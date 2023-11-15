@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.project.draw;
 
 import java.util.Map;
-import java.util.Set;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -59,16 +58,10 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	}
 
 	private final Map<Day, String> nameDays;
-	private final Set<Day> verticalSeparators;
 
 	public TimeHeaderDaily(TimeHeaderParameters thParam, Map<Day, String> nameDays, Day printStart, Day printEnd) {
 		super(thParam, new TimeScaleDaily(thParam.getStartingDay(), thParam.getScale(), printStart));
 		this.nameDays = nameDays;
-		this.verticalSeparators = thParam.getVerticalSeparatorBefore();
-	}
-
-	private boolean isBold(Day wink) {
-		return verticalSeparators.contains(wink);
 	}
 
 	@Override

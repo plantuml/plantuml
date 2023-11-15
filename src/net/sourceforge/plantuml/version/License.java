@@ -58,7 +58,7 @@ public class License {
 
 	@Override
 	public String toString() {
-		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
+		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__ or __GPLV2__
 		return "GPL";
 		// ::done
 		// ::uncomment when __CORE__ or __MIT__
@@ -75,6 +75,9 @@ public class License {
 		// ::done
 		// ::uncomment when __LGPL__
 		// return "LGPL";
+		// ::done
+		// ::uncomment when __GPLV2__
+		// return "GPLv2";
 		// ::done
 	}
 
@@ -155,7 +158,7 @@ public class License {
 	}
 
 	private void end3(final LicenseInfo licenseInfo, final List<String> text) {
-		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
+		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__ or __GPLV2__
 		text.add("PlantUML is free software; you can redistribute it and/or modify it");
 		text.add("under the terms of the GNU General Public License as published by");
 		text.add("the Free Software Foundation, either version 3 of the License, or");
@@ -187,6 +190,9 @@ public class License {
 		// ::done
 		// ::uncomment when __LGPL__
 		// addLgpl(licenseInfo, text);
+		// ::done
+		// ::uncomment when __GPLV2__
+		// addGplv2(licenseInfo, text);
 		// ::done
 
 		text.add(" ");
@@ -370,22 +376,39 @@ public class License {
 //	}
 // ::done
 
-// ::uncomment when __LGPL__
-//	private void addLgpl(final LicenseInfo licenseInfo, final List<String> text) {
-//		text.add("PlantUML is free software; you can redistribute it and/or modify it");
-//		text.add("under the terms of the GNU Lesser General Public License as published by");
-//		text.add("the Free Software Foundation, either version 3 of the License, or");
-//		text.add("(at your option) any later version.");
-//		text.add(" ");
-//		text.add("PlantUML distributed in the hope that it will be useful, but");
-//		text.add("WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY");
-//		text.add("or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public");
-//		text.add("License for more details.");
-//		text.add(" ");
-//		text.add("You should have received a copy of the GNU Lesser General Public License");
-//		text.add("along with this library.  If not, see <https://www.gnu.org/licenses/>.");
-//	}
-// ::done
+	// ::uncomment when __LGPL__
+//		private void addLgpl(final LicenseInfo licenseInfo, final List<String> text) {
+//			text.add("PlantUML is free software; you can redistribute it and/or modify it");
+//			text.add("under the terms of the GNU Lesser General Public License as published by");
+//			text.add("the Free Software Foundation, either version 3 of the License, or");
+//			text.add("(at your option) any later version.");
+//			text.add(" ");
+//			text.add("PlantUML distributed in the hope that it will be useful, but");
+//			text.add("WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY");
+//			text.add("or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public");
+//			text.add("License for more details.");
+//			text.add(" ");
+//			text.add("You should have received a copy of the GNU Lesser General Public License");
+//			text.add("along with this library.  If not, see <https://www.gnu.org/licenses/>.");
+//		}
+	// ::done
+
+	// ::uncomment when __GPLV2__
+//		private void addGplv2(final LicenseInfo licenseInfo, final List<String> text) {
+//			text.add("PlantUML is free software; you can redistribute it and/or modify it");
+//			text.add("under the terms of the GNU General Public License V2 as published by");
+//			text.add("the Free Software Foundation, either version 2 of the License, or");
+//			text.add("(at your option) any later version.");
+//			text.add(" ");
+//			text.add("PlantUML distributed in the hope that it will be useful, but");
+//			text.add("WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY");
+//			text.add("or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public");
+//			text.add("License for more details.");
+//			text.add(" ");
+//			text.add("You should have received a copy of the GNU Lesser General Public License");
+//			text.add("along with this library.  If not, see <https://www.gnu.org/licenses/old-licenses/gpl-2.0.html>.");
+//		}
+	// ::done
 
 	public static void addLicenseInfo(final List<String> text, LicenseInfo licenseInfo) {
 		if (licenseInfo.getLicenseType() == LicenseType.NAMED) {

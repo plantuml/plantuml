@@ -43,32 +43,22 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.AbstractFtile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileGeometry;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
-import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.svek.image.CircleStart;
 
 public class FtileCircleStart extends AbstractFtile {
 
-	private static final int SIZE = 20;
-
-	private HColor backColor;
-	private HColor borderColor;
+	private final CircleStart circle;
 	private final Swimlane swimlane;
-	private double shadowing;
 
-	public FtileCircleStart(ISkinParam skinParam, HColor backColor, Swimlane swimlane, Style style) {
+	public FtileCircleStart(ISkinParam skinParam, Swimlane swimlane, Style style) {
 		super(skinParam);
 		this.swimlane = swimlane;
-		this.backColor = backColor;
-		this.borderColor = HColors.none();
-		this.shadowing = style.value(PName.Shadowing).asDouble();
-		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
-		this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
+		this.circle = new CircleStart(skinParam, style, Colors.empty());
 	}
 
 	@Override
@@ -92,14 +82,13 @@ public class FtileCircleStart extends AbstractFtile {
 	}
 
 	public void drawU(UGraphic ug) {
-		final UEllipse circle = UEllipse.build(SIZE, SIZE);
-		circle.setDeltaShadow(shadowing);
-		ug.apply(borderColor).apply(backColor.bg()).draw(circle);
+		circle.drawU(ug);
 	}
 
 	@Override
 	protected FtileGeometry calculateDimensionFtile(StringBounder stringBounder) {
-		return new FtileGeometry(SIZE, SIZE, SIZE / 2, 0, SIZE);
+		final double size = circle.calculateDimension(stringBounder).getWidth();
+		return new FtileGeometry(size, size, size / 2, 0, size);
 	}
 
 }

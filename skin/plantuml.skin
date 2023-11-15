@@ -248,6 +248,12 @@ stateDiagram {
   header {
     FontSize 12
   }
+  circle {
+   start, stop, end {
+	    LineColor #2
+	    BackgroundColor #2
+    }
+  }
 }
 
 
@@ -326,17 +332,9 @@ activityDiagram {
 	    LineThickness 1
 	}
 	circle {
-	    start {
+	    start, stop, end {
 		    LineColor #2
 		    BackgroundColor #2
-	    }
-	    stop {
-		    LineColor #2
-		    BackgroundColor transparent
-	    }
-	    end {
-		    LineColor #2
-		    BackgroundColor transparent
 	    }
 	}
 	activityBar {
@@ -610,17 +608,9 @@ activityDiagram {
 	    LineColor white
 	}
 	circle {
-	    start {
+	    start, stop, end {
 		    LineColor #d
 		    BackgroundColor #d
-	    }
-	    stop {
-		    LineColor #d
-		    BackgroundColor transparent
-	    }
-	    end {
-		    LineColor #d
-		    BackgroundColor transparent
 	    }
 	}
 	activityBar {

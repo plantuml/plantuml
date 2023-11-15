@@ -37,4 +37,6 @@ package net.sourceforge.plantuml.abel;
 
 public interface EntityGender {
 	public boolean contains(Entity test);
+
+	public String getGender();
 }

@@ -44,6 +44,11 @@ public class EntityGenderUtils {
 			public boolean contains(Entity test) {
 				return test.getLeafType() == type;
 			}
+
+			@Override
+			public String getGender() {
+				return type.name();
+			}
 		};
 	}
 
@@ -51,6 +56,11 @@ public class EntityGenderUtils {
 		return new EntityGender() {
 			public boolean contains(Entity test) {
 				return test.getUid().equals(entity.getUid());
+			}
+
+			@Override
+			public String getGender() {
+				return entity.getUid();
 			}
 		};
 	}
@@ -61,7 +71,19 @@ public class EntityGenderUtils {
 				if (test.getStereotype() == null) {
 					return false;
 				}
-				return stereotype.equals(test.getStereotype().getLabel(Guillemet.DOUBLE_COMPARATOR));
+
+				for (String label : test.getStereotype().getLabels(Guillemet.DOUBLE_COMPARATOR)) {
+					if (label.equals(stereotype)) {
+						return true;
+					}
+				}
+
+				return false;
+			}
+
+			@Override
+			public String getGender() {
+				return stereotype;
 			}
 		};
 	}
@@ -80,6 +102,11 @@ public class EntityGenderUtils {
 				}
 				return false;
 			}
+
+			@Override
+			public String getGender() {
+				return null;
+			}
 		};
 	}
 
@@ -87,6 +114,11 @@ public class EntityGenderUtils {
 		return new EntityGender() {
 			public boolean contains(Entity test) {
 				return g1.contains(test) && g2.contains(test);
+			}
+
+			@Override
+			public String getGender() {
+				return null;
 			}
 		};
 	}
@@ -96,6 +128,11 @@ public class EntityGenderUtils {
 			public boolean contains(Entity test) {
 				return true;
 			}
+
+			@Override
+			public String getGender() {
+				return null;
+			}
 		};
 	}
 
@@ -103,6 +140,11 @@ public class EntityGenderUtils {
 		return new EntityGender() {
 			public boolean contains(Entity test) {
 				return test.getBodier().getMethodsToDisplay().size() == 0;
+			}
+
+			@Override
+			public String getGender() {
+				return null;
 			}
 		};
 	}
@@ -112,7 +154,26 @@ public class EntityGenderUtils {
 			public boolean contains(Entity test) {
 				return test.getBodier().getFieldsToDisplay().size() == 0;
 			}
+
+			@Override
+			public String getGender() {
+				return null;
+			}
+
 		};
 	}
 
+	static public EntityGender byClassName(final String className) {
+		return new EntityGender() {
+			@Override
+			public boolean contains(Entity test) {
+				return className.equals(test.getName());
+			}
+
+			@Override
+			public String getGender() {
+				return className;
+			}
+		};
+	}
 }

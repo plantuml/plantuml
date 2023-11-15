@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandBackward3 extends SingleLineCommand2<ActivityDiagram3> {
@@ -96,12 +97,18 @@ public class CommandBackward3 extends SingleLineCommand2<ActivityDiagram3> {
 		else
 			boxStyle = BoxStyle.fromString(styleString);
 
+		final String stereo = arg.get("STYLE", 1);
+
+		Stereotype stereotype = null;
+		if (stereo != null)
+			stereotype = Stereotype.build(stereo);
+
 		final Display label = Display.getWithNewlines(arg.get("LABEL", 0));
 
 		final LinkRendering in = getBackRendering(diagram, arg, "INCOMING");
 		final LinkRendering out = getBackRendering(diagram, arg, "OUTCOMING");
 
-		return diagram.backward(label, boxStyle, in, out);
+		return diagram.backward(label, boxStyle, in, out, stereotype);
 	}
 
 	static public LinkRendering getBackRendering(ActivityDiagram3 diagram, RegexResult arg, String name)

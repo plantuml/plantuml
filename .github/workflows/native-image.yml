@@ -23,7 +23,7 @@ jobs:
     runs-on: ${{matrix.os}}
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - uses: graalvm/setup-graalvm@v1
         with:
@@ -42,6 +42,7 @@ jobs:
             plantuml-epl/build/libs
             plantuml-lgpl/build/libs
             plantuml-mit/build/libs
+            plantuml-gplv2/build/libs
           key: "libs-${{ github.run_id }}"
           fail-on-cache-miss: true
           enableCrossOsArchive: true

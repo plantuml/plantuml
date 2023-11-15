@@ -71,6 +71,7 @@ import net.sourceforge.plantuml.eggs.PSystemWelcomeFactory;
 import net.sourceforge.plantuml.emoji.PSystemListEmojiFactory;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
+import net.sourceforge.plantuml.error.PSystemUnsupported;
 import net.sourceforge.plantuml.filesdiagram.FilesDiagramFactory;
 import net.sourceforge.plantuml.flowdiagram.FlowDiagramFactory;
 import net.sourceforge.plantuml.font.PSystemListFontsFactory;
@@ -109,6 +110,15 @@ import net.sourceforge.plantuml.wbs.WBSDiagramFactory;
 import net.sourceforge.plantuml.wire.WireDiagramFactory;
 import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
 
+/**
+ * Builds a diagram from pre-processed PlantUML source.
+ *
+ * <p>
+ * Tries each of the factories (enumerated in the static block below) until one
+ * succeeds.
+ *
+ * @see AbstractPSystem
+ */
 public class PSystemBuilder {
 	// ::remove file when __HAXE__
 
@@ -138,6 +148,9 @@ public class PSystemBuilder {
 			}
 
 			final DiagramType diagramType = umlSource.getDiagramType();
+			if (diagramType == DiagramType.UNKNOWN)
+				return new PSystemUnsupported(umlSource);
+
 			final List<PSystemError> errors = new ArrayList<>();
 			for (PSystemFactory systemFactory : factories) {
 				if (diagramType != systemFactory.getDiagramType())
@@ -151,6 +164,8 @@ public class PSystemBuilder {
 				}
 				errors.add((PSystemError) sys);
 			}
+			if (errors.size() == 0)
+				return new PSystemUnsupported(umlSource);
 
 			result = PSystemErrorUtils.merge(errors);
 			return result;
@@ -210,9 +225,11 @@ public class PSystemBuilder {
 		// ::done
 
 		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
-		factories.add(new PSystemDitaaFactory());
 		factories.add(new PSystemJcckitFactory());
 		factories.add(new PSystemSudokuFactory());
+		// ::done
+		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__
+		factories.add(new PSystemDitaaFactory());
 		// ::done
 
 		// ::comment when __CORE__

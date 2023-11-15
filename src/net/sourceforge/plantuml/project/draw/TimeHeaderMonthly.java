@@ -62,9 +62,17 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 		drawTextsBackground(ug, totalHeightWithoutFooter);
 		drawYears(ug);
 		drawMonths(ug.apply(UTranslate.dy(16)));
+		printSmallVbars(ug, totalHeightWithoutFooter);
 		drawHline(ug, 0);
 		drawHline(ug, 16);
 		drawHline(ug, getFullHeaderHeight());
+	}
+
+	private void printSmallVbars(final UGraphic ug, double totalHeightWithoutFooter) {
+		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment())
+			if (isBold(wink))
+				drawVbar(ug, getTimeScale().getStartingPosition(wink), getFullHeaderHeight(), totalHeightWithoutFooter,
+						isBold(wink));
 	}
 
 	@Override

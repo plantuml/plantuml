@@ -24,9 +24,9 @@ java {
 }
 
 dependencies {
-	compileOnly("org.apache.ant:ant:1.10.13")
+	compileOnly("org.apache.ant:ant:1.10.14")
 	testImplementation("org.assertj:assertj-core:3.24.2")
-	testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
 	testImplementation("org.scilab.forge:jlatexmath:1.0.7")
 }
 
@@ -41,7 +41,8 @@ sourceSets {
 			srcDirs("build/generated/sjpp")
 		}
 		resources {
-			srcDirs("build/generated/sjpp")
+			srcDirs("build/sources/sjpp/java")
+			include("**/graphviz.dat")
 			include("**/*.png")
 			include("**/*.svg")
 			include("**/*.txt")
@@ -123,7 +124,6 @@ tasks.compileJava{
 tasks.named("sourcesJar"){
 	dependsOn(preprocessLicenceAntTask)
 }
-
 
 publishing {
 	publications.create<MavenPublication>("maven") {

@@ -108,12 +108,17 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	}
 
 	private void printSmallVbars(final UGraphic ug, double totalHeightWithoutFooter) {
-		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
-			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek()) {
+		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment())
+			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek())
 				drawVbar(ug, getTimeScale().getStartingPosition(wink), Y_POS_ROW16(), totalHeightWithoutFooter, false);
-			}
-		}
+
 		drawVbar(ug, getTimeScale().getEndingPosition(max), Y_POS_ROW16(), totalHeightWithoutFooter, false);
+
+		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment())
+			if (isBold(wink))
+				drawVbar(ug, getTimeScale().getStartingPosition(wink), getFullHeaderHeight(), totalHeightWithoutFooter,
+						isBold(wink));
+
 	}
 
 	private void printDaysOfMonth(final UGraphic ug) {

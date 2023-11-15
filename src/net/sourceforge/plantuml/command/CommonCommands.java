@@ -73,8 +73,6 @@ public final class CommonCommands {
 		cmds.add(CommandScaleMaxWidth.ME);
 		cmds.add(CommandScaleMaxHeight.ME);
 		cmds.add(CommandScaleMaxWidthAndHeight.ME);
-		cmds.add(CommandAffineTransform.ME);
-		cmds.add(CommandAffineTransformMultiline.ME);
 		final CommandFactorySprite factorySpriteCommand = new CommandFactorySprite();
 		cmds.add(factorySpriteCommand.createMultiLine(false));
 		cmds.add(factorySpriteCommand.createSingleLine());

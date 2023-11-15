@@ -134,28 +134,25 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 	@Override
 	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
-		final String codeRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("CODE", 0));
-		final String displayRaw = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("DISPLAY", 0));
+		final String codeArg = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("CODE", 0));
+		final Quark<Entity> ident = diagram.quarkInContext(false,
+				diagram.cleanId(codeArg.length() == 0 ? diagram.getUniqueSequence("##") : codeArg));
+
+		final String displayArg = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("DISPLAY", 0));
 		final String display;
-		final String idShort;
-		if (codeRaw.length() == 0) {
-			idShort = diagram.getUniqueSequence("##");
+
+		if (codeArg.length() == 0)
 			display = null;
-		} else {
-			idShort = codeRaw;
-			if (displayRaw == null)
-				display = idShort;
-			else
-				display = displayRaw;
-
-		}
-
-		final Quark<Entity> ident = diagram.quarkInContext(false, diagram.cleanId(idShort));
+		else if (displayArg == null)
+			display = ident.getName();
+		else
+			display = displayArg;
 
 		final CommandExecutionResult status = diagram.gotoGroup(ident, Display.getWithNewlines(display),
 				GroupType.PACKAGE);
 		if (status.isOk() == false)
 			return status;
+
 		final Entity p = diagram.getCurrentGroup();
 		final String symbol = arg.get("SYMBOL", 0);
 

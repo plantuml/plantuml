@@ -190,30 +190,36 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 		} else {
 			arg1 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg1);
 			final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(arg1));
-			Entity entity = quark.getData();
-			if (entity == null)
-				return CommandExecutionResult.error("No such element " + quark.getName());
-			gender = EntityGenderUtils.byEntityAlone(entity);
-		}
-		if (gender != null) {
-			final boolean empty = arg.get("EMPTY", 0) != null;
-			final boolean emptyMembers = empty && portion == EntityPortion.MEMBER;
-			if (empty == true && emptyMembers == false)
-				gender = EntityGenderUtils.and(gender, emptyByGender(portion));
-
-			if (diagram.getCurrentGroup().isRoot() == false)
-				gender = EntityGenderUtils.and(gender, EntityGenderUtils.byPackage(diagram.getCurrentGroup()));
-
-			if (emptyMembers) {
-				diagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(EntityPortion.FIELD)),
-						EntityPortion.FIELD, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
-				diagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(EntityPortion.METHOD)),
-						EntityPortion.METHOD, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+			if (quark == null) {
+				// Not sure it could really happens... to be checked
+				return CommandExecutionResult.error("No such quark " + arg1);
+			}
+			if (portion == EntityPortion.METHOD) {
+					gender = EntityGenderUtils.byClassName(arg1);
 			} else {
-				diagram.hideOrShow(gender, portion, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+				Entity entity = quark.getData();
+				if (entity == null)
+					return CommandExecutionResult.error("No such element " + quark.getName());
+				gender = EntityGenderUtils.byEntityAlone(entity);
 			}
 		}
-		return CommandExecutionResult.ok();
+			final boolean empty = arg.get("EMPTY", 0) != null;
+			final boolean emptyMembers = empty && portion == EntityPortion.MEMBER;
+			if (empty && !emptyMembers)
+					gender = EntityGenderUtils.and(gender, emptyByGender(portion));
+
+			if (!diagram.getCurrentGroup().isRoot())
+					gender = EntityGenderUtils.and(gender, EntityGenderUtils.byPackage(diagram.getCurrentGroup()));
+
+			if (emptyMembers) {
+					diagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(EntityPortion.FIELD)),
+									EntityPortion.FIELD, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+					diagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(EntityPortion.METHOD)),
+									EntityPortion.METHOD, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+			} else {
+					diagram.hideOrShow(gender, portion, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+			}
+			return CommandExecutionResult.ok();
 	}
 
 	private EntityPortion getEntityPortion(String s) {

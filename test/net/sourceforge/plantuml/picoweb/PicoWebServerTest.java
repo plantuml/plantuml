@@ -197,13 +197,13 @@ public class PicoWebServerTest {
 
 		response = httpPostJson("/render", renderRequestJson("@startuml", "-ttxt"));
 		assert response.getResponseCode() == 200;
-		assert response.getHeaderField("X-PlantUML-Diagram-Error").equals("No @startuml/@enduml found");
+		assert response.getHeaderField("X-PlantUML-Diagram-Error").equals("No valid @start/@end found, please check the version");
 		assert response.getHeaderField("X-PlantUML-Diagram-Error-Line").equals("0");
 		assert response.getContentType().equals("text/plain");
 		assert readStreamAsString(response.getInputStream()).equals("" +
 				"                               \n" +
 				"                               \n" +
-				"     No @startuml/@enduml found\n"
+				"     No valid @start/@end found, please check the version\n"
 		);
 
 		response = httpPostJson("/render", "");

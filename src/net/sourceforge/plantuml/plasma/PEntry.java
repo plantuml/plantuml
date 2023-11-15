@@ -35,6 +35,16 @@
  */
 package net.sourceforge.plantuml.plasma;
 
+/**
+ * Keeps track of the {@link Quark} objects that have a given name. Short for
+ * "{@link Plasma} entry".
+ * 
+ * <p>
+ * Tracks the first instace created with that name, as well as the number of
+ * quarks with that name.
+ *
+ * @see Plasma#stats
+ */
 class PEntry<DATA> {
     // ::remove folder when __HAXE__
 

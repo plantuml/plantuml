@@ -13,6 +13,7 @@ plugins {
 	java
 	`maven-publish`
 	signing
+//	id("com.adarshr.test-logger") version "3.2.0"
 }
 
 group = "net.sourceforge.plantuml"
@@ -27,12 +28,22 @@ java {
 }
 
 dependencies {
-	compileOnly("org.apache.ant:ant:1.10.13")
+	compileOnly("org.apache.ant:ant:1.10.14")
+
+	testImplementation("io.github.glytching:junit-extensions:2.6.0")
 	testImplementation("org.assertj:assertj-core:3.24.2")
-	testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
+	if (JavaVersion.current().isJava8) {
+		testImplementation("org.mockito:mockito-core:4.+")
+		testImplementation("org.mockito:mockito-junit-jupiter:4.+")
+	} else {
+		testImplementation("org.mockito:mockito-core:5.+")
+		testImplementation("org.mockito:mockito-junit-jupiter:5.+")
+	}
 	testImplementation("org.scilab.forge:jlatexmath:1.0.7")
-	"pdfRuntimeOnly"("org.apache.xmlgraphics:fop:2.8")
-	"pdfRuntimeOnly"("org.apache.xmlgraphics:batik-all:1.16")
+
+	"pdfRuntimeOnly"("org.apache.xmlgraphics:fop:2.9")
+	"pdfRuntimeOnly"("org.apache.xmlgraphics:batik-all:1.17")
 }
 
 repositories {
@@ -147,6 +158,10 @@ tasks.withType<Javadoc>().configureEach {
 }
 
 tasks.test {
+	doFirst {
+		println("Java Home:" + System.getProperty("java.home"));
+		println("Java Version: " + System.getProperty("java.version"));
+	}
 	useJUnitPlatform()
 	testLogging.showStandardStreams = true
 }

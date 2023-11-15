@@ -148,7 +148,7 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 
 	public TextBlock toTextBlockInternal(ISkinParam skinParam) {
 		if (type == BpmElementType.START) {
-			return new FtileCircleStart(skinParam, HColors.BLACK, null, getStyle(skinParam));
+			return new FtileCircleStart(skinParam, null, getStyle(skinParam));
 		}
 		if (type == BpmElementType.MERGE) {
 			final HColor borderColor = SkinParamUtils.getColor(skinParam, null, ColorParam.activityBorder);

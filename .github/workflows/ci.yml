@@ -26,11 +26,12 @@ jobs:
       do_release: ${{ steps.config.outputs.do_release }}
       do_snapshot_release: ${{ steps.config.outputs.do_snapshot_release }}
       pom_version: ${{ steps.config.outputs.pom_version }}
+      do_javadoc: ${{ steps.config.outputs.do_javadoc }}
       do_test_linux: ${{ steps.config.outputs.do_test_linux }}
       do_test_windows: ${{ steps.config.outputs.do_test_windows }}
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Configure workflow
         id: config
@@ -53,7 +54,6 @@ jobs:
 
           # Do a release when a git tag starting with 'v' has been created by a suitable user.
           # (We match against github.repository_owner as a kludge so that forked repos can release themselves when testing the workflow)
-
           if [[ "${GITHUB_EVENT_NAME}" == "create" && "${REF_TYPE}" == "tag" && "${REF}" == v* && \
                 ( "${ACTOR}" == "arnaudroques" || "${ACTOR}" == "${GITHUB_REPOSITORY_OWNER}" ) \
              ]]; then
@@ -61,6 +61,8 @@ jobs:
             echo "do_release=true" >> $GITHUB_OUTPUT
             echo "pom_version=${REF#v}"
             echo "pom_version=${REF#v}" >> $GITHUB_OUTPUT # pom_version is the tag without the 'v' prefix
+            echo "do_javadoc=true" >> $GITHUB_OUTPUT
+            echo "This run will update the Javadoc"
 
           elif [[ "${GITHUB_EVENT_NAME}" =~ push|workflow_dispatch && "${REF}" == "refs/heads/master" && "${ACTOR}" == "arnaudroques" ]]; then
             echo "::notice title=::This run will release a snapshot"
@@ -68,9 +70,13 @@ jobs:
             V=$(perl -ne 'if (/return (\d{6,7});/) {$v=$1} if (/final int beta = (\d+);/) {$b=$1} END{print(substr($v, 0, 1),".", substr($v, 1, 4),"."); if ($b) {print(int(substr($v+1, 5)), "beta", $b);} else {print(int(substr($v, 5)))}}' src/net/sourceforge/plantuml/version/Version.java)
             echo "pom_version=$V-SNAPSHOT"
             echo "pom_version=$V-SNAPSHOT" >> $GITHUB_OUTPUT # pom_version is taken from Version.java
+            echo "do_javadoc=true" >> $GITHUB_OUTPUT
+            echo "This run will update the Javadoc"
 
           else
             echo "This run will NOT make a release"
+            echo "do_javadoc=false" >> $GITHUB_OUTPUT
+            echo "This run will NOT update the Javadoc"
           fi
           echo "do_test_linux=true" >> $GITHUB_OUTPUT
           echo "do_test_windows=false" >> $GITHUB_OUTPUT
@@ -89,7 +95,7 @@ jobs:
     steps:
       - name: Checkout the repository
         if: needs.workflow_config.outputs.do_test_linux == 'true'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up java
         if: needs.workflow_config.outputs.do_test_linux == 'true'
@@ -116,43 +122,6 @@ jobs:
           name: ${{ github.run_number }}-${{ matrix.os }}-java-${{ matrix.java_version }}-test-reports
           path: build/reports/tests/
 
-  test_windows:
-    needs: workflow_config
-    strategy:
-      fail-fast: false
-      matrix:
-        java_version: [ 8 ]
-        os: [ windows-latest ]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - name: Checkout the repository
-        if: needs.workflow_config.outputs.do_test_windows == 'true'
-        uses: actions/checkout@v3
-
-      - name: Set up java
-        if: needs.workflow_config.outputs.do_test_windows == 'true'
-        uses: actions/setup-java@v3
-        with:
-          java-version: ${{ matrix.java_version }}
-          distribution: temurin
-          cache: gradle
-
-      # Compile / Test / Package are separate steps so the reason for any failure is more obvious in GitHub UI
-      - name: Compile
-        if: needs.workflow_config.outputs.do_test_windows == 'true'
-        run: gradle -q compileJava --no-daemon
-
-      - name: Test
-        if: needs.workflow_config.outputs.do_test_windows == 'true'
-        run: gradle test --no-daemon -i
-
-      - name: Upload test reports
-        uses: actions/upload-artifact@v3
-        if: needs.workflow_config.outputs.do_test_windows == 'true'
-        with:
-          # Using github.run_number here to reduce confusion when downloading & comparing from several builds
-          name: ${{ github.run_number }}-${{ matrix.os }}-java-${{ matrix.java_version }}-test-reports
-          path: build/reports/tests/
 
   build_artifacts:
     needs: [ workflow_config ]
@@ -161,7 +130,7 @@ jobs:
       release_version: ${{ steps.version.outputs.release_version }}
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up java
         uses: actions/setup-java@v3
         with:
@@ -197,6 +166,7 @@ jobs:
           ls -l plantuml-epl/build/libs
           ls -l plantuml-lgpl/build/libs
           ls -l plantuml-mit/build/libs
+          ls -l plantuml-gplv2/build/libs
       - name: Get release version
         id: version
         run: |
@@ -212,8 +182,33 @@ jobs:
             plantuml-epl/build/libs
             plantuml-lgpl/build/libs
             plantuml-mit/build/libs
+            plantuml-gplv2/build/libs
           key: "libs-${{ github.run_id }}"
           enableCrossOsArchive: true
+
+  deploy_javadoc:
+    needs: [ build_artifacts, test_linux ]
+    if: needs.workflow_config.outputs.do_javadoc == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Set up java
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: temurin
+
+      - name: Build Javadoc
+        run: gradle javadoc
+
+      - name: Deploy Javadoc to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/docs/javadoc
+
 
   upload:
     if: |
@@ -223,7 +218,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up java
         uses: actions/setup-java@v3
@@ -243,6 +238,7 @@ jobs:
             plantuml-epl/build/libs
             plantuml-lgpl/build/libs
             plantuml-mit/build/libs
+            plantuml-gplv2/build/libs
           key: "libs-${{ github.run_id }}"
           fail-on-cache-miss: true
           enableCrossOsArchive: true
@@ -260,6 +256,7 @@ jobs:
             plantuml-epl/build/libs
             plantuml-lgpl/build/libs
             plantuml-mit/build/libs
+            plantuml-gplv2/build/libs
 
       - name: Create snapshot
         if: needs.workflow_config.outputs.do_snapshot_release == 'true'
@@ -296,19 +293,19 @@ jobs:
           gradle --debug publish
 
   push_to_docker_registry:
-    needs: [ workflow_config, upload, test_linux, test_windows ]
+    needs: [ workflow_config, upload, test_linux ]
     if: needs.workflow_config.outputs.do_release == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
+        uses: docker/setup-qemu-action@v3
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           # list of Docker images to use as base name for tags
           images: |
@@ -321,18 +318,18 @@ jobs:
             type=semver,pattern={{major}}
             type=sha
       - name: Log into Docker Hub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Log in to GitHub Docker Registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build/push container image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           context: .
           push: true

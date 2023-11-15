@@ -262,6 +262,12 @@ stateDiagram {
 	  FontStyle plain
 	}
   }
+  circle {
+    start, stop, end {
+	    LineColor black
+	    BackgroundColor black
+    }
+  }
 }
 
 
@@ -382,17 +388,9 @@ activityDiagram {
 	    FontSize 11
 	}
 	circle {
-	    start {
+	    start, stop, end {
 		    LineColor black
 		    BackgroundColor black
-	    }
-	    stop {
-		    LineColor black
-		    BackgroundColor white
-	    }
-	    end {
-		    LineColor black
-		    BackgroundColor white
 	    }
 	}
 	activityBar {

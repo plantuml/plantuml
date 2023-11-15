@@ -388,11 +388,11 @@ public class ActivityDiagram3 extends UmlDiagram {
 	}
 
 	public CommandExecutionResult backward(Display label, BoxStyle boxStyle, LinkRendering incoming1,
-			LinkRendering incoming2) {
+			LinkRendering incoming2, Stereotype stereotype) {
 		manageSwimlaneStrategy();
 		if (current() instanceof InstructionRepeat) {
 			final InstructionRepeat instructionRepeat = (InstructionRepeat) current();
-			instructionRepeat.setBackward(label, swinlanes.getCurrentSwimlane(), boxStyle, incoming1, incoming2);
+			instructionRepeat.setBackward(label, swinlanes.getCurrentSwimlane(), boxStyle, incoming1, incoming2, stereotype);
 			return CommandExecutionResult.ok();
 		}
 		if (current() instanceof InstructionWhile) {
