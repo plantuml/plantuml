@@ -53,9 +53,9 @@ import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandAssociateRelationship extends SingleLineCommand2<ChenEerDiagram> {
+public class CommandAssociate extends SingleLineCommand2<ChenEerDiagram> {
 
-  public CommandAssociateRelationship() {
+  public CommandAssociate() {
     super(getRegexConcat());
   }
 

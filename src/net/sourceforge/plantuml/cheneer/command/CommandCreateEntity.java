@@ -57,7 +57,7 @@ public class CommandCreateEntity extends SingleLineCommand2<ChenEerDiagram> {
 
   private static IRegex getRegexConcat() {
     return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //
-        new RegexLeaf("entity"), //
+        new RegexLeaf("TYPE", "(entity|relationship)"), //
         RegexLeaf.spaceOneOrMore(), //
         new RegexLeaf("NAME", "(\\w+)"), //
         RegexLeaf.spaceZeroOrMore(), //

@@ -39,10 +39,9 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.AbstractPSystem;
-import net.sourceforge.plantuml.cheneer.command.CommandAssociateRelationship;
+import net.sourceforge.plantuml.cheneer.command.CommandAssociate;
 import net.sourceforge.plantuml.cheneer.command.CommandCreateAttribute;
 import net.sourceforge.plantuml.cheneer.command.CommandCreateEntity;
-import net.sourceforge.plantuml.cheneer.command.CommandCreateRelationship;
 import net.sourceforge.plantuml.cheneer.command.CommandEndGroup;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommonCommands;
@@ -59,9 +58,8 @@ public class ChenEerDiagramFactory extends PSystemCommandFactory {
 	@Override
 	protected void initCommandsList(List<Command> cmds) {
 		cmds.add(new CommandCreateEntity());
-		cmds.add(new CommandCreateRelationship());
 		cmds.add(new CommandCreateAttribute());
-		cmds.add(new CommandAssociateRelationship());
+		cmds.add(new CommandAssociate());
 		cmds.add(new CommandEndGroup());
 
 		CommonCommands.addTitleCommands(cmds);
