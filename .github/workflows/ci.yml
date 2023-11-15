@@ -182,6 +182,7 @@ jobs:
 
   deploy_javadoc:
     needs: [ build_artifacts, test_linux ]
+    if: needs.workflow_config.outputs.do_release == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the repository
