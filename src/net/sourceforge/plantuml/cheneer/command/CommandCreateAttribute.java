@@ -84,7 +84,7 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
     }
 
     final LeafType type = LeafType.USECASE;
-    final String name = diagram.cleanId(arg.get("NAME", 0));
+    final String name = diagram.cleanId(arg.get("NAME", 0).trim());
     final String id = owner.getName() + "/" + name;
     final boolean composite = arg.get("COMPOSITE", 0) != null;
 

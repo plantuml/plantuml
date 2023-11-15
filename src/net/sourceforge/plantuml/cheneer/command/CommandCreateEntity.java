@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -59,7 +60,11 @@ public class CommandCreateEntity extends SingleLineCommand2<ChenEerDiagram> {
     return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //
         new RegexLeaf("TYPE", "(entity|relationship)"), //
         RegexLeaf.spaceOneOrMore(), //
-        new RegexLeaf("NAME", "(\\w+)"), //
+        new RegexLeaf("NAME", "([^<>{}]+)"), //
+        new RegexOptional(//
+            new RegexConcat(
+                RegexLeaf.spaceZeroOrMore(), //
+                new RegexLeaf("STEREOTYPE", "(<<.+>>)"))), //
         RegexLeaf.spaceZeroOrMore(), //
         new RegexLeaf("\\{"), //
         RegexLeaf.end());
@@ -69,7 +74,7 @@ public class CommandCreateEntity extends SingleLineCommand2<ChenEerDiagram> {
   protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg)
       throws NoSuchColorException {
     final LeafType type = LeafType.OBJECT;
-    final String name = diagram.cleanId(arg.get("NAME", 0));
+    final String name = diagram.cleanId(arg.get("NAME", 0).trim());
 
     final Quark<Entity> quark = diagram.quarkInContext(true, name);
     Entity entity = quark.getData();
