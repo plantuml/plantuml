@@ -61,37 +61,41 @@ public class CommandAssociateRelationship extends SingleLineCommand2<ChenEerDiag
 
   private static IRegex getRegexConcat() {
     return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //
+        new RegexLeaf("NAME1", "([\\w-]+)"), //
         RegexLeaf.spaceZeroOrMore(), //
         new RegexLeaf("PARTICIPATION", "([-=])"), //
         new RegexOptional( //
             new RegexLeaf("CARDINALITY", "(\\w+|\\(\\w+,[%s]*\\w+\\))")), //
-        RegexLeaf.spaceOneOrMore(), //
-        new RegexLeaf("NAME", "([\\w-]+)"), //
+        new RegexLeaf("PARTICIPATION2", "([-=])"), //
+        RegexLeaf.spaceZeroOrMore(), //
+        new RegexLeaf("NAME2", "([\\w-]+)"), //
         RegexLeaf.end());
   }
 
   @Override
   protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg)
       throws NoSuchColorException {
-    final Entity relationship = diagram.peekOwner();
-    if (relationship == null) {
-      return CommandExecutionResult.error("Can only associate from a relationship");
+    final String name1 = diagram.cleanId(arg.get("NAME1", 0));
+    final String name2 = diagram.cleanId(arg.get("NAME2", 0));
+
+    final Quark<Entity> quark1 = diagram.quarkInContext(true, name1);
+    final Entity entity1 = quark1.getData();
+    if (entity1 == null) {
+      return CommandExecutionResult.error("No such entity: " + name1);
     }
 
-    final String entityName = diagram.cleanId(arg.get("NAME", 0));
-
-    final Quark<Entity> entityQuark = diagram.quarkInContext(true, entityName);
-    final Entity entity = entityQuark.getData();
-    if (entity == null) {
-      return CommandExecutionResult.error("No such entity: " + entityName);
+    final Quark<Entity> quark2 = diagram.quarkInContext(true, name2);
+    final Entity entity2 = quark2.getData();
+    if (entity2 == null) {
+      return CommandExecutionResult.error("No such entity: " + name2);
     }
 
     final LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);
-    final Link link = new Link(diagram.getEntityFactory(), diagram.getCurrentStyleBuilder(), relationship, entity,
+    final Link link = new Link(diagram.getEntityFactory(), diagram.getCurrentStyleBuilder(), entity1, entity2,
         linkType,
         // TODO: Cardinality
         LinkArg.build(Display.NULL, 3));
-    link.setPortMembers(diagram.getPortId(relationship.getName()), diagram.getPortId(entity.getName()));
+    link.setPortMembers(diagram.getPortId(entity1.getName()), diagram.getPortId(entity2.getName()));
     diagram.addLink(link);
 
     return CommandExecutionResult.ok();

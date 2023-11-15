@@ -63,27 +63,11 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
   private static IRegex getRegexConcat() {
     return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //
         RegexLeaf.spaceZeroOrMore(),
-        new RegexOptional( //
-            new RegexConcat( //
-                new RegexLeaf("MULTI", "multi"), //
-                RegexLeaf.spaceOneOrMore())), //
-        new RegexOptional( //
-            new RegexConcat( //
-                new RegexLeaf("DERIVED", "derived"), //
-                RegexLeaf.spaceOneOrMore())), //
-        new RegexOptional( //
-            new RegexConcat( //
-                new RegexOptional( //
-                    new RegexConcat( //
-                        new RegexLeaf("PARTIAL", "partial"), //
-                        RegexLeaf.spaceOneOrMore())),
-                new RegexLeaf("KEY", "key"), //
-                RegexLeaf.spaceOneOrMore())), //
-        new RegexOptional( //
-            new RegexConcat( //
-                new RegexLeaf("attr(:?ibute)?"), //
-                RegexLeaf.spaceOneOrMore())), //
-        new RegexLeaf("NAME", "(\\w+)"), //
+        new RegexLeaf("NAME", "([^<>{}-]+)"), //
+        new RegexOptional(//
+            new RegexConcat(
+                RegexLeaf.spaceZeroOrMore(), //
+                new RegexLeaf("STEREOTYPE", "(<<.+>>)"))), //
         new RegexOptional(//
             new RegexConcat( //
                 RegexLeaf.spaceZeroOrMore(), //
@@ -103,6 +87,8 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
     final String name = diagram.cleanId(arg.get("NAME", 0));
     final String id = owner.getName() + "/" + name;
     final boolean composite = arg.get("COMPOSITE", 0) != null;
+
+    // TODO: stereotypes: multi, derived, key, partial key
 
     final Quark<Entity> quark = diagram.quarkInContext(true, id);
 

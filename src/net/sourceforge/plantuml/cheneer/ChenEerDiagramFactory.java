@@ -59,8 +59,8 @@ public class ChenEerDiagramFactory extends PSystemCommandFactory {
 	@Override
 	protected void initCommandsList(List<Command> cmds) {
 		cmds.add(new CommandCreateEntity());
-		cmds.add(new CommandCreateAttribute());
 		cmds.add(new CommandCreateRelationship());
+		cmds.add(new CommandCreateAttribute());
 		cmds.add(new CommandAssociateRelationship());
 		cmds.add(new CommandEndGroup());
 
