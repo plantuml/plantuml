@@ -1,4 +1,4 @@
-# PlantUML
+# 🌱 PlantUML
 
 Generate UML diagrams from textual descriptions.
 
@@ -17,22 +17,24 @@ Generate UML diagrams from textual descriptions.
 [![Release (latest by date)](https://img.shields.io/github/v/release/plantuml/plantuml)](https://github.com/plantuml/plantuml/releases/latest)
 [![Release Date](https://img.shields.io/github/release-date/plantuml/plantuml?color=blue)](https://github.com/plantuml/plantuml/releases/latest)
 [![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/plantuml/plantuml/latest)](https://github.com/plantuml/plantuml/commits/)
+[![javadoc](https://javadoc.io/badge2/net.sourceforge.plantuml/plantuml-gplv2/javadoc.svg)](https://javadoc.io/doc/net.sourceforge.plantuml/plantuml-gplv2)
 
 [![Pre-release (latest by date)](https://img.shields.io/github/v/release/plantuml/plantuml?color=chocolate&include_prereleases)](https://github.com/plantuml/plantuml/releases/tag/snapshot)
 [![Pre-release Date](https://img.shields.io/github/release-date-pre/plantuml/plantuml?color=chocolate)](https://github.com/plantuml/plantuml/releases/tag/snapshot)
 [![GitHub last commit](https://img.shields.io/github/last-commit/plantuml/plantuml?color=chocolate)](https://github.com/plantuml/plantuml/commits/)
 [![CI](https://github.com/plantuml/plantuml/actions/workflows/ci.yml/badge.svg?color=chocolate)](https://github.com/plantuml/plantuml/actions/workflows/ci.yml)
+[![snapshot javadoc](https://img.shields.io/badge/javadoc-snapshot-chocolate.svg?logo=github)](https://plantuml.github.io/plantuml/)
 
 > [!IMPORTANT]
 > [PlantUML is **not** affected by the log4j vulnerability.](https://github.com/plantuml/plantuml/issues/826)
 
-## About
+## ℹ️ About
 
 PlantUML is a component that allows you to create various UML diagrams through simple textual descriptions. From sequence diagrams to deployment diagrams and beyond, PlantUML provides an easy way to create visual representations of complex systems.
 
-### Supported Diagram Types
+### 🗃️ Supported Diagram Types
 
-- UML Diagrams
+- 🧩 UML Diagrams
   - [Sequence diagram](http://plantuml.com/sequence-diagram)
   - [Use case diagram](http://plantuml.com/use-case-diagram)
   - [Class diagram](http://plantuml.com/class-diagram)
@@ -43,7 +45,7 @@ PlantUML is a component that allows you to create various UML diagrams through s
   - [Deployment diagram](http://plantuml.com/deployment-diagram)
   - [State diagram](http://plantuml.com/state-diagram)
   - [Timing diagram](http://plantuml.com/timing-diagram)
-- Non-UML Diagrams
+- 📈 Non-UML Diagrams
   - [JSON data](http://plantuml.com/json)
   - [YAML data](http://plantuml.com/yaml)
   - [EBNF (Extended Backus-Naur Form)](http://plantuml.com/ebnf)
@@ -59,35 +61,35 @@ PlantUML is a component that allows you to create various UML diagrams through s
   - [Mathematical Notations (AsciiMath, JLaTeXMath)](http://plantuml.com/ascii-math)
   - [IE/ER (Information Engineering/Entity Relationship)](http://plantuml.com/ie-diagram)
 
-### Additional Features
+### 📣 Additional Features
 
 - [Hyperlinks and tooltips](http://plantuml.com/link)
 - [Rich text (Creole) with emoticons, unicode, and icons](http://plantuml.com/creole)
 - [OpenIconic icons](http://plantuml.com/openiconic)
 - [Sprite icons](http://plantuml.com/sprite)
 
-### Learn More
+### 📖 Learn More
 
 For a more detailed overview, visit [PlantUML Official Website](https://plantuml.com/).
 
-## Getting Started
+## 🚀 Getting Started
 
 Whether you're looking to use PlantUML as a standalone application or as a component in your own project, getting started is simple. Check out the official [PlantUML setup guide](https://plantuml.com/starting) for instructions on how to set up PlantUML on your system.
 
-## Building from Source
+## ⚙️ Building from Source
 
 To build PlantUML from source, you'll need to have certain prerequisites installed and follow a series of steps outlined in our build guide. Find detailed instructions in our [BUILDING.md](https://github.com/plantuml/plantuml/blob/master/BUILDING.md) file.
 
-## Contributing
+## 🧱 Contributing
 
 PlantUML is an open-source project, and we welcome contributions of all kinds. Whether you're helping us fix bugs, improve the docs, or spread the word, we appreciate your support. See our [contributing guide](CONTRIBUTING.md) for more information on how to get started.
 
-## Support and Community
+## 🧑‍🤝‍🧑 Support and Community
 
 - [GitHub issues](https://github.com/plantuml/plantuml/issues/)
 - [Community Forum](https://forum.plantuml.net/)
 
-## License
+## 📃 License
 
 PlantUML is licensed under several licenses; you can choose the one that suits you best:
 
