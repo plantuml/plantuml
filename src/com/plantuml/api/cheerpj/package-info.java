@@ -4,4 +4,4 @@
  * CheerpJ</a> API.
  * 
  */
-package cheerpj;
+package com.plantuml.api.cheerpj;

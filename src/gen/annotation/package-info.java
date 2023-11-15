@@ -5,11 +5,8 @@
  * in <a href="https://plantuml.com/smetana02" target="_top">plantuml</a>.
  *
  * @see h
- * @see gen
- * @see gen.annotation
- * @see gen.lib
- * @see gen.plugin.dot_layout
+ * @see smetana.core
  * @see net.sourceforge.plantuml.sdot
  * 
  */
-package smetana.core;
+package gen.annotation;
