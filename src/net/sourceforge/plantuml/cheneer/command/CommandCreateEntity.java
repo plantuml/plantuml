@@ -73,7 +73,18 @@ public class CommandCreateEntity extends SingleLineCommand2<ChenEerDiagram> {
   @Override
   protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg)
       throws NoSuchColorException {
-    final LeafType type = LeafType.OBJECT;
+    LeafType type;
+    switch (arg.get("TYPE", 0)) {
+    case "entity":
+      type = LeafType.CHEN_ENTITY;
+      break;
+    case "relationship":
+      type = LeafType.CHEN_RELATIONSHIP;
+      break;
+    default:
+      throw new IllegalStateException();
+    }
+
     final String name = diagram.cleanId(arg.get("NAME", 0).trim());
 
     final Quark<Entity> quark = diagram.quarkInContext(true, name);

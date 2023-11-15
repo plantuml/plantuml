@@ -83,7 +83,7 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
       return CommandExecutionResult.error("Attribute must be inside an entity, relationship or another attribute");
     }
 
-    final LeafType type = LeafType.USECASE;
+    final LeafType type = LeafType.CHEN_ATTRIBUTE;
     final String name = diagram.cleanId(arg.get("NAME", 0).trim());
     final String id = owner.getName() + "/" + name;
     final boolean composite = arg.get("COMPOSITE", 0) != null;
