@@ -9,4 +9,4 @@
  * @see net.sourceforge.plantuml.sdot
  * 
  */
-package core;
+package smetana.core;
