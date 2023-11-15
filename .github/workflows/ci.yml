@@ -116,43 +116,6 @@ jobs:
           name: ${{ github.run_number }}-${{ matrix.os }}-java-${{ matrix.java_version }}-test-reports
           path: build/reports/tests/
 
-  test_windows:
-    needs: workflow_config
-    strategy:
-      fail-fast: false
-      matrix:
-        java_version: [ 8 ]
-        os: [ windows-latest ]
-    runs-on: ${{ matrix.os }}
-    steps:
-      - name: Checkout the repository
-        if: needs.workflow_config.outputs.do_test_windows == 'true'
-        uses: actions/checkout@v4
-
-      - name: Set up java
-        if: needs.workflow_config.outputs.do_test_windows == 'true'
-        uses: actions/setup-java@v3
-        with:
-          java-version: ${{ matrix.java_version }}
-          distribution: temurin
-          cache: gradle
-
-      # Compile / Test / Package are separate steps so the reason for any failure is more obvious in GitHub UI
-      - name: Compile
-        if: needs.workflow_config.outputs.do_test_windows == 'true'
-        run: gradle -q compileJava --no-daemon
-
-      - name: Test
-        if: needs.workflow_config.outputs.do_test_windows == 'true'
-        run: gradle test --no-daemon -i
-
-      - name: Upload test reports
-        uses: actions/upload-artifact@v3
-        if: needs.workflow_config.outputs.do_test_windows == 'true'
-        with:
-          # Using github.run_number here to reduce confusion when downloading & comparing from several builds
-          name: ${{ github.run_number }}-${{ matrix.os }}-java-${{ matrix.java_version }}-test-reports
-          path: build/reports/tests/
 
   build_artifacts:
     needs: [ workflow_config ]
@@ -216,6 +179,30 @@ jobs:
             plantuml-gplv2/build/libs
           key: "libs-${{ github.run_id }}"
           enableCrossOsArchive: true
+
+  deploy_javadoc:
+    needs: [ build_artifacts, test_linux ]
+    if: needs.workflow_config.outputs.do_release == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Set up java
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: temurin
+
+      - name: Build Javadoc
+        run: gradle javadoc
+
+      - name: Deploy Javadoc to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/docs/javadoc
+
 
   upload:
     if: |
@@ -300,7 +287,7 @@ jobs:
           gradle --debug publish
 
   push_to_docker_registry:
-    needs: [ workflow_config, upload, test_linux, test_windows ]
+    needs: [ workflow_config, upload, test_linux ]
     if: needs.workflow_config.outputs.do_release == 'true'
     runs-on: ubuntu-latest
     steps:
