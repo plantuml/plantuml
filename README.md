@@ -23,6 +23,7 @@ Generate UML diagrams from textual descriptions.
 [![Pre-release Date](https://img.shields.io/github/release-date-pre/plantuml/plantuml?color=chocolate)](https://github.com/plantuml/plantuml/releases/tag/snapshot)
 [![GitHub last commit](https://img.shields.io/github/last-commit/plantuml/plantuml?color=chocolate)](https://github.com/plantuml/plantuml/commits/)
 [![CI](https://github.com/plantuml/plantuml/actions/workflows/ci.yml/badge.svg?color=chocolate)](https://github.com/plantuml/plantuml/actions/workflows/ci.yml)
+[![snapshot javadoc](https://img.shields.io/badge/javadoc-snapshot-chocolate.svg?logo=github)](https://plantuml.github.io/plantuml/)
 
 > [!IMPORTANT]
 > [PlantUML is **not** affected by the log4j vulnerability.](https://github.com/plantuml/plantuml/issues/826)
