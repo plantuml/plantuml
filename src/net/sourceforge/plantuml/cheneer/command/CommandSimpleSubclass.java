@@ -49,13 +49,12 @@ import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandAssociate extends SingleLineCommand2<ChenEerDiagram> {
+public class CommandSimpleSubclass extends SingleLineCommand2<ChenEerDiagram> {
 
-  public CommandAssociate() {
+  public CommandSimpleSubclass() {
     super(getRegexConcat());
   }
 
@@ -64,8 +63,7 @@ public class CommandAssociate extends SingleLineCommand2<ChenEerDiagram> {
         new RegexLeaf("NAME1", "([\\w-]+)"), //
         RegexLeaf.spaceZeroOrMore(), //
         new RegexLeaf("PARTICIPATION", "([-=])"), //
-        new RegexOptional( //
-            new RegexLeaf("CARDINALITY", "(\\w+|\\(\\w+,[%s]*\\w+\\))")), //
+        new RegexLeaf("DIRECTION", "([<>])"), //
         new RegexLeaf("PARTICIPATION2", "([-=])"), //
         RegexLeaf.spaceZeroOrMore(), //
         new RegexLeaf("NAME2", "([\\w-]+)"), //
@@ -75,10 +73,10 @@ public class CommandAssociate extends SingleLineCommand2<ChenEerDiagram> {
   @Override
   protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg)
       throws NoSuchColorException {
-    final String name1 = diagram.cleanId(arg.get("NAME1", 0));
-    final String name2 = diagram.cleanId(arg.get("NAME2", 0));
+    String name1 = diagram.cleanId(arg.get("NAME1", 0));
+    String name2 = diagram.cleanId(arg.get("NAME2", 0));
     final boolean isDouble = arg.get("PARTICIPATION", 0).equals("=");
-    final String cardinality = arg.get("CARDINALITY", 0);
+    final boolean isSuperset = arg.get("DIRECTION", 0).equals(">");
 
     final Quark<Entity> quark1 = diagram.quarkInContext(true, name1);
     final Entity entity1 = quark1.getData();
@@ -96,9 +94,14 @@ public class CommandAssociate extends SingleLineCommand2<ChenEerDiagram> {
     if (isDouble) {
       linkType = linkType.goBold();
     }
+    if (isSuperset) {
+      linkType = linkType.withMiddleSuperset();
+    } else {
+      linkType = linkType.withMiddleSubset();
+    }
     final Link link = new Link(diagram.getEntityFactory(), diagram.getCurrentStyleBuilder(), entity1, entity2,
         linkType,
-        LinkArg.build(Display.getWithNewlines(cardinality), 3));
+        LinkArg.build(Display.NULL, 3));
     link.setPortMembers(diagram.getPortId(entity1.getName()), diagram.getPortId(entity2.getName()));
     diagram.addLink(link);
 
