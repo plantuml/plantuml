@@ -92,8 +92,7 @@ public class CommandMultiSubclass extends SingleLineCommand2<ChenEerDiagram> {
     final String symbol = arg.get("SYMBOL", 0);
 
     final Quark<Entity> centerQuark = diagram.quarkInContext(false, superclass + "/" + symbol + subclasses + "/center");
-    // TODO: Custom LeafType
-    final Entity centerEntity = diagram.reallyCreateLeaf(centerQuark, Display.create(symbol), LeafType.USECASE, null);
+    final Entity centerEntity = diagram.reallyCreateLeaf(centerQuark, Display.create(symbol), LeafType.CHEN_CIRCLE, null);
 
     final Quark<Entity> superclassQuark = diagram.quarkInContext(true, superclass);
     final Entity superclassEntity = superclassQuark.getData();

@@ -100,6 +100,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageAssociation;
 import net.sourceforge.plantuml.svek.image.EntityImageAssociationPoint;
 import net.sourceforge.plantuml.svek.image.EntityImageBranch;
 import net.sourceforge.plantuml.svek.image.EntityImageChenAttribute;
+import net.sourceforge.plantuml.svek.image.EntityImageChenCircle;
 import net.sourceforge.plantuml.svek.image.EntityImageChenEntity;
 import net.sourceforge.plantuml.svek.image.EntityImageChenRelationship;
 import net.sourceforge.plantuml.svek.image.EntityImageCircleEnd;
@@ -265,6 +266,9 @@ public final class GeneralImageBuilder {
 
 		if (leaf.getLeafType() == LeafType.CHEN_ATTRIBUTE)
 			return new EntityImageChenAttribute(leaf, skinParam);
+
+		if (leaf.getLeafType() == LeafType.CHEN_CIRCLE)
+			return new EntityImageChenCircle(leaf, skinParam);
 
 		// TODO Clean
 		if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
