@@ -12,9 +12,9 @@
  * </ul>
  * </p>
  * 
- * @see gen
+ * @see "gen"
  * @see gen.annotation
- * @see gen.lib
+ * @see "gen.lib"
  * @see gen.plugin.dot_layout
  * @see smetana.core
  * @see net.sourceforge.plantuml.sdot
