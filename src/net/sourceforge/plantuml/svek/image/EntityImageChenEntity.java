@@ -63,11 +63,15 @@ import net.sourceforge.plantuml.url.Url;
 
 public class EntityImageChenEntity extends AbstractEntityImage {
 
+	final private boolean isWeak;
+
 	final private TextBlock title;
 	final private Url url;
 
 	public EntityImageChenEntity(Entity entity, ISkinParam skinParam) {
 		super(entity, skinParam);
+
+		isWeak = hasStereotype("<<weak>>");
 
 		final FontConfiguration titleFontConfiguration = getStyleStateTitle(entity, skinParam)
 				.getFontConfiguration(getSkinParam().getIHtmlColorSet(), entity.getColors());
@@ -76,6 +80,10 @@ public class EntityImageChenEntity extends AbstractEntityImage {
 				getStyleState().wrapWidth());
 
 		url = entity.getUrl99();
+	}
+
+	private boolean hasStereotype(String stereotype) {
+		return getEntity().getStereotype() != null && getEntity().getStereotype().toString().contains(stereotype);
 	}
 
 	private Style getStyleState() {
@@ -117,6 +125,9 @@ public class EntityImageChenEntity extends AbstractEntityImage {
 		ug = applyColor(ug);
 		ug = ug.apply(stroke);
 		ug.draw(getShape(dimTotal));
+		if (isWeak) {
+			ug.apply(new UTranslate(3, 3)).draw(getShape(dimTotal.delta(-6)));
+		}
 
 		final double xTitle = (dimTotal.getWidth() - dimTitle.getWidth()) / 2;
 		final double yTitle = MARGIN + MARGIN_LINE;

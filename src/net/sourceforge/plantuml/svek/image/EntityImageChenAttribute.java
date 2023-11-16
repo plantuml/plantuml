@@ -67,19 +67,34 @@ public class EntityImageChenAttribute extends AbstractEntityImage {
 
 	final static private int MARGIN = 6;
 
+	final private boolean isKey;
+	final private boolean isMulti;
+	final private boolean isDerived;
+
 	final private TextBlock title;
 	final private Url url;
 
 	public EntityImageChenAttribute(Entity entity, ISkinParam skinParam) {
 		super(entity, skinParam);
 
-		final FontConfiguration titleFontConfiguration = getStyleTitle(entity, skinParam)
+		isKey = hasStereotype("<<key>>");
+		isMulti = hasStereotype("<<multi>>");
+		isDerived = hasStereotype("<<derived>>");
+
+		FontConfiguration titleFontConfiguration = getStyleTitle(entity, skinParam)
 				.getFontConfiguration(getSkinParam().getIHtmlColorSet(), entity.getColors());
+		if (isKey) {
+			titleFontConfiguration = titleFontConfiguration.underline();
+		}
 
 		title = entity.getDisplay().create8(titleFontConfiguration, HorizontalAlignment.CENTER, skinParam, CreoleMode.FULL,
 				getStyle().wrapWidth());
 
 		url = entity.getUrl99();
+	}
+
+	private boolean hasStereotype(String stereotype) {
+		return getEntity().getStereotype() != null && getEntity().getStereotype().toString().contains(stereotype);
 	}
 
 	private Style getStyle() {
@@ -117,10 +132,17 @@ public class EntityImageChenAttribute extends AbstractEntityImage {
 		final XDimension2D dimTotal = calculateDimension(ug.getStringBounder());
 		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
 
-		final UStroke stroke = getStyle().getStroke(getEntity().getColors());
+		UStroke stroke = getStyle().getStroke(getEntity().getColors());
+		if (isDerived) {
+			stroke = new UStroke(10, 10, stroke.getThickness());
+		}
+
 		ug = applyColor(ug);
 		ug = ug.apply(stroke);
 		ug.draw(getShape(dimTotal));
+		if (isMulti) {
+			ug.apply(new UTranslate(3, 3)).draw(getShape(dimTotal.delta(-6)));
+		}
 
 		final double xTitle = (dimTotal.getWidth() - dimTitle.getWidth()) / 2;
 		final double yTitle = MARGIN;

@@ -46,8 +46,8 @@ import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateEntity extends SingleLineCommand2<ChenEerDiagram> {
@@ -61,10 +61,8 @@ public class CommandCreateEntity extends SingleLineCommand2<ChenEerDiagram> {
         new RegexLeaf("TYPE", "(entity|relationship)"), //
         RegexLeaf.spaceOneOrMore(), //
         new RegexLeaf("NAME", "([^<>{}]+)"), //
-        new RegexOptional(//
-            new RegexConcat(
-                RegexLeaf.spaceZeroOrMore(), //
-                new RegexLeaf("STEREOTYPE", "(<<.+>>)"))), //
+        RegexLeaf.spaceZeroOrMore(), //
+        new RegexLeaf("STEREO", "(<<.+>>)?"), //
         RegexLeaf.spaceZeroOrMore(), //
         new RegexLeaf("\\{"), //
         RegexLeaf.end());
@@ -75,17 +73,18 @@ public class CommandCreateEntity extends SingleLineCommand2<ChenEerDiagram> {
       throws NoSuchColorException {
     LeafType type;
     switch (arg.get("TYPE", 0)) {
-    case "entity":
-      type = LeafType.CHEN_ENTITY;
-      break;
-    case "relationship":
-      type = LeafType.CHEN_RELATIONSHIP;
-      break;
-    default:
-      throw new IllegalStateException();
+      case "entity":
+        type = LeafType.CHEN_ENTITY;
+        break;
+      case "relationship":
+        type = LeafType.CHEN_RELATIONSHIP;
+        break;
+      default:
+        throw new IllegalStateException();
     }
 
     final String name = diagram.cleanId(arg.get("NAME", 0).trim());
+    final String stereo = arg.get("STEREO", 0);
 
     final Quark<Entity> quark = diagram.quarkInContext(true, name);
     Entity entity = quark.getData();
@@ -96,6 +95,11 @@ public class CommandCreateEntity extends SingleLineCommand2<ChenEerDiagram> {
     } else {
       if (entity.muteToType(type, null) == false)
         return CommandExecutionResult.error("Bad name");
+    }
+
+    if (stereo != null) {
+      entity.setStereotype(Stereotype.build(stereo));
+      entity.setStereostyle(stereo);
     }
 
     diagram.pushOwner(entity);

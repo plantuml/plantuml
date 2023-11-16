@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.TextBlockInEllipse;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
@@ -67,11 +66,15 @@ import net.sourceforge.plantuml.url.Url;
 
 public class EntityImageChenRelationship extends AbstractEntityImage {
 
+	final private boolean isIdentifying;
+
 	final private TextBlock title;
 	final private Url url;
 
 	public EntityImageChenRelationship(Entity entity, ISkinParam skinParam) {
 		super(entity, skinParam);
+
+		isIdentifying = hasStereotype("<<identifying>>");
 
 		final FontConfiguration titleFontConfiguration = getStyleTitle(entity, skinParam)
 				.getFontConfiguration(getSkinParam().getIHtmlColorSet(), entity.getColors());
@@ -80,6 +83,10 @@ public class EntityImageChenRelationship extends AbstractEntityImage {
 				getStyle().wrapWidth());
 
 		url = entity.getUrl99();
+	}
+
+	private boolean hasStereotype(String stereotype) {
+		return getEntity().getStereotype() != null && getEntity().getStereotype().toString().contains(stereotype);
 	}
 
 	private Style getStyle() {
@@ -126,6 +133,9 @@ public class EntityImageChenRelationship extends AbstractEntityImage {
 		ug = applyColor(ug);
 		ug = ug.apply(stroke);
 		ug.draw(getShape(dimTotal));
+		if (isIdentifying) {
+			ug.apply(new UTranslate(10, 5)).draw(getShape(dimTotal.delta(-20, -10)));
+		}
 
 		final double xTitle = (dimTotal.getWidth() - dimTitle.getWidth()) / 2;
 		final double yTitle = (dimTotal.getHeight() - dimTitle.getHeight()) / 2;

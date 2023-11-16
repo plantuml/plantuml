@@ -50,8 +50,8 @@ import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
@@ -63,15 +63,11 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
   private static IRegex getRegexConcat() {
     return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //
         RegexLeaf.spaceZeroOrMore(),
-        new RegexLeaf("NAME", "([^<>{}-]+)"), //
-        new RegexOptional(//
-            new RegexConcat(
-                RegexLeaf.spaceZeroOrMore(), //
-                new RegexLeaf("STEREOTYPE", "(<<.+>>)"))), //
-        new RegexOptional(//
-            new RegexConcat( //
-                RegexLeaf.spaceZeroOrMore(), //
-                new RegexLeaf("COMPOSITE", "(\\{)"))), //
+        new RegexLeaf("NAME", "([^<>{}=-]+)"), //
+        RegexLeaf.spaceZeroOrMore(), //
+        new RegexLeaf("STEREO", "(<<.*>>)?"), //
+        RegexLeaf.spaceZeroOrMore(), //
+        new RegexLeaf("COMPOSITE", "(\\{)?"), //
         RegexLeaf.end());
   }
 
@@ -86,9 +82,8 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
     final LeafType type = LeafType.CHEN_ATTRIBUTE;
     final String name = diagram.cleanId(arg.get("NAME", 0).trim());
     final String id = owner.getName() + "/" + name;
+    final String stereo = arg.get("STEREO", 0);
     final boolean composite = arg.get("COMPOSITE", 0) != null;
-
-    // TODO: stereotypes: multi, derived, key, partial key
 
     final Quark<Entity> quark = diagram.quarkInContext(true, id);
 
@@ -98,6 +93,11 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
       entity = diagram.reallyCreateLeaf(quark, display, type, null);
     } else {
       return CommandExecutionResult.error("Attribute already exists");
+    }
+
+    if (stereo != null) {
+      entity.setStereotype(Stereotype.build(stereo));
+      entity.setStereostyle(stereo);
     }
 
     final LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);
