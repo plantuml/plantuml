@@ -42,6 +42,8 @@ import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.decoration.LinkDecor;
+import net.sourceforge.plantuml.decoration.LinkMiddleDecor;
+import net.sourceforge.plantuml.decoration.LinkStyle;
 import net.sourceforge.plantuml.decoration.LinkType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -77,6 +79,8 @@ public class CommandAssociate extends SingleLineCommand2<ChenEerDiagram> {
       throws NoSuchColorException {
     final String name1 = diagram.cleanId(arg.get("NAME1", 0));
     final String name2 = diagram.cleanId(arg.get("NAME2", 0));
+    final boolean isDouble = arg.get("PARTICIPATION", 0).equals("=");
+    final String cardinality = arg.get("CARDINALITY", 0);
 
     final Quark<Entity> quark1 = diagram.quarkInContext(true, name1);
     final Entity entity1 = quark1.getData();
@@ -90,11 +94,13 @@ public class CommandAssociate extends SingleLineCommand2<ChenEerDiagram> {
       return CommandExecutionResult.error("No such entity: " + name2);
     }
 
-    final LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);
+    LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);
+    if (isDouble) {
+      linkType = linkType.goBold();
+    }
     final Link link = new Link(diagram.getEntityFactory(), diagram.getCurrentStyleBuilder(), entity1, entity2,
         linkType,
-        // TODO: Cardinality
-        LinkArg.build(Display.NULL, 3));
+        LinkArg.build(Display.getWithNewlines(cardinality), 3));
     link.setPortMembers(diagram.getPortId(entity1.getName()), diagram.getPortId(entity2.getName()));
     diagram.addLink(link);
 
