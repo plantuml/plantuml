@@ -127,6 +127,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ClusterDecoration;
+import net.sourceforge.plantuml.svek.ClusterHeader;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.DotStringFactory;
 import net.sourceforge.plantuml.svek.GeneralImageBuilder;
@@ -298,12 +299,12 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 //			final double roundCorner = group.getUSymbol() == null ? 0
 //					: group.getUSymbol().getSkinParameter().getRoundCorner(skinParam, group.getStereotype());
 
-			final TextBlock ztitle = getTitleBlock(group);
-			final TextBlock zstereo = TextBlockUtils.empty(0, 0);
-
 			final RectangleArea rectangleArea = new RectangleArea(0, 0, elkNode.getWidth(), elkNode.getHeight());
-			final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(), ztitle,
-					zstereo, rectangleArea, stroke);
+			final ClusterHeader clusterHeader = new ClusterHeader(group, diagram.getSkinParam(), diagram,
+					stringBounder);
+
+			final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),
+					clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);
 
 			final HColor borderColor = HColors.BLACK;
 			decoration.drawU(ug.apply(UTranslate.point(corner)), backColor, borderColor, shadowing, roundCorner,
@@ -312,16 +313,6 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 //			// Print a simple rectangle right now
 //			ug.apply(HColorUtils.BLACK).apply(UStroke.withThickness(1.5)).apply(new UTranslate(corner)).draw(rect);
-		}
-
-		private TextBlock getTitleBlock(Entity g) {
-			final Display label = g.getDisplay();
-			if (label == null)
-				return TextBlockUtils.empty(0, 0);
-
-			final ISkinParam skinParam = diagram.getSkinParam();
-			final FontConfiguration fontConfiguration = g.getFontConfigurationForTitle(skinParam);
-			return label.create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);
 		}
 
 		private HColor getBackColor(UmlDiagramType umlDiagramType) {
@@ -429,7 +420,14 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 				// We create the "cluster" in ELK for this group
 				final ElkNode elkCluster = ElkGraphUtil.createNode(cluster);
 				elkCluster.setProperty(CoreOptions.DIRECTION, Direction.DOWN);
-				elkCluster.setProperty(CoreOptions.PADDING, new ElkPadding(40, 15, 15, 15));
+
+				final ClusterHeader clusterHeader = new ClusterHeader(g, diagram.getSkinParam(), diagram,
+						stringBounder);
+
+				final int titleAndAttributeHeight = clusterHeader.getTitleAndAttributeHeight();
+
+				final double topPadding = Math.max(25, titleAndAttributeHeight) + 15;
+				elkCluster.setProperty(CoreOptions.PADDING, new ElkPadding(topPadding, 15, 15, 15));
 
 				// Not sure this is usefull to put a label on a "cluster"
 				final ElkLabel label = ElkGraphUtil.createLabel(elkCluster);

@@ -617,7 +617,7 @@ public final class GeneralImageBuilder {
 		if (g.getGroupType() == GroupType.CONCURRENT_STATE)
 			return;
 
-		final ClusterHeader clusterHeader = new ClusterHeader((Entity) g, dotData.getSkinParam(), dotData,
+		final ClusterHeader clusterHeader = new ClusterHeader(g, dotData.getSkinParam(), dotData,
 				stringBounder);
 		dotStringFactory.openCluster(g, clusterHeader);
 		this.printEntities(dotStringFactory, g.leafs());
