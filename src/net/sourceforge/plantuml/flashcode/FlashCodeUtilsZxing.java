@@ -41,12 +41,12 @@ import java.util.Hashtable;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import ext.plantuml.com.google.zxing.BarcodeFormat;
-import ext.plantuml.com.google.zxing.EncodeHintType;
-import ext.plantuml.com.google.zxing.client.j2se.MatrixToImageWriter;
-import ext.plantuml.com.google.zxing.common.BitMatrix;
-import ext.plantuml.com.google.zxing.qrcode.QRCodeWriter;
-import ext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import zext.plantuml.com.google.zxing.BarcodeFormat;
+import zext.plantuml.com.google.zxing.EncodeHintType;
+import zext.plantuml.com.google.zxing.client.j2se.MatrixToImageWriter;
+import zext.plantuml.com.google.zxing.common.BitMatrix;
+import zext.plantuml.com.google.zxing.qrcode.QRCodeWriter;
+import zext.plantuml.com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import net.sourceforge.plantuml.utils.Log;
 
 public class FlashCodeUtilsZxing implements FlashCodeUtils {
