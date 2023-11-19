@@ -57,10 +57,10 @@ public class ActorHollow extends AbstractTextBlock implements TextBlock {
 	private final double bodyThickness = 6;
 	private final double legThickness = 6;
 
-	private final Fashion symbolContext;
+	private final Fashion fashion;
 
-	public ActorHollow(Fashion symbolContext) {
-		this.symbolContext = symbolContext;
+	public ActorHollow(Fashion fashion) {
+		this.fashion = fashion;
 	}
 
 	public void drawU(UGraphic ug) {
@@ -87,17 +87,17 @@ public class ActorHollow extends AbstractTextBlock implements TextBlock {
 		path.lineTo(-bodyWidth / 2, 0);
 		path.closePath();
 
-		if (symbolContext.getDeltaShadow() != 0) {
-			head.setDeltaShadow(symbolContext.getDeltaShadow());
-			path.setDeltaShadow(symbolContext.getDeltaShadow());
+		if (fashion.getDeltaShadow() != 0) {
+			head.setDeltaShadow(fashion.getDeltaShadow());
+			path.setDeltaShadow(fashion.getDeltaShadow());
 		}
-		ug = symbolContext.apply(ug);
+		ug = fashion.apply(ug);
 		ug.apply(new UTranslate(centerX - head.getWidth() / 2, thickness())).draw(head);
 		ug.apply(new UTranslate(centerX, head.getHeight() + thickness() + neckHeight)).draw(path);
 	}
 
 	private double thickness() {
-		return symbolContext.getStroke().getThickness();
+		return fashion.getStroke().getThickness();
 	}
 
 	public double getPreferredWidth() {
@@ -105,7 +105,7 @@ public class ActorHollow extends AbstractTextBlock implements TextBlock {
 	}
 
 	public double getPreferredHeight() {
-		return headDiam + neckHeight + bodyHeight + thickness() * 2 + symbolContext.getDeltaShadow();
+		return headDiam + neckHeight + bodyHeight + thickness() * 2 + fashion.getDeltaShadow();
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {

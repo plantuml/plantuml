@@ -55,10 +55,10 @@ public class ActorAwesome extends AbstractTextBlock implements TextBlock {
 	private final double radius = 8;
 	private final double bodyHeight = 28;
 
-	private final Fashion symbolContext;
+	private final Fashion fashion;
 
-	public ActorAwesome(Fashion symbolContext) {
-		this.symbolContext = symbolContext.withStroke(UStroke.withThickness(1.5));
+	public ActorAwesome(Fashion fashion) {
+		this.fashion = fashion;
 	}
 
 	public void drawU(UGraphic ug) {
@@ -81,18 +81,18 @@ public class ActorAwesome extends AbstractTextBlock implements TextBlock {
 		path.cubicTo(-bodyWidth / 2 + shoulder + collar, collar, -collar, collar, 0, collar);
 		path.closePath();
 
-		if (symbolContext.getDeltaShadow() != 0) {
-			head.setDeltaShadow(symbolContext.getDeltaShadow());
-			path.setDeltaShadow(symbolContext.getDeltaShadow());
+		if (fashion.getDeltaShadow() != 0) {
+			head.setDeltaShadow(fashion.getDeltaShadow());
+			path.setDeltaShadow(fashion.getDeltaShadow());
 		}
-		ug = symbolContext.apply(ug);
+		ug = fashion.apply(ug);
 		ug.apply(new UTranslate(centerX - head.getWidth() / 2, thickness())).draw(head);
 		ug.apply(new UTranslate(centerX, head.getHeight() + thickness())).draw(path);
 
 	}
 
 	private double thickness() {
-		return symbolContext.getStroke().getThickness();
+		return fashion.getStroke().getThickness();
 	}
 
 	public double getPreferredWidth() {

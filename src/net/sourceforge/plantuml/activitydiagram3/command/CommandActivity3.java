@@ -61,7 +61,7 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	public static final String endingGroup() {
 		return "(" //
-				+ ";(?:[%s]*(\\<\\<\\w+\\>\\>))?" //
+				+ ";[%s]*(\\<\\<\\w+\\>\\>(?:[%s]*\\<\\<\\w+\\>\\>)*)?" //
 				+ "|" //
 				+ Matcher.quoteReplacement("\\\\") // that is simply \ character
 				+ "|" //
@@ -77,7 +77,7 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	private static final String endingGroupShort() {
 		return "(" //
-				+ ";(?:[%s]*(\\<\\<\\w+\\>\\>))?" //
+				+ ";[%s]*(\\<\\<\\w+\\>\\>(?:[%s]*\\<\\<\\w+\\>\\>)*)?" //
 				+ "|" //
 				+ Matcher.quoteReplacement("\\\\") // that is simply \ character
 				+ "|" //

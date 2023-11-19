@@ -57,11 +57,11 @@ public class ActorStickMan extends AbstractTextBlock implements TextBlock {
 	private final double legsY = 15;
 	private final double headDiam = 16;
 
-	private final Fashion symbolContext;
+	private final Fashion fashion;
 	private final boolean actorBusiness;
 
-	ActorStickMan(Fashion symbolContext, boolean actorBusiness) {
-		this.symbolContext = symbolContext;
+	ActorStickMan(Fashion fashion, boolean actorBusiness) {
+		this.fashion = fashion;
 		this.actorBusiness = actorBusiness;
 	}
 
@@ -81,12 +81,12 @@ public class ActorStickMan extends AbstractTextBlock implements TextBlock {
 		path.lineTo(-legsX, bodyLenght + legsY);
 		path.moveTo(0, bodyLenght);
 		path.lineTo(legsX, bodyLenght + legsY);
-		if (symbolContext.getDeltaShadow() != 0) {
-			head.setDeltaShadow(symbolContext.getDeltaShadow());
-			path.setDeltaShadow(symbolContext.getDeltaShadow());
+		if (fashion.getDeltaShadow() != 0) {
+			head.setDeltaShadow(fashion.getDeltaShadow());
+			path.setDeltaShadow(fashion.getDeltaShadow());
 		}
 
-		ug = symbolContext.apply(ug);
+		ug = fashion.apply(ug);
 		ug.apply(new UTranslate(startX, thickness())).draw(head);
 		if (actorBusiness) {
 			specialBusiness(ug.apply(new UTranslate(startX + headDiam / 2, thickness() + headDiam / 2)));
@@ -109,7 +109,7 @@ public class ActorStickMan extends AbstractTextBlock implements TextBlock {
 	}
 
 	private double thickness() {
-		return symbolContext.getStroke().getThickness();
+		return fashion.getStroke().getThickness();
 	}
 
 	public double getPreferredWidth() {
@@ -117,7 +117,7 @@ public class ActorStickMan extends AbstractTextBlock implements TextBlock {
 	}
 
 	public double getPreferredHeight() {
-		return headDiam + bodyLenght + legsY + 2 * thickness() + symbolContext.getDeltaShadow() + 1;
+		return headDiam + bodyLenght + legsY + 2 * thickness() + fashion.getDeltaShadow() + 1;
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
