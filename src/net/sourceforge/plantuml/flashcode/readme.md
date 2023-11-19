@@ -8,7 +8,7 @@ This package provides classes used to manage Flashcode especially QR Code (on Pl
 - [QR code _(on Wikipedia)_](https://en.wikipedia.org/wiki/QR_code)
 
 ## Credit
-- [`com.google.zxing`](../../../../ext/plantuml/com/google/zxing/) _(included in PlantUML)_
+- [`com.google.zxing`](../../../../zext/plantuml/com/google/zxing/) _(included in PlantUML)_
 - :octocat: [zxing/zxing](https://github.com/zxing/zxing)
 
 ## Misc.

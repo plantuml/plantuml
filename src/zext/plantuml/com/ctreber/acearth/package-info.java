@@ -9,7 +9,7 @@
  * Internal copy of <code>AC.earth</code> - <code>XEarth</code> 
  * for Java <i>(code of Christian Treber)</i>.
  * 
- * @see ext.plantuml.com.ctreber.acearth.ACearth
+ * @see zext.plantuml.com.ctreber.acearth.ACearth
  * @see net.sourceforge.plantuml.acearth
  * 
  */
