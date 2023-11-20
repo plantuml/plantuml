@@ -3,7 +3,7 @@
 ## Description
 This package provides classes used to generate [XEarth Image](https://plantuml.com/xearth).
 
-The Java port of `XEarth` used in `PlantUML` is the [`AC.earth` of Christian Treber](../../../../ext/plantuml/com/ctreber/acearth/).
+The Java port of `XEarth` used in `PlantUML` is the [`AC.earth` of Christian Treber](../../../../zext/plantuml/com/ctreber/acearth/).
 
 ## Link
 - [XEarth Image _(on `PlantUML`)_](https://plantuml.com/xearth)
@@ -13,7 +13,7 @@ The Java port of `XEarth` used in `PlantUML` is the [`AC.earth` of Christian Tre
 - [`xearth` for Windows of Greg Hewgill](https://hewgill.com/xearth/)
 
 ## Credit
-- [`AC.earth` of Christian Treber](../../../../ext/plantuml/com/ctreber/acearth/)
+- [`AC.earth` of Christian Treber](../../../../zext/plantuml/com/ctreber/acearth/)
 - [AC Earth _(on Web Archive)_](https://web.archive.org/web/20180428011447/http://www.acproductions.de/acearth)
 
 ## Misc.

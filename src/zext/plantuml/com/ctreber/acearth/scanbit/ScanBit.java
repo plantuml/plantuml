@@ -53,7 +53,7 @@ public class ScanBit implements Comparable
 
   /**
    * <p>See values for
-   * @see ext.plantuml.com.ctreber.acearth.util.Polygon
+   * @see zext.plantuml.com.ctreber.acearth.util.Polygon
    */
   public int getType()
   {
