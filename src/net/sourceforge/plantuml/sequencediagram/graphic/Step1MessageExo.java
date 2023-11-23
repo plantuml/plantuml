@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.sequencediagram.Note;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Component;
-import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.style.ISkinParam;
 
 class Step1MessageExo extends Step1Abstract {
@@ -69,7 +68,8 @@ class Step1MessageExo extends Step1Abstract {
 		for (Note noteOnMessage : noteOnMessages) {
 			final ISkinParam skinParam = noteOnMessage.getSkinParamBackcolored(drawingSet.getSkinParam());
 			final Component note = drawingSet.getSkin().createComponentNote(noteOnMessage.getUsedStyles(),
-					ComponentType.NOTE, skinParam, noteOnMessage.getDisplay(), noteOnMessage.getColors());
+					noteOnMessage.getNoteStyle().getNoteComponentType(), skinParam, noteOnMessage.getDisplay(),
+					noteOnMessage.getColors());
 			addNote(note);
 		}
 

@@ -44,21 +44,22 @@ public enum NoteStyle {
 	NORMAL, HEXAGONAL, BOX;
 
 	public static NoteStyle getNoteStyle(String s) {
-		if (s.equalsIgnoreCase("hnote")) {
+		if (s.equalsIgnoreCase("hnote"))
 			return NoteStyle.HEXAGONAL;
-		} else if (s.equalsIgnoreCase("rnote")) {
+
+		if (s.equalsIgnoreCase("rnote"))
 			return NoteStyle.BOX;
-		}
+
 		return NoteStyle.NORMAL;
 	}
 
 	public ComponentType getNoteComponentType() {
-		if (this == NoteStyle.HEXAGONAL) {
+		if (this == NoteStyle.HEXAGONAL)
 			return ComponentType.NOTE_HEXAGONAL;
-		}
-		if (this == NoteStyle.BOX) {
+
+		if (this == NoteStyle.BOX)
 			return ComponentType.NOTE_BOX;
-		}
+
 		return ComponentType.NOTE;
 	}
 
