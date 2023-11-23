@@ -47,7 +47,35 @@ import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementDate implements Something {
 
+	private final Type type;
+
+	static enum Type {
+		ANY, ONLY_RELATIVE, ONLY_ABSOLUTE;
+	}
+
+	private ComplementDate(Type type) {
+		this.type = type;
+	}
+
+	public static ComplementDate any() {
+		return new ComplementDate(Type.ANY);
+	}
+
+	public static ComplementDate onlyRelative() {
+		return new ComplementDate(Type.ONLY_RELATIVE);
+	}
+
+	public static ComplementDate onlyAbsolute() {
+		return new ComplementDate(Type.ONLY_ABSOLUTE);
+	}
+
 	public IRegex toRegex(String suffix) {
+		switch (type) {
+		case ONLY_ABSOLUTE:
+			return new RegexOr(toRegexA(suffix), toRegexB(suffix), toRegexC(suffix));
+		case ONLY_RELATIVE:
+			return new RegexOr(toRegexD(suffix), toRegexE(suffix));
+		}
 		return new RegexOr(toRegexA(suffix), toRegexB(suffix), toRegexC(suffix), toRegexD(suffix), toRegexE(suffix));
 	}
 
@@ -98,21 +126,21 @@ public class ComplementDate implements Something {
 	}
 
 	public Failable<Day> getMe(GanttDiagram system, RegexResult arg, String suffix) {
-		if (arg.get("ADAY" + suffix, 0) != null) {
+		if (arg.get("ADAY" + suffix, 0) != null)
 			return Failable.ok(resultA(arg, suffix));
-		}
-		if (arg.get("BDAY" + suffix, 0) != null) {
+
+		if (arg.get("BDAY" + suffix, 0) != null)
 			return Failable.ok(resultB(arg, suffix));
-		}
-		if (arg.get("CDAY" + suffix, 0) != null) {
+
+		if (arg.get("CDAY" + suffix, 0) != null)
 			return Failable.ok(resultC(arg, suffix));
-		}
-		if (arg.get("DCOUNT" + suffix, 0) != null) {
+
+		if (arg.get("DCOUNT" + suffix, 0) != null)
 			return Failable.ok(resultD(system, arg, suffix));
-		}
-		if (arg.get("ECOUNT" + suffix, 0) != null) {
+
+		if (arg.get("ECOUNT" + suffix, 0) != null)
 			return Failable.ok(resultE(system, arg, suffix));
-		}
+
 		throw new IllegalStateException();
 	}
 

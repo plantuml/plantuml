@@ -79,4 +79,6 @@ public interface Task extends Moment {
 
 	public StyleBuilder getStyleBuilder();
 
+	public boolean isAssignedTo(Resource res);
+
 }

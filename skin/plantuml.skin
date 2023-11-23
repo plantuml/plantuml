@@ -367,6 +367,11 @@ ganttDiagram {
 	  Margin 5
 	  Padding 5
 	}
+	verticalSeparator {
+	  LineThickness 2
+	  LineStyle 2-2
+	  LineColor black
+	}
 	timeline {
 	    BackgroundColor transparent
 	    LineColor #C0C0C0

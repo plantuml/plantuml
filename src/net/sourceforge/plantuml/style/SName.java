@@ -138,7 +138,8 @@ public enum SName {
 	undone, //
 	unstarted, //
 	usecase, //
-
+	verticalSeparator, //
+	
 	visibilityIcon, //
 	private_, //
 	protected_, //

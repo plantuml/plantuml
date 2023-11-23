@@ -68,7 +68,7 @@ public class SubjectProject implements Subject {
 	class Starts extends SentenceSimple {
 
 		public Starts() {
-			super(SubjectProject.this, Verbs.starts, new ComplementDate());
+			super(SubjectProject.this, Verbs.starts, ComplementDate.onlyAbsolute());
 		}
 
 		@Override

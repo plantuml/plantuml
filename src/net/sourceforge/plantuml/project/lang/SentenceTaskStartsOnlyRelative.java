@@ -33,15 +33,26 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.draw;
+package net.sourceforge.plantuml.project.lang;
 
-import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.time.Day;
 
-public interface ResourceDraw extends UDrawable {
+public class SentenceTaskStartsOnlyRelative extends SentenceSimple {
 
-	public double getHeight(StringBounder stringBounder);
+	public SentenceTaskStartsOnlyRelative() {
+		super(SubjectTask.ME, Verbs.starts3, ComplementDate.onlyRelative());
+	}
 
-	public double getY();
+	@Override
+	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+		final Task task = (Task) subject;
+		final Day start = (Day) complement;
+
+		task.setStart(start);
+		return CommandExecutionResult.ok();
+	}
 
 }

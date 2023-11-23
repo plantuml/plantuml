@@ -82,47 +82,43 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	private void drawCalendar(final UGraphic ug, double totalHeightWithoutFooter) {
 		printDaysOfMonth(ug);
-		printSmallVbars(ug, totalHeightWithoutFooter);
+		printVerticalSeparators(ug, totalHeightWithoutFooter);
 		printMonths(ug);
 	}
 
 	private void printMonths(final UGraphic ug) {
 		MonthYear last = null;
 		double lastChangeMonth = -1;
-		for (Day wink = min; wink.compareTo(max) < 0; wink = wink.increment()) {
+		for (Day wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			if (wink.monthYear().equals(last) == false) {
-				drawVbar(ug, x1, 0, Y_POS_ROW16(), false);
-				if (last != null) {
+				drawVline(ug.apply(getLineColor()), x1, (double) 0, Y_POS_ROW16());
+				if (last != null)
 					printMonth(ug, last, lastChangeMonth, x1);
-				}
+
 				lastChangeMonth = x1;
 				last = wink.monthYear();
 			}
 		}
-		drawVbar(ug, getTimeScale().getEndingPosition(max), 0, Y_POS_ROW16(), false);
-		final double x1 = getTimeScale().getStartingPosition(max.increment());
-		if (x1 > lastChangeMonth) {
+		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), (double) 0, Y_POS_ROW16());
+		final double x1 = getTimeScale().getStartingPosition(getMax().increment());
+		if (x1 > lastChangeMonth)
 			printMonth(ug, last, lastChangeMonth, x1);
-		}
+
 	}
 
-	private void printSmallVbars(final UGraphic ug, double totalHeightWithoutFooter) {
-		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment())
+	@Override
+	protected void printVerticalSeparators(final UGraphic ug, double totalHeightWithoutFooter) {
+		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment())
 			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek())
-				drawVbar(ug, getTimeScale().getStartingPosition(wink), Y_POS_ROW16(), totalHeightWithoutFooter, false);
+				drawVline(ug.apply(getLineColor()), getTimeScale().getStartingPosition(wink), Y_POS_ROW16(), totalHeightWithoutFooter);
 
-		drawVbar(ug, getTimeScale().getEndingPosition(max), Y_POS_ROW16(), totalHeightWithoutFooter, false);
-
-		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment())
-			if (isBold(wink))
-				drawVbar(ug, getTimeScale().getStartingPosition(wink), getFullHeaderHeight(), totalHeightWithoutFooter,
-						isBold(wink));
-
+		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), Y_POS_ROW16(), totalHeightWithoutFooter);
+		super.printVerticalSeparators(ug, totalHeightWithoutFooter);
 	}
 
 	private void printDaysOfMonth(final UGraphic ug) {
-		for (Day wink = min; wink.compareTo(max) < 0; wink = wink.increment()) {
+		for (Day wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
 			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek()) {
 				final String num;
 				if (withCalendarDate)

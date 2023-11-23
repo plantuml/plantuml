@@ -70,7 +70,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 		drawTextsDayOfWeek(ug.apply(UTranslate.dy(Y_POS_ROW16())));
 		drawTextDayOfMonth(ug.apply(UTranslate.dy(Y_POS_ROW28())));
 		drawMonths(ug);
-		printSmallVbars(ug, totalHeightWithoutFooter);
+		printVerticalSeparators(ug, totalHeightWithoutFooter);
 
 		printNamedDays(ug);
 
@@ -78,12 +78,20 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 		drawHline(ug, totalHeightWithoutFooter);
 	}
 
-	private void printSmallVbars(final UGraphic ug, double totalHeightWithoutFooter) {
-		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment())
-			drawVbar(ug, getTimeScale().getStartingPosition(wink), getFullHeaderHeight(), totalHeightWithoutFooter,
-					isBold(wink));
+	@Override
+	protected void printVerticalSeparators(final UGraphic ug, double totalHeightWithoutFooter) {
+		final UGraphic ugVerticalSeparator = thParam.forVerticalSeparator(ug);
+		final UGraphic ugLineColor = ug.apply(getLineColor());
+		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment())
+			if (isBold2(wink))
+				drawVline(ugVerticalSeparator, getTimeScale().getStartingPosition(wink), getFullHeaderHeight(),
+						totalHeightWithoutFooter);
+			else
+				drawVline(ugLineColor, getTimeScale().getStartingPosition(wink), getFullHeaderHeight(),
+						totalHeightWithoutFooter);
 
-		drawVbar(ug, getTimeScale().getEndingPosition(max), getFullHeaderHeight(), totalHeightWithoutFooter, false);
+		drawVline(ugLineColor, getTimeScale().getEndingPosition(getMax()), getFullHeaderHeight(),
+				totalHeightWithoutFooter);
 	}
 
 	@Override
@@ -94,7 +102,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	}
 
 	private void drawTextsDayOfWeek(UGraphic ug) {
-		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
+		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			final double x2 = getTimeScale().getEndingPosition(wink);
 			final HColor textColor = getTextBackColor(wink);
@@ -103,7 +111,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	}
 
 	private void drawTextDayOfMonth(UGraphic ug) {
-		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
+		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			final double x2 = getTimeScale().getEndingPosition(wink);
 			final HColor textColor = getTextBackColor(wink);
@@ -121,7 +129,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	private void drawMonths(final UGraphic ug) {
 		MonthYear last = null;
 		double lastChangeMonth = -1;
-		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
+		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			if (wink.monthYear().equals(last) == false) {
 				if (last != null)
@@ -131,7 +139,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 				last = wink.monthYear();
 			}
 		}
-		final double x1 = getTimeScale().getStartingPosition(max.increment());
+		final double x1 = getTimeScale().getStartingPosition(getMax().increment());
 		if (x1 > lastChangeMonth)
 			printMonth(ug, last, lastChangeMonth, x1);
 
@@ -147,7 +155,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	private void printNamedDays(final UGraphic ug) {
 		if (nameDays.size() > 0) {
 			String last = null;
-			for (Day wink = min; wink.compareTo(max.increment()) <= 0; wink = wink.increment()) {
+			for (Day wink = getMin(); wink.compareTo(getMax().increment()) <= 0; wink = wink.increment()) {
 				final String name = nameDays.get(wink);
 				if (name != null && name.equals(last) == false) {
 					final double x1 = getTimeScale().getStartingPosition(wink);

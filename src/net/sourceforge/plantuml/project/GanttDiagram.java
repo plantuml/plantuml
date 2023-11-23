@@ -86,6 +86,7 @@ import net.sourceforge.plantuml.project.core.TaskInstant;
 import net.sourceforge.plantuml.project.core.TaskSeparator;
 import net.sourceforge.plantuml.project.draw.FingerPrint;
 import net.sourceforge.plantuml.project.draw.ResourceDraw;
+import net.sourceforge.plantuml.project.draw.ResourceDrawVersion2;
 import net.sourceforge.plantuml.project.draw.TaskDraw;
 import net.sourceforge.plantuml.project.draw.TaskDrawDiamond;
 import net.sourceforge.plantuml.project.draw.TaskDrawGroup;
@@ -99,6 +100,7 @@ import net.sourceforge.plantuml.project.draw.TimeHeaderSimple;
 import net.sourceforge.plantuml.project.draw.TimeHeaderWeekly;
 import net.sourceforge.plantuml.project.draw.TimeHeaderYearly;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
+import net.sourceforge.plantuml.project.solver.ImpossibleSolvingException;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.project.time.WeekNumberStrategy;
@@ -148,6 +150,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	private Day printEnd;
 
 	private final RealOrigin origin = RealUtils.createOrigin();
+
+	private int defaultCompletion = 100;
 
 	public CommandExecutionResult changeLanguage(String lang) {
 		this.locale = new Locale(lang);
@@ -200,6 +204,16 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			return true;
 
 		return false;
+	}
+
+	@Override
+	public String checkFinalError() {
+		try {
+			initMinMax();
+		} catch (ImpossibleSolvingException ex) {
+			return ex.getMessage();
+		}
+		return null;
 	}
 
 	@Override
@@ -312,7 +326,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private TimeHeaderParameters thParam() {
 		return new TimeHeaderParameters(colorDays(), getFactorScale(), min, max, getIHtmlColorSet(), getTimelineStyle(),
-				getClosedStyle(), locale, openClose, colorDaysOfWeek, verticalSeparatorBefore);
+				getClosedStyle(), locale, openClose, colorDaysOfWeek, verticalSeparatorBefore,
+				getVerticalSeparatorStyle());
 	}
 
 	private Map<Day, HColor> colorDays() {
@@ -327,6 +342,11 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private Style getTimelineStyle() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.timeline)
+				.getMergedStyle(getCurrentStyleBuilder());
+	}
+
+	private Style getVerticalSeparatorStyle() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.verticalSeparator)
 				.getMergedStyle(getCurrentStyleBuilder());
 	}
 
@@ -457,12 +477,17 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			yy = headerHeight;
 		} else if (this.hideResourceFoobox == false)
 			for (Resource res : resources.values()) {
-				final ResourceDraw draw = new ResourceDraw(this, res, timeScale, yy, min, max);
+				final ResourceDraw draw = buildResourceDraw(this, res, timeScale, yy, min, max);
 				res.setTaskDraw(draw);
-				yy += draw.getHeight();
+				yy += draw.getHeight(stringBounder);
 			}
 
 		this.totalHeightWithoutFooter = yy;
+	}
+
+	private ResourceDraw buildResourceDraw(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, Day min,
+			Day max) {
+		return new ResourceDrawVersion2(gantt, res, timeScale, y, min, max);
 	}
 
 	private Collection<GanttConstraint> getConstraints(Task task) {
@@ -603,7 +628,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			final OpenClose except = this.openCloseForTask.get(codeOrShortName);
 
 			result = new TaskImpl(getSkinParam().getCurrentStyleBuilder(), code, openClose.mutateMe(except),
-					openClose.getStartingDay());
+					openClose.getStartingDay(), defaultCompletion);
 			if (currentGroup != null)
 				currentGroup.addTask(result);
 
@@ -864,6 +889,21 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	public void addVerticalSeparatorBefore(Day day) {
 		verticalSeparatorBefore.add(day);
+	}
+
+	public void setTaskDefaultCompletion(int defaultCompletion) {
+		this.defaultCompletion = defaultCompletion;
+	}
+
+	public List<TaskDrawRegular> getAllTasksForResource(Resource res) {
+		final List<TaskDrawRegular> result = new ArrayList<TaskDrawRegular>();
+		for (Task task : tasks.values())
+			if (task.isAssignedTo(res)) {
+				final TaskDrawRegular draw = (TaskDrawRegular) draws.get(task);
+				result.add(draw);
+			}
+
+		return Collections.unmodifiableList(result);
 	}
 
 }

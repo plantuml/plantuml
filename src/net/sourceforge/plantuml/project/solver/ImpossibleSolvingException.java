@@ -33,15 +33,12 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.draw;
+package net.sourceforge.plantuml.project.solver;
 
-import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
+public class ImpossibleSolvingException extends RuntimeException {
 
-public interface ResourceDraw extends UDrawable {
-
-	public double getHeight(StringBounder stringBounder);
-
-	public double getY();
+	public ImpossibleSolvingException(String message) {
+		super(message);
+	}
 
 }

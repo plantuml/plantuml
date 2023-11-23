@@ -33,72 +33,52 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.lang;
-
-import java.util.Arrays;
-import java.util.Collection;
+package net.sourceforge.plantuml.project.command;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.project.Failable;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.Today;
-import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.utils.LineLocation;
 
-public class SubjectToday implements Subject {
-    // ::remove folder when __HAXE__
+public class CommandTaskCompleteDefault extends SingleLineCommand2<GanttDiagram> {
 
-	public static final Subject ME = new SubjectToday();
-
-	private SubjectToday() {
+	public CommandTaskCompleteDefault() {
+		super(getRegexConcat());
 	}
 
-	public IRegex toRegex() {
-		return new RegexConcat( //
-				new RegexLeaf("today") //
-		);
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandTaskCompleteDefault.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("task"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexOr(//
+						new RegexLeaf("default[%s]+completion"), //
+						new RegexLeaf("completion[%s]+default")), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("to"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("VALUE", "(\\d+)"), //
+				new RegexLeaf(".*"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				RegexLeaf.end());
 	}
 
-	public Failable<Today> getMe(GanttDiagram project, RegexResult arg) {
-		return Failable.ok(new Today());
-	}
+	@Override
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 
-	public Collection<? extends SentenceSimple> getSentences() {
-		return Arrays.asList(new InColor(), new IsDate());
-	}
+		final int value = Integer.parseInt(arg.get("VALUE", 0));
+		if (value > 100)
+			return CommandExecutionResult.error("Completetion must between 0 and 100");
 
-	class InColor extends SentenceSimple {
+		diagram.setTaskDefaultCompletion(value);
 
-		public InColor() {
-			super(SubjectToday.this, Verbs.isColored, new ComplementInColors());
-		}
-
-		@Override
-		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			final Today task = (Today) subject;
-			final CenterBorderColor colors = (CenterBorderColor) complement;
-			project.setTodayColors(colors);
-			return CommandExecutionResult.ok();
-
-		}
-
-	}
-
-	class IsDate extends SentenceSimple {
-
-		public IsDate() {
-			super(SubjectToday.this, Verbs.is, ComplementDate.any());
-		}
-
-		@Override
-		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			final Day date = (Day) complement;
-			return project.setToday(date);
-		}
-
+		return CommandExecutionResult.ok();
 	}
 
 }

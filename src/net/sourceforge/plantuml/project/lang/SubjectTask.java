@@ -81,11 +81,11 @@ public class SubjectTask implements Subject {
 
 	public Collection<? extends SentenceSimple> getSentences() {
 		return Arrays.asList(new SentenceLasts(), new SentenceTaskStarts(), new SentenceTaskStartsWithColor(),
-				new SentenceTaskStartsAbsolute(), new SentenceHappens(), new SentenceHappensDate(), new SentenceEnds(),
-				new SentenceTaskEndsAbsolute(), new SentenceIsColored(), new SentenceIsColoredForCompletion(),
-				new SentenceIsDeleted(), new SentenceIsForTask(), new SentenceLinksTo(), new SentenceOccurs(),
-				new SentenceDisplayOnSameRowAs(), new SentencePausesDate(), new SentencePausesDates(),
-				new SentencePausesDayOfWeek());
+				new SentenceTaskStartsOnlyRelative(), new SentenceTaskStartsAbsolute(), new SentenceHappens(),
+				new SentenceHappensDate(), new SentenceEnds(), new SentenceTaskEndsAbsolute(), new SentenceIsColored(),
+				new SentenceIsColoredForCompletion(), new SentenceIsDeleted(), new SentenceIsForTask(),
+				new SentenceLinksTo(), new SentenceOccurs(), new SentenceDisplayOnSameRowAs(), new SentencePausesDate(),
+				new SentencePausesDates(), new SentencePausesDayOfWeek());
 	}
 
 	public IRegex toRegex() {

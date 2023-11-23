@@ -61,16 +61,9 @@ public class TimeHeaderYearly extends TimeHeaderCalendar {
 	public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
 		drawTextsBackground(ug, totalHeightWithoutFooter);
 		drawYears(ug);
-		printSmallVbars(ug, totalHeightWithoutFooter);
+		printVerticalSeparators(ug, totalHeightWithoutFooter);
 		drawHline(ug, 0);
 		drawHline(ug, getFullHeaderHeight());
-	}
-
-	private void printSmallVbars(final UGraphic ug, double totalHeightWithoutFooter) {
-		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment())
-			if (isBold(wink))
-				drawVbar(ug, getTimeScale().getStartingPosition(wink), getFullHeaderHeight(), totalHeightWithoutFooter,
-						isBold(wink));
 	}
 
 	@Override
@@ -84,22 +77,22 @@ public class TimeHeaderYearly extends TimeHeaderCalendar {
 	private void drawYears(final UGraphic ug) {
 		MonthYear last = null;
 		double lastChange = -1;
-		for (Day wink = min; wink.compareTo(max) < 0; wink = wink.increment()) {
+		for (Day wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			if (last == null || wink.monthYear().year() != last.year()) {
-				drawVbar(ug, x1, 0, 19, false);
-				if (last != null) {
+				drawVline(ug.apply(getLineColor()), x1, (double) 0, (double) 19);
+				if (last != null)
 					printYear(ug, last, lastChange, x1);
-				}
+
 				lastChange = x1;
 				last = wink.monthYear();
 			}
 		}
-		final double x1 = getTimeScale().getStartingPosition(max.increment());
-		if (x1 > lastChange) {
+		final double x1 = getTimeScale().getStartingPosition(getMax().increment());
+		if (x1 > lastChange)
 			printYear(ug, last, lastChange, x1);
-		}
-		drawVbar(ug, getTimeScale().getEndingPosition(max), 0, 19, false);
+		
+		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), (double) 0, (double) 19);
 	}
 
 	private void printYear(UGraphic ug, MonthYear monthYear, double start, double end) {

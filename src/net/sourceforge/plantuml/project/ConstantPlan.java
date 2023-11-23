@@ -53,8 +53,14 @@ public class ConstantPlan implements LoadPlanable {
 		return new ConstantPlan(load);
 	}
 
+	@Override
 	public int getLoadAt(Day instant) {
 		return loadPerInstant;
 
+	}
+
+	@Override
+	public Day getLastDayIfAny() {
+		return null;
 	}
 }

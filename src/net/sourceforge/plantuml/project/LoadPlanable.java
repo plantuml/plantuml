@@ -40,4 +40,6 @@ import net.sourceforge.plantuml.project.time.Day;
 public interface LoadPlanable {
 
 	public int getLoadAt(Day instant);
+
+	public Day getLastDayIfAny();
 }

@@ -35,8 +35,6 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
-import java.util.Set;
-
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -53,9 +51,7 @@ import net.sourceforge.plantuml.project.timescale.TimeScaleWink;
 
 public class TimeHeaderSimple extends TimeHeader {
 
-	private final TimeHeaderParameters colorDays;
 	private final PrintScale printScale;
-	private final Set<Day> verticalSeparators;
 
 	@Override
 	public double getFullHeaderHeight() {
@@ -75,37 +71,21 @@ public class TimeHeaderSimple extends TimeHeader {
 	}
 
 	public TimeHeaderSimple(TimeHeaderParameters thParam, PrintScale printScale) {
-		super(thParam.getTimelineStyle(), thParam.getClosedStyle(), thParam.getMin(), thParam.getMax(),
-				new TimeScaleWink(thParam.getScale(), printScale), thParam.getColorSet());
-		this.colorDays = thParam;
+		super(thParam, new TimeScaleWink(thParam.getScale(), printScale));
 		this.printScale = printScale;
-		this.verticalSeparators = thParam.getVerticalSeparatorBefore();
-	}
-
-	private boolean isBold(Day wink) {
-		return verticalSeparators.contains(wink);
-	}
-
-	private void drawSeparatorsDay(UGraphic ug, TimeScale timeScale, double totalHeightWithoutFooter) {
-		final ULine vbar = ULine.vline(totalHeightWithoutFooter - getFullHeaderHeight() + 2);
-		ug = goBold(ug).apply(UTranslate.dy(getFullHeaderHeight() - 1));
-		for (Day i = min; i.compareTo(max.increment()) <= 0; i = i.increment(printScale))
-			if (isBold(i)) {
-				final double x1 = timeScale.getStartingPosition(i);
-				ug.apply(UTranslate.dx(x1)).draw(vbar);
-			}
 	}
 
 	private void drawSmallVlinesDay(UGraphic ug, TimeScale timeScale, double totalHeightWithoutFooter) {
+		ug = ug.apply(getLineColor());
 		final ULine vbar = ULine.vline(totalHeightWithoutFooter);
-		for (Day i = min; i.compareTo(max.increment()) <= 0; i = i.increment(printScale)) {
+		for (Day i = getMin(); i.compareTo(getMax().increment()) <= 0; i = i.increment(printScale)) {
 			final double x1 = timeScale.getStartingPosition(i);
-			ug.apply(getBarColor()).apply(UTranslate.dx(x1)).draw(vbar);
+			ug.apply(UTranslate.dx(x1)).draw(vbar);
 		}
 	}
 
 	private void drawSimpleDayCounter(UGraphic ug, TimeScale timeScale) {
-		for (Day i = min; i.compareTo(max.increment()) <= 0; i = i.increment(printScale)) {
+		for (Day i = getMin(); i.compareTo(getMax().increment()) <= 0; i = i.increment(printScale)) {
 			final int value;
 			if (printScale == PrintScale.WEEKLY)
 				value = i.getAbsoluteDayNum() / 7 + 1;
@@ -122,33 +102,34 @@ public class TimeHeaderSimple extends TimeHeader {
 				x2 = timeScale.getEndingPosition(i);
 			final double width = num.calculateDimension(ug.getStringBounder()).getWidth();
 			final double delta = (x2 - x1) - width;
-			if (i.compareTo(max.increment()) < 0)
+			if (i.compareTo(getMax().increment()) < 0)
 				num.drawU(ug.apply(UTranslate.dx(x1 + delta / 2)));
 
 		}
 	}
 
 	@Override
-	public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
+	public void drawTimeHeader(UGraphic ug, double totalHeightWithoutFooter) {
 		drawTextsBackground(ug.apply(UTranslate.dy(-3)), totalHeightWithoutFooter + 6);
-		final double xmin = getTimeScale().getStartingPosition(min);
-		final double xmax = getTimeScale().getEndingPosition(max);
+		final double xmin = getTimeScale().getStartingPosition(getMin());
+		final double xmax = getTimeScale().getEndingPosition(getMax());
 		drawSmallVlinesDay(ug, getTimeScale(), totalHeightWithoutFooter + 2);
-		drawSeparatorsDay(ug, getTimeScale(), totalHeightWithoutFooter);
+		printVerticalSeparators(ug, totalHeightWithoutFooter);
 		drawSimpleDayCounter(ug, getTimeScale());
-		ug.apply(getBarColor()).draw(ULine.hline(xmax - xmin));
-		ug.apply(getBarColor()).apply(UTranslate.dy(getFullHeaderHeight() - 3)).draw(ULine.hline(xmax - xmin));
+		ug = ug.apply(getLineColor());
+		ug.draw(ULine.hline(xmax - xmin));
+		ug.apply(UTranslate.dy(getFullHeaderHeight() - 3)).draw(ULine.hline(xmax - xmin));
 
 	}
 
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
-		final double xmin = getTimeScale().getStartingPosition(min);
-		final double xmax = getTimeScale().getEndingPosition(max);
+		final double xmin = getTimeScale().getStartingPosition(getMin());
+		final double xmax = getTimeScale().getEndingPosition(getMax());
 		ug = ug.apply(UTranslate.dy(3));
 		drawSmallVlinesDay(ug, getTimeScale(), getTimeFooterHeight() - 3);
 		drawSimpleDayCounter(ug, getTimeScale());
-		ug.apply(getBarColor()).draw(ULine.hline(xmax - xmin));
+		ug.apply(getLineColor()).draw(ULine.hline(xmax - xmin));
 	}
 
 	// Duplicate in TimeHeaderDaily
@@ -173,10 +154,10 @@ public class TimeHeaderSimple extends TimeHeader {
 		final double height = totalHeightWithoutFooter - getFullHeaderHeight();
 		Pending pending = null;
 
-		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
+		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			final double x2 = getTimeScale().getEndingPosition(wink);
-			HColor back = colorDays.getColor(wink);
+			HColor back = thParam.getColor(wink);
 //			// Day of week should be stronger than period of time (back color).
 //			final HColor backDoW = colorDaysOfWeek.get(wink.getDayOfWeek());
 //			if (backDoW != null) {

@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.project.command.CommandNoteBottom;
 import net.sourceforge.plantuml.project.command.CommandPrintBetween;
 import net.sourceforge.plantuml.project.command.CommandPrintScale;
 import net.sourceforge.plantuml.project.command.CommandSeparator;
+import net.sourceforge.plantuml.project.command.CommandTaskCompleteDefault;
 import net.sourceforge.plantuml.project.command.CommandWeekNumberStrategy;
 import net.sourceforge.plantuml.project.command.NaturalCommand;
 import net.sourceforge.plantuml.project.lang.SentenceAnd;
@@ -115,6 +116,7 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandLabelOnColumn());
 		cmds.add(new CommandHideResourceName());
 		cmds.add(new CommandHideResourceFootbox());
+		cmds.add(new CommandTaskCompleteDefault());
 	}
 
 	private void addLanguageCommands(List<Command> cmd) {

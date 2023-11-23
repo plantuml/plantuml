@@ -63,7 +63,8 @@ public class SubjectResource implements Subject {
 	}
 
 	public Collection<? extends SentenceSimple> getSentences() {
-		return Arrays.asList(new IsOffDate(), new IsOffDates(), new IsOffDayOfWeek(), new IsOnDate(), new IsOnDates());
+		return Arrays.asList(new IsOffDate(), new IsOffDates(), new IsOffDayOfWeek(), new IsOnDate(), new IsOnDates(),
+				new IsOffBeforeDate(), new IsOffAfterDate());
 	}
 
 	public IRegex toRegex() {
@@ -72,10 +73,42 @@ public class SubjectResource implements Subject {
 		);
 	}
 
+	public class IsOffBeforeDate extends SentenceSimple {
+
+		public IsOffBeforeDate() {
+			super(SubjectResource.this, Verbs.isOffBefore, ComplementDate.any());
+		}
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			final Resource resource = (Resource) subject;
+			final Day when = (Day) complement;
+			resource.setOffBeforeDate(when);
+			return CommandExecutionResult.ok();
+		}
+
+	}
+
+	public class IsOffAfterDate extends SentenceSimple {
+
+		public IsOffAfterDate() {
+			super(SubjectResource.this, Verbs.isOffAfter, ComplementDate.any());
+		}
+
+		@Override
+		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+			final Resource resource = (Resource) subject;
+			final Day when = (Day) complement;
+			resource.setOffAfterDate(when);
+			return CommandExecutionResult.ok();
+		}
+
+	}
+
 	public class IsOffDate extends SentenceSimple {
 
 		public IsOffDate() {
-			super(SubjectResource.this, Verbs.isOff, new ComplementDate());
+			super(SubjectResource.this, Verbs.isOff, ComplementDate.any());
 		}
 
 		@Override
@@ -123,7 +156,7 @@ public class SubjectResource implements Subject {
 	public class IsOnDate extends SentenceSimple {
 
 		public IsOnDate() {
-			super(SubjectResource.this, Verbs.isOn, new ComplementDate());
+			super(SubjectResource.this, Verbs.isOn, ComplementDate.any());
 		}
 
 		@Override

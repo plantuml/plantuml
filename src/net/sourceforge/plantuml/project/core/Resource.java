@@ -94,4 +94,17 @@ public class Resource {
 	public void addCloseDay(DayOfWeek day) {
 		openClose.close(day);
 	}
+
+	public void setOffBeforeDate(Day day) {
+		openClose.setOffBeforeDate(day);
+	}
+
+	public void setOffAfterDate(Day day) {
+		openClose.setOffAfterDate(day);
+	}
+
+	public Day getLastDayIfAny() {
+		return openClose.getLastDayIfAny();
+	}
+
 }

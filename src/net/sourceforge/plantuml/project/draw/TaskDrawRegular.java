@@ -101,7 +101,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	}
 
 	@Override
-	protected double getShapeHeight(StringBounder stringBounder) {
+	public double getShapeHeight(StringBounder stringBounder) {
 		final Style style = getStyle();
 		final ClockwiseTopRightBottomLeft padding = style.getPadding();
 		return padding.getTop() + getTitle().calculateDimension(stringBounder).getHeight() + padding.getBottom();
@@ -170,7 +170,6 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		final double startPos = timeScale.getStartingPosition(start);
 		drawNote(ug.apply((new UTranslate(startPos, getYNotePosition(ug.getStringBounder())))));
 
-		ug = applyColors(ug);
 		drawShape(ug);
 	}
 
@@ -256,7 +255,8 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		return endPos;
 	}
 
-	private void drawShape(UGraphic ug) {
+	public void drawShape(UGraphic ug) {
+		ug = applyColors(ug);
 		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 

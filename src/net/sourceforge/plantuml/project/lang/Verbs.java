@@ -70,17 +70,33 @@ public class Verbs {
 			new RegexLeaf("off"), //
 			RegexLeaf.spaceOneOrMore(), //
 			new RegexOr(//
+					new RegexLeaf("from"), //
 					new RegexLeaf("on"), //
 					new RegexLeaf("for"), //
 					new RegexLeaf("the"), //
 					new RegexLeaf("at") //
 			));
 
+	public static IRegex isOffBefore = new RegexConcat(new RegexLeaf("is"), //
+			RegexLeaf.spaceOneOrMore(), //
+			new RegexLeaf("off"), //
+			RegexLeaf.spaceOneOrMore(), //
+			new RegexLeaf("before") //
+	);
+
+	public static IRegex isOffAfter = new RegexConcat(new RegexLeaf("is"), //
+			RegexLeaf.spaceOneOrMore(), //
+			new RegexLeaf("off"), //
+			RegexLeaf.spaceOneOrMore(), //
+			new RegexLeaf("after") //
+	);
+
 	public static IRegex isOn = new RegexConcat(new RegexLeaf("is"), //
 			RegexLeaf.spaceOneOrMore(), //
 			new RegexLeaf("on"), //
 			RegexLeaf.spaceOneOrMore(), //
 			new RegexOr(//
+					new RegexLeaf("from"), //
 					new RegexLeaf("on"), //
 					new RegexLeaf("for"), //
 					new RegexLeaf("the"), //
