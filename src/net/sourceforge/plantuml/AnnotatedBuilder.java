@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -167,7 +168,7 @@ public class AnnotatedBuilder {
 		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final TextBlock block = style.createTextBlockBordered(title.getDisplay(), skinParam.getIHtmlColorSet(),
-				skinParam, Style.ID_TITLE);
+				skinParam, Style.ID_TITLE, LineBreakStrategy.NONE);
 		return block;
 	}
 
@@ -179,7 +180,7 @@ public class AnnotatedBuilder {
 		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.caption)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		return style.createTextBlockBordered(caption.getDisplay(), skinParam.getIHtmlColorSet(), skinParam,
-				Style.ID_CAPTION);
+				Style.ID_CAPTION, LineBreakStrategy.NONE);
 
 	}
 

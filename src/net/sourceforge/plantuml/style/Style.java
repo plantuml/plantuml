@@ -40,7 +40,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
 
-import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -49,6 +48,7 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -283,19 +283,17 @@ public class Style {
 		return value(PName.HorizontalAlignment).asHorizontalAlignment();
 	}
 
-	private TextBlock createTextBlockInternal(Display display, HColorSet set, ISkinSimple spriteContainer,
-			HorizontalAlignment alignment) {
-		final FontConfiguration fc = getFontConfiguration(set);
-		return display.create(fc, alignment, spriteContainer);
-	}
-
 	public static final String ID_TITLE = "_title";
 	public static final String ID_CAPTION = "_caption";
 	public static final String ID_LEGEND = "_legend";
 
-	public TextBlock createTextBlockBordered(Display note, HColorSet set, ISkinSimple spriteContainer, String id) {
+	public TextBlock createTextBlockBordered(Display note, HColorSet set, ISkinSimple spriteContainer, String id,
+			LineBreakStrategy lineBreak) {
 		final HorizontalAlignment alignment = this.getHorizontalAlignment();
-		final TextBlock textBlock = this.createTextBlockInternal(note, set, spriteContainer, alignment);
+		final FontConfiguration fc = this.getFontConfiguration(set);
+
+		final TextBlock textBlock = note.create0(fc, alignment, spriteContainer, lineBreak, CreoleMode.FULL, null,
+				null);
 
 		final HColor backgroundColor = this.value(PName.BackGroundColor).asColor(set);
 		final HColor lineColor = this.value(PName.LineColor).asColor(set);

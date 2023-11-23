@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.png;
 
 import net.sourceforge.plantuml.cucadiagram.DisplaySection;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -73,6 +74,6 @@ public class PngTitler {
 		if (display == null)
 			return null;
 
-		return style.createTextBlockBordered(display, set, spriteContainer, Style.ID_TITLE);
+		return style.createTextBlockBordered(display, set, spriteContainer, Style.ID_TITLE, LineBreakStrategy.NONE);
 	}
 }

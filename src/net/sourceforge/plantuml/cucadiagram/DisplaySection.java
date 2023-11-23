@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.cucadiagram;
 import java.util.EnumMap;
 import java.util.Map;
 
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
@@ -96,7 +97,8 @@ public class DisplaySection {
 			return null;
 
 		if (style != null)
-			return style.createTextBlockBordered(display, spriteContainer.getIHtmlColorSet(), spriteContainer, null);
+			return style.createTextBlockBordered(display, spriteContainer.getIHtmlColorSet(), spriteContainer, null,
+					LineBreakStrategy.NONE);
 
 		return display.create(fontConfiguration, getHorizontalAlignment(), spriteContainer);
 	}
