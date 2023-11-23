@@ -135,7 +135,7 @@ public class FEntry implements Iterable<FEntry> {
 			return createOpale();
 
 		final Display display = Display.getWithNewlines(getEmoticon() + getName());
-		TextBlock result = display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
+		TextBlock result = display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam, CreoleMode.NO_CREOLE);
 		return result;
 	}
 
