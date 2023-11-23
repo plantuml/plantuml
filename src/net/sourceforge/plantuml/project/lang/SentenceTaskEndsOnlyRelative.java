@@ -37,20 +37,21 @@ package net.sourceforge.plantuml.project.lang;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.time.Day;
 
-public class SentenceLasts extends SentenceSimple {
+public class SentenceTaskEndsOnlyRelative extends SentenceSimple {
 
-	public SentenceLasts() {
-		super(SubjectTask.ME, Verbs.lasts, new ComplementSeveralDays());
+	public SentenceTaskEndsOnlyRelative() {
+		super(SubjectTask.ME, Verbs.ends2, ComplementDate.onlyRelative());
 	}
 
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 		final Task task = (Task) subject;
-		final Load duration = (Load) complement;
-		task.setLoad(duration);
+		final Day end = (Day) complement;
+
+		task.setEnd(end);
 		return CommandExecutionResult.ok();
 	}
 

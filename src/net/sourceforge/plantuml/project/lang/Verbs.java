@@ -108,7 +108,7 @@ public class Verbs {
 
 	public static IRegex isOrAreNamed = new RegexLeaf("(is|are)[%s]+named");
 
-	public static IRegex lasts = new RegexLeaf("(lasts|requires)");
+	public static IRegex requires = new RegexLeaf("(lasts|requires?)");
 
 	public static IRegex linksTo = new RegexLeaf("links to");
 
