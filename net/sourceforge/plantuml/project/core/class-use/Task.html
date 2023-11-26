@@ -82,10 +82,13 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">GanttDiagram.</span><code><a href="../../GanttDiagram.html#getExistingTask(java.lang.String)" class="member-name-link">getExistingTask</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">GanttDiagram.</span><code><a href="../../GanttDiagram.html#getOrCreateTask(java.lang.String,java.lang.String,boolean)" class="member-name-link">getOrCreateTask</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;codeOrShortName,
+<div class="col-second odd-row-color"><span class="type-name-label">GanttDiagram.</span><code><a href="../../GanttDiagram.html#getIt()" class="member-name-link">getIt</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">GanttDiagram.</span><code><a href="../../GanttDiagram.html#getOrCreateTask(java.lang.String,java.lang.String,boolean)" class="member-name-link">getOrCreateTask</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;codeOrShortName,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;shortName,
  boolean&nbsp;linkedToPrevious)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../../package-summary.html">net.sourceforge.plantuml.project</a> with parameters of type <a href="../Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a></span></div>
 <div class="summary-table three-column-summary">
@@ -115,6 +118,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>boolean</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">GanttConstraint.</span><code><a href="../../GanttConstraint.html#isThereRightArrow(net.sourceforge.plantuml.project.core.Task)" class="member-name-link">isThereRightArrow</a><wbr>(<a href="../Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&nbsp;task)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">GanttDiagram.</span><code><a href="../../GanttDiagram.html#setIt(net.sourceforge.plantuml.project.core.Task)" class="member-name-link">setIt</a><wbr>(<a href="../Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&nbsp;result)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -248,9 +254,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../../Failable.html" title="class in net.sourceforge.plantuml.project">Failable</a>&lt;<a href="../Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SubjectTask.</span><code><a href="../../lang/SubjectTask.html#getMe(net.sourceforge.plantuml.project.GanttDiagram,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">getMe</a><wbr>(<a href="../../GanttDiagram.html" title="class in net.sourceforge.plantuml.project">GanttDiagram</a>&nbsp;project,
- <a href="../../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ComplementTask.</span><code><a href="../../lang/ComplementTask.html#getMe(net.sourceforge.plantuml.project.GanttDiagram,net.sourceforge.plantuml.regex.RegexResult,java.lang.String)" class="member-name-link">getMe</a><wbr>(<a href="../../GanttDiagram.html" title="class in net.sourceforge.plantuml.project">GanttDiagram</a>&nbsp;gantt,
+ <a href="../../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;suffix)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../../Failable.html" title="class in net.sourceforge.plantuml.project">Failable</a>&lt;<a href="../Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SubjectTask.</span><code><a href="../../lang/SubjectTask.html#getMe(net.sourceforge.plantuml.project.GanttDiagram,net.sourceforge.plantuml.regex.RegexResult)" class="member-name-link">getMe</a><wbr>(<a href="../../GanttDiagram.html" title="class in net.sourceforge.plantuml.project">GanttDiagram</a>&nbsp;gantt,
+ <a href="../../../regex/RegexResult.html" title="class in net.sourceforge.plantuml.regex">RegexResult</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
