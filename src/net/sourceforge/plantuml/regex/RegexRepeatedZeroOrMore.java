@@ -33,27 +33,26 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.lang;
+package net.sourceforge.plantuml.regex;
 
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.text.StringLocated;
 
-public class SentenceTaskEndsOnlyRelative extends SentenceSimple {
+public class RegexRepeatedZeroOrMore extends RegexComposed implements IRegex {
 
-	public SentenceTaskEndsOnlyRelative() {
-		super(SubjectTask.ME, Verbs.ends, Words.zeroOrMore(Words.THE, Words.ON, Words.AT),
-				ComplementDate.onlyRelative());
+	public RegexRepeatedZeroOrMore(IRegex partial) {
+		super(partial);
 	}
 
 	@Override
-	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-		final Task task = (Task) subject;
-		final Day end = (Day) complement;
+	protected String getFullSlow() {
+		final StringBuilder sb = new StringBuilder("(?:");
+		sb.append(partials().get(0).getPattern());
+		sb.append(")*");
+		return sb.toString();
+	}
 
-		task.setEnd(end);
-		return CommandExecutionResult.ok();
+	public boolean match(StringLocated full) {
+		throw new UnsupportedOperationException();
 	}
 
 }

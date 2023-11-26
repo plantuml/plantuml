@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.project.time.Day;
 public class SentenceHappensDate extends SentenceSimple {
 
 	public SentenceHappensDate() {
-		super(SubjectTask.ME, Verbs.happens, ComplementDate.any());
+		super(SubjectTask.ME, Verbs.happens, Words.zeroOrMore(Words.THE, Words.ON, Words.AT), ComplementDate.any());
 	}
 
 	@Override

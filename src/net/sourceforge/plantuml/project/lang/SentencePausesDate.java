@@ -43,7 +43,8 @@ import net.sourceforge.plantuml.project.time.Day;
 public class SentencePausesDate extends SentenceSimple {
 
 	public SentencePausesDate() {
-		super(SubjectTask.ME, Verbs.pauses, ComplementDate.any());
+		super(SubjectTask.ME, Verbs.pauses, Words.zeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),
+				ComplementDate.any());
 	}
 
 	@Override

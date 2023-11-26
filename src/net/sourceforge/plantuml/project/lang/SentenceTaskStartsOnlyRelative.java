@@ -43,7 +43,8 @@ import net.sourceforge.plantuml.project.time.Day;
 public class SentenceTaskStartsOnlyRelative extends SentenceSimple {
 
 	public SentenceTaskStartsOnlyRelative() {
-		super(SubjectTask.ME, Verbs.starts3, ComplementDate.onlyRelative());
+		super(SubjectTask.ME, Verbs.starts, Words.zeroOrMore(Words.THE, Words.ON, Words.AT),
+				ComplementDate.onlyRelative());
 	}
 
 	@Override

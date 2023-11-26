@@ -43,7 +43,8 @@ import net.sourceforge.plantuml.project.time.DayOfWeek;
 public class SentencePausesDayOfWeek extends SentenceSimple {
 
 	public SentencePausesDayOfWeek() {
-		super(SubjectTask.ME, Verbs.pauses, new ComplementDayOfWeek());
+		super(SubjectTask.ME, Verbs.pauses, Words.zeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),
+				new ComplementDayOfWeek());
 	}
 
 	@Override

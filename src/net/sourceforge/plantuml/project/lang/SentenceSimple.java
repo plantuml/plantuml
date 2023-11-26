@@ -45,49 +45,57 @@ import net.sourceforge.plantuml.regex.RegexResult;
 
 public abstract class SentenceSimple implements Sentence {
 
-	protected final Subject subjectii;
+	private final Subject subject;
 	private final IRegex verb;
-	protected final Something complementii;
+	private final IRegex adverbialOrPropositon;
+	private final Something complement;
 
 	public SentenceSimple(Subject subject, IRegex verb, Something complement) {
-		this.subjectii = subject;
+		this(subject, verb, new RegexLeaf(""), complement);
+	}
+
+	public SentenceSimple(Subject subject, IRegex verb, IRegex adverbialOrPropositon, Something complement) {
+		this.subject = subject;
 		this.verb = verb;
-		this.complementii = complement;
+		this.adverbialOrPropositon = adverbialOrPropositon;
+		this.complement = complement;
 	}
 
 	public String getSignature() {
-		return subjectii.getClass() + "/" + verb.getPattern() + "/" + complementii.getClass();
+		return subject.getClass() + "/" + verb.getPattern() + "/" + complement.getClass();
 	}
 
 	public final IRegex toRegex() {
-		if (complementii instanceof ComplementEmpty)
+		if (complement instanceof ComplementEmpty)
 			return new RegexConcat(//
 					RegexLeaf.start(), //
-					subjectii.toRegex(), //
+					subject.toRegex(), //
 					RegexLeaf.spaceOneOrMore(), //
 					verb, //
-					RegexLeaf.end());
+					adverbialOrPropositon, //
+					OPTIONAL_FINAL_DOT);
 
 		return new RegexConcat(//
 				RegexLeaf.start(), //
-				subjectii.toRegex(), //
+				subject.toRegex(), //
 				RegexLeaf.spaceOneOrMore(), //
 				verb, //
+				adverbialOrPropositon, //
 				RegexLeaf.spaceOneOrMore(), //
-				complementii.toRegex("0"), //
-				RegexLeaf.end());
+				complement.toRegex("0"), //
+				OPTIONAL_FINAL_DOT);
 	}
 
 	public final CommandExecutionResult execute(GanttDiagram project, RegexResult arg) {
-		final Failable<? extends Object> subject = subjectii.getMe(project, arg);
-		if (subject.isFail())
-			return CommandExecutionResult.error(subject.getError());
+		final Failable<? extends Object> currentSubject = subject.getMe(project, arg);
+		if (currentSubject.isFail())
+			return CommandExecutionResult.error(currentSubject.getError());
 
-		final Failable<? extends Object> complement = complementii.getMe(project, arg, "0");
-		if (complement.isFail())
-			return CommandExecutionResult.error(complement.getError());
+		final Failable<? extends Object> currentComplement = complement.getMe(project, arg, "0");
+		if (currentComplement.isFail())
+			return CommandExecutionResult.error(currentComplement.getError());
 
-		return execute(project, subject.get(), complement.get());
+		return execute(project, currentSubject.get(), currentComplement.get());
 
 	}
 
@@ -96,5 +104,19 @@ public abstract class SentenceSimple implements Sentence {
 	public IRegex getVerbRegex() {
 		return verb;
 	}
+
+	protected final IRegex getAdverbialOrPropositon() {
+		return adverbialOrPropositon;
+	}
+	
+	protected final Subject getSubject() {
+		return subject;
+	}
+
+	protected final Something getComplement() {
+		return complement;
+	}
+
+
 
 }

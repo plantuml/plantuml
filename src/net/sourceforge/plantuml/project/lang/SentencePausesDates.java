@@ -44,20 +44,17 @@ import net.sourceforge.plantuml.project.time.Day;
 public class SentencePausesDates extends SentenceSimple {
 
 	public SentencePausesDates() {
-		super(SubjectTask.ME, Verbs.pauses, new ComplementDates());
+		super(SubjectTask.ME, Verbs.pauses, Words.zeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),
+				new ComplementDates());
 	}
 
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
 		final Task task = (Task) subject;
 		final DaysAsDates pauses = (DaysAsDates) complement;
-//		final Day startingDate = project.getStartingDate();
-//		if (startingDate == null) {
-//			return CommandExecutionResult.error("No starting date for the project");
-//		}
-		for (Day day : pauses) {
+		for (Day day : pauses)
 			task.addPause(day);
-		}
+
 		return CommandExecutionResult.ok();
 	}
 

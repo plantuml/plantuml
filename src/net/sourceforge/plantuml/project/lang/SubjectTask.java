@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 
 public class SubjectTask implements Subject {
@@ -55,23 +56,32 @@ public class SubjectTask implements Subject {
 	private SubjectTask() {
 	}
 
-	public Failable<Task> getMe(GanttDiagram project, RegexResult arg) {
-		final String s = arg.get("SUBJECT", 0);
-		final String shortName = arg.get("SUBJECT", 1);
-		final String then = arg.get("THEN", 0);
-		final String resource = arg.get("RESOURCE", 0);
-		final Task result = project.getOrCreateTask(s, shortName, then != null);
-		if (result == null) {
-			throw new IllegalStateException();
+	public Failable<Task> getMe(GanttDiagram gantt, RegexResult arg) {
+		final Task result;
+		if (arg.get("IT", 0) != null) {
+			result = gantt.getIt();
+			if (result == null)
+				return Failable.error("Not sure what are you refering to?");
+		} else {
+			final String subject = arg.get("SUBJECT", 0);
+			final String shortName = arg.get("SUBJECT", 1);
+			final String then = arg.get("THEN", 0);
+			result = gantt.getOrCreateTask(subject, shortName, then != null);
+			gantt.setIt(result);
 		}
+
+		if (result == null)
+			throw new IllegalStateException();
+
+		final String resource = arg.get("RESOURCE", 0);
 		if (resource != null) {
 			for (final StringTokenizer st = new StringTokenizer(resource, "{}"); st.hasMoreTokens();) {
 				final String part = st.nextToken().trim();
 				if (part.length() > 0) {
-					final boolean ok = project.affectResource(result, part);
-					if (ok == false) {
+					final boolean ok = gantt.affectResource(result, part);
+					if (ok == false)
 						return Failable.error("Bad argument for resource");
-					}
+
 				}
 			}
 
@@ -90,17 +100,17 @@ public class SubjectTask implements Subject {
 	}
 
 	public IRegex toRegex() {
-		return new RegexConcat( //
-				new RegexLeaf("THEN", "(then[%s]+)?"), //
-				new RegexLeaf("SUBJECT", "\\[([^\\[\\]]+?)\\](?:[%s]+as[%s]+\\[([^\\[\\]]+?)\\])?"), //
-				new RegexOptional( //
-						new RegexConcat( //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("on"), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("RESOURCE", "((?:\\{[^{}]+\\}[%s]*)+)") //
-						)) //
-		);
+		return new RegexOr( //
+				new RegexLeaf("IT", "(it)"), //
+				new RegexConcat(new RegexLeaf("THEN", "(then[%s]+)?"), //
+						new RegexLeaf("SUBJECT", "\\[([^\\[\\]]+?)\\](?:[%s]+as[%s]+\\[([^\\[\\]]+?)\\])?"), //
+						new RegexOptional( //
+								new RegexConcat( //
+										RegexLeaf.spaceOneOrMore(), //
+										new RegexLeaf("on"), //
+										RegexLeaf.spaceOneOrMore(), //
+										new RegexLeaf("RESOURCE", "((?:\\{[^{}]+\\}[%s]*)+)") //
+								))));
 	}
 
 }

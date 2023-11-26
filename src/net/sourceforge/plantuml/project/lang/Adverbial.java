@@ -35,25 +35,10 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.regex.IRegex;
 
-public class SentenceTaskEndsOnlyRelative extends SentenceSimple {
+public interface Adverbial {
 
-	public SentenceTaskEndsOnlyRelative() {
-		super(SubjectTask.ME, Verbs.ends, Words.zeroOrMore(Words.THE, Words.ON, Words.AT),
-				ComplementDate.onlyRelative());
-	}
-
-	@Override
-	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-		final Task task = (Task) subject;
-		final Day end = (Day) complement;
-
-		task.setEnd(end);
-		return CommandExecutionResult.ok();
-	}
+	public IRegex toRegex();
 
 }

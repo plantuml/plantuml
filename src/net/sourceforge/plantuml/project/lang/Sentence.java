@@ -38,9 +38,14 @@ package net.sourceforge.plantuml.project.lang;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
 public interface Sentence {
+	
+	public final RegexLeaf OPTIONAL_FINAL_DOT = new RegexLeaf("\\s*[.]?\\s*$");
+	
+	public final RegexLeaf SENTENCE_SEPARATOR = new RegexLeaf("\\s*(,|\\sand\\s)\\s*");
 
 	public IRegex toRegex();
 

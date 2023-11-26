@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.project.core.Resource;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 
-public class ResourceDrawBasicImpl implements ResourceDraw {
+public class ResourceDrawBasic implements ResourceDraw {
 
 	private final Resource res;
 	private final TimeScale timeScale;
@@ -61,7 +61,7 @@ public class ResourceDrawBasicImpl implements ResourceDraw {
 	private final Day max;
 	private final GanttDiagram gantt;
 
-	public ResourceDrawBasicImpl(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, Day min, Day max) {
+	public ResourceDrawBasic(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, Day min, Day max) {
 		this.res = res;
 		this.timeScale = timeScale;
 		this.y = y;

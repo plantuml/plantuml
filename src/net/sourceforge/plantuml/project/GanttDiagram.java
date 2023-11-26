@@ -86,7 +86,7 @@ import net.sourceforge.plantuml.project.core.TaskInstant;
 import net.sourceforge.plantuml.project.core.TaskSeparator;
 import net.sourceforge.plantuml.project.draw.FingerPrint;
 import net.sourceforge.plantuml.project.draw.ResourceDraw;
-import net.sourceforge.plantuml.project.draw.ResourceDrawVersion2;
+import net.sourceforge.plantuml.project.draw.ResourceDrawBasic;
 import net.sourceforge.plantuml.project.draw.TaskDraw;
 import net.sourceforge.plantuml.project.draw.TaskDrawDiamond;
 import net.sourceforge.plantuml.project.draw.TaskDrawGroup;
@@ -152,6 +152,9 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	private final RealOrigin origin = RealUtils.createOrigin();
 
 	private int defaultCompletion = 100;
+
+	private Task it;
+	private Resource they;
 
 	public CommandExecutionResult changeLanguage(String lang) {
 		this.locale = new Locale(lang);
@@ -487,7 +490,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private ResourceDraw buildResourceDraw(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, Day min,
 			Day max) {
-		return new ResourceDrawVersion2(gantt, res, timeScale, y, min, max);
+		return new ResourceDrawBasic(gantt, res, timeScale, y, min, max);
+		// return new ResourceDrawVersion2(gantt, res, timeScale, y, min, max);
 	}
 
 	private Collection<GanttConstraint> getConstraints(Task task) {
@@ -904,6 +908,22 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			}
 
 		return Collections.unmodifiableList(result);
+	}
+
+	public void setIt(Task result) {
+		this.it = result;
+	}
+
+	public Task getIt() {
+		return it;
+	}
+
+	public final Resource getThey() {
+		return they;
+	}
+
+	public final void setThey(Resource they) {
+		this.they = they;
 	}
 
 }

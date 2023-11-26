@@ -35,51 +35,43 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import java.util.Arrays;
-import java.util.Collection;
-
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.project.Failable;
-import net.sourceforge.plantuml.project.GanttDiagram;
-import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.regex.RegexRepeatedZeroOrMore;
 
-public class SubjectProject implements Subject {
+public class Words {
 
-	public static final Subject ME = new SubjectProject();
+	public final static String AFTER = "after";
+	public final static String AT = "at";
+	public final static String BEFORE = "before";
+	public final static String COMPLETION = "completion";
+	public final static String FOR = "for";
+	public final static String FROM = "from";
+	public final static String ON = "on";
+	public final static String THE = "the";
+	public final static String TO = "to";
 
-	private SubjectProject() {
+	public static IRegex zeroOrMore(String... words) {
+		final IRegex tmp[] = new IRegex[words.length];
+		for (int i = 0; i < words.length; i++)
+			tmp[i] = new RegexLeaf(words[i]);
+
+		final RegexOr or = new RegexOr(tmp);
+		return new RegexRepeatedZeroOrMore(new RegexConcat(RegexLeaf.spaceOneOrMore(), or));
 	}
 
-	public IRegex toRegex() {
-		return new RegexLeaf("SUBJECT", "project");
+	public static IRegex exactly(String... words) {
+		final IRegex tmp[] = new IRegex[words.length];
+		for (int i = 0; i < words.length; i++)
+			tmp[i] = new RegexConcat(RegexLeaf.spaceOneOrMore(), new RegexLeaf(words[i]));
+
+		return new RegexConcat(tmp);
 	}
 
-	public Failable<GanttDiagram> getMe(GanttDiagram project, RegexResult arg) {
-		return Failable.ok(project);
-	}
-
-	public Collection<? extends SentenceSimple> getSentences() {
-		return Arrays.asList(new Starts());
-	}
-
-	class Starts extends SentenceSimple {
-
-		public Starts() {
-			super(SubjectProject.this, Verbs.starts, Words.zeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT),
-					ComplementDate.onlyAbsolute());
-		}
-
-		@Override
-		public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-			final Day start = (Day) complement;
-			assert project == subject;
-			project.setProjectStartingDate(start);
-			return CommandExecutionResult.ok();
-		}
-
+	public static IRegex concat(IRegex... expressions) {
+		return new RegexConcat(expressions);
 	}
 
 }

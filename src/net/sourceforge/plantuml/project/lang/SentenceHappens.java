@@ -44,7 +44,8 @@ import net.sourceforge.plantuml.project.core.TaskInstant;
 public class SentenceHappens extends SentenceSimple {
 
 	public SentenceHappens() {
-		super(SubjectTask.ME, Verbs.happens, new ComplementBeforeOrAfterOrAtTaskStartOrEnd());
+		super(SubjectTask.ME, Verbs.happens, Words.zeroOrMore(Words.THE, Words.ON, Words.AT),
+				new ComplementBeforeOrAfterOrAtTaskStartOrEnd());
 	}
 
 	@Override

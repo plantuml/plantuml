@@ -69,7 +69,7 @@ public class SubjectSeparator implements Subject {
 	class JustBefore extends SentenceSimple {
 
 		public JustBefore() {
-			super(SubjectSeparator.this, Verbs.justBefore, ComplementDate.any());
+			super(SubjectSeparator.this, Verbs.just, Words.exactly(Words.BEFORE), ComplementDate.any());
 		}
 
 		@Override
@@ -85,7 +85,7 @@ public class SubjectSeparator implements Subject {
 	class JustAfter extends SentenceSimple {
 
 		public JustAfter() {
-			super(SubjectSeparator.this, Verbs.justAfter, ComplementDate.any());
+			super(SubjectSeparator.this, Verbs.just, Words.exactly(Words.AFTER), ComplementDate.any());
 		}
 
 		@Override

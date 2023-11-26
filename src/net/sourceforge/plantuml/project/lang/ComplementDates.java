@@ -58,8 +58,8 @@ public class ComplementDates implements Something {
 				new RegexLeaf("BMONTH1" + suffix, "([\\d]{1,2})"), //
 				new RegexLeaf("\\D"), //
 				new RegexLeaf("BDAY1" + suffix, "([\\d]{1,2})"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("to"), //
+				Words.exactly(Words.TO), //
+				Words.zeroOrMore(Words.THE), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("BYEAR2" + suffix, "([\\d]{4})"), //
 				new RegexLeaf("\\D"), //
@@ -73,8 +73,8 @@ public class ComplementDates implements Something {
 		return new RegexConcat( //
 				new RegexLeaf("[dD]\\+"), //
 				new RegexLeaf("ECOUNT1" + suffix, "([\\d]+)"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("to"), //
+				Words.exactly(Words.TO), //
+				Words.zeroOrMore(Words.THE), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("[dD]\\+"), //
 				new RegexLeaf("ECOUNT2" + suffix, "([\\d]+)") //

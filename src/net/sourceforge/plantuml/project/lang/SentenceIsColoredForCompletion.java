@@ -42,7 +42,8 @@ import net.sourceforge.plantuml.project.core.Task;
 public class SentenceIsColoredForCompletion extends SentenceSimple {
 
 	public SentenceIsColoredForCompletion() {
-		super(SubjectTask.ME, Verbs.isColoredForCompletion, new ComplementInColorsFromTo());
+		super(SubjectTask.ME, Verbs.isColored, Words.exactly(Words.FOR, Words.COMPLETION),
+				new ComplementInColorsFromTo());
 	}
 
 	@Override

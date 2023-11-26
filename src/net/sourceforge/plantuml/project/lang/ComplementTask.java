@@ -35,25 +35,24 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
-import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.time.Day;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
 
-public class SentenceTaskEndsOnlyRelative extends SentenceSimple {
+public class ComplementTask implements Something {
 
-	public SentenceTaskEndsOnlyRelative() {
-		super(SubjectTask.ME, Verbs.ends, Words.zeroOrMore(Words.THE, Words.ON, Words.AT),
-				ComplementDate.onlyRelative());
+	public IRegex toRegex(String suffix) {
+		return new RegexLeaf("COMPLEMENT" + suffix, "\\[([^\\[\\]]+?)\\]");
 	}
 
-	@Override
-	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
-		final Task task = (Task) subject;
-		final Day end = (Day) complement;
-
-		task.setEnd(end);
-		return CommandExecutionResult.ok();
+	public Failable<Task> getMe(GanttDiagram gantt, RegexResult arg, String suffix) {
+		final String code = arg.get("COMPLEMENT" + suffix, 0);
+		final Task task = gantt.getExistingTask(code);
+		if (task == null)
+			return Failable.error("No such task " + code);
+		return Failable.ok(task);
 	}
-
 }
