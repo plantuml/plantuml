@@ -76,7 +76,7 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 
 	protected final void drawTextsBackground(UGraphic ug, double totalHeightWithoutFooter) {
 
-		final double height = totalHeightWithoutFooter - getFullHeaderHeight();
+		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());
 		Pending pending = null;
 
 		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {

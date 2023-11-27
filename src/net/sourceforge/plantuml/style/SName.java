@@ -69,6 +69,7 @@ public enum SName {
 	constraintArrow, //
 	control, //
 	database, //
+	day, //
 	delay, //
 	destroy, //
 	diamond, //
@@ -100,6 +101,7 @@ public enum SName {
 	map, //
 	milestone, //
 	mindmapDiagram, //
+	month, //
 	network, //
 	node, //
 	note, //
@@ -139,6 +141,7 @@ public enum SName {
 	unstarted, //
 	usecase, //
 	verticalSeparator, //
+	year, //
 	
 	visibilityIcon, //
 	private_, //

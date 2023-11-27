@@ -43,27 +43,42 @@ public abstract class AbstractTask implements Task {
 	private final StyleBuilder styleBuilder;
 
 	private Task row;
+	private String displayString;
 
 	protected AbstractTask(StyleBuilder styleBuilder, TaskCode code) {
 		this.styleBuilder = styleBuilder;
 		this.code = code;
 	}
 
+	@Override
 	final public void putInSameRowAs(Task row) {
 		if (this != row)
 			this.row = row;
 	}
 
+	@Override
 	public final Task getRow() {
 		return row;
 	}
 
+	@Override
 	public final TaskCode getCode() {
 		return code;
 	}
 
+	@Override
 	public final StyleBuilder getStyleBuilder() {
 		return styleBuilder;
+	}
+
+	@Override
+	public void setDisplay(String displayString) {
+		this.displayString = displayString;
+	}
+
+	@Override
+	public String getDisplayString() {
+		return this.displayString;
 	}
 
 }

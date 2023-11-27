@@ -52,20 +52,14 @@ public class ComplementDates implements Something {
 	}
 
 	private IRegex toRegexB(String suffix) {
+		final DayPattern dayPattern1 = new DayPattern("1");
+		final DayPattern dayPattern2 = new DayPattern("2");
 		return new RegexConcat( //
-				new RegexLeaf("BYEAR1" + suffix, "([\\d]{4})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf("BMONTH1" + suffix, "([\\d]{1,2})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf("BDAY1" + suffix, "([\\d]{1,2})"), //
+				dayPattern1.toRegex(), //
 				Words.exactly(Words.TO), //
 				Words.zeroOrMore(Words.THE), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("BYEAR2" + suffix, "([\\d]{4})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf("BMONTH2" + suffix, "([\\d]{1,2})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf("BDAY2" + suffix, "([\\d]{1,2})") //
+				dayPattern2.toRegex() //
 		);
 	}
 
@@ -82,28 +76,17 @@ public class ComplementDates implements Something {
 	}
 
 	public Failable<DaysAsDates> getMe(GanttDiagram project, RegexResult arg, String suffix) {
-		if (arg.get("BDAY1" + suffix, 0) != null) {
-			return Failable.ok(resultB(arg, suffix));
+		final Day d1 = new DayPattern("1").getDay(arg);
+		if (d1 != null) {
+			final Day d2 = new DayPattern("2").getDay(arg);
+			return Failable.ok(new DaysAsDates(d1, d2));
 		}
-		if (arg.get("ECOUNT1" + suffix, 0) != null) {
+
+		if (arg.get("ECOUNT1" + suffix, 0) != null)
 			return Failable.ok(resultE(project, arg, suffix));
-		}
+
 		throw new IllegalStateException();
 
-	}
-
-	private DaysAsDates resultB(RegexResult arg, String suffix) {
-		final int day1 = Integer.parseInt(arg.get("BDAY1" + suffix, 0));
-		final int month1 = Integer.parseInt(arg.get("BMONTH1" + suffix, 0));
-		final int year1 = Integer.parseInt(arg.get("BYEAR1" + suffix, 0));
-		final Day date1 = Day.create(year1, month1, day1);
-
-		final int day2 = Integer.parseInt(arg.get("BDAY2" + suffix, 0));
-		final int month2 = Integer.parseInt(arg.get("BMONTH2" + suffix, 0));
-		final int year2 = Integer.parseInt(arg.get("BYEAR2" + suffix, 0));
-		final Day date2 = Day.create(year2, month2, day2);
-
-		return new DaysAsDates(date1, date2);
 	}
 
 	private DaysAsDates resultE(GanttDiagram project, RegexResult arg, String suffix) {

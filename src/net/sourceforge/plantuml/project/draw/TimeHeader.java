@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -51,17 +52,10 @@ import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
 
 public abstract class TimeHeader {
 	// ::remove folder when __HAXE__
-
-	protected final double Y_POS_ROW16() {
-		return 16;
-	}
-
-	protected final double Y_POS_ROW28() {
-		return 28;
-	}
 
 	private final TimeScale timeScale;
 
@@ -100,15 +94,19 @@ public abstract class TimeHeader {
 		return thParam.getTimelineStyle().value(PName.LineColor).asColor(thParam.getColorSet());
 	}
 
-	public abstract double getTimeHeaderHeight();
+	public abstract double getTimeHeaderHeight(StringBounder stringBounder);
 
-	public abstract double getTimeFooterHeight();
+	public abstract double getTimeFooterHeight(StringBounder stringBounder);
+
+	public abstract double getFullHeaderHeight(StringBounder stringBounder);
 
 	public abstract void drawTimeHeader(UGraphic ug, double totalHeightWithoutFooter);
 
 	public abstract void drawTimeFooter(UGraphic ug);
 
-	public abstract double getFullHeaderHeight();
+	public final TimeScale getTimeScale() {
+		return timeScale;
+	}
 
 	protected final void drawHline(UGraphic ug, double y) {
 		final double xmin = getTimeScale().getStartingPosition(thParam.getMin());
@@ -122,20 +120,17 @@ public abstract class TimeHeader {
 		ug.apply(new UTranslate(x, y1)).draw(vbar);
 	}
 
-	final protected FontConfiguration getFontConfiguration(int size, boolean bold, HColor color) {
-		UFont font = UFont.serif(size);
+	final protected FontConfiguration getFontConfiguration(UFont font, boolean bold, HColor color) {
 		if (bold)
 			font = font.bold();
 
 		return FontConfiguration.create(font, color, color, null);
 	}
 
-	public final TimeScale getTimeScale() {
-		return timeScale;
-	}
-
-	protected final TextBlock getTextBlock(String text, int size, boolean bold, HColor color) {
-		return Display.getWithNewlines(text).create(getFontConfiguration(size, bold, color), HorizontalAlignment.LEFT,
+	protected final TextBlock getTextBlock(SName param, String text, boolean bold, HColor color) {
+		final UFont font = thParam.getStyle(SName.timeline, param).getUFont();
+		final FontConfiguration fontConfiguration = getFontConfiguration(font, bold, color);
+		return Display.getWithNewlines(text).create(fontConfiguration, HorizontalAlignment.LEFT,
 				new SpriteContainerEmpty());
 	}
 
@@ -165,7 +160,7 @@ public abstract class TimeHeader {
 			return;
 
 		ug = ug.apply(HColors.none());
-		ug = ug.apply(new UTranslate(x1, getFullHeaderHeight()));
+		ug = ug.apply(new UTranslate(x1, getFullHeaderHeight(ug.getStringBounder())));
 		ug.draw(URectangle.build(x2 - x1, height));
 	}
 
@@ -173,8 +168,8 @@ public abstract class TimeHeader {
 		ug = thParam.forVerticalSeparator(ug);
 		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment())
 			if (isBold2(wink))
-				drawVline(ug, getTimeScale().getStartingPosition(wink), getFullHeaderHeight(),
-						totalHeightWithoutFooter);
+				drawVline(ug, getTimeScale().getStartingPosition(wink),
+						getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);
 	}
 
 }

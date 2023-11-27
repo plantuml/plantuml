@@ -138,12 +138,7 @@ public class SubjectDayAsDate implements Subject {
 	}
 
 	private IRegex toRegexB() {
-		return new RegexConcat( //
-				new RegexLeaf("BYEAR", "([\\d]{4})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf("BMONTH", "([\\d]{1,2})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf("BDAY", "([\\d]{1,2})"));
+		return TimeResolution.toRegexB_YYYY_MM_DD("BYEAR", "BMONTH", "BDAY");
 	}
 
 	private IRegex toRegexE() {

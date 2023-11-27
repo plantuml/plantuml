@@ -35,30 +35,20 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import net.sourceforge.plantuml.project.Failable;
+import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
 
-public class Verbs {
+public class ComplementAnything implements Something {
 
-	public static IRegex are = new RegexLeaf("are");
-	public static IRegex areColored = new RegexLeaf("are[%s]+colou?red");
-	public static IRegex displayOnSameRowAs = new RegexLeaf("displays?[%s]+on[%s]+same[%s]+row[%s]+as");
-	public static IRegex ends = new RegexLeaf("ends");
-	public static IRegex happens = new RegexLeaf("happens");
-	public static IRegex is = new RegexLeaf("is");
-	public static IRegex isColored = new RegexLeaf("is[%s]+colou?red");
-	public static IRegex isDeleted = new RegexLeaf("is[%s]+deleted");
-	public static IRegex isDisplayedAs = new RegexLeaf("is[%s]+displayed[%s]+as");
-	public static IRegex isOff = new RegexLeaf("is[%s]+off");
-	public static IRegex isOn = new RegexLeaf("is[%s]+on");
-	public static IRegex isOrAre = new RegexLeaf("(is|are)");
-	public static IRegex isOrAreNamed = new RegexLeaf("(is|are)[%s]+named");
-	public static IRegex just = new RegexLeaf("just");
-	public static IRegex linksTo = new RegexLeaf("links[%s]+to");
-	public static IRegex occurs = new RegexLeaf("occurs");
-	public static IRegex pauses = new RegexLeaf("pauses");
-	public static IRegex requires = new RegexLeaf("(lasts|requires)");
-	public static IRegex starts = new RegexLeaf("starts");
-	public static IRegex worksOn = new RegexLeaf("works[%s]+on");
+	public IRegex toRegex(String suffix) {
+		return new RegexLeaf("ANYTHING" + suffix, "(.*?)");
+	}
 
+	public Failable<String> getMe(GanttDiagram system, RegexResult arg, String suffix) {
+		final String value = arg.get("ANYTHING" + suffix, 0);
+		return Failable.ok(value);
+	}
 }

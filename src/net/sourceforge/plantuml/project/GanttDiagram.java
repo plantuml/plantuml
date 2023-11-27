@@ -117,7 +117,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.text.BackSlash;
 
-public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprite {
+public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprite, GanttStyle {
 
 	private final Map<Task, TaskDraw> draws = new LinkedHashMap<Task, TaskDraw>();
 	private final Map<TaskCode, Task> tasks = new LinkedHashMap<TaskCode, Task>();
@@ -233,8 +233,9 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			this.min = printStart;
 			this.max = printEnd;
 		}
-		final TimeHeader timeHeader = getTimeHeader();
-		initTaskAndResourceDraws(timeHeader.getTimeScale(), timeHeader.getFullHeaderHeight(), stringBounder);
+		final TimeHeader timeHeader = getTimeHeader(stringBounder);
+		initTaskAndResourceDraws(timeHeader.getTimeScale(), timeHeader.getFullHeaderHeight(stringBounder),
+				stringBounder);
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
@@ -250,12 +251,12 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 					final HColor back = timelineStyle.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 					if (back.isTransparent() == false) {
 						final URectangle rect1 = URectangle.build(calculateDimension(ug.getStringBounder()).getWidth(),
-								timeHeader.getTimeHeaderHeight());
+								timeHeader.getTimeHeaderHeight(ug.getStringBounder()));
 						ug.apply(back.bg()).draw(rect1);
 						if (showFootbox) {
 							final URectangle rect2 = URectangle.build(
 									calculateDimension(ug.getStringBounder()).getWidth(),
-									timeHeader.getTimeFooterHeight());
+									timeHeader.getTimeFooterHeight(ug.getStringBounder()));
 							ug.apply(back.bg()).apply(UTranslate.dy(totalHeightWithoutFooter)).draw(rect2);
 						}
 					}
@@ -297,7 +298,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				return new XDimension2D(getTitlesColumnWidth(stringBounder) + getBarsColumnWidth(timeHeader),
-						getTotalHeight(timeHeader));
+						getTotalHeight(stringBounder, timeHeader));
 			}
 
 			private double getBarsColumnWidth(final TimeHeader timeHeader) {
@@ -309,28 +310,27 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		};
 	}
 
-	private TimeHeader getTimeHeader() {
+	private TimeHeader getTimeHeader(StringBounder stringBounder) {
 		if (openClose.getStartingDay() == null)
-			return new TimeHeaderSimple(thParam(), printScale);
+			return new TimeHeaderSimple(stringBounder, thParam(), printScale);
 		else if (printScale == PrintScale.DAILY)
-			return new TimeHeaderDaily(thParam(), nameDays, printStart, printEnd);
+			return new TimeHeaderDaily(stringBounder, thParam(), nameDays, printStart, printEnd);
 		else if (printScale == PrintScale.WEEKLY)
-			return new TimeHeaderWeekly(thParam(), weekNumberStrategy, withCalendarDate);
+			return new TimeHeaderWeekly(stringBounder, thParam(), weekNumberStrategy, withCalendarDate);
 		else if (printScale == PrintScale.MONTHLY)
-			return new TimeHeaderMonthly(thParam());
+			return new TimeHeaderMonthly(stringBounder, thParam());
 		else if (printScale == PrintScale.QUARTERLY)
-			return new TimeHeaderQuarterly(thParam());
+			return new TimeHeaderQuarterly(stringBounder, thParam());
 		else if (printScale == PrintScale.YEARLY)
-			return new TimeHeaderYearly(thParam());
+			return new TimeHeaderYearly(stringBounder, thParam());
 		else
 			throw new IllegalStateException();
 
 	}
 
 	private TimeHeaderParameters thParam() {
-		return new TimeHeaderParameters(colorDays(), getFactorScale(), min, max, getIHtmlColorSet(), getTimelineStyle(),
-				getClosedStyle(), locale, openClose, colorDaysOfWeek, verticalSeparatorBefore,
-				getVerticalSeparatorStyle());
+		return new TimeHeaderParameters(colorDays(), getFactorScale(), min, max, getIHtmlColorSet(), locale, openClose,
+				colorDaysOfWeek, verticalSeparatorBefore, this);
 	}
 
 	private Map<Day, HColor> colorDays() {
@@ -338,24 +338,21 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return Collections.unmodifiableMap(colorDaysInternal);
 	}
 
-	private Style getClosedStyle() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.closed)
+	@Override
+	public final Style getStyle(SName param) {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, param)
 				.getMergedStyle(getCurrentStyleBuilder());
 	}
 
-	private Style getTimelineStyle() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.timeline)
+	@Override
+	public final Style getStyle(SName param1, SName param2) {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, param1, param2)
 				.getMergedStyle(getCurrentStyleBuilder());
 	}
 
-	private Style getVerticalSeparatorStyle() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.verticalSeparator)
-				.getMergedStyle(getCurrentStyleBuilder());
-	}
-
-	private double getTotalHeight(TimeHeader timeHeader) {
+	private double getTotalHeight(StringBounder stringBounder, TimeHeader timeHeader) {
 		if (showFootbox)
-			return totalHeightWithoutFooter + timeHeader.getTimeFooterHeight();
+			return totalHeightWithoutFooter + timeHeader.getTimeFooterHeight(stringBounder);
 
 		return totalHeightWithoutFooter;
 	}

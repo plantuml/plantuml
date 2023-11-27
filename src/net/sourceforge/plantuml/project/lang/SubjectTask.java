@@ -96,7 +96,7 @@ public class SubjectTask implements Subject {
 				new SentenceTaskEndsAbsolute(), new SentenceIsColored(), new SentenceIsColoredForCompletion(),
 				new SentenceIsDeleted(), new SentenceIsForTask(), new SentenceLinksTo(), new SentenceOccurs(),
 				new SentenceDisplayOnSameRowAs(), new SentencePausesDate(), new SentencePausesDates(),
-				new SentencePausesDayOfWeek());
+				new SentencePausesDayOfWeek(), new SentenceIsDisplayedAs());
 	}
 
 	public IRegex toRegex() {
@@ -106,8 +106,7 @@ public class SubjectTask implements Subject {
 						new RegexLeaf("SUBJECT", "\\[([^\\[\\]]+?)\\](?:[%s]+as[%s]+\\[([^\\[\\]]+?)\\])?"), //
 						new RegexOptional( //
 								new RegexConcat( //
-										RegexLeaf.spaceOneOrMore(), //
-										new RegexLeaf("on"), //
+										Words.exactly(Words.ON), //
 										RegexLeaf.spaceOneOrMore(), //
 										new RegexLeaf("RESOURCE", "((?:\\{[^{}]+\\}[%s]*)+)") //
 								))));

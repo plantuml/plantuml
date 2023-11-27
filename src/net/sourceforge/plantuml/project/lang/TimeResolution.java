@@ -35,30 +35,38 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import net.sourceforge.plantuml.project.time.Month;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 
-public class Verbs {
+public abstract class TimeResolution {
 
-	public static IRegex are = new RegexLeaf("are");
-	public static IRegex areColored = new RegexLeaf("are[%s]+colou?red");
-	public static IRegex displayOnSameRowAs = new RegexLeaf("displays?[%s]+on[%s]+same[%s]+row[%s]+as");
-	public static IRegex ends = new RegexLeaf("ends");
-	public static IRegex happens = new RegexLeaf("happens");
-	public static IRegex is = new RegexLeaf("is");
-	public static IRegex isColored = new RegexLeaf("is[%s]+colou?red");
-	public static IRegex isDeleted = new RegexLeaf("is[%s]+deleted");
-	public static IRegex isDisplayedAs = new RegexLeaf("is[%s]+displayed[%s]+as");
-	public static IRegex isOff = new RegexLeaf("is[%s]+off");
-	public static IRegex isOn = new RegexLeaf("is[%s]+on");
-	public static IRegex isOrAre = new RegexLeaf("(is|are)");
-	public static IRegex isOrAreNamed = new RegexLeaf("(is|are)[%s]+named");
-	public static IRegex just = new RegexLeaf("just");
-	public static IRegex linksTo = new RegexLeaf("links[%s]+to");
-	public static IRegex occurs = new RegexLeaf("occurs");
-	public static IRegex pauses = new RegexLeaf("pauses");
-	public static IRegex requires = new RegexLeaf("(lasts|requires)");
-	public static IRegex starts = new RegexLeaf("starts");
-	public static IRegex worksOn = new RegexLeaf("works[%s]+on");
+	public static IRegex toRegexA_DD_MONTH_YYYY(String year, String month, String day) {
+		return new RegexConcat( //
+				new RegexLeaf(day, "([\\d]{1,2})"), //
+				new RegexLeaf("[\\w, ]*?"), //
+				new RegexLeaf(month, "(" + Month.getRegexString() + ")"), //
+				new RegexLeaf("[\\w, ]*?"), //
+				new RegexLeaf(year, "([\\d]{1,4})"));
+	}
+
+	public static IRegex toRegexB_YYYY_MM_DD(String year, String month, String day) {
+		return new RegexConcat( //
+				new RegexLeaf(year, "([\\d]{1,4})"), //
+				new RegexLeaf("\\D"), //
+				new RegexLeaf(month, "([\\d]{1,2})"), //
+				new RegexLeaf("\\D"), //
+				new RegexLeaf(day, "([\\d]{1,2})"));
+	}
+
+	public static IRegex toRegexC_MONTH_DD_YYYY(String year, String month, String day) {
+		return new RegexConcat( //
+				new RegexLeaf(month, "(" + Month.getRegexString() + ")"), //
+				new RegexLeaf("[\\w, ]*?"), //
+				new RegexLeaf(day, "([\\d]{1,2})"), //
+				new RegexLeaf("[\\w, ]*?"), //
+				new RegexLeaf(year, "([\\d]{1,4})"));
+	}
 
 }

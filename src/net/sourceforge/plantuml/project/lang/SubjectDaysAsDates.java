@@ -63,19 +63,10 @@ public class SubjectDaysAsDates implements Subject {
 
 	private IRegex toRegexB() {
 		return new RegexConcat( //
-				new RegexLeaf("BYEAR1", "([\\d]{4})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf("BMONTH1", "([\\d]{1,2})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf("BDAY1", "([\\d]{1,2})"), //
+				TimeResolution.toRegexB_YYYY_MM_DD("BYEAR1", "BMONTH1", "BDAY1"), //
+				Words.exactly(Words.TO), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("to"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("BYEAR2", "([\\d]{4})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf("BMONTH2", "([\\d]{1,2})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf("BDAY2", "([\\d]{1,2})") //
+				TimeResolution.toRegexB_YYYY_MM_DD("BYEAR2", "BMONTH2", "BDAY2") //
 		);
 	}
 
@@ -83,8 +74,7 @@ public class SubjectDaysAsDates implements Subject {
 		return new RegexConcat( //
 				new RegexLeaf("[dD]\\+"), //
 				new RegexLeaf("ECOUNT1", "([\\d]+)"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("to"), //
+				Words.exactly(Words.TO), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("[dD]\\+"), //
 				new RegexLeaf("ECOUNT2", "([\\d]+)") //
@@ -93,13 +83,8 @@ public class SubjectDaysAsDates implements Subject {
 
 	private IRegex andRegex() {
 		return new RegexConcat( //
-				new RegexLeaf("BYEAR3", "([\\d]{4})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf("BMONTH3", "([\\d]{1,2})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf("BDAY3", "([\\d]{1,2})"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("and"), //
+				TimeResolution.toRegexB_YYYY_MM_DD("BYEAR3", "BMONTH3", "BDAY3"), //
+				Words.exactly(Words.AND), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("COUNT_AND", "([\\d]+)"), //
 				RegexLeaf.spaceOneOrMore(), //

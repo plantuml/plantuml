@@ -40,41 +40,79 @@ import java.util.Map;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.MonthYear;
 import net.sourceforge.plantuml.project.timescale.TimeScaleDaily;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
 
 public class TimeHeaderDaily extends TimeHeaderCalendar {
 
-	public double getTimeHeaderHeight() {
-		return Y_POS_ROW28() + 13;
+	private double getH1(StringBounder stringBounder) {
+		final double h = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble() + 2;
+		return h;
 	}
 
-	public double getTimeFooterHeight() {
-		// return 0;
-		return 24 + 14;
+	private double getH2(StringBounder stringBounder) {
+		final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 2;
+		return getH1(stringBounder) + h;
+	}
+
+	private double getH3(StringBounder stringBounder) {
+		final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 3;
+		return getH2(stringBounder) + h;
+	}
+
+	@Override
+	public double getTimeHeaderHeight(StringBounder stringBounder) {
+		return getH3(stringBounder);
+	}
+
+	@Override
+	public double getTimeFooterHeight(StringBounder stringBounder) {
+		final double h1 = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble();
+		final double h2 = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble();
+		final double h3 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
+		return h1 + h2 + h3 + 8;
+	}
+
+	private double getHeaderNameDayHeight() {
+		if (nameDays.size() > 0) {
+			final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 6;
+			return h;
+		}
+
+		return 0;
+	}
+
+	@Override
+	public double getFullHeaderHeight(StringBounder stringBounder) {
+		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();
 	}
 
 	private final Map<Day, String> nameDays;
 
-	public TimeHeaderDaily(TimeHeaderParameters thParam, Map<Day, String> nameDays, Day printStart, Day printEnd) {
-		super(thParam, new TimeScaleDaily(thParam.getStartingDay(), thParam.getScale(), printStart));
+	public TimeHeaderDaily(StringBounder stringBounder, TimeHeaderParameters thParam, Map<Day, String> nameDays,
+			Day printStart, Day printEnd) {
+		super(thParam, new TimeScaleDaily(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),
+				thParam.getScale(), printStart));
 		this.nameDays = nameDays;
 	}
 
 	@Override
 	public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
 		drawTextsBackground(ug, totalHeightWithoutFooter);
-		drawTextsDayOfWeek(ug.apply(UTranslate.dy(Y_POS_ROW16())));
-		drawTextDayOfMonth(ug.apply(UTranslate.dy(Y_POS_ROW28())));
+		drawTextsDayOfWeek(ug.apply(UTranslate.dy(getH1(ug.getStringBounder()))));
+		drawTextDayOfMonth(ug.apply(UTranslate.dy(getH2(ug.getStringBounder()))));
 		drawMonths(ug);
 		printVerticalSeparators(ug, totalHeightWithoutFooter);
 
 		printNamedDays(ug);
 
-		drawHline(ug, getFullHeaderHeight());
+		drawHline(ug, getFullHeaderHeight(ug.getStringBounder()));
 		drawHline(ug, totalHeightWithoutFooter);
 	}
 
@@ -84,21 +122,22 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 		final UGraphic ugLineColor = ug.apply(getLineColor());
 		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment())
 			if (isBold2(wink))
-				drawVline(ugVerticalSeparator, getTimeScale().getStartingPosition(wink), getFullHeaderHeight(),
-						totalHeightWithoutFooter);
+				drawVline(ugVerticalSeparator, getTimeScale().getStartingPosition(wink),
+						getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);
 			else
-				drawVline(ugLineColor, getTimeScale().getStartingPosition(wink), getFullHeaderHeight(),
-						totalHeightWithoutFooter);
+				drawVline(ugLineColor, getTimeScale().getStartingPosition(wink),
+						getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);
 
-		drawVline(ugLineColor, getTimeScale().getEndingPosition(getMax()), getFullHeaderHeight(),
+		drawVline(ugLineColor, getTimeScale().getEndingPosition(getMax()), getFullHeaderHeight(ug.getStringBounder()),
 				totalHeightWithoutFooter);
 	}
 
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
-		drawTextDayOfMonth(ug.apply(UTranslate.dy(12)));
+		final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 2;
 		drawTextsDayOfWeek(ug);
-		drawMonths(ug.apply(UTranslate.dy(24)));
+		drawTextDayOfMonth(ug.apply(UTranslate.dy(h + 2)));
+		drawMonths(ug.apply(UTranslate.dy(2 * h + 3)));
 	}
 
 	private void drawTextsDayOfWeek(UGraphic ug) {
@@ -106,7 +145,8 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			final double x2 = getTimeScale().getEndingPosition(wink);
 			final HColor textColor = getTextBackColor(wink);
-			printCentered(ug, getTextBlock(wink.getDayOfWeek().shortName(locale()), 10, false, textColor), x1, x2);
+			printCentered(ug, getTextBlock(SName.day, wink.getDayOfWeek().shortName(locale()), false, textColor), x1,
+					x2);
 		}
 	}
 
@@ -115,7 +155,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			final double x2 = getTimeScale().getEndingPosition(wink);
 			final HColor textColor = getTextBackColor(wink);
-			printCentered(ug, getTextBlock("" + wink.getDayOfMonth(), 10, false, textColor), x1, x2);
+			printCentered(ug, getTextBlock(SName.day, "" + wink.getDayOfMonth(), false, textColor), x1, x2);
 		}
 	}
 
@@ -146,9 +186,9 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	}
 
 	private void printMonth(UGraphic ug, MonthYear monthYear, double start, double end) {
-		final TextBlock tiny = getTextBlock(monthYear.shortName(locale()), 12, true, openFontColor());
-		final TextBlock small = getTextBlock(monthYear.longName(locale()), 12, true, openFontColor());
-		final TextBlock big = getTextBlock(monthYear.longNameYYYY(locale()), 12, true, openFontColor());
+		final TextBlock tiny = getTextBlock(SName.month, monthYear.shortName(locale()), true, openFontColor());
+		final TextBlock small = getTextBlock(SName.month, monthYear.longName(locale()), true, openFontColor());
+		final TextBlock big = getTextBlock(SName.month, monthYear.longNameYYYY(locale()), true, openFontColor());
 		printCentered(ug, false, start, end, tiny, small, big);
 	}
 
@@ -160,27 +200,17 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 				if (name != null && name.equals(last) == false) {
 					final double x1 = getTimeScale().getStartingPosition(wink);
 					final double x2 = getTimeScale().getEndingPosition(wink);
-					final TextBlock label = getTextBlock(name, 12, false, openFontColor());
+					final TextBlock label = getTextBlock(SName.month, name, false, openFontColor());
 					final double h = label.calculateDimension(ug.getStringBounder()).getHeight();
-					double y1 = getTimeHeaderHeight();
-					double y2 = getFullHeaderHeight();
-					label.drawU(ug.apply(new UTranslate(x1, Y_POS_ROW28() + 11)));
+					double y1 = getTimeHeaderHeight(ug.getStringBounder());
+					double y2 = getFullHeaderHeight(ug.getStringBounder());
+
+					final double position = getH3(ug.getStringBounder());
+					label.drawU(ug.apply(new UTranslate(x1, position)));
 				}
 				last = name;
 			}
 		}
-	}
-
-	@Override
-	public double getFullHeaderHeight() {
-		return getTimeHeaderHeight() + getHeaderNameDayHeight();
-	}
-
-	private double getHeaderNameDayHeight() {
-		if (nameDays.size() > 0)
-			return 16;
-
-		return 0;
 	}
 
 }

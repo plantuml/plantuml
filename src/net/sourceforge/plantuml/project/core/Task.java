@@ -81,4 +81,8 @@ public interface Task extends Moment {
 
 	public boolean isAssignedTo(Resource res);
 
+	public void setDisplay(String displayString);
+
+	public String getDisplayString();
+
 }

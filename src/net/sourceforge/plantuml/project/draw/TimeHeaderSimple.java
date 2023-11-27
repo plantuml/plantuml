@@ -39,6 +39,9 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
@@ -48,30 +51,36 @@ import net.sourceforge.plantuml.project.core.PrintScale;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.project.timescale.TimeScaleWink;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
 
 public class TimeHeaderSimple extends TimeHeader {
 
 	private final PrintScale printScale;
 
 	@Override
-	public double getFullHeaderHeight() {
-		return getTimeHeaderHeight() + getHeaderNameDayHeight();
+	public double getFullHeaderHeight(StringBounder stringBounder) {
+		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();
 	}
 
-	public double getTimeHeaderHeight() {
-		return 16;
+	@Override
+	public double getTimeHeaderHeight(StringBounder stringBounder) {
+		final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble();
+		return h + 6;
 	}
 
-	public double getTimeFooterHeight() {
-		return 16;
+	@Override
+	public double getTimeFooterHeight(StringBounder stringBounder) {
+		final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble();
+		return h + 6;
 	}
 
 	private double getHeaderNameDayHeight() {
 		return 0;
 	}
 
-	public TimeHeaderSimple(TimeHeaderParameters thParam, PrintScale printScale) {
-		super(thParam, new TimeScaleWink(thParam.getScale(), printScale));
+	public TimeHeaderSimple(StringBounder stringBounder, TimeHeaderParameters thParam, PrintScale printScale) {
+		super(thParam, new TimeScaleWink(thParam.getCellWidth(stringBounder), thParam.getScale(), printScale));
 		this.printScale = printScale;
 	}
 
@@ -91,9 +100,10 @@ public class TimeHeaderSimple extends TimeHeader {
 				value = i.getAbsoluteDayNum() / 7 + 1;
 			else
 				value = i.getAbsoluteDayNum() + 1;
-			final TextBlock num = Display.getWithNewlines("" + value).create(
-					getFontConfiguration(10, false, openFontColor()), HorizontalAlignment.LEFT,
-					new SpriteContainerEmpty());
+			final UFont font = thParam.getStyle(SName.timeline, SName.day).getUFont();
+			final FontConfiguration fontConfiguration = getFontConfiguration(font, false, openFontColor());
+			final TextBlock num = Display.getWithNewlines("" + value).create(fontConfiguration,
+					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 			final double x1 = timeScale.getStartingPosition(i);
 			final double x2;
 			if (printScale == PrintScale.WEEKLY)
@@ -110,15 +120,15 @@ public class TimeHeaderSimple extends TimeHeader {
 
 	@Override
 	public void drawTimeHeader(UGraphic ug, double totalHeightWithoutFooter) {
-		drawTextsBackground(ug.apply(UTranslate.dy(-3)), totalHeightWithoutFooter + 6);
+		// drawTextsBackground(ug.apply(UTranslate.dy(-3)), totalHeightWithoutFooter + 6);
 		final double xmin = getTimeScale().getStartingPosition(getMin());
 		final double xmax = getTimeScale().getEndingPosition(getMax());
 		drawSmallVlinesDay(ug, getTimeScale(), totalHeightWithoutFooter + 2);
 		printVerticalSeparators(ug, totalHeightWithoutFooter);
 		drawSimpleDayCounter(ug, getTimeScale());
-		ug = ug.apply(getLineColor());
-		ug.draw(ULine.hline(xmax - xmin));
-		ug.apply(UTranslate.dy(getFullHeaderHeight() - 3)).draw(ULine.hline(xmax - xmin));
+		// ug = ug.apply(getLineColor());
+		// ug.draw(ULine.hline(xmax - xmin));
+		// ug.apply(UTranslate.dy(getFullHeaderHeight(ug.getStringBounder()) - 3)).draw(ULine.hline(xmax - xmin));
 
 	}
 
@@ -127,9 +137,9 @@ public class TimeHeaderSimple extends TimeHeader {
 		final double xmin = getTimeScale().getStartingPosition(getMin());
 		final double xmax = getTimeScale().getEndingPosition(getMax());
 		ug = ug.apply(UTranslate.dy(3));
-		drawSmallVlinesDay(ug, getTimeScale(), getTimeFooterHeight() - 3);
+		drawSmallVlinesDay(ug, getTimeScale(), getTimeFooterHeight(ug.getStringBounder()) - 3);
 		drawSimpleDayCounter(ug, getTimeScale());
-		ug.apply(getLineColor()).draw(ULine.hline(xmax - xmin));
+		// ug.apply(getLineColor()).draw(ULine.hline(xmax - xmin));
 	}
 
 	// Duplicate in TimeHeaderDaily
@@ -151,7 +161,7 @@ public class TimeHeaderSimple extends TimeHeader {
 
 	protected final void drawTextsBackground(UGraphic ug, double totalHeightWithoutFooter) {
 
-		final double height = totalHeightWithoutFooter - getFullHeaderHeight();
+		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());
 		Pending pending = null;
 
 		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {

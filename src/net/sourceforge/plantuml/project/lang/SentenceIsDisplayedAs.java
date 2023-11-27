@@ -33,33 +33,24 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.timescale;
+package net.sourceforge.plantuml.project.lang;
 
-import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.DayOfWeek;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.core.Task;
 
-public class TimeScaleCompressed implements TimeScale {
+public class SentenceIsDisplayedAs extends SentenceSimple {
 
-	private final TimeScale daily;
-
-	public TimeScaleCompressed(double size, Day calendar, double scale) {
-		this.daily = new TimeScaleDaily(size, calendar, scale, null);
+	public SentenceIsDisplayedAs() {
+		super(SubjectTask.ME, Verbs.isDisplayedAs, new ComplementAnything());
 	}
 
-	public double getStartingPosition(Day instant) {
-		return daily.getStartingPosition(instant);
-	}
-
-	public double getEndingPosition(Day instant) {
-		return daily.getEndingPosition(instant);
-	}
-
-	public double getWidth(Day instant) {
-		return daily.getWidth(instant);
-	}
-
-	public boolean isBreaking(Day instant) {
-		return instant.getDayOfWeek() == DayOfWeek.SUNDAY;
+	@Override
+	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+		final Task task = (Task) subject;
+		final String displayString = (String) complement;
+		task.setDisplay(displayString);
+		return CommandExecutionResult.ok();
 	}
 
 }

@@ -33,12 +33,15 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.lang;
+package net.sourceforge.plantuml.project;
 
-import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
 
-public interface Adverbial {
+public interface GanttStyle {
 
-	public IRegex toRegex();
+	public Style getStyle(SName param);
+
+	public Style getStyle(SName param1, SName param2);
 
 }

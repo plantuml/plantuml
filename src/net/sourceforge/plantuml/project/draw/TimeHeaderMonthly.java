@@ -37,54 +37,76 @@ package net.sourceforge.plantuml.project.draw;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.MonthYear;
 import net.sourceforge.plantuml.project.timescale.TimeScaleCompressed;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
 
 public class TimeHeaderMonthly extends TimeHeaderCalendar {
 
-	public double getTimeHeaderHeight() {
-		return 16 + 13;
+	@Override
+	public double getTimeHeaderHeight(StringBounder stringBounder) {
+		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
+		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
+		return h1 + h2 + 5;
 	}
 
-	public double getTimeFooterHeight() {
-		return 16 + 13 - 1;
+	@Override
+	public double getTimeFooterHeight(StringBounder stringBounder) {
+		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
+		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
+		return h1 + h2 + 5;
 	}
 
-	public TimeHeaderMonthly(TimeHeaderParameters thParam) {
-		super(thParam, new TimeScaleCompressed(thParam.getStartingDay(), thParam.getScale()));
+	@Override
+	public double getFullHeaderHeight(StringBounder stringBounder) {
+		return getTimeHeaderHeight(stringBounder);
+	}
+
+	public TimeHeaderMonthly(StringBounder stringBounder, TimeHeaderParameters thParam) {
+		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),
+				thParam.getScale()));
 	}
 
 	@Override
 	public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
 		drawTextsBackground(ug, totalHeightWithoutFooter);
 		drawYears(ug);
-		drawMonths(ug.apply(UTranslate.dy(16)));
+		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
+		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
+		drawMonths(ug.apply(UTranslate.dy(h1 + 2)));
 		printVerticalSeparators(ug, totalHeightWithoutFooter);
 		drawHline(ug, 0);
-		drawHline(ug, 16);
-		drawHline(ug, getFullHeaderHeight());
+		drawHline(ug, h1 + 2);
+		drawHline(ug, h1 + 2 + h2 + 2);
+//		drawHline(ug, getFullHeaderHeight(ug.getStringBounder()));
 	}
 
 	@Override
 	public void drawTimeFooter(UGraphic ug) {
-		ug = ug.apply(UTranslate.dy(3));
+		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
+		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
+		// ug = ug.apply(UTranslate.dy(3));
 		drawMonths(ug);
-		drawYears(ug.apply(UTranslate.dy(13)));
+		drawYears(ug.apply(UTranslate.dy(h2 + 2)));
 		drawHline(ug, 0);
-		drawHline(ug, 13);
-		drawHline(ug, getTimeFooterHeight());
+		drawHline(ug, h2 + 2);
+		drawHline(ug, h1 + 2 + h2 + 2);
+//		drawHline(ug, getTimeFooterHeight(ug.getStringBounder()));
 	}
 
 	private void drawYears(final UGraphic ug) {
+		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
 		MonthYear last = null;
 		double lastChange = -1;
 		for (Day wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			if (last == null || wink.monthYear().year() != last.year()) {
-				drawVline(ug.apply(getLineColor()), x1, 0, 15);
+				drawVline(ug.apply(getLineColor()), x1, 0, h1 + 2);
 				if (last != null)
 					printYear(ug, last, lastChange, x1);
 
@@ -96,16 +118,17 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 		if (x1 > lastChange)
 			printYear(ug, last, lastChange, x1);
 
-		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), (double) 0, (double) 15);
+		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), 0, h1 + 2);
 	}
 
 	private void drawMonths(UGraphic ug) {
+		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
 		MonthYear last = null;
 		double lastChange = -1;
 		for (Day wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			if (wink.monthYear().equals(last) == false) {
-				drawVline(ug.apply(getLineColor()), x1, (double) 0, (double) 12);
+				drawVline(ug.apply(getLineColor()), x1, 0, h2 + 2);
 				if (last != null)
 					printMonth(ug, last, lastChange, x1);
 
@@ -117,27 +140,22 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 		if (x1 > lastChange)
 			printMonth(ug, last, lastChange, x1);
 
-		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), (double) 0, (double) 12);
+		drawVline(ug.apply(getLineColor()), getTimeScale().getEndingPosition(getMax()), 0, h2 + 2);
 	}
 
 	private void printYear(UGraphic ug, MonthYear monthYear, double start, double end) {
-		final TextBlock small = getTextBlock("" + monthYear.year(), 12, true, openFontColor());
+		final TextBlock small = getTextBlock(SName.month, "" + monthYear.year(), true, openFontColor());
 		printCentered(ug, false, start, end, small);
 	}
 
 	private void printMonth(UGraphic ug, MonthYear monthYear, double start, double end) {
-		final TextBlock small = getTextBlock(monthYear.shortName(locale()), 10, false, openFontColor());
-		final TextBlock big = getTextBlock(monthYear.longName(locale()), 10, false, openFontColor());
+		final TextBlock small = getTextBlock(SName.day, monthYear.shortName(locale()), false, openFontColor());
+		final TextBlock big = getTextBlock(SName.day, monthYear.longName(locale()), false, openFontColor());
 		printCentered(ug, false, start, end, small, big);
 	}
 
 	private void printLeft(UGraphic ug, TextBlock text, double start) {
 		text.drawU(ug.apply(UTranslate.dx(start)));
-	}
-
-	@Override
-	public double getFullHeaderHeight() {
-		return getTimeHeaderHeight();
 	}
 
 }

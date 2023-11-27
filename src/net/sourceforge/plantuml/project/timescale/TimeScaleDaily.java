@@ -39,13 +39,13 @@ import net.sourceforge.plantuml.project.core.PrintScale;
 import net.sourceforge.plantuml.project.time.Day;
 
 public final class TimeScaleDaily implements TimeScale {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private final TimeScaleWink basic;
 	private final double delta;
 
-	public TimeScaleDaily(Day startingDay, double scale, Day zeroDay) {
-		this.basic = new TimeScaleWink(scale, PrintScale.DAILY);
+	public TimeScaleDaily(double size, Day startingDay, double scale, Day zeroDay) {
+		this.basic = new TimeScaleWink(size, scale, PrintScale.DAILY);
 		if (zeroDay == null)
 			this.delta = basic.getStartingPosition(startingDay);
 		else

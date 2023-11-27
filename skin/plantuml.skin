@@ -375,6 +375,13 @@ ganttDiagram {
 	timeline {
 	    BackgroundColor transparent
 	    LineColor #C0C0C0
+	    FontSize 10
+	    month {
+	      FontSize 12
+	    }
+	    year {
+	      FontSize 14
+	    }
 	}
 	closed {
         BackGroundColor #F1E5E5
