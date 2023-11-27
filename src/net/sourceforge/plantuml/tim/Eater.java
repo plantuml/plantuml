@@ -82,9 +82,9 @@ public abstract class Eater {
 		char ch = peekChar();
 		if (ch == '{' || ch == '[') {
 			final String data = eatAllToEnd();
-			 // System.err.println("data=" + data);
+			// System.err.println("data=" + data);
 			final JsonValue json = Json.parse(data);
-			 // System.err.println("json=" + json);
+			// System.err.println("json=" + json);
 			return TValue.fromJson(json);
 		}
 		final TokenStack tokenStack = eatTokenStack();
