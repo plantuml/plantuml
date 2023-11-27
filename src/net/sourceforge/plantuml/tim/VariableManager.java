@@ -66,7 +66,8 @@ public class VariableManager {
 			} else if (value.toJson().isNumber()) {
 				result.append(value.toJson().toString());
 			} else {
-				JsonValue jsonValue = (JsonObject) value.toJson();
+				JsonValue jsonValue = (value.toJson().isArray()) ? (JsonArray) value.toJson()
+					: (JsonObject) value.toJson();
 				i++;
 				i = replaceJson(jsonValue, str, i, result) - 1;
 			}
