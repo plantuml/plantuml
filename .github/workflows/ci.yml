@@ -99,7 +99,7 @@ jobs:
 
       - name: Set up java
         if: needs.workflow_config.outputs.do_test_linux == 'true'
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java_version }}
           distribution: temurin
@@ -132,7 +132,7 @@ jobs:
       - name: Checkout the repository
         uses: actions/checkout@v4
       - name: Set up java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: 17
           distribution: temurin
@@ -195,7 +195,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: 17
           distribution: temurin
@@ -221,7 +221,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: 17
           distribution: temurin
