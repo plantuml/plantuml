@@ -112,6 +112,9 @@ public class Option {
 
 	private FileFormatOption fileFormatOption = new FileFormatOption(FileFormat.PNG);
 
+	/**
+	 *  @deprecated Use {@link #setFileFormatOption(FileFormatOption)} instead
+	 */
 	@Deprecated
 	@ApiWarning(willBeRemoved = "in next major release")
 	final public void setFileFormat(FileFormat fileFormat) {
