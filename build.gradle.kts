@@ -33,6 +33,7 @@ dependencies {
 	testImplementation("io.github.glytching:junit-extensions:2.6.0")
 	testImplementation("org.assertj:assertj-core:3.24.2")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.10.1")
+	testImplementation("org.xmlunit:xmlunit-core:2.9.+")
 	if (JavaVersion.current().isJava8) {
 		testImplementation("org.mockito:mockito-core:4.+")
 		testImplementation("org.mockito:mockito-junit-jupiter:4.+")
