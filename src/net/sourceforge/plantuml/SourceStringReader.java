@@ -106,6 +106,9 @@ public class SourceStringReader {
 		}
 	}
 
+	/**
+	 * @deprecated Use {@link #outputImage(OutputStream)} instead
+	 */
 	@Deprecated
 	public String generateImage(OutputStream os) throws IOException {
 		return outputImage(os).getDescription();
@@ -116,6 +119,9 @@ public class SourceStringReader {
 	}
 
 	// ::comment when __CORE__
+	/**
+	 * @deprecated Use {@link #outputImage(SFile)} instead
+	 */
 	@Deprecated
 	public String generateImage(SFile f) throws IOException {
 		return outputImage(f).getDescription();
@@ -128,6 +134,9 @@ public class SourceStringReader {
 	}
 	// ::done
 
+	/**
+	 * @deprecated Use {@link #outputImage(OutputStream, FileFormatOption)} instead
+	 */
 	@Deprecated
 	public String generateImage(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
 		return outputImage(os, fileFormatOption).getDescription();
@@ -137,6 +146,9 @@ public class SourceStringReader {
 		return outputImage(os, 0, fileFormatOption);
 	}
 
+	/**
+	 * @deprecated Use {@link #outputImage(OutputStream, int)} instead
+	 */
 	@Deprecated
 	public String generateImage(OutputStream os, int numImage) throws IOException {
 		return outputImage(os, numImage).getDescription();
@@ -146,6 +158,9 @@ public class SourceStringReader {
 		return outputImage(os, numImage, new FileFormatOption(FileFormat.PNG));
 	}
 
+	/**
+	 * @deprecated Use {@link #outputImage(OutputStream, int, FileFormatOption)} instead
+	 */
 	@Deprecated
 	public String generateImage(OutputStream os, int numImage, FileFormatOption fileFormatOption) throws IOException {
 		return outputImage(os, numImage, fileFormatOption).getDescription();
