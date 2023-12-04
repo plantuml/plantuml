@@ -12,9 +12,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.concurrent.atomic.AtomicInteger;
+
+import org.xmlunit.builder.DiffBuilder;
+import org.xmlunit.builder.Input;
+import org.xmlunit.diff.DefaultNodeMatcher;
+import org.xmlunit.diff.Diff;
+import org.xmlunit.diff.ElementSelectors;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
@@ -30,44 +33,31 @@ public class XmiTest {
 		final String star = removeVersion(runPlantUML(expectedDescription, FileFormat.XMI_STAR));
 		final String starExpected = readStringFromSourceFile(getDiagramFile(), "{{{star", "}}}star");
 
-		// This is really a hack. Since XML generation does not guarantee the order of
-		// attributes, we make an easy to do check by sorting characters.
-		// Of course, this is really incomplete: a faulty String may match the expected
-		// result if, for example, an attribute is moved from a node to another.
-		// However, we consider that it is a good start.
-		if (sortString(star).equals(sortString(starExpected)) == false) {
-			assertEquals(starExpected, star, "XmiStar: Generated GraphML is not ok");
-		}
+		assertXMIEqual(star, starExpected);
 
 		final String argo = removeVersion(runPlantUML(expectedDescription, FileFormat.XMI_ARGO));
 		final String argoExpected = readStringFromSourceFile(getDiagramFile(), "{{{argo", "}}}argo");
 
-		if (sortString(argo).equals(sortString(argoExpected)) == false) {
-			assertEquals(argoExpected, argo, "XmiArgo: Generated GraphML is not ok");
-		}
+		assertXMIEqual(argo, argoExpected);
+	}
 
+	private void assertXMIEqual(final String actual, final String expected) {
+		// XMI is XML, so we can just use the xmlunit diffbuilder
+		// Compare elements with the same xmi ID
+		// checkForSimilar required to ignore order
+		Diff diff = DiffBuilder.compare(Input.fromString(actual)).withTest(Input.fromString(expected))
+				.ignoreWhitespace().ignoreComments().checkForSimilar()
+				.withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndAttributes("xmi.id"))).build();
+		
+		if (diff.hasDifferences()) {
+			assertTrue(false, diff.fullDescription());
+		}
 	}
 
 	private String removeVersion(String xmi) {
 		return xmi.replaceFirst("\\<XMI.exporterVersion\\>.*\\</XMI.exporterVersion\\>", "");
 	}
 
-	private String sortString(String s) {
-		final Map<Character, AtomicInteger> map = new TreeMap<>();
-		for (int i = 0; i < s.length(); i++) {
-			final char ch = s.charAt(i);
-			// We ignore non writable characters
-			if (ch <= ' ')
-				continue;
-
-			AtomicInteger count = map.get(ch);
-			if (count == null)
-				map.put(ch, new AtomicInteger(1));
-			else
-				count.addAndGet(1);
-		}
-		return map.toString();
-	}
 
 	private String getLocalFolder() {
 		return "test/" + getPackageName().replace(".", "/");
