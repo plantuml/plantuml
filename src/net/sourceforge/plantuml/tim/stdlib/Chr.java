@@ -59,8 +59,8 @@ public class Chr extends SimpleReturnFunction {
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		try {
-			final char value = (char) values.get(0).toInt();
-			return TValue.fromString("" + value);
+			final String value = String.valueOf(Character.toChars(values.get(0).toInt()));
+			return TValue.fromString(value);
 		} catch (Throwable t) {
 			return TValue.fromString("\0");
 		}

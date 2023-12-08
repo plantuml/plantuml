@@ -32,9 +32,9 @@ class ChrTest {
 			" 34   , '\"' ",
 			" 224  , à ",
 			" 233  , é ",
-// TODO: fix `%chr` to allow Unicode chars, the corresponding tests are here:
-//			" 128512 , 😀 ",
-//			" 128512 , \uD83D\uDE00 ",
+// DONE: fix `%chr` to allow Unicode chars, the corresponding tests are here:
+			" 128512 , 😀 ",
+			" 128512 , \uD83D\uDE00 ",
 	})
 	void executeReturnFunctionChrTest(Integer input, String expected) throws EaterException, EaterExceptionLocated {
 		Chr cut = new Chr();
