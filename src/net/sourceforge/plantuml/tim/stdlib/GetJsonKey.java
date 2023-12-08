@@ -76,9 +76,11 @@ public class GetJsonKey extends SimpleReturnFunction {
 			final JsonArray array = (JsonArray) json;
 			final JsonArray result = new JsonArray();
 			for (JsonValue tmp : array) {
-				final JsonObject object = (JsonObject) tmp;
-				for (String key : object.names())
-					result.add(key);
+				if (tmp.isObject()) {
+					final JsonObject object = (JsonObject) tmp;
+					for (String key : object.names())
+						result.add(key);
+				}
 			}
 			return TValue.fromJson(result);
 		}
