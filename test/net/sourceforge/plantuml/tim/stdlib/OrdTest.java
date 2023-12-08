@@ -1,29 +1,31 @@
 package net.sourceforge.plantuml.tim.stdlib;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static net.sourceforge.plantuml.tim.TimTestUtils.assertTimExpectedOutputFromInput;
 
-import java.util.Collections;
-import java.util.List;
-
+import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
+import org.junit.jupiter.api.IndicativeSentencesGeneration;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
-import net.sourceforge.plantuml.tim.expression.TValue;
+import net.sourceforge.plantuml.tim.TFunction;
 
 /**
  * Tests the builtin function %ord.
  */
-class OrdTest {
+@IndicativeSentencesGeneration(separator = ": ", generator = ReplaceUnderscores.class)
 
+class OrdTest {
+	TFunction cut = new Ord();
+	final String cutName = "Ord";
 	/**
 	 * Tests ord according to a list of input / expected output 
 	 *
 	 * @throws EaterException should not
 	 * @throws EaterExceptionLocated should not
 	 */
-	@ParameterizedTest
+	@ParameterizedTest(name = "[{index}] " + cutName + "(''{0}'') = {1}")
 	@CsvSource(nullValues = "null", value = {
 			" A     , 65 ",
 			" ABC   , 65 ",
@@ -39,11 +41,7 @@ class OrdTest {
 			" 😀   , 128512 ",
 			" \uD83D\uDE00 , 128512 ",
 	})
-	void executeReturnFunctionOrdTest(String input, String expected) throws EaterException, EaterExceptionLocated {
-		Ord cut = new Ord();
-
-		List<TValue> values = Collections.singletonList(TValue.fromString(input));
-		TValue tValue = cut.executeReturnFunction(null, null, null, values, null);
-		assertEquals(expected, tValue.toString());
+	void Test_with_String(String input, String expected) throws EaterException, EaterExceptionLocated {
+		assertTimExpectedOutputFromInput(cut, input, expected);
 	}
 }
