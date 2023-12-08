@@ -61,11 +61,11 @@ class GetJsonKeyTest {
 			" '{\"a\":\"abc\"}' , [\"a\"]",
 			" '[{\"a\":[1, 2]}, {\"b\":[3, 4]}]'  , '[\"a\",\"b\"]'",
 			" '{\"a\":[1, 2], \"b\":\"abc\", \"b\":true}' , '[\"a\",\"b\",\"b\"]'",
-			// TODO: Manage Array with different type inside
+			// DONE: Manage Array with different type inside
 			// Ref.:
 			// - https://datatracker.ietf.org/doc/html/rfc8259#section-5
 			// - https://json-schema.org/understanding-json-schema/reference/array.html
-			//" '[3, \"different\", { \"types\" : \"of values\" }]', [\"types\"]",
+			" '[3, \"different\", { \"types\" : \"of values\" }]', [\"types\"]",
 	})
 	void Test_with_Json(@ConvertWith(StringJsonConverter.class) JsonValue input, String expected) throws EaterException, EaterExceptionLocated {
 		assertTimExpectedOutputFromInput(cut, input, expected);
