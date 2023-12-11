@@ -46,6 +46,7 @@ net.sourceforge.plantuml.board
 net.sourceforge.plantuml.bpm
 net.sourceforge.plantuml.braille
 net.sourceforge.plantuml.brotli
+net.sourceforge.plantuml.chronology
 net.sourceforge.plantuml.classdiagram
 net.sourceforge.plantuml.classdiagram.command
 net.sourceforge.plantuml.code
