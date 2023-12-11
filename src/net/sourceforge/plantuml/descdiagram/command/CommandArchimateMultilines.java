@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.utils.BlocLines;
 
@@ -77,13 +78,7 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 				color().getRegex(), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("CODE", "([%pLN_.]+)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional( //
-						new RegexConcat( //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("STEREOTYPE", "(?:\\<\\<([-\\w]+)\\>\\>)") //
-						)), //
-				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optionalArchimate("STEREOTYPE"), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
@@ -108,7 +103,7 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 		if (quark.getData() != null)
 			return CommandExecutionResult.error("Already exists " + quark.getName());
 
-		final String icon = line0.getLazzy("STEREOTYPE", 0);
+		final String icon = StereotypePattern.removeChevronBrackets(line0.getLazzy("STEREOTYPE", 0));
 
 		final Entity entity = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark), LeafType.DESCRIPTION,
 				USymbols.RECTANGLE);

@@ -64,7 +64,6 @@ public class CommandTaskCompleteDefault extends SingleLineCommand2<GanttDiagram>
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("VALUE", "(\\d+)"), //
 				new RegexLeaf(".*"), //
-				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
 

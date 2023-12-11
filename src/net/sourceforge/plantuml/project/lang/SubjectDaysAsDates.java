@@ -50,9 +50,9 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-public class SubjectDaysAsDates implements Subject {
+public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 
-	public static final Subject ME = new SubjectDaysAsDates();
+	public static final Subject<GanttDiagram> ME = new SubjectDaysAsDates();
 
 	private SubjectDaysAsDates() {
 	}
@@ -136,11 +136,11 @@ public class SubjectDaysAsDates implements Subject {
 		throw new IllegalStateException();
 	}
 
-	public Collection<? extends SentenceSimple> getSentences() {
+	public Collection<? extends SentenceSimple<GanttDiagram>> getSentences() {
 		return Arrays.asList(new Close(), new Open(), new InColor(), new Named());
 	}
 
-	class Close extends SentenceSimple {
+	class Close extends SentenceSimple<GanttDiagram> {
 
 		public Close() {
 			super(SubjectDaysAsDates.this, Verbs.isOrAre, new ComplementClose());
@@ -156,7 +156,7 @@ public class SubjectDaysAsDates implements Subject {
 		}
 	}
 
-	class Open extends SentenceSimple {
+	class Open extends SentenceSimple<GanttDiagram> {
 
 		public Open() {
 			super(SubjectDaysAsDates.this, Verbs.isOrAre, new ComplementOpen());
@@ -173,7 +173,7 @@ public class SubjectDaysAsDates implements Subject {
 
 	}
 
-	class InColor extends SentenceSimple {
+	class InColor extends SentenceSimple<GanttDiagram> {
 
 		public InColor() {
 			super(SubjectDaysAsDates.this, Verbs.isOrAre, new ComplementInColors2());
@@ -191,7 +191,7 @@ public class SubjectDaysAsDates implements Subject {
 
 	}
 
-	class Named extends SentenceSimple {
+	class Named extends SentenceSimple<GanttDiagram> {
 
 		public Named() {
 			super(SubjectDaysAsDates.this, Verbs.isOrAreNamed, new ComplementNamed());

@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.core.Task;
 
-public class SentenceRequire extends SentenceSimple {
+public class SentenceRequire extends SentenceSimple<GanttDiagram> {
 
 	public SentenceRequire() {
 		super(SubjectTask.ME, Verbs.requires, new ComplementSeveralDays());

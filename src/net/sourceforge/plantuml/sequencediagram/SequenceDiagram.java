@@ -296,13 +296,13 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	@Override
-	final public void exportDiagramGraphic(UGraphic ug) {
-		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(0, new FileFormatOption(FileFormat.PNG));
+	final public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
+		final FileMaker sequenceDiagramPngMaker = getSequenceDiagramPngMaker(0, fileFormatOption);
 		sequenceDiagramPngMaker.createOneGraphic(ug);
 	}
 
 	@Override
-	final protected TextBlock getTextBlock() {
+	final protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
 		throw new UnsupportedOperationException();
 	}
 

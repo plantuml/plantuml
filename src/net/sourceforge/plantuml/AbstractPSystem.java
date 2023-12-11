@@ -114,14 +114,14 @@ public abstract class AbstractPSystem implements Diagram {
 	}
 
 	final public String getMetadata() {
-		if (source == null) 
+		if (source == null)
 			return getVersion();
-		
+
 		final String rawString = source.getRawString("\n");
 		final String plainString = source.getPlainString("\n");
-		if (rawString != null && rawString.equals(plainString)) 
+		if (rawString != null && rawString.equals(plainString))
 			return rawString + BackSlash.NEWLINE + getVersion();
-		
+
 		return rawString + BackSlash.NEWLINE + plainString + BackSlash.NEWLINE + getVersion();
 	}
 
@@ -130,9 +130,9 @@ public abstract class AbstractPSystem implements Diagram {
 	}
 
 	final public long seed() {
-		if (source == null) 
+		if (source == null)
 			return 42;
-		
+
 		return getSource().seed();
 	}
 
@@ -159,9 +159,9 @@ public abstract class AbstractPSystem implements Diagram {
 	}
 
 	public DisplayPositionned getTitle() {
-		if (source == null) 
+		if (source == null)
 			return DisplayPositioned.single(Display.empty(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);
-		
+
 		return DisplayPositioned.single(source.getTitle(), HorizontalAlignment.CENTER, VerticalAlignment.TOP);
 	}
 
@@ -247,7 +247,7 @@ public abstract class AbstractPSystem implements Diagram {
 	}
 
 	@Override
-	public void exportDiagramGraphic(UGraphic ug) {
+	public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
 		final UFont font = UFont.monospaced(14);
 		final FontConfiguration fc = FontConfiguration.blackBlueTrue(font);
 		final UText text = UText.build("Not implemented yet for " + getClass().getName(), fc);

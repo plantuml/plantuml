@@ -51,9 +51,9 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-public class SubjectResource implements Subject {
+public class SubjectResource implements Subject<GanttDiagram> {
 
-	public static final Subject ME = new SubjectResource();
+	public static final Subject<GanttDiagram> ME = new SubjectResource();
 
 	private SubjectResource() {
 	}
@@ -71,7 +71,7 @@ public class SubjectResource implements Subject {
 		return Failable.ok(result);
 	}
 
-	public Collection<? extends SentenceSimple> getSentences() {
+	public Collection<? extends SentenceSimple<GanttDiagram>> getSentences() {
 		return Arrays.asList(new IsOffDate(), new IsOffDates(), new IsOffDayOfWeek(), new IsOnDate(), new IsOnDates(),
 				new IsOffBeforeDate(), new IsOffAfterDate(), new WorksOn());
 	}
@@ -83,7 +83,7 @@ public class SubjectResource implements Subject {
 		);
 	}
 
-	public class WorksOn extends SentenceSimple {
+	public class WorksOn extends SentenceSimple<GanttDiagram> {
 
 		public WorksOn() {
 			super(SubjectResource.this, Verbs.worksOn, new ComplementTask());
@@ -99,7 +99,7 @@ public class SubjectResource implements Subject {
 
 	}
 
-	public class IsOffBeforeDate extends SentenceSimple {
+	public class IsOffBeforeDate extends SentenceSimple<GanttDiagram> {
 
 		public IsOffBeforeDate() {
 			super(SubjectResource.this, Verbs.isOff,
@@ -116,7 +116,7 @@ public class SubjectResource implements Subject {
 
 	}
 
-	public class IsOffAfterDate extends SentenceSimple {
+	public class IsOffAfterDate extends SentenceSimple<GanttDiagram> {
 
 		public IsOffAfterDate() {
 			super(SubjectResource.this, Verbs.isOff,
@@ -133,7 +133,7 @@ public class SubjectResource implements Subject {
 
 	}
 
-	public class IsOffDate extends SentenceSimple {
+	public class IsOffDate extends SentenceSimple<GanttDiagram> {
 
 		public IsOffDate() {
 			super(SubjectResource.this, Verbs.isOff,
@@ -150,7 +150,7 @@ public class SubjectResource implements Subject {
 
 	}
 
-	public class IsOffDates extends SentenceSimple {
+	public class IsOffDates extends SentenceSimple<GanttDiagram> {
 
 		public IsOffDates() {
 			super(SubjectResource.this, Verbs.isOff,
@@ -168,7 +168,7 @@ public class SubjectResource implements Subject {
 
 	}
 
-	public class IsOffDayOfWeek extends SentenceSimple {
+	public class IsOffDayOfWeek extends SentenceSimple<GanttDiagram> {
 
 		public IsOffDayOfWeek() {
 			super(SubjectResource.this, Verbs.isOff,
@@ -184,7 +184,7 @@ public class SubjectResource implements Subject {
 
 	}
 
-	public class IsOnDate extends SentenceSimple {
+	public class IsOnDate extends SentenceSimple<GanttDiagram> {
 
 		public IsOnDate() {
 			super(SubjectResource.this, Verbs.isOn,
@@ -201,7 +201,7 @@ public class SubjectResource implements Subject {
 
 	}
 
-	public class IsOnDates extends SentenceSimple {
+	public class IsOnDates extends SentenceSimple<GanttDiagram> {
 
 		public IsOnDates() {
 			super(SubjectResource.this, Verbs.isOn,

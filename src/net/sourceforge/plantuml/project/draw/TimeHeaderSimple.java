@@ -86,7 +86,8 @@ public class TimeHeaderSimple extends TimeHeader {
 
 	private void drawSmallVlinesDay(UGraphic ug, TimeScale timeScale, double totalHeightWithoutFooter) {
 		ug = ug.apply(getLineColor());
-		final ULine vbar = ULine.vline(totalHeightWithoutFooter);
+		ug = ug.apply(UTranslate.dy(6));
+		final ULine vbar = ULine.vline(totalHeightWithoutFooter + 2);
 		for (Day i = getMin(); i.compareTo(getMax().increment()) <= 0; i = i.increment(printScale)) {
 			final double x1 = timeScale.getStartingPosition(i);
 			ug.apply(UTranslate.dx(x1)).draw(vbar);
@@ -120,15 +121,17 @@ public class TimeHeaderSimple extends TimeHeader {
 
 	@Override
 	public void drawTimeHeader(UGraphic ug, double totalHeightWithoutFooter) {
-		// drawTextsBackground(ug.apply(UTranslate.dy(-3)), totalHeightWithoutFooter + 6);
+		// drawTextsBackground(ug.apply(UTranslate.dy(-3)), totalHeightWithoutFooter +
+		// 6);
 		final double xmin = getTimeScale().getStartingPosition(getMin());
 		final double xmax = getTimeScale().getEndingPosition(getMax());
-		drawSmallVlinesDay(ug, getTimeScale(), totalHeightWithoutFooter + 2);
+		drawSmallVlinesDay(ug, getTimeScale(), totalHeightWithoutFooter);
 		printVerticalSeparators(ug, totalHeightWithoutFooter);
 		drawSimpleDayCounter(ug, getTimeScale());
 		// ug = ug.apply(getLineColor());
 		// ug.draw(ULine.hline(xmax - xmin));
-		// ug.apply(UTranslate.dy(getFullHeaderHeight(ug.getStringBounder()) - 3)).draw(ULine.hline(xmax - xmin));
+		// ug.apply(UTranslate.dy(getFullHeaderHeight(ug.getStringBounder()) -
+		// 3)).draw(ULine.hline(xmax - xmin));
 
 	}
 
@@ -137,7 +140,8 @@ public class TimeHeaderSimple extends TimeHeader {
 		final double xmin = getTimeScale().getStartingPosition(getMin());
 		final double xmax = getTimeScale().getEndingPosition(getMax());
 		ug = ug.apply(UTranslate.dy(3));
-		drawSmallVlinesDay(ug, getTimeScale(), getTimeFooterHeight(ug.getStringBounder()) - 3);
+		// drawSmallVlinesDay(ug, getTimeScale(),
+		// getTimeFooterHeight(ug.getStringBounder()) - 3);
 		drawSimpleDayCounter(ug, getTimeScale());
 		// ug.apply(getLineColor()).draw(ULine.hline(xmax - xmin));
 	}

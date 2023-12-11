@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
@@ -62,7 +63,7 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandRepeat3.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
+				StereotypePattern.optional("STEREO"), //
 				ColorParser.exp4(), //
 				new RegexLeaf("repeat"), //
 				RegexLeaf.spaceZeroOrMore(), //

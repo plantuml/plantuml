@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandFootbox extends SingleLineCommand2<GanttDiagram> {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	public CommandFootbox() {
 		super(getRegexConcat());
@@ -55,7 +55,8 @@ public class CommandFootbox extends SingleLineCommand2<GanttDiagram> {
 		return RegexConcat.build(CommandFootbox.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", "(hide|show)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("footbox"), RegexLeaf.end()); //
+				new RegexLeaf("footbox"), //
+				RegexLeaf.end());
 	}
 
 	@Override

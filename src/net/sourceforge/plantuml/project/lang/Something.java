@@ -35,15 +35,15 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.project.Failable;
-import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-public interface Something {
+public interface Something<D extends Diagram> {
 
 	public IRegex toRegex(String suffix);
 
-	public Failable<? extends Object> getMe(GanttDiagram project, RegexResult arg, String suffix);
+	public Failable<? extends Object> getMe(D diagram, RegexResult arg, String suffix);
 
 }

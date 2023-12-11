@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-public class ComplementDate implements Something {
+public class ComplementDate implements Something<GanttDiagram> {
 
 	private final Type type;
 

@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.time.Day;
 
-public class SentenceTaskEndsOnlyRelative extends SentenceSimple {
+public class SentenceTaskEndsOnlyRelative extends SentenceSimple<GanttDiagram> {
 
 	public SentenceTaskEndsOnlyRelative() {
 		super(SubjectTask.ME, Verbs.ends, Words.zeroOrMore(Words.THE, Words.ON, Words.AT),

@@ -54,21 +54,21 @@ import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class TaskDrawDiamond extends AbstractTaskDraw {
 
-	public TaskDrawDiamond(TimeScale timeScale, Real y, String prettyDisplay, Day start, ISkinParam skinParam,
-			Task task, ToTaskDraw toTaskDraw, StyleBuilder styleBuilder) {
-		super(timeScale, y, prettyDisplay, start, skinParam, task, toTaskDraw, styleBuilder);
+	public TaskDrawDiamond(TimeScale timeScale, Real y, String prettyDisplay, Day start, Task task,
+			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder) {
+		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder);
 	}
 
 	@Override
-	StyleSignatureBasic getStyleSignature() {
+	StyleSignature getStyleSignature() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.milestone);
 	}
 

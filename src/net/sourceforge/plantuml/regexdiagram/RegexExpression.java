@@ -103,7 +103,7 @@ public class RegexExpression {
 		return false;
 	}
 
-	private static String readOpenParenthesis(CharInspector it) {
+	private static String readOpenParenthesis(CharInspector it) throws RegexParsingException {
 		final char current0 = it.peek(0);
 		it.jump();
 		final StringBuilder result = new StringBuilder();
@@ -117,6 +117,17 @@ public class RegexExpression {
 			it.jump();
 			it.jump();
 			result.append("?!");
+		}
+		if (it.peek(0) == '?' && it.peek(1) == '<') {
+			while (true) {
+				if (it.peek(0) == 0)
+					throw new RegexParsingException("Unclosed named capturing group");
+				if (it.peek(0) == '>') {
+					it.jump();
+					return result.toString();
+				}
+				it.jump();
+			}
 		}
 		return result.toString();
 	}

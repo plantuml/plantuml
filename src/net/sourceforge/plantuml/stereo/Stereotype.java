@@ -78,6 +78,8 @@ public class Stereotype implements CharSequence {
 	}
 
 	public static Stereotype build(String label) {
+		if (label == null)
+			return null;
 		return build(label, true);
 	}
 

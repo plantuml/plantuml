@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-public class ComplementInColors2 implements Something {
+public class ComplementInColors2 implements Something<GanttDiagram> {
 
 	public IRegex toRegex(String suffix) {
 		return new RegexLeaf("COMPLEMENT" + suffix, "colou?red[%s]+(?:in[%s]+)?(#?\\w+)(?:/(#?\\w+))?");

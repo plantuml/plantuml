@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
@@ -93,9 +94,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 			return RegexConcat.build(CommandCreateElementMultilines.class.getName() + type, RegexLeaf.start(), //
 					new RegexLeaf("TYPE", "(" + CommandCreateElementFull.ALL_TYPES + ")[%s]+"), //
 					new RegexLeaf("CODE", "([%pLN_.]+)"), //
-					RegexLeaf.spaceZeroOrMore(), //
-					new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
-					RegexLeaf.spaceZeroOrMore(), //
+					StereotypePattern.optional("STEREO"), //
 					UrlBuilder.OPTIONAL, //
 					RegexLeaf.spaceZeroOrMore(), //
 					ColorParser.exp1(), //
@@ -110,9 +109,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 			return RegexConcat.build(CommandCreateElementMultilines.class.getName() + type, RegexLeaf.start(), //
 					new RegexLeaf("TYPE", "(" + CommandCreateElementFull.ALL_TYPES + ")[%s]+"), //
 					new RegexLeaf("CODE", "([%pLN_.]+)"), //
-					RegexLeaf.spaceZeroOrMore(), //
-					new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
-					RegexLeaf.spaceZeroOrMore(), //
+					StereotypePattern.optional("STEREO"), //
 					UrlBuilder.OPTIONAL, //
 					RegexLeaf.spaceZeroOrMore(), //
 					ColorParser.exp1(), //

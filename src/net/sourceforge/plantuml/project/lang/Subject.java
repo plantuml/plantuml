@@ -37,17 +37,17 @@ package net.sourceforge.plantuml.project.lang;
 
 import java.util.Collection;
 
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.project.Failable;
-import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-public interface Subject {
+public interface Subject<D extends Diagram> {
 
-	public Collection<? extends SentenceSimple> getSentences();
+	public Collection<? extends SentenceSimple<D>> getSentences();
 
 	public IRegex toRegex();
 
-	public Failable<? extends Object> getMe(GanttDiagram project, RegexResult arg);
+	public Failable<? extends Object> getMe(D project, RegexResult arg);
 
 }

@@ -45,6 +45,7 @@ public class Words {
 
 	public final static String AFTER = "after";
 	public final static String AND = "and";
+	public final static String AS = "as";
 	public final static String AT = "at";
 	public final static String BEFORE = "before";
 	public final static String COMPLETION = "completion";

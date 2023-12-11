@@ -48,10 +48,10 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-public class SubjectToday implements Subject {
-    // ::remove folder when __HAXE__
+public class SubjectToday implements Subject<GanttDiagram> {
+	// ::remove folder when __HAXE__
 
-	public static final Subject ME = new SubjectToday();
+	public static final Subject<GanttDiagram> ME = new SubjectToday();
 
 	private SubjectToday() {
 	}
@@ -66,11 +66,11 @@ public class SubjectToday implements Subject {
 		return Failable.ok(new Today());
 	}
 
-	public Collection<? extends SentenceSimple> getSentences() {
+	public Collection<? extends SentenceSimple<GanttDiagram>> getSentences() {
 		return Arrays.asList(new InColor(), new IsDate());
 	}
 
-	class InColor extends SentenceSimple {
+	class InColor extends SentenceSimple<GanttDiagram> {
 
 		public InColor() {
 			super(SubjectToday.this, Verbs.isColored, new ComplementInColors());
@@ -87,7 +87,7 @@ public class SubjectToday implements Subject {
 
 	}
 
-	class IsDate extends SentenceSimple {
+	class IsDate extends SentenceSimple<GanttDiagram> {
 
 		public IsDate() {
 			super(SubjectToday.this, Verbs.is, ComplementDate.any());

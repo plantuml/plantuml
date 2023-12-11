@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-public class ComplementDates implements Something {
+public class ComplementDates implements Something<GanttDiagram> {
 
 	public IRegex toRegex(String suffix) {
 		return new RegexOr(toRegexB(suffix), toRegexE(suffix));

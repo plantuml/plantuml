@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
 
-public class SentenceEnds extends SentenceSimple {
+public class SentenceEnds extends SentenceSimple<GanttDiagram> {
 
 	public SentenceEnds() {
 		super(SubjectTask.ME, Verbs.ends, new ComplementBeforeOrAfterOrAtTaskStartOrEnd());

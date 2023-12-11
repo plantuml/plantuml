@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandPartition extends SingleLineCommand2<ActivityDiagram> {
@@ -69,9 +70,7 @@ public class CommandPartition extends SingleLineCommand2<ActivityDiagram> {
 				new RegexOr(//
 						color().getRegex(), //
 						new RegexLeaf("LEGACYCOLORIGNORED", "(#[0-9a-fA-F]{6}|#?\\w+)?")), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optional("STEREOTYPE"), //
 				new RegexLeaf("\\{?"), //
 				RegexLeaf.end());
 	}
@@ -89,12 +88,10 @@ public class CommandPartition extends SingleLineCommand2<ActivityDiagram> {
 		final Entity p = diagram.getCurrentGroup();
 
 		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
-		if (colors.isEmpty() == false) {
+		if (colors.isEmpty() == false)
 			p.setColors(colors);
-		}
-		if (arg.get("STEREOTYPE", 0) != null) {
-			p.setStereotype(Stereotype.build(arg.get("STEREOTYPE", 0)));
-		}
+
+		p.setStereotype(Stereotype.build(arg.get("STEREOTYPE", 0)));
 
 		return CommandExecutionResult.ok();
 	}

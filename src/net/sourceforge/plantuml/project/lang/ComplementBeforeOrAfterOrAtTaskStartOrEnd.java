@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-public class ComplementBeforeOrAfterOrAtTaskStartOrEnd implements Something {
+public class ComplementBeforeOrAfterOrAtTaskStartOrEnd implements Something<GanttDiagram> {
 
 	private static final int POS_NB1 = 0;
 	private static final int POS_WORKING1 = 1;

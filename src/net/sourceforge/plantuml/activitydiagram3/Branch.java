@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -95,12 +96,12 @@ public class Branch {
 	}
 
 	public Branch(StyleBuilder styleBuilder, Swimlane swimlane, LinkRendering labelPositive, Display labelTest,
-			HColor color, LinkRendering inlabel) {
+			HColor color, LinkRendering inlabel, Stereotype stereotype) {
 		this.inlabel = Objects.requireNonNull(inlabel);
 		this.labelTest = Objects.requireNonNull(labelTest);
 		this.labelPositive = Objects.requireNonNull(labelPositive);
 
-		final Style style = getDefaultStyleDefinitionDiamond().getMergedStyle(styleBuilder);
+		final Style style = getDefaultStyleDefinitionDiamond().withTOBECHANGED(stereotype).getMergedStyle(styleBuilder);
 		this.color = color == null
 				? style.value(PName.BackGroundColor).asColor(styleBuilder.getSkinParam().getIHtmlColorSet())
 				: color;

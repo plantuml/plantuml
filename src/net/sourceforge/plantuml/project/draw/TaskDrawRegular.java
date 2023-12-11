@@ -65,11 +65,12 @@ import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.sequencediagram.graphic.Segment;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
-import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.image.Opale;
 
@@ -80,13 +81,13 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	private final boolean oddEnd;
 	private final Collection<Day> paused;
 	private final Collection<GanttConstraint> constraints;
-	private final ISkinParam skinParam;
+	private final ISkinSimple skinSimple;
 
 	public TaskDrawRegular(TimeScale timeScale, Real y, String prettyDisplay, Day start, Day end, boolean oddStart,
-			boolean oddEnd, ISkinParam skinParam, Task task, ToTaskDraw toTaskDraw,
+			boolean oddEnd, ISkinSimple skinSimple, Task task, ToTaskDraw toTaskDraw,
 			Collection<GanttConstraint> constraints, StyleBuilder styleBuilder) {
-		super(timeScale, y, prettyDisplay, start, skinParam, task, toTaskDraw, styleBuilder);
-		this.skinParam = skinParam;
+		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder);
+		this.skinSimple = skinSimple;
 		this.constraints = constraints;
 		this.end = end;
 		this.oddStart = oddStart;
@@ -162,8 +163,9 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	}
 
 	@Override
-	StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.task);
+	StyleSignature getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.task)
+				.withTOBECHANGED(getTask().getStereotype());
 	}
 
 	public void drawU(UGraphic ug) {
@@ -202,7 +204,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		final FontConfiguration fc = style.getFontConfiguration(getColorSet());
 
 		final HorizontalAlignment horizontalAlignment = style.value(PName.HorizontalAlignment).asHorizontalAlignment();
-		final Sheet sheet = skinParam.sheet(fc, horizontalAlignment, CreoleMode.FULL).createSheet(note);
+		final Sheet sheet = skinSimple.sheet(fc, horizontalAlignment, CreoleMode.FULL).createSheet(note);
 		final double padding = style.value(PName.Padding).asDouble();
 		final SheetBlock1 sheet1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, padding);
 

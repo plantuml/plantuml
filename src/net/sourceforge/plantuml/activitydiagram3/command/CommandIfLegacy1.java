@@ -72,7 +72,7 @@ public class CommandIfLegacy1 extends SingleLineCommand2<ActivityDiagram3> {
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg) {
 
 		diagram.startIf(Display.getWithNewlines(arg.get("TEST", 0)), Display.getWithNewlines(arg.get("WHEN", 0)), null,
-				null);
+				null, null);
 
 		return CommandExecutionResult.ok();
 	}

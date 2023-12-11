@@ -253,11 +253,11 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 
 	}
 
-	protected abstract TextBlock getTextBlock();
+	protected abstract TextBlock getTextMainBlock(FileFormatOption fileFormatOption);
 
 	@Override
-	public void exportDiagramGraphic(UGraphic ug) {
-		final TextBlock textBlock = getTextBlock();
+	public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
+		final TextBlock textBlock = getTextMainBlock(fileFormatOption);
 		textBlock.drawU(ug);
 	}
 

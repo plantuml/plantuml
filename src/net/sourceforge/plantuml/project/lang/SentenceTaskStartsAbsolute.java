@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.time.Day;
 
-public class SentenceTaskStartsAbsolute extends SentenceSimple {
+public class SentenceTaskStartsAbsolute extends SentenceSimple<GanttDiagram> {
 
 	public SentenceTaskStartsAbsolute() {
 		super(SubjectTask.ME, Verbs.starts, Words.zeroOrMore(Words.THE, Words.ON, Words.AT), ComplementDate.any());

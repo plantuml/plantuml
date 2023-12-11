@@ -70,7 +70,7 @@ public class PSystemSudoku extends AbstractPSystem {
 	}
 
 	@Override
-	public void exportDiagramGraphic(UGraphic ug) {
+	public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
 		final GraphicsSudoku sud = new GraphicsSudoku(sudoku);
 		sud.drawInternal(ug);
 	}

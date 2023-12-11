@@ -40,7 +40,6 @@ import java.io.OutputStream;
 import java.util.Map;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
@@ -208,8 +207,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 	}
 
 	@Override
-	protected TextBlock getTextBlock() {
-		final FileFormatOption fileFormatOption = new FileFormatOption(FileFormat.PNG);
+	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
 		return getTextBlock(stringBounder);
 	}
@@ -318,10 +316,10 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return CommandExecutionResult.error("Cannot find switch");
 	}
 
-	public void startIf(Display test, Display whenThen, HColor color, Url url) {
+	public void startIf(Display test, Display whenThen, HColor color, Url url, Stereotype stereotype) {
 		manageSwimlaneStrategy();
 		final InstructionIf instructionIf = new InstructionIf(swinlanes.getCurrentSwimlane(), current(), test,
-				LinkRendering.none().withDisplay(whenThen), nextLinkRenderer(), color, getSkinParam(), url);
+				LinkRendering.none().withDisplay(whenThen), nextLinkRenderer(), color, getSkinParam(), url, stereotype);
 		current().add(instructionIf);
 		setNextLinkRendererInternal(LinkRendering.none());
 		setCurrent(instructionIf);
@@ -392,7 +390,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 		manageSwimlaneStrategy();
 		if (current() instanceof InstructionRepeat) {
 			final InstructionRepeat instructionRepeat = (InstructionRepeat) current();
-			instructionRepeat.setBackward(label, swinlanes.getCurrentSwimlane(), boxStyle, incoming1, incoming2, stereotype);
+			instructionRepeat.setBackward(label, swinlanes.getCurrentSwimlane(), boxStyle, incoming1, incoming2,
+					stereotype);
 			return CommandExecutionResult.ok();
 		}
 		if (current() instanceof InstructionWhile) {

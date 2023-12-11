@@ -59,7 +59,8 @@ public class CommandColorTask extends SingleLineCommand2<GanttDiagram> {
 				new RegexLeaf("CODE", "\\[([%pLN_.]+)\\]"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("COLORS", "#(\\w+)(?:/(#?\\w+))?"), //
-				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
+				RegexLeaf.spaceZeroOrMore(), //
+				RegexLeaf.end());
 	}
 
 	@Override

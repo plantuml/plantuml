@@ -36,25 +36,25 @@
 package net.sourceforge.plantuml.project.lang;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.project.Failable;
-import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-public abstract class SentenceSimple implements Sentence {
+public abstract class SentenceSimple<D extends Diagram> implements Sentence<D> {
 
-	private final Subject subject;
+	private final Subject<D> subject;
 	private final IRegex verb;
 	private final IRegex adverbialOrPropositon;
-	private final Something complement;
+	private final Something<D> complement;
 
-	public SentenceSimple(Subject subject, IRegex verb, Something complement) {
+	public SentenceSimple(Subject<D> subject, IRegex verb, Something<D> complement) {
 		this(subject, verb, new RegexLeaf(""), complement);
 	}
 
-	public SentenceSimple(Subject subject, IRegex verb, IRegex adverbialOrPropositon, Something complement) {
+	public SentenceSimple(Subject<D> subject, IRegex verb, IRegex adverbialOrPropositon, Something<D> complement) {
 		this.subject = subject;
 		this.verb = verb;
 		this.adverbialOrPropositon = adverbialOrPropositon;
@@ -86,7 +86,7 @@ public abstract class SentenceSimple implements Sentence {
 				OPTIONAL_FINAL_DOT);
 	}
 
-	public final CommandExecutionResult execute(GanttDiagram project, RegexResult arg) {
+	public final CommandExecutionResult execute(D project, RegexResult arg) {
 		final Failable<? extends Object> currentSubject = subject.getMe(project, arg);
 		if (currentSubject.isFail())
 			return CommandExecutionResult.error(currentSubject.getError());
@@ -99,7 +99,7 @@ public abstract class SentenceSimple implements Sentence {
 
 	}
 
-	public abstract CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement);
+	public abstract CommandExecutionResult execute(D project, Object subject, Object complement);
 
 	public IRegex getVerbRegex() {
 		return verb;
@@ -108,15 +108,13 @@ public abstract class SentenceSimple implements Sentence {
 	protected final IRegex getAdverbialOrPropositon() {
 		return adverbialOrPropositon;
 	}
-	
-	protected final Subject getSubject() {
+
+	protected final Subject<D> getSubject() {
 		return subject;
 	}
 
-	protected final Something getComplement() {
+	protected final Something<D> getComplement() {
 		return complement;
 	}
-
-
 
 }

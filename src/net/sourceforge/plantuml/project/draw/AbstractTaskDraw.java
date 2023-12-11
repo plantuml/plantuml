@@ -49,11 +49,11 @@ import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Direction;
@@ -85,8 +85,8 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 		this.note = note;
 	}
 
-	public AbstractTaskDraw(TimeScale timeScale, Real y, String prettyDisplay, Day start, ISkinParam skinParam,
-			Task task, ToTaskDraw toTaskDraw, StyleBuilder styleBuilder) {
+	public AbstractTaskDraw(TimeScale timeScale, Real y, String prettyDisplay, Day start, Task task,
+			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder) {
 		this.y = y;
 		this.styleBuilder = styleBuilder;
 		this.toTaskDraw = toTaskDraw;
@@ -96,7 +96,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 		this.task = task;
 	}
 
-	abstract StyleSignatureBasic getStyleSignature();
+	abstract StyleSignature getStyleSignature();
 
 	private StyleSignatureBasic getStyleSignatureUnstarted() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.task, SName.unstarted);

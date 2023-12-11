@@ -36,20 +36,20 @@
 package net.sourceforge.plantuml.project.lang;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.project.Failable;
-import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-public class SentenceAndAnd implements Sentence {
+public class SentenceAndAnd<D extends Diagram> implements Sentence<D> {
 
-	private final SentenceSimple sentence1;
-	private final SentenceSimple sentence2;
-	private final SentenceSimple sentence3;
+	private final SentenceSimple<D> sentence1;
+	private final SentenceSimple<D> sentence2;
+	private final SentenceSimple<D> sentence3;
 
-	public SentenceAndAnd(SentenceSimple sentence1, SentenceSimple sentence2, SentenceSimple sentence3) {
+	public SentenceAndAnd(SentenceSimple<D> sentence1, SentenceSimple<D> sentence2, SentenceSimple<D> sentence3) {
 		this.sentence1 = sentence1;
 		this.sentence2 = sentence2;
 		this.sentence3 = sentence3;
@@ -77,7 +77,7 @@ public class SentenceAndAnd implements Sentence {
 				OPTIONAL_FINAL_DOT);
 	}
 
-	public final CommandExecutionResult execute(GanttDiagram project, RegexResult arg) {
+	public final CommandExecutionResult execute(D project, RegexResult arg) {
 		final Failable<? extends Object> subject = sentence1.getSubject().getMe(project, arg);
 		if (subject.isFail())
 			return CommandExecutionResult.error(subject.getError());

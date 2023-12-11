@@ -41,7 +41,7 @@ import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskInstant;
 
-public class SentenceHappens extends SentenceSimple {
+public class SentenceHappens extends SentenceSimple<GanttDiagram> {
 
 	public SentenceHappens() {
 		super(SubjectTask.ME, Verbs.happens, Words.zeroOrMore(Words.THE, Words.ON, Words.AT),

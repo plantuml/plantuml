@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.timingdiagram.TimingStyle;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -64,15 +65,11 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf("FULL", "[%g]([^%g]+)[%g]"), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
-								RegexLeaf.spaceZeroOrMore(), //
+								StereotypePattern.optional("STEREOTYPE"), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore())), //
 				new RegexLeaf("CODE", "([%pLN_.@]+)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREOTYPE2", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optional("STEREOTYPE2"), //
 				RegexLeaf.end());
 	}
 

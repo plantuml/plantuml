@@ -47,6 +47,8 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
@@ -63,7 +65,7 @@ public class CommandIf2 extends SingleLineCommand2<ActivityDiagram3> {
 				UrlBuilder.OPTIONAL, //
 				ColorParser.exp4(), //
 				new RegexLeaf("if"), //
-				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optional("STEREO"), //
 				new RegexLeaf("\\("), //
 				new RegexLeaf("TEST", "(.*?)"), //
 				new RegexLeaf("\\)"), //
@@ -85,9 +87,8 @@ public class CommandIf2 extends SingleLineCommand2<ActivityDiagram3> {
 		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 
 		String test = arg.get("TEST", 0);
-		if (test.length() == 0) {
+		if (test.length() == 0)
 			test = null;
-		}
 
 		final Url url;
 		if (arg.get("URL", 0) == null) {
@@ -96,8 +97,9 @@ public class CommandIf2 extends SingleLineCommand2<ActivityDiagram3> {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 			url = urlBuilder.getUrl(arg.get("URL", 0));
 		}
+		final Stereotype stereotype = Stereotype.build(arg.get("STEREO", 0));
 
-		diagram.startIf(Display.getWithNewlines(test), Display.getWithNewlines(arg.get("WHEN", 0)), color, url);
+		diagram.startIf(Display.getWithNewlines(test), Display.getWithNewlines(arg.get("WHEN", 0)), color, url, stereotype);
 
 		return CommandExecutionResult.ok();
 	}

@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandWBSLink extends SingleLineCommand2<WBSDiagram> {
@@ -64,9 +65,7 @@ public class CommandWBSLink extends SingleLineCommand2<WBSDiagram> {
 				new RegexLeaf("CODE2", "([%pLN_]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optional("STEREOTYPE"), //
 				new RegexLeaf("LABEL_LINK", "(?::[%s]*(.+))?"), //
 				RegexLeaf.end());
 	}

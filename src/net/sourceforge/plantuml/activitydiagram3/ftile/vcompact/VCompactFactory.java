@@ -169,7 +169,7 @@ public class VCompactFactory implements FtileFactory {
 
 	@Override
 	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile,
-			LinkRendering topInlinkRendering, Url url, Collection<PositionedNote> notes) {
+			LinkRendering topInlinkRendering, Url url, Collection<PositionedNote> notes, Stereotype stereotype) {
 		final List<Ftile> ftiles = new ArrayList<>();
 		for (Branch branch : thens)
 			ftiles.add(branch.getFtile());
