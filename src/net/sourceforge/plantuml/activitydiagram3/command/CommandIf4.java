@@ -82,10 +82,10 @@ public class CommandIf4 extends SingleLineCommand2<ActivityDiagram3> {
 		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 
 		String test = arg.get("TEST", 0);
-		if (test.length() == 0) {
+		if (test.length() == 0)
 			test = null;
-		}
-		diagram.startIf(Display.getWithNewlines(test), Display.getWithNewlines(arg.get("WHEN", 0)), color, null);
+
+		diagram.startIf(Display.getWithNewlines(test), Display.getWithNewlines(arg.get("WHEN", 0)), color, null, null);
 
 		return CommandExecutionResult.ok();
 	}

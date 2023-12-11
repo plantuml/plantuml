@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -77,9 +78,7 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
 								color("BACK2").getRegex())), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optional("STEREO"), //
 				new RegexLeaf("\\{?"), //
 				RegexLeaf.end());
 	}

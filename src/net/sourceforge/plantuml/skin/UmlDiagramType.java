@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.style.SName;
 
 public enum UmlDiagramType {
 	SEQUENCE, STATE, CLASS, OBJECT, ACTIVITY, DESCRIPTION, COMPOSITE, FLOW, TIMING, BPM, NWDIAG, MINDMAP, WBS, WIRE,
-	HELP, GANTT, SALT, JSON, GIT, BOARD, YAML, HCL, EBNF, REGEX, FILES;
+	HELP, GANTT, SALT, JSON, GIT, BOARD, YAML, HCL, EBNF, REGEX, FILES, CHRONOLOGY;
 
 	public SName getStyleName() {
 		if (this == SEQUENCE)
@@ -95,6 +95,9 @@ public enum UmlDiagramType {
 
 		if (this == REGEX)
 			return SName.regex;
+
+		if (this == CHRONOLOGY)
+			return SName.ganttDiagram;
 
 		return SName.activityDiagram;
 	}

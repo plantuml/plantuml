@@ -47,9 +47,9 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-public class SubjectDayOfWeek implements Subject {
+public class SubjectDayOfWeek implements Subject<GanttDiagram> {
 
-	public static final Subject ME = new SubjectDayOfWeek();
+	public static final Subject<GanttDiagram> ME = new SubjectDayOfWeek();
 
 	private SubjectDayOfWeek() {
 	}
@@ -63,11 +63,11 @@ public class SubjectDayOfWeek implements Subject {
 		return Failable.ok(DayOfWeek.fromString(s));
 	}
 
-	public Collection<? extends SentenceSimple> getSentences() {
+	public Collection<? extends SentenceSimple<GanttDiagram>> getSentences() {
 		return Arrays.asList(new AreClose(), new AreOpen(), new InColor());
 	}
 
-	class AreOpen extends SentenceSimple {
+	class AreOpen extends SentenceSimple<GanttDiagram> {
 		public AreOpen() {
 			super(SubjectDayOfWeek.this, Verbs.are, new ComplementOpen());
 		}
@@ -80,7 +80,7 @@ public class SubjectDayOfWeek implements Subject {
 		}
 	}
 
-	class AreClose extends SentenceSimple {
+	class AreClose extends SentenceSimple<GanttDiagram> {
 
 		public AreClose() {
 			super(SubjectDayOfWeek.this, Verbs.are, new ComplementClose());
@@ -95,7 +95,7 @@ public class SubjectDayOfWeek implements Subject {
 
 	}
 
-	class InColor extends SentenceSimple {
+	class InColor extends SentenceSimple<GanttDiagram> {
 
 		public InColor() {
 			super(SubjectDayOfWeek.this, Verbs.isOrAre, new ComplementInColors2());

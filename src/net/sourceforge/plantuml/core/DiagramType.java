@@ -38,9 +38,9 @@ package net.sourceforge.plantuml.core;
 import net.sourceforge.plantuml.utils.StartUtils;
 
 public enum DiagramType {
-    // ::remove folder when __HAXE__
-	UML, BPM, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, MATH, LATEX, DEFINITION, GANTT, NW,
-	MINDMAP, WBS, WIRE, JSON, GIT, BOARD, YAML, HCL, EBNF, REGEX, FILES, UNKNOWN;
+	// ::remove folder when __HAXE__
+	UML, BPM, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, MATH, LATEX, DEFINITION, GANTT, CHRONOLOGY, NW, MINDMAP,
+	WBS, WIRE, JSON, GIT, BOARD, YAML, HCL, EBNF, REGEX, FILES, UNKNOWN;
 
 	static public DiagramType getTypeFromArobaseStart(String s) {
 		s = s.toLowerCase();
@@ -59,7 +59,8 @@ public enum DiagramType {
 		if (StartUtils.startsWithSymbolAnd("startdot", s))
 			return DOT;
 
-		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
+		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or
+		// __LGPL__
 		if (StartUtils.startsWithSymbolAnd("startjcckit", s))
 			return JCCKIT;
 		// ::done
@@ -125,6 +126,9 @@ public enum DiagramType {
 
 		if (StartUtils.startsWithSymbolAnd("startfiles", s))
 			return FILES;
+
+		if (StartUtils.startsWithSymbolAnd("startchronology", s))
+			return CHRONOLOGY;
 
 		return UNKNOWN;
 	}

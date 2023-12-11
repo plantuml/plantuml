@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.timingdiagram.PlayerAnalog;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -62,9 +63,7 @@ public class CommandAnalog extends SingleLineCommand2<TimingDiagram> {
 				new RegexLeaf("analog"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("FULL", "[%g]([^%g]+)[%g]"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceOneOrMore(), //
+				StereotypePattern.optional("STEREOTYPE"), //
 				new RegexOptional(//
 						new RegexConcat( //
 								new RegexLeaf("between"), //
@@ -78,9 +77,7 @@ public class CommandAnalog extends SingleLineCommand2<TimingDiagram> {
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("CODE", "([%pLN_.@]+)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREOTYPE2", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optional("STEREOTYPE2"), //
 				RegexLeaf.end());
 	}
 

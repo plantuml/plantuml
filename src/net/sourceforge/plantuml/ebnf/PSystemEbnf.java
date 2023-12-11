@@ -97,11 +97,11 @@ public class PSystemEbnf extends TitledDiagram {
 	@Override
 	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-		return createImageBuilder(fileFormatOption).drawable(getTextBlock()).write(os);
+		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);
 	}
 
 	@Override
-	protected TextBlock getTextBlock() {
+	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
 		if (expressions.size() == 0) {
 			final Style style = ETile.getStyleSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 			final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());

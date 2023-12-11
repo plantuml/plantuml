@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.project.core;
 
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.StyleBuilder;
 
 public abstract class AbstractTask implements Task {
@@ -44,6 +45,7 @@ public abstract class AbstractTask implements Task {
 
 	private Task row;
 	private String displayString;
+	private Stereotype stereotype;
 
 	protected AbstractTask(StyleBuilder styleBuilder, TaskCode code) {
 		this.styleBuilder = styleBuilder;
@@ -80,5 +82,16 @@ public abstract class AbstractTask implements Task {
 	public String getDisplayString() {
 		return this.displayString;
 	}
+	
+	@Override
+	public Stereotype getStereotype() {
+		return stereotype;
+	}
+
+	@Override
+	public final void setStereotype(Stereotype stereotype) {
+		this.stereotype = stereotype;
+	}
+
 
 }

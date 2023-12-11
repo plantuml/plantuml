@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
 
-public class SentenceIsDisplayedAs extends SentenceSimple {
+public class SentenceIsDisplayedAs extends SentenceSimple<GanttDiagram> {
 
 	public SentenceIsDisplayedAs() {
 		super(SubjectTask.ME, Verbs.isDisplayedAs, new ComplementAnything());

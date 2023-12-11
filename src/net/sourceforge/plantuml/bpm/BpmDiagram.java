@@ -194,7 +194,7 @@ public class BpmDiagram extends UmlDiagram {
 	}
 
 	@Override
-	protected TextBlock getTextBlock() {
+	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
 		throw new UnsupportedOperationException();
 	}
 }

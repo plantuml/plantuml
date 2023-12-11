@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
 
-public class SentenceIsColored extends SentenceSimple {
+public class SentenceIsColored extends SentenceSimple<GanttDiagram> {
 
 	public SentenceIsColored() {
 		super(SubjectTask.ME, Verbs.isColored, new ComplementInColors());

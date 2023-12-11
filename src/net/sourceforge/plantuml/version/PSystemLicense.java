@@ -76,7 +76,7 @@ public class PSystemLicense extends PlainDiagram implements UDrawable {
 	}
 
 	@Override
-	public void exportDiagramGraphic(UGraphic ug) {
+	public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
 		final LicenseInfo licenseInfo = LicenseInfo.retrieveQuick();
 		getTextBlock(licenseInfo).drawU(ug);
 	}

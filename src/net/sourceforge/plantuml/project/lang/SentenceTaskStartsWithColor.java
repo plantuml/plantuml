@@ -43,11 +43,11 @@ import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
 
-public class SentenceTaskStartsWithColor extends SentenceSimple {
+public class SentenceTaskStartsWithColor extends SentenceSimple<GanttDiagram> {
 
 	public SentenceTaskStartsWithColor() {
 		super(SubjectTask.ME, Verbs.starts,
-				new PairOfSomething(new ComplementBeforeOrAfterOrAtTaskStartOrEnd(), new ComplementWithColorLink()));
+				new PairOfSomething<>(new ComplementBeforeOrAfterOrAtTaskStartOrEnd(), new ComplementWithColorLink()));
 	}
 
 	@Override

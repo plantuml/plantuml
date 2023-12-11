@@ -35,26 +35,26 @@
  */
 package net.sourceforge.plantuml.project.lang;
 
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.project.Failable;
-import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-public class PairOfSomething implements Something {
+public class PairOfSomething<D extends Diagram> implements Something<D> {
 
-	private final Something complement1;
-	private final Something complement2;
+	private final Something<D> complement1;
+	private final Something<D> complement2;
 
-	public PairOfSomething(Something complement1, Something complement2) {
+	public PairOfSomething(Something<D> complement1, Something<D> complement2) {
 		this.complement1 = complement1;
 		this.complement2 = complement2;
 	}
 
-	public Failable<? extends Object> getMe(GanttDiagram system, RegexResult arg, String suffix) {
-		final Failable<? extends Object> r1 = complement1.getMe(system, arg, "A" + suffix);
-		final Failable<? extends Object> r2 = complement2.getMe(system, arg, "B" + suffix);
+	public Failable<? extends Object> getMe(D diagram, RegexResult arg, String suffix) {
+		final Failable<? extends Object> r1 = complement1.getMe(diagram, arg, "A" + suffix);
+		final Failable<? extends Object> r2 = complement2.getMe(diagram, arg, "B" + suffix);
 		if (r1.isFail()) {
 			return r1;
 		}

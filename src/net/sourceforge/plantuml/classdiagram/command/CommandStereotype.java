@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandStereotype extends SingleLineCommand2<ClassDiagram> {
@@ -60,7 +61,8 @@ public class CommandStereotype extends SingleLineCommand2<ClassDiagram> {
 				RegexLeaf.start(), //
 				new RegexLeaf("NAME", "([%pLN_.]+|[%g][^%g]+[%g])"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)"), RegexLeaf.end()); //
+				StereotypePattern.mandatory("STEREO"), //
+				RegexLeaf.end()); //
 	}
 
 	@Override

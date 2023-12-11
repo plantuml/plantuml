@@ -94,7 +94,7 @@ public class JsonDiagram extends TitledDiagram {
 	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		return createImageBuilder(fileFormatOption).drawable(getTextBlock()).write(os);
+		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);
 	}
 
 	private void drawInternal(UGraphic ug) {
@@ -113,7 +113,7 @@ public class JsonDiagram extends TitledDiagram {
 	}
 
 	@Override
-	protected TextBlock getTextBlock() {
+	protected TextBlock getTextMainBlock(final FileFormatOption fileFormatOption) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
@@ -121,7 +121,7 @@ public class JsonDiagram extends TitledDiagram {
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				return TextBlockUtils.getMinMax(getTextBlock(), stringBounder, true).getDimension();
+				return TextBlockUtils.getMinMax(getTextMainBlock(fileFormatOption), stringBounder, true).getDimension();
 			}
 		};
 	}

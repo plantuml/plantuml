@@ -66,7 +66,7 @@ public class CommandPrintBetween extends SingleLineCommand2<GanttDiagram> {
 				new RegexLeaf("and"), //
 				RegexLeaf.spaceOneOrMore(), //
 				pattern.toRegex("END"), //
-				RegexLeaf.end()); //
+				RegexLeaf.end());
 	}
 
 	@Override

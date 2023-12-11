@@ -70,7 +70,8 @@ public class CommandLabelOnColumn extends SingleLineCommand2<GanttDiagram> {
 						new RegexLeaf("ALIGNED", "(left|right)"), //
 						RegexLeaf.spaceZeroOrMore(), //
 						new RegexLeaf("aligned") //
-				)), RegexLeaf.end()); //
+				)), // 
+				RegexLeaf.end());
 	}
 
 	@Override

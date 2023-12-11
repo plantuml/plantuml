@@ -57,7 +57,7 @@ public class CommandHideResourceFootbox extends SingleLineCommand2<GanttDiagram>
 				new RegexLeaf("ress?ources?"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("footbox"), //
-				RegexLeaf.end()); //
+				RegexLeaf.end());
 	}
 
 	@Override

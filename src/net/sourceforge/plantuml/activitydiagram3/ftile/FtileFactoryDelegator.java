@@ -188,8 +188,8 @@ public class FtileFactoryDelegator implements FtileFactory {
 
 	@Override
 	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile,
-			LinkRendering topInlinkRendering, Url url, Collection<PositionedNote> notes) {
-		return factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering, url, notes);
+			LinkRendering topInlinkRendering, Url url, Collection<PositionedNote> notes, Stereotype stereotype) {
+		return factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering, url, notes, stereotype);
 	}
 
 	@Override

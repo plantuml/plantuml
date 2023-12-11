@@ -122,11 +122,11 @@ public class PSystemRegex extends TitledDiagram {
 	@Override
 	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-		return createImageBuilder(fileFormatOption).drawable(getTextBlock()).write(os);
+		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);
 	}
 
 	@Override
-	protected TextBlock getTextBlock() {
+	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
 //		while (stack.size() > 1)
 //			concatenation();
 		final ETile peekFirst = stack.peekFirst();
@@ -266,9 +266,10 @@ public class PSystemRegex extends TitledDiagram {
 		if (arg1 instanceof ETileConcatenation) {
 			arg1.push(arg2);
 			stack.addFirst(arg1);
-		} else if (arg2 instanceof ETileConcatenation) {
-			arg2.push(arg1);
-			stack.addFirst(arg2);
+			// This does not work for (A[B])(C)
+//		} else if (arg2 instanceof ETileConcatenation) {
+//			arg2.push(arg1);
+//			stack.addFirst(arg2);
 		} else {
 			final ETile concat = new ETileConcatenation();
 			concat.push(arg1);

@@ -85,7 +85,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		Ftile result = middle;
 		final List<Connection> conns = new ArrayList<>();
 		final Swimlane swimlaneBlack = in;
-		final Style style = getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder());
+		final Style style = getStyleSignatureArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
 		final Ftile black = new FtileBlackBlock(skinParam(), swimlaneBlack);
 		double x = 0;
 		for (Ftile tmp : list99) {

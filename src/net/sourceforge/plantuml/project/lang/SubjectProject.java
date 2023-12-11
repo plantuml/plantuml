@@ -46,9 +46,9 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-public class SubjectProject implements Subject {
+public class SubjectProject implements Subject<GanttDiagram> {
 
-	public static final Subject ME = new SubjectProject();
+	public static final Subject<GanttDiagram> ME = new SubjectProject();
 
 	private SubjectProject() {
 	}
@@ -61,11 +61,11 @@ public class SubjectProject implements Subject {
 		return Failable.ok(project);
 	}
 
-	public Collection<? extends SentenceSimple> getSentences() {
+	public Collection<? extends SentenceSimple<GanttDiagram>> getSentences() {
 		return Arrays.asList(new Starts());
 	}
 
-	class Starts extends SentenceSimple {
+	class Starts extends SentenceSimple<GanttDiagram> {
 
 		public Starts() {
 			super(SubjectProject.this, Verbs.starts, Words.zeroOrMore(Words.ON, Words.FOR, Words.THE, Words.AT),

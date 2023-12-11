@@ -48,10 +48,12 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 
-public class SubjectTask implements Subject {
+public class SubjectTask implements Subject<GanttDiagram> {
 
-	public static final Subject ME = new SubjectTask();
+	public static final Subject<GanttDiagram> ME = new SubjectTask();
 
 	private SubjectTask() {
 	}
@@ -64,9 +66,16 @@ public class SubjectTask implements Subject {
 				return Failable.error("Not sure what are you refering to?");
 		} else {
 			final String subject = arg.get("SUBJECT", 0);
-			final String shortName = arg.get("SUBJECT", 1);
+			final String shortName = arg.get("SHORTNAME", 0);
 			final String then = arg.get("THEN", 0);
+			final String stereotype = arg.get("STEREOTYPE", 0);
+			
 			result = gantt.getOrCreateTask(subject, shortName, then != null);
+			
+			if (stereotype != null)
+				result.setStereotype(Stereotype.build(arg.get("STEREOTYPE", 0)));
+
+
 			gantt.setIt(result);
 		}
 
@@ -89,7 +98,7 @@ public class SubjectTask implements Subject {
 		return Failable.ok(result);
 	}
 
-	public Collection<? extends SentenceSimple> getSentences() {
+	public Collection<? extends SentenceSimple<GanttDiagram>> getSentences() {
 		return Arrays.asList(new SentenceRequire(), new SentenceTaskStarts(), new SentenceTaskStartsWithColor(),
 				new SentenceTaskStartsOnlyRelative(), new SentenceTaskStartsAbsolute(), new SentenceHappens(),
 				new SentenceHappensDate(), new SentenceEnds(), new SentenceTaskEndsOnlyRelative(),
@@ -103,13 +112,17 @@ public class SubjectTask implements Subject {
 		return new RegexOr( //
 				new RegexLeaf("IT", "(it)"), //
 				new RegexConcat(new RegexLeaf("THEN", "(then[%s]+)?"), //
-						new RegexLeaf("SUBJECT", "\\[([^\\[\\]]+?)\\](?:[%s]+as[%s]+\\[([^\\[\\]]+?)\\])?"), //
-						new RegexOptional( //
-								new RegexConcat( //
-										Words.exactly(Words.ON), //
-										RegexLeaf.spaceOneOrMore(), //
-										new RegexLeaf("RESOURCE", "((?:\\{[^{}]+\\}[%s]*)+)") //
-								))));
+						new RegexLeaf("SUBJECT", "\\[([^\\[\\]]+?)\\]"), //
+						StereotypePattern.optional("STEREOTYPE"), //
+						new RegexOptional(new RegexConcat(//
+								Words.exactly(Words.AS), //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("SHORTNAME", "\\[([^\\[\\]]+?)\\]"))), //
+						new RegexOptional(new RegexConcat( //
+								Words.exactly(Words.ON), //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("RESOURCE", "((?:\\{[^{}]+\\}[%s]*)+)") //
+						))));
 	}
 
 }

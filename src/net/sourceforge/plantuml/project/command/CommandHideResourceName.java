@@ -57,7 +57,7 @@ public class CommandHideResourceName extends SingleLineCommand2<GanttDiagram> {
 				new RegexLeaf("ress?ources?"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("names?"), //
-				RegexLeaf.end()); //
+				RegexLeaf.end());
 	}
 
 	@Override

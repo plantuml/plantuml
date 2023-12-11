@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.project;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -70,7 +71,7 @@ public class TimeHeaderParameters implements GanttStyle {
 		this.scale = scale;
 		this.min = min;
 		this.max = max;
-		this.colorSet = colorSet;
+		this.colorSet = Objects.requireNonNull(colorSet);
 		this.ganttStyle = ganttStyle;
 		this.locale = locale;
 		this.openClose = openClose;

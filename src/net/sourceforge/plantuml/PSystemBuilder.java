@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.activitydiagram3.ActivityDiagramFactory3;
 import net.sourceforge.plantuml.api.PSystemFactory;
 import net.sourceforge.plantuml.board.BoardDiagramFactory;
 import net.sourceforge.plantuml.bpm.BpmDiagramFactory;
+import net.sourceforge.plantuml.chronology.ChronologyDiagramFactory;
 import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
@@ -223,7 +224,8 @@ public class PSystemBuilder {
 		// factories.add(new PSystemSudokuFactory());
 		// ::done
 
-		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
+		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or
+		// __LGPL__
 		factories.add(new PSystemJcckitFactory());
 		factories.add(new PSystemSudokuFactory());
 		// ::done
@@ -247,11 +249,13 @@ public class PSystemBuilder {
 		// ::done
 
 		factories.add(new PSystemCharlieFactory());
-		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
+		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or
+		// __LGPL__
 		factories.add(new PSystemXearthFactory());
 		// ::done
 
 		factories.add(new GanttDiagramFactory());
+		factories.add(new ChronologyDiagramFactory());
 		factories.add(new FlowDiagramFactory());
 
 		// ::comment when __CORE__

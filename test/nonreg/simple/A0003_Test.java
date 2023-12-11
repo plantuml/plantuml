@@ -29,6 +29,6 @@ public class A0003_Test extends BasicTest {
 
 	@Test
 	void testSimple() throws IOException {
-		checkImage("(Project)");
+		checkImage("(Gantt)");
 	}
 }

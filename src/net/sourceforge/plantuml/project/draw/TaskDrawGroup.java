@@ -54,22 +54,19 @@ import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class TaskDrawGroup extends AbstractTaskDraw {
 
 	private final Day end;
 
-	private final ISkinParam skinParam;
-
-	public TaskDrawGroup(TimeScale timeScale, Real y, String prettyDisplay, Day start, Day end, ISkinParam skinParam,
-			Task task, ToTaskDraw toTaskDraw, StyleBuilder styleBuilder) {
-		super(timeScale, y, prettyDisplay, start, skinParam, task, toTaskDraw, styleBuilder);
-		this.skinParam = skinParam;
+	public TaskDrawGroup(TimeScale timeScale, Real y, String prettyDisplay, Day start, Day end, Task task,
+			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder) {
+		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder);
 		this.end = end;
 	}
 
@@ -122,7 +119,7 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 	}
 
 	@Override
-	StyleSignatureBasic getStyleSignature() {
+	StyleSignature getStyleSignature() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.task);
 	}
 

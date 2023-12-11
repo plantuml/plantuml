@@ -99,11 +99,11 @@ public class TimingDiagram extends UmlDiagram implements Clocks {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 
-		return createImageBuilder(fileFormatOption).drawable(getTextBlock()).write(os);
+		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);
 	}
 
 	@Override
-	protected TextBlock getTextBlock() {
+	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {

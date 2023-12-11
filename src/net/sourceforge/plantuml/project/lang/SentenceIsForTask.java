@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.project.Completion;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
 
-public class SentenceIsForTask extends SentenceSimple {
+public class SentenceIsForTask extends SentenceSimple<GanttDiagram> {
 
 	public SentenceIsForTask() {
 		super(SubjectTask.ME, Verbs.is, new ComplementCompleted());

@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-public class ComplementWithColorLink implements Something {
+public class ComplementWithColorLink implements Something<GanttDiagram> {
 
 	public IRegex toRegex(String suffix) {
 		final String optionalStyle = "(?:(dotted|bold|dashed)[%s]+)?";

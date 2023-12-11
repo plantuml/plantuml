@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.Log;
 
 public class SourceStringReader {
@@ -157,6 +158,14 @@ public class SourceStringReader {
 			noValidStartFound(os, fileFormatOption);
 			return null;
 		}
+		if (fileFormatOption.getFileFormat() == FileFormat.PREPROC) {
+			final BlockUml first = blocks.get(0);
+			for (StringLocated s : first.getData()) {
+				os.write(s.getString().getBytes(UTF_8));
+				os.write("\n".getBytes(UTF_8));
+			}
+			return new DiagramDescription("PREPROC");
+		}
 		for (BlockUml b : blocks) {
 			final Diagram system = b.getDiagram();
 			final int nbInSystem = system.getNbImages();
@@ -231,7 +240,8 @@ public class SourceStringReader {
 	}
 
 	public ImageData noValidStartFound(OutputStream os, FileFormatOption fileFormatOption) throws IOException {
-		final TextBlock error = GraphicStrings.createForError(Arrays.asList("No valid @start/@end found, please check the version"),
+		final TextBlock error = GraphicStrings.createForError(
+				Arrays.asList("No valid @start/@end found, please check the version"),
 				fileFormatOption.isUseRedForError());
 
 		return plainImageBuilder(error, fileFormatOption).write(os);

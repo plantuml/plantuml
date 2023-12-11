@@ -51,7 +51,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.WithSprite;
@@ -162,7 +161,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescription("(Project)");
+		return new DiagramDescription("(Gantt)");
 	}
 
 	public void setWeekNumberStrategy(DayOfWeek firstDayOfWeek, int minimalDaysInFirstWeek) {
@@ -180,8 +179,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	@Override
 	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
-		return createImageBuilder(fileFormatOption).drawable(getTextBlock(stringBounder)).write(os);
+		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);
 	}
 
 	public void setPrintScale(PrintScale printScale) {
@@ -220,13 +218,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	@Override
-	protected TextBlock getTextBlock() {
-		final FileFormatOption fileFormatOption = new FileFormatOption(FileFormat.PNG);
+	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
-		return getTextBlock(stringBounder);
-	}
-
-	private TextBlock getTextBlock(StringBounder stringBounder) {
 		if (printStart == null) {
 			initMinMax();
 		} else {
@@ -450,13 +443,12 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			} else if (task instanceof TaskGroup) {
 				final TaskGroup taskGroup = (TaskGroup) task;
 				draw = new TaskDrawGroup(timeScale, y, taskGroup.getCode().getSimpleDisplay(), getStart(taskGroup),
-						getEnd(taskGroup), getSkinParam(), task, this, task.getStyleBuilder());
+						getEnd(taskGroup), task, this, task.getStyleBuilder());
 			} else {
 				final TaskImpl tmp = (TaskImpl) task;
 				final String disp = hideResourceName ? tmp.getCode().getSimpleDisplay() : tmp.getPrettyDisplay();
 				if (tmp.isDiamond()) {
-					draw = new TaskDrawDiamond(timeScale, y, disp, getStart(tmp), getSkinParam(), task, this,
-							task.getStyleBuilder());
+					draw = new TaskDrawDiamond(timeScale, y, disp, getStart(tmp), task, this, task.getStyleBuilder());
 				} else {
 					final boolean oddStart = printStart != null && min.compareTo(getStart(tmp)) == 0;
 					final boolean oddEnd = printStart != null && max.compareTo(getEnd(tmp)) == 0;

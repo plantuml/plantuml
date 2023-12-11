@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
 
-public class SentencePausesDayOfWeek extends SentenceSimple {
+public class SentencePausesDayOfWeek extends SentenceSimple<GanttDiagram> {
 
 	public SentencePausesDayOfWeek() {
 		super(SubjectTask.ME, Verbs.pauses, Words.zeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),

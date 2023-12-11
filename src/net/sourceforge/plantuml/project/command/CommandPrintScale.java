@@ -77,7 +77,7 @@ public class CommandPrintScale extends SingleLineCommand2<GanttDiagram> {
 						new RegexLeaf("zoom"), //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("ZOOM", "([.\\d]+)"))), //
-				RegexLeaf.end()); //
+				RegexLeaf.end());
 	}
 
 	@Override

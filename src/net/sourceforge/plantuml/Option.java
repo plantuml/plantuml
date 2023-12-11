@@ -440,9 +440,11 @@ public class Option {
 
 			} else if (s.equalsIgnoreCase("-preproc")) {
 				preprocessorOutput = OptionPreprocOutputMode.NORMAL;
+				setFileFormatOption(new FileFormatOption(FileFormat.PREPROC));
 
 			} else if (s.equalsIgnoreCase("-cypher")) {
 				preprocessorOutput = OptionPreprocOutputMode.CYPHER;
+				setFileFormatOption(new FileFormatOption(FileFormat.PREPROC));
 
 			} else if (s.equalsIgnoreCase("-checkmetadata")) {
 				checkMetadata = true;

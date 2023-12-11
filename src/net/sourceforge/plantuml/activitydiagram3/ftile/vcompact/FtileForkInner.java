@@ -81,9 +81,9 @@ class FtileForkInner extends AbstractFtile {
 
 	public static Set<Swimlane> mergeSwimlanes(List<Ftile> tiles) {
 		final Set<Swimlane> result = new HashSet<>();
-		for (Ftile tile : tiles) {
+		for (Ftile tile : tiles)
 			result.addAll(tile.getSwimlanes());
-		}
+
 		return Collections.unmodifiableSet(result);
 	}
 
@@ -105,9 +105,9 @@ class FtileForkInner extends AbstractFtile {
 		for (Ftile ftile : forks) {
 			final XDimension2D dim = ftile.calculateDimension(stringBounder);
 			width += dim.getWidth();
-			if (dim.getHeight() > height) {
+			if (dim.getHeight() > height)
 				height = dim.getHeight();
-			}
+
 		}
 		final XDimension2D dimTotal = new XDimension2D(width, height);
 		return new FtileGeometry(dimTotal, dimTotal.getWidth() / 2, 0, dimTotal.getHeight());
@@ -116,9 +116,9 @@ class FtileForkInner extends AbstractFtile {
 	public UTranslate getTranslateFor(Ftile searched, StringBounder stringBounder) {
 		double xpos = 0;
 		for (Ftile ftile : forks) {
-			if (ftile == searched) {
+			if (ftile == searched)
 				return UTranslate.dx(xpos);
-			}
+
 			final XDimension2D dim = ftile.calculateDimension(stringBounder);
 			xpos += dim.getWidth();
 		}

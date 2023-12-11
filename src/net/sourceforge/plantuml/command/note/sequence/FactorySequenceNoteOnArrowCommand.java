@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.sequencediagram.NoteStyle;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
@@ -72,13 +73,9 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 		return RegexConcat.build(FactorySequenceNoteOnArrowCommand.class.getName() + "multi", RegexLeaf.start(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO1", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceOneOrMore(), //
+				StereotypePattern.optional("STEREO1"), //
 				new RegexLeaf("POSITION", "(right|left|bottom|top)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO2", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optional("STEREO2"), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //
@@ -89,13 +86,9 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 		return RegexConcat.build(FactorySequenceNoteOnArrowCommand.class.getName() + "single", RegexLeaf.start(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO1", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceOneOrMore(), //
+				StereotypePattern.optional("STEREO1"), //
 				new RegexLeaf("POSITION", "(right|left|bottom|top)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO2", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optional("STEREO2"), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //

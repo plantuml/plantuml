@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.BlockUmlBuilder;
 import net.sourceforge.plantuml.EmptyImageBuilder;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
@@ -124,7 +125,7 @@ public class Raw {
 			ug.resetMax();
 			WasmLog.log("...drawing...");
 
-			system.exportDiagramGraphic(ug);
+			system.exportDiagramGraphic(ug, new FileFormatOption(FileFormat.PNG));
 
 			final int width = (int) (2 + ug.getMaxX());
 			final int height = (int) (2 + ug.getMaxY());
@@ -208,7 +209,7 @@ public class Raw {
 			ug.resetMax();
 			WasmLog.log("...drawing...");
 
-			system.exportDiagramGraphic(ug);
+			system.exportDiagramGraphic(ug, new FileFormatOption(FileFormat.PNG));
 
 			final int width = (int) (2 + ug.getMaxX());
 			final int height = (int) (2 + ug.getMaxY());

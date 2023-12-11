@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
@@ -73,11 +74,11 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 				new RegexLeaf("DISPLAY", DISPLAY_WITH_GENERIC), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("as"), //
-				RegexLeaf.spaceOneOrMore(), new RegexLeaf("CODE", "([a-zA-Z0-9]+)"), RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("CODE", "([a-zA-Z0-9]+)"), //
+				StereotypePattern.optional("STEREO"), //
 				// domain: lexical, causal, biddable
 				// requirement: FR, NFR, quality
-				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("GROUP", "(\\{)?"), RegexLeaf.end());
 	}
 

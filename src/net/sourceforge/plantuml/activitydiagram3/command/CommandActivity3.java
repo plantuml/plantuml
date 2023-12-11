@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
@@ -104,9 +105,7 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 		return RegexConcat.build(CommandActivity3.class.getName(), RegexLeaf.start(), //
 				UrlBuilder.OPTIONAL, //
 				color().getRegex(), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optional("STEREO"), //
 				new RegexLeaf(":"), //
 				new RegexLeaf("LABEL", "(.*?)"), //
 				new RegexLeaf("STYLE", endingGroupShort()), //

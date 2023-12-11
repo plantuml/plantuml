@@ -79,7 +79,7 @@ public abstract class Eater {
 	}
 
 	final public TValue eatExpression(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
-		char ch = peekChar();
+		final char ch = peekChar();
 		if (ch == '{' || ch == '[') {
 			final String data = eatAllToEnd();
 			// System.err.println("data=" + data);
