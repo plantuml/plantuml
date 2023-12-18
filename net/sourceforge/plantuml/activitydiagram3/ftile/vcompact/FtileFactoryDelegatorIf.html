@@ -114,14 +114,15 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../Ftile.html" title="interface in net.sourceforge.plantuml.activitydiagram3.ftile">Ftile</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createIf(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane,java.util.List,net.sourceforge.plantuml.activitydiagram3.Branch,net.sourceforge.plantuml.activitydiagram3.LinkRendering,net.sourceforge.plantuml.activitydiagram3.LinkRendering,net.sourceforge.plantuml.url.Url,java.util.Collection,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">createIf</a><wbr>(<a href="../Swimlane.html" title="class in net.sourceforge.plantuml.activitydiagram3.ftile">Swimlane</a>&nbsp;swimlane,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createIf(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane,java.util.List,net.sourceforge.plantuml.activitydiagram3.Branch,net.sourceforge.plantuml.activitydiagram3.LinkRendering,net.sourceforge.plantuml.activitydiagram3.LinkRendering,net.sourceforge.plantuml.url.Url,java.util.Collection,net.sourceforge.plantuml.stereo.Stereotype,net.sourceforge.plantuml.style.StyleBuilder)" class="member-name-link">createIf</a><wbr>(<a href="../Swimlane.html" title="class in net.sourceforge.plantuml.activitydiagram3.ftile">Swimlane</a>&nbsp;swimlane,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../Branch.html" title="class in net.sourceforge.plantuml.activitydiagram3">Branch</a>&gt;&nbsp;thens,
  <a href="../../Branch.html" title="class in net.sourceforge.plantuml.activitydiagram3">Branch</a>&nbsp;elseBranch,
  <a href="../../LinkRendering.html" title="class in net.sourceforge.plantuml.activitydiagram3">LinkRendering</a>&nbsp;afterEndwhile,
  <a href="../../LinkRendering.html" title="class in net.sourceforge.plantuml.activitydiagram3">LinkRendering</a>&nbsp;topInlinkRendering,
  <a href="../../../url/Url.html" title="class in net.sourceforge.plantuml.url">Url</a>&nbsp;url,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../PositionedNote.html" title="class in net.sourceforge.plantuml.activitydiagram3">PositionedNote</a>&gt;&nbsp;notes,
- <a href="../../../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
+ <a href="../../../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype,
+ <a href="../../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;currentStyleBuilder)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -159,7 +160,7 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="createIf(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane,java.util.List,net.sourceforge.plantuml.activitydiagram3.Branch,net.sourceforge.plantuml.activitydiagram3.LinkRendering,net.sourceforge.plantuml.activitydiagram3.LinkRendering,net.sourceforge.plantuml.url.Url,java.util.Collection,net.sourceforge.plantuml.stereo.Stereotype)">
+<section class="detail" id="createIf(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane,java.util.List,net.sourceforge.plantuml.activitydiagram3.Branch,net.sourceforge.plantuml.activitydiagram3.LinkRendering,net.sourceforge.plantuml.activitydiagram3.LinkRendering,net.sourceforge.plantuml.url.Url,java.util.Collection,net.sourceforge.plantuml.stereo.Stereotype,net.sourceforge.plantuml.style.StyleBuilder)">
 <h3>createIf</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../Ftile.html" title="interface in net.sourceforge.plantuml.activitydiagram3.ftile">Ftile</a></span>&nbsp;<span class="element-name">createIf</span><wbr><span class="parameters">(<a href="../Swimlane.html" title="class in net.sourceforge.plantuml.activitydiagram3.ftile">Swimlane</a>&nbsp;swimlane,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../Branch.html" title="class in net.sourceforge.plantuml.activitydiagram3">Branch</a>&gt;&nbsp;thens,
@@ -168,12 +169,13 @@ loadScripts(document, 'script');</script>
  <a href="../../LinkRendering.html" title="class in net.sourceforge.plantuml.activitydiagram3">LinkRendering</a>&nbsp;topInlinkRendering,
  <a href="../../../url/Url.html" title="class in net.sourceforge.plantuml.url">Url</a>&nbsp;url,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../PositionedNote.html" title="class in net.sourceforge.plantuml.activitydiagram3">PositionedNote</a>&gt;&nbsp;notes,
- <a href="../../../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</span></div>
+ <a href="../../../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype,
+ <a href="../../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;currentStyleBuilder)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../FtileFactory.html#createIf(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane,java.util.List,net.sourceforge.plantuml.activitydiagram3.Branch,net.sourceforge.plantuml.activitydiagram3.LinkRendering,net.sourceforge.plantuml.activitydiagram3.LinkRendering,net.sourceforge.plantuml.url.Url,java.util.Collection,net.sourceforge.plantuml.stereo.Stereotype)">createIf</a></code>&nbsp;in interface&nbsp;<code><a href="../FtileFactory.html" title="interface in net.sourceforge.plantuml.activitydiagram3.ftile">FtileFactory</a></code></dd>
+<dd><code><a href="../FtileFactory.html#createIf(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane,java.util.List,net.sourceforge.plantuml.activitydiagram3.Branch,net.sourceforge.plantuml.activitydiagram3.LinkRendering,net.sourceforge.plantuml.activitydiagram3.LinkRendering,net.sourceforge.plantuml.url.Url,java.util.Collection,net.sourceforge.plantuml.stereo.Stereotype,net.sourceforge.plantuml.style.StyleBuilder)">createIf</a></code>&nbsp;in interface&nbsp;<code><a href="../FtileFactory.html" title="interface in net.sourceforge.plantuml.activitydiagram3.ftile">FtileFactory</a></code></dd>
 <dt>Overrides:</dt>
-<dd><code><a href="../FtileFactoryDelegator.html#createIf(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane,java.util.List,net.sourceforge.plantuml.activitydiagram3.Branch,net.sourceforge.plantuml.activitydiagram3.LinkRendering,net.sourceforge.plantuml.activitydiagram3.LinkRendering,net.sourceforge.plantuml.url.Url,java.util.Collection,net.sourceforge.plantuml.stereo.Stereotype)">createIf</a></code>&nbsp;in class&nbsp;<code><a href="../FtileFactoryDelegator.html" title="class in net.sourceforge.plantuml.activitydiagram3.ftile">FtileFactoryDelegator</a></code></dd>
+<dd><code><a href="../FtileFactoryDelegator.html#createIf(net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane,java.util.List,net.sourceforge.plantuml.activitydiagram3.Branch,net.sourceforge.plantuml.activitydiagram3.LinkRendering,net.sourceforge.plantuml.activitydiagram3.LinkRendering,net.sourceforge.plantuml.url.Url,java.util.Collection,net.sourceforge.plantuml.stereo.Stereotype,net.sourceforge.plantuml.style.StyleBuilder)">createIf</a></code>&nbsp;in class&nbsp;<code><a href="../FtileFactoryDelegator.html" title="class in net.sourceforge.plantuml.activitydiagram3.ftile">FtileFactoryDelegator</a></code></dd>
 </dl>
 </section>
 </li>
