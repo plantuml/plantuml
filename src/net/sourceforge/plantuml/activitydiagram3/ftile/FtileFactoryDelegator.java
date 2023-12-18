@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.url.Url;
 
@@ -188,8 +189,10 @@ public class FtileFactoryDelegator implements FtileFactory {
 
 	@Override
 	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile,
-			LinkRendering topInlinkRendering, Url url, Collection<PositionedNote> notes, Stereotype stereotype) {
-		return factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering, url, notes, stereotype);
+			LinkRendering topInlinkRendering, Url url, Collection<PositionedNote> notes, Stereotype stereotype,
+			StyleBuilder currentStyleBuilder) {
+		return factory.createIf(swimlane, thens, elseBranch, afterEndwhile, topInlinkRendering, url, notes, stereotype,
+				currentStyleBuilder);
 	}
 
 	@Override

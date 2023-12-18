@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
 
 public class InstructionIf extends WithNote implements Instruction, InstructionCollection {
@@ -77,6 +78,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 	private final Stereotype stereotype;
 
 	private final Swimlane swimlane;
+	private final StyleBuilder currentStyleBuilder;
 
 	@Override
 	public boolean containsBreak() {
@@ -98,8 +100,9 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		this.skinParam = skinParam;
 		this.topInlinkRendering = Objects.requireNonNull(inlinkRendering);
 		this.swimlane = swimlane;
-		this.thens.add(new Branch(skinParam.getCurrentStyleBuilder(), swimlane, whenThen, labelTest, color,
-				LinkRendering.none(), stereotype));
+		this.currentStyleBuilder = skinParam.getCurrentStyleBuilder();
+		this.thens.add(new Branch(currentStyleBuilder, swimlane, whenThen, labelTest, color, LinkRendering.none(),
+				stereotype));
 		this.current = this.thens.get(0);
 	}
 
@@ -138,12 +141,12 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 			branch.updateFtile(factory);
 
 		if (elseBranch == null)
-			this.elseBranch = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, LinkRendering.none(),
+			this.elseBranch = new Branch(currentStyleBuilder, swimlane, LinkRendering.none(),
 					Display.NULL, null, LinkRendering.none(), stereotype);
 
 		elseBranch.updateFtile(factory);
 		Ftile result = factory.createIf(swimlane, thens, elseBranch, outColor, topInlinkRendering, url,
-				getPositionedNotes(), stereotype);
+				getPositionedNotes(), stereotype, currentStyleBuilder);
 //		if (getPositionedNotes().size() > 0)
 //			result = FtileWithNoteOpale.create(result, getPositionedNotes(), false, VerticalAlignment.CENTER);
 

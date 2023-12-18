@@ -43,12 +43,15 @@ public enum ReTokenType {
 	QUANTIFIER, //
 	ANCHOR, //
 	GROUP, //
+	NAMED_GROUP, //
 	ALTERNATIVE, //
 	PARENTHESIS_OPEN, //
 	PARENTHESIS_CLOSE, //
 	CONCATENATION_IMPLICIT;
 
 	static public boolean needImplicitConcatenation(ReTokenType token1, ReTokenType token2) {
+		if (token1 == NAMED_GROUP)
+			return false;
 		if (token1 == ALTERNATIVE)
 			return false;
 		if (token2 == ALTERNATIVE)

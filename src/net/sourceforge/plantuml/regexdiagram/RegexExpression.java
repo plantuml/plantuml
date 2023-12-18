@@ -63,9 +63,15 @@ public class RegexExpression {
 			} else if (current == '[') {
 				final String s = readGroup(it);
 				result.add(new ReToken(ReTokenType.GROUP, s));
+			} else if (isStartComment(it)) {
+				skipComment(it);
+			} else if (isStartNamedCapturingGroup(it)) {
+				final ReToken token = readNamedGroup(it);
+				result.add(token);
+				result.add(new ReToken(ReTokenType.PARENTHESIS_OPEN, "("));
 			} else if (isStartOpenParenthesis(it)) {
-				final String s = readOpenParenthesis(it);
-				result.add(new ReToken(ReTokenType.PARENTHESIS_OPEN, s));
+				final ReToken token = readOpenParenthesis(it);
+				result.add(token);
 			} else if (current == ')') {
 				result.add(new ReToken(ReTokenType.PARENTHESIS_CLOSE, ")"));
 				it.jump();
@@ -103,7 +109,55 @@ public class RegexExpression {
 		return false;
 	}
 
-	private static String readOpenParenthesis(CharInspector it) throws RegexParsingException {
+	private static boolean isStartNamedCapturingGroup(CharInspector it) {
+		final char current0 = it.peek(0);
+		if (current0 == '(' && it.peek(1) == '?' && it.peek(2) == '<')
+			return true;
+		return false;
+	}
+
+	private static boolean isStartComment(CharInspector it) {
+		final char current0 = it.peek(0);
+		if (current0 == '(' && it.peek(1) == '?' && it.peek(2) == '#')
+			return true;
+		return false;
+	}
+
+	private static void skipComment(CharInspector it) throws RegexParsingException {
+		it.jump();
+		it.jump();
+		it.jump();
+		final StringBuilder comment = new StringBuilder();
+		while (true) {
+			if (it.peek(0) == 0)
+				throw new RegexParsingException("Unclosed comment");
+			if (it.peek(0) == ')') {
+				it.jump();
+				return;
+			}
+			comment.append(it.peek(0));
+			it.jump();
+		}
+	}
+
+	private static ReToken readNamedGroup(CharInspector it) throws RegexParsingException {
+		it.jump();
+		it.jump();
+		it.jump();
+		final StringBuilder namedGroup = new StringBuilder();
+		while (true) {
+			if (it.peek(0) == 0)
+				throw new RegexParsingException("Unclosed named capturing group");
+			if (it.peek(0) == '>') {
+				it.jump();
+				return new ReToken(ReTokenType.NAMED_GROUP, namedGroup.toString());
+			}
+			namedGroup.append(it.peek(0));
+			it.jump();
+		}
+	}
+
+	private static ReToken readOpenParenthesis(CharInspector it) {
 		final char current0 = it.peek(0);
 		it.jump();
 		final StringBuilder result = new StringBuilder();
@@ -118,18 +172,7 @@ public class RegexExpression {
 			it.jump();
 			result.append("?!");
 		}
-		if (it.peek(0) == '?' && it.peek(1) == '<') {
-			while (true) {
-				if (it.peek(0) == 0)
-					throw new RegexParsingException("Unclosed named capturing group");
-				if (it.peek(0) == '>') {
-					it.jump();
-					return result.toString();
-				}
-				it.jump();
-			}
-		}
-		return result.toString();
+		return new ReToken(ReTokenType.PARENTHESIS_OPEN, result.toString());
 	}
 
 	private static boolean isStartQuantifier(CharInspector it) {

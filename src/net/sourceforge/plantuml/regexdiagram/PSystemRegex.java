@@ -52,11 +52,11 @@ import net.sourceforge.plantuml.ebnf.ETile;
 import net.sourceforge.plantuml.ebnf.ETileAlternation;
 import net.sourceforge.plantuml.ebnf.ETileBox;
 import net.sourceforge.plantuml.ebnf.ETileConcatenation;
+import net.sourceforge.plantuml.ebnf.ETileNamedGroup;
 import net.sourceforge.plantuml.ebnf.ETileOneOrMore;
 import net.sourceforge.plantuml.ebnf.ETileOptional;
 import net.sourceforge.plantuml.ebnf.ETileZeroOrMore;
 import net.sourceforge.plantuml.ebnf.Symbol;
-import net.sourceforge.plantuml.ebnf.TextBlockable;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColors;
@@ -75,8 +75,6 @@ import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.CharInspector;
 
 public class PSystemRegex extends TitledDiagram {
-
-	private final List<TextBlockable> expressions = new ArrayList<>();
 
 	public PSystemRegex(UmlSource source) {
 		super(source, UmlDiagramType.REGEX, null);
@@ -164,6 +162,8 @@ public class PSystemRegex extends TitledDiagram {
 					push(token, Symbol.TERMINAL_STRING1);
 				else if (token.getType() == ReTokenType.GROUP)
 					push(token, Symbol.SPECIAL_SEQUENCE);
+				else if (token.getType() == ReTokenType.NAMED_GROUP)
+					namedGroup(token.getData());
 				else if (token.getType() == ReTokenType.CLASS)
 					push(token, Symbol.LITTERAL);
 				else if (token.getType() == ReTokenType.ANCHOR)
@@ -203,6 +203,11 @@ public class PSystemRegex extends TitledDiagram {
 	private void push(ReToken element, Symbol type) {
 		// final Symbol type = Symbol.LITTERAL;
 		stack.addFirst(new ETileBox(element.getData(), type, fontConfiguration, style, colorSet, getSkinParam()));
+	}
+
+	private void namedGroup(String name) {
+		final ETile arg1 = stack.removeFirst();
+		stack.addFirst(new ETileNamedGroup(arg1, fontConfiguration, colorSet, getSkinParam(), name));
 	}
 
 	private void repetitionZeroOrMore(boolean isCompact) {
