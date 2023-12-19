@@ -84,10 +84,11 @@ public interface FtileFactory {
 
 	public Ftile repeat(BoxStyle boxStyleIn, Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat,
 			Display test, Display yes, Display out, Colors colors, Ftile backward, boolean noOut,
-			LinkRendering incoming1, LinkRendering incoming2);
+			LinkRendering incoming1, LinkRendering incoming2, StyleBuilder currentStyleBuilder);
 
 	public Ftile createWhile(LinkRendering outColor, Swimlane swimlane, Ftile whileBlock, Display test, Display yes,
-			HColor color, Instruction specialOut, Ftile backward, LinkRendering incoming1, LinkRendering incoming2);
+			HColor color, Instruction specialOut, Ftile backward, LinkRendering incoming1, LinkRendering incoming2,
+			StyleBuilder currentStyleBuilder);
 
 	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering outColor,
 			LinkRendering topInlinkRendering, Url url, Collection<PositionedNote> notes, Stereotype stereotype,

@@ -59,7 +59,7 @@ public class ShuntingYard {
 				ouputQueue.add(token);
 			} else if (token.getType() == ReTokenType.GROUP) {
 				ouputQueue.add(token);
-			} else if (token.getType() == ReTokenType.NAMED_GROUP) {
+			} else if (token.getType().isNamedGroupOrLookAheadOrLookBehind()) {
 				operatorStack.addFirst(token);
 			} else if (token.getType() == ReTokenType.CLASS) {
 				ouputQueue.add(token);
@@ -82,10 +82,8 @@ public class ShuntingYard {
 						&& operatorStack.peekFirst().getType() != ReTokenType.PARENTHESIS_OPEN)
 					ouputQueue.add(operatorStack.removeFirst());
 				final ReToken first = operatorStack.removeFirst();
-				if (operatorStack.peekFirst() != null
-						&& operatorStack.peekFirst().getType() == ReTokenType.NAMED_GROUP)
+				if (operatorStack.peekFirst() != null && operatorStack.peekFirst().getType().isNamedGroupOrLookAheadOrLookBehind())
 					ouputQueue.add(operatorStack.removeFirst());
-				
 
 			} else {
 				throw new UnsupportedOperationException(token.toString());

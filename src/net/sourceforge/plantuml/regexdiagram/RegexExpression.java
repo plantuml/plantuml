@@ -60,11 +60,22 @@ public class RegexExpression {
 			} else if (current == '|') {
 				result.add(new ReToken(ReTokenType.ALTERNATIVE, "|"));
 				it.jump();
+			} else if (isStartPosixGroup(it)) {
+				final String s = readGroupPosix(it);
+				result.add(new ReToken(ReTokenType.CLASS, s));
 			} else if (current == '[') {
 				final String s = readGroup(it);
 				result.add(new ReToken(ReTokenType.GROUP, s));
 			} else if (isStartComment(it)) {
 				skipComment(it);
+			} else if (isStartLookAhead(it)) {
+				final ReToken token = readLookAhead(it);
+				result.add(token);
+				result.add(new ReToken(ReTokenType.PARENTHESIS_OPEN, "("));
+			} else if (isStartLookBehind(it)) {
+				final ReToken token = readLookBehind(it);
+				result.add(token);
+				result.add(new ReToken(ReTokenType.PARENTHESIS_OPEN, "("));
 			} else if (isStartNamedCapturingGroup(it)) {
 				final ReToken token = readNamedGroup(it);
 				result.add(token);
@@ -102,6 +113,20 @@ public class RegexExpression {
 
 	}
 
+	private static boolean isStartLookAhead(CharInspector it) {
+		final char current0 = it.peek(0);
+		if (current0 == '(' && it.peek(1) == '?' && (it.peek(2) == '=' || it.peek(2) == '!'))
+			return true;
+		return false;
+	}
+
+	private static boolean isStartLookBehind(CharInspector it) {
+		final char current0 = it.peek(0);
+		if (current0 == '(' && it.peek(1) == '?' && it.peek(2) == '<' && (it.peek(3) == '=' || it.peek(3) == '!'))
+			return true;
+		return false;
+	}
+
 	private static boolean isStartOpenParenthesis(CharInspector it) {
 		final char current0 = it.peek(0);
 		if (current0 == '(')
@@ -109,10 +134,28 @@ public class RegexExpression {
 		return false;
 	}
 
+	private static boolean isStartPosixGroup(CharInspector it) {
+		final char current0 = it.peek(0);
+		if (current0 == '[' && it.peek(1) == '[' && it.peek(2) == ':')
+			return true;
+		return false;
+	}
+
 	private static boolean isStartNamedCapturingGroup(CharInspector it) {
 		final char current0 = it.peek(0);
-		if (current0 == '(' && it.peek(1) == '?' && it.peek(2) == '<')
-			return true;
+		if (current0 == '(' && it.peek(1) == '?' && it.peek(2) == '<') {
+			int i = 3;
+			while (it.peek(i) != 0) {
+				if (it.peek(i) == '>' && i == 3)
+					return false;
+				if (it.peek(i) == '>')
+					return true;
+				if (Character.isLetter(it.peek(i)) == false)
+					return false;
+				i++;
+			}
+
+		}
 		return false;
 	}
 
@@ -138,6 +181,23 @@ public class RegexExpression {
 			comment.append(it.peek(0));
 			it.jump();
 		}
+	}
+
+	private static ReToken readLookAhead(CharInspector it) throws RegexParsingException {
+		it.jump();
+		it.jump();
+		final char ch = it.peek(0);
+		it.jump();
+		return new ReToken(ReTokenType.LOOK_AHEAD, "?" + ch);
+	}
+
+	private static ReToken readLookBehind(CharInspector it) throws RegexParsingException {
+		it.jump();
+		it.jump();
+		it.jump();
+		final char ch = it.peek(0);
+		it.jump();
+		return new ReToken(ReTokenType.LOOK_BEHIND, "?<" + ch);
 	}
 
 	private static ReToken readNamedGroup(CharInspector it) throws RegexParsingException {
@@ -216,6 +276,23 @@ public class RegexExpression {
 				return true;
 		}
 		return false;
+	}
+
+	private static String readGroupPosix(CharInspector it) {
+		it.jump();
+		it.jump();
+		it.jump();
+		final StringBuilder result = new StringBuilder(":");
+		while (it.peek(0) != 0) {
+			char ch = it.peek(0);
+			it.jump();
+			result.append(ch);
+			if (ch == ':')
+				break;
+		}
+		it.jump();
+		it.jump();
+		return result.toString();
 	}
 
 	private static String readGroup(CharInspector it) {

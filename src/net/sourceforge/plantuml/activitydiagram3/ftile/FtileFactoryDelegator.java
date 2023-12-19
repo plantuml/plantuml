@@ -175,16 +175,17 @@ public class FtileFactoryDelegator implements FtileFactory {
 	@Override
 	public Ftile repeat(BoxStyle boxStyleIn, Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat,
 			Display test, Display yes, Display out, Colors colors, Ftile backward, boolean noOut,
-			LinkRendering incoming1, LinkRendering incoming2) {
+			LinkRendering incoming1, LinkRendering incoming2, StyleBuilder currentStyleBuilder) {
 		return factory.repeat(boxStyleIn, swimlane, swimlaneOut, startLabel, repeat, test, yes, out, colors, backward,
-				noOut, incoming1, incoming2);
+				noOut, incoming1, incoming2, currentStyleBuilder);
 	}
 
 	@Override
 	public Ftile createWhile(LinkRendering outColor, Swimlane swimlane, Ftile whileBlock, Display test, Display yes,
-			HColor color, Instruction specialOut, Ftile back, LinkRendering incoming1, LinkRendering incoming2) {
+			HColor color, Instruction specialOut, Ftile back, LinkRendering incoming1, LinkRendering incoming2,
+			StyleBuilder styleBuilder) {
 		return factory.createWhile(outColor, swimlane, whileBlock, test, yes, color, specialOut, back, incoming1,
-				incoming2);
+				incoming2, styleBuilder);
 	}
 
 	@Override

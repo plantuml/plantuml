@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.StyleBuilder;
 
 public class InstructionWhile extends WithNote implements Instruction, InstructionCollection {
 
@@ -82,6 +83,7 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 	private LinkRendering incoming1 = LinkRendering.none();
 	private LinkRendering incoming2 = LinkRendering.none();
 	private boolean backwardCalled;
+	private final StyleBuilder currentStyleBuilder;
 
 	public void overwriteYes(Display yes) {
 		this.yes = yes;
@@ -94,6 +96,7 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 		this.nextLinkRenderer = Objects.requireNonNull(nextLinkRenderer);
 		this.yes = Objects.requireNonNull(yes);
 		this.swimlane = swimlane;
+		this.currentStyleBuilder = skinParam.getCurrentStyleBuilder();
 		this.color = color;
 		this.skinParam = skinParam;
 	}
@@ -118,7 +121,7 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 		final Ftile back = Display.isNull(backward) ? null
 				: factory.activity(backward, swimlane, boxStyle, Colors.empty(), null);
 		Ftile tmp = repeatList.createFtile(factory);
-		tmp = factory.createWhile(outColor, swimlane, tmp, test, yes, color, specialOut, back, incoming1, incoming2);
+		tmp = factory.createWhile(outColor, swimlane, tmp, test, yes, color, specialOut, back, incoming1, incoming2, currentStyleBuilder);
 		if (getPositionedNotes().size() > 0)
 			tmp = FtileWithNoteOpale.create(tmp, getPositionedNotes(), false, VerticalAlignment.CENTER);
 

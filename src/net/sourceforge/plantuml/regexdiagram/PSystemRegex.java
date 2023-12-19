@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.ebnf.ETile;
 import net.sourceforge.plantuml.ebnf.ETileAlternation;
 import net.sourceforge.plantuml.ebnf.ETileBox;
 import net.sourceforge.plantuml.ebnf.ETileConcatenation;
+import net.sourceforge.plantuml.ebnf.ETileLookAheadOrBehind;
 import net.sourceforge.plantuml.ebnf.ETileNamedGroup;
 import net.sourceforge.plantuml.ebnf.ETileOneOrMore;
 import net.sourceforge.plantuml.ebnf.ETileOptional;
@@ -162,6 +163,10 @@ public class PSystemRegex extends TitledDiagram {
 					push(token, Symbol.TERMINAL_STRING1);
 				else if (token.getType() == ReTokenType.GROUP)
 					push(token, Symbol.SPECIAL_SEQUENCE);
+				else if (token.getType() == ReTokenType.LOOK_AHEAD)
+					lookAheadOrBehind(token.getData());
+				else if (token.getType() == ReTokenType.LOOK_BEHIND)
+					lookAheadOrBehind(token.getData());
 				else if (token.getType() == ReTokenType.NAMED_GROUP)
 					namedGroup(token.getData());
 				else if (token.getType() == ReTokenType.CLASS)
@@ -203,6 +208,11 @@ public class PSystemRegex extends TitledDiagram {
 	private void push(ReToken element, Symbol type) {
 		// final Symbol type = Symbol.LITTERAL;
 		stack.addFirst(new ETileBox(element.getData(), type, fontConfiguration, style, colorSet, getSkinParam()));
+	}
+
+	private void lookAheadOrBehind(String name) {
+		final ETile arg1 = stack.removeFirst();
+		stack.addFirst(new ETileLookAheadOrBehind(arg1, fontConfiguration, style, colorSet, name));
 	}
 
 	private void namedGroup(String name) {

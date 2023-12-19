@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 
 public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
@@ -73,13 +74,12 @@ public class FtileFactoryDelegatorRepeat extends FtileFactoryDelegator {
 	@Override
 	public Ftile repeat(BoxStyle boxStyleIn, Swimlane swimlane, Swimlane swimlaneOut, Display startLabel,
 			final Ftile repeat, Display test, Display yes, Display out, Colors colors, Ftile backward, boolean noOut,
-			LinkRendering incoming1, LinkRendering incoming2) {
+			LinkRendering incoming1, LinkRendering incoming2, StyleBuilder currentStyleBuilder) {
 
 		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
 
-		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
-		final Style styleDiamond = getDefaultStyleDefinitionDiamond()
-				.getMergedStyle(skinParam().getCurrentStyleBuilder());
+		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(currentStyleBuilder);
+		final Style styleDiamond = getDefaultStyleDefinitionDiamond().getMergedStyle(currentStyleBuilder);
 		final HColor borderColor = styleDiamond.value(PName.LineColor).asColor(skinParam().getIHtmlColorSet());
 		final HColor diamondColor = styleDiamond.value(PName.BackGroundColor).asColor(skinParam().getIHtmlColorSet());
 		final Rainbow arrowColor = Rainbow.build(styleArrow, skinParam().getIHtmlColorSet());

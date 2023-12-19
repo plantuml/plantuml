@@ -82,6 +82,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.Styleable;
 import net.sourceforge.plantuml.svek.UGraphicForSnake;
@@ -127,9 +128,9 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 	}
 
 	protected Style getStyle() {
-		if (style == null) {
+		if (style == null)
 			this.style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
-		}
+
 		return style;
 	}
 
@@ -453,6 +454,10 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 			cachedMinMax = TextBlockUtils.getMinMax(this, stringBounder, false);
 
 		return cachedMinMax;
+	}
+
+	public StyleBuilder getCurrentStyleBuilder() {
+		return skinParam.getCurrentStyleBuilder();
 	}
 
 }

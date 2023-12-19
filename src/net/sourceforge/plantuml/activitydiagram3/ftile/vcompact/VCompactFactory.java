@@ -156,14 +156,14 @@ public class VCompactFactory implements FtileFactory {
 	@Override
 	public Ftile repeat(BoxStyle boxStyleIn, Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat,
 			Display test, Display yes, Display out, Colors colors, Ftile backward, boolean noOut,
-			LinkRendering incoming1, LinkRendering incoming2) {
+			LinkRendering incoming1, LinkRendering incoming2, StyleBuilder currentStyleBuilder) {
 		return repeat;
 	}
 
 	@Override
 	public Ftile createWhile(LinkRendering afterEndwhile, Swimlane swimlane, Ftile whileBlock, Display test,
 			Display yes, HColor color, Instruction specialOut, Ftile back, LinkRendering incoming1,
-			LinkRendering incoming2) {
+			LinkRendering incoming2, StyleBuilder styleBuilder) {
 		return whileBlock;
 	}
 
