@@ -69,7 +69,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiagram> {
 
-	public static final String ALL_TYPES = "person|artifact|actor/|actor|folder|card|file|package|rectangle|hexagon|label|node|frame|cloud|database|queue|stack|storage|agent|usecase/|usecase|component|boundary|control|entity|interface|circle|collections|port|portin|portout";
+	public static final String ALL_TYPES = "person|artifact|actor/|actor|folder|card|file|package|rectangle|hexagon|label|node|frame|cloud|action|process|database|queue|stack|storage|agent|usecase/|usecase|component|boundary|control|entity|interface|circle|collections|port|portin|portout";
 
 	public CommandCreateElementFull() {
 		super(getRegexConcat());
