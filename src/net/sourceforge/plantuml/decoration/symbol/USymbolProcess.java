@@ -64,7 +64,7 @@ class USymbolProcess extends USymbol {
 		return sname;
 	}
 
-	private void drawAction(UGraphic ug, double width, double height, double shadowing, double roundCorner,
+	private void drawProcess(UGraphic ug, double width, double height, double shadowing, double roundCorner,
 			double diagonalCorner) {
 		final UPolygon shape = new UPolygon();
 		shape.addPoint(0, 0);
@@ -89,7 +89,7 @@ class USymbolProcess extends USymbol {
 				final XDimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = UGraphicStencil.create(ug, dim);
 				ug = symbolContext.apply(ug);
-				drawAction(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow(),
+				drawProcess(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow(),
 						symbolContext.getRoundCorner(), symbolContext.getDiagonalCorner());
 				final Margin margin = getMargin();
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, stereoAlignment);
@@ -104,11 +104,41 @@ class USymbolProcess extends USymbol {
 		};
 	}
 
+	private double getHTitle(XDimension2D dimTitle) {
+		final double htitle;
+		if (dimTitle.getWidth() == 0)
+			htitle = 10;
+		else
+			htitle = dimTitle.getHeight();
+
+		return htitle;
+	}
+
 	@Override
 	public TextBlock asBig(final TextBlock title, final HorizontalAlignment labelAlignment, final TextBlock stereotype,
 			final double width, final double height, final Fashion symbolContext,
 			final HorizontalAlignment stereoAlignment) {
-		throw new UnsupportedOperationException();
+		return new AbstractTextBlock() {
+
+			public void drawU(UGraphic ug) {
+				final StringBounder stringBounder = ug.getStringBounder();
+				final XDimension2D dim = calculateDimension(stringBounder);
+				ug = symbolContext.apply(ug);
+				final XDimension2D dimTitle = title.calculateDimension(stringBounder);
+				drawProcess(ug, dim.getWidth(), dim.getHeight(), symbolContext.getDeltaShadow(),
+						symbolContext.getRoundCorner(), symbolContext.getDiagonalCorner());
+				final double posTitle = (width - dimTitle.getWidth()) / 2;
+				title.drawU(ug.apply(new UTranslate(posTitle, 2)));
+				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);
+				final double posStereo = (width - dimStereo.getWidth()) / 2;
+
+				stereotype.drawU(ug.apply(new UTranslate(4 + posStereo, 2 + getHTitle(dimTitle))));
+			}
+
+			public XDimension2D calculateDimension(StringBounder stringBounder) {
+				return new XDimension2D(width, height);
+			}
+		};
 	}
 
 }

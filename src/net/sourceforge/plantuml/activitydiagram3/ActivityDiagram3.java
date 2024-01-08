@@ -108,11 +108,11 @@ public class ActivityDiagram3 extends UmlDiagram {
 		return swinlanes.nextLinkRenderer();
 	}
 
-	public CommandExecutionResult addActivity(Display activity, BoxStyle style, Url url, Colors colors,
+	public CommandExecutionResult addActivity(Display activity, BoxStyle boxStyle, Url url, Colors colors,
 			Stereotype stereotype) {
 		manageSwimlaneStrategy();
 		final InstructionSimple ins = new InstructionSimple(activity, nextLinkRenderer(),
-				swinlanes.getCurrentSwimlane(), style, url, colors, stereotype);
+				swinlanes.getCurrentSwimlane(), boxStyle, url, colors, stereotype);
 		final CommandExecutionResult added = current().add(ins);
 		if (added.isOk() == false)
 			return added;
@@ -396,7 +396,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 		}
 		if (current() instanceof InstructionWhile) {
 			final InstructionWhile instructionWhile = (InstructionWhile) current();
-			instructionWhile.setBackward(label, swinlanes.getCurrentSwimlane(), boxStyle, incoming1, incoming2);
+			instructionWhile.setBackward(label, boxStyle, incoming1, incoming2, stereotype);
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("Cannot find repeat");
@@ -406,7 +406,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 	public void doWhile(Display test, Display yes, HColor color) {
 		manageSwimlaneStrategy();
 		final InstructionWhile instructionWhile = new InstructionWhile(swinlanes.getCurrentSwimlane(), current(), test,
-				nextLinkRenderer(), yes, color, getSkinParam());
+				nextLinkRenderer(), yes, color, getSkinParam().getCurrentStyleBuilder());
 		current().add(instructionWhile);
 		setCurrent(instructionWhile);
 	}

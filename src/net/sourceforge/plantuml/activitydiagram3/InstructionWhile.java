@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.StyleBuilder;
 
@@ -73,13 +74,14 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 
 	private LinkRendering outColor = LinkRendering.none();
 	private final Swimlane swimlane;
-	private final ISkinParam skinParam;
 
 	private Instruction specialOut;
 
 	private BoxStyle boxStyle;
-	private Swimlane swimlaneOut;
+
 	private Display backward = Display.NULL;
+	private Stereotype stereotype;
+
 	private LinkRendering incoming1 = LinkRendering.none();
 	private LinkRendering incoming2 = LinkRendering.none();
 	private boolean backwardCalled;
@@ -90,15 +92,14 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 	}
 
 	public InstructionWhile(Swimlane swimlane, Instruction parent, Display test, LinkRendering nextLinkRenderer,
-			Display yes, HColor color, ISkinParam skinParam) {
+			Display yes, HColor color, StyleBuilder currentStyleBuilder) {
 		this.parent = parent;
 		this.test = Objects.requireNonNull(test);
 		this.nextLinkRenderer = Objects.requireNonNull(nextLinkRenderer);
 		this.yes = Objects.requireNonNull(yes);
 		this.swimlane = swimlane;
-		this.currentStyleBuilder = skinParam.getCurrentStyleBuilder();
+		this.currentStyleBuilder = currentStyleBuilder;
 		this.color = color;
-		this.skinParam = skinParam;
 	}
 
 	@Override
@@ -119,9 +120,10 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
 		final Ftile back = Display.isNull(backward) ? null
-				: factory.activity(backward, swimlane, boxStyle, Colors.empty(), null);
+				: factory.activity(backward, swimlane, boxStyle, Colors.empty(), stereotype);
 		Ftile tmp = repeatList.createFtile(factory);
-		tmp = factory.createWhile(outColor, swimlane, tmp, test, yes, color, specialOut, back, incoming1, incoming2, currentStyleBuilder);
+		tmp = factory.createWhile(outColor, swimlane, tmp, test, yes, color, specialOut, back, incoming1, incoming2,
+				currentStyleBuilder);
 		if (getPositionedNotes().size() > 0)
 			tmp = FtileWithNoteOpale.create(tmp, getPositionedNotes(), false, VerticalAlignment.CENTER);
 
@@ -194,14 +196,14 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 		return repeatList.containsBreak();
 	}
 
-	public void setBackward(Display label, Swimlane swimlaneOut, BoxStyle boxStyle, LinkRendering incoming1,
-			LinkRendering incoming2) {
+	public void setBackward(Display label, BoxStyle boxStyle, LinkRendering incoming1, LinkRendering incoming2,
+			Stereotype stereotype) {
 		this.backward = label;
-		this.swimlaneOut = swimlaneOut;
 		this.boxStyle = boxStyle;
 		this.incoming1 = incoming1;
 		this.incoming2 = incoming2;
 		this.backwardCalled = true;
+		this.stereotype = stereotype;
 	}
 
 	public void incoming(LinkRendering incoming) {

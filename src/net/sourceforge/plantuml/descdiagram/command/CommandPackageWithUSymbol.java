@@ -72,7 +72,7 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandPackageWithUSymbol.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("SYMBOL",
-						"(package|rectangle|hexagon|node|artifact|folder|file|frame|cloud|database|storage|component|card|queue|stack)"), //
+						"(package|rectangle|hexagon|node|artifact|folder|file|frame|cloud|action|process|database|storage|component|card|queue|stack)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexOr(//
 						new RegexConcat( //
