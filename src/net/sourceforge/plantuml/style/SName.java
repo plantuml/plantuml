@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.style;
 
 public enum SName {
+	action, //
 	activity, //
 	activityBar, //
 	activityDiagram, //
@@ -113,6 +114,7 @@ public enum SName {
 	partition, //
 	person, //
 	port, //
+	process, //
 	queue, //
 	rectangle, //
 	reference, //

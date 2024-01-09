@@ -60,47 +60,48 @@ import net.sourceforge.plantuml.svek.image.Opale;
 
 public class FEntry implements Iterable<FEntry> {
 
-	private final ISkinParam skinParam;
+	private final FEntry parent;
 	private final List<String> note;
 	private final String name;
 	private FilesType type;
 	private List<FEntry> children = new ArrayList<>();
 
-	public static FEntry createRoot(ISkinParam skinParam) {
-		return new FEntry(null, "", FilesType.FOLDER, skinParam);
+	public static FEntry createRoot() {
+		return new FEntry(null, FilesType.FOLDER, "", null);
 	}
 
-	private FEntry(List<String> note, String name, FilesType type, ISkinParam skinParam) {
+	private FEntry(FEntry parent, FilesType type, String name, List<String> note) {
+		this.parent = parent;
 		this.note = note;
 		this.name = name;
 		this.type = type;
-		this.skinParam = skinParam;
 	}
 
-	public void addRawEntry(String raw, ISkinParam skinParam) {
+	public FEntry addRawEntry(String raw) {
 		final int x = raw.indexOf('/');
 		if (x == -1) {
-			final FEntry result = new FEntry(null, raw, FilesType.DATA, skinParam);
+			final FEntry result = new FEntry(this, FilesType.DATA, raw, null);
 			children.add(result);
-			return;
+			return result;
 		}
-		final FEntry folder = getOrCreateFolder(raw.substring(0, x), skinParam);
+		final FEntry folder = getOrCreateFolder(raw.substring(0, x));
 		final String remain = raw.substring(x + 1);
 		if (remain.length() != 0)
-			folder.addRawEntry(remain, skinParam);
+			return folder.addRawEntry(remain);
+		return null;
 	}
 
-	public void addNote(List<String> note, ISkinParam skinParam) {
-		final FEntry result = new FEntry(note, "NONE", FilesType.NOTE, skinParam);
+	public void addNote(List<String> note) {
+		final FEntry result = new FEntry(this, FilesType.NOTE, "NONE", note);
 		children.add(result);
 	}
 
-	private FEntry getOrCreateFolder(String folderName, ISkinParam skinParam) {
+	private FEntry getOrCreateFolder(String folderName) {
 		for (FEntry child : children)
 			if (child.type == FilesType.FOLDER && child.getName().equals(folderName))
 				return child;
 
-		final FEntry result = new FEntry(null, folderName, FilesType.FOLDER, skinParam);
+		final FEntry result = new FEntry(this, FilesType.FOLDER, folderName, null);
 		children.add(result);
 		return result;
 	}
@@ -108,6 +109,10 @@ public class FEntry implements Iterable<FEntry> {
 	@Override
 	public Iterator<FEntry> iterator() {
 		return Collections.unmodifiableCollection(children).iterator();
+	}
+
+	public FEntry getParent() {
+		return parent;
 	}
 
 	public String getName() {
@@ -132,14 +137,15 @@ public class FEntry implements Iterable<FEntry> {
 
 	private TextBlock getTextBlock(FontConfiguration fontConfiguration, ISkinParam skinParam) {
 		if (type == FilesType.NOTE)
-			return createOpale();
+			return createOpale(skinParam);
 
 		final Display display = Display.getWithNewlines(getEmoticon() + getName());
-		TextBlock result = display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam, CreoleMode.NO_CREOLE);
+		TextBlock result = display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam,
+				CreoleMode.NO_CREOLE);
 		return result;
 	}
 
-	private Opale createOpale() {
+	private Opale createOpale(ISkinParam skinParam) {
 
 		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,
 				SName.note);
