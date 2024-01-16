@@ -93,6 +93,8 @@ public class LanguageDescriptor {
 		type.add("metaclass");
 		type.add("map");
 		type.add("json");
+		type.add("action");
+		type.add("process");
 
 		keyword.add("@startwire");
 		keyword.add("@startbpm");
