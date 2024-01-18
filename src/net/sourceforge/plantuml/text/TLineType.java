@@ -34,6 +34,8 @@
  */
 package net.sourceforge.plantuml.text;
 
+import java.util.regex.Pattern;
+
 public enum TLineType {
 
 	PLAIN, AFFECTATION_DEFINE, AFFECTATION, ASSERT, IF, IFDEF, UNDEF, IFNDEF, ELSE, ELSEIF, ENDIF, WHILE, ENDWHILE,
@@ -41,115 +43,174 @@ public enum TLineType {
 	LEGACY_DEFINELONG, THEME, INCLUDE, INCLUDE_DEF, IMPORT, STARTSUB, ENDSUB, INCLUDESUB, LOG, DUMP_MEMORY,
 	COMMENT_SIMPLE, COMMENT_LONG_START;
 
-//	private boolean elseLike() {
-//		return this == ELSE || this == ELSEIF;
-//	}
-//
-//	public boolean incIndentAfter() {
-//		return this == IF || this == IFDEF || this == IFNDEF || elseLike();
-//	}
-//
-//	public boolean decIndentBefore() {
-//		return this == ENDIF || elseLike();
-//	}
+	private static final Pattern PATTERN_LEGACY_DEFINE = Pattern.compile("^\\s*!define\\s+[\\p{L}_][\\p{L}_0-9]*\\(.*");
+
+	private static final Pattern PATTERN_LEGACY_DEFINELONG = Pattern
+			.compile("^\\s*!definelong\\s+[\\p{L}_][\\p{L}_0-9]*\\b.*");
+
+	private static final Pattern PATTERN_AFFECTATION_DEFINE = Pattern
+			.compile("^\\s*!define\\s+[\\p{L}_][\\p{L}_0-9]*\\b.*");
+
+	private static final Pattern PATTERN_AFFECTATION = Pattern
+			.compile("^\\s*!\\s*(local|global)?\\s*\\$?[\\p{L}_][\\p{L}_0-9]*\\s*\\??=.*");
+
+	private static final Pattern PATTERN_COMMENT_SIMPLE1 = Pattern.compile("^\\s*'.*");
+
+	private static final Pattern PATTERN_COMMENT_SIMPLE2 = Pattern.compile("^\\s*/'.*'/\\s*$");
+
+	private static final Pattern PATTERN_COMMENT_LONG_START = Pattern.compile("^\\s*/'.*");
+
+	private static final Pattern PATTERN_IFDEF = Pattern.compile("^\\s*!ifdef\\s+.*");
+
+	private static final Pattern PATTERN_UNDEF = Pattern.compile("^\\s*!undef\\s+.*");
+
+	private static final Pattern PATTERN_IFNDEF = Pattern.compile("^\\s*!ifndef\\s+.*");
+
+	private static final Pattern PATTERN_ASSERT = Pattern.compile("^\\s*!assert\\s+.*");
+
+	private static final Pattern PATTERN_IF = Pattern.compile("^\\s*!if\\s+.*");
+
+	private static final Pattern PATTERN_DECLARE_RETURN_FUNCTION = Pattern
+			.compile("^\\s*!(unquoted\\s|final\\s)*(function)\\s+\\$?[\\p{L}_][\\p{L}_0-9]*.*");
+
+	private static final Pattern PATTERN_DECLARE_PROCEDURE = Pattern
+			.compile("^\\s*!(unquoted\\s|final\\s)*(procedure)\\s+\\$?[\\p{L}_][\\p{L}_0-9]*.*");
+
+	private static final Pattern PATTERN_ELSE = Pattern.compile("^\\s*!else\\b.*");
+
+	private static final Pattern PATTERN_ELSEIF = Pattern.compile("^\\s*!elseif\\b.*");
+
+	private static final Pattern PATTERN_ENDIF = Pattern.compile("^\\s*!endif\\b.*");
+
+	private static final Pattern PATTERN_WHILE = Pattern.compile("^\\s*!while\\s+.*");
+
+	private static final Pattern PATTERN_ENDWHILE = Pattern.compile("^\\s*!endwhile\\b.*");
+
+	private static final Pattern PATTERN_FOREACH = Pattern.compile("^\\s*!foreach\\s+.*");
+
+	private static final Pattern PATTERN_ENDFOREACH = Pattern.compile("^\\s*!endfor\\b.*");
+
+	private static final Pattern PATTERN_END_FUNCTION = Pattern
+			.compile("^\\s*!(end\\s*function|end\\s*definelong|end\\s*procedure)\\b.*");
+
+	private static final Pattern PATTERN_RETURN = Pattern.compile("^\\s*!return\\b.*");
+
+	private static final Pattern PATTERN_THEME = Pattern.compile("^\\s*!theme\\b.*");
+
+	private static final Pattern PATTERN_INCLUDE = Pattern
+			.compile("^\\s*!(include|includeurl|include_many|include_once)\\b.*");
+
+	private static final Pattern PATTERN_INCLUDE_DEF = Pattern.compile("^\\s*!(includedef)\\b.*");
+
+	private static final Pattern PATTERN_IMPORT = Pattern.compile("^\\s*!(import)\\b.*");
+
+	private static final Pattern PATTERN_STARTSUB = Pattern.compile("^\\s*!startsub\\s+.*");
+
+	private static final Pattern PATTERN_ENDSUB = Pattern.compile("^\\s*!endsub\\b.*");
+
+	private static final Pattern PATTERN_INCLUDESUB = Pattern.compile("^\\s*!includesub\\b.*");
+
+	private static final Pattern PATTERN_LOG = Pattern.compile("^\\s*!(log)\\b.*");
+
+	private static final Pattern PATTERN_DUMP_MEMORY = Pattern.compile("^\\s*!(dump_memory)\\b.*");
 
 	public static TLineType getFromLineInternal(String s) {
-		if (s.matches("^\\s*!define\\s+[\\p{L}_][\\p{L}_0-9]*\\(.*")) {
+		if (PATTERN_LEGACY_DEFINE.matcher(s).matches())
 			return LEGACY_DEFINE;
-		}
-		if (s.matches("^\\s*!definelong\\s+[\\p{L}_][\\p{L}_0-9]*\\b.*")) {
+
+		if (PATTERN_LEGACY_DEFINELONG.matcher(s).matches())
 			return LEGACY_DEFINELONG;
-		}
-		if (s.matches("^\\s*!define\\s+[\\p{L}_][\\p{L}_0-9]*\\b.*")) {
+
+		if (PATTERN_AFFECTATION_DEFINE.matcher(s).matches())
 			return AFFECTATION_DEFINE;
-		}
-		if (s.matches("^\\s*!\\s*(local|global)?\\s*\\$?[\\p{L}_][\\p{L}_0-9]*\\s*\\??=.*")) {
+
+		if (PATTERN_AFFECTATION.matcher(s).matches())
 			return AFFECTATION;
-		}
-		if (s.matches("^\\s*'.*")) {
+
+		if (PATTERN_COMMENT_SIMPLE1.matcher(s).matches())
 			return COMMENT_SIMPLE;
-		}
-		if (s.matches("^\\s*/'.*'/\\s*$")) {
+
+		if (PATTERN_COMMENT_SIMPLE2.matcher(s).matches())
 			return COMMENT_SIMPLE;
-		}
-		if (s.matches("^\\s*/'.*") && s.contains("'/") == false) {
+
+		if (PATTERN_COMMENT_LONG_START.matcher(s).matches() && s.contains("'/") == false)
 			return COMMENT_LONG_START;
-		}
-		if (s.matches("^\\s*!ifdef\\s+.*")) {
+
+		if (PATTERN_IFDEF.matcher(s).matches())
 			return IFDEF;
-		}
-		if (s.matches("^\\s*!undef\\s+.*")) {
+
+		if (PATTERN_UNDEF.matcher(s).matches())
 			return UNDEF;
-		}
-		if (s.matches("^\\s*!ifndef\\s+.*")) {
+
+		if (PATTERN_IFNDEF.matcher(s).matches())
 			return IFNDEF;
-		}
-		if (s.matches("^\\s*!assert\\s+.*")) {
+
+		if (PATTERN_ASSERT.matcher(s).matches())
 			return ASSERT;
-		}
-		if (s.matches("^\\s*!if\\s+.*")) {
+
+		if (PATTERN_IF.matcher(s).matches())
 			return IF;
-		}
-		if (s.matches("^\\s*!(unquoted\\s|final\\s)*(function)\\s+\\$?[\\p{L}_][\\p{L}_0-9]*.*")) {
+
+		if (PATTERN_DECLARE_RETURN_FUNCTION.matcher(s).matches())
 			return DECLARE_RETURN_FUNCTION;
-		}
-		if (s.matches("^\\s*!(unquoted\\s|final\\s)*(procedure)\\s+\\$?[\\p{L}_][\\p{L}_0-9]*.*")) {
+
+		if (PATTERN_DECLARE_PROCEDURE.matcher(s).matches())
 			return DECLARE_PROCEDURE;
-		}
-		if (s.matches("^\\s*!else\\b.*")) {
+
+		if (PATTERN_ELSE.matcher(s).matches())
 			return ELSE;
-		}
-		if (s.matches("^\\s*!elseif\\b.*")) {
+
+		if (PATTERN_ELSEIF.matcher(s).matches())
 			return ELSEIF;
-		}
-		if (s.matches("^\\s*!endif\\b.*")) {
+
+		if (PATTERN_ENDIF.matcher(s).matches())
 			return ENDIF;
-		}
-		if (s.matches("^\\s*!while\\s+.*")) {
+
+		if (PATTERN_WHILE.matcher(s).matches())
 			return WHILE;
-		}
-		if (s.matches("^\\s*!endwhile\\b.*")) {
+
+		if (PATTERN_ENDWHILE.matcher(s).matches())
 			return ENDWHILE;
-		}
-		if (s.matches("^\\s*!foreach\\s+.*")) {
+
+		if (PATTERN_FOREACH.matcher(s).matches())
 			return FOREACH;
-		}
-		if (s.matches("^\\s*!endfor\\b.*")) {
+
+		if (PATTERN_ENDFOREACH.matcher(s).matches())
 			return ENDFOREACH;
-		}
-		if (s.matches("^\\s*!(end\\s*function|end\\s*definelong|end\\s*procedure)\\b.*")) {
+
+		if (PATTERN_END_FUNCTION.matcher(s).matches())
 			return END_FUNCTION;
-		}
-		if (s.matches("^\\s*!return\\b.*")) {
+
+		if (PATTERN_RETURN.matcher(s).matches())
 			return RETURN;
-		}
-		if (s.matches("^\\s*!theme\\b.*")) {
+
+		if (PATTERN_THEME.matcher(s).matches())
 			return THEME;
-		}
-		if (s.matches("^\\s*!(include|includeurl|include_many|include_once)\\b.*")) {
+
+		if (PATTERN_INCLUDE.matcher(s).matches())
 			return INCLUDE;
-		}
-		if (s.matches("^\\s*!(includedef)\\b.*")) {
+
+		if (PATTERN_INCLUDE_DEF.matcher(s).matches())
 			return INCLUDE_DEF;
-		}
-		if (s.matches("^\\s*!(import)\\b.*")) {
+
+		if (PATTERN_IMPORT.matcher(s).matches())
 			return IMPORT;
-		}
-		if (s.matches("^\\s*!startsub\\s+.*")) {
+
+		if (PATTERN_STARTSUB.matcher(s).matches())
 			return STARTSUB;
-		}
-		if (s.matches("^\\s*!endsub\\b.*")) {
+
+		if (PATTERN_ENDSUB.matcher(s).matches())
 			return ENDSUB;
-		}
-		if (s.matches("^\\s*!includesub\\b.*")) {
+
+		if (PATTERN_INCLUDESUB.matcher(s).matches())
 			return INCLUDESUB;
-		}
-		if (s.matches("^\\s*!(log)\\b.*")) {
+
+		if (PATTERN_LOG.matcher(s).matches())
 			return LOG;
-		}
-		if (s.matches("^\\s*!(dump_memory)\\b.*")) {
+
+		if (PATTERN_DUMP_MEMORY.matcher(s).matches())
 			return DUMP_MEMORY;
-		}
+
 		return PLAIN;
 	}
 

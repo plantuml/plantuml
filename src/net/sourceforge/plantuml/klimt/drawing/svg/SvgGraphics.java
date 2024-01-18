@@ -1024,7 +1024,7 @@ public class SvgGraphics {
 
 	public void addCommentMetadata(String metadata) {
 		// ::comment when __CORE__
-		final String signature = getMetadataHex(metadata);
+		final String signature = getMetadataHex(metadata).replace("--", "- -");
 		final String comment = "SRC=[" + signature + "]";
 		final Comment commentElement = document.createComment(comment);
 		getG().appendChild(commentElement);
