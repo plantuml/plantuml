@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.tim.stdlib;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import net.sourceforge.plantuml.tim.EaterException;
@@ -46,22 +47,35 @@ import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class Random extends SimpleReturnFunction {
+public class RandomFunction extends SimpleReturnFunction {
 
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%random", 1);
+		return new TFunctionSignature("%random", 2);
 	}
 
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
-		return nbArg == 1;
+		return nbArg == 0 || nbArg == 1 || nbArg == 2;
 	}
 
+	final Random random = new Random();
+	
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
-		if (values.get(0).isNumber()) {
-			final int limit = values.get(0).toInt();
-			return TValue.fromInt((int) (Math.random() * limit));
+		switch (values.size()) {
+			case 0:
+				return TValue.fromInt(random.nextInt(2));
+
+			case 1:
+				final Integer mx = values.get(0).toInt();
+				return TValue.fromInt(random.nextInt(mx));
+
+			case 2:
+				final Integer min = values.get(0).toInt();
+				final Integer max = values.get(1).toInt();			
+				return TValue.fromInt(random.nextInt(max - min) + min);
+
+			default:
+				throw EaterException.located("Error on Random: Too many argument");
 		}
-		return TValue.fromInt(0);
 	}
 }
