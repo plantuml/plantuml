@@ -209,7 +209,7 @@ public class TContext {
 		functionsSet.addFunction(new LogicalNor());
 		functionsSet.addFunction(new LogicalNxor());
 		functionsSet.addFunction(new Ord());
-		functionsSet.addFunction(new Random());
+		functionsSet.addFunction(new RandomFunction());
 		// %standard_exists_function
 		// %str_replace
 		// !exit
