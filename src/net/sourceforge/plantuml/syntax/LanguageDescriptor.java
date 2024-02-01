@@ -123,6 +123,7 @@ public class LanguageDescriptor {
 		keyword.add("@startebnf");
 		keyword.add("@startregex");
 		keyword.add("@startfiles");
+		keyword.add("@startchronology");
 		keyword.add("@endwire");
 		keyword.add("@endbpm");
 		keyword.add("@enduml");
@@ -150,6 +151,7 @@ public class LanguageDescriptor {
 		keyword.add("@endebnf");
 		keyword.add("@endregex");
 		keyword.add("@endfiles");
+		keyword.add("@endchronology");
 		keyword.add("as");
 		keyword.add("also");
 		keyword.add("autonumber");

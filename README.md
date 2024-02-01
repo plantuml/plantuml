@@ -56,6 +56,7 @@ PlantUML is a component that allows you to create various UML diagrams through s
   - [SDL (Specification and Description Language)](http://plantuml.com/activity-diagram-beta#sdl)
   - [Ditaa diagram](http://plantuml.com/ditaa)
   - [Gantt diagram](http://plantuml.com/gantt-diagram)
+  - [Chronology diagram](http://plantuml.com/chronology-diagram)
   - [MindMap diagram](http://plantuml.com/mindmap-diagram)
   - [WBS (Work Breakdown Structure)](http://plantuml.com/wbs-diagram)
   - [Mathematical Notations (AsciiMath, JLaTeXMath)](http://plantuml.com/ascii-math)
