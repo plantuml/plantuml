@@ -64,9 +64,9 @@ public class TimeHeaderYearly extends TimeHeaderCalendar {
 		return getTimeHeaderHeight(stringBounder);
 	}
 
-	public TimeHeaderYearly(StringBounder stringBounder, TimeHeaderParameters thParam) {
+	public TimeHeaderYearly(StringBounder stringBounder, TimeHeaderParameters thParam, Day printStart) {
 		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),
-				thParam.getScale()));
+				thParam.getScale(), printStart));
 	}
 
 	@Override

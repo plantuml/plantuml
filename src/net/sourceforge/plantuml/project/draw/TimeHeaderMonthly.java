@@ -67,9 +67,9 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 		return getTimeHeaderHeight(stringBounder);
 	}
 
-	public TimeHeaderMonthly(StringBounder stringBounder, TimeHeaderParameters thParam) {
+	public TimeHeaderMonthly(StringBounder stringBounder, TimeHeaderParameters thParam, Day printStart) {
 		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),
-				thParam.getScale()));
+				thParam.getScale(), printStart));
 	}
 
 	@Override

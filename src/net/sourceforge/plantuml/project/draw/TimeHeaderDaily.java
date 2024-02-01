@@ -96,7 +96,7 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	private final Map<Day, String> nameDays;
 
 	public TimeHeaderDaily(StringBounder stringBounder, TimeHeaderParameters thParam, Map<Day, String> nameDays,
-			Day printStart, Day printEnd) {
+			Day printStart) {
 		super(thParam, new TimeScaleDaily(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),
 				thParam.getScale(), printStart));
 		this.nameDays = nameDays;

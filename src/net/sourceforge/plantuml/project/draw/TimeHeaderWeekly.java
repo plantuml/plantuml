@@ -76,9 +76,9 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	}
 
 	public TimeHeaderWeekly(StringBounder stringBounder, TimeHeaderParameters thParam,
-			WeekNumberStrategy weekNumberStrategy, boolean withCalendarDate) {
+			WeekNumberStrategy weekNumberStrategy, boolean withCalendarDate, Day printStart) {
 		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),
-				thParam.getScale()));
+				thParam.getScale(), printStart));
 		this.weekNumberStrategy = weekNumberStrategy;
 		this.withCalendarDate = withCalendarDate;
 	}
