@@ -119,6 +119,9 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 		if (s.equals(EMBEDDED_START + "files"))
 			return "files";
 
+		if (s.equals(EMBEDDED_START + "chronology"))
+			return "chronology";
+
 		return null;
 	}
 
