@@ -57,7 +57,7 @@ public class RandomFunction extends SimpleReturnFunction {
 		return nbArg == 0 || nbArg == 1 || nbArg == 2;
 	}
 
-	final Random random = new Random();
+	private final Random random = new Random();
 	
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
