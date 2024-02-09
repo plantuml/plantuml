@@ -1,4 +1,9 @@
 @startuml
+'' NAME = Sunlust
+'' DESCRIPTION = sunlust theme based off of the [solarized theme](https://ethanschoonover.com/solarized)
+'' AUTHOR = Artem V. Ageev
+'' LICENCE = GPL 3+
+
 !$THEME = 'sunlust'
 !if %not(%variable_exists("$BGCOLOR"))
 !$BGCOLOR = '#fdf6e3'
