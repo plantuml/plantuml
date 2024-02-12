@@ -1,9 +1,9 @@
 package net.sourceforge.plantuml;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static net.sourceforge.plantuml.test.TestUtils.writeUtf8File;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.util.Lists.newArrayList;
+import static test.utils.TestUtils.writeUtf8File;
 
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;

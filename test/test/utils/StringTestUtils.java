@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.test;
+package test.utils;
 
 import static java.util.Objects.requireNonNull;
 

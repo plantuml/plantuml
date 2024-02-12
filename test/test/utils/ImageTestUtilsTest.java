@@ -1,9 +1,9 @@
-package net.sourceforge.plantuml.test;
+package test.utils;
 
-import static net.sourceforge.plantuml.test.ImageTestUtils.assertImageSizeEqual;
-import static net.sourceforge.plantuml.test.ImageTestUtils.assertImagesEqual;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static test.utils.ImageTestUtils.assertImageSizeEqual;
+import static test.utils.ImageTestUtils.assertImagesEqual;
 
 import java.awt.image.BufferedImage;
 

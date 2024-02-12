@@ -1,11 +1,11 @@
-package testhelper;
+package test.example;
 
-import static net.sourceforge.plantuml.test.PlantUmlTestUtils.exportDiagram;
+import static test.utils.PlantUmlTestUtils.exportDiagram;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-class TestHelper {
+class TestExample {
 
 	@Test
 	public void test_help_themes() throws Exception {

@@ -1,8 +1,8 @@
 package net.sourceforge.plantuml.tim.stdlib;
 
-import static net.sourceforge.plantuml.test.JunitUtils.StringJsonConverter;
 import static net.sourceforge.plantuml.tim.TimTestUtils.assertTimExpectedOutput;
 import static net.sourceforge.plantuml.tim.TimTestUtils.assertTimExpectedOutputFromInput;
+import static test.utils.JunitUtils.StringJsonConverter;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
