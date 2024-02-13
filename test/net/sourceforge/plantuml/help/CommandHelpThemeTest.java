@@ -1,14 +1,14 @@
-package testhelper;
+package net.sourceforge.plantuml.help;
 
-import static net.sourceforge.plantuml.test.PlantUmlTestUtils.exportDiagram;
 import static org.assertj.core.api.Assertions.assertThat;
+import static test.utils.PlantUmlTestUtils.exportDiagram;
 
 import org.junit.jupiter.api.Test;
 
-class TestHelper {
+class CommandHelpThemeTest {
 
 	@Test
-	public void test_help_themes() throws Exception {
+	public void command_help_theme() throws Exception {
 
 		final String output = exportDiagram(
 				"@startuml",

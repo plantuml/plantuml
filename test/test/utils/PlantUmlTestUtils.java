@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.test;
+package test.utils;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;

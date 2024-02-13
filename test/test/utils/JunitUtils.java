@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.test;
+package test.utils;
 
 import org.junit.jupiter.params.converter.ArgumentConversionException;
 import org.junit.jupiter.params.converter.SimpleArgumentConverter;
