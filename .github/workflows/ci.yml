@@ -115,7 +115,7 @@ jobs:
         run: gradle test --no-daemon -i
 
       - name: Upload test reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: needs.workflow_config.outputs.do_test_linux == 'true'
         with:
           # Using github.run_number here to reduce confusion when downloading & comparing from several builds
@@ -172,7 +172,7 @@ jobs:
         run: |
           echo "release_version=$(gradle properties -q | grep "version:" | awk '{print $2}')" >> $GITHUB_OUTPUT
       - name: Cache libs
-        uses: actions/cache/save@v3
+        uses: actions/cache/save@v4
         with:
           path: |
             build/libs
@@ -228,7 +228,7 @@ jobs:
           cache: gradle
 
       - name: Restore Libs cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         with:
           path: |
             build/libs
@@ -244,7 +244,7 @@ jobs:
           enableCrossOsArchive: true
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           # Using github.run_number here to reduce confusion when downloading & comparing artifacts from several builds
           name: ${{ github.run_number }}-artifacts
