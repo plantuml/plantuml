@@ -2,7 +2,7 @@
 
 Thank you for your interest in contributing to PlantUML! This guide will help you build the PlantUML project.
 
-PlantUML can be built using either [Gradle](#building-plantuml-with-gradle) or [Ant](#building-plantuml-with-ant-alternative-method). It's recommended to use Gradle as the primary build tool for this project. You will find instructions for both methods, starting with Gradle.
+PlantUML can be built using either [Gradle](#-building-plantuml-with-gradle) or [Ant](#-building-plantuml-with-ant-alternative-method). It's recommended to use Gradle as the primary build tool for this project. You will find instructions for both methods, starting with Gradle.
 
 ## ☕ Java Compatibility and Development Notes
 
