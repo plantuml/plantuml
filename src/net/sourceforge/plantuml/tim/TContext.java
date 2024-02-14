@@ -97,6 +97,7 @@ import net.sourceforge.plantuml.tim.stdlib.Feature;
 import net.sourceforge.plantuml.tim.stdlib.FileExists;
 import net.sourceforge.plantuml.tim.stdlib.Filename;
 import net.sourceforge.plantuml.tim.stdlib.FunctionExists;
+import net.sourceforge.plantuml.tim.stdlib.GetAllTheme;
 import net.sourceforge.plantuml.tim.stdlib.GetJsonKey;
 import net.sourceforge.plantuml.tim.stdlib.GetJsonType;
 import net.sourceforge.plantuml.tim.stdlib.GetVariableValue;
@@ -210,6 +211,7 @@ public class TContext {
 		functionsSet.addFunction(new LogicalNxor());
 		functionsSet.addFunction(new Ord());
 		functionsSet.addFunction(new RandomFunction());
+		functionsSet.addFunction(new GetAllTheme());
 		// %standard_exists_function
 		// %str_replace
 		// !exit
