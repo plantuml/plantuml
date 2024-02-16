@@ -49,9 +49,6 @@ public interface TFunction {
 
 	public TFunctionType getFunctionType();
 
-	public void executeProcedure(TContext context, TMemory memory, LineLocation location, String s)
-			throws EaterException, EaterExceptionLocated;
-
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> args,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated;
 

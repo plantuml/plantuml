@@ -51,11 +51,7 @@ public abstract class SimpleReturnFunction implements TFunction {
 		return TFunctionType.RETURN_FUNCTION;
 	}
 
-	final public void executeProcedure(TContext context, TMemory memory, LineLocation location, String s)
-			throws EaterException {
-		throw new UnsupportedOperationException();
-	}
-
+	@Override
 	final public void executeProcedureInternal(TContext context, TMemory memory, List<TValue> args,
 			Map<String, TValue> named) throws EaterException {
 		throw new UnsupportedOperationException();

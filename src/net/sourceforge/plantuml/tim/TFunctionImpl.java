@@ -130,18 +130,7 @@ public class TFunctionImpl implements TFunction {
 		}
 	}
 
-	public void executeProcedure(TContext context, TMemory memory, LineLocation location, String s)
-			throws EaterException, EaterExceptionLocated {
-		final EaterFunctionCall call = new EaterFunctionCall(new StringLocated(s, location),
-				context.isLegacyDefine(signature.getFunctionName()), unquoted);
-		call.analyze(context, memory);
-		final String endOfLine = call.getEndOfLine();
-		final List<TValue> args = call.getValues();
-		final Map<String, TValue> named = call.getNamedArguments();
-		executeProcedureInternal(context, memory, args, named);
-		context.appendEndOfLine(endOfLine);
-	}
-
+	@Override
 	public void executeProcedureInternal(TContext context, TMemory memory, List<TValue> args, Map<String, TValue> named)
 			throws EaterException, EaterExceptionLocated {
 		if (functionType != TFunctionType.PROCEDURE && functionType != TFunctionType.LEGACY_DEFINELONG)

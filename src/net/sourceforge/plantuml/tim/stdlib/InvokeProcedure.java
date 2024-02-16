@@ -62,11 +62,7 @@ public class InvokeProcedure implements TFunction {
 		return TFunctionType.PROCEDURE;
 	}
 
-	public void executeProcedure(TContext context, TMemory memory, LineLocation location, String s)
-			throws EaterException, EaterExceptionLocated {
-		throw new UnsupportedOperationException();
-	}
-
+	@Override
 	public void executeProcedureInternal(TContext context, TMemory memory, List<TValue> args, Map<String, TValue> named)
 			throws EaterException, EaterExceptionLocated {
 		final String fname = args.get(0).toString();
