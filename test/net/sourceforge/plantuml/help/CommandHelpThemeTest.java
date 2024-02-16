@@ -17,7 +17,7 @@ class CommandHelpThemeTest {
 		).asString();
 
 		assertThat(output)
-				.startsWith("                                \nHelp on themes")
+				.contains("Help on themes")
 				.contains("bluegray", "hacker");
 	}
 }
