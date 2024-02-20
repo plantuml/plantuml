@@ -53,10 +53,12 @@ public class GetVersion extends SimpleReturnFunction {
 		return new TFunctionSignature("%version", 0);
 	}
 
+	@Override
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg == 0;
 	}
 
+	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		return TValue.fromString(Version.versionString());

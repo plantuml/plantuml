@@ -54,10 +54,12 @@ public class SplitStr extends SimpleReturnFunction {
 		return new TFunctionSignature("%splitstr", 3);
 	}
 
+	@Override
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg == 2;
 	}
 
+	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		final JsonArray result = new JsonArray();

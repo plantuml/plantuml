@@ -53,12 +53,14 @@ public class RandomFunction extends SimpleReturnFunction {
 		return new TFunctionSignature("%random", 2);
 	}
 
+	@Override
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg == 0 || nbArg == 1 || nbArg == 2;
 	}
 
 	private final Random random = new Random();
 	
+	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		switch (values.size()) {

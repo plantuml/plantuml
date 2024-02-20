@@ -52,10 +52,12 @@ public class Substr extends SimpleReturnFunction {
 		return new TFunctionSignature("%substr", 3);
 	}
 
+	@Override
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg == 2 || nbArg == 3;
 	}
 
+	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		final String full = values.get(0).toString();

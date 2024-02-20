@@ -52,10 +52,12 @@ public class Strlen extends SimpleReturnFunction {
 		return new TFunctionSignature("%strlen", 1);
 	}
 
+	@Override
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg == 1;
 	}
 
+	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		return TValue.fromInt(values.get(0).toString().length());

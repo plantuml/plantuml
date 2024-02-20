@@ -50,10 +50,12 @@ public class StringFunction extends SimpleReturnFunction {
 		return new TFunctionSignature("%string", 1);
 	}
 
+	@Override
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg == 1;
 	}
 
+	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) {
 		return TValue.fromString(values.get(0).toString());

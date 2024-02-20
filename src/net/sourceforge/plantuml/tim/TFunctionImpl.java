@@ -69,6 +69,7 @@ public class TFunctionImpl implements TFunction {
 		this.functionType = functionType;
 	}
 
+	@Override
 	public boolean canCover(int nbArg, Set<String> namedArguments) {
 		for (String n : namedArguments)
 			if (signature.getNamedArguments().contains(n) == false)
@@ -140,8 +141,9 @@ public class TFunctionImpl implements TFunction {
 		context.executeLines(copy, body, TFunctionType.PROCEDURE, false);
 	}
 
-	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> args,
-			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
+	@Override
+	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location,
+			List<TValue> args, Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		if (functionType == TFunctionType.LEGACY_DEFINE)
 			return executeReturnLegacyDefine(location, context, memory, args);
 

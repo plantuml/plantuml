@@ -332,6 +332,9 @@ public class Stdlib {
 	private static Collection<String> getAll() throws IOException {
 		final Set<String> result = new TreeSet<>();
 		final InputStream home = getInternalInputStream("home", ".repx");
+		if (home == null)
+			throw new IOException("Cannot access to /stdlib/*.repx files");
+
 		final BufferedReader br = new BufferedReader(new InputStreamReader(home));
 		String name;
 		while ((name = br.readLine()) != null)

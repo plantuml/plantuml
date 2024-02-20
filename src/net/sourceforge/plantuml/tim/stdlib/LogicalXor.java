@@ -52,10 +52,12 @@ public class LogicalXor extends SimpleReturnFunction {
 		return new TFunctionSignature("%xor", 2);
 	}
 
+	@Override
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg >= 2;
 	}
 
+	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		int cpt = 0;

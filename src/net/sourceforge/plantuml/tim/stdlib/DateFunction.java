@@ -54,10 +54,12 @@ public class DateFunction extends SimpleReturnFunction {
 		return new TFunctionSignature("%date", 2);
 	}
 
+	@Override
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg == 0 || nbArg == 1 || nbArg == 2;
 	}
 
+	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		if (values.size() == 0)

@@ -53,10 +53,12 @@ public class FunctionExists extends SimpleReturnFunction {
 		return new TFunctionSignature("%function_exists", 1);
 	}
 
+	@Override
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg == 1;
 	}
 
+	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		final String name = values.get(0).toString();

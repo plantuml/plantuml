@@ -54,10 +54,12 @@ public class JsonKeyExists extends SimpleReturnFunction {
 		return new TFunctionSignature("%json_key_exists", 1);
 	}
 
+	@Override
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg == 2;
 	}
 
+	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		final TValue arg0 = values.get(0);

@@ -54,6 +54,7 @@ public class InvokeProcedure implements TFunction {
 		return new TFunctionSignature("%invoke_procedure", 1);
 	}
 
+	@Override
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg > 0;
 	}
@@ -75,6 +76,7 @@ public class InvokeProcedure implements TFunction {
 		func.executeProcedureInternal(context, memory, sublist, named);
 	}
 
+	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) {
 		throw new UnsupportedOperationException();

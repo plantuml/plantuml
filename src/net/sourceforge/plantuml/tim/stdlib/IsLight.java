@@ -56,10 +56,12 @@ public class IsLight extends SimpleReturnFunction {
 		return new TFunctionSignature("%is_light", 1);
 	}
 
+	@Override
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg == 1;
 	}
 
+	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		final String colorString = values.get(0).toString();

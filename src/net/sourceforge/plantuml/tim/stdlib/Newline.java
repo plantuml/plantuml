@@ -50,10 +50,12 @@ public class Newline extends SimpleReturnFunction {
 		return new TFunctionSignature("%newline", 0);
 	}
 
+	@Override
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg == 0;
 	}
 
+	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) {
 		return TValue.fromString("\n");

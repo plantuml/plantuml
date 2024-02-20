@@ -52,10 +52,12 @@ public class Feature extends SimpleReturnFunction {
 		return new TFunctionSignature("%feature", 1);
 	}
 
+	@Override
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg == 1;
 	}
 
+	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		final String arg = values.get(0).toString();

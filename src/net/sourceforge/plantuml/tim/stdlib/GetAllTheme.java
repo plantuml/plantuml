@@ -56,10 +56,12 @@ public class GetAllTheme extends SimpleReturnFunction {
 		return new TFunctionSignature("%get_all_theme", 0);
 	}
 
+	@Override
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg == 0;
 	}
 
+	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		final JsonArray result = new JsonArray();
