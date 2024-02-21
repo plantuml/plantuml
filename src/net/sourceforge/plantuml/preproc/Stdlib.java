@@ -3,10 +3,13 @@ package net.sourceforge.plantuml.preproc;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -317,9 +320,12 @@ public class Stdlib {
 		return new BrotliInputStream(raw);
 	}
 
-	private static InputStream getInternalInputStream(String fullname, String extension) {
-		final String res = "/stdlib/" + fullname + extension;
-		return Stdlib.class.getResourceAsStream(res);
+	private static InputStream getInternalInputStream(String fullname, String extension) throws FileNotFoundException {
+		final String path = "stdlib/" + fullname + extension;
+		InputStream result = Stdlib.class.getResourceAsStream("/" + path);
+		if (result == null)
+			result = new BufferedInputStream(new FileInputStream(path));
+		return result;
 	}
 
 	public static void extractStdLib() throws IOException {

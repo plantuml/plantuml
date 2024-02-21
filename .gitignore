@@ -8,7 +8,7 @@
 out
 
 #vscode files
-/bin
+**/bin/
 
 # Ant result file
 plantuml.jar
