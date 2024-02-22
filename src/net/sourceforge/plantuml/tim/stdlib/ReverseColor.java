@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
@@ -62,14 +61,14 @@ public class ReverseColor extends SimpleReturnFunction {
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
-			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
+			Map<String, TValue> named) throws EaterExceptionLocated {
 		final String colorString = values.get(0).toString();
 		try {
 			HColor color = HColorSet.instance().getColorLEGACY(colorString);
 			color = color.reverse();
 			return TValue.fromString(color.asString());
 		} catch (NoSuchColorException e) {
-			throw EaterException.located("No such color", location);
+			throw EaterExceptionLocated.located("No such color", location);
 		}
 	}
 }

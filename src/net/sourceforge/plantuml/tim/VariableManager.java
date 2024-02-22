@@ -40,7 +40,6 @@ import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.expression.TValue;
-import net.sourceforge.plantuml.utils.LineLocation;
 
 public class VariableManager {
 
@@ -54,7 +53,7 @@ public class VariableManager {
 		this.location = location;
 	}
 
-	public int replaceVariables(String str, int i, StringBuilder result) throws EaterException, EaterExceptionLocated {
+	public int replaceVariables(String str, int i, StringBuilder result) throws EaterExceptionLocated {
 		final String presentVariable = getVarnameAt(str, i);
 		if (result.toString().endsWith("##"))
 			result.setLength(result.length() - 2);
@@ -81,8 +80,7 @@ public class VariableManager {
 		return i;
 	}
 
-	private int replaceJson(JsonValue jsonValue, String str, int i, StringBuilder result)
-			throws EaterException, EaterExceptionLocated {
+	private int replaceJson(JsonValue jsonValue, String str, int i, StringBuilder result) throws EaterExceptionLocated {
 		while (i < str.length()) {
 			final char n = str.charAt(i);
 			if (n == '.') {
@@ -120,11 +118,11 @@ public class VariableManager {
 				} else if (jsonValue instanceof JsonObject) {
 					jsonValue = ((JsonObject) jsonValue).get(nbString);
 				} else {
-					throw EaterException.unlocated("Major parsing error", location);
+					throw EaterExceptionLocated.unlocated("Major parsing error", location);
 				}
 
 				if (jsonValue == null)
-					throw EaterException.unlocated("Data parsing error", location);
+					throw EaterExceptionLocated.unlocated("Data parsing error", location);
 
 				i++;
 			} else {

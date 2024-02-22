@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
@@ -65,7 +64,7 @@ public class GetAllStdlib extends SimpleReturnFunction {
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
-			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
+			Map<String, TValue> named) throws EaterExceptionLocated {
 
 		switch (values.size()) {
 		case 0:
@@ -100,7 +99,7 @@ public class GetAllStdlib extends SimpleReturnFunction {
 
 		default:
 			assert false; // Should not append because of canCover()
-			throw EaterException.located("Error on get_all_stdlib: Too many arguments", location);
+			throw EaterExceptionLocated.located("Error on get_all_stdlib: Too many arguments", location);
 		}
 	}
 }

@@ -133,7 +133,7 @@ public class TFunctionImpl implements TFunction {
 
 	@Override
 	public void executeProcedureInternal(TContext context, TMemory memory, StringLocated location, List<TValue> args,
-			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
+			Map<String, TValue> named) throws EaterExceptionLocated {
 		if (functionType != TFunctionType.PROCEDURE && functionType != TFunctionType.LEGACY_DEFINELONG)
 			throw new IllegalStateException();
 
@@ -143,23 +143,24 @@ public class TFunctionImpl implements TFunction {
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> args,
-			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
+			Map<String, TValue> named) throws EaterExceptionLocated {
 		if (functionType == TFunctionType.LEGACY_DEFINE)
 			return executeReturnLegacyDefine(location.getLocation(), context, memory, args);
 
 		if (functionType != TFunctionType.RETURN_FUNCTION)
-			throw EaterException.unlocated("Illegal call here. Is there a return directive in your function?", location);
+			throw EaterExceptionLocated.unlocated("Illegal call here. Is there a return directive in your function?",
+					location);
 
 		final TMemory copy = getNewMemory(memory, args, named);
 		final TValue result = context.executeLines(copy, body, TFunctionType.RETURN_FUNCTION, true);
 		if (result == null)
-			throw EaterException.unlocated("No return directive found in your function", location);
+			throw EaterExceptionLocated.unlocated("No return directive found in your function", location);
 
 		return result;
 	}
 
 	private TValue executeReturnLegacyDefine(LineLocation location, TContext context, TMemory memory, List<TValue> args)
-			throws EaterException, EaterExceptionLocated {
+			throws EaterExceptionLocated {
 		if (legacyDefinition == null)
 			throw new IllegalStateException();
 

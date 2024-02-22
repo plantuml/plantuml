@@ -58,7 +58,7 @@ public class EaterFunctionCall extends Eater {
 	}
 
 	@Override
-	public void analyze(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
+	public void analyze(TContext context, TMemory memory) throws EaterExceptionLocated {
 		skipUntilChar('(');
 		checkAndEatChar('(');
 		skipSpaces();
@@ -119,9 +119,10 @@ public class EaterFunctionCall extends Eater {
 				break;
 			}
 			if (unquoted) {
-				throw EaterException.located("unquoted function/procedure cannot use expression.", getStringLocated());
+				throw EaterExceptionLocated.located("unquoted function/procedure cannot use expression.",
+						getStringLocated());
 			}
-			throw EaterException.located("call001", getStringLocated());
+			throw EaterExceptionLocated.located("call001", getStringLocated());
 		}
 	}
 
@@ -133,7 +134,7 @@ public class EaterFunctionCall extends Eater {
 		return Collections.unmodifiableMap(namedArguments);
 	}
 
-	public final String getEndOfLine() throws EaterException {
+	public final String getEndOfLine() throws EaterExceptionLocated {
 		return this.eatAllToEnd();
 	}
 

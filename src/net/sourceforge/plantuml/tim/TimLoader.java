@@ -57,7 +57,7 @@ public class TimLoader {
 		this.context = new TContext(importedFiles, defines, charset, definitionsContainer);
 		try {
 			defines.copyTo(global, location);
-		} catch (EaterException e) {
+		} catch (EaterExceptionLocated e) {
 			Logme.error(e);
 		}
 	}

@@ -38,7 +38,6 @@ import java.util.List;
 
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
-import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.EaterWhile;
 import net.sourceforge.plantuml.tim.ExecutionContextWhile;
@@ -60,7 +59,7 @@ public class CodeIteratorWhile extends AbstractCodeIterator {
 		this.logs = logs;
 	}
 
-	public StringLocated peek() throws EaterException, EaterExceptionLocated {
+	public StringLocated peek() throws EaterExceptionLocated {
 		int level = 0;
 		while (true) {
 			final StringLocated result = source.peek();
@@ -90,7 +89,7 @@ public class CodeIteratorWhile extends AbstractCodeIterator {
 			} else if (result.getType() == TLineType.ENDWHILE) {
 				logs.add(result);
 				if (currentWhile == null)
-					throw EaterException.located("No while related to this endwhile", result);
+					throw EaterExceptionLocated.located("No while related to this endwhile", result);
 
 				final TValue value = currentWhile.conditionValue(result, context, memory);
 				if (value.toBoolean())
@@ -106,7 +105,7 @@ public class CodeIteratorWhile extends AbstractCodeIterator {
 		}
 	}
 
-	private void executeWhile(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
+	private void executeWhile(TMemory memory, StringLocated s) throws EaterExceptionLocated {
 		final EaterWhile condition = new EaterWhile(s);
 		condition.analyze(context, memory);
 		final TokenStack whileExpression = condition.getWhileExpression();

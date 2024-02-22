@@ -95,9 +95,9 @@ public class FunctionsSet {
 	}
 
 	public void executeLegacyDefine(TContext context, TMemory memory, StringLocated s)
-			throws EaterException, EaterExceptionLocated {
+			throws EaterExceptionLocated {
 		if (this.pendingFunction != null)
-			throw EaterException.located("already0048", s);
+			throw EaterExceptionLocated.located("already0048", s);
 
 		final EaterLegacyDefine legacyDefine = new EaterLegacyDefine(s);
 		legacyDefine.analyze(context, memory);
@@ -107,9 +107,9 @@ public class FunctionsSet {
 	}
 
 	public void executeLegacyDefineLong(TContext context, TMemory memory, StringLocated s)
-			throws EaterException, EaterExceptionLocated {
+			throws EaterExceptionLocated {
 		if (this.pendingFunction != null)
-			throw EaterException.located("already0068", s);
+			throw EaterExceptionLocated.located("already0068", s);
 
 		final EaterLegacyDefineLong legacyDefineLong = new EaterLegacyDefineLong(s);
 		legacyDefineLong.analyze(context, memory);
@@ -117,9 +117,9 @@ public class FunctionsSet {
 	}
 
 	public void executeDeclareReturnFunction(TContext context, TMemory memory, StringLocated s)
-			throws EaterException, EaterExceptionLocated {
+			throws EaterExceptionLocated {
 		if (this.pendingFunction != null)
-			throw EaterException.located("already0068", s);
+			throw EaterExceptionLocated.located("already0068", s);
 
 		final EaterDeclareReturnFunction declareFunction = new EaterDeclareReturnFunction(s);
 		declareFunction.analyze(context, memory);
@@ -127,7 +127,7 @@ public class FunctionsSet {
 		final TFunctionSignature declaredSignature = declareFunction.getFunction().getSignature();
 		final TFunction previous = this.functions.get(declaredSignature);
 		if (previous != null && (finalFlag || this.functionsFinal.contains(declaredSignature)))
-			throw EaterException.located("This function is already defined", s);
+			throw EaterExceptionLocated.located("This function is already defined", s);
 
 		if (finalFlag)
 			this.functionsFinal.add(declaredSignature);
@@ -140,9 +140,9 @@ public class FunctionsSet {
 	}
 
 	public void executeDeclareProcedure(TContext context, TMemory memory, StringLocated s)
-			throws EaterException, EaterExceptionLocated {
+			throws EaterExceptionLocated {
 		if (this.pendingFunction != null)
-			throw EaterException.located("already0068", s);
+			throw EaterExceptionLocated.located("already0068", s);
 
 		final EaterDeclareProcedure declareFunction = new EaterDeclareProcedure(s);
 		declareFunction.analyze(context, memory);
@@ -150,7 +150,7 @@ public class FunctionsSet {
 		final TFunctionSignature declaredSignature = declareFunction.getFunction().getSignature();
 		final TFunction previous = this.functions.get(declaredSignature);
 		if (previous != null && (finalFlag || this.functionsFinal.contains(declaredSignature)))
-			throw EaterException.located("This function is already defined", s);
+			throw EaterExceptionLocated.located("This function is already defined", s);
 
 		if (finalFlag)
 			this.functionsFinal.add(declaredSignature);

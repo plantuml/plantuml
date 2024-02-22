@@ -37,7 +37,7 @@ package net.sourceforge.plantuml.tim.iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 
 public class CodeIteratorImpl implements CodeIterator {
 
@@ -89,10 +89,10 @@ public class CodeIteratorImpl implements CodeIterator {
 	}
 
 	@Override
-	public void jumpToCodePosition(CodePosition newPosition, StringLocated location) throws EaterException {
+	public void jumpToCodePosition(CodePosition newPosition, StringLocated location) throws EaterExceptionLocated {
 		this.countJump++;
 		if (this.countJump > 999)
-			throw EaterException.unlocated("Infinite loop?", location);
+			throw EaterExceptionLocated.unlocated("Infinite loop?", location);
 
 		final Position pos = (Position) newPosition;
 		this.current = pos.pos;

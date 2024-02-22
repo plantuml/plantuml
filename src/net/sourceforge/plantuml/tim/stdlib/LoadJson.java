@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
@@ -109,7 +108,7 @@ public class LoadJson extends SimpleReturnFunction {
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
-			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
+			Map<String, TValue> named) throws EaterExceptionLocated {
 		final String path = values.get(0).toString();
 		try {
 			String data = loadStringData(path, getCharset(values));
@@ -120,11 +119,12 @@ public class LoadJson extends SimpleReturnFunction {
 			return TValue.fromJson(jsonValue);
 		} catch (ParseException pe) {
 			Logme.error(pe);
-			throw EaterException.unlocated("JSON parse issue in source " + path + " on location " + pe.getLocation(),
-					location);
+			throw EaterExceptionLocated
+					.unlocated("JSON parse issue in source " + path + " on location " + pe.getLocation(), location);
 		} catch (UnsupportedEncodingException e) {
 			Logme.error(e);
-			throw EaterException.unlocated("JSON encoding issue in source " + path + ": " + e.getMessage(), location);
+			throw EaterExceptionLocated.unlocated("JSON encoding issue in source " + path + ": " + e.getMessage(),
+					location);
 		}
 	}
 
@@ -163,7 +163,8 @@ public class LoadJson extends SimpleReturnFunction {
 	 * @return the decoded String from the data source
 	 * @throws EaterException if something went wrong on reading data
 	 */
-	private String loadStringData(String path, String charset) throws EaterException, UnsupportedEncodingException {
+	private String loadStringData(String path, String charset)
+			throws EaterExceptionLocated, UnsupportedEncodingException {
 
 		byte[] byteData = null;
 		if (path.startsWith("http://") || path.startsWith("https://")) {

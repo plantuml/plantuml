@@ -35,18 +35,17 @@
 package net.sourceforge.plantuml.tim.iterator;
 
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 
 public interface CodeIterator {
 	// ::remove folder when __HAXE__
 
-	public StringLocated peek() throws EaterException, EaterExceptionLocated;
+	public StringLocated peek() throws EaterExceptionLocated;
 
-	public void next() throws EaterException, EaterExceptionLocated;
+	public void next() throws EaterExceptionLocated;
 
 	public CodePosition getCodePosition();
 
-	public void jumpToCodePosition(CodePosition newPosition, StringLocated location) throws EaterException;
+	public void jumpToCodePosition(CodePosition newPosition, StringLocated location) throws EaterExceptionLocated;
 
 }

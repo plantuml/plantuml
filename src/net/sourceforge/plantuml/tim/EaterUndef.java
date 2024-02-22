@@ -43,7 +43,7 @@ public class EaterUndef extends Eater {
 	}
 
 	@Override
-	public void analyze(TContext context, TMemory memory) throws EaterException {
+	public void analyze(TContext context, TMemory memory) throws EaterExceptionLocated {
 		skipSpaces();
 		checkAndEatChar("!undef");
 		skipSpaces();

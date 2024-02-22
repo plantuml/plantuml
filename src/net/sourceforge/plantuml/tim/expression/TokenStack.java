@@ -44,7 +44,6 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.Eater;
-import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TMemory;
@@ -87,7 +86,7 @@ public class TokenStack {
 		return result;
 	}
 
-	static public TokenStack eatUntilCloseParenthesisOrComma(Eater eater) throws EaterException {
+	static public TokenStack eatUntilCloseParenthesisOrComma(Eater eater) throws EaterExceptionLocated {
 		final TokenStack result = new TokenStack();
 		int level = 0;
 		Token lastToken = null;
@@ -95,7 +94,7 @@ public class TokenStack {
 			eater.skipSpaces();
 			final char ch = eater.peekChar();
 			if (ch == 0)
-				throw EaterException.unlocated("until001", eater.getStringLocated());
+				throw EaterExceptionLocated.unlocated("until001", eater.getStringLocated());
 
 			if (level == 0 && (ch == ',' || ch == ')'))
 				return result;
@@ -113,12 +112,13 @@ public class TokenStack {
 		}
 	}
 
-	static public void eatUntilCloseParenthesisOrComma(TokenIterator it, StringLocated location) throws EaterException {
+	static public void eatUntilCloseParenthesisOrComma(TokenIterator it, StringLocated location)
+			throws EaterExceptionLocated {
 		int level = 0;
 		while (true) {
 			final Token ch = it.peekToken();
 			if (ch == null)
-				throw EaterException.unlocated("until002", location);
+				throw EaterExceptionLocated.unlocated("until002", location);
 
 			final TokenType typech = ch.getTokenType();
 			if (level == 0 && (typech == TokenType.COMMA || typech == TokenType.CLOSE_PAREN_MATH)
@@ -135,7 +135,7 @@ public class TokenStack {
 		}
 	}
 
-	private int countFunctionArg(TokenIterator it, StringLocated location) throws EaterException {
+	private int countFunctionArg(TokenIterator it, StringLocated location) throws EaterExceptionLocated {
 		// return 42;
 		final TokenType type1 = it.peekToken().getTokenType();
 		if (type1 == TokenType.CLOSE_PAREN_MATH || type1 == TokenType.CLOSE_PAREN_FUNC)
@@ -151,13 +151,13 @@ public class TokenStack {
 			else if (type == TokenType.COMMA)
 				result++;
 			else
-				throw EaterException.unlocated("count13", location);
+				throw EaterExceptionLocated.unlocated("count13", location);
 
 		}
-		throw EaterException.unlocated("count12", location);
+		throw EaterExceptionLocated.unlocated("count12", location);
 	}
 
-	public void guessFunctions(StringLocated location) throws EaterException {
+	public void guessFunctions(StringLocated location) throws EaterExceptionLocated {
 		final Deque<Integer> open = new ArrayDeque<>();
 		final Map<Integer, Integer> parens = new HashMap<Integer, Integer>();
 		for (int i = 0; i < tokens.size(); i++) {
@@ -210,8 +210,7 @@ public class TokenStack {
 		return new InternalIterator();
 	}
 
-	public TValue getResult(StringLocated location, TContext context, TMemory memory)
-			throws EaterException, EaterExceptionLocated {
+	public TValue getResult(StringLocated location, TContext context, TMemory memory) throws EaterExceptionLocated {
 		final Knowledge knowledge = context.asKnowledge(memory, location.getLocation());
 		final TokenStack tmp = withoutSpace();
 		tmp.guessFunctions(location);

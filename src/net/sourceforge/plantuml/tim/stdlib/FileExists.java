@@ -40,7 +40,6 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
@@ -60,7 +59,7 @@ public class FileExists extends SimpleReturnFunction {
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
-			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
+			Map<String, TValue> named) throws EaterExceptionLocated {
 		// ::comment when __CORE__
 		final String path = values.get(0).toString();
 		return TValue.fromBoolean(new SFile(path).exists());

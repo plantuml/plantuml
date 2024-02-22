@@ -52,6 +52,10 @@ public class EaterExceptionLocated extends Exception {
 		return new EaterExceptionLocated(message, Objects.requireNonNull(location));
 	}
 
+	public static EaterExceptionLocated unlocated(String message, StringLocated location) {
+		return new EaterExceptionLocated(message, Objects.requireNonNull(location));
+	}
+
 	public final String getMessage() {
 		return message;
 	}

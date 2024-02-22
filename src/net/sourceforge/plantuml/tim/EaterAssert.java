@@ -44,7 +44,7 @@ public class EaterAssert extends Eater {
 	}
 
 	@Override
-	public void analyze(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
+	public void analyze(TContext context, TMemory memory) throws EaterExceptionLocated {
 		skipSpaces();
 		checkAndEatChar("!assert");
 		skipSpaces();
@@ -55,9 +55,9 @@ public class EaterAssert extends Eater {
 			if (ch == ':') {
 				checkAndEatChar(':');
 				final TValue message = eatExpression(context, memory);
-				throw EaterException.located("Assertion error : " + message.toString(), getStringLocated());
+				throw EaterExceptionLocated.located("Assertion error : " + message.toString(), getStringLocated());
 			}
-			throw EaterException.located("Assertion error", getStringLocated());
+			throw EaterExceptionLocated.located("Assertion error", getStringLocated());
 		}
 	}
 

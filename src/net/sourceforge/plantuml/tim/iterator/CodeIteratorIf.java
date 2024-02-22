@@ -39,7 +39,6 @@ import java.util.List;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.EaterElseIf;
-import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.EaterIf;
 import net.sourceforge.plantuml.tim.EaterIfdef;
@@ -61,7 +60,7 @@ public class CodeIteratorIf extends AbstractCodeIterator {
 		this.logs = logs;
 	}
 
-	public StringLocated peek() throws EaterException, EaterExceptionLocated {
+	public StringLocated peek() throws EaterExceptionLocated {
 		while (true) {
 			final StringLocated result = source.peek();
 			if (result == null) {
@@ -107,19 +106,17 @@ public class CodeIteratorIf extends AbstractCodeIterator {
 		}
 	}
 
-	private void executeIf(TContext context, TMemory memory, StringLocated s)
-			throws EaterException, EaterExceptionLocated {
+	private void executeIf(TContext context, TMemory memory, StringLocated s) throws EaterExceptionLocated {
 		final EaterIf condition = new EaterIf(s);
 		condition.analyze(context, memory);
 		final boolean isTrue = condition.isTrue();
 		memory.addIf(ExecutionContextIf.fromValue(isTrue));
 	}
 
-	private void executeElseIf(TContext context, TMemory memory, StringLocated s)
-			throws EaterException, EaterExceptionLocated {
+	private void executeElseIf(TContext context, TMemory memory, StringLocated s) throws EaterExceptionLocated {
 		final ExecutionContextIf poll = (ExecutionContextIf) memory.peekIf();
 		if (poll == null)
-			throw EaterException.located("No if related to this else", s);
+			throw EaterExceptionLocated.located("No if related to this else", s);
 
 		poll.enteringElseIf();
 		if (poll.hasBeenBurn() == false) {
@@ -132,32 +129,32 @@ public class CodeIteratorIf extends AbstractCodeIterator {
 		}
 	}
 
-	private void executeIfdef(TContext context, TMemory memory, StringLocated s) throws EaterException {
+	private void executeIfdef(TContext context, TMemory memory, StringLocated s) throws EaterExceptionLocated {
 		final EaterIfdef condition = new EaterIfdef(s);
 		condition.analyze(context, memory);
 		final boolean isTrue = condition.isTrue(context, memory);
 		memory.addIf(ExecutionContextIf.fromValue(isTrue));
 	}
 
-	private void executeIfndef(TContext context, TMemory memory, StringLocated s) throws EaterException {
+	private void executeIfndef(TContext context, TMemory memory, StringLocated s) throws EaterExceptionLocated {
 		final EaterIfndef condition = new EaterIfndef(s);
 		condition.analyze(context, memory);
 		final boolean isTrue = condition.isTrue(context, memory);
 		memory.addIf(ExecutionContextIf.fromValue(isTrue));
 	}
 
-	private void executeElse(TContext context, TMemory memory, StringLocated s) throws EaterException {
+	private void executeElse(TContext context, TMemory memory, StringLocated s) throws EaterExceptionLocated {
 		final ExecutionContextIf poll = (ExecutionContextIf) memory.peekIf();
 		if (poll == null)
-			throw EaterException.located("No if related to this else", s);
+			throw EaterExceptionLocated.located("No if related to this else", s);
 
 		poll.nowInElse();
 	}
 
-	private void executeEndif(TContext context, TMemory memory, StringLocated s) throws EaterException {
+	private void executeEndif(TContext context, TMemory memory, StringLocated s) throws EaterExceptionLocated {
 		final ExecutionContextIf poll = (ExecutionContextIf) memory.pollIf();
 		if (poll == null)
-			throw EaterException.located("No if related to this endif", s);
+			throw EaterExceptionLocated.located("No if related to this endif", s);
 
 	}
 

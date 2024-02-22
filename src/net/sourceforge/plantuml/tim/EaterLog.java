@@ -44,7 +44,7 @@ public class EaterLog extends Eater {
 	}
 
 	@Override
-	public void analyze(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
+	public void analyze(TContext context, TMemory memory) throws EaterExceptionLocated {
 		skipSpaces();
 		checkAndEatChar("!log");
 		skipSpaces();

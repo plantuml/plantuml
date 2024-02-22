@@ -39,7 +39,6 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunction;
@@ -65,13 +64,13 @@ public class InvokeProcedure implements TFunction {
 
 	@Override
 	public void executeProcedureInternal(TContext context, TMemory memory, StringLocated location, List<TValue> args,
-			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
+			Map<String, TValue> named) throws EaterExceptionLocated {
 		final String fname = args.get(0).toString();
 		final List<TValue> sublist = args.subList(1, args.size());
 		final TFunctionSignature signature = new TFunctionSignature(fname, sublist.size());
 		final TFunction func = context.getFunctionSmart(signature);
 		if (func == null)
-			throw EaterException.located("Cannot find void function " + fname, location);
+			throw EaterExceptionLocated.located("Cannot find void function " + fname, location);
 
 		func.executeProcedureInternal(context, memory, location, sublist, named);
 	}

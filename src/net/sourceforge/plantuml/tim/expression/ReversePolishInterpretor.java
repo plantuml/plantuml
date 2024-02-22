@@ -41,7 +41,6 @@ import java.util.Deque;
 import java.util.List;
 
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunction;
@@ -54,7 +53,7 @@ public class ReversePolishInterpretor {
 	private final boolean trace = false;
 
 	public ReversePolishInterpretor(StringLocated location, TokenStack queue, Knowledge knowledge, TMemory memory,
-			TContext context) throws EaterException, EaterExceptionLocated {
+			TContext context) throws EaterExceptionLocated {
 
 		final Deque<TValue> stack = new ArrayDeque<>();
 		if (trace)
@@ -73,45 +72,45 @@ public class ReversePolishInterpretor {
 				final TValue v2 = stack.removeFirst();
 				final TValue v1 = stack.removeFirst();
 				final TokenOperator op = token.getTokenOperator();
-				if (op == null) 
-					throw EaterException.unlocated("bad op", location);
-				
+				if (op == null)
+					throw EaterExceptionLocated.unlocated("bad op", location);
+
 				final TValue tmp = op.operate(v1, v2);
 				stack.addFirst(tmp);
 			} else if (token.getTokenType() == TokenType.OPEN_PAREN_FUNC) {
 				final int nb = Integer.parseInt(token.getSurface());
 				final Token token2 = it.nextToken();
-				if (token2.getTokenType() != TokenType.FUNCTION_NAME) 
-					throw EaterException.unlocated("rpn43", location);
-				
+				if (token2.getTokenType() != TokenType.FUNCTION_NAME)
+					throw EaterExceptionLocated.unlocated("rpn43", location);
+
 				if (trace)
 					System.err.println("token2=" + token2);
 				final TFunction function = knowledge.getFunction(new TFunctionSignature(token2.getSurface(), nb));
 				if (trace)
 					System.err.println("function=" + function);
-				if (function == null) 
-					throw EaterException.unlocated("Unknown built-in function " + token2.getSurface(), location);
-				
-				if (function.canCover(nb, Collections.<String>emptySet()) == false) 
-					throw EaterException.unlocated(
+				if (function == null)
+					throw EaterExceptionLocated.unlocated("Unknown built-in function " + token2.getSurface(), location);
+
+				if (function.canCover(nb, Collections.<String>emptySet()) == false)
+					throw EaterExceptionLocated.unlocated(
 							"Bad number of arguments for " + function.getSignature().getFunctionName(), location);
-				
+
 				final List<TValue> args = new ArrayList<>();
-				for (int i = 0; i < nb; i++) 
+				for (int i = 0; i < nb; i++)
 					args.add(0, stack.removeFirst());
-				
+
 				if (trace)
 					System.err.println("args=" + args);
-				if (location == null) 
-					throw EaterException.unlocated("rpn44", location);
-				
+				if (location == null)
+					throw EaterExceptionLocated.unlocated("rpn44", location);
+
 				final TValue r = function.executeReturnFunction(context, memory, location, args,
 						Collections.<String, TValue>emptyMap());
 				if (trace)
 					System.err.println("r=" + r);
 				stack.addFirst(r);
 			} else {
-				throw EaterException.unlocated("rpn41", location);
+				throw EaterExceptionLocated.unlocated("rpn41", location);
 			}
 		}
 		result = stack.removeFirst();

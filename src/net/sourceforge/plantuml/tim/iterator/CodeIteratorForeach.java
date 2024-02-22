@@ -39,7 +39,6 @@ import java.util.List;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
-import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.EaterForeach;
 import net.sourceforge.plantuml.tim.ExecutionContextForeach;
@@ -61,7 +60,7 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 		this.logs = logs;
 	}
 
-	public StringLocated peek() throws EaterException, EaterExceptionLocated {
+	public StringLocated peek() throws EaterExceptionLocated {
 		int level = 0;
 		while (true) {
 			final StringLocated result = source.peek();
@@ -91,7 +90,7 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 			} else if (result.getType() == TLineType.ENDFOREACH) {
 				logs.add(result);
 				if (foreach == null)
-					throw EaterException.located("No foreach related to this endforeach", result);
+					throw EaterExceptionLocated.located("No foreach related to this endforeach", result);
 
 				foreach.inc();
 				if (foreach.isSkipMe()) {
@@ -108,7 +107,7 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 		}
 	}
 
-	private void executeForeach(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
+	private void executeForeach(TMemory memory, StringLocated s) throws EaterExceptionLocated {
 		final EaterForeach condition = new EaterForeach(s);
 		condition.analyze(context, memory);
 		final ExecutionContextForeach foreach = ExecutionContextForeach.fromValue(condition.getVarname(),
@@ -122,7 +121,7 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 	}
 
 	private void setLoopVariable(TMemory memory, ExecutionContextForeach foreach, StringLocated position)
-			throws EaterException {
+			throws EaterExceptionLocated {
 		final JsonValue first = foreach.getJsonArray().get(foreach.currentIndex());
 		memory.putVariable(foreach.getVarname(), TValue.fromJson(first), TVariableScope.GLOBAL, position);
 	}

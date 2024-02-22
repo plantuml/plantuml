@@ -236,7 +236,7 @@ public class TContext {
 	public Knowledge asKnowledge(final TMemory memory, final LineLocation location) {
 		return new Knowledge() {
 
-			public TValue getVariable(String name) throws EaterException, EaterExceptionLocated {
+			public TValue getVariable(String name) throws EaterExceptionLocated {
 				if (name.contains(".") || name.contains("[")) {
 					final TValue result = fromJson(memory, name, location);
 					return result;
@@ -250,8 +250,7 @@ public class TContext {
 		};
 	}
 
-	private TValue fromJson(TMemory memory, String name, LineLocation location)
-			throws EaterException, EaterExceptionLocated {
+	private TValue fromJson(TMemory memory, String name, LineLocation location) throws EaterExceptionLocated {
 		final String result = applyFunctionsAndVariables(memory, new StringLocated(name, location));
 		try {
 			final JsonValue json = Json.parse(result);
@@ -284,23 +283,19 @@ public class TContext {
 		final CodeIterator it = buildCodeIterator(memory, body);
 
 		StringLocated s = null;
-		try {
-			while ((s = it.peek()) != null) {
-				final TValue result = executeOneLineSafe(memory, s, ftype, modeSpecial);
-				if (result != null)
-					return result;
+		while ((s = it.peek()) != null) {
+			final TValue result = executeOneLineSafe(memory, s, ftype, modeSpecial);
+			if (result != null)
+				return result;
 
-				it.next();
-			}
-			return null;
-		} catch (EaterException e) {
-			throw e.withLocation(s);
+			it.next();
 		}
+		return null;
 
 	}
 
 	private void executeLinesInternal(TMemory memory, List<StringLocated> body, TFunctionType ftype)
-			throws EaterExceptionLocated, EaterException {
+			throws EaterExceptionLocated {
 		final CodeIterator it = buildCodeIterator(memory, body);
 
 		StringLocated s = null;
@@ -312,22 +307,20 @@ public class TContext {
 	}
 
 	private TValue executeOneLineSafe(TMemory memory, StringLocated s, TFunctionType ftype, boolean modeSpecial)
-			throws EaterException, EaterExceptionLocated {
+			throws EaterExceptionLocated {
 		try {
 			this.debug.add(s);
 			return executeOneLineNotSafe(memory, s, ftype, modeSpecial);
 		} catch (Exception e) {
-			if (e instanceof EaterException)
-				throw (EaterException) e;
 			if (e instanceof EaterExceptionLocated)
 				throw (EaterExceptionLocated) e;
 			Logme.error(e);
-			throw EaterException.located("Fatal parsing error", s);
+			throw EaterExceptionLocated.located("Fatal parsing error", s);
 		}
 	}
 
 	private TValue executeOneLineNotSafe(TMemory memory, StringLocated s, TFunctionType ftype, boolean modeSpecial)
-			throws EaterException, EaterExceptionLocated {
+			throws EaterExceptionLocated {
 		final TLineType type = s.getType();
 
 		if (type == TLineType.INCLUDESUB) {
@@ -382,11 +375,11 @@ public class TContext {
 		} else if (s.getString().matches("^\\s+$")) {
 			return null;
 		} else {
-			throw EaterException.located("Compile Error " + ftype + " " + type, s);
+			throw EaterExceptionLocated.located("Compile Error " + ftype + " " + type, s);
 		}
 	}
 
-	private void addPlain(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
+	private void addPlain(TMemory memory, StringLocated s) throws EaterExceptionLocated {
 		final StringLocated tmp[] = applyFunctionsAndVariablesInternal(memory, s);
 		if (tmp != null) {
 			if (pendingAdd != null) {
@@ -399,32 +392,31 @@ public class TContext {
 		}
 	}
 
-	private void simulatePlain(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
+	private void simulatePlain(TMemory memory, StringLocated s) throws EaterExceptionLocated {
 		final StringLocated ignored[] = applyFunctionsAndVariablesInternal(memory, s);
 	}
 
-	private void executeAffectationDefine(TMemory memory, StringLocated s)
-			throws EaterException, EaterExceptionLocated {
+	private void executeAffectationDefine(TMemory memory, StringLocated s) throws EaterExceptionLocated {
 		new EaterAffectationDefine(s).analyze(this, memory);
 	}
 
-	private void executeDumpMemory(TMemory memory, StringLocated s) throws EaterException {
+	private void executeDumpMemory(TMemory memory, StringLocated s) throws EaterExceptionLocated {
 		final EaterDumpMemory condition = new EaterDumpMemory(s);
 		condition.analyze(this, memory);
 	}
 
-	private void executeAssert(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
+	private void executeAssert(TMemory memory, StringLocated s) throws EaterExceptionLocated {
 		final EaterAssert condition = new EaterAssert(s);
 		condition.analyze(this, memory);
 	}
 
-	private void executeUndef(TMemory memory, StringLocated s) throws EaterException {
+	private void executeUndef(TMemory memory, StringLocated s) throws EaterExceptionLocated {
 		final EaterUndef undef = new EaterUndef(s);
 		undef.analyze(this, memory);
 	}
 
 	private StringLocated[] applyFunctionsAndVariablesInternal(TMemory memory, StringLocated located)
-			throws EaterException, EaterExceptionLocated {
+			throws EaterExceptionLocated {
 		if (memory.isEmpty() && functionsSet.size() == 0)
 			return new StringLocated[] { located };
 
@@ -442,8 +434,7 @@ public class TContext {
 
 	private String pendingAdd = null;
 
-	public String applyFunctionsAndVariables(TMemory memory, final StringLocated str)
-			throws EaterException, EaterExceptionLocated {
+	public String applyFunctionsAndVariables(TMemory memory, final StringLocated str) throws EaterExceptionLocated {
 		// https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore%E2%80%93Horspool_algorithm
 		// https://stackoverflow.com/questions/1326682/java-replacing-multiple-different-substring-in-a-string-at-once-or-in-the-most
 		// https://en.wikipedia.org/wiki/String-searching_algorithm
@@ -465,7 +456,7 @@ public class TContext {
 						call.getNamedArguments().keySet());
 				final TFunction function = functionsSet.getFunctionSmart(signature);
 				if (function == null)
-					throw EaterException.located("Function not found " + presentFunction, str);
+					throw EaterExceptionLocated.located("Function not found " + presentFunction, str);
 
 				if (function.getFunctionType() == TFunctionType.PROCEDURE) {
 					this.pendingAdd = result.toString();
@@ -503,11 +494,11 @@ public class TContext {
 	}
 
 	private void executeVoid3(StringLocated location, TMemory memory, TFunction function, EaterFunctionCall call)
-			throws EaterException, EaterExceptionLocated {
+			throws EaterExceptionLocated {
 		function.executeProcedureInternal(this, memory, location, call.getValues(), call.getNamedArguments());
 	}
 
-	private void executeImport(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
+	private void executeImport(TMemory memory, StringLocated s) throws EaterExceptionLocated {
 		final EaterImport _import = new EaterImport(s.getTrimmed());
 		_import.analyze(this, memory);
 
@@ -520,13 +511,13 @@ public class TContext {
 			}
 		} catch (IOException e) {
 			Logme.error(e);
-			throw EaterException.located("Cannot import " + e.getMessage(), s);
+			throw EaterExceptionLocated.located("Cannot import " + e.getMessage(), s);
 		}
 
-		throw EaterException.located("Cannot import", s);
+		throw EaterExceptionLocated.located("Cannot import", s);
 	}
 
-	private void executeLog(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
+	private void executeLog(TMemory memory, StringLocated s) throws EaterExceptionLocated {
 		final EaterLog log = new EaterLog(s.getTrimmed());
 		log.analyze(this, memory);
 	}
@@ -538,7 +529,7 @@ public class TContext {
 
 	}
 
-	private void executeIncludesub(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
+	private void executeIncludesub(TMemory memory, StringLocated s) throws EaterExceptionLocated {
 		ImportedFiles saveImportedFiles = null;
 		try {
 			final EaterIncludesub include = new EaterIncludesub(s.getTrimmed());
@@ -556,7 +547,7 @@ public class TContext {
 						this.importedFiles = this.importedFiles.withCurrentDir(f2.getParentFile());
 						final Reader reader = f2.getReader(charset);
 						if (reader == null)
-							throw EaterException.located("cannot include " + what, s);
+							throw EaterExceptionLocated.located("cannot include " + what, s);
 
 						try {
 							ReadLine readerline = ReadLineReader.create(reader, what, s.getLocation());
@@ -568,14 +559,14 @@ public class TContext {
 					}
 				} catch (IOException e) {
 					Logme.error(e);
-					throw EaterException.located("cannot include " + what, s);
+					throw EaterExceptionLocated.located("cannot include " + what, s);
 				}
 			}
 			if (sub == null)
 				sub = subs.get(what);
 
 			if (sub == null)
-				throw EaterException.located("cannot include " + what, s);
+				throw EaterExceptionLocated.located("cannot include " + what, s);
 
 			executeLinesInternal(memory, sub.lines(), null);
 		} finally {
@@ -585,7 +576,7 @@ public class TContext {
 		}
 	}
 
-	private void executeIncludeDef(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
+	private void executeIncludeDef(TMemory memory, StringLocated s) throws EaterExceptionLocated {
 		final EaterIncludeDef include = new EaterIncludeDef(s.getTrimmed());
 		include.analyze(this, memory);
 		final String definitionName = include.getLocation();
@@ -604,7 +595,7 @@ public class TContext {
 			} while (true);
 		} catch (IOException e) {
 			Logme.error(e);
-			throw EaterException.located("" + e, s);
+			throw EaterExceptionLocated.located("" + e, s);
 		} finally {
 			try {
 				reader2.close();
@@ -614,12 +605,12 @@ public class TContext {
 		}
 	}
 
-	private void executeTheme(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
+	private void executeTheme(TMemory memory, StringLocated s) throws EaterExceptionLocated {
 		final EaterTheme eater = new EaterTheme(s.getTrimmed(), importedFiles);
 		eater.analyze(this, memory);
 		final ReadLine reader = eater.getTheme();
 		if (reader == null)
-			throw EaterException.located("No such theme " + eater.getName(), s);
+			throw EaterExceptionLocated.located("No such theme " + eater.getName(), s);
 
 		try {
 			final List<StringLocated> body = new ArrayList<>();
@@ -633,7 +624,7 @@ public class TContext {
 			} while (true);
 		} catch (IOException e) {
 			Logme.error(e);
-			throw EaterException.located("Error reading theme " + e, s);
+			throw EaterExceptionLocated.located("Error reading theme " + e, s);
 		} finally {
 			try {
 				reader.close();
@@ -643,7 +634,7 @@ public class TContext {
 		}
 	}
 
-	private void executeInclude(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
+	private void executeInclude(TMemory memory, StringLocated s) throws EaterExceptionLocated {
 		final EaterInclude include = new EaterInclude(s.getTrimmed());
 		include.analyze(this, memory);
 		String location = include.getWhat();
@@ -661,7 +652,7 @@ public class TContext {
 			if (location.startsWith("http://") || location.startsWith("https://")) {
 				final SURL url = SURL.create(location);
 				if (url == null)
-					throw EaterException.located("Cannot open URL", s);
+					throw EaterExceptionLocated.located("Cannot open URL", s);
 
 				reader = PreprocessorUtils.getReaderIncludeUrl(url, s, suf, charset);
 			} else if (location.startsWith("<") && location.endsWith(">")) {
@@ -677,14 +668,14 @@ public class TContext {
 						return;
 
 					if (strategy == PreprocessorIncludeStrategy.ONCE && filesUsedCurrent.contains(f2))
-						throw EaterException.located("This file has already been included", s);
+						throw EaterExceptionLocated.located("This file has already been included", s);
 
 					if (StartDiagramExtractReader.containsStartDiagram(f2, s, charset)) {
 						reader = StartDiagramExtractReader.build(f2, s, charset);
 					} else {
 						final Reader tmp = f2.getReader(charset);
 						if (tmp == null)
-							throw EaterException.located("Cannot include file", s);
+							throw EaterExceptionLocated.located("Cannot include file", s);
 
 						reader = ReadLineReader.create(tmp, location, s.getLocation());
 					}
@@ -713,7 +704,7 @@ public class TContext {
 			}
 		} catch (IOException e) {
 			Logme.error(e);
-			throw EaterException.located("cannot include " + e, s);
+			throw EaterExceptionLocated.located("cannot include " + e, s);
 		} finally {
 			if (reader != null) {
 				try {
@@ -724,7 +715,7 @@ public class TContext {
 			}
 		}
 
-		throw EaterException.located("cannot include " + location, s);
+		throw EaterExceptionLocated.located("cannot include " + location, s);
 	}
 
 	public boolean isLegacyDefine(String functionName) {

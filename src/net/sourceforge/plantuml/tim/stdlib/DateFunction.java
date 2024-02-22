@@ -41,7 +41,6 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
@@ -61,7 +60,7 @@ public class DateFunction extends SimpleReturnFunction {
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
-			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
+			Map<String, TValue> named) throws EaterExceptionLocated {
 		if (values.size() == 0)
 			return TValue.fromString(new Date().toString());
 
@@ -71,11 +70,11 @@ public class DateFunction extends SimpleReturnFunction {
 			now = 1000L * values.get(1).toInt();
 		else
 			now = System.currentTimeMillis();
-		
+
 		try {
 			return TValue.fromString(new SimpleDateFormat(format).format(now));
 		} catch (Exception e) {
-			throw EaterException.unlocated("Bad date pattern", location);
+			throw EaterExceptionLocated.unlocated("Bad date pattern", location);
 		}
 	}
 }

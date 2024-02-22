@@ -47,7 +47,7 @@ public class EaterInclude extends Eater {
 	}
 
 	@Override
-	public void analyze(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
+	public void analyze(TContext context, TMemory memory) throws EaterExceptionLocated {
 		skipSpaces();
 		checkAndEatChar("!include");
 		final char peekChar = peekChar();

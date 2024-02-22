@@ -36,10 +36,10 @@ package net.sourceforge.plantuml.tim.expression;
 
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.Eater;
-import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 
 public enum TokenType {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 	QUOTED_STRING, JSON_DATA, OPERATOR, OPEN_PAREN_MATH, COMMA, CLOSE_PAREN_MATH, NUMBER, PLAIN_TEXT, SPACES,
 	FUNCTION_NAME, OPEN_PAREN_FUNC, CLOSE_PAREN_FUNC;
 
@@ -77,7 +77,8 @@ public enum TokenType {
 		return result;
 	}
 
-	final static public Token eatOneToken(Token lastToken, Eater eater, boolean manageColon) throws EaterException {
+	final static public Token eatOneToken(Token lastToken, Eater eater, boolean manageColon)
+			throws EaterExceptionLocated {
 		char ch = eater.peekChar();
 		if (ch == 0)
 			return null;
@@ -121,7 +122,7 @@ public enum TokenType {
 		return true;
 	}
 
-	static private String eatAndGetTokenPlainText(Eater eater) throws EaterException {
+	static private String eatAndGetTokenPlainText(Eater eater) throws EaterExceptionLocated {
 		final StringBuilder result = new StringBuilder();
 		while (true) {
 			final char ch = eater.peekChar();

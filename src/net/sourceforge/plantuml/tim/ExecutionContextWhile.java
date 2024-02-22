@@ -61,7 +61,7 @@ public class ExecutionContextWhile {
 	}
 
 	public TValue conditionValue(StringLocated location, TContext context, TMemory memory)
-			throws EaterException, EaterExceptionLocated {
+			throws EaterExceptionLocated {
 		return whileExpression.getResult(location, context, memory);
 	}
 

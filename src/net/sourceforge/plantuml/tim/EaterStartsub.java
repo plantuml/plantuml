@@ -45,13 +45,13 @@ public class EaterStartsub extends Eater {
 	}
 
 	@Override
-	public void analyze(TContext context, TMemory memory) throws EaterException {
+	public void analyze(TContext context, TMemory memory) throws EaterExceptionLocated {
 		skipSpaces();
 		checkAndEatChar("!startsub");
 		skipSpaces();
 		this.subname = eatAllToEnd();
 		if (this.subname.matches("\\w+") == false)
-			throw EaterException.located("Bad sub name", getStringLocated());
+			throw EaterExceptionLocated.located("Bad sub name", getStringLocated());
 
 	}
 
