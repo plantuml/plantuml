@@ -335,7 +335,7 @@ public class Stdlib {
 		}
 	}
 
-	private static Collection<String> getAll() throws IOException {
+	public static Collection<String> getAll() throws IOException {
 		final Set<String> result = new TreeSet<>();
 		final InputStream home = getInternalInputStream("home", ".repx");
 		if (home == null)
@@ -451,11 +451,11 @@ public class Stdlib {
 		}
 	}
 
-	private String getVersion() {
+	public String getVersion() {
 		return info.get("VERSION");
 	}
 
-	private String getSource() {
+	public String getSource() {
 		return info.get("SOURCE");
 	}
 
