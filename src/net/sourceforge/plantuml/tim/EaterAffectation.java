@@ -53,7 +53,8 @@ public class EaterAffectation extends Eater {
 		if (scope != null) {
 			skipSpaces();
 			if (peekChar() == '?' || peekChar() == '=') {
-				// The variable itself is "local" or "glocal", which is not a good idea by the way
+				// The variable itself is "local" or "glocal", which is not a good idea by the
+				// way
 				scope = null;
 			} else
 				varname = eatAndGetVarname();

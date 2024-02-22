@@ -252,7 +252,7 @@ public class TContext {
 
 	private TValue fromJson(TMemory memory, String name, LineLocation location)
 			throws EaterException, EaterExceptionLocated {
-		final String result = applyFunctionsAndVariables(memory, location, name);
+		final String result = applyFunctionsAndVariables(memory, new StringLocated(name, location));
 		try {
 			final JsonValue json = Json.parse(result);
 			return TValue.fromJson(json);
@@ -428,7 +428,7 @@ public class TContext {
 		if (memory.isEmpty() && functionsSet.size() == 0)
 			return new StringLocated[] { located };
 
-		final String result = applyFunctionsAndVariables(memory, located.getLocation(), located.getString());
+		final String result = applyFunctionsAndVariables(memory, located);
 		if (result == null)
 			return null;
 
@@ -442,7 +442,7 @@ public class TContext {
 
 	private String pendingAdd = null;
 
-	public String applyFunctionsAndVariables(TMemory memory, LineLocation location, final String str)
+	public String applyFunctionsAndVariables(TMemory memory, final StringLocated str)
 			throws EaterException, EaterExceptionLocated {
 		// https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore%E2%80%93Horspool_algorithm
 		// https://stackoverflow.com/questions/1326682/java-replacing-multiple-different-substring-in-a-string-at-once-or-in-the-most
@@ -450,15 +450,15 @@ public class TContext {
 		// https://www.quora.com/What-is-the-most-efficient-algorithm-to-replace-all-occurrences-of-a-pattern-P-in-a-string-with-a-pattern-P
 		// https://en.wikipedia.org/wiki/Trie
 		if (memory.isEmpty() && functionsSet.size() == 0)
-			return str;
+			return str.getString();
 
 		final StringBuilder result = new StringBuilder();
 		for (int i = 0; i < str.length(); i++) {
 			final char c = str.charAt(i);
-			final String presentFunction = getFunctionNameAt(str, i);
+			final String presentFunction = getFunctionNameAt(str.getString(), i);
 			if (presentFunction != null) {
-				final String sub = str.substring(i);
-				final EaterFunctionCall call = new EaterFunctionCall(new StringLocated(sub, location),
+				final String sub = str.getString().substring(i);
+				final EaterFunctionCall call = new EaterFunctionCall(new StringLocated(sub, str.getLocation()),
 						isLegacyDefine(presentFunction), isUnquoted(presentFunction));
 				call.analyze(this, memory);
 				final TFunctionSignature signature = new TFunctionSignature(presentFunction, call.getValues().size(),
@@ -469,27 +469,27 @@ public class TContext {
 
 				if (function.getFunctionType() == TFunctionType.PROCEDURE) {
 					this.pendingAdd = result.toString();
-					executeVoid3(location, memory, sub, function, call);
+					executeVoid3(str, memory, function, call);
 					i += call.getCurrentPosition();
-					final String remaining = str.substring(i);
+					final String remaining = str.getString().substring(i);
 					if (remaining.length() > 0)
 						appendToLastResult(remaining);
 
 					return null;
 				}
 				if (function.getFunctionType() == TFunctionType.LEGACY_DEFINELONG) {
-					this.pendingAdd = str.substring(0, i);
-					executeVoid3(location, memory, sub, function, call);
+					this.pendingAdd = str.getString().substring(0, i);
+					executeVoid3(str, memory, function, call);
 					return null;
 				}
 				assert function.getFunctionType() == TFunctionType.RETURN_FUNCTION
 						|| function.getFunctionType() == TFunctionType.LEGACY_DEFINE;
-				final TValue functionReturn = function.executeReturnFunction(this, memory, location, call.getValues(),
+				final TValue functionReturn = function.executeReturnFunction(this, memory, str, call.getValues(),
 						call.getNamedArguments());
 				result.append(functionReturn.toString());
 				i += call.getCurrentPosition() - 1;
-			} else if (new VariableManager(this, memory, location).getVarnameAt(str, i) != null) {
-				i = new VariableManager(this, memory, location).replaceVariables(str, i, result);
+			} else if (new VariableManager(this, memory, str.getLocation()).getVarnameAt(str.getString(), i) != null) {
+				i = new VariableManager(this, memory, str.getLocation()).replaceVariables(str.getString(), i, result);
 			} else {
 				result.append(c);
 			}
@@ -502,11 +502,9 @@ public class TContext {
 		this.resultList.set(this.resultList.size() - 1, last.append(remaining));
 	}
 
-	private void executeVoid3(LineLocation location, TMemory memory, String s, TFunction function,
-			EaterFunctionCall call) throws EaterException, EaterExceptionLocated {
-		function.executeProcedureInternal(this, memory, call.getValues(), call.getNamedArguments());
-		// function.executeProcedure(this, memory, location, s, call.getValues(),
-		// call.getNamedArguments());
+	private void executeVoid3(StringLocated location, TMemory memory, TFunction function, EaterFunctionCall call)
+			throws EaterException, EaterExceptionLocated {
+		function.executeProcedureInternal(this, memory, location, call.getValues(), call.getNamedArguments());
 	}
 
 	private void executeImport(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
@@ -514,8 +512,8 @@ public class TContext {
 		_import.analyze(this, memory);
 
 		try {
-			final SFile file = FileSystem.getInstance()
-					.getFile(applyFunctionsAndVariables(memory, s.getLocation(), _import.getLocation()));
+			final SFile file = FileSystem.getInstance().getFile(
+					applyFunctionsAndVariables(memory, new StringLocated(_import.getWhat(), s.getLocation())));
 			if (file.exists() && file.isDirectory() == false) {
 				importedFiles.add(file);
 				return;

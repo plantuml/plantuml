@@ -48,7 +48,8 @@ public class EaterLog extends Eater {
 		skipSpaces();
 		checkAndEatChar("!log");
 		skipSpaces();
-		final String logData = context.applyFunctionsAndVariables(memory, getLineLocation(), this.eatAllToEnd());
+		final String logData = context.applyFunctionsAndVariables(memory,
+				new StringLocated(this.eatAllToEnd(), getLineLocation()));
 		Log.error("[Log] " + logData);
 	}
 

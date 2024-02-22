@@ -70,7 +70,8 @@ public class EaterFunctionCall extends Eater {
 			skipSpaces();
 			if (isLegacyDefine) {
 				final String read = eatAndGetOptionalQuotedString();
-				final String value = context.applyFunctionsAndVariables(memory, getLineLocation(), read);
+				final String value = context.applyFunctionsAndVariables(memory,
+						new StringLocated(read, getLineLocation()));
 				final TValue result = TValue.fromString(value);
 				values.add(result);
 			} else if (unquoted) {
@@ -80,12 +81,14 @@ public class EaterFunctionCall extends Eater {
 					checkAndEatChar('=');
 					skipSpaces();
 					final String read = eatAndGetOptionalQuotedString();
-					final String value = context.applyFunctionsAndVariables(memory, getLineLocation(), read);
+					final String value = context.applyFunctionsAndVariables(memory,
+							new StringLocated(read, getLineLocation()));
 					final TValue result = TValue.fromString(value);
 					namedArguments.put(varname, result);
 				} else {
 					final String read = eatAndGetOptionalQuotedString();
-					final String value = context.applyFunctionsAndVariables(memory, getLineLocation(), read);
+					final String value = context.applyFunctionsAndVariables(memory,
+							new StringLocated(read, getLineLocation()));
 					final TValue result = TValue.fromString(value);
 					values.add(result);
 				}
@@ -98,12 +101,12 @@ public class EaterFunctionCall extends Eater {
 					skipSpaces();
 					final TokenStack tokens = TokenStack.eatUntilCloseParenthesisOrComma(this).withoutSpace();
 					tokens.guessFunctions();
-					final TValue result = tokens.getResult(getLineLocation(), context, memory);
+					final TValue result = tokens.getResult(getStringLocated(), context, memory);
 					namedArguments.put(varname, result);
 				} else {
 					final TokenStack tokens = TokenStack.eatUntilCloseParenthesisOrComma(this).withoutSpace();
 					tokens.guessFunctions();
-					final TValue result = tokens.getResult(getLineLocation(), context, memory);
+					final TValue result = tokens.getResult(getStringLocated(), context, memory);
 					values.add(result);
 				}
 			}

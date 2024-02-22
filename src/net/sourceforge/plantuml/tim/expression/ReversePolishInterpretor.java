@@ -40,6 +40,7 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
@@ -58,7 +59,7 @@ public class ReversePolishInterpretor {
 		this(null, queue, knowledge, memory, context);
 	}
 
-	public ReversePolishInterpretor(LineLocation location, TokenStack queue, Knowledge knowledge, TMemory memory,
+	public ReversePolishInterpretor(StringLocated location, TokenStack queue, Knowledge knowledge, TMemory memory,
 			TContext context) throws EaterException, EaterExceptionLocated {
 
 		final Deque<TValue> stack = new ArrayDeque<>();

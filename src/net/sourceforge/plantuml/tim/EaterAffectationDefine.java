@@ -51,7 +51,7 @@ public class EaterAffectationDefine extends Eater {
 		final String varname = eatAndGetVarname();
 		skipSpaces();
 		final String tmp = eatAllToEnd();
-		final String tmp2 = context.applyFunctionsAndVariables(memory, getLineLocation(), tmp);
+		final String tmp2 = context.applyFunctionsAndVariables(memory, new StringLocated(tmp, getLineLocation()));
 		final TValue value = TValue.fromString(tmp2);
 		// if (memory instanceof TMemoryLocal) {
 		// memory = ((TMemoryLocal) memory).getGlobalForInternalUseOnly();

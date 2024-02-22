@@ -90,10 +90,10 @@ public class CodeIteratorWhile extends AbstractCodeIterator {
 				continue;
 			} else if (result.getType() == TLineType.ENDWHILE) {
 				logs.add(result);
-				if (currentWhile == null) {
+				if (currentWhile == null)
 					throw EaterException.located("No while related to this endwhile");
-				}
-				final TValue value = currentWhile.conditionValue(result.getLocation(), context, memory);
+
+				final TValue value = currentWhile.conditionValue(result, context, memory);
 				if (value.toBoolean()) {
 					source.jumpToCodePosition(currentWhile.getStartWhile());
 				} else {
@@ -113,10 +113,10 @@ public class CodeIteratorWhile extends AbstractCodeIterator {
 		final TokenStack whileExpression = condition.getWhileExpression();
 		final ExecutionContextWhile theWhile = ExecutionContextWhile.fromValue(whileExpression,
 				source.getCodePosition());
-		final TValue value = theWhile.conditionValue(s.getLocation(), context, memory);
-		if (value.toBoolean() == false) {
+		final TValue value = theWhile.conditionValue(s, context, memory);
+		if (value.toBoolean() == false)
 			theWhile.skipMe();
-		}
+
 		memory.addWhile(theWhile);
 	}
 

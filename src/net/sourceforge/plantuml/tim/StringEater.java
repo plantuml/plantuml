@@ -34,10 +34,12 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import net.sourceforge.plantuml.text.StringLocated;
+
 public class StringEater extends Eater {
 
 	public StringEater(String s) {
-		super(s, null);
+		super(new StringLocated(s, null));
 	}
 
 	@Override

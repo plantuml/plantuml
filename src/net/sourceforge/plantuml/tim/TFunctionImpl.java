@@ -132,8 +132,8 @@ public class TFunctionImpl implements TFunction {
 	}
 
 	@Override
-	public void executeProcedureInternal(TContext context, TMemory memory, List<TValue> args, Map<String, TValue> named)
-			throws EaterException, EaterExceptionLocated {
+	public void executeProcedureInternal(TContext context, TMemory memory, StringLocated location, List<TValue> args,
+			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		if (functionType != TFunctionType.PROCEDURE && functionType != TFunctionType.LEGACY_DEFINELONG)
 			throw new IllegalStateException();
 
@@ -142,10 +142,10 @@ public class TFunctionImpl implements TFunction {
 	}
 
 	@Override
-	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location,
-			List<TValue> args, Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
+	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> args,
+			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		if (functionType == TFunctionType.LEGACY_DEFINE)
-			return executeReturnLegacyDefine(location, context, memory, args);
+			return executeReturnLegacyDefine(location.getLocation(), context, memory, args);
 
 		if (functionType != TFunctionType.RETURN_FUNCTION)
 			throw EaterException.unlocated("Illegal call here. Is there a return directive in your function?");
@@ -164,7 +164,7 @@ public class TFunctionImpl implements TFunction {
 			throw new IllegalStateException();
 
 		final TMemory copy = getNewMemory(memory, args, Collections.<String, TValue>emptyMap());
-		final String tmp = context.applyFunctionsAndVariables(copy, location, legacyDefinition);
+		final String tmp = context.applyFunctionsAndVariables(copy, new StringLocated(legacyDefinition, location));
 		if (tmp == null)
 			return TValue.fromString("");
 

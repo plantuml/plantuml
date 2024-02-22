@@ -39,13 +39,13 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
-import net.sourceforge.plantuml.utils.LineLocation;
 
 public class RandomFunction extends SimpleReturnFunction {
 
@@ -59,25 +59,25 @@ public class RandomFunction extends SimpleReturnFunction {
 	}
 
 	private final Random random = new Random();
-	
+
 	@Override
-	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
+	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		switch (values.size()) {
-			case 0:
-				return TValue.fromInt(random.nextInt(2));
+		case 0:
+			return TValue.fromInt(random.nextInt(2));
 
-			case 1:
-				final Integer mx = values.get(0).toInt();
-				return TValue.fromInt(random.nextInt(mx));
+		case 1:
+			final Integer mx = values.get(0).toInt();
+			return TValue.fromInt(random.nextInt(mx));
 
-			case 2:
-				final Integer min = values.get(0).toInt();
-				final Integer max = values.get(1).toInt();			
-				return TValue.fromInt(random.nextInt(max - min) + min);
+		case 2:
+			final Integer min = values.get(0).toInt();
+			final Integer max = values.get(1).toInt();
+			return TValue.fromInt(random.nextInt(max - min) + min);
 
-			default:
-				throw EaterException.located("Error on Random: Too many argument");
+		default:
+			throw EaterException.located("Error on Random: Too many argument");
 		}
 	}
 }

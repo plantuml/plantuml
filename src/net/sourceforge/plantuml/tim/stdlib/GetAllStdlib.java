@@ -39,18 +39,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonArray;
 import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.Stdlib;
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
-import net.sourceforge.plantuml.utils.LineLocation;
 
 public class GetAllStdlib extends SimpleReturnFunction {
 
@@ -64,42 +64,42 @@ public class GetAllStdlib extends SimpleReturnFunction {
 	}
 
 	@Override
-	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
+	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 
 		switch (values.size()) {
-			case 0:
-				final JsonArray result = new JsonArray();
-				try {
-					for (String name : Stdlib.getAll()) {
-						result.add(name);
-					}
-					return TValue.fromJson(result);
-				} catch (IOException e) {
-					Logme.error(e);
-					return TValue.fromJson(result);
+		case 0:
+			final JsonArray result = new JsonArray();
+			try {
+				for (String name : Stdlib.getAll()) {
+					result.add(name);
 				}
+				return TValue.fromJson(result);
+			} catch (IOException e) {
+				Logme.error(e);
+				return TValue.fromJson(result);
+			}
 
-			case 1:
-				final JsonObject res = new JsonObject();
-				try {
-					// Inspired by Stdlib.addInfoVersion
-					for (String name : Stdlib.getAll()) {
-						final Stdlib folder = Stdlib.retrieve(name);
-						final JsonObject object = Json.object() //
-								.add("name", name) //
-								.add("version", folder.getVersion()) //
-								.add("source", folder.getSource());
-						res.add(name, object);
-					}
-					return TValue.fromJson(res);
-				} catch (IOException e) {
-					Logme.error(e);
-					return TValue.fromJson(res);
+		case 1:
+			final JsonObject res = new JsonObject();
+			try {
+				// Inspired by Stdlib.addInfoVersion
+				for (String name : Stdlib.getAll()) {
+					final Stdlib folder = Stdlib.retrieve(name);
+					final JsonObject object = Json.object() //
+							.add("name", name) //
+							.add("version", folder.getVersion()) //
+							.add("source", folder.getSource());
+					res.add(name, object);
 				}
+				return TValue.fromJson(res);
+			} catch (IOException e) {
+				Logme.error(e);
+				return TValue.fromJson(res);
+			}
 
-			default:
-				throw EaterException.located("Error on get_all_stdlib: Too many arguments");
+		default:
+			throw EaterException.located("Error on get_all_stdlib: Too many arguments");
 		}
 	}
 }

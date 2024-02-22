@@ -49,7 +49,8 @@ public class EaterIncludeDef extends Eater {
 		skipSpaces();
 		checkAndEatChar("!includedef");
 		skipSpaces();
-		this.location = context.applyFunctionsAndVariables(memory, getLineLocation(), this.eatAllToEnd());
+		this.location = context.applyFunctionsAndVariables(memory,
+				new StringLocated(this.eatAllToEnd(), getLineLocation()));
 
 	}
 

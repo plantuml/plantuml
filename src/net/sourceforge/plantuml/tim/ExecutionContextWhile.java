@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.tim.expression.TokenStack;
 import net.sourceforge.plantuml.tim.iterator.CodePosition;
@@ -59,7 +60,7 @@ public class ExecutionContextWhile {
 		return new ExecutionContextWhile(whileExpression, codePosition);
 	}
 
-	public TValue conditionValue(LineLocation location, TContext context, TMemory memory)
+	public TValue conditionValue(StringLocated location, TContext context, TMemory memory)
 			throws EaterException, EaterExceptionLocated {
 		return whileExpression.getResult(location, context, memory);
 	}

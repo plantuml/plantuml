@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.tim;
 import net.sourceforge.plantuml.json.JsonArray;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -67,7 +68,7 @@ public class VariableManager {
 				result.append(value.toJson().toString());
 			} else {
 				JsonValue jsonValue = (value.toJson().isArray()) ? (JsonArray) value.toJson()
-					: (JsonObject) value.toJson();
+						: (JsonObject) value.toJson();
 				i++;
 				i = replaceJson(jsonValue, str, i, result) - 1;
 			}
@@ -111,7 +112,8 @@ public class VariableManager {
 					inBracket.append(str.charAt(i));
 					i++;
 				}
-				final String nbString = context.applyFunctionsAndVariables(memory, location, inBracket.toString());
+				final String nbString = context.applyFunctionsAndVariables(memory,
+						new StringLocated(inBracket.toString(), location));
 				if (jsonValue instanceof JsonArray) {
 					final int nb = Integer.parseInt(nbString);
 					jsonValue = ((JsonArray) jsonValue).get(nb);

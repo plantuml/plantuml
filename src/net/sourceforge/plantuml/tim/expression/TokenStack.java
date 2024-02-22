@@ -42,6 +42,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.Eater;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
@@ -210,9 +211,9 @@ public class TokenStack {
 		return new InternalIterator();
 	}
 
-	public TValue getResult(LineLocation location, TContext context, TMemory memory)
+	public TValue getResult(StringLocated location, TContext context, TMemory memory)
 			throws EaterException, EaterExceptionLocated {
-		final Knowledge knowledge = context.asKnowledge(memory, location);
+		final Knowledge knowledge = context.asKnowledge(memory, location.getLocation());
 		final TokenStack tmp = withoutSpace();
 		tmp.guessFunctions();
 		final TokenIterator it = tmp.tokenIterator();

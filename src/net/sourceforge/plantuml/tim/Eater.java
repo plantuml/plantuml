@@ -50,20 +50,18 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public abstract class Eater {
 
 	private int i = 0;
-	private final String s;
-	private final LineLocation lineLocation;
+	private final StringLocated stringLocated;
 
-	public Eater(StringLocated sl) {
-		this(sl.getString(), sl.getLocation());
-	}
-
-	protected Eater(String s, LineLocation lineLocation) {
-		this.s = s;
-		this.lineLocation = lineLocation;
+	public Eater(StringLocated stringLocated) {
+		this.stringLocated = stringLocated;
 	}
 
 	public final LineLocation getLineLocation() {
-		return lineLocation;
+		return stringLocated.getLocation();
+	}
+
+	public final StringLocated getStringLocated() {
+		return stringLocated;
 	}
 
 	public abstract void analyze(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated;
@@ -73,8 +71,8 @@ public abstract class Eater {
 	}
 
 	final protected String eatAllToEnd() throws EaterException {
-		final String result = s.substring(i);
-		i = s.length();
+		final String result = stringLocated.getString().substring(i);
+		i = stringLocated.length();
 		return result;
 	}
 
@@ -88,7 +86,7 @@ public abstract class Eater {
 			return TValue.fromJson(json);
 		}
 		final TokenStack tokenStack = eatTokenStack();
-		return tokenStack.getResult(getLineLocation(), context, memory);
+		return tokenStack.getResult(getStringLocated(), context, memory);
 	}
 
 	final protected TokenStack eatTokenStack() throws EaterException {
@@ -104,7 +102,7 @@ public abstract class Eater {
 			throws EaterException, EaterExceptionLocated {
 		final TokenStack tokenStack = new TokenStack();
 		addIntoTokenStack(tokenStack, true);
-		return tokenStack.getResult(getLineLocation(), context, memory);
+		return tokenStack.getResult(getStringLocated(), context, memory);
 	}
 
 	final protected void addIntoTokenStack(TokenStack tokenStack, boolean stopAtColon) throws EaterException {
@@ -208,56 +206,56 @@ public abstract class Eater {
 	}
 
 	final public void skipSpaces() {
-		while (i < s.length() && Character.isWhitespace(s.charAt(i)))
+		while (i < stringLocated.length() && Character.isWhitespace(stringLocated.charAt(i)))
 			i++;
 
 	}
 
 	final protected void skipUntilChar(char ch) {
-		while (i < s.length() && s.charAt(i) != ch)
+		while (i < stringLocated.length() && stringLocated.charAt(i) != ch)
 			i++;
 
 	}
 
 	final public char peekChar() {
-		if (i >= s.length())
+		if (i >= stringLocated.length())
 			return 0;
 
-		return s.charAt(i);
+		return stringLocated.charAt(i);
 	}
 
 	final public boolean matchAffectation() {
-		final String tmp = s.substring(i);
+		final String tmp = stringLocated.getString().substring(i);
 		final boolean result = tmp.matches("^\\$?[_\\p{L}][_\\p{L}0-9]*\\s*=.*");
 		return result;
 	}
 
 	final public char peekCharN2() {
-		if (i + 1 >= s.length())
+		if (i + 1 >= stringLocated.length())
 			return 0;
 
-		return s.charAt(i + 1);
+		return stringLocated.charAt(i + 1);
 	}
 
 	final protected boolean hasNextChar() {
-		return i < s.length();
+		return i < stringLocated.length();
 	}
 
 	final public char eatOneChar() {
-		final char ch = s.charAt(i);
+		final char ch = stringLocated.charAt(i);
 		i++;
 		return ch;
 	}
 
 	final protected void checkAndEatChar(char ch) throws EaterException {
-		if (i >= s.length() || s.charAt(i) != ch)
+		if (i >= stringLocated.length() || stringLocated.charAt(i) != ch)
 			throw EaterException.located("a001");
 
 		i++;
 	}
 
 	final protected boolean safeCheckAndEatChar(char ch) throws EaterException {
-		if (i >= s.length() || s.charAt(i) != ch)
+		if (i >= stringLocated.length() || stringLocated.charAt(i) != ch)
 			return false;
 
 		i++;
@@ -265,10 +263,10 @@ public abstract class Eater {
 	}
 
 	final protected void optionallyEatChar(char ch) throws EaterException {
-		if (i >= s.length() || s.charAt(i) != ch)
+		if (i >= stringLocated.length() || stringLocated.charAt(i) != ch)
 			return;
 
-		assert s.charAt(i) == ch;
+		assert stringLocated.charAt(i) == ch;
 		i++;
 	}
 
@@ -279,8 +277,8 @@ public abstract class Eater {
 	}
 
 	final protected void addUpToLastLetterOrUnderscoreOrDigit(StringBuilder sb) {
-		while (i < s.length()) {
-			final char ch = s.charAt(i);
+		while (i < stringLocated.length()) {
+			final char ch = stringLocated.charAt(i);
 			if (TLineType.isLetterOrUnderscoreOrDigit(ch) == false)
 				return;
 
@@ -290,7 +288,7 @@ public abstract class Eater {
 	}
 
 	final protected void addUpTo(char separator, StringBuilder sb) {
-		while (i < s.length()) {
+		while (i < stringLocated.length()) {
 			final char ch = peekChar();
 			if (ch == separator)
 				return;
@@ -323,7 +321,7 @@ public abstract class Eater {
 					eatOneChar();
 					final TokenStack def = TokenStack.eatUntilCloseParenthesisOrComma(this);
 					def.guessFunctions();
-					defValue = def.getResult(getLineLocation(), context, memory);
+					defValue = def.getResult(getStringLocated(), context, memory);
 					// System.err.println("result=" + defValue);
 				} else {
 					defValue = null;
