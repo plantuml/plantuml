@@ -71,7 +71,7 @@ public class InvokeProcedure implements TFunction {
 		final TFunctionSignature signature = new TFunctionSignature(fname, sublist.size());
 		final TFunction func = context.getFunctionSmart(signature);
 		if (func == null)
-			throw EaterException.located("Cannot find void function " + fname);
+			throw EaterException.located("Cannot find void function " + fname, location);
 
 		func.executeProcedureInternal(context, memory, location, sublist, named);
 	}

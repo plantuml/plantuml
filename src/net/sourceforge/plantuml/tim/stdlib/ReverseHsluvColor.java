@@ -69,7 +69,7 @@ public class ReverseHsluvColor extends SimpleReturnFunction {
 			color = color.reverseHsluv();
 			return TValue.fromString(color.asString());
 		} catch (NoSuchColorException e) {
-			throw EaterException.located("No such color");
+			throw EaterException.located("No such color", location);
 		}
 	}
 }

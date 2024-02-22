@@ -65,7 +65,8 @@ public class GetJsonKey extends SimpleReturnFunction {
 			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
 		final TValue data = values.get(0);
 		if (data.isJson() == false)
-			throw EaterException.unlocated("Not JSON data");
+			throw EaterException.unlocated("Not JSON data", location);
+		
 		final JsonValue json = data.toJson();
 		if (json.isObject()) {
 			final JsonObject object = (JsonObject) json;
@@ -87,7 +88,7 @@ public class GetJsonKey extends SimpleReturnFunction {
 			return TValue.fromJson(result);
 		}
 
-		throw EaterException.unlocated("Bad JSON type");
+		throw EaterException.unlocated("Bad JSON type", location);
 
 	}
 

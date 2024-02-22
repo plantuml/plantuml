@@ -99,7 +99,8 @@ public class GetAllStdlib extends SimpleReturnFunction {
 			}
 
 		default:
-			throw EaterException.located("Error on get_all_stdlib: Too many arguments");
+			assert false; // Should not append because of canCover()
+			throw EaterException.located("Error on get_all_stdlib: Too many arguments", location);
 		}
 	}
 }

@@ -65,9 +65,8 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 		int level = 0;
 		while (true) {
 			final StringLocated result = source.peek();
-			if (result == null) {
+			if (result == null)
 				return null;
-			}
 
 			final ExecutionContextForeach foreach = memory.peekForeach();
 			if (foreach != null && foreach.isSkipMe()) {
@@ -91,15 +90,15 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 				continue;
 			} else if (result.getType() == TLineType.ENDFOREACH) {
 				logs.add(result);
-				if (foreach == null) {
-					throw EaterException.located("No foreach related to this endforeach");
-				}
+				if (foreach == null)
+					throw EaterException.located("No foreach related to this endforeach", result);
+
 				foreach.inc();
 				if (foreach.isSkipMe()) {
 					memory.pollForeach();
 				} else {
 					setLoopVariable(memory, foreach, result);
-					source.jumpToCodePosition(foreach.getStartForeach());
+					source.jumpToCodePosition(foreach.getStartForeach(), result);
 				}
 				next();
 				continue;
@@ -114,18 +113,18 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 		condition.analyze(context, memory);
 		final ExecutionContextForeach foreach = ExecutionContextForeach.fromValue(condition.getVarname(),
 				condition.getJsonArray(), source.getCodePosition());
-		if (condition.isSkip()) {
+		if (condition.isSkip())
 			foreach.skipMeNow();
-		} else {
+		else
 			setLoopVariable(memory, foreach, s);
-		}
+
 		memory.addForeach(foreach);
 	}
 
 	private void setLoopVariable(TMemory memory, ExecutionContextForeach foreach, StringLocated position)
 			throws EaterException {
 		final JsonValue first = foreach.getJsonArray().get(foreach.currentIndex());
-		memory.putVariable(foreach.getVarname(), TValue.fromJson(first), TVariableScope.GLOBAL);
+		memory.putVariable(foreach.getVarname(), TValue.fromJson(first), TVariableScope.GLOBAL, position);
 	}
 
 }

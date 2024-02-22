@@ -120,10 +120,11 @@ public class LoadJson extends SimpleReturnFunction {
 			return TValue.fromJson(jsonValue);
 		} catch (ParseException pe) {
 			Logme.error(pe);
-			throw EaterException.unlocated("JSON parse issue in source " + path + " on location " + pe.getLocation());
+			throw EaterException.unlocated("JSON parse issue in source " + path + " on location " + pe.getLocation(),
+					location);
 		} catch (UnsupportedEncodingException e) {
 			Logme.error(e);
-			throw EaterException.unlocated("JSON encoding issue in source " + path + ": " + e.getMessage());
+			throw EaterException.unlocated("JSON encoding issue in source " + path + ": " + e.getMessage(), location);
 		}
 	}
 

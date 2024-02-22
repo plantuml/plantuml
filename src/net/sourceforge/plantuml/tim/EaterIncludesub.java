@@ -38,7 +38,7 @@ import net.sourceforge.plantuml.text.StringLocated;
 
 public class EaterIncludesub extends Eater {
 
-	private String location;
+	private String what;
 
 	public EaterIncludesub(StringLocated s) {
 		super(s);
@@ -49,13 +49,13 @@ public class EaterIncludesub extends Eater {
 		skipSpaces();
 		checkAndEatChar("!includesub");
 		skipSpaces();
-		this.location = context.applyFunctionsAndVariables(memory,
+		this.what = context.applyFunctionsAndVariables(memory,
 				new StringLocated(this.eatAllToEnd(), getLineLocation()));
 
 	}
 
-	public final String getLocation() {
-		return location;
+	public final String getWhat() {
+		return what;
 	}
 
 }

@@ -35,17 +35,16 @@
 package net.sourceforge.plantuml.tim;
 
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.utils.LineLocation;
 
 public class EaterDeclareReturnFunction extends Eater {
 
 	private TFunctionImpl function;
-	private final LineLocation location;
+	private final StringLocated location;
 	private boolean finalFlag;
 
 	public EaterDeclareReturnFunction(StringLocated s) {
 		super(s.getTrimmed());
-		this.location = s.getLocation();
+		this.location = s;
 	}
 
 	@Override

@@ -93,7 +93,7 @@ public abstract class Eater {
 		final TokenStack tokenStack = new TokenStack();
 		addIntoTokenStack(tokenStack, false);
 		if (tokenStack.size() == 0)
-			throw EaterException.located("Missing expression");
+			throw EaterException.located("Missing expression", stringLocated);
 
 		return tokenStack;
 	}
@@ -121,7 +121,7 @@ public abstract class Eater {
 	final public String eatAndGetQuotedString() throws EaterException {
 		final char separator = peekChar();
 		if (TLineType.isQuote(separator) == false)
-			throw EaterException.located("quote10");
+			throw EaterException.located("quote10", stringLocated);
 
 		checkAndEatChar(separator);
 		final StringBuilder value = new StringBuilder();
@@ -142,7 +142,7 @@ public abstract class Eater {
 		while (true) {
 			char ch = peekChar();
 			if (ch == 0)
-				throw EaterException.located("until001");
+				throw EaterException.located("until001", stringLocated);
 
 			if (level == 0 && (ch == ',' || ch == ')'))
 				return value.toString().trim();
@@ -190,7 +190,7 @@ public abstract class Eater {
 	final protected String eatAndGetVarname() throws EaterException {
 		final StringBuilder varname = new StringBuilder("" + eatOneChar());
 		if (TLineType.isLetterOrUnderscoreOrDollar(varname.charAt(0)) == false)
-			throw EaterException.located("a002");
+			throw EaterException.located("a002", stringLocated);
 
 		addUpToLastLetterOrUnderscoreOrDigit(varname);
 		return varname.toString();
@@ -199,7 +199,7 @@ public abstract class Eater {
 	final protected String eatAndGetFunctionName() throws EaterException {
 		final StringBuilder varname = new StringBuilder("" + eatOneChar());
 		if (TLineType.isLetterOrUnderscoreOrDollar(varname.charAt(0)) == false)
-			throw EaterException.located("a003");
+			throw EaterException.located("a003", stringLocated);
 
 		addUpToLastLetterOrUnderscoreOrDigit(varname);
 		return varname.toString();
@@ -249,7 +249,7 @@ public abstract class Eater {
 
 	final protected void checkAndEatChar(char ch) throws EaterException {
 		if (i >= stringLocated.length() || stringLocated.charAt(i) != ch)
-			throw EaterException.located("a001");
+			throw EaterException.located("a001", stringLocated);
 
 		i++;
 	}
@@ -299,7 +299,7 @@ public abstract class Eater {
 	}
 
 	final protected TFunctionImpl eatDeclareFunction(TContext context, TMemory memory, boolean unquoted,
-			LineLocation location, boolean allowNoParenthesis, TFunctionType type)
+			StringLocated location, boolean allowNoParenthesis, TFunctionType type)
 			throws EaterException, EaterExceptionLocated {
 		final List<TFunctionArgument> args = new ArrayList<>();
 		final String functionName = eatAndGetFunctionName();
@@ -308,7 +308,7 @@ public abstract class Eater {
 			if (allowNoParenthesis)
 				return new TFunctionImpl(functionName, args, unquoted, type);
 
-			throw EaterException.located("Missing opening parenthesis");
+			throw EaterException.located("Missing opening parenthesis", stringLocated);
 		}
 		while (true) {
 			skipSpaces();
@@ -320,7 +320,7 @@ public abstract class Eater {
 				if (peekChar() == '=') {
 					eatOneChar();
 					final TokenStack def = TokenStack.eatUntilCloseParenthesisOrComma(this);
-					def.guessFunctions();
+					def.guessFunctions(location);
 					defValue = def.getResult(getStringLocated(), context, memory);
 					// System.err.println("result=" + defValue);
 				} else {
@@ -333,7 +333,7 @@ public abstract class Eater {
 				checkAndEatChar(")");
 				break;
 			} else {
-				throw EaterException.located("Error in function definition");
+				throw EaterException.located("Error in function definition", stringLocated);
 			}
 		}
 		skipSpaces();
@@ -341,25 +341,25 @@ public abstract class Eater {
 	}
 
 	final protected TFunctionImpl eatDeclareReturnFunctionWithOptionalReturn(TContext context, TMemory memory,
-			boolean unquoted, LineLocation location) throws EaterException, EaterExceptionLocated {
+			boolean unquoted, StringLocated location) throws EaterException, EaterExceptionLocated {
 		final TFunctionImpl result = eatDeclareFunction(context, memory, unquoted, location, false,
 				TFunctionType.RETURN_FUNCTION);
 		if (peekChar() == 'r') {
 			checkAndEatChar("return");
 			skipSpaces();
 			final String line = "!return " + eatAllToEnd();
-			result.addBody(new StringLocated(line, location));
+			result.addBody(new StringLocated(line, location.getLocation()));
 		} else if (peekChar() == '!') {
 			checkAndEatChar("!return");
 			skipSpaces();
 			final String line = "!return " + eatAllToEnd();
-			result.addBody(new StringLocated(line, location));
+			result.addBody(new StringLocated(line, location.getLocation()));
 		}
 		return result;
 	}
 
 	final protected TFunctionImpl eatDeclareProcedure(TContext context, TMemory memory, boolean unquoted,
-			LineLocation location) throws EaterException, EaterExceptionLocated {
+			StringLocated location) throws EaterException, EaterExceptionLocated {
 		final TFunctionImpl result = eatDeclareFunction(context, memory, unquoted, location, false,
 				TFunctionType.PROCEDURE);
 		return result;

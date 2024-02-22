@@ -100,12 +100,12 @@ public class EaterFunctionCall extends Eater {
 					checkAndEatChar('=');
 					skipSpaces();
 					final TokenStack tokens = TokenStack.eatUntilCloseParenthesisOrComma(this).withoutSpace();
-					tokens.guessFunctions();
+					tokens.guessFunctions(getStringLocated());
 					final TValue result = tokens.getResult(getStringLocated(), context, memory);
 					namedArguments.put(varname, result);
 				} else {
 					final TokenStack tokens = TokenStack.eatUntilCloseParenthesisOrComma(this).withoutSpace();
-					tokens.guessFunctions();
+					tokens.guessFunctions(getStringLocated());
 					final TValue result = tokens.getResult(getStringLocated(), context, memory);
 					values.add(result);
 				}
@@ -119,9 +119,9 @@ public class EaterFunctionCall extends Eater {
 				break;
 			}
 			if (unquoted) {
-				throw EaterException.located("unquoted function/procedure cannot use expression.");
+				throw EaterException.located("unquoted function/procedure cannot use expression.", getStringLocated());
 			}
-			throw EaterException.located("call001");
+			throw EaterException.located("call001", getStringLocated());
 		}
 	}
 

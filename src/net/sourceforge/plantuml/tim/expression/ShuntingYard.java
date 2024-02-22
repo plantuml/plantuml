@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.tim.expression;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 
@@ -58,7 +59,8 @@ public class ShuntingYard {
 		System.err.println("");
 	}
 
-	public ShuntingYard(TokenIterator it, Knowledge knowledge) throws EaterException, EaterExceptionLocated {
+	public ShuntingYard(TokenIterator it, Knowledge knowledge, StringLocated location)
+			throws EaterException, EaterExceptionLocated {
 
 		while (it.hasMoreTokens()) {
 			final Token token = it.nextToken();
@@ -74,7 +76,7 @@ public class ShuntingYard {
 				final TValue variable = knowledge.getVariable(name);
 				if (variable == null) {
 					if (isVariableName(name) == false)
-						throw EaterException.unlocated("Parsing syntax error about " + name);
+						throw EaterException.unlocated("Parsing syntax error about " + name, location);
 
 					ouputQueue.add(new Token(name, TokenType.QUOTED_STRING, null));
 				} else {

@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 
 public interface CodeIterator {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	public StringLocated peek() throws EaterException, EaterExceptionLocated;
 
@@ -47,6 +47,6 @@ public interface CodeIterator {
 
 	public CodePosition getCodePosition();
 
-	public void jumpToCodePosition(CodePosition newPosition) throws EaterException;
+	public void jumpToCodePosition(CodePosition newPosition, StringLocated location) throws EaterException;
 
 }

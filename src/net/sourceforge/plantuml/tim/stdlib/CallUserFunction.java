@@ -65,9 +65,9 @@ public class CallUserFunction extends SimpleReturnFunction {
 		final List<TValue> args = values.subList(1, values.size());
 		final TFunctionSignature signature = new TFunctionSignature(fname, args.size());
 		final TFunction func = context.getFunctionSmart(signature);
-		if (func == null) {
-			throw EaterException.unlocated("Cannot find void function " + fname);
-		}
+		if (func == null)
+			throw EaterException.unlocated("Cannot find void function " + fname, location);
+
 		return func.executeReturnFunction(context, memory, location, args, named);
 	}
 

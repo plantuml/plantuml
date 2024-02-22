@@ -66,7 +66,7 @@ public class SetVariableValue extends SimpleReturnFunction {
 		// }
 		final String name = values.get(0).toString();
 		final TValue value = values.get(1);
-		memory.putVariable(name, value, TVariableScope.GLOBAL);
+		memory.putVariable(name, value, TVariableScope.GLOBAL, location);
 		return TValue.fromString("");
 	}
 

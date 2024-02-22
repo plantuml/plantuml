@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.file.AParentFolder;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.TVariableScope;
@@ -81,11 +82,11 @@ public class Defines implements Truth {
 		return new Defines();
 	}
 
-	public void copyTo(TMemory memory) throws EaterException {
+	public void copyTo(TMemory memory, StringLocated location) throws EaterException {
 		for (Entry<String, Define> ent : values.entrySet()) {
 			final String name = ent.getKey();
 			final Define def = ent.getValue();
-			memory.putVariable(name, def.asTVariable(), TVariableScope.GLOBAL);
+			memory.putVariable(name, def.asTVariable(), TVariableScope.GLOBAL, location);
 		}
 
 	}
@@ -114,10 +115,10 @@ public class Defines implements Truth {
 		final Defines result = createEmpty();
 		result.overrideFilename(file.getName());
 		result.environment.put("filedate", new Date(file.lastModified()).toString());
-		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {
+		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
 			result.environment.put("dirpath",
 					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));
-		}
+
 		return result;
 	}
 
@@ -126,10 +127,10 @@ public class Defines implements Truth {
 		final Defines result = createEmpty();
 		result.overrideFilename(file.getName());
 		result.environment.put("filedate", new Date(file.lastModified()).toString());
-		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {
+		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
 			result.environment.put("dirpath",
 					file.getAbsoluteFile().getParentFile().getAbsolutePath().replace('\\', '/'));
-		}
+
 		return result;
 	}
 
@@ -147,9 +148,9 @@ public class Defines implements Truth {
 
 	private static String nameNoExtension(String name) {
 		final int x = name.lastIndexOf('.');
-		if (x == -1) {
+		if (x == -1)
 			return name;
-		}
+
 		return name.substring(0, x);
 	}
 
@@ -169,11 +170,10 @@ public class Defines implements Truth {
 	}
 
 	public boolean isTrue(String name) {
-		for (String key : values.keySet()) {
-			if (key.equals(name) || key.startsWith(name + "(")) {
+		for (String key : values.keySet())
+			if (key.equals(name) || key.startsWith(name + "("))
 				return true;
-			}
-		}
+
 		return false;
 	}
 
@@ -192,9 +192,9 @@ public class Defines implements Truth {
 	}
 
 	private String method1(String line) {
-		for (Define def : values.values()) {
+		for (Define def : values.values())
 			line = def.apply(line);
-		}
+
 		return line;
 	}
 
@@ -215,18 +215,17 @@ public class Defines implements Truth {
 
 	private String method2(String line) {
 		final Set<String> words = words(line);
-		if (magic == null) {
+		if (magic == null)
 			magic = getAll();
 
-		}
 		for (String w : words) {
 			Collection<Define> tmp = magic.get(w);
-			if (tmp == null) {
+			if (tmp == null)
 				continue;
-			}
-			for (Define def : tmp) {
+
+			for (Define def : tmp)
 				line = def.apply(line);
-			}
+
 		}
 		return line;
 	}
@@ -236,9 +235,9 @@ public class Defines implements Truth {
 		Pattern p = Pattern.compile(ID);
 		Matcher m = p.matcher(line);
 		final Set<String> words = new HashSet<>();
-		while (m.find()) {
+		while (m.find())
 			words.add(m.group(0));
-		}
+
 		return words;
 	}
 

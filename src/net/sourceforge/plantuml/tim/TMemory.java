@@ -37,13 +37,15 @@ package net.sourceforge.plantuml.tim;
 import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
 public interface TMemory {
 
 	public TValue getVariable(String varname);
 
-	public void putVariable(String varname, TValue value, TVariableScope scope) throws EaterException;
+	public void putVariable(String varname, TValue value, TVariableScope scope, StringLocated location)
+			throws EaterException;
 
 	public void removeVariable(String varname);
 

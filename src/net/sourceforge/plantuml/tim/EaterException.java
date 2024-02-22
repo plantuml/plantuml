@@ -40,16 +40,16 @@ public class EaterException extends Exception {
 
 	private final String message;
 
-	private EaterException(String message) {
+	private EaterException(String message, StringLocated location) {
 		this.message = message;
 	}
 
-	public static EaterException unlocated(String message) {
-		return new EaterException(message);
+	public static EaterException unlocated(String message, StringLocated location) {
+		return new EaterException(message, location);
 	}
 
-	public static EaterException located(String message) {
-		return unlocated(message);
+	public static EaterException located(String message, StringLocated location) {
+		return unlocated(message, location);
 	}
 
 	public final String getMessage() {

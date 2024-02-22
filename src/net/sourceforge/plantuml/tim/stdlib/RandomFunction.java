@@ -77,7 +77,8 @@ public class RandomFunction extends SimpleReturnFunction {
 			return TValue.fromInt(random.nextInt(max - min) + min);
 
 		default:
-			throw EaterException.located("Error on Random: Too many argument");
+			assert false; // Should not append because of canCover()
+			throw EaterException.located("Error on Random: Too many argument", location);
 		}
 	}
 }

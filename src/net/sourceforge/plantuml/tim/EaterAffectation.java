@@ -53,7 +53,7 @@ public class EaterAffectation extends Eater {
 		if (scope != null) {
 			skipSpaces();
 			if (peekChar() == '?' || peekChar() == '=') {
-				// The variable itself is "local" or "glocal", which is not a good idea by the
+				// The variable itself is "local" or "global", which is not a good idea by the
 				// way
 				scope = null;
 			} else
@@ -72,7 +72,7 @@ public class EaterAffectation extends Eater {
 
 		skipSpaces();
 		final TValue value = eatExpression(context, memory);
-		memory.putVariable(varname, value, scope);
+		memory.putVariable(varname, value, scope, getStringLocated());
 	}
 
 }

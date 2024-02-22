@@ -148,12 +148,12 @@ public class TFunctionImpl implements TFunction {
 			return executeReturnLegacyDefine(location.getLocation(), context, memory, args);
 
 		if (functionType != TFunctionType.RETURN_FUNCTION)
-			throw EaterException.unlocated("Illegal call here. Is there a return directive in your function?");
+			throw EaterException.unlocated("Illegal call here. Is there a return directive in your function?", location);
 
 		final TMemory copy = getNewMemory(memory, args, named);
 		final TValue result = context.executeLines(copy, body, TFunctionType.RETURN_FUNCTION, true);
 		if (result == null)
-			throw EaterException.unlocated("No return directive found in your function");
+			throw EaterException.unlocated("No return directive found in your function", location);
 
 		return result;
 	}

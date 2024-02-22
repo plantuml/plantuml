@@ -71,10 +71,11 @@ public class DateFunction extends SimpleReturnFunction {
 			now = 1000L * values.get(1).toInt();
 		else
 			now = System.currentTimeMillis();
+		
 		try {
 			return TValue.fromString(new SimpleDateFormat(format).format(now));
 		} catch (Exception e) {
-			throw EaterException.unlocated("Bad date pattern");
+			throw EaterException.unlocated("Bad date pattern", location);
 		}
 	}
 }

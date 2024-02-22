@@ -71,7 +71,7 @@ public class Darken extends SimpleReturnFunction {
 			color = color.darken(ratio);
 			return TValue.fromString(color.asString());
 		} catch (NoSuchColorException e) {
-			throw EaterException.located("No such color");
+			throw EaterException.located("No such color", location);
 		}
 	}
 }

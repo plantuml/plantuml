@@ -56,7 +56,7 @@ public class EaterAffectationDefine extends Eater {
 		// if (memory instanceof TMemoryLocal) {
 		// memory = ((TMemoryLocal) memory).getGlobalForInternalUseOnly();
 		// }
-		memory.putVariable(varname, value, TVariableScope.GLOBAL);
+		memory.putVariable(varname, value, TVariableScope.GLOBAL, getStringLocated());
 	}
 
 }

@@ -69,7 +69,7 @@ public class IsLight extends SimpleReturnFunction {
 			final HColor color = HColorSet.instance().getColorLEGACY(colorString);
 			return TValue.fromBoolean(!color.isDark());
 		} catch (NoSuchColorException e) {
-			throw EaterException.located("No such color");
+			throw EaterException.located("No such color", location);
 		}
 	}
 }

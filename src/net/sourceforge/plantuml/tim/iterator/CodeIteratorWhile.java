@@ -64,9 +64,8 @@ public class CodeIteratorWhile extends AbstractCodeIterator {
 		int level = 0;
 		while (true) {
 			final StringLocated result = source.peek();
-			if (result == null) {
+			if (result == null)
 				return null;
-			}
 
 			final ExecutionContextWhile currentWhile = memory.peekWhile();
 			if (currentWhile != null && currentWhile.isSkipMe()) {
@@ -91,14 +90,14 @@ public class CodeIteratorWhile extends AbstractCodeIterator {
 			} else if (result.getType() == TLineType.ENDWHILE) {
 				logs.add(result);
 				if (currentWhile == null)
-					throw EaterException.located("No while related to this endwhile");
+					throw EaterException.located("No while related to this endwhile", result);
 
 				final TValue value = currentWhile.conditionValue(result, context, memory);
-				if (value.toBoolean()) {
-					source.jumpToCodePosition(currentWhile.getStartWhile());
-				} else {
+				if (value.toBoolean())
+					source.jumpToCodePosition(currentWhile.getStartWhile(), result);
+				else
 					memory.pollWhile();
-				}
+
 				next();
 				continue;
 			}

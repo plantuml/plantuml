@@ -67,13 +67,13 @@ public class CodeIteratorSub extends AbstractCodeIterator {
 	}
 
 	public StringLocated peek() throws EaterException, EaterExceptionLocated {
-		if (readingInProgress != null) {
+		if (readingInProgress != null)
 			return readingInProgress.peek();
-		}
+
 		StringLocated result = source.peek();
-		if (result == null) {
+		if (result == null)
 			return null;
-		}
+
 		if (result.getType() == TLineType.STARTSUB) {
 			final EaterStartsub eater = new EaterStartsub(result.getTrimmed());
 			eater.analyze(context, memory);
@@ -83,7 +83,7 @@ public class CodeIteratorSub extends AbstractCodeIterator {
 			StringLocated s = null;
 			while ((s = source.peek()) != null) {
 				if (s.getType() == TLineType.STARTSUB) {
-					throw EaterException.located("Cannot nest sub");
+					throw EaterException.located("Cannot nest sub", result);
 				} else if (s.getType() == TLineType.ENDSUB) {
 					source.next();
 					readingInProgress = new CodeIteratorImpl(created.lines());
@@ -94,9 +94,9 @@ public class CodeIteratorSub extends AbstractCodeIterator {
 				}
 			}
 		}
-		if (readingInProgress != null) {
+		if (readingInProgress != null)
 			return readingInProgress.peek();
-		}
+
 		return result;
 	}
 
@@ -107,9 +107,9 @@ public class CodeIteratorSub extends AbstractCodeIterator {
 			return;
 		}
 		readingInProgress.next();
-		if (readingInProgress.peek() == null) {
+		if (readingInProgress.peek() == null)
 			readingInProgress = null;
-		}
+
 	}
 
 }

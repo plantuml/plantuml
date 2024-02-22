@@ -58,6 +58,7 @@ public class CodeIteratorAffectation extends AbstractCodeIterator {
 		this.logs = log;
 	}
 
+	@Override
 	public StringLocated peek() throws EaterException, EaterExceptionLocated {
 		while (true) {
 			final StringLocated result = source.peek();
@@ -81,9 +82,9 @@ public class CodeIteratorAffectation extends AbstractCodeIterator {
 				this.executeAffectation(context, memory, result);
 				return;
 			} catch (ParseException e) {
-				if (e.getColumn() <= lastLocation) {
-					throw EaterException.located("Error in JSON format");
-				}
+				if (e.getColumn() <= lastLocation) 
+					throw EaterException.located("Error in JSON format", result);
+				
 				lastLocation = e.getColumn();
 				next();
 				final StringLocated forward = source.peek();

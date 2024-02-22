@@ -139,21 +139,21 @@ public class PreprocessorUtils {
 			if (StartDiagramExtractReader.containsStartDiagram(url, s, charset))
 				return StartDiagramExtractReader.build(url, s, suf, charset);
 
-			return getReaderInclude(url, s.getLocation(), charset);
+			return getReaderInclude(url, s, charset);
 		} catch (IOException e) {
 			Logme.error(e);
-			throw EaterException.located("Cannot open URL " + e.getMessage());
+			throw EaterException.located("Cannot open URL " + e.getMessage(), s);
 		}
 
 	}
 
-	public static ReadLine getReaderInclude(SURL url, LineLocation lineLocation, Charset charset)
+	public static ReadLine getReaderInclude(SURL url, StringLocated s, Charset charset)
 			throws EaterException, UnsupportedEncodingException {
 		final InputStream is = url.openStream();
 		if (is == null)
-			throw EaterException.located("Cannot open URL");
+			throw EaterException.located("Cannot open URL", s);
 
-		return ReadLineReader.create(new InputStreamReader(is, charset), url.toString(), lineLocation);
+		return ReadLineReader.create(new InputStreamReader(is, charset), url.toString(), s.getLocation());
 	}
 
 }

@@ -69,7 +69,7 @@ public class ReverseColor extends SimpleReturnFunction {
 			color = color.reverse();
 			return TValue.fromString(color.asString());
 		} catch (NoSuchColorException e) {
-			throw EaterException.located("No such color");
+			throw EaterException.located("No such color", location);
 		}
 	}
 }
