@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunction;
 import net.sourceforge.plantuml.tim.TFunctionType;
@@ -53,7 +53,7 @@ public abstract class SimpleReturnFunction implements TFunction {
 
 	@Override
 	final public void executeProcedureInternal(TContext context, TMemory memory, StringLocated location,
-			List<TValue> args, Map<String, TValue> named) throws EaterExceptionLocated {
+			List<TValue> args, Map<String, TValue> named) throws EaterException {
 		throw new UnsupportedOperationException();
 	}
 

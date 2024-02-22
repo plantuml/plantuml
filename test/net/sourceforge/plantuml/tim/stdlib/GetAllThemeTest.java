@@ -9,7 +9,7 @@ import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.IndicativeSentencesGeneration;
 import org.junit.jupiter.api.Test;
 
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TFunction;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
@@ -23,7 +23,7 @@ class GetAllThemeTest {
 	final String cutName = "GetAllTheme";
 
 	@Test
-	void Test_without_Param() throws EaterExceptionLocated {
+	void Test_without_Param() throws EaterException {
 		final List<TValue> empty = new ArrayList<>();
 		final TValue tValue = cut.executeReturnFunction(null, null, null, empty, null);
 		assertThat(tValue.toString()).contains("_none_", "amiga", "vibrant");

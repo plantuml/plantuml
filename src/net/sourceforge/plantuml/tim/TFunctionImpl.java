@@ -121,19 +121,18 @@ public class TFunctionImpl implements TFunction {
 		return "FUNCTION " + signature + " " + args;
 	}
 
-	public void addBody(StringLocated s) throws EaterExceptionLocated {
+	public void addBody(StringLocated s) throws EaterException {
 		body.add(s);
 		if (s.getType() == TLineType.RETURN) {
 			this.containsReturn = true;
 			if (functionType == TFunctionType.PROCEDURE)
-				throw EaterExceptionLocated
-						.located("A procedure cannot have !return directive. Declare it as a function instead ?", s);
+				throw new EaterException("A procedure cannot have !return directive. Declare it as a function instead ?", s);
 		}
 	}
 
 	@Override
 	public void executeProcedureInternal(TContext context, TMemory memory, StringLocated location, List<TValue> args,
-			Map<String, TValue> named) throws EaterExceptionLocated {
+			Map<String, TValue> named) throws EaterException {
 		if (functionType != TFunctionType.PROCEDURE && functionType != TFunctionType.LEGACY_DEFINELONG)
 			throw new IllegalStateException();
 
@@ -143,24 +142,23 @@ public class TFunctionImpl implements TFunction {
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> args,
-			Map<String, TValue> named) throws EaterExceptionLocated {
+			Map<String, TValue> named) throws EaterException {
 		if (functionType == TFunctionType.LEGACY_DEFINE)
 			return executeReturnLegacyDefine(location.getLocation(), context, memory, args);
 
 		if (functionType != TFunctionType.RETURN_FUNCTION)
-			throw EaterExceptionLocated.unlocated("Illegal call here. Is there a return directive in your function?",
-					location);
+			throw new EaterException("Illegal call here. Is there a return directive in your function?", location);
 
 		final TMemory copy = getNewMemory(memory, args, named);
 		final TValue result = context.executeLines(copy, body, TFunctionType.RETURN_FUNCTION, true);
 		if (result == null)
-			throw EaterExceptionLocated.unlocated("No return directive found in your function", location);
+			throw new EaterException("No return directive found in your function", location);
 
 		return result;
 	}
 
 	private TValue executeReturnLegacyDefine(LineLocation location, TContext context, TMemory memory, List<TValue> args)
-			throws EaterExceptionLocated {
+			throws EaterException {
 		if (legacyDefinition == null)
 			throw new IllegalStateException();
 

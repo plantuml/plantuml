@@ -48,7 +48,7 @@ public class EaterDeclareReturnFunction extends Eater {
 	}
 
 	@Override
-	public void analyze(TContext context, TMemory memory) throws EaterExceptionLocated {
+	public void analyze(TContext context, TMemory memory) throws EaterException {
 		skipSpaces();
 		checkAndEatChar("!");
 		boolean unquoted = false;

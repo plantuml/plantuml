@@ -38,7 +38,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.FunctionsSet;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionType;
@@ -61,7 +61,7 @@ public class CodeIteratorProcedure extends AbstractCodeIterator {
 		this.memory = memory;
 	}
 
-	public StringLocated peek() throws EaterExceptionLocated {
+	public StringLocated peek() throws EaterException {
 		while (true) {
 			final StringLocated result = source.peek();
 			if (result == null) {

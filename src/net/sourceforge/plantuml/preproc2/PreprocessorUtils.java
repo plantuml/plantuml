@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.preproc.StartDiagramExtractReader;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PreprocessorUtils {
@@ -133,7 +133,7 @@ public class PreprocessorUtils {
 	}
 
 	public static ReadLine getReaderIncludeUrl(final SURL url, StringLocated s, String suf, Charset charset)
-			throws EaterExceptionLocated {
+			throws EaterException {
 		try {
 			if (StartDiagramExtractReader.containsStartDiagram(url, s, charset))
 				return StartDiagramExtractReader.build(url, s, suf, charset);
@@ -141,16 +141,16 @@ public class PreprocessorUtils {
 			return getReaderInclude(url, s, charset);
 		} catch (IOException e) {
 			Logme.error(e);
-			throw EaterExceptionLocated.located("Cannot open URL " + e.getMessage(), s);
+			throw new EaterException("Cannot open URL " + e.getMessage(), s);
 		}
 
 	}
 
 	public static ReadLine getReaderInclude(SURL url, StringLocated s, Charset charset)
-			throws EaterExceptionLocated, UnsupportedEncodingException {
+			throws EaterException, UnsupportedEncodingException {
 		final InputStream is = url.openStream();
 		if (is == null)
-			throw EaterExceptionLocated.located("Cannot open URL", s);
+			throw new EaterException("Cannot open URL", s);
 
 		return ReadLineReader.create(new InputStreamReader(is, charset), url.toString(), s.getLocation());
 	}

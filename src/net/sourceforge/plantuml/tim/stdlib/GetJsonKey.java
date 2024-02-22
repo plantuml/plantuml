@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.json.JsonArray;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TMemory;
@@ -61,10 +61,10 @@ public class GetJsonKey extends SimpleReturnFunction {
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
-			Map<String, TValue> named) throws EaterExceptionLocated {
+			Map<String, TValue> named) throws EaterException {
 		final TValue data = values.get(0);
 		if (data.isJson() == false)
-			throw EaterExceptionLocated.unlocated("Not JSON data", location);
+			throw new EaterException("Not JSON data", location);
 
 		final JsonValue json = data.toJson();
 		if (json.isObject()) {
@@ -87,7 +87,7 @@ public class GetJsonKey extends SimpleReturnFunction {
 			return TValue.fromJson(result);
 		}
 
-		throw EaterExceptionLocated.unlocated("Bad JSON type", location);
+		throw new EaterException("Bad JSON type", location);
 
 	}
 

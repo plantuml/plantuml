@@ -40,7 +40,7 @@ import java.util.Random;
 import java.util.Set;
 
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TMemory;
@@ -61,7 +61,7 @@ public class RandomFunction extends SimpleReturnFunction {
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
-			Map<String, TValue> named) throws EaterExceptionLocated {
+			Map<String, TValue> named) throws EaterException {
 		switch (values.size()) {
 		case 0:
 			return TValue.fromInt(random.nextInt(2));
@@ -77,7 +77,7 @@ public class RandomFunction extends SimpleReturnFunction {
 
 		default:
 			assert false; // Should not append because of canCover()
-			throw EaterExceptionLocated.located("Error on Random: Too many argument", location);
+			throw new EaterException("Error on Random: Too many argument", location);
 		}
 	}
 }

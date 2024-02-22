@@ -45,7 +45,7 @@ public interface TMemory {
 	public TValue getVariable(String varname);
 
 	public void putVariable(String varname, TValue value, TVariableScope scope, StringLocated location)
-			throws EaterExceptionLocated;
+			throws EaterException;
 
 	public void removeVariable(String varname);
 
@@ -59,7 +59,7 @@ public interface TMemory {
 
 	public ExecutionContextIf peekIf();
 
-	public boolean areAllIfOk(TContext context, TMemory memory) throws EaterExceptionLocated;
+	public boolean areAllIfOk(TContext context, TMemory memory) throws EaterException;
 
 	public void addIf(ExecutionContextIf context);
 

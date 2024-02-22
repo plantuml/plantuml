@@ -79,7 +79,7 @@ public abstract class ExecutionContexts {
 		return allForeachs.pollLast();
 	}
 
-	public boolean areAllIfOk(TContext context, TMemory memory) throws EaterExceptionLocated {
+	public boolean areAllIfOk(TContext context, TMemory memory) throws EaterException {
 		for (ExecutionContextIf conditionalContext : allIfs) 
 			if (conditionalContext.conditionIsOkHere() == false) 
 				return false;

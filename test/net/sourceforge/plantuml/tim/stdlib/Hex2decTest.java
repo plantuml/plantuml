@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TFunction;
 
 /**
@@ -22,7 +22,7 @@ class Hex2decTest {
 	final String cutName = "Hex2dec";
 
 	@Test
-	void Test_without_Param() throws EaterExceptionLocated {
+	void Test_without_Param() throws EaterException {
 		assertTimExpectedOutput(cut, "0");
 	}
 
@@ -42,7 +42,7 @@ class Hex2decTest {
 			" -1    , -1 ",
 			" -a    , -10 ",
 	})
-	void Test_with_String(String input, String expected) throws EaterExceptionLocated {
+	void Test_with_String(String input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
 	}
 
@@ -53,7 +53,7 @@ class Hex2decTest {
 			" 10   , 16 ",
 			" -1    , -1 ",
 	})
-	void Test_with_Integer(Integer input, String expected) throws EaterExceptionLocated {
+	void Test_with_Integer(Integer input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
 	}
 }

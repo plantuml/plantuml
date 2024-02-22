@@ -36,7 +36,7 @@ package net.sourceforge.plantuml.tim.expression;
 
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.Eater;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.EaterException;
 
 public enum TokenType {
 	// ::remove folder when __HAXE__
@@ -78,7 +78,7 @@ public enum TokenType {
 	}
 
 	final static public Token eatOneToken(Token lastToken, Eater eater, boolean manageColon)
-			throws EaterExceptionLocated {
+			throws EaterException {
 		char ch = eater.peekChar();
 		if (ch == 0)
 			return null;
@@ -122,7 +122,7 @@ public enum TokenType {
 		return true;
 	}
 
-	static private String eatAndGetTokenPlainText(Eater eater) throws EaterExceptionLocated {
+	static private String eatAndGetTokenPlainText(Eater eater) throws EaterException {
 		final StringBuilder result = new StringBuilder();
 		while (true) {
 			final char ch = eater.peekChar();

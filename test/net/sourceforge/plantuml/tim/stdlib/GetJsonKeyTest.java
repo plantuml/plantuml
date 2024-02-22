@@ -12,7 +12,7 @@ import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import net.sourceforge.plantuml.json.JsonValue;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TFunction;
 import test.utils.JunitUtils.StringJsonConverter;
 
@@ -27,7 +27,7 @@ class GetJsonKeyTest {
 
 	@Disabled
 	@Test
-	void Test_without_Param() throws EaterExceptionLocated {
+	void Test_without_Param() throws EaterException {
 		assertTimExpectedOutput(cut, "0");
 	}
 
@@ -38,7 +38,7 @@ class GetJsonKeyTest {
 			" a, Not JSON data",
 			" -1, Not JSON data",
 	})
-	void Test_with_String(String input, String expected) throws EaterExceptionLocated {
+	void Test_with_String(String input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
 	}
 
@@ -48,7 +48,7 @@ class GetJsonKeyTest {
 			" 0,  Not JSON data",
 			" -1, Not JSON data",
 	})
-	void Test_with_Integer(Integer input, String expected) throws EaterExceptionLocated {
+	void Test_with_Integer(Integer input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
 	}
 
@@ -66,7 +66,7 @@ class GetJsonKeyTest {
 			// - https://json-schema.org/understanding-json-schema/reference/array.html
 			" '[3, \"different\", { \"types\" : \"of values\" }]', [\"types\"]",
 	})
-	void Test_with_Json(@ConvertWith(StringJsonConverter.class) JsonValue input, String expected) throws EaterExceptionLocated {
+	void Test_with_Json(@ConvertWith(StringJsonConverter.class) JsonValue input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
 	}
 }

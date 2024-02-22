@@ -57,7 +57,7 @@ public class TimLoader {
 		this.context = new TContext(importedFiles, defines, charset, definitionsContainer);
 		try {
 			defines.copyTo(global, location);
-		} catch (EaterExceptionLocated e) {
+		} catch (EaterException e) {
 			Logme.error(e);
 		}
 	}
@@ -66,7 +66,7 @@ public class TimLoader {
 //		CodeIteratorImpl.indentNow(list);
 		try {
 			context.executeLines(global, list, null, false);
-		} catch (EaterExceptionLocated e) {
+		} catch (EaterException e) {
 			context.getResultList().add(e.getLocation().withErrorPreprocessor(e.getMessage()));
 			changeLastLine(context.getDebug(), e.getMessage());
 			this.preprocessorError = true;

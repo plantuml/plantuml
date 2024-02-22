@@ -39,7 +39,7 @@ import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunction;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
@@ -59,13 +59,13 @@ public class CallUserFunction extends SimpleReturnFunction {
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
-			Map<String, TValue> named) throws EaterExceptionLocated {
+			Map<String, TValue> named) throws EaterException {
 		final String fname = values.get(0).toString();
 		final List<TValue> args = values.subList(1, values.size());
 		final TFunctionSignature signature = new TFunctionSignature(fname, args.size());
 		final TFunction func = context.getFunctionSmart(signature);
 		if (func == null)
-			throw EaterExceptionLocated.unlocated("Cannot find void function " + fname, location);
+			throw new EaterException("Cannot find void function " + fname, location);
 
 		return func.executeReturnFunction(context, memory, location, args, named);
 	}

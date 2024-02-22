@@ -40,7 +40,7 @@ import java.util.Map;
 import net.sourceforge.plantuml.preproc.Sub;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterStartsub;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TMemory;
@@ -65,7 +65,7 @@ public class CodeIteratorSub extends AbstractCodeIterator {
 		return Collections.unmodifiableMap(subs);
 	}
 
-	public StringLocated peek() throws EaterExceptionLocated {
+	public StringLocated peek() throws EaterException {
 		if (readingInProgress != null)
 			return readingInProgress.peek();
 
@@ -82,7 +82,7 @@ public class CodeIteratorSub extends AbstractCodeIterator {
 			StringLocated s = null;
 			while ((s = source.peek()) != null) {
 				if (s.getType() == TLineType.STARTSUB) {
-					throw EaterExceptionLocated.located("Cannot nest sub", result);
+					throw new EaterException("Cannot nest sub", result);
 				} else if (s.getType() == TLineType.ENDSUB) {
 					source.next();
 					readingInProgress = new CodeIteratorImpl(created.lines());
@@ -100,7 +100,7 @@ public class CodeIteratorSub extends AbstractCodeIterator {
 	}
 
 	@Override
-	public void next() throws EaterExceptionLocated {
+	public void next() throws EaterException {
 		if (readingInProgress == null) {
 			source.next();
 			return;

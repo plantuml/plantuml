@@ -50,10 +50,10 @@ public interface TFunction {
 	public TFunctionType getFunctionType();
 
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> args,
-			Map<String, TValue> named) throws EaterExceptionLocated;
+			Map<String, TValue> named) throws EaterException;
 
 	public void executeProcedureInternal(TContext context, TMemory memory, StringLocated location, List<TValue> args,
-			Map<String, TValue> named) throws EaterExceptionLocated;
+			Map<String, TValue> named) throws EaterException;
 
 	public boolean isUnquoted();
 

@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TMemory;
@@ -62,7 +62,7 @@ public class Lighten extends SimpleReturnFunction {
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
-			Map<String, TValue> named) throws EaterExceptionLocated {
+			Map<String, TValue> named) throws EaterException {
 		final String colorString = values.get(0).toString();
 		final int ratio = values.get(1).toInt();
 		try {
@@ -70,7 +70,7 @@ public class Lighten extends SimpleReturnFunction {
 			color = color.lighten(ratio);
 			return TValue.fromString(color.asString());
 		} catch (NoSuchColorException e) {
-			throw EaterExceptionLocated.located("No such color", location);
+			throw new EaterException("No such color", location);
 		}
 	}
 }

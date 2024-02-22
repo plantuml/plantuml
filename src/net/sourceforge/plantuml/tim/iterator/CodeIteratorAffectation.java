@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.json.ParseException;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.EaterAffectation;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TMemory;
 
@@ -58,7 +58,7 @@ public class CodeIteratorAffectation extends AbstractCodeIterator {
 	}
 
 	@Override
-	public StringLocated peek() throws EaterExceptionLocated {
+	public StringLocated peek() throws EaterException {
 		while (true) {
 			final StringLocated result = source.peek();
 			if (result == null) {
@@ -74,7 +74,7 @@ public class CodeIteratorAffectation extends AbstractCodeIterator {
 		}
 	}
 
-	private void doAffectation(StringLocated result) throws EaterExceptionLocated {
+	private void doAffectation(StringLocated result) throws EaterException {
 		int lastLocation = -1;
 		for (int i = 0; i < 9999; i++)
 			try {
@@ -82,7 +82,7 @@ public class CodeIteratorAffectation extends AbstractCodeIterator {
 				return;
 			} catch (ParseException e) {
 				if (e.getColumn() <= lastLocation)
-					throw EaterExceptionLocated.located("Error in JSON format", result);
+					throw new EaterException("Error in JSON format", result);
 
 				lastLocation = e.getColumn();
 				next();
@@ -92,7 +92,7 @@ public class CodeIteratorAffectation extends AbstractCodeIterator {
 	}
 
 	private void executeAffectation(TContext context, TMemory memory, StringLocated s)
-			throws EaterExceptionLocated {
+			throws EaterException {
 		new EaterAffectation(s).analyze(context, memory);
 	}
 

@@ -42,7 +42,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.EaterStartsub;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TMemory;
@@ -79,7 +79,7 @@ public class Sub {
 	}
 
 	public static Sub fromFile(ReadLine reader, String blocname, TContext context, TMemory memory)
-			throws IOException, EaterExceptionLocated {
+			throws IOException, EaterException {
 		Sub result = null;
 		StringLocated s = null;
 		boolean skip = false;

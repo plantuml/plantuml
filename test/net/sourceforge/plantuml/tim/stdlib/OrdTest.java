@@ -7,7 +7,7 @@ import org.junit.jupiter.api.IndicativeSentencesGeneration;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TFunction;
 
 /**
@@ -22,7 +22,6 @@ class OrdTest {
 	 * Tests ord according to a list of input / expected output 
 	 *
 	 * @throws EaterException should not
-	 * @throws EaterExceptionLocated should not
 	 */
 	@ParameterizedTest(name = "[{index}] " + cutName + "(''{0}'') = {1}")
 	@CsvSource(nullValues = "null", value = {
@@ -40,7 +39,7 @@ class OrdTest {
 			" 😀   , 128512 ",
 			" \uD83D\uDE00 , 128512 ",
 	})
-	void Test_with_String(String input, String expected) throws EaterExceptionLocated {
+	void Test_with_String(String input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
 	}
 }

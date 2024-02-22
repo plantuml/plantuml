@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.TVariableScope;
 import net.sourceforge.plantuml.utils.Log;
@@ -82,7 +82,7 @@ public class Defines implements Truth {
 		return new Defines();
 	}
 
-	public void copyTo(TMemory memory, StringLocated location) throws EaterExceptionLocated {
+	public void copyTo(TMemory memory, StringLocated location) throws EaterException {
 		for (Entry<String, Define> ent : values.entrySet()) {
 			final String name = ent.getKey();
 			final Define def = ent.getValue();

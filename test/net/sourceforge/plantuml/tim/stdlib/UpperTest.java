@@ -12,7 +12,7 @@ import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import net.sourceforge.plantuml.json.JsonValue;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
+import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TFunction;
 import test.utils.JunitUtils.StringJsonConverter;
 
@@ -28,7 +28,7 @@ class UpperTest {
 	// TODO: Manage Upper function without param. (today: we observe `Function not found %upper`)
 	@Disabled
 	@Test
-	void Test_without_Param() throws EaterExceptionLocated {
+	void Test_without_Param() throws EaterException {
 		assertTimExpectedOutput(cut, "");
 	}
 
@@ -43,7 +43,7 @@ class UpperTest {
 			" é    , É ",
 			" 😀  , 😀 ",
 	})
-	void Test_with_String(String input, String expected) throws EaterExceptionLocated {
+	void Test_with_String(String input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
 	}
 
@@ -54,7 +54,7 @@ class UpperTest {
 			" 10   , 10 ",
 			" -1    , -1 ",
 	})
-	void Test_with_Integer(Integer input, String expected) throws EaterExceptionLocated {
+	void Test_with_Integer(Integer input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
 	}
 
@@ -65,7 +65,7 @@ class UpperTest {
 			" '{\"a\":[1, 2], \"b\":\"abc\", \"b\":true}' , '{\"A\":[1,2],\"B\":\"ABC\",\"B\":TRUE}'",
 			" true             , TRUE ",
 	})
-	void Test_with_Json(@ConvertWith(StringJsonConverter.class) JsonValue input, String expected) throws EaterExceptionLocated {
+	void Test_with_Json(@ConvertWith(StringJsonConverter.class) JsonValue input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
 	}
 }

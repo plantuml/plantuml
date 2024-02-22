@@ -79,7 +79,7 @@ public class TMemoryLocal extends ExecutionContexts implements TMemory {
 
 	@Override
 	public void putVariable(String varname, TValue value, TVariableScope scope, StringLocated location)
-			throws EaterExceptionLocated {
+			throws EaterException {
 		if (scope == TVariableScope.GLOBAL) {
 			memoryGlobal.putVariable(varname, value, scope, location);
 			return;
