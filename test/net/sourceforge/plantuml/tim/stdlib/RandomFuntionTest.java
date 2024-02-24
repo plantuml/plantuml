@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
@@ -26,7 +27,7 @@ class RandomFunctionTest {
 
 	@RepeatedTest(value = 10, name = repetitionLabel + cutName + "()")
 	void test_with_no_argument() throws EaterException {
-		final List<TValue> empty = new ArrayList<>();
+		final List<TValue> empty = Collections.emptyList();
 		final TValue tValue = cut.executeReturnFunction(null, null, null, empty, null);
 		assertThat(tValue.toInt()).isIn(0, 1);
 	}
