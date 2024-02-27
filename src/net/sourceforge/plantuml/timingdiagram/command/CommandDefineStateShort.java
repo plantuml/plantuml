@@ -59,8 +59,9 @@ public class CommandDefineStateShort extends SingleLineCommand2<TimingDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("has"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("STATE", "([%pLN_.@]+)"), //
-				new RegexLeaf("STATES", "((,([%pLN_.@]+))*)"), RegexLeaf.end());
+				new RegexLeaf("STATE", "([-%pLN_.@]+)"), //
+				new RegexLeaf("STATES", "((,([-%pLN_.@]+))*)"), //
+				RegexLeaf.end());
 	}
 
 	@Override
