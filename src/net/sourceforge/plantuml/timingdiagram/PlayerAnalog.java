@@ -76,7 +76,7 @@ public class PlayerAnalog extends Player {
 	private Integer ticksEvery;
 
 	public PlayerAnalog(String code, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
-		super(code, skinParam, ruler, compact, stereotype);
+		super(code, skinParam, ruler, compact, stereotype, null);
 		this.suggestedHeight = 100;
 	}
 

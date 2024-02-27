@@ -43,6 +43,7 @@ import java.util.TreeSet;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -50,6 +51,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -77,8 +79,8 @@ public final class PlayerRobustConcise extends Player {
 	private Colors initialColors;
 
 	public PlayerRobustConcise(TimingStyle type, String full, ISkinParam skinParam, TimingRuler ruler, boolean compact,
-			Stereotype stereotype) {
-		super(full, skinParam, ruler, compact, stereotype);
+			Stereotype stereotype, HColor generalBackgroundColor) {
+		super(full, skinParam, ruler, compact, stereotype, generalBackgroundColor);
 		this.type = type;
 		this.suggestedHeight = 0;
 	}

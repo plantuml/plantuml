@@ -65,7 +65,7 @@ public class PlayerClock extends Player {
 
 	public PlayerClock(String title, ISkinParam skinParam, TimingRuler ruler, int period, int pulse, int offset,
 			boolean compact) {
-		super(title, skinParam, ruler, compact, null);
+		super(title, skinParam, ruler, compact, null, null);
 		this.displayTitle = title.length() > 0;
 		this.period = period;
 		this.pulse = pulse;

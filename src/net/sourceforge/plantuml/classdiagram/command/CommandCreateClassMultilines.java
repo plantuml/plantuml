@@ -127,10 +127,16 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 						new RegexLeaf("LINECOLOR", "(?:\\[(dotted|dashed|bold)\\])?(\\w+)?"))), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(),
 						new RegexLeaf("EXTENDS",
-								"(extends)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
+								"(extends)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"),
+						new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(),
+								new RegexLeaf("\\<(" + GenericRegexProducer.PATTERN + ")\\>"))) //
+				)), //
 				new RegexOptional(new RegexConcat(RegexLeaf.spaceOneOrMore(),
 						new RegexLeaf("IMPLEMENTS",
-								"(implements)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"))), //
+								"(implements)[%s]+(" + CommandCreateClassMultilines.CODES + "|[%g]([^%g]+)[%g])"),
+						new RegexOptional(new RegexConcat(RegexLeaf.spaceZeroOrMore(),
+								new RegexLeaf("\\<(" + GenericRegexProducer.PATTERN + ")\\>"))) //
+				)), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\{"), //
 				RegexLeaf.spaceZeroOrMore(), //

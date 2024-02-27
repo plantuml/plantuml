@@ -60,7 +60,7 @@ public class CommandMindMapOrgmodeMultiline extends CommandMultilines2<MindMapDi
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandMindMapOrgmodeMultiline.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("TYPE", "(\\*+)"), //
+				new RegexLeaf("TYPE", "([*#]+)"), //
 				new RegexOptional(new RegexLeaf("BACKCOLOR", "\\[(#\\w+)\\]")), //
 				new RegexLeaf("SHAPE", "(_)?"), //
 				new RegexLeaf(":"), //
