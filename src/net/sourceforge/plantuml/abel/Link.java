@@ -204,6 +204,14 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return cl2;
 	}
 
+	public String getPortName1() {
+		return port1;
+	}
+	
+	public String getPortName2() {
+		return port2;
+	}
+
 	public EntityPort getEntityPort1(Bibliotekon bibliotekon) {
 		return getEntityPort(cl1, port1, bibliotekon);
 	}

@@ -22,7 +22,7 @@ class A {
 class B{
 }
 
-A -->B
+A .> B
 @enduml
 """
 
@@ -114,12 +114,14 @@ Expected result MUST be put between triple brackets
                 <UML:Class name="B" xmi.id="cl0003">
                     <UML:Classifier.feature/>
                 </UML:Class>
-                <UML:Association xmi.id="ass5">
-                    <UML:Association.connection>
-                        <UML:AssociationEnd isNavigable="false" association="ass5" participant="cl0002" xmi.id="end6"/>
-                        <UML:AssociationEnd isNavigable="true" association="ass5" participant="cl0003" xmi.id="end7"/>
-                    </UML:Association.connection>
-                </UML:Association>
+                <UML:Dependency xmi.id="dep5">
+                	<UML:Dependency.client>
+                		<UML:Class xmi.idref="cl0002"/>
+                	</UML:Dependency.client>
+                   	<UML:Dependency.supplier>
+                		<UML:Class xmi.idref="cl0003"/>
+                	</UML:Dependency.supplier>
+                </UML:Dependency>
             </UML:Namespace.ownedElement>
         </UML:Model>
     </XMI.content>
@@ -128,7 +130,7 @@ Expected result MUST be put between triple brackets
 
 
  */
-public class XMI0002_Test extends XmiTest {
+public class XMI0004_Test extends XmiTest {
 
 	@Test
 	void testSimple() throws IOException {

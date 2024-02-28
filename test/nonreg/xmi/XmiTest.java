@@ -39,17 +39,24 @@ public class XmiTest {
 		final String argoExpected = readStringFromSourceFile(getDiagramFile(), "{{{argo", "}}}argo");
 
 		assertXMIEqual(argo, argoExpected);
+		
+		final String script = removeVersion(runPlantUML(expectedDescription, FileFormat.XMI_SCRIPT));
+		final String scriptExpected = readStringFromSourceFile(getDiagramFile(), "{{{script", "}}}script");
+
+		assertXMIEqual(script, scriptExpected);
 	}
 
 	private void assertXMIEqual(final String actual, final String expected) {
 		// XMI is XML, so we can just use the xmlunit diffbuilder
 		// Compare elements with the same xmi ID
 		// checkForSimilar required to ignore order
-		Diff diff = DiffBuilder.compare(Input.fromString(actual)).withTest(Input.fromString(expected))
+		Diff diff = DiffBuilder.compare(Input.fromString(expected)).withTest(Input.fromString(actual))
 				.ignoreWhitespace().ignoreComments().checkForSimilar()
 				.withNodeMatcher(new DefaultNodeMatcher(ElementSelectors.byNameAndAttributes("xmi.id"))).build();
 		
 		if (diff.hasDifferences()) {
+			System.out.println("Generated XMI: ");
+			System.out.println(actual);
 			assertTrue(false, diff.fullDescription());
 		}
 	}
