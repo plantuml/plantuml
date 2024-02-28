@@ -71,7 +71,7 @@ public final class CucaDiagramXmiMaker {
 			if (diagram instanceof StateDiagram)
 				xmi = new XmiStateDiagram((StateDiagram) diagram);
 			else if (diagram instanceof DescriptionDiagram)
-				xmi = new XmiDescriptionDiagramScript((DescriptionDiagram) diagram);
+				xmi = createDescriptionDiagram();
 			else if (diagram instanceof ClassDiagram)
 				xmi = createClassDiagram();
 			else
@@ -101,6 +101,16 @@ public final class CucaDiagramXmiMaker {
 			return new XmiClassDiagramStar((ClassDiagram) diagram);
 		else 
 			throw new UnsupportedOperationException();
+	}
+
+	private XmlDiagramTransformer createDescriptionDiagram() throws ParserConfigurationException {
+		if (fileFormat == FileFormat.XMI_SCRIPT) {
+			return new XmiDescriptionDiagramScript((DescriptionDiagram) diagram);
+		} else {
+			// dont care about which file format is specified, to keep backwards
+			// compatibility
+			return new XmiDescriptionDiagramStandard((DescriptionDiagram) diagram);
+		}
 	}
 
 }

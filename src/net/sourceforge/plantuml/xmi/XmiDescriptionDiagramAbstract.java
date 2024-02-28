@@ -59,13 +59,13 @@ import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.xml.XmlFactories;
 
-public class XmiDescriptionDiagram implements XmlDiagramTransformer {
+public abstract class XmiDescriptionDiagramAbstract implements XmlDiagramTransformer {
 
-	private final DescriptionDiagram diagram;
-	private final Document document;
-	private final Element ownedElement;
+	protected final DescriptionDiagram diagram;
+	protected final Document document;
+	protected final Element ownedElement;
 
-	public XmiDescriptionDiagram(DescriptionDiagram diagram) throws ParserConfigurationException {
+	public XmiDescriptionDiagramAbstract(DescriptionDiagram diagram) throws ParserConfigurationException {
 		this.diagram = diagram;
 
 		final DocumentBuilder builder = XmlFactories.newDocumentBuilder();
@@ -110,7 +110,7 @@ public class XmiDescriptionDiagram implements XmlDiagramTransformer {
 
 	}
 
-	private void addElement(final Entity tobeAdded, Element container) {
+	protected void addElement(final Entity tobeAdded, Element container) {
 		final Element element = createEntityNode(tobeAdded);
 		container.appendChild(element);
 		for (final Entity ent : diagram.getEntityFactory().groups())
@@ -123,66 +123,9 @@ public class XmiDescriptionDiagram implements XmlDiagramTransformer {
 
 	}
 
-	public static String forXMI(String s) {
-		return s.replace(':', ' ');
-	}
+	protected abstract void addLink(Link link);
 
-	public static String forXMI(Display s) {
-		return s.get(0).toString().replace(':', ' ');
-	}
-
-	private void addLink(Link link) {
-		final String assId = "ass" + diagram.getUniqueSequence();
-
-		final Element association = document.createElement("UML:Association");
-		association.setAttribute("xmi.id", assId);
-		association.setAttribute("namespace", CucaDiagramXmiMaker.getModel(diagram));
-		if (Display.isNull(link.getLabel()) == false)
-			association.setAttribute("name", forXMI(link.getLabel()));
-
-		final Element connection = document.createElement("UML:Association.connection");
-		final Element end1 = document.createElement("UML:AssociationEnd");
-		end1.setAttribute("xmi.id", "end" + diagram.getUniqueSequence());
-		end1.setAttribute("association", assId);
-		end1.setAttribute("type", link.getEntity1().getUid());
-		if (link.getQuantifier1() != null)
-			end1.setAttribute("name", forXMI(link.getQuantifier1()));
-
-		final Element endparticipant1 = document.createElement("UML:AssociationEnd.participant");
-
-		if (link.getType().getDecor2() == LinkDecor.COMPOSITION)
-			end1.setAttribute("aggregation", "composite");
-
-		if (link.getType().getDecor2() == LinkDecor.AGREGATION)
-			end1.setAttribute("aggregation", "aggregate");
-
-		end1.appendChild(endparticipant1);
-		connection.appendChild(end1);
-
-		final Element end2 = document.createElement("UML:AssociationEnd");
-		end2.setAttribute("xmi.id", "end" + diagram.getUniqueSequence());
-		end2.setAttribute("association", assId);
-		end2.setAttribute("type", link.getEntity2().getUid());
-		if (link.getQuantifier2() != null)
-			end2.setAttribute("name", forXMI(link.getQuantifier2()));
-
-		final Element endparticipant2 = document.createElement("UML:AssociationEnd.participant");
-		if (link.getType().getDecor1() == LinkDecor.COMPOSITION)
-			end2.setAttribute("aggregation", "composite");
-
-		if (link.getType().getDecor1() == LinkDecor.AGREGATION)
-			end2.setAttribute("aggregation", "aggregate");
-
-		end2.appendChild(endparticipant2);
-		connection.appendChild(end2);
-
-		association.appendChild(connection);
-
-		ownedElement.appendChild(association);
-
-	}
-
-	private Element createEntityNode(Entity entity) {
+	protected Element createEntityNode(Entity entity) {
 		final Element cla = document.createElement("UML:Component");
 
 		cla.setAttribute("xmi.id", entity.getUid());
@@ -192,19 +135,6 @@ public class XmiDescriptionDiagram implements XmlDiagramTransformer {
 		final Element feature = document.createElement("UML:Classifier.feature");
 		cla.appendChild(feature);
 
-//		for (Member m : entity.getBodier().getFieldsToDisplay()) {
-//			final Element attribute = document.createElement("UML:Attribute");
-//			attribute.setAttribute("xmi.id", "att" + UniqueSequence.getValue());
-//			attribute.setAttribute("name", m.getDisplay(false));
-//			feature.appendChild(attribute);
-//		}
-//
-//		for (Member m : entity.getBodier().getMethodsToDisplay()) {
-//			final Element operation = document.createElement("UML:Operation");
-//			operation.setAttribute("xmi.id", "att" + UniqueSequence.getValue());
-//			operation.setAttribute("name", m.getDisplay(false));
-//			feature.appendChild(operation);
-//		}
 		return cla;
 	}
 
@@ -220,4 +150,11 @@ public class XmiDescriptionDiagram implements XmlDiagramTransformer {
 		transformer.transform(source, resultat);
 	}
 
+	public static String forXMI(String s) {
+		return s.replace(':', ' ');
+	}
+
+	public static String forXMI(Display s) {
+		return s.get(0).toString().replace(':', ' ');
+	}
 }

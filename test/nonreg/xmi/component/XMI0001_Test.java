@@ -113,6 +113,46 @@ Expected result MUST be put between triple brackets
 </XMI>
 }}}argo
 
+{{{script
+<?xml version="1.0" encoding="UTF-8"?><XMI xmlns:UML="href://org.omg/UML/1.3" xmi.version="1.1">
+    <XMI.header>
+        <XMI.metamodel xmi.name="UML" xmi.version="1.3"/>
+    </XMI.header>
+    <XMI.content>
+        <UML:Model name="PlantUML" xmi.id="model1">
+            <UML:Namespace.ownedElement>
+                <UML:Component name="test" namespace="model1" xmi.id="cl0002">
+                    <UML:Classifier.feature/>
+                </UML:Component>
+                <UML:Component name="first line1" namespace="model1" xmi.id="cl0004">
+                    <UML:Classifier.feature/>
+                </UML:Component>
+                <UML:Component name="first line3" namespace="model1" xmi.id="cl0007">
+                    <UML:Classifier.feature/>
+                </UML:Component>
+                    <UML:Dependency xmi.id="dep9">
+                        <UML:Dependency.client>
+                            <UML:Component xmi.idref="cl0004"/>
+                        </UML:Dependency.client>
+                        <UML:Dependency.supplier>
+                            <UML:Component xmi.idref="cl0002"/>
+                        </UML:Dependency.supplier>
+                    </UML:Dependency>
+                    <UML:Dependency xmi.id="dep10">
+                        <UML:Dependency.client>
+                            <UML:Component xmi.idref="cl0002"/>
+                        </UML:Dependency.client>
+                        <UML:Dependency.supplier>
+                            <UML:Component xmi.idref="cl0007"/>
+                        </UML:Dependency.supplier>
+                    </UML:Dependency>
+            </UML:Namespace.ownedElement>
+        </UML:Model>
+    </XMI.content>
+</XMI>
+}}}script
+
+
  */
 public class XMI0001_Test extends XmiTest {
 
