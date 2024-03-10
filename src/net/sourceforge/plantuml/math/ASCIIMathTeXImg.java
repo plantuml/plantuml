@@ -905,8 +905,8 @@ public class ASCIIMathTeXImg {
 										subarr = new ArrayList<String>(Arrays.asList(
 												newFrag.substring(pos.get(i) + 8, subpos.get(pos.get(i)).get(1))));
 										for (int j = 2; j < subpos.get(pos.get(i)).size(); j++) {
-											subarr.add(newFrag.substring(subpos.get(i).get(j - 1) + 1,
-													subpos.get(i).get(j)));
+											subarr.add(newFrag.substring(subpos.get(pos.get(i)).get(j - 1) + 1,
+													subpos.get(pos.get(i)).get(j)));
 										}
 										subarr.add(newFrag.substring(
 												subpos.get(pos.get(i)).get(subpos.get(pos.get(i)).size() - 1) + 1,
