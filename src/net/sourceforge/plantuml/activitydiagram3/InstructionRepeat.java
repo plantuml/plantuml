@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.StyleBuilder;
 
 public class InstructionRepeat extends AbstractInstruction implements Instruction {
 
@@ -87,6 +88,7 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 	private LinkRendering endRepeatLinkRendering = LinkRendering.none();
 
 	private final Colors colors;
+	private final StyleBuilder currentStyleBuilder;
 
 	public boolean containsBreak() {
 		return repeatList.containsBreak();
@@ -94,6 +96,7 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 
 	public InstructionRepeat(Swimlanes swimlanes, Instruction parent, LinkRendering nextLinkRenderer, HColor color,
 			Display startLabel, BoxStyle boxStyleIn, Colors colors) {
+		this.currentStyleBuilder = swimlanes.getCurrentStyleBuilder();
 		this.swimlanes = swimlanes;
 		this.swimlane = swimlanes.getCurrentSwimlane();
 		this.repeatList = new InstructionList(this.swimlane);
@@ -158,7 +161,7 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 		if (this.testCalled == false && incoming1.isNone())
 			incoming1 = swimlanes.nextLinkRenderer();
 		final Ftile result = factory.repeat(boxStyleIn, swimlane, swimlaneOut, startLabel, decorateOut, test, yes, out,
-				colors, back, isLastOfTheParent(), incoming1, incoming2);
+				colors, back, isLastOfTheParent(), incoming1, incoming2, currentStyleBuilder);
 		if (killed)
 			return new FtileKilled(result);
 

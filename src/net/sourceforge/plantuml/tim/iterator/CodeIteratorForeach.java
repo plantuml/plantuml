@@ -40,7 +40,6 @@ import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.EaterException;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.EaterForeach;
 import net.sourceforge.plantuml.tim.ExecutionContextForeach;
 import net.sourceforge.plantuml.tim.TContext;
@@ -61,13 +60,12 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 		this.logs = logs;
 	}
 
-	public StringLocated peek() throws EaterException, EaterExceptionLocated {
+	public StringLocated peek() throws EaterException {
 		int level = 0;
 		while (true) {
 			final StringLocated result = source.peek();
-			if (result == null) {
+			if (result == null)
 				return null;
-			}
 
 			final ExecutionContextForeach foreach = memory.peekForeach();
 			if (foreach != null && foreach.isSkipMe()) {
@@ -91,15 +89,15 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 				continue;
 			} else if (result.getType() == TLineType.ENDFOREACH) {
 				logs.add(result);
-				if (foreach == null) {
-					throw EaterException.located("No foreach related to this endforeach");
-				}
+				if (foreach == null)
+					throw new EaterException("No foreach related to this endforeach", result);
+
 				foreach.inc();
 				if (foreach.isSkipMe()) {
 					memory.pollForeach();
 				} else {
 					setLoopVariable(memory, foreach, result);
-					source.jumpToCodePosition(foreach.getStartForeach());
+					source.jumpToCodePosition(foreach.getStartForeach(), result);
 				}
 				next();
 				continue;
@@ -109,23 +107,23 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 		}
 	}
 
-	private void executeForeach(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
+	private void executeForeach(TMemory memory, StringLocated s) throws EaterException {
 		final EaterForeach condition = new EaterForeach(s);
 		condition.analyze(context, memory);
 		final ExecutionContextForeach foreach = ExecutionContextForeach.fromValue(condition.getVarname(),
 				condition.getJsonArray(), source.getCodePosition());
-		if (condition.isSkip()) {
+		if (condition.isSkip())
 			foreach.skipMeNow();
-		} else {
+		else
 			setLoopVariable(memory, foreach, s);
-		}
+
 		memory.addForeach(foreach);
 	}
 
 	private void setLoopVariable(TMemory memory, ExecutionContextForeach foreach, StringLocated position)
 			throws EaterException {
 		final JsonValue first = foreach.getJsonArray().get(foreach.currentIndex());
-		memory.putVariable(foreach.getVarname(), TValue.fromJson(first), TVariableScope.GLOBAL);
+		memory.putVariable(foreach.getVarname(), TValue.fromJson(first), TVariableScope.GLOBAL, position);
 	}
 
 }

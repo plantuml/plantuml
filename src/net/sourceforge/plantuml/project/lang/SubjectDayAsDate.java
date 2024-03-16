@@ -49,9 +49,9 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-public class SubjectDayAsDate implements Subject {
+public class SubjectDayAsDate implements Subject<GanttDiagram> {
 
-	public static final Subject ME = new SubjectDayAsDate();
+	public static final Subject<GanttDiagram> ME = new SubjectDayAsDate();
 
 	private SubjectDayAsDate() {
 	}
@@ -89,11 +89,11 @@ public class SubjectDayAsDate implements Subject {
 		throw new IllegalStateException();
 	}
 
-	public Collection<? extends SentenceSimple> getSentences() {
+	public Collection<? extends SentenceSimple<GanttDiagram>> getSentences() {
 		return Arrays.asList(new Close(), new Open(), new InColor());
 	}
 
-	class Close extends SentenceSimple {
+	class Close extends SentenceSimple<GanttDiagram> {
 
 		public Close() {
 			super(SubjectDayAsDate.this, Verbs.isOrAre, new ComplementClose());
@@ -106,7 +106,7 @@ public class SubjectDayAsDate implements Subject {
 		}
 	}
 
-	class Open extends SentenceSimple {
+	class Open extends SentenceSimple<GanttDiagram> {
 		public Open() {
 			super(SubjectDayAsDate.this, Verbs.isOrAre, new ComplementOpen());
 		}
@@ -118,7 +118,7 @@ public class SubjectDayAsDate implements Subject {
 		}
 	}
 
-	class InColor extends SentenceSimple {
+	class InColor extends SentenceSimple<GanttDiagram> {
 
 		public InColor() {
 			super(SubjectDayAsDate.this, Verbs.isOrAre, new ComplementInColors2());
@@ -138,12 +138,7 @@ public class SubjectDayAsDate implements Subject {
 	}
 
 	private IRegex toRegexB() {
-		return new RegexConcat( //
-				new RegexLeaf("BYEAR", "([\\d]{4})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf("BMONTH", "([\\d]{1,2})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf("BDAY", "([\\d]{1,2})"));
+		return TimeResolution.toRegexB_YYYY_MM_DD("BYEAR", "BMONTH", "BDAY");
 	}
 
 	private IRegex toRegexE() {

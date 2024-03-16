@@ -40,26 +40,20 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunction;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TMemory;
-import net.sourceforge.plantuml.utils.LineLocation;
 
 public class ReversePolishInterpretor {
 
 	private final TValue result;
 	private final boolean trace = false;
 
-	public ReversePolishInterpretor(TokenStack queue, Knowledge knowledge, TMemory memory, TContext context)
-			throws EaterException, EaterExceptionLocated {
-		this(null, queue, knowledge, memory, context);
-	}
-
-	public ReversePolishInterpretor(LineLocation location, TokenStack queue, Knowledge knowledge, TMemory memory,
-			TContext context) throws EaterException, EaterExceptionLocated {
+	public ReversePolishInterpretor(StringLocated location, TokenStack queue, Knowledge knowledge, TMemory memory,
+			TContext context) throws EaterException {
 
 		final Deque<TValue> stack = new ArrayDeque<>();
 		if (trace)
@@ -78,45 +72,44 @@ public class ReversePolishInterpretor {
 				final TValue v2 = stack.removeFirst();
 				final TValue v1 = stack.removeFirst();
 				final TokenOperator op = token.getTokenOperator();
-				if (op == null) {
-					throw EaterException.unlocated("bad op");
-				}
+				if (op == null)
+					throw new EaterException("bad op", location);
+
 				final TValue tmp = op.operate(v1, v2);
 				stack.addFirst(tmp);
 			} else if (token.getTokenType() == TokenType.OPEN_PAREN_FUNC) {
 				final int nb = Integer.parseInt(token.getSurface());
 				final Token token2 = it.nextToken();
-				if (token2.getTokenType() != TokenType.FUNCTION_NAME) {
-					throw EaterException.unlocated("rpn43");
-				}
+				if (token2.getTokenType() != TokenType.FUNCTION_NAME)
+					throw new EaterException("rpn43", location);
+
 				if (trace)
 					System.err.println("token2=" + token2);
 				final TFunction function = knowledge.getFunction(new TFunctionSignature(token2.getSurface(), nb));
 				if (trace)
 					System.err.println("function=" + function);
-				if (function == null) {
-					throw EaterException.unlocated("Unknown built-in function " + token2.getSurface());
-				}
-				if (function.canCover(nb, Collections.<String>emptySet()) == false) {
-					throw EaterException
-							.unlocated("Bad number of arguments for " + function.getSignature().getFunctionName());
-				}
+				if (function == null)
+					throw new EaterException("Unknown built-in function " + token2.getSurface(), location);
+
+				if (function.canCover(nb, Collections.<String>emptySet()) == false)
+					throw new EaterException("Bad number of arguments for " + function.getSignature().getFunctionName(), location);
+
 				final List<TValue> args = new ArrayList<>();
-				for (int i = 0; i < nb; i++) {
+				for (int i = 0; i < nb; i++)
 					args.add(0, stack.removeFirst());
-				}
+
 				if (trace)
 					System.err.println("args=" + args);
-				if (location == null) {
-					throw EaterException.unlocated("rpn44");
-				}
+				if (location == null)
+					throw new EaterException("rpn44", location);
+
 				final TValue r = function.executeReturnFunction(context, memory, location, args,
 						Collections.<String, TValue>emptyMap());
 				if (trace)
 					System.err.println("r=" + r);
 				stack.addFirst(r);
 			} else {
-				throw EaterException.unlocated("rpn41");
+				throw new EaterException("rpn41", location);
 			}
 		}
 		result = stack.removeFirst();

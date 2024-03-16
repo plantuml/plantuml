@@ -69,6 +69,7 @@ public class TFunctionImpl implements TFunction {
 		this.functionType = functionType;
 	}
 
+	@Override
 	public boolean canCover(int nbArg, Set<String> namedArguments) {
 		for (String n : namedArguments)
 			if (signature.getNamedArguments().contains(n) == false)
@@ -120,30 +121,18 @@ public class TFunctionImpl implements TFunction {
 		return "FUNCTION " + signature + " " + args;
 	}
 
-	public void addBody(StringLocated s) throws EaterExceptionLocated {
+	public void addBody(StringLocated s) throws EaterException {
 		body.add(s);
 		if (s.getType() == TLineType.RETURN) {
 			this.containsReturn = true;
 			if (functionType == TFunctionType.PROCEDURE)
-				throw EaterExceptionLocated
-						.located("A procedure cannot have !return directive. Declare it as a function instead ?", s);
+				throw new EaterException("A procedure cannot have !return directive. Declare it as a function instead ?", s);
 		}
 	}
 
-	public void executeProcedure(TContext context, TMemory memory, LineLocation location, String s)
-			throws EaterException, EaterExceptionLocated {
-		final EaterFunctionCall call = new EaterFunctionCall(new StringLocated(s, location),
-				context.isLegacyDefine(signature.getFunctionName()), unquoted);
-		call.analyze(context, memory);
-		final String endOfLine = call.getEndOfLine();
-		final List<TValue> args = call.getValues();
-		final Map<String, TValue> named = call.getNamedArguments();
-		executeProcedureInternal(context, memory, args, named);
-		context.appendEndOfLine(endOfLine);
-	}
-
-	public void executeProcedureInternal(TContext context, TMemory memory, List<TValue> args, Map<String, TValue> named)
-			throws EaterException, EaterExceptionLocated {
+	@Override
+	public void executeProcedureInternal(TContext context, TMemory memory, StringLocated location, List<TValue> args,
+			Map<String, TValue> named) throws EaterException {
 		if (functionType != TFunctionType.PROCEDURE && functionType != TFunctionType.LEGACY_DEFINELONG)
 			throw new IllegalStateException();
 
@@ -151,29 +140,30 @@ public class TFunctionImpl implements TFunction {
 		context.executeLines(copy, body, TFunctionType.PROCEDURE, false);
 	}
 
-	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> args,
-			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
+	@Override
+	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> args,
+			Map<String, TValue> named) throws EaterException {
 		if (functionType == TFunctionType.LEGACY_DEFINE)
-			return executeReturnLegacyDefine(location, context, memory, args);
+			return executeReturnLegacyDefine(location.getLocation(), context, memory, args);
 
 		if (functionType != TFunctionType.RETURN_FUNCTION)
-			throw EaterException.unlocated("Illegal call here. Is there a return directive in your function?");
+			throw new EaterException("Illegal call here. Is there a return directive in your function?", location);
 
 		final TMemory copy = getNewMemory(memory, args, named);
 		final TValue result = context.executeLines(copy, body, TFunctionType.RETURN_FUNCTION, true);
 		if (result == null)
-			throw EaterException.unlocated("No return directive found in your function");
+			throw new EaterException("No return directive found in your function", location);
 
 		return result;
 	}
 
 	private TValue executeReturnLegacyDefine(LineLocation location, TContext context, TMemory memory, List<TValue> args)
-			throws EaterException, EaterExceptionLocated {
+			throws EaterException {
 		if (legacyDefinition == null)
 			throw new IllegalStateException();
 
 		final TMemory copy = getNewMemory(memory, args, Collections.<String, TValue>emptyMap());
-		final String tmp = context.applyFunctionsAndVariables(copy, location, legacyDefinition);
+		final String tmp = context.applyFunctionsAndVariables(copy, new StringLocated(legacyDefinition, location));
 		if (tmp == null)
 			return TValue.fromString("");
 

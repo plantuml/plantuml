@@ -49,13 +49,12 @@ import net.sourceforge.plantuml.json.ParseException;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
-import net.sourceforge.plantuml.utils.LineLocation;
 
 /**
  * Loads JSON data from file or URL source.
@@ -102,12 +101,14 @@ public class LoadJson extends SimpleReturnFunction {
 		return new TFunctionSignature("%load_json", 3);
 	}
 
+	@Override
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg == 1 || nbArg == 2 || nbArg == 3;
 	}
 
-	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
-			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
+	@Override
+	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
+			Map<String, TValue> named) throws EaterException {
 		final String path = values.get(0).toString();
 		try {
 			String data = loadStringData(path, getCharset(values));
@@ -118,10 +119,10 @@ public class LoadJson extends SimpleReturnFunction {
 			return TValue.fromJson(jsonValue);
 		} catch (ParseException pe) {
 			Logme.error(pe);
-			throw EaterException.unlocated("JSON parse issue in source " + path + " on location " + pe.getLocation());
+			throw new EaterException("JSON parse issue in source " + path + " on location " + pe.getLocation(), location);
 		} catch (UnsupportedEncodingException e) {
 			Logme.error(e);
-			throw EaterException.unlocated("JSON encoding issue in source " + path + ": " + e.getMessage());
+			throw new EaterException("JSON encoding issue in source " + path + ": " + e.getMessage(), location);
 		}
 	}
 
@@ -160,7 +161,8 @@ public class LoadJson extends SimpleReturnFunction {
 	 * @return the decoded String from the data source
 	 * @throws EaterException if something went wrong on reading data
 	 */
-	private String loadStringData(String path, String charset) throws EaterException, UnsupportedEncodingException {
+	private String loadStringData(String path, String charset)
+			throws EaterException, UnsupportedEncodingException {
 
 		byte[] byteData = null;
 		if (path.startsWith("http://") || path.startsWith("https://")) {

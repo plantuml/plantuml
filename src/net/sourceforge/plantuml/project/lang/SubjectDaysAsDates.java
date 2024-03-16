@@ -50,9 +50,9 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-public class SubjectDaysAsDates implements Subject {
+public class SubjectDaysAsDates implements Subject<GanttDiagram> {
 
-	public static final Subject ME = new SubjectDaysAsDates();
+	public static final Subject<GanttDiagram> ME = new SubjectDaysAsDates();
 
 	private SubjectDaysAsDates() {
 	}
@@ -63,19 +63,10 @@ public class SubjectDaysAsDates implements Subject {
 
 	private IRegex toRegexB() {
 		return new RegexConcat( //
-				new RegexLeaf("BYEAR1", "([\\d]{4})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf("BMONTH1", "([\\d]{1,2})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf("BDAY1", "([\\d]{1,2})"), //
+				TimeResolution.toRegexB_YYYY_MM_DD("BYEAR1", "BMONTH1", "BDAY1"), //
+				Words.exactly(Words.TO), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("to"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("BYEAR2", "([\\d]{4})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf("BMONTH2", "([\\d]{1,2})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf("BDAY2", "([\\d]{1,2})") //
+				TimeResolution.toRegexB_YYYY_MM_DD("BYEAR2", "BMONTH2", "BDAY2") //
 		);
 	}
 
@@ -83,8 +74,7 @@ public class SubjectDaysAsDates implements Subject {
 		return new RegexConcat( //
 				new RegexLeaf("[dD]\\+"), //
 				new RegexLeaf("ECOUNT1", "([\\d]+)"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("to"), //
+				Words.exactly(Words.TO), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("[dD]\\+"), //
 				new RegexLeaf("ECOUNT2", "([\\d]+)") //
@@ -93,13 +83,8 @@ public class SubjectDaysAsDates implements Subject {
 
 	private IRegex andRegex() {
 		return new RegexConcat( //
-				new RegexLeaf("BYEAR3", "([\\d]{4})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf("BMONTH3", "([\\d]{1,2})"), //
-				new RegexLeaf("\\D"), //
-				new RegexLeaf("BDAY3", "([\\d]{1,2})"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("and"), //
+				TimeResolution.toRegexB_YYYY_MM_DD("BYEAR3", "BMONTH3", "BDAY3"), //
+				Words.exactly(Words.AND), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("COUNT_AND", "([\\d]+)"), //
 				RegexLeaf.spaceOneOrMore(), //
@@ -151,11 +136,11 @@ public class SubjectDaysAsDates implements Subject {
 		throw new IllegalStateException();
 	}
 
-	public Collection<? extends SentenceSimple> getSentences() {
+	public Collection<? extends SentenceSimple<GanttDiagram>> getSentences() {
 		return Arrays.asList(new Close(), new Open(), new InColor(), new Named());
 	}
 
-	class Close extends SentenceSimple {
+	class Close extends SentenceSimple<GanttDiagram> {
 
 		public Close() {
 			super(SubjectDaysAsDates.this, Verbs.isOrAre, new ComplementClose());
@@ -171,7 +156,7 @@ public class SubjectDaysAsDates implements Subject {
 		}
 	}
 
-	class Open extends SentenceSimple {
+	class Open extends SentenceSimple<GanttDiagram> {
 
 		public Open() {
 			super(SubjectDaysAsDates.this, Verbs.isOrAre, new ComplementOpen());
@@ -188,7 +173,7 @@ public class SubjectDaysAsDates implements Subject {
 
 	}
 
-	class InColor extends SentenceSimple {
+	class InColor extends SentenceSimple<GanttDiagram> {
 
 		public InColor() {
 			super(SubjectDaysAsDates.this, Verbs.isOrAre, new ComplementInColors2());
@@ -206,7 +191,7 @@ public class SubjectDaysAsDates implements Subject {
 
 	}
 
-	class Named extends SentenceSimple {
+	class Named extends SentenceSimple<GanttDiagram> {
 
 		public Named() {
 			super(SubjectDaysAsDates.this, Verbs.isOrAreNamed, new ComplementNamed());

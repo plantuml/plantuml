@@ -39,7 +39,6 @@ import java.util.List;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.EaterException;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.FunctionsSet;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionType;
@@ -62,7 +61,7 @@ public class CodeIteratorReturnFunction extends AbstractCodeIterator {
 		this.memory = memory;
 	}
 
-	public StringLocated peek() throws EaterException, EaterExceptionLocated {
+	public StringLocated peek() throws EaterException {
 		while (true) {
 			final StringLocated result = source.peek();
 			if (result == null) {
@@ -74,9 +73,7 @@ public class CodeIteratorReturnFunction extends AbstractCodeIterator {
 				logs.add(result);
 				if (result.getType() == TLineType.END_FUNCTION) {
 					if (functionsSet.pendingFunction().doesContainReturn() == false) {
-						throw EaterExceptionLocated.located(
-								"This function does not have any !return directive. Declare it as a procedure instead ?",
-								result);
+						throw new EaterException("This function does not have any !return directive. Declare it as a procedure instead ?", result);
 					}
 					functionsSet.executeEndfunction();
 				} else {

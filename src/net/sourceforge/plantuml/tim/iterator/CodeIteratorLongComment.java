@@ -39,7 +39,6 @@ import java.util.List;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.EaterException;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 
 public class CodeIteratorLongComment extends AbstractCodeIterator {
 
@@ -50,7 +49,7 @@ public class CodeIteratorLongComment extends AbstractCodeIterator {
 		this.logs = logs;
 	}
 
-	public StringLocated peek() throws EaterException, EaterExceptionLocated {
+	public StringLocated peek() throws EaterException {
 		while (true) {
 			if (source.peek() == null) {
 				return null;

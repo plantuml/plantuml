@@ -49,6 +49,8 @@ public class TranscoderSmartProtected implements Transcoder {
 			new CompressionNone());
 	private final Transcoder zip = TranscoderImpl.utf8(new AsciiEncoder(), new ArobaseStringCompressor(),
 			new CompressionZip());
+	private final Transcoder gzip = TranscoderImpl.utf8(new AsciiEncoder(), new ArobaseStringCompressor(),
+			new CompressionGZip());
 
 	public String decode(String code) throws NoPlantumlCompressionException {
 		// Work in progress
@@ -62,6 +64,9 @@ public class TranscoderSmartProtected implements Transcoder {
 
 		if (code.startsWith("~h"))
 			return hexOnly.decode(code.substring(2));
+
+		if (code.startsWith("~g"))
+			return gzip.decode(code.substring(2));
 
 		if (code.startsWith("~zip~"))
 			return zip.decode(code.substring(5));

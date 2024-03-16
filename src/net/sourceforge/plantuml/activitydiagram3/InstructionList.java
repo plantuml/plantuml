@@ -129,8 +129,13 @@ public class InstructionList extends WithNote implements Instruction, Instructio
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
-		if (all.size() == 0)
-			return new FtileEmpty(factory.skinParam(), defaultSwimlane);
+		if (all.size() == 0) {
+			Ftile result = new FtileEmpty(factory.skinParam(), defaultSwimlane);
+			// Not a typo, in that case, we decide to decorate the entry link.
+			if (outlinkRendering != null)
+				result = factory.decorateIn(result, outlinkRendering);
+			return result;
+		}
 
 		final List<WeldingPoint> breaks = new ArrayList<>();
 		Ftile result = eventuallyAddNote(factory, null, getSwimlaneIn(), VerticalAlignment.CENTER);

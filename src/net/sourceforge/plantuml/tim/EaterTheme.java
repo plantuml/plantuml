@@ -67,7 +67,7 @@ public class EaterTheme extends Eater {
 	}
 
 	@Override
-	public void analyze(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
+	public void analyze(TContext context, TMemory memory) throws EaterException {
 		skipSpaces();
 		checkAndEatChar("!theme");
 		skipSpaces();
@@ -76,12 +76,12 @@ public class EaterTheme extends Eater {
 		final int x = this.name.toLowerCase().indexOf(" from ");
 		if (x != -1) {
 			final String fromTmp = this.name.substring(x + " from ".length()).trim();
-			this.from = context.applyFunctionsAndVariables(memory, getLineLocation(), fromTmp);
+			this.from = context.applyFunctionsAndVariables(memory, new StringLocated(fromTmp, getLineLocation()));
 			this.name = this.name.substring(0, x).trim();
 			this.context = context;
 		}
 
-		this.realName = context.applyFunctionsAndVariables(memory, getLineLocation(), this.name);
+		this.realName = context.applyFunctionsAndVariables(memory, new StringLocated(this.name, getLineLocation()));
 
 	}
 
@@ -101,24 +101,24 @@ public class EaterTheme extends Eater {
 			} catch (IOException e) {
 				Logme.error(e);
 			}
-			throw EaterException.located("Cannot load " + realName);
+			throw new EaterException("Cannot load " + realName, getStringLocated());
 		}
 
 		if (from.startsWith("<") && from.endsWith(">")) {
 			final ReadLine reader = ThemeUtils.getReaderTheme(realName, from);
 			if (reader == null)
-				throw EaterException.located("No such theme " + realName + " in " + from);
+				throw new EaterException("No such theme " + realName + " in " + from, getStringLocated());
 			return reader;
 		} else if (from.startsWith("http://") || from.startsWith("https://")) {
 			final SURL url = SURL.create(ThemeUtils.getFullPath(from, realName));
 			if (url == null)
-				throw EaterException.located("Cannot open URL");
+				throw new EaterException("Cannot open URL", getStringLocated());
 
 			try {
-				return PreprocessorUtils.getReaderInclude(url, getLineLocation(), UTF_8);
+				return PreprocessorUtils.getReaderInclude(url, getStringLocated(), UTF_8);
 			} catch (UnsupportedEncodingException e) {
 				Logme.error(e);
-				throw EaterException.located("Cannot decode charset");
+				throw new EaterException("Cannot decode charset", getStringLocated());
 			}
 		}
 
@@ -126,12 +126,12 @@ public class EaterTheme extends Eater {
 			final FileWithSuffix file = context.getFileWithSuffix(from, realName);
 			final Reader tmp = file.getReader(UTF_8);
 			if (tmp == null)
-				throw EaterException.located("No such theme " + realName);
+				throw new EaterException("No such theme " + realName, getStringLocated());
 
 			return ReadLineReader.create(tmp, "theme " + realName);
 		} catch (IOException e) {
 			Logme.error(e);
-			throw EaterException.located("Cannot load " + realName);
+			throw new EaterException("Cannot load " + realName, getStringLocated());
 		}
 
 	}

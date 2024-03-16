@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.style;
 
 public enum SName {
+	action, //
 	activity, //
 	activityBar, //
 	activityDiagram, //
@@ -73,6 +74,7 @@ public enum SName {
 	constraintArrow, //
 	control, //
 	database, //
+	day, //
 	delay, //
 	destroy, //
 	diamond, //
@@ -104,6 +106,7 @@ public enum SName {
 	map, //
 	milestone, //
 	mindmapDiagram, //
+	month, //
 	network, //
 	node, //
 	note, //
@@ -115,6 +118,7 @@ public enum SName {
 	partition, //
 	person, //
 	port, //
+	process, //
 	queue, //
 	rectangle, //
 	reference, //
@@ -142,7 +146,9 @@ public enum SName {
 	undone, //
 	unstarted, //
 	usecase, //
-
+	verticalSeparator, //
+	year, //
+	
 	visibilityIcon, //
 	private_, //
 	protected_, //

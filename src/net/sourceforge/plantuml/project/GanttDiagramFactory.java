@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.project.command.CommandNoteBottom;
 import net.sourceforge.plantuml.project.command.CommandPrintBetween;
 import net.sourceforge.plantuml.project.command.CommandPrintScale;
 import net.sourceforge.plantuml.project.command.CommandSeparator;
+import net.sourceforge.plantuml.project.command.CommandTaskCompleteDefault;
 import net.sourceforge.plantuml.project.command.CommandWeekNumberStrategy;
 import net.sourceforge.plantuml.project.command.NaturalCommand;
 import net.sourceforge.plantuml.project.lang.SentenceAnd;
@@ -78,8 +79,8 @@ import net.sourceforge.plantuml.style.CommandStyleMultilinesCSS;
 
 public class GanttDiagramFactory extends PSystemCommandFactory {
 
-	static private final List<Subject> subjects() {
-		return Arrays.<Subject>asList(SubjectTask.ME, SubjectProject.ME, SubjectDayOfWeek.ME, SubjectDayAsDate.ME,
+	static private final List<Subject<GanttDiagram>> subjects() {
+		return Arrays.asList(SubjectTask.ME, SubjectProject.ME, SubjectDayOfWeek.ME, SubjectDayAsDate.ME,
 				SubjectDaysAsDates.ME, SubjectResource.ME, SubjectToday.ME, SubjectSeparator.ME);
 	}
 
@@ -115,31 +116,32 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandLabelOnColumn());
 		cmds.add(new CommandHideResourceName());
 		cmds.add(new CommandHideResourceFootbox());
+		cmds.add(new CommandTaskCompleteDefault());
 	}
 
 	private void addLanguageCommands(List<Command> cmd) {
-		for (Subject subject : subjects())
-			for (SentenceSimple sentenceA : subject.getSentences()) {
+		for (Subject<GanttDiagram> subject : subjects())
+			for (SentenceSimple<GanttDiagram> sentenceA : subject.getSentences()) {
 				cmd.add(NaturalCommand.create(sentenceA));
-				for (SentenceSimple sentenceB : subject.getSentences()) {
+				for (SentenceSimple<GanttDiagram> sentenceB : subject.getSentences()) {
 					final String signatureA = sentenceA.getSignature();
 					final String signatureB = sentenceB.getSignature();
 					if (signatureA.equals(signatureB) == false)
-						cmd.add(NaturalCommand.create(new SentenceAnd(sentenceA, sentenceB)));
+						cmd.add(NaturalCommand.create(new SentenceAnd<GanttDiagram>(sentenceA, sentenceB)));
 
 				}
 			}
 
-		for (Subject subject : subjects())
-			for (SentenceSimple sentenceA : subject.getSentences())
-				for (SentenceSimple sentenceB : subject.getSentences())
-					for (SentenceSimple sentenceC : subject.getSentences()) {
+		for (Subject<GanttDiagram> subject : subjects())
+			for (SentenceSimple<GanttDiagram> sentenceA : subject.getSentences())
+				for (SentenceSimple<GanttDiagram> sentenceB : subject.getSentences())
+					for (SentenceSimple<GanttDiagram> sentenceC : subject.getSentences()) {
 						final String signatureA = sentenceA.getSignature();
 						final String signatureB = sentenceB.getSignature();
 						final String signatureC = sentenceC.getSignature();
 						if (signatureA.equals(signatureB) == false && signatureA.equals(signatureC) == false
 								&& signatureC.equals(signatureB) == false)
-							cmd.add(NaturalCommand.create(new SentenceAndAnd(sentenceA, sentenceB, sentenceC)));
+							cmd.add(NaturalCommand.create(new SentenceAndAnd<GanttDiagram>(sentenceA, sentenceB, sentenceC)));
 					}
 	}
 

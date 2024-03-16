@@ -80,11 +80,11 @@ public abstract class ExecutionContexts {
 	}
 
 	public boolean areAllIfOk(TContext context, TMemory memory) throws EaterException {
-		for (ExecutionContextIf conditionalContext : allIfs) {
-			if (conditionalContext.conditionIsOkHere() == false) {
+		for (ExecutionContextIf conditionalContext : allIfs) 
+			if (conditionalContext.conditionIsOkHere() == false) 
 				return false;
-			}
-		}
+			
+		
 		return true;
 	}
 

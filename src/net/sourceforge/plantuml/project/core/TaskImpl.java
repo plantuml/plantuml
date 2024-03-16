@@ -66,7 +66,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 	private final LoadPlanable defaultPlan;
 	private boolean diamond;
 
-	private int completion = 100;
+	private int completion;
 	private Display note;
 
 	private Url url;
@@ -76,8 +76,9 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		this.url = url;
 	}
 
-	public TaskImpl(StyleBuilder styleBuilder, TaskCode code, LoadPlanable plan, Day startingDay) {
+	public TaskImpl(StyleBuilder styleBuilder, TaskCode code, LoadPlanable plan, Day startingDay, int completion) {
 		super(styleBuilder, code);
+		this.completion = completion;
 		this.defaultPlan = plan;
 		this.solver = new SolverImpl(this);
 		if (startingDay == null)
@@ -88,6 +89,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		setLoad(Load.inWinks(1));
 	}
 
+	@Override
 	public int getLoadAt(Day instant) {
 		if (isPaused(instant))
 			return 0;
@@ -131,10 +133,12 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		return 0;
 	}
 
+	@Override
 	public void addPause(Day pause) {
 		this.pausedDay.add(pause);
 	}
 
+	@Override
 	public void addPause(DayOfWeek pause) {
 		this.pausedDayOfWeek.add(pause);
 	}
@@ -156,7 +160,27 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 				}
 				return result;
 			}
+
+			@Override
+			public Day getLastDayIfAny() {
+				return TaskImpl.this.getLastDayIfAny();
+			}
 		};
+	}
+
+	@Override
+	public Day getLastDayIfAny() {
+		Day result = null;
+
+		for (Resource res : resources.keySet()) {
+			if (res.getLastDayIfAny() == null)
+				return null;
+
+			if (result == null || result.compareTo(res.getLastDayIfAny()) < 0)
+				result = res.getLastDayIfAny();
+		}
+
+		return result;
 	}
 
 	public String getPrettyDisplay() {
@@ -190,6 +214,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		return "" + getStart() + " ---> " + getEnd() + "   [" + getLoad() + "]";
 	}
 
+	@Override
 	public Day getStart() {
 		Day result = (Day) solver.getData(TaskAttribute.START);
 		if (diamond == false)
@@ -199,42 +224,52 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 		return result;
 	}
 
+	@Override
 	public Day getEnd() {
 		return (Day) solver.getData(TaskAttribute.END);
 	}
 
+	@Override
 	public Load getLoad() {
 		return (Load) solver.getData(TaskAttribute.LOAD);
 	}
 
+	@Override
 	public void setLoad(Load load) {
 		solver.setData(TaskAttribute.LOAD, load);
 	}
 
+	@Override
 	public void setStart(Day start) {
 		solver.setData(TaskAttribute.START, start);
 	}
 
+	@Override
 	public void setEnd(Day end) {
 		solver.setData(TaskAttribute.END, end);
 	}
 
+	@Override
 	public void setColors(CenterBorderColor... colors) {
 		this.colors = colors;
 	}
 
+	@Override
 	public void addResource(Resource resource, int percentage) {
 		this.resources.put(resource, percentage);
 	}
 
+	@Override
 	public void setDiamond(boolean diamond) {
 		this.diamond = diamond;
 	}
 
+	@Override
 	public boolean isDiamond() {
 		return this.diamond;
 	}
 
+	@Override
 	public void setCompletion(int completion) {
 		this.completion = completion;
 	}
@@ -274,6 +309,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 
 	}
 
+	@Override
 	public void setNote(Display note) {
 		this.note = note;
 	}
@@ -284,6 +320,11 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 
 	public LoadPlanable getDefaultPlan() {
 		return defaultPlan;
+	}
+
+	@Override
+	public boolean isAssignedTo(Resource res) {
+		return resources.containsKey(res);
 	}
 
 }

@@ -45,16 +45,8 @@ import net.sourceforge.plantuml.project.timescale.TimeScale;
 
 public abstract class TimeHeaderCalendar extends TimeHeader {
 
-	private final TimeHeaderParameters thParam;
-
 	public TimeHeaderCalendar(TimeHeaderParameters thParam, TimeScale timeScale) {
-		super(thParam.getTimelineStyle(), thParam.getClosedStyle(), thParam.getMin(), thParam.getMax(), timeScale,
-				thParam.getColorSet());
-		this.thParam = thParam;
-	}
-
-	protected final boolean isBold(Day wink) {
-		return thParam.getVerticalSeparatorBefore().contains(wink);
+		super(thParam, timeScale);
 	}
 
 	protected final Locale locale() {
@@ -64,7 +56,7 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 	protected final int getLoadAt(Day instant) {
 		return thParam.getLoadPlanable().getLoadAt(instant);
 	}
-
+	
 	// Duplicate in TimeHeaderSimple
 	class Pending {
 		final double x1;
@@ -84,10 +76,10 @@ public abstract class TimeHeaderCalendar extends TimeHeader {
 
 	protected final void drawTextsBackground(UGraphic ug, double totalHeightWithoutFooter) {
 
-		final double height = totalHeightWithoutFooter - getFullHeaderHeight();
+		final double height = totalHeightWithoutFooter - getFullHeaderHeight(ug.getStringBounder());
 		Pending pending = null;
 
-		for (Day wink = min; wink.compareTo(max) <= 0; wink = wink.increment()) {
+		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			final double x2 = getTimeScale().getEndingPosition(wink);
 			HColor back = thParam.getColor(wink);

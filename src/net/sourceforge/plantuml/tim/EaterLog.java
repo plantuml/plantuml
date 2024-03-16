@@ -44,11 +44,12 @@ public class EaterLog extends Eater {
 	}
 
 	@Override
-	public void analyze(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
+	public void analyze(TContext context, TMemory memory) throws EaterException {
 		skipSpaces();
 		checkAndEatChar("!log");
 		skipSpaces();
-		final String logData = context.applyFunctionsAndVariables(memory, getLineLocation(), this.eatAllToEnd());
+		final String logData = context.applyFunctionsAndVariables(memory,
+				new StringLocated(this.eatAllToEnd(), getLineLocation()));
 		Log.error("[Log] " + logData);
 	}
 

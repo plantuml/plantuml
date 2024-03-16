@@ -49,6 +49,8 @@ public class TranscoderSmart implements Transcoder {
 			new CompressionHuffman());
 	private final Transcoder zip = TranscoderImpl.utf8(new AsciiEncoder(), new ArobaseStringCompressor(),
 			new CompressionZip());
+	private final Transcoder gzip = TranscoderImpl.utf8(new AsciiEncoder(), new ArobaseStringCompressor(),
+			new CompressionGZip());
 	// ::done
 
 	public String decode(String code) throws NoPlantumlCompressionException {
@@ -65,6 +67,9 @@ public class TranscoderSmart implements Transcoder {
 
 		if (code.startsWith("~h"))
 			return hexOnly.decode(code.substring(2));
+
+		if (code.startsWith("~g"))
+			return gzip.decode(code.substring(2));
 
 		// ::comment when __CORE__
 		if (code.startsWith("~zip~"))

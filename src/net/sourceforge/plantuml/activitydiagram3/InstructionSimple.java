@@ -62,7 +62,7 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 	private final Display label;
 	private final Colors colors;
 	private final LinkRendering inlinkRendering;
-	private final BoxStyle style;
+	private final BoxStyle boxStyle;
 	private final Url url;
 	private final Stereotype stereotype;
 
@@ -71,12 +71,12 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 		return false;
 	}
 
-	public InstructionSimple(Display label, LinkRendering inlinkRendering, Swimlane swimlane, BoxStyle style, Url url,
-			Colors colors, Stereotype stereotype) {
+	public InstructionSimple(Display label, LinkRendering inlinkRendering, Swimlane swimlane, BoxStyle boxStyle,
+			Url url, Colors colors, Stereotype stereotype) {
 		super(swimlane);
 		this.stereotype = stereotype;
 		this.url = url;
-		this.style = style;
+		this.boxStyle = boxStyle;
 		this.label = label;
 		this.inlinkRendering = Objects.requireNonNull(inlinkRendering);
 		this.colors = Objects.requireNonNull(colors);
@@ -85,7 +85,7 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 	// ::comment when __CORE__
 	@Override
 	public Gtile createGtile(ISkinParam skinParam, StringBounder stringBounder) {
-		GtileBox result = GtileBox.create(stringBounder, colors.mute(skinParam), label, getSwimlaneIn(), style,
+		GtileBox result = GtileBox.create(stringBounder, colors.mute(skinParam), label, getSwimlaneIn(), boxStyle,
 				stereotype);
 		if (hasNotes()) {
 			final Collection<PositionedNote> notes = getPositionedNotes();
@@ -103,7 +103,7 @@ public class InstructionSimple extends MonoSwimable implements Instruction {
 
 	@Override
 	public Ftile createFtile(FtileFactory factory) {
-		Ftile result = factory.activity(label, getSwimlaneIn(), style, colors, stereotype);
+		Ftile result = factory.activity(label, getSwimlaneIn(), boxStyle, colors, stereotype);
 		if (url != null) {
 			result = factory.addUrl(result, url);
 		}

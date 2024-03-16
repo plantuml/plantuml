@@ -68,7 +68,7 @@ public interface Diagram {
 	 */
 	ImageData exportDiagram(OutputStream os, int num, FileFormatOption fileFormat) throws IOException;
 
-	void exportDiagramGraphic(UGraphic ug);
+	void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormat);
 
 	/**
 	 * Number of images in this diagram (usually, 1)

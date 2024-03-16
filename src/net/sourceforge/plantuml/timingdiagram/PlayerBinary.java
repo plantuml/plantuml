@@ -76,7 +76,7 @@ public class PlayerBinary extends Player {
 	private final List<TimingNote> notes = new ArrayList<>();
 
 	public PlayerBinary(String code, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
-		super(code, skinParam, ruler, compact, stereotype);
+		super(code, skinParam, ruler, compact, stereotype, null);
 		this.suggestedHeight = 30;
 	}
 

@@ -97,7 +97,10 @@ public class FormatCounter {
 					final String name = removeDotSaved(key);
 					final NumberAnalyzed value = NumberAnalyzed.load(name, prefs);
 					if (value != null) {
-						final FileFormat format = FileFormat.valueOf(name.substring(prefix.length()));
+						final String subname = name.substring(prefix.length());
+						if (subname.equals("ANIMATED_GIF"))
+							continue;
+						final FileFormat format = FileFormat.valueOf(subname);
 						data.put(format, value);
 					}
 				} catch (Exception e) {

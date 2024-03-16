@@ -53,10 +53,10 @@ public class TimLoader {
 	private List<StringLocated> resultList;
 
 	public TimLoader(ImportedFiles importedFiles, Defines defines, Charset charset,
-			DefinitionsContainer definitionsContainer) {
+			DefinitionsContainer definitionsContainer, StringLocated location) {
 		this.context = new TContext(importedFiles, defines, charset, definitionsContainer);
 		try {
-			defines.copyTo(global);
+			defines.copyTo(global, location);
 		} catch (EaterException e) {
 			Logme.error(e);
 		}
@@ -66,7 +66,7 @@ public class TimLoader {
 //		CodeIteratorImpl.indentNow(list);
 		try {
 			context.executeLines(global, list, null, false);
-		} catch (EaterExceptionLocated e) {
+		} catch (EaterException e) {
 			context.getResultList().add(e.getLocation().withErrorPreprocessor(e.getMessage()));
 			changeLastLine(context.getDebug(), e.getMessage());
 			this.preprocessorError = true;

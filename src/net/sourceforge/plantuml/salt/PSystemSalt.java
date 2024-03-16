@@ -126,8 +126,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 	}
 
 	@Override
-	protected TextBlock getTextBlock() {
-		final FileFormatOption fileFormatOption = new FileFormatOption(FileFormat.PNG);
+	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
 		final Element salt = createElement(manageSprite());
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
 		final XDimension2D size = salt.getPreferredDimension(stringBounder, 0, 0);

@@ -41,13 +41,12 @@ import java.util.Set;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
-import net.sourceforge.plantuml.utils.LineLocation;
 
 public class IsLight extends SimpleReturnFunction {
 
@@ -56,18 +55,20 @@ public class IsLight extends SimpleReturnFunction {
 		return new TFunctionSignature("%is_light", 1);
 	}
 
+	@Override
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
 		return nbArg == 1;
 	}
 
-	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> values,
-			Map<String, TValue> named) throws EaterException, EaterExceptionLocated {
+	@Override
+	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
+			Map<String, TValue> named) throws EaterException {
 		final String colorString = values.get(0).toString();
 		try {
 			final HColor color = HColorSet.instance().getColorLEGACY(colorString);
 			return TValue.fromBoolean(!color.isDark());
 		} catch (NoSuchColorException e) {
-			throw EaterException.located("No such color");
+			throw new EaterException("No such color", location);
 		}
 	}
 }

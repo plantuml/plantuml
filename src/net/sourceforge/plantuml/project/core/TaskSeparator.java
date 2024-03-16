@@ -52,22 +52,27 @@ public class TaskSeparator extends AbstractTask implements Task {
 		this.comment = comment;
 	}
 
+	@Override
 	public Day getStart() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Day getEnd() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setStart(Day start) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setEnd(Day end) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setColors(CenterBorderColor... colors) {
 		throw new UnsupportedOperationException();
 	}
@@ -76,10 +81,12 @@ public class TaskSeparator extends AbstractTask implements Task {
 		return comment;
 	}
 
+	@Override
 	public void addResource(Resource resource, int percentage) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Load getLoad() {
 		throw new UnsupportedOperationException();
 	}
@@ -88,31 +95,43 @@ public class TaskSeparator extends AbstractTask implements Task {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setDiamond(boolean diamond) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public boolean isDiamond() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setCompletion(int completion) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setUrl(Url url) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void addPause(Day pause) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void addPause(DayOfWeek pause) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setNote(Display note) {
+	}
+
+	@Override
+	public boolean isAssignedTo(Resource res) {
+		return false;
 	}
 
 }

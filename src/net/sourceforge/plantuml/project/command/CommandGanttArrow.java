@@ -63,7 +63,8 @@ public class CommandGanttArrow extends SingleLineCommand2<GanttDiagram> {
 				new RegexLeaf("\\>"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("CODE2", "([%pLN_.]+)"), //
-				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
+				RegexLeaf.spaceZeroOrMore(), //
+				RegexLeaf.end());
 	}
 
 	@Override

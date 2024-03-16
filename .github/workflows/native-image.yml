@@ -32,7 +32,7 @@ jobs:
           components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/cache/restore@v3
+      - uses: actions/cache/restore@v4
         with:
           path: |
             build/libs
@@ -57,7 +57,7 @@ jobs:
           native-image -H:ConfigurationFileDirectories=native-image-config-dir --no-fallback --report-unsupported-elements-at-runtime -jar "build/libs/plantuml-${{ inputs.release-version }}.jar" -H:Path="build/libs" -H:Name="plantuml-${{ matrix.platform }}-${{ inputs.release-version }}"
 
       - name: Cache native image
-        uses: actions/cache/save@v3
+        uses: actions/cache/save@v4
         with:
           path: "build/libs/plantuml-${{ matrix.platform }}-*"
           key: "native-image-${{ matrix.platform }}-${{ github.run_id }}"

@@ -62,34 +62,38 @@ public class CodeIteratorImpl implements CodeIterator {
 		this.list = list;
 	}
 
+	@Override
 	public StringLocated peek() {
-		if (current == list.size()) {
+		if (current == list.size())
 			return null;
-		}
-		if (current > list.size()) {
+
+		if (current > list.size())
 			throw new IllegalStateException();
-		}
+
 		return list.get(current);
 	}
 
+	@Override
 	public void next() {
-		if (current >= list.size()) {
+		if (current >= list.size())
 			throw new IllegalStateException();
-		}
+
 		assert current < list.size();
 		current++;
 		assert current <= list.size();
 	}
 
+	@Override
 	public CodePosition getCodePosition() {
 		return new Position(current);
 	}
 
-	public void jumpToCodePosition(CodePosition newPosition) throws EaterException {
+	@Override
+	public void jumpToCodePosition(CodePosition newPosition, StringLocated location) throws EaterException {
 		this.countJump++;
-		if (this.countJump > 999) {
-			throw EaterException.unlocated("Infinite loop?");
-		}
+		if (this.countJump > 999)
+			throw new EaterException("Infinite loop?", location);
+
 		final Position pos = (Position) newPosition;
 		this.current = pos.pos;
 

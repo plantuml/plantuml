@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.klimt.shape;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class UText implements UShape {
 
@@ -81,6 +82,10 @@ public class UText implements UShape {
 
 	public final int getOrientation() {
 		return orientation;
+	}
+
+	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		return stringBounder.calculateDimension(font.getFont(), text);
 	}
 
 }

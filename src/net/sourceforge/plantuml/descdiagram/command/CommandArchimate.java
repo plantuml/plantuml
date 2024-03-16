@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
@@ -74,44 +75,25 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 						new RegexLeaf("CODE1", CommandCreateElementFull.CODE_WITH_QUOTE), //
 						new RegexConcat(//
 								new RegexLeaf("DISPLAY2", CommandCreateElementFull.DISPLAY), //
-								new RegexOptional( //
-										new RegexConcat( //
-												RegexLeaf.spaceOneOrMore(), //
-												new RegexLeaf("STEREOTYPE2", "(?:\\<\\<([-\\w]+)\\>\\>)") //
-										)), //
-								RegexLeaf.spaceZeroOrMore(), //
+								StereotypePattern.optionalArchimate("STEREOTYPE2"), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("CODE2", CommandCreateElementFull.CODE)), //
 						new RegexConcat(//
 								new RegexLeaf("CODE3", CommandCreateElementFull.CODE), //
-								new RegexOptional( //
-										new RegexConcat( //
-												RegexLeaf.spaceOneOrMore(), //
-												new RegexLeaf("STEREOTYPE3", "(?:\\<\\<([-\\w]+)\\>\\>)") //
-										)), //
-								RegexLeaf.spaceOneOrMore(), //
+								StereotypePattern.optionalArchimate("STEREOTYPE3"), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceZeroOrMore(), //
 								new RegexLeaf("DISPLAY3", CommandCreateElementFull.DISPLAY)), //
 						new RegexConcat(//
 								new RegexLeaf("DISPLAY4", CommandCreateElementFull.DISPLAY_WITHOUT_QUOTE), //
-								new RegexOptional( //
-										new RegexConcat( //
-												RegexLeaf.spaceOneOrMore(), //
-												new RegexLeaf("STEREOTYPE4", "(?:\\<\\<([-\\w]+)\\>\\>)") //
-										)), //
-								RegexLeaf.spaceZeroOrMore(), //
+								StereotypePattern.optionalArchimate("STEREOTYPE4"), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("CODE4", CommandCreateElementFull.CODE)) //
 				), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional( //
-						new RegexConcat( //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("STEREOTYPE", "(?:\\<\\<([-\\w]+)\\>\\>)") //
-						)), RegexLeaf.end());
+				StereotypePattern.optionalArchimate("STEREOTYPE"), //
+				RegexLeaf.end());
 	}
 
 	private static ColorParser color() {
@@ -134,7 +116,7 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 			entity = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(display), LeafType.DESCRIPTION,
 					USymbols.ARCHIMATE);
 
-		final String icon = arg.getLazzy("STEREOTYPE", 0);
+		final String icon = StereotypePattern.removeChevronBrackets(arg.getLazzy("STEREOTYPE", 0));
 
 		entity.setDisplay(Display.getWithNewlines(display));
 		entity.setUSymbol(USymbols.ARCHIMATE);

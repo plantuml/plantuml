@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.url.UrlBuilder;
 
 public class CommandParticipantA3 extends CommandParticipant {
@@ -56,9 +57,7 @@ public class CommandParticipantA3 extends CommandParticipant {
 				new RegexLeaf("as"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("CODE", "([%pLN_.@]+)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optional("STEREO"), //
 				getOrderRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //

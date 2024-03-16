@@ -56,6 +56,7 @@ public class TaskGroup extends AbstractTask implements Task {
 		this.parent = parent;
 	}
 
+	@Override
 	public Day getStart() {
 		Day min = null;
 		for (Task child : children)
@@ -68,6 +69,7 @@ public class TaskGroup extends AbstractTask implements Task {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Day getEnd() {
 		Day max = null;
 		for (Task child : children)
@@ -80,54 +82,67 @@ public class TaskGroup extends AbstractTask implements Task {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setStart(Day start) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setEnd(Day end) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setColors(CenterBorderColor... colors) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void addResource(Resource resource, int percentage) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public Load getLoad() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setLoad(Load load) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setDiamond(boolean diamond) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public boolean isDiamond() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setCompletion(int completion) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setUrl(Url url) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void addPause(Day pause) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void addPause(DayOfWeek pause) {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public void setNote(Display note) {
 	}
 
@@ -137,6 +152,11 @@ public class TaskGroup extends AbstractTask implements Task {
 
 	public final TaskGroup getParent() {
 		return parent;
+	}
+
+	@Override
+	public boolean isAssignedTo(Resource res) {
+		return false;
 	}
 
 }

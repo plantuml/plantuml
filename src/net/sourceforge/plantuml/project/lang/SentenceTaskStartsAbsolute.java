@@ -40,10 +40,10 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.time.Day;
 
-public class SentenceTaskStartsAbsolute extends SentenceSimple {
+public class SentenceTaskStartsAbsolute extends SentenceSimple<GanttDiagram> {
 
 	public SentenceTaskStartsAbsolute() {
-		super(SubjectTask.ME, Verbs.starts3, new ComplementDate());
+		super(SubjectTask.ME, Verbs.starts, Words.zeroOrMore(Words.THE, Words.ON, Words.AT), ComplementDate.any());
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class SentenceTaskStartsAbsolute extends SentenceSimple {
 		final Day start = (Day) complement;
 		final Day startingDate = project.getStartingDate();
 		if (startingDate.getAbsoluteDayNum() == 0)
-			project.setProjectStartingDate(start);
+			return CommandExecutionResult.error("No starting date for the project");
 
 		task.setStart(start);
 		return CommandExecutionResult.ok();

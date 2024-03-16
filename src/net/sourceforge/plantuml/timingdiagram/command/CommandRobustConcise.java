@@ -37,12 +37,18 @@ package net.sourceforge.plantuml.timingdiagram.command;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
+import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.timingdiagram.TimingStyle;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -64,20 +70,23 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 				new RegexOptional( //
 						new RegexConcat( //
 								new RegexLeaf("FULL", "[%g]([^%g]+)[%g]"), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("STEREOTYPE", "(\\<\\<.*\\>\\>)?"), //
-								RegexLeaf.spaceZeroOrMore(), //
+								StereotypePattern.optional("STEREOTYPE"), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore())), //
 				new RegexLeaf("CODE", "([%pLN_.@]+)"), //
+				StereotypePattern.optional("STEREOTYPE2"), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREOTYPE2", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
+				new RegexOr(color().getRegex()), //
 				RegexLeaf.end());
 	}
 
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
+	}
+
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg) {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
 		final String compact = arg.get("COMPACT", 0);
 		final String code = arg.get("CODE", 0);
 		String full = arg.get("FULL", 0);
@@ -91,7 +100,10 @@ public class CommandRobustConcise extends SingleLineCommand2<TimingDiagram> {
 			stereotype = Stereotype.build(arg.get("STEREOTYPE2", 0));
 
 		final TimingStyle type = TimingStyle.valueOf(arg.get("TYPE", 0).toUpperCase());
-		return diagram.createRobustConcise(code, full, type, compact != null, stereotype);
+		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+
+		return diagram.createRobustConcise(code, full, type, compact != null, stereotype,
+				colors.getColor(ColorType.BACK));
 	}
 
 }

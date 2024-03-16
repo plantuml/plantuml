@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandPrintBetween extends SingleLineCommand2<GanttDiagram> {
 
-	private static final ComplementDate pattern = new ComplementDate();
+	private static final ComplementDate pattern = ComplementDate.any();
 
 	public CommandPrintBetween() {
 		super(getRegexConcat());
@@ -66,7 +66,7 @@ public class CommandPrintBetween extends SingleLineCommand2<GanttDiagram> {
 				new RegexLeaf("and"), //
 				RegexLeaf.spaceOneOrMore(), //
 				pattern.toRegex("END"), //
-				RegexLeaf.end()); //
+				RegexLeaf.end());
 	}
 
 	@Override

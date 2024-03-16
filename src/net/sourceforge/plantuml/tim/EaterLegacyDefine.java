@@ -45,11 +45,11 @@ public class EaterLegacyDefine extends Eater {
 	}
 
 	@Override
-	public void analyze(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
+	public void analyze(TContext context, TMemory memory) throws EaterException {
 		skipSpaces();
 		checkAndEatChar("!define");
 		skipSpaces();
-		function = eatDeclareFunction(context, memory, true, getLineLocation(), false, TFunctionType.LEGACY_DEFINE);
+		function = eatDeclareFunction(context, memory, true, getStringLocated(), false, TFunctionType.LEGACY_DEFINE);
 		final String def = this.eatAllToEnd();
 //		function.setFunctionType(TFunctionType.LEGACY_DEFINE);
 		function.setLegacyDefinition(def);

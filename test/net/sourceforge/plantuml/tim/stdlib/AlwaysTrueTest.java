@@ -6,12 +6,10 @@ import static net.sourceforge.plantuml.tim.TimTestUtils.assertTimExpectedOutputF
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.IndicativeSentencesGeneration;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import net.sourceforge.plantuml.tim.EaterException;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TFunction;
 
 /**
@@ -24,7 +22,7 @@ class AlwaysTrueTest {
 	final String cutName = "AlwaysTrue";
 
 	@Test
-	void Test_without_Param() throws EaterException, EaterExceptionLocated {
+	void Test_without_Param() throws EaterException {
 		assertTimExpectedOutput(cut, "1");
 	}
 
@@ -34,7 +32,7 @@ class AlwaysTrueTest {
 			" 1     , 1 ",
 			" 'a'   , 1 ",
 	})
-	void Test_with_String(String input, String expected) throws EaterException, EaterExceptionLocated {
+	void Test_with_String(String input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
 	}
 
@@ -44,7 +42,7 @@ class AlwaysTrueTest {
 			" 1     , 1 ",
 			" 123   , 1 ",
 	})
-	void Test_with_Integer(Integer input, String expected) throws EaterException, EaterExceptionLocated {
+	void Test_with_Integer(Integer input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
 	}
 }

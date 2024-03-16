@@ -51,7 +51,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.WithSprite;
@@ -86,6 +85,7 @@ import net.sourceforge.plantuml.project.core.TaskInstant;
 import net.sourceforge.plantuml.project.core.TaskSeparator;
 import net.sourceforge.plantuml.project.draw.FingerPrint;
 import net.sourceforge.plantuml.project.draw.ResourceDraw;
+import net.sourceforge.plantuml.project.draw.ResourceDrawBasic;
 import net.sourceforge.plantuml.project.draw.TaskDraw;
 import net.sourceforge.plantuml.project.draw.TaskDrawDiamond;
 import net.sourceforge.plantuml.project.draw.TaskDrawGroup;
@@ -99,6 +99,7 @@ import net.sourceforge.plantuml.project.draw.TimeHeaderSimple;
 import net.sourceforge.plantuml.project.draw.TimeHeaderWeekly;
 import net.sourceforge.plantuml.project.draw.TimeHeaderYearly;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
+import net.sourceforge.plantuml.project.solver.ImpossibleSolvingException;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.project.time.WeekNumberStrategy;
@@ -115,7 +116,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.text.BackSlash;
 
-public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprite {
+public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprite, GanttStyle {
 
 	private final Map<Task, TaskDraw> draws = new LinkedHashMap<Task, TaskDraw>();
 	private final Map<TaskCode, Task> tasks = new LinkedHashMap<TaskCode, Task>();
@@ -149,13 +150,18 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private final RealOrigin origin = RealUtils.createOrigin();
 
+	private int defaultCompletion = 100;
+
+	private Task it;
+	private Resource they;
+
 	public CommandExecutionResult changeLanguage(String lang) {
 		this.locale = new Locale(lang);
 		return CommandExecutionResult.ok();
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescription("(Project)");
+		return new DiagramDescription("(Gantt)");
 	}
 
 	public void setWeekNumberStrategy(DayOfWeek firstDayOfWeek, int minimalDaysInFirstWeek) {
@@ -173,8 +179,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	@Override
 	protected ImageData exportDiagramNow(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
-		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
-		return createImageBuilder(fileFormatOption).drawable(getTextBlock(stringBounder)).write(os);
+		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);
 	}
 
 	public void setPrintScale(PrintScale printScale) {
@@ -203,21 +208,27 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	@Override
-	protected TextBlock getTextBlock() {
-		final FileFormatOption fileFormatOption = new FileFormatOption(FileFormat.PNG);
-		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
-		return getTextBlock(stringBounder);
+	public String checkFinalError() {
+		try {
+			initMinMax();
+		} catch (ImpossibleSolvingException ex) {
+			return ex.getMessage();
+		}
+		return null;
 	}
 
-	private TextBlock getTextBlock(StringBounder stringBounder) {
+	@Override
+	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
 		if (printStart == null) {
 			initMinMax();
 		} else {
 			this.min = printStart;
 			this.max = printEnd;
 		}
-		final TimeHeader timeHeader = getTimeHeader();
-		initTaskAndResourceDraws(timeHeader.getTimeScale(), timeHeader.getFullHeaderHeight(), stringBounder);
+		final TimeHeader timeHeader = getTimeHeader(stringBounder);
+		initTaskAndResourceDraws(timeHeader.getTimeScale(), timeHeader.getFullHeaderHeight(stringBounder),
+				stringBounder);
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
@@ -233,12 +244,12 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 					final HColor back = timelineStyle.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 					if (back.isTransparent() == false) {
 						final URectangle rect1 = URectangle.build(calculateDimension(ug.getStringBounder()).getWidth(),
-								timeHeader.getTimeHeaderHeight());
+								timeHeader.getTimeHeaderHeight(ug.getStringBounder()));
 						ug.apply(back.bg()).draw(rect1);
 						if (showFootbox) {
 							final URectangle rect2 = URectangle.build(
 									calculateDimension(ug.getStringBounder()).getWidth(),
-									timeHeader.getTimeFooterHeight());
+									timeHeader.getTimeFooterHeight(ug.getStringBounder()));
 							ug.apply(back.bg()).apply(UTranslate.dy(totalHeightWithoutFooter)).draw(rect2);
 						}
 					}
@@ -280,7 +291,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				return new XDimension2D(getTitlesColumnWidth(stringBounder) + getBarsColumnWidth(timeHeader),
-						getTotalHeight(timeHeader));
+						getTotalHeight(stringBounder, timeHeader));
 			}
 
 			private double getBarsColumnWidth(final TimeHeader timeHeader) {
@@ -292,27 +303,27 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		};
 	}
 
-	private TimeHeader getTimeHeader() {
+	private TimeHeader getTimeHeader(StringBounder stringBounder) {
 		if (openClose.getStartingDay() == null)
-			return new TimeHeaderSimple(thParam(), printScale);
+			return new TimeHeaderSimple(stringBounder, thParam(), printScale);
 		else if (printScale == PrintScale.DAILY)
-			return new TimeHeaderDaily(thParam(), nameDays, printStart, printEnd);
+			return new TimeHeaderDaily(stringBounder, thParam(), nameDays, printStart);
 		else if (printScale == PrintScale.WEEKLY)
-			return new TimeHeaderWeekly(thParam(), weekNumberStrategy, withCalendarDate);
+			return new TimeHeaderWeekly(stringBounder, thParam(), weekNumberStrategy, withCalendarDate, printStart);
 		else if (printScale == PrintScale.MONTHLY)
-			return new TimeHeaderMonthly(thParam());
+			return new TimeHeaderMonthly(stringBounder, thParam(), printStart);
 		else if (printScale == PrintScale.QUARTERLY)
-			return new TimeHeaderQuarterly(thParam());
+			return new TimeHeaderQuarterly(stringBounder, thParam(), printStart);
 		else if (printScale == PrintScale.YEARLY)
-			return new TimeHeaderYearly(thParam());
+			return new TimeHeaderYearly(stringBounder, thParam(), printStart);
 		else
 			throw new IllegalStateException();
 
 	}
 
 	private TimeHeaderParameters thParam() {
-		return new TimeHeaderParameters(colorDays(), getFactorScale(), min, max, getIHtmlColorSet(), getTimelineStyle(),
-				getClosedStyle(), locale, openClose, colorDaysOfWeek, verticalSeparatorBefore);
+		return new TimeHeaderParameters(colorDays(), getFactorScale(), min, max, getIHtmlColorSet(), locale, openClose,
+				colorDaysOfWeek, verticalSeparatorBefore, this);
 	}
 
 	private Map<Day, HColor> colorDays() {
@@ -320,19 +331,21 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return Collections.unmodifiableMap(colorDaysInternal);
 	}
 
-	private Style getClosedStyle() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.closed)
+	@Override
+	public final Style getStyle(SName param) {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, param)
 				.getMergedStyle(getCurrentStyleBuilder());
 	}
 
-	private Style getTimelineStyle() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.timeline)
+	@Override
+	public final Style getStyle(SName param1, SName param2) {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, param1, param2)
 				.getMergedStyle(getCurrentStyleBuilder());
 	}
 
-	private double getTotalHeight(TimeHeader timeHeader) {
+	private double getTotalHeight(StringBounder stringBounder, TimeHeader timeHeader) {
 		if (showFootbox)
-			return totalHeightWithoutFooter + timeHeader.getTimeFooterHeight();
+			return totalHeightWithoutFooter + timeHeader.getTimeFooterHeight(stringBounder);
 
 		return totalHeightWithoutFooter;
 	}
@@ -430,13 +443,12 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			} else if (task instanceof TaskGroup) {
 				final TaskGroup taskGroup = (TaskGroup) task;
 				draw = new TaskDrawGroup(timeScale, y, taskGroup.getCode().getSimpleDisplay(), getStart(taskGroup),
-						getEnd(taskGroup), getSkinParam(), task, this, task.getStyleBuilder());
+						getEnd(taskGroup), task, this, task.getStyleBuilder());
 			} else {
 				final TaskImpl tmp = (TaskImpl) task;
 				final String disp = hideResourceName ? tmp.getCode().getSimpleDisplay() : tmp.getPrettyDisplay();
 				if (tmp.isDiamond()) {
-					draw = new TaskDrawDiamond(timeScale, y, disp, getStart(tmp), getSkinParam(), task, this,
-							task.getStyleBuilder());
+					draw = new TaskDrawDiamond(timeScale, y, disp, getStart(tmp), task, this, task.getStyleBuilder());
 				} else {
 					final boolean oddStart = printStart != null && min.compareTo(getStart(tmp)) == 0;
 					final boolean oddEnd = printStart != null && max.compareTo(getEnd(tmp)) == 0;
@@ -457,12 +469,18 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			yy = headerHeight;
 		} else if (this.hideResourceFoobox == false)
 			for (Resource res : resources.values()) {
-				final ResourceDraw draw = new ResourceDraw(this, res, timeScale, yy, min, max);
+				final ResourceDraw draw = buildResourceDraw(this, res, timeScale, yy, min, max);
 				res.setTaskDraw(draw);
-				yy += draw.getHeight();
+				yy += draw.getHeight(stringBounder);
 			}
 
 		this.totalHeightWithoutFooter = yy;
+	}
+
+	private ResourceDraw buildResourceDraw(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, Day min,
+			Day max) {
+		return new ResourceDrawBasic(gantt, res, timeScale, y, min, max);
+		// return new ResourceDrawVersion2(gantt, res, timeScale, y, min, max);
 	}
 
 	private Collection<GanttConstraint> getConstraints(Task task) {
@@ -603,7 +621,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			final OpenClose except = this.openCloseForTask.get(codeOrShortName);
 
 			result = new TaskImpl(getSkinParam().getCurrentStyleBuilder(), code, openClose.mutateMe(except),
-					openClose.getStartingDay());
+					openClose.getStartingDay(), defaultCompletion);
 			if (currentGroup != null)
 				currentGroup.addTask(result);
 
@@ -864,6 +882,37 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	public void addVerticalSeparatorBefore(Day day) {
 		verticalSeparatorBefore.add(day);
+	}
+
+	public void setTaskDefaultCompletion(int defaultCompletion) {
+		this.defaultCompletion = defaultCompletion;
+	}
+
+	public List<TaskDrawRegular> getAllTasksForResource(Resource res) {
+		final List<TaskDrawRegular> result = new ArrayList<TaskDrawRegular>();
+		for (Task task : tasks.values())
+			if (task.isAssignedTo(res)) {
+				final TaskDrawRegular draw = (TaskDrawRegular) draws.get(task);
+				result.add(draw);
+			}
+
+		return Collections.unmodifiableList(result);
+	}
+
+	public void setIt(Task result) {
+		this.it = result;
+	}
+
+	public Task getIt() {
+		return it;
+	}
+
+	public final Resource getThey() {
+		return they;
+	}
+
+	public final void setThey(Resource they) {
+		this.they = they;
 	}
 
 }

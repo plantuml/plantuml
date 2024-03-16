@@ -40,11 +40,12 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.time.Day;
 
-public class SentenceTaskEndsAbsolute extends SentenceSimple {
+public class SentenceTaskEndsAbsolute extends SentenceSimple<GanttDiagram> {
 
 	public SentenceTaskEndsAbsolute() {
-		super(SubjectTask.ME, Verbs.ends2, new ComplementDate());
+		 super(SubjectTask.ME, Verbs.ends, Words.zeroOrMore(Words.THE, Words.ON, Words.AT), ComplementDate.any());
 	}
+
 
 	@Override
 	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {

@@ -51,16 +51,16 @@ public class FunctionsSet {
 
 	public TFunction getFunctionSmart(TFunctionSignature searched) {
 		final TFunction func = this.functions.get(searched);
-		if (func != null) {
+		if (func != null)
 			return func;
-		}
+
 		for (TFunction candidate : this.functions.values()) {
-			if (candidate.getSignature().sameFunctionNameAs(searched) == false) {
+			if (candidate.getSignature().sameFunctionNameAs(searched) == false)
 				continue;
-			}
-			if (candidate.canCover(searched.getNbArg(), searched.getNamedArguments())) {
+
+			if (candidate.canCover(searched.getNbArg(), searched.getNamedArguments()))
 				return candidate;
-			}
+
 		}
 		return null;
 	}
@@ -82,9 +82,9 @@ public class FunctionsSet {
 	}
 
 	public void addFunction(TFunction func) {
-		if (func.getFunctionType() == TFunctionType.LEGACY_DEFINELONG) {
+		if (func.getFunctionType() == TFunctionType.LEGACY_DEFINELONG)
 			((TFunctionImpl) func).finalizeEnddefinelong();
-		}
+
 		this.functions.put(func.getSignature(), func);
 		this.functions3.add(func.getSignature().getFunctionName() + "(");
 	}
@@ -95,10 +95,10 @@ public class FunctionsSet {
 	}
 
 	public void executeLegacyDefine(TContext context, TMemory memory, StringLocated s)
-			throws EaterException, EaterExceptionLocated {
-		if (this.pendingFunction != null) {
-			throw EaterException.located("already0048");
-		}
+			throws EaterException {
+		if (this.pendingFunction != null)
+			throw new EaterException("already0048", s);
+
 		final EaterLegacyDefine legacyDefine = new EaterLegacyDefine(s);
 		legacyDefine.analyze(context, memory);
 		final TFunction function = legacyDefine.getFunction();
@@ -107,59 +107,59 @@ public class FunctionsSet {
 	}
 
 	public void executeLegacyDefineLong(TContext context, TMemory memory, StringLocated s)
-			throws EaterException, EaterExceptionLocated {
-		if (this.pendingFunction != null) {
-			throw EaterException.located("already0068");
-		}
+			throws EaterException {
+		if (this.pendingFunction != null)
+			throw new EaterException("already0068", s);
+
 		final EaterLegacyDefineLong legacyDefineLong = new EaterLegacyDefineLong(s);
 		legacyDefineLong.analyze(context, memory);
 		this.pendingFunction = legacyDefineLong.getFunction();
 	}
 
 	public void executeDeclareReturnFunction(TContext context, TMemory memory, StringLocated s)
-			throws EaterException, EaterExceptionLocated {
-		if (this.pendingFunction != null) {
-			throw EaterException.located("already0068");
-		}
+			throws EaterException {
+		if (this.pendingFunction != null)
+			throw new EaterException("already0068", s);
+
 		final EaterDeclareReturnFunction declareFunction = new EaterDeclareReturnFunction(s);
 		declareFunction.analyze(context, memory);
 		final boolean finalFlag = declareFunction.getFinalFlag();
 		final TFunctionSignature declaredSignature = declareFunction.getFunction().getSignature();
 		final TFunction previous = this.functions.get(declaredSignature);
-		if (previous != null && (finalFlag || this.functionsFinal.contains(declaredSignature))) {
-			throw EaterException.located("This function is already defined");
-		}
-		if (finalFlag) {
+		if (previous != null && (finalFlag || this.functionsFinal.contains(declaredSignature)))
+			throw new EaterException("This function is already defined", s);
+
+		if (finalFlag)
 			this.functionsFinal.add(declaredSignature);
-		}
-		if (declareFunction.getFunction().hasBody()) {
+
+		if (declareFunction.getFunction().hasBody())
 			this.addFunction(declareFunction.getFunction());
-		} else {
+		else
 			this.pendingFunction = declareFunction.getFunction();
-		}
+
 	}
 
 	public void executeDeclareProcedure(TContext context, TMemory memory, StringLocated s)
-			throws EaterException, EaterExceptionLocated {
-		if (this.pendingFunction != null) {
-			throw EaterException.located("already0068");
-		}
+			throws EaterException {
+		if (this.pendingFunction != null)
+			throw new EaterException("already0068", s);
+
 		final EaterDeclareProcedure declareFunction = new EaterDeclareProcedure(s);
 		declareFunction.analyze(context, memory);
 		final boolean finalFlag = declareFunction.getFinalFlag();
 		final TFunctionSignature declaredSignature = declareFunction.getFunction().getSignature();
 		final TFunction previous = this.functions.get(declaredSignature);
-		if (previous != null && (finalFlag || this.functionsFinal.contains(declaredSignature))) {
-			throw EaterException.located("This function is already defined");
-		}
-		if (finalFlag) {
+		if (previous != null && (finalFlag || this.functionsFinal.contains(declaredSignature)))
+			throw new EaterException("This function is already defined", s);
+
+		if (finalFlag)
 			this.functionsFinal.add(declaredSignature);
-		}
-		if (declareFunction.getFunction().hasBody()) {
+
+		if (declareFunction.getFunction().hasBody())
 			this.addFunction(declareFunction.getFunction());
-		} else {
+		else
 			this.pendingFunction = declareFunction.getFunction();
-		}
+
 	}
 
 }

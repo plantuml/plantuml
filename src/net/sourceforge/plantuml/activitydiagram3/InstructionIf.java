@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.FtileDecorateWelding;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.WeldingPoint;
-import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FtileWithNoteOpale;
 import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileIfAlone;
 import net.sourceforge.plantuml.activitydiagram3.gtile.GtileIfHexagon;
@@ -56,10 +55,11 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
 
 public class InstructionIf extends WithNote implements Instruction, InstructionCollection {
@@ -75,8 +75,10 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 	private Branch current;
 	private final LinkRendering topInlinkRendering;
 	private LinkRendering outColor = LinkRendering.none();
+	private final Stereotype stereotype;
 
 	private final Swimlane swimlane;
+	private final StyleBuilder currentStyleBuilder;
 
 	@Override
 	public boolean containsBreak() {
@@ -91,14 +93,16 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 	}
 
 	public InstructionIf(Swimlane swimlane, Instruction parent, Display labelTest, LinkRendering whenThen,
-			LinkRendering inlinkRendering, HColor color, ISkinParam skinParam, Url url) {
+			LinkRendering inlinkRendering, HColor color, ISkinParam skinParam, Url url, Stereotype stereotype) {
 		this.url = url;
+		this.stereotype = stereotype;
 		this.parent = parent;
 		this.skinParam = skinParam;
 		this.topInlinkRendering = Objects.requireNonNull(inlinkRendering);
 		this.swimlane = swimlane;
-		this.thens.add(new Branch(skinParam.getCurrentStyleBuilder(), swimlane, whenThen, labelTest, color,
-				LinkRendering.none()));
+		this.currentStyleBuilder = skinParam.getCurrentStyleBuilder();
+		this.thens.add(new Branch(currentStyleBuilder, swimlane, whenThen, labelTest, color, LinkRendering.none(),
+				stereotype));
 		this.current = this.thens.get(0);
 	}
 
@@ -137,12 +141,12 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 			branch.updateFtile(factory);
 
 		if (elseBranch == null)
-			this.elseBranch = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, LinkRendering.none(),
-					Display.NULL, null, LinkRendering.none());
+			this.elseBranch = new Branch(currentStyleBuilder, swimlane, LinkRendering.none(),
+					Display.NULL, null, LinkRendering.none(), stereotype);
 
 		elseBranch.updateFtile(factory);
 		Ftile result = factory.createIf(swimlane, thens, elseBranch, outColor, topInlinkRendering, url,
-				getPositionedNotes());
+				getPositionedNotes(), stereotype, currentStyleBuilder);
 //		if (getPositionedNotes().size() > 0)
 //			result = FtileWithNoteOpale.create(result, getPositionedNotes(), false, VerticalAlignment.CENTER);
 
@@ -169,7 +173,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 
 		this.current.setInlinkRendering(nextLinkRenderer);
 		this.elseBranch = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, whenElse, Display.NULL, null,
-				LinkRendering.none());
+				LinkRendering.none(), stereotype);
 		this.current = elseBranch;
 		return true;
 	}
@@ -180,7 +184,8 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 			return false;
 
 		this.current.setSpecial(nextLinkRenderer);
-		this.current = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, whenThen, test, color, inlabel);
+		this.current = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, whenThen, test, color, inlabel,
+				stereotype);
 		this.thens.add(current);
 		return true;
 
@@ -190,7 +195,7 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 		endifCalled = true;
 		if (elseBranch == null)
 			this.elseBranch = new Branch(skinParam.getCurrentStyleBuilder(), swimlane, LinkRendering.none(),
-					Display.NULL, null, LinkRendering.none());
+					Display.NULL, null, LinkRendering.none(), stereotype);
 
 		this.elseBranch.setSpecial(nextLinkRenderer);
 		this.current.setInlinkRendering(nextLinkRenderer);

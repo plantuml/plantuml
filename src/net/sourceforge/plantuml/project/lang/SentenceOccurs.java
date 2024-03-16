@@ -42,7 +42,7 @@ import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
 
-public class SentenceOccurs extends SentenceSimple {
+public class SentenceOccurs extends SentenceSimple<GanttDiagram> {
 
 	public SentenceOccurs() {
 		super(SubjectTask.ME, Verbs.occurs, new ComplementFromTo());

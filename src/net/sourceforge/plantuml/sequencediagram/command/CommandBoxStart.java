@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -69,8 +70,7 @@ public class CommandBoxStart extends SingleLineCommand2<SequenceDiagram> {
 						new RegexConcat( //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("NAME2", "([^#]+)")))), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
+				StereotypePattern.optional("STEREO"), //
 				color().getRegex(), //
 				RegexLeaf.end());
 	}

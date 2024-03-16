@@ -93,6 +93,8 @@ public class LanguageDescriptor {
 		type.add("metaclass");
 		type.add("map");
 		type.add("json");
+		type.add("action");
+		type.add("process");
 
 		keyword.add("@startwire");
 		keyword.add("@startbpm");
@@ -121,6 +123,7 @@ public class LanguageDescriptor {
 		keyword.add("@startebnf");
 		keyword.add("@startregex");
 		keyword.add("@startfiles");
+		keyword.add("@startchronology");
 		keyword.add("@endwire");
 		keyword.add("@endbpm");
 		keyword.add("@enduml");
@@ -148,6 +151,7 @@ public class LanguageDescriptor {
 		keyword.add("@endebnf");
 		keyword.add("@endregex");
 		keyword.add("@endfiles");
+		keyword.add("@endchronology");
 		keyword.add("as");
 		keyword.add("also");
 		keyword.add("autonumber");

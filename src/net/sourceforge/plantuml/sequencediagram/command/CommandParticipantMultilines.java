@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.ParticipantType;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
@@ -74,9 +75,7 @@ public class CommandParticipantMultilines extends CommandMultilines2<SequenceDia
 				new RegexLeaf("TYPE", "(participant)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("CODE", "([%pLN_.@]+)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<\\<.+\\>\\>)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optional("STEREO"), //
 				CommandParticipant.getOrderRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //

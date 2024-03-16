@@ -230,7 +230,7 @@ public class FlowDiagram extends UmlDiagram implements TextBlock {
 	}
 
 	@Override
-	protected TextBlock getTextBlock() {
+	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
 		return this;
 	}
 

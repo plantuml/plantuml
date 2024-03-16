@@ -35,113 +35,102 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
-import java.util.Objects;
-
-import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
+import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.style.PName;
-import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.SName;
 
 public abstract class TimeHeader {
-    // ::remove folder when __HAXE__
-
-	protected final double Y_POS_ROW16() {
-		return 16;
-	}
-
-	protected final double Y_POS_ROW28() {
-		return 28;
-	}
+	// ::remove folder when __HAXE__
 
 	private final TimeScale timeScale;
-	private final Style closedStyle;
-	private final Style timelineStyle;
 
-	private final HColorSet colorSet;
+	protected final TimeHeaderParameters thParam;
 
-	protected final Day min;
-	protected final Day max;
-
-	public TimeHeader(Style timelineStyle, Style closedStyle, Day min, Day max, TimeScale timeScale,
-			HColorSet colorSet) {
+	public TimeHeader(TimeHeaderParameters thParam, TimeScale timeScale) {
+		this.thParam = thParam;
 		this.timeScale = timeScale;
-		this.min = min;
-		this.max = max;
-		this.closedStyle = Objects.requireNonNull(closedStyle);
-		this.timelineStyle = Objects.requireNonNull(timelineStyle);
-		this.colorSet = colorSet;
+	}
+
+	protected final boolean isBold2(Day wink) {
+		return thParam.getVerticalSeparatorBefore().contains(wink);
+	}
+
+	protected final Day getMin() {
+		return thParam.getMin();
+	}
+
+	protected final Day getMax() {
+		return thParam.getMax();
 	}
 
 	protected final HColor closedBackgroundColor() {
-		return closedStyle.value(PName.BackGroundColor).asColor(colorSet);
+		return thParam.getClosedStyle().value(PName.BackGroundColor).asColor(thParam.getColorSet());
 	}
 
 	protected final HColor closedFontColor() {
-		return closedStyle.value(PName.FontColor).asColor(colorSet);
+		return thParam.getClosedStyle().value(PName.FontColor).asColor(thParam.getColorSet());
 	}
 
 	protected final HColor openFontColor() {
-		return timelineStyle.value(PName.FontColor).asColor(colorSet);
+		return thParam.getTimelineStyle().value(PName.FontColor).asColor(thParam.getColorSet());
 	}
 
-	protected final HColor getBarColor() {
-		return timelineStyle.value(PName.LineColor).asColor(colorSet);
+	protected final HColor getLineColor() {
+		return thParam.getTimelineStyle().value(PName.LineColor).asColor(thParam.getColorSet());
 	}
 
-	public abstract double getTimeHeaderHeight();
+	public abstract double getTimeHeaderHeight(StringBounder stringBounder);
 
-	public abstract double getTimeFooterHeight();
+	public abstract double getTimeFooterHeight(StringBounder stringBounder);
+
+	public abstract double getFullHeaderHeight(StringBounder stringBounder);
 
 	public abstract void drawTimeHeader(UGraphic ug, double totalHeightWithoutFooter);
 
 	public abstract void drawTimeFooter(UGraphic ug);
 
-	public abstract double getFullHeaderHeight();
-
-	protected final void drawHline(UGraphic ug, double y) {
-		final double xmin = getTimeScale().getStartingPosition(min);
-		final double xmax = getTimeScale().getEndingPosition(max);
-		final ULine hline = ULine.hline(xmax - xmin);
-		ug.apply(getBarColor()).apply(UTranslate.dy(y)).draw(hline);
+	public final TimeScale getTimeScale() {
+		return timeScale;
 	}
 
-	protected final void drawVbar(UGraphic ug, double x, double y1, double y2, boolean bold) {
+	protected final void drawHline(UGraphic ug, double y) {
+		final double xmin = getTimeScale().getStartingPosition(thParam.getMin());
+		final double xmax = getTimeScale().getEndingPosition(thParam.getMax());
+		final ULine hline = ULine.hline(xmax - xmin);
+		ug.apply(getLineColor()).apply(UTranslate.dy(y)).draw(hline);
+	}
+
+	protected final void drawVline(UGraphic ug, double x, double y1, double y2) {
 		final ULine vbar = ULine.vline(y2 - y1);
-		if (bold)
-			ug = goBold(ug);
-		else
-			ug = ug.apply(getBarColor());
 		ug.apply(new UTranslate(x, y1)).draw(vbar);
 	}
 
-	final protected FontConfiguration getFontConfiguration(int size, boolean bold, HColor color) {
-		UFont font = UFont.serif(size);
+	final protected FontConfiguration getFontConfiguration(UFont font, boolean bold, HColor color) {
 		if (bold)
 			font = font.bold();
 
 		return FontConfiguration.create(font, color, color, null);
 	}
 
-	public final TimeScale getTimeScale() {
-		return timeScale;
-	}
-
-	protected final TextBlock getTextBlock(String text, int size, boolean bold, HColor color) {
-		return Display.getWithNewlines(text).create(getFontConfiguration(size, bold, color), HorizontalAlignment.LEFT,
+	protected final TextBlock getTextBlock(SName param, String text, boolean bold, HColor color) {
+		final UFont font = thParam.getStyle(SName.timeline, param).getUFont();
+		final FontConfiguration fontConfiguration = getFontConfiguration(font, bold, color);
+		return Display.getWithNewlines(text).create(fontConfiguration, HorizontalAlignment.LEFT,
 				new SpriteContainerEmpty());
 	}
 
@@ -171,12 +160,16 @@ public abstract class TimeHeader {
 			return;
 
 		ug = ug.apply(HColors.none());
-		ug = ug.apply(new UTranslate(x1, getFullHeaderHeight()));
+		ug = ug.apply(new UTranslate(x1, getFullHeaderHeight(ug.getStringBounder())));
 		ug.draw(URectangle.build(x2 - x1, height));
 	}
 
-	protected final UGraphic goBold(UGraphic ug) {
-		return ug.apply(HColors.BLACK).apply(UStroke.withThickness(2));
+	protected void printVerticalSeparators(UGraphic ug, double totalHeightWithoutFooter) {
+		ug = thParam.forVerticalSeparator(ug);
+		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment())
+			if (isBold2(wink))
+				drawVline(ug, getTimeScale().getStartingPosition(wink),
+						getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);
 	}
 
 }

@@ -158,4 +158,8 @@ final public class StringLocated {
 		return s.length();
 	}
 
+	public char charAt(int i) {
+		return s.charAt(i);
+	}
+
 }

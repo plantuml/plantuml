@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.stereo.Stereotag;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
@@ -92,9 +93,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 						new RegexLeaf("")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optional("STEREO"), //
 				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
@@ -127,9 +126,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 							new RegexLeaf("")), //
 					RegexLeaf.spaceZeroOrMore(), //
 					new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
-					RegexLeaf.spaceZeroOrMore(), //
-					new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
-					RegexLeaf.spaceZeroOrMore(), //
+					StereotypePattern.optional("STEREO"), //
 					new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 					RegexLeaf.spaceZeroOrMore(), //
 					color().getRegex(), //
@@ -153,9 +150,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 						new RegexLeaf("")), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optional("STEREO"), //
 				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //

@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandActivityLong3 extends CommandMultilines3<ActivityDiagram3> {
@@ -84,10 +85,16 @@ public class CommandActivityLong3 extends CommandMultilines3<ActivityDiagram3> {
 		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
 
 		final RegexResult lineLast = getPatternEnd2().matcher(lines.getLast().getString());
+
 		final String end = lineLast.get("END", 0);
+
+		Stereotype stereotype = null;
+		String stereo = lineLast.get("END", 1);
+		if (stereo != null)
+			stereotype = Stereotype.build(stereo);
 
 		final BoxStyle style = BoxStyle.fromString(end);
 		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), end.length());
-		return diagram.addActivity(lines.toDisplay(), style, null, colors, null);
+		return diagram.addActivity(lines.toDisplay(), style, null, colors, stereotype);
 	}
 }

@@ -48,8 +48,10 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.ConditionalBuilder;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.svek.ConditionEndStyle;
 import net.sourceforge.plantuml.svek.ConditionStyle;
 import net.sourceforge.plantuml.url.Url;
@@ -65,15 +67,16 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 
 	@Override
 	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering afterEndwhile,
-			LinkRendering topInlinkRendering, Url url, Collection<PositionedNote> notes) {
+			LinkRendering topInlinkRendering, Url url, Collection<PositionedNote> notes, Stereotype stereotype,
+			StyleBuilder currentStyleBuilder) {
 
 		final ConditionStyle conditionStyle = skinParam().getConditionStyle();
 		final ConditionEndStyle conditionEndStyle = skinParam().getConditionEndStyle();
 		final Branch branch0 = thens.get(0);
 
-		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(skinParam().getCurrentStyleBuilder());
-		final Style styleDiamond = getDefaultStyleDefinitionDiamond()
-				.getMergedStyle(skinParam().getCurrentStyleBuilder());
+		final Style styleArrow = getDefaultStyleDefinitionArrow().getMergedStyle(currentStyleBuilder);
+		final Style styleDiamond = getDefaultStyleDefinitionDiamond().withTOBECHANGED(stereotype)
+				.getMergedStyle(currentStyleBuilder);
 		final HColor backColor = branch0.getColor() == null
 				? styleDiamond.value(PName.BackGroundColor).asColor(skinParam().getIHtmlColorSet())
 				: branch0.getColor();

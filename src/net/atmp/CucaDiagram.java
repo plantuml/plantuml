@@ -376,13 +376,13 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	// ::done
 
 	@Override
-	final public void exportDiagramGraphic(UGraphic ug) {
+	final public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
 		final CucaDiagramFileMaker maker = new CucaDiagramFileMakerSmetana(this, ug.getStringBounder());
 		maker.createOneGraphic(ug);
 	}
 
 	@Override
-	final protected TextBlock getTextBlock() {
+	final protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
 		throw new UnsupportedOperationException();
 	}
 

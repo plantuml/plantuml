@@ -1,7 +1,7 @@
 /**
- * Provides classes used to manage 
- * <a href="https://plantuml.com/preprocessing" target="_top">
- * Preprocessing</a> of PlantUML input.
+ * Provides classes used to manage
+ * <a href="https://plantuml.com/preprocessing" target="_top"> Preprocessing</a>
+ * of PlantUML input.
  *
  * @see net.sourceforge.plantuml.text.TLineType
  * @see net.sourceforge.plantuml.preproc

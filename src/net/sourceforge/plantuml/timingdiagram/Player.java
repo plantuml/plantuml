@@ -62,8 +62,11 @@ public abstract class Player implements TimeProjected {
 	private final Display title;
 	protected int suggestedHeight;
 	protected final Stereotype stereotype;
+	private final HColor generalBackgroundColor;
 
-	public Player(String title, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype) {
+	public Player(String title, ISkinParam skinParam, TimingRuler ruler, boolean compact, Stereotype stereotype,
+			HColor generalBackgroundColor) {
+		this.generalBackgroundColor = generalBackgroundColor;
 		this.stereotype = stereotype;
 		this.skinParam = skinParam;
 		this.compact = compact;
@@ -73,6 +76,10 @@ public abstract class Player implements TimeProjected {
 
 	public boolean isCompact() {
 		return compact;
+	}
+
+	public HColor getGeneralBackgroundColor() {
+		return generalBackgroundColor;
 	}
 
 	protected abstract StyleSignature getStyleSignature();

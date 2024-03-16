@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.url.Url;
 
-public class SentenceLinksTo extends SentenceSimple {
+public class SentenceLinksTo extends SentenceSimple<GanttDiagram> {
 
 	public SentenceLinksTo() {
 		super(SubjectTask.ME, Verbs.linksTo, new ComplementUrl());

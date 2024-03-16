@@ -34,8 +34,8 @@
  */
 package net.sourceforge.plantuml.tim.iterator;
 
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 
 public abstract class AbstractCodeIterator implements CodeIterator {
 
@@ -45,16 +45,20 @@ public abstract class AbstractCodeIterator implements CodeIterator {
 		this.source = source;
 	}
 
-	public void next() throws EaterException, EaterExceptionLocated {
+	@Override
+	public void next() throws EaterException {
 		source.next();
 	}
 
+	@Override
 	final public CodePosition getCodePosition() {
 		return source.getCodePosition();
 	}
 
-	final public void jumpToCodePosition(CodePosition newPosition) throws EaterException {
-		source.jumpToCodePosition(newPosition);
+	@Override
+	final public void jumpToCodePosition(CodePosition newPosition, StringLocated location)
+			throws EaterException {
+		source.jumpToCodePosition(newPosition, location);
 	}
 
 }

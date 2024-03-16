@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.sequencediagram.SequenceDiagram;
 import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
@@ -70,13 +71,9 @@ public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactor
 				new RegexLeaf("VMERGE", "(/)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO1", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optional("STEREO1"), //
 				new RegexLeaf("ACROSS", "(accross|across)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO2", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optional("STEREO2"), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //
@@ -89,13 +86,9 @@ public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactor
 				new RegexLeaf("VMERGE", "(/)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STYLE", "(note|hnote|rnote)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO1", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optional("STEREO1"), //
 				new RegexLeaf("ACROSS", "(accross|across)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREO2", "(\\<\\<.*\\>\\>)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optional("STEREO2"), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //

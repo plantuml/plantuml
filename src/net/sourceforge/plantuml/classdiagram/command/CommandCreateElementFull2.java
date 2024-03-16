@@ -53,11 +53,11 @@ import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotag;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
@@ -88,21 +88,14 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 							new RegexLeaf("CODE1", CommandCreateElementFull.CODE_WITH_QUOTE), //
 							new RegexConcat(//
 									new RegexLeaf("DISPLAY2", CommandCreateElementFull.DISPLAY), //
-									new RegexOptional( //
-											new RegexConcat( //
-													RegexLeaf.spaceOneOrMore(), //
-													new RegexLeaf("STEREOTYPE2", "(\\<\\<.+\\>\\>)") //
-											)), //
-									RegexLeaf.spaceZeroOrMore(), //
+									StereotypePattern.optional("STEREOTYPE2"), //
 									new RegexLeaf("as"), //
 									RegexLeaf.spaceOneOrMore(), //
 									new RegexLeaf("CODE2", CommandCreateElementFull.CODE)) //
 					), //
 					RegexLeaf.spaceZeroOrMore(), //
 					new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
-					RegexLeaf.spaceZeroOrMore(), //
-					new RegexLeaf("STEREOTYPE", "(\\<\\<.+\\>\\>)?"), //
-					RegexLeaf.spaceZeroOrMore(), //
+					StereotypePattern.optional("STEREOTYPE"), //
 					new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 					RegexLeaf.spaceZeroOrMore(), //
 					UrlBuilder.OPTIONAL, //
@@ -118,21 +111,14 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 						new RegexLeaf("CODE1", CommandCreateElementFull.CODE_WITH_QUOTE), //
 						new RegexConcat(//
 								new RegexLeaf("DISPLAY2", CommandCreateElementFull.DISPLAY), //
-								new RegexOptional( //
-										new RegexConcat( //
-												RegexLeaf.spaceOneOrMore(), //
-												new RegexLeaf("STEREOTYPE2", "(\\<\\<.+\\>\\>)") //
-										)), //
-								RegexLeaf.spaceZeroOrMore(), //
+								StereotypePattern.optional("STEREOTYPE2"), //
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore(), //
 								new RegexLeaf("CODE2", CommandCreateElementFull.CODE)) //
 				), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS1", Stereotag.pattern() + "?"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("STEREOTYPE", "(\\<\\<.+\\>\\>)?"), //
-				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optional("STEREOTYPE"), //
 				new RegexLeaf("TAGS2", Stereotag.pattern() + "?"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				UrlBuilder.OPTIONAL, //

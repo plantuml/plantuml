@@ -42,12 +42,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.Eater;
 import net.sourceforge.plantuml.tim.EaterException;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TMemory;
-import net.sourceforge.plantuml.utils.LineLocation;
 
 public class TokenStack {
 
@@ -95,7 +94,7 @@ public class TokenStack {
 			eater.skipSpaces();
 			final char ch = eater.peekChar();
 			if (ch == 0)
-				throw EaterException.unlocated("until001");
+				throw new EaterException("until001", eater.getStringLocated());
 
 			if (level == 0 && (ch == ',' || ch == ')'))
 				return result;
@@ -113,12 +112,13 @@ public class TokenStack {
 		}
 	}
 
-	static public void eatUntilCloseParenthesisOrComma(TokenIterator it) throws EaterException {
+	static public void eatUntilCloseParenthesisOrComma(TokenIterator it, StringLocated location)
+			throws EaterException {
 		int level = 0;
 		while (true) {
 			final Token ch = it.peekToken();
 			if (ch == null)
-				throw EaterException.unlocated("until002");
+				throw new EaterException("until002", location);
 
 			final TokenType typech = ch.getTokenType();
 			if (level == 0 && (typech == TokenType.COMMA || typech == TokenType.CLOSE_PAREN_MATH)
@@ -135,7 +135,7 @@ public class TokenStack {
 		}
 	}
 
-	private int countFunctionArg(TokenIterator it) throws EaterException {
+	private int countFunctionArg(TokenIterator it, StringLocated location) throws EaterException {
 		// return 42;
 		final TokenType type1 = it.peekToken().getTokenType();
 		if (type1 == TokenType.CLOSE_PAREN_MATH || type1 == TokenType.CLOSE_PAREN_FUNC)
@@ -143,7 +143,7 @@ public class TokenStack {
 
 		int result = 1;
 		while (it.hasMoreTokens()) {
-			eatUntilCloseParenthesisOrComma(it);
+			eatUntilCloseParenthesisOrComma(it, location);
 			final Token token = it.nextToken();
 			final TokenType type = token.getTokenType();
 			if (type == TokenType.CLOSE_PAREN_MATH || type == TokenType.CLOSE_PAREN_FUNC)
@@ -151,13 +151,13 @@ public class TokenStack {
 			else if (type == TokenType.COMMA)
 				result++;
 			else
-				throw EaterException.unlocated("count13");
+				throw new EaterException("count13", location);
 
 		}
-		throw EaterException.unlocated("count12");
+		throw new EaterException("count12", location);
 	}
 
-	public void guessFunctions() throws EaterException {
+	public void guessFunctions(StringLocated location) throws EaterException {
 		final Deque<Integer> open = new ArrayDeque<>();
 		final Map<Integer, Integer> parens = new HashMap<Integer, Integer>();
 		for (int i = 0; i < tokens.size(); i++) {
@@ -177,7 +177,7 @@ public class TokenStack {
 			assert tokens.get(iclose).getTokenType() == TokenType.CLOSE_PAREN_MATH;
 			if (iopen > 0 && tokens.get(iopen - 1).getTokenType() == TokenType.PLAIN_TEXT) {
 				tokens.set(iopen - 1, new Token(tokens.get(iopen - 1).getSurface(), TokenType.FUNCTION_NAME, null));
-				final int nbArg = countFunctionArg(subTokenStack(iopen + 1).tokenIterator());
+				final int nbArg = countFunctionArg(subTokenStack(iopen + 1).tokenIterator(), location);
 				tokens.set(iopen, new Token("" + nbArg, TokenType.OPEN_PAREN_FUNC, null));
 				tokens.set(iclose, new Token(")", TokenType.CLOSE_PAREN_FUNC, null));
 			}
@@ -210,13 +210,12 @@ public class TokenStack {
 		return new InternalIterator();
 	}
 
-	public TValue getResult(LineLocation location, TContext context, TMemory memory)
-			throws EaterException, EaterExceptionLocated {
-		final Knowledge knowledge = context.asKnowledge(memory, location);
+	public TValue getResult(StringLocated location, TContext context, TMemory memory) throws EaterException {
+		final Knowledge knowledge = context.asKnowledge(memory, location.getLocation());
 		final TokenStack tmp = withoutSpace();
-		tmp.guessFunctions();
+		tmp.guessFunctions(location);
 		final TokenIterator it = tmp.tokenIterator();
-		final ShuntingYard shuntingYard = new ShuntingYard(it, knowledge);
+		final ShuntingYard shuntingYard = new ShuntingYard(it, knowledge, location);
 		final ReversePolishInterpretor rpn = new ReversePolishInterpretor(location, shuntingYard.getQueue(), knowledge,
 				memory, context);
 		return rpn.getResult();

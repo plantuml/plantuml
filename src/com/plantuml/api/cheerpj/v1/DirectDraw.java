@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.BlockUml;
 import net.sourceforge.plantuml.BlockUmlBuilder;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -122,7 +123,7 @@ public class DirectDraw {
 			ug.apply(back).apply(back.bg()).draw(URectangle.build(frameWidth, frameHeight));
 			WasmLog.log("...drawing...");
 
-			system.exportDiagramGraphic(ug);
+			system.exportDiagramGraphic(ug, new FileFormatOption(FileFormat.PNG));
 
 			WasmLog.log("done!");
 

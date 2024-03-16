@@ -43,12 +43,21 @@ public enum ReTokenType {
 	QUANTIFIER, //
 	ANCHOR, //
 	GROUP, //
+	NAMED_GROUP, //
+	LOOK_AHEAD, //
+	LOOK_BEHIND, //
 	ALTERNATIVE, //
 	PARENTHESIS_OPEN, //
 	PARENTHESIS_CLOSE, //
 	CONCATENATION_IMPLICIT;
 
+	public boolean isNamedGroupOrLookAheadOrLookBehind() {
+		return this == NAMED_GROUP || this == LOOK_AHEAD || this == LOOK_BEHIND;
+	}
+
 	static public boolean needImplicitConcatenation(ReTokenType token1, ReTokenType token2) {
+		if (token1.isNamedGroupOrLookAheadOrLookBehind())
+			return false;
 		if (token1 == ALTERNATIVE)
 			return false;
 		if (token2 == ALTERNATIVE)

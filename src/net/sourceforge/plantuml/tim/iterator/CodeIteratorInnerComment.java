@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.tim.iterator;
 
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 
 public class CodeIteratorInnerComment extends AbstractCodeIterator {
 
@@ -44,7 +43,7 @@ public class CodeIteratorInnerComment extends AbstractCodeIterator {
 		super(source);
 	}
 
-	public StringLocated peek() throws EaterException, EaterExceptionLocated {
+	public StringLocated peek() throws EaterException {
 		final StringLocated result = source.peek();
 		if (result == null) {
 			return null;

@@ -81,6 +81,7 @@ public class AtomTable extends AbstractAtom implements Atom {
 	private final List<Line> lines = new ArrayList<>();
 	private final Map<Atom, Position> positions = new HashMap<Atom, Position>();
 	private final HColor lineColor;
+	private Class<? extends StringBounder> lastCaller;
 
 	public AtomTable(HColor lineColor) {
 		this.lineColor = lineColor;
@@ -110,14 +111,14 @@ public class AtomTable extends AbstractAtom implements Atom {
 						.draw(URectangle.build(x2 - x1, y2 - y1));
 			}
 			for (int j = 0; j < getNbCols(); j++) {
-				if (j >= line.cells.size()) {
+				if (j >= line.cells.size())
 					continue;
-				}
+
 				final Atom cell = line.cells.get(j);
 				HorizontalAlignment align = HorizontalAlignment.LEFT;
-				if (cell instanceof SheetBlock1) {
+				if (cell instanceof SheetBlock1)
 					align = ((SheetBlock1) cell).getCellAlignment();
-				}
+
 				final HColor cellBackColor = line.cellsBackColor.get(j);
 				final double x1 = getStartingX(j);
 				final double x2 = getStartingX(j + 1);
@@ -131,11 +132,11 @@ public class AtomTable extends AbstractAtom implements Atom {
 				final Position pos = positions.get(cell);
 				final XDimension2D dimCell = cell.calculateDimension(ug.getStringBounder());
 				final double dx;
-				if (align == HorizontalAlignment.RIGHT) {
+				if (align == HorizontalAlignment.RIGHT)
 					dx = cellWidth - dimCell.getWidth();
-				} else {
+				else
 					dx = 0;
-				}
+
 				if (cellBackColor == null)
 					cell.drawU(ug.apply(pos.getTranslate().compose(UTranslate.dx(dx))));
 				else
@@ -144,20 +145,25 @@ public class AtomTable extends AbstractAtom implements Atom {
 		}
 		ug = ug.apply(lineColor);
 		final ULine hline = ULine.hline(getEndingX(getNbCols() - 1));
-		for (int i = 0; i <= getNbLines(); i++) {
+		for (int i = 0; i <= getNbLines(); i++)
 			ug.apply(UTranslate.dy(getStartingY(i))).draw(hline);
-		}
+
 		final ULine vline = ULine.vline(getEndingY(getNbLines() - 1));
-		for (int i = 0; i <= getNbCols(); i++) {
+		for (int i = 0; i <= getNbCols(); i++)
 			ug.apply(UTranslate.dx(getStartingX(i))).draw(vline);
-		}
 
 	}
 
 	private void initMap(StringBounder stringBounder) {
-		if (positions.size() > 0) {
+		final Class<? extends StringBounder> currentCaller = stringBounder.getClass();
+		if (lastCaller != currentCaller)
+			positions.clear();
+
+		this.lastCaller = currentCaller;
+
+		if (positions.size() > 0)
 			return;
-		}
+
 		for (Line line : lines) {
 			for (Atom cell : line.cells) {
 				final XDimension2D dim = cell.calculateDimension(stringBounder);
@@ -179,33 +185,33 @@ public class AtomTable extends AbstractAtom implements Atom {
 
 	private double getStartingX(int col) {
 		double result = 0;
-		for (int i = 0; i < col; i++) {
+		for (int i = 0; i < col; i++)
 			result += getColWidth(i);
-		}
+
 		return result;
 	}
 
 	private double getEndingX(int col) {
 		double result = 0;
-		for (int i = 0; i <= col; i++) {
+		for (int i = 0; i <= col; i++)
 			result += getColWidth(i);
-		}
+
 		return result;
 	}
 
 	private double getStartingY(int line) {
 		double result = 0;
-		for (int i = 0; i < line; i++) {
+		for (int i = 0; i < line; i++)
 			result += getLineHeight(i);
-		}
+
 		return result;
 	}
 
 	private double getEndingY(int line) {
 		double result = 0;
-		for (int i = 0; i <= line; i++) {
+		for (int i = 0; i <= line; i++)
 			result += getLineHeight(i);
-		}
+
 		return result;
 	}
 
@@ -213,9 +219,9 @@ public class AtomTable extends AbstractAtom implements Atom {
 		double result = 0;
 		for (int i = 0; i < getNbLines(); i++) {
 			final Position position = getPosition(i, col);
-			if (position == null) {
+			if (position == null)
 				continue;
-			}
+
 			final double width = position.getWidth();
 			result = Math.max(result, width);
 		}
@@ -226,9 +232,9 @@ public class AtomTable extends AbstractAtom implements Atom {
 		double result = 0;
 		for (int i = 0; i < getNbCols(); i++) {
 			final Position position = getPosition(line, i);
-			if (position == null) {
+			if (position == null)
 				continue;
-			}
+
 			final double height = position.getHeight();
 			result = Math.max(result, height);
 		}
@@ -236,13 +242,13 @@ public class AtomTable extends AbstractAtom implements Atom {
 	}
 
 	private Position getPosition(int line, int col) {
-		if (line >= lines.size()) {
+		if (line >= lines.size())
 			return null;
-		}
+
 		final Line l = lines.get(line);
-		if (col >= l.cells.size()) {
+		if (col >= l.cells.size())
 			return null;
-		}
+
 		final Atom atom = l.cells.get(col);
 		return positions.get(atom);
 	}

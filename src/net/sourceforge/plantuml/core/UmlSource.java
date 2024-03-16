@@ -158,7 +158,10 @@ final public class UmlSource {
 //		return Collections.unmodifiableCollection(rawSource).iterator();
 //	}
 
-	
+	/**
+	 * @deprecated Use {@link #getPlainString(String)} instead, 
+	 * like <code>getPlainString("\n")</code>
+	 */
 	@Deprecated()
 	public String getPlainString() {
 		return getPlainString("\n");

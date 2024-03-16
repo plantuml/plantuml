@@ -49,6 +49,8 @@ public class OpenClose implements Histogram, LoadPlanable {
 	private final Map<DayOfWeek, DayStatus> weekdayStatus = new EnumMap<>(DayOfWeek.class);
 	private final Map<Day, DayStatus> dayStatus = new HashMap<>();
 	private Day startingDay;
+	private Day offBefore;
+	private Day offAfter;
 
 	public int daysInWeek() {
 		int result = 7;
@@ -89,6 +91,11 @@ public class OpenClose implements Histogram, LoadPlanable {
 	}
 
 	private DayStatus getLocalStatus(Day day) {
+		if (offBefore != null && day.compareTo(offBefore) < 0)
+			return DayStatus.CLOSE;
+		if (offAfter != null && day.compareTo(offAfter) > 0)
+			return DayStatus.CLOSE;
+
 		final DayStatus status1 = dayStatus.get(day);
 		if (status1 != null)
 			return status1;
@@ -174,6 +181,14 @@ public class OpenClose implements Histogram, LoadPlanable {
 		return getLoatAtInternal(day);
 	}
 
+	public void setOffBeforeDate(Day day) {
+		this.offBefore = day;
+	}
+
+	public void setOffAfterDate(Day day) {
+		this.offAfter = day;
+	}
+
 	private int getLoatAtInternal(Day day) {
 		if (isClosed(day))
 			return 0;
@@ -193,8 +208,18 @@ public class OpenClose implements Histogram, LoadPlanable {
 						return 100;
 					return OpenClose.this.getLoadAt(instant);
 				}
+
+				@Override
+				public Day getLastDayIfAny() {
+					return offAfter;
+				}
 			};
 		return this;
+	}
+
+	@Override
+	public Day getLastDayIfAny() {
+		return offAfter;
 	}
 
 }

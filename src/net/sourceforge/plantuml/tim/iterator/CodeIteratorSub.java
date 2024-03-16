@@ -41,7 +41,6 @@ import net.sourceforge.plantuml.preproc.Sub;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.EaterException;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.EaterStartsub;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TMemory;
@@ -66,14 +65,14 @@ public class CodeIteratorSub extends AbstractCodeIterator {
 		return Collections.unmodifiableMap(subs);
 	}
 
-	public StringLocated peek() throws EaterException, EaterExceptionLocated {
-		if (readingInProgress != null) {
+	public StringLocated peek() throws EaterException {
+		if (readingInProgress != null)
 			return readingInProgress.peek();
-		}
+
 		StringLocated result = source.peek();
-		if (result == null) {
+		if (result == null)
 			return null;
-		}
+
 		if (result.getType() == TLineType.STARTSUB) {
 			final EaterStartsub eater = new EaterStartsub(result.getTrimmed());
 			eater.analyze(context, memory);
@@ -83,7 +82,7 @@ public class CodeIteratorSub extends AbstractCodeIterator {
 			StringLocated s = null;
 			while ((s = source.peek()) != null) {
 				if (s.getType() == TLineType.STARTSUB) {
-					throw EaterException.located("Cannot nest sub");
+					throw new EaterException("Cannot nest sub", result);
 				} else if (s.getType() == TLineType.ENDSUB) {
 					source.next();
 					readingInProgress = new CodeIteratorImpl(created.lines());
@@ -94,22 +93,22 @@ public class CodeIteratorSub extends AbstractCodeIterator {
 				}
 			}
 		}
-		if (readingInProgress != null) {
+		if (readingInProgress != null)
 			return readingInProgress.peek();
-		}
+
 		return result;
 	}
 
 	@Override
-	public void next() throws EaterException, EaterExceptionLocated {
+	public void next() throws EaterException {
 		if (readingInProgress == null) {
 			source.next();
 			return;
 		}
 		readingInProgress.next();
-		if (readingInProgress.peek() == null) {
+		if (readingInProgress.peek() == null)
 			readingInProgress = null;
-		}
+
 	}
 
 }

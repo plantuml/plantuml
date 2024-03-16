@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
 // Removed
-public class SubjectLinks implements Subject {
+public class SubjectLinks implements Subject<GanttDiagram> {
 
 	private SubjectLinks() {
 	}
@@ -59,11 +59,11 @@ public class SubjectLinks implements Subject {
 		return Failable.ok(project);
 	}
 
-	public Collection<? extends SentenceSimple> getSentences() {
+	public Collection<? extends SentenceSimple<GanttDiagram>> getSentences() {
 		return Arrays.asList(new InColor());
 	}
 
-	public class InColor extends SentenceSimple {
+	public class InColor extends SentenceSimple<GanttDiagram> {
 
 		public InColor() {
 			super(SubjectLinks.this, Verbs.areColored, new ComplementInColors());

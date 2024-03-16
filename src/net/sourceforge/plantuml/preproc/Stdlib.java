@@ -3,10 +3,13 @@ package net.sourceforge.plantuml.preproc;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -317,9 +320,12 @@ public class Stdlib {
 		return new BrotliInputStream(raw);
 	}
 
-	private static InputStream getInternalInputStream(String fullname, String extension) {
-		final String res = "/stdlib/" + fullname + extension;
-		return Stdlib.class.getResourceAsStream(res);
+	private static InputStream getInternalInputStream(String fullname, String extension) throws FileNotFoundException {
+		final String path = "stdlib/" + fullname + extension;
+		InputStream result = Stdlib.class.getResourceAsStream("/" + path);
+		if (result == null)
+			result = new BufferedInputStream(new FileInputStream(path));
+		return result;
 	}
 
 	public static void extractStdLib() throws IOException {
@@ -329,9 +335,12 @@ public class Stdlib {
 		}
 	}
 
-	private static Collection<String> getAll() throws IOException {
+	public static Collection<String> getAll() throws IOException {
 		final Set<String> result = new TreeSet<>();
 		final InputStream home = getInternalInputStream("home", ".repx");
+		if (home == null)
+			throw new IOException("Cannot access to /stdlib/*.repx files");
+
 		final BufferedReader br = new BufferedReader(new InputStreamReader(home));
 		String name;
 		while ((name = br.readLine()) != null)
@@ -442,11 +451,11 @@ public class Stdlib {
 		}
 	}
 
-	private String getVersion() {
+	public String getVersion() {
 		return info.get("VERSION");
 	}
 
-	private String getSource() {
+	public String getSource() {
 		return info.get("SOURCE");
 	}
 

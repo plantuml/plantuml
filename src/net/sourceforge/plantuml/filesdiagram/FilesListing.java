@@ -49,10 +49,11 @@ public class FilesListing extends AbstractTextBlock {
 	private final ISkinParam skinParam;
 	private final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFont.courier(14));
 	private final FEntry root;
+	private FEntry lastCreated;
 
 	public FilesListing(ISkinParam skinParam) {
 		this.skinParam = skinParam;
-		this.root = FEntry.createRoot(skinParam);
+		this.root = FEntry.createRoot();
 	}
 
 	@Override
@@ -67,11 +68,14 @@ public class FilesListing extends AbstractTextBlock {
 	}
 
 	public void addRawEntry(String raw) {
-		root.addRawEntry(raw, skinParam);
+		lastCreated = root.addRawEntry(raw);
 	}
 
 	public void addNote(List<String> note) {
-		root.addNote(note, skinParam);
+		if (lastCreated == null)
+			root.addNote(note);
+		else
+			lastCreated.getParent().addNote(note);
 	}
 
 }

@@ -39,7 +39,6 @@ import java.util.List;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.tim.EaterException;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.EaterWhile;
 import net.sourceforge.plantuml.tim.ExecutionContextWhile;
 import net.sourceforge.plantuml.tim.TContext;
@@ -60,13 +59,12 @@ public class CodeIteratorWhile extends AbstractCodeIterator {
 		this.logs = logs;
 	}
 
-	public StringLocated peek() throws EaterException, EaterExceptionLocated {
+	public StringLocated peek() throws EaterException {
 		int level = 0;
 		while (true) {
 			final StringLocated result = source.peek();
-			if (result == null) {
+			if (result == null)
 				return null;
-			}
 
 			final ExecutionContextWhile currentWhile = memory.peekWhile();
 			if (currentWhile != null && currentWhile.isSkipMe()) {
@@ -90,15 +88,15 @@ public class CodeIteratorWhile extends AbstractCodeIterator {
 				continue;
 			} else if (result.getType() == TLineType.ENDWHILE) {
 				logs.add(result);
-				if (currentWhile == null) {
-					throw EaterException.located("No while related to this endwhile");
-				}
-				final TValue value = currentWhile.conditionValue(result.getLocation(), context, memory);
-				if (value.toBoolean()) {
-					source.jumpToCodePosition(currentWhile.getStartWhile());
-				} else {
+				if (currentWhile == null)
+					throw new EaterException("No while related to this endwhile", result);
+
+				final TValue value = currentWhile.conditionValue(result, context, memory);
+				if (value.toBoolean())
+					source.jumpToCodePosition(currentWhile.getStartWhile(), result);
+				else
 					memory.pollWhile();
-				}
+
 				next();
 				continue;
 			}
@@ -107,16 +105,16 @@ public class CodeIteratorWhile extends AbstractCodeIterator {
 		}
 	}
 
-	private void executeWhile(TMemory memory, StringLocated s) throws EaterException, EaterExceptionLocated {
+	private void executeWhile(TMemory memory, StringLocated s) throws EaterException {
 		final EaterWhile condition = new EaterWhile(s);
 		condition.analyze(context, memory);
 		final TokenStack whileExpression = condition.getWhileExpression();
 		final ExecutionContextWhile theWhile = ExecutionContextWhile.fromValue(whileExpression,
 				source.getCodePosition());
-		final TValue value = theWhile.conditionValue(s.getLocation(), context, memory);
-		if (value.toBoolean() == false) {
+		final TValue value = theWhile.conditionValue(s, context, memory);
+		if (value.toBoolean() == false)
 			theWhile.skipMe();
-		}
+
 		memory.addWhile(theWhile);
 	}
 

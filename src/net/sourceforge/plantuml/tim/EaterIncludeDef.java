@@ -45,11 +45,12 @@ public class EaterIncludeDef extends Eater {
 	}
 
 	@Override
-	public void analyze(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
+	public void analyze(TContext context, TMemory memory) throws EaterException {
 		skipSpaces();
 		checkAndEatChar("!includedef");
 		skipSpaces();
-		this.location = context.applyFunctionsAndVariables(memory, getLineLocation(), this.eatAllToEnd());
+		this.location = context.applyFunctionsAndVariables(memory,
+				new StringLocated(this.eatAllToEnd(), getLineLocation()));
 
 	}
 

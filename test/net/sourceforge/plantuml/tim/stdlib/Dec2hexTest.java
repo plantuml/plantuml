@@ -6,12 +6,10 @@ import static net.sourceforge.plantuml.tim.TimTestUtils.assertTimExpectedOutputF
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.IndicativeSentencesGeneration;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.converter.ConvertWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import net.sourceforge.plantuml.tim.EaterException;
-import net.sourceforge.plantuml.tim.EaterExceptionLocated;
 import net.sourceforge.plantuml.tim.TFunction;
 
 /**
@@ -24,7 +22,7 @@ class Dec2hexTest {
 	final String cutName = "Dec2hex";
 
 	@Test
-	void Test_without_Param() throws EaterException, EaterExceptionLocated {
+	void Test_without_Param() throws EaterException {
 		assertTimExpectedOutput(cut, "");
 	}
 
@@ -38,7 +36,7 @@ class Dec2hexTest {
 			" 255   , 0 ",
 			" 65535 , 0 ",
 	})
-	void Test_with_String(String input, String expected) throws EaterException, EaterExceptionLocated {
+	void Test_with_String(String input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
 	}
 
@@ -52,7 +50,7 @@ class Dec2hexTest {
 			" 255   , ff ",
 			" 65535 , ffff ",
 	})
-	void Test_with_Integer(Integer input, String expected) throws EaterException, EaterExceptionLocated {
+	void Test_with_Integer(Integer input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
 	}
 }

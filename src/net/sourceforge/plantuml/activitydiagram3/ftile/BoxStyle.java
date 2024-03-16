@@ -160,11 +160,12 @@ public enum BoxStyle {
 					if (bs.style == style.charAt(0))
 						return bs;
 
-			style = style.replaceAll("\\W", "");
-
-			for (BoxStyle bs : BoxStyle.values())
-				if (style.equalsIgnoreCase(bs.stereotype))
-					return bs;
+			for (String s : style.split("\\s")) {
+				s = s.replaceAll("\\W", "");
+				for (BoxStyle bs : BoxStyle.values())
+					if (s.equalsIgnoreCase(bs.stereotype))
+						return bs;
+			}
 		}
 		return PLAIN;
 	}

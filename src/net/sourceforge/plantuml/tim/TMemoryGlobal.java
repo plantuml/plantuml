@@ -41,6 +41,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.utils.Log;
 
@@ -49,10 +50,12 @@ public class TMemoryGlobal extends ExecutionContexts implements TMemory {
 	private final Map<String, TValue> globalVariables = new HashMap<String, TValue>();
 	private final TrieImpl variables = new TrieImpl();
 
+	@Override
 	public TValue getVariable(String varname) {
 		return this.globalVariables.get(varname);
 	}
 
+	@Override
 	public void dumpDebug(String message) {
 		Log.error("[MemGlobal] Start of memory_dump " + message);
 		dumpMemoryInternal();
@@ -68,32 +71,39 @@ public class TMemoryGlobal extends ExecutionContexts implements TMemory {
 		}
 	}
 
-	public void putVariable(String varname, TValue value, TVariableScope scope) throws EaterException {
+	@Override
+	public void putVariable(String varname, TValue value, TVariableScope scope, StringLocated location)
+			throws EaterException {
 		Log.info("[MemGlobal] Setting " + varname);
-		if (scope == TVariableScope.LOCAL) {
-			throw EaterException.unlocated("Cannot use local variable here");
-		}
+		if (scope == TVariableScope.LOCAL)
+			throw new EaterException("Cannot use local variable here", location);
+
 		this.globalVariables.put(varname, value);
 		this.variables.add(varname);
 	}
 
+	@Override
 	public void removeVariable(String varname) {
 		this.globalVariables.remove(varname);
 		this.variables.remove(varname);
 	}
 
+	@Override
 	public boolean isEmpty() {
 		return globalVariables.isEmpty();
 	}
 
+	@Override
 	public Set<String> variablesNames() {
 		return Collections.unmodifiableSet(globalVariables.keySet());
 	}
 
+	@Override
 	public Trie variablesNames3() {
 		return variables;
 	}
 
+	@Override
 	public TMemory forkFromGlobal(Map<String, TValue> input) {
 		return new TMemoryLocal(this, input);
 	}

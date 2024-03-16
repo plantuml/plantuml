@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.project.time;
 
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import net.sourceforge.plantuml.project.Value;
@@ -48,7 +49,7 @@ public class Day implements Comparable<Day>, Value {
 
 	private final int dayOfMonth;
 	private final MonthYear monthYear;
-	private final long ms1;
+	private final long milliseconds;
 
 	public static Day create(int year, String month, int dayOfMonth) {
 		return new Day(year, Month.fromString(month), dayOfMonth);
@@ -66,10 +67,14 @@ public class Day implements Comparable<Day>, Value {
 		return create(System.currentTimeMillis());
 	}
 
+	public String toStringShort(Locale locale) {
+		return monthYear.shortName(locale) + " " + dayOfMonth;
+	}
+
 	public int getWeekOfYear(WeekNumberStrategy strategy) {
 		synchronized (gmt) {
 			gmt.clear();
-			gmt.setTimeInMillis(ms1);
+			gmt.setTimeInMillis(milliseconds);
 			gmt.setFirstDayOfWeek(strategy.getFirstDayOfWeekAsLegacyInt());
 			gmt.setMinimalDaysInFirstWeek(strategy.getMinimalDaysInFirstWeek());
 			return gmt.get(Calendar.WEEK_OF_YEAR);
@@ -82,12 +87,12 @@ public class Day implements Comparable<Day>, Value {
 		synchronized (gmt) {
 			gmt.clear();
 			gmt.set(year, month.ordinal(), dayOfMonth);
-			this.ms1 = gmt.getTimeInMillis();
+			this.milliseconds = gmt.getTimeInMillis();
 		}
 	}
 
 	private Day(long ms) {
-		this.ms1 = ms;
+		this.milliseconds = ms;
 		synchronized (gmt) {
 			gmt.clear();
 			gmt.setTimeInMillis(ms);
@@ -113,11 +118,11 @@ public class Day implements Comparable<Day>, Value {
 	}
 
 	public final int getAbsoluteDayNum() {
-		return (int) (ms1 / MILLISECONDS_PER_DAY);
+		return (int) (milliseconds / MILLISECONDS_PER_DAY);
 	}
 
 	public final long getMillis() {
-		return ms1;
+		return milliseconds;
 	}
 
 	public int year() {
@@ -193,6 +198,14 @@ public class Day implements Comparable<Day>, Value {
 		if (printScale == PrintScale.WEEKLY)
 			return this.addDays(7);
 		return increment();
+	}
+
+	public Day roundDayDown() {
+		return new Day((milliseconds / MILLISECONDS_PER_DAY) * MILLISECONDS_PER_DAY);
+	}
+
+	public Day roundDayUp() {
+		return new Day(((milliseconds + MILLISECONDS_PER_DAY - 1) / MILLISECONDS_PER_DAY) * MILLISECONDS_PER_DAY);
 	}
 
 }

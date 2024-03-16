@@ -40,6 +40,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.utils.Log;
 
@@ -76,19 +77,21 @@ public class TMemoryLocal extends ExecutionContexts implements TMemory {
 		Log.error("[MemGlobal] End of memory_dump");
 	}
 
-	public void putVariable(String varname, TValue value, TVariableScope scope) throws EaterException {
+	@Override
+	public void putVariable(String varname, TValue value, TVariableScope scope, StringLocated location)
+			throws EaterException {
 		if (scope == TVariableScope.GLOBAL) {
-			memoryGlobal.putVariable(varname, value, scope);
+			memoryGlobal.putVariable(varname, value, scope, location);
 			return;
 		}
 		if (scope == TVariableScope.LOCAL || overridenVariables01.containsKey(varname)) {
 			this.overridenVariables01.put(varname, value);
-			if (this.overridenVariables00 != null) {
+			if (this.overridenVariables00 != null)
 				this.overridenVariables00.add(varname);
-			}
+
 			Log.info("[MemLocal/overrriden] Setting " + varname);
 		} else if (memoryGlobal.getVariable(varname) != null) {
-			memoryGlobal.putVariable(varname, value, scope);
+			memoryGlobal.putVariable(varname, value, scope, location);
 		} else {
 			this.localVariables01.put(varname, value);
 			this.localVariables00.add(varname);
@@ -96,12 +99,13 @@ public class TMemoryLocal extends ExecutionContexts implements TMemory {
 		}
 	}
 
+	@Override
 	public void removeVariable(String varname) {
 		if (overridenVariables01.containsKey(varname)) {
 			this.overridenVariables01.remove(varname);
-			if (this.overridenVariables00 != null) {
+			if (this.overridenVariables00 != null)
 				this.overridenVariables00.remove(varname);
-			}
+
 		} else if (memoryGlobal.getVariable(varname) != null) {
 			memoryGlobal.removeVariable(varname);
 		} else {
@@ -110,25 +114,27 @@ public class TMemoryLocal extends ExecutionContexts implements TMemory {
 		}
 	}
 
+	@Override
 	public TValue getVariable(String varname) {
 		TValue result = overridenVariables01.get(varname);
-		if (result != null) {
+		if (result != null)
 			return result;
-		}
+
 		result = memoryGlobal.getVariable(varname);
-		if (result != null) {
+		if (result != null)
 			return result;
-		}
+
 		result = localVariables01.get(varname);
 		return result;
 	}
 
+	@Override
 	public Trie variablesNames3() {
 		if (overridenVariables00 == null) {
 			overridenVariables00 = new TrieImpl();
-			for (String name : overridenVariables01.keySet()) {
+			for (String name : overridenVariables01.keySet())
 				overridenVariables00.add(name);
-			}
+
 		}
 		return new Trie() {
 			public void add(String s) {
@@ -140,12 +146,12 @@ public class TMemoryLocal extends ExecutionContexts implements TMemory {
 				final String s2 = overridenVariables00.getLonguestMatchStartingIn(s);
 				final String s3 = localVariables00.getLonguestMatchStartingIn(s);
 
-				if (s1.length() >= s2.length() && s1.length() >= s3.length()) {
+				if (s1.length() >= s2.length() && s1.length() >= s3.length())
 					return s1;
-				}
-				if (s2.length() >= s3.length() && s2.length() >= s1.length()) {
+
+				if (s2.length() >= s3.length() && s2.length() >= s1.length())
 					return s2;
-				}
+
 				return s3;
 			}
 		};
@@ -162,14 +168,17 @@ public class TMemoryLocal extends ExecutionContexts implements TMemory {
 		// return result;
 	}
 
+	@Override
 	public boolean isEmpty() {
 		return memoryGlobal.isEmpty() && localVariables01.isEmpty() && overridenVariables01.isEmpty();
 	}
 
+	@Override
 	public Set<String> variablesNames() {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
 	public TMemory forkFromGlobal(Map<String, TValue> input) {
 		return new TMemoryLocal(memoryGlobal, input);
 	}

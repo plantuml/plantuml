@@ -14,27 +14,27 @@ import net.sourceforge.plantuml.json.JsonValue;
 public class TimTestUtils {
 
 	// Tfunc: () -> (String)
-	public static void assertTimExpectedOutput(TFunction func, String expected) throws EaterException, EaterExceptionLocated {
+	public static void assertTimExpectedOutput(TFunction func, String expected) throws EaterException {
 		TValue tValue = func.executeReturnFunction(null, null, null, null, null);
 		assertEquals(expected, tValue.toString());
 	}
 
 	// Tfunc: (Integer) -> (String)
-	public static void assertTimExpectedOutputFromInput(TFunction func, Integer input, String expected) throws EaterException, EaterExceptionLocated {
+	public static void assertTimExpectedOutputFromInput(TFunction func, Integer input, String expected) throws EaterException {
 		List<TValue> values = Collections.singletonList(TValue.fromInt(input));
 		TValue tValue = func.executeReturnFunction(null, null, null, values, null);
 		assertEquals(expected, tValue.toString());
 	}
 
 	// Tfunc: (String) -> (String)
-	public static void assertTimExpectedOutputFromInput(TFunction func, String input, String expected) throws EaterException, EaterExceptionLocated {
+	public static void assertTimExpectedOutputFromInput(TFunction func, String input, String expected) throws EaterException {
 		List<TValue> values = Collections.singletonList(TValue.fromString(input));
 		TValue tValue = func.executeReturnFunction(null, null, null, values, null);
 		assertEquals(expected, tValue.toString());
 	}
 
 	// Tfunc: (JsonValue) -> (String)
-	public static void assertTimExpectedOutputFromInput(TFunction func, JsonValue input, String expected) throws EaterException, EaterExceptionLocated {
+	public static void assertTimExpectedOutputFromInput(TFunction func, JsonValue input, String expected) throws EaterException {
 		List<TValue> values = Collections.singletonList(TValue.fromJson(input));
 		TValue tValue = func.executeReturnFunction(null, null, null, values, null);
 		assertEquals(expected, tValue.toString());

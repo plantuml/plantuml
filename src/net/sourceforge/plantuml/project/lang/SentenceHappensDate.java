@@ -41,10 +41,10 @@ import net.sourceforge.plantuml.project.Load;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.time.Day;
 
-public class SentenceHappensDate extends SentenceSimple {
+public class SentenceHappensDate extends SentenceSimple<GanttDiagram> {
 
 	public SentenceHappensDate() {
-		super(SubjectTask.ME, Verbs.happens, new ComplementDate());
+		super(SubjectTask.ME, Verbs.happens, Words.zeroOrMore(Words.THE, Words.ON, Words.AT), ComplementDate.any());
 	}
 
 	@Override

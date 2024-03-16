@@ -43,10 +43,10 @@ import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
 
-public class SentenceTaskStarts extends SentenceSimple {
+public class SentenceTaskStarts extends SentenceSimple<GanttDiagram> {
 
 	public SentenceTaskStarts() {
-		super(SubjectTask.ME, Verbs.starts2, new ComplementBeforeOrAfterOrAtTaskStartOrEnd());
+		super(SubjectTask.ME, Verbs.starts, new ComplementBeforeOrAfterOrAtTaskStartOrEnd());
 	}
 
 	@Override

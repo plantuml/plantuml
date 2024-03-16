@@ -37,38 +37,42 @@ package net.sourceforge.plantuml.project;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
+import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 
-public class TimeHeaderParameters {
+public class TimeHeaderParameters implements GanttStyle {
 
 	private final Map<Day, HColor> colorDays;
 	private final double scale;
 	private final Day min;
 	private final Day max;
 	private final HColorSet colorSet;
-	private final Style timelineStyle;
-	private final Style closedStyle;
+	private final GanttStyle ganttStyle;
 	private final Locale locale;
 	private final OpenClose openClose;
 	private final Map<DayOfWeek, HColor> colorDaysOfWeek;
 	private final Set<Day> verticalSeparatorBefore;
 
 	public TimeHeaderParameters(Map<Day, HColor> colorDays, double scale, Day min, Day max, HColorSet colorSet,
-			Style timelineStyle, Style closedStyle, Locale locale, OpenClose openClose,
-			Map<DayOfWeek, HColor> colorDaysOfWeek, Set<Day> verticalSeparatorBefore) {
+			Locale locale, OpenClose openClose, Map<DayOfWeek, HColor> colorDaysOfWeek,
+			Set<Day> verticalSeparatorBefore, GanttStyle ganttStyle) {
 		this.colorDays = colorDays;
 		this.scale = scale;
 		this.min = min;
 		this.max = max;
-		this.colorSet = colorSet;
-		this.timelineStyle = timelineStyle;
-		this.closedStyle = closedStyle;
+		this.colorSet = Objects.requireNonNull(colorSet);
+		this.ganttStyle = ganttStyle;
 		this.locale = locale;
 		this.openClose = openClose;
 		this.colorDaysOfWeek = colorDaysOfWeek;
@@ -100,11 +104,11 @@ public class TimeHeaderParameters {
 	}
 
 	public final Style getTimelineStyle() {
-		return timelineStyle;
+		return getStyle(SName.timeline);
 	}
 
 	public final Style getClosedStyle() {
-		return closedStyle;
+		return getStyle(SName.closed);
 	}
 
 	public final Locale getLocale() {
@@ -121,6 +125,28 @@ public class TimeHeaderParameters {
 
 	public final Set<Day> getVerticalSeparatorBefore() {
 		return verticalSeparatorBefore;
+	}
+
+	public final UGraphic forVerticalSeparator(UGraphic ug) {
+		final Style style = getStyle(SName.verticalSeparator);
+		final HColor color = style.value(PName.LineColor).asColor(getColorSet());
+		final UStroke stroke = style.getStroke();
+		return ug.apply(color).apply(stroke);
+	}
+
+	@Override
+	public final Style getStyle(SName param1, SName param2) {
+		return ganttStyle.getStyle(param1, param2);
+	}
+
+	@Override
+	public Style getStyle(SName param) {
+		return ganttStyle.getStyle(param);
+	}
+
+	public double getCellWidth(StringBounder stringBounder) {
+		final double w = getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble();
+		return w * 1.6;
 	}
 
 }

@@ -70,6 +70,8 @@ public abstract class USymbols {
 	public final static USymbol FOLDER = record("FOLDER", new USymbolFolder(SName.folder, false));
 	public final static USymbol FILE = record("FILE", new USymbolFile());
 	public final static USymbol RECTANGLE = record("RECTANGLE", new USymbolRectangle(SName.rectangle));
+	public final static USymbol ACTION = record("ACTION", new USymbolAction(SName.action));
+	public final static USymbol PROCESS = record("PROCESS", new USymbolProcess(SName.process));
 	public final static USymbol HEXAGON = record("HEXAGON", new USymbolHexagon());
 	public final static USymbol PERSON = record("PERSON", new USymbolPerson());
 	public final static USymbol LABEL = record("LABEL", new USymbolLabel());
@@ -142,6 +144,10 @@ public abstract class USymbols {
 			usymbol = USymbols.FRAME;
 		else if (symbol.equalsIgnoreCase("cloud"))
 			usymbol = USymbols.CLOUD;
+		else if (symbol.equalsIgnoreCase("action"))
+			usymbol = USymbols.ACTION;
+		else if (symbol.equalsIgnoreCase("process"))
+			usymbol = USymbols.PROCESS;
 		else if (symbol.equalsIgnoreCase("database"))
 			usymbol = USymbols.DATABASE;
 		else if (symbol.equalsIgnoreCase("queue"))

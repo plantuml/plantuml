@@ -34,14 +34,16 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import net.sourceforge.plantuml.text.StringLocated;
+
 public class StringEater extends Eater {
 
 	public StringEater(String s) {
-		super(s, null);
+		super(new StringLocated(s, null));
 	}
 
 	@Override
-	public void analyze(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
+	public void analyze(TContext context, TMemory memory) throws EaterException {
 		throw new UnsupportedOperationException();
 	}
 

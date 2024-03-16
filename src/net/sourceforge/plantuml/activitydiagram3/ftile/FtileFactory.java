@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
 
 public interface FtileFactory {
@@ -83,13 +84,15 @@ public interface FtileFactory {
 
 	public Ftile repeat(BoxStyle boxStyleIn, Swimlane swimlane, Swimlane swimlaneOut, Display startLabel, Ftile repeat,
 			Display test, Display yes, Display out, Colors colors, Ftile backward, boolean noOut,
-			LinkRendering incoming1, LinkRendering incoming2);
+			LinkRendering incoming1, LinkRendering incoming2, StyleBuilder currentStyleBuilder);
 
 	public Ftile createWhile(LinkRendering outColor, Swimlane swimlane, Ftile whileBlock, Display test, Display yes,
-			HColor color, Instruction specialOut, Ftile backward, LinkRendering incoming1, LinkRendering incoming2);
+			HColor color, Instruction specialOut, Ftile backward, LinkRendering incoming1, LinkRendering incoming2,
+			StyleBuilder currentStyleBuilder);
 
 	public Ftile createIf(Swimlane swimlane, List<Branch> thens, Branch elseBranch, LinkRendering outColor,
-			LinkRendering topInlinkRendering, Url url, Collection<PositionedNote> notes);
+			LinkRendering topInlinkRendering, Url url, Collection<PositionedNote> notes, Stereotype stereotype,
+			StyleBuilder currentStyleBuilder);
 
 	public Ftile createSwitch(Swimlane swimlane, List<Branch> branches, LinkRendering afterEndwhile,
 			LinkRendering topInlinkRendering, Display labelTest);

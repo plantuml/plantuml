@@ -602,7 +602,7 @@ public class ASCIIMathTeXImg {
 		case CONST:
 			str = AMremoveCharsAndBlanks(str, symbol.input.length());
 			String texsymbol = AMTgetTeXsymbol(symbol);
-			if (texsymbol.charAt(0) == '\\' || symbol.tag.equals("mo"))
+			if (texsymbol.isEmpty() || texsymbol.charAt(0) == '\\' || symbol.tag.equals("mo"))
 				return new String[] { texsymbol, str };
 			else {
 				return new String[] { "{" + texsymbol + "}", str };
@@ -676,7 +676,7 @@ public class ASCIIMathTeXImg {
 			if (result[0] == null)
 				return new String[] { "{" + AMTgetTeXsymbol(symbol) + "}", str };
 			if (symbol.hasFlag("func")) { // functions hack
-				st = "" + str.charAt(0);
+				st = "" + (str.isEmpty() ? "" : str.charAt(0));
 				if (st.equals("^") || st.equals("_") || st.equals("/") || st.equals("|") || st.equals(",")
 						|| (symbol.input.length() == 1 && symbol.input.matches("\\w") && !st.equals("("))) {
 					return new String[] { "{" + AMTgetTeXsymbol(symbol) + "}", str };
@@ -905,8 +905,8 @@ public class ASCIIMathTeXImg {
 										subarr = new ArrayList<String>(Arrays.asList(
 												newFrag.substring(pos.get(i) + 8, subpos.get(pos.get(i)).get(1))));
 										for (int j = 2; j < subpos.get(pos.get(i)).size(); j++) {
-											subarr.add(newFrag.substring(subpos.get(i).get(j - 1) + 1,
-													subpos.get(i).get(j)));
+											subarr.add(newFrag.substring(subpos.get(pos.get(i)).get(j - 1) + 1,
+													subpos.get(pos.get(i)).get(j)));
 										}
 										subarr.add(newFrag.substring(
 												subpos.get(pos.get(i)).get(subpos.get(pos.get(i)).size() - 1) + 1,

@@ -37,27 +37,27 @@ package net.sourceforge.plantuml.project.command;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.project.lang.Sentence;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class NaturalCommand extends SingleLineCommand2<GanttDiagram> {
+public class NaturalCommand<D extends Diagram> extends SingleLineCommand2<D> {
 
-	private final Sentence sentence;
+	private final Sentence<D> sentence;
 
-	public NaturalCommand(Sentence sentence) {
+	public NaturalCommand(Sentence<D> sentence) {
 		super(sentence.toRegex());
 		this.sentence = sentence;
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(GanttDiagram system, LineLocation location, RegexResult arg) {
+	final protected CommandExecutionResult executeArg(D system, LineLocation location, RegexResult arg) {
 		return sentence.execute(system, arg);
 	}
 
-	public static NaturalCommand create(Sentence sentence) {
-		return new NaturalCommand(sentence);
+	public static <D extends Diagram> NaturalCommand<D> create(Sentence<D> sentence) {
+		return new NaturalCommand<D>(sentence);
 
 	}
 

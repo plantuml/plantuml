@@ -1,37 +1,55 @@
 'm:release':
-- 'CHANGELOG.md'
-- 'gradle.properties'
+- changed-files:
+  - any-glob-to-any-file:
+    - 'CHANGELOG.md'
+    - 'gradle.properties'
 
 'm:docs':
-- '*.md'
-- 'docs/**/*'
+- changed-files:
+  - any-glob-to-any-file:
+    - '*.md'
+    - 'docs/**/*'
 
 'm:workflow':
-- .github/**
+- changed-files:
+  - any-glob-to-any-file:
+    - .github/**
 
 'm:gradle':
-- 'gradle*'
-- 'gradle/**'
-- '**/settings.gradle.*'
-- '**/build.gradle.*'
-- 'sjpp.jar'
+- changed-files:
+  - any-glob-to-any-file:
+    - 'gradle*'
+    - 'gradle/**'
+    - '**/settings.gradle.*'
+    - '**/build.gradle.*'
+    - 'sjpp.jar'
 
 'm:source':
-- 'skin/**/*'
-- 'src/**/*'
-- 'stdlib/**/*'
-- 'svg/**/*'
-- 'themes/**/*'
-- 'manifest.txt'
+- changed-files:
+  - any-glob-to-any-file:
+    - 'skin/**/*'
+    - 'src/**/*'
+    - 'stdlib/**/*'
+    - 'svg/**/*'
+    - 'themes/**/*'
+    - 'manifest.txt'
 
 'm:test':
-- 'test/**/*'
+- changed-files:
+  - any-glob-to-any-file:
+    - 'test/**/*'
 
 'm:license':
-- '**/*license.txt'
+- changed-files:
+  - any-glob-to-any-file:
+    - '**/*license.txt'
 
 'm:docker':
-- Dockerfile
+- changed-files:
+  - any-glob-to-any-file:
+    - Dockerfile
 
 'm:native':
-- .github/workflows/native-image.yml
+- changed-files:
+  - any-glob-to-any-file:
+    - .github/workflows/native-image.yml

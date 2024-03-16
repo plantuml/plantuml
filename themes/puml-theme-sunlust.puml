@@ -1,0 +1,133 @@
+'' NAME = Sunlust
+'' DESCRIPTION = sunlust theme based off of the [solarized theme](https://ethanschoonover.com/solarized)
+'' AUTHOR = Artem V. Ageev
+'' LICENCE = GPL 3+
+
+!$THEME = 'sunlust'
+!if %not(%variable_exists("$BGCOLOR"))
+!$BGCOLOR = '#fdf6e3'
+!endif
+scale max 2000 * 2000
+!$colors = {
+    "font"      : "#657b83",
+    "bg"        : "#fdf6e3",
+    "yellow"    : "#b58900",
+    "yellow_bg" : "#BUSINESS",
+    "orange"    : "#cb4b16",
+    "orange_bg" : "#STRATEGY",
+    "red"       : "#dc322f",
+    "red_bg"    : "#IMPLEMENTATION",
+    "violet"    : "#6c71c4",
+    "violet_bg" : "#MOTIVATION",
+    "blue"      : "#268bd2",
+    "blue_bg"   : "#APPLICATION",
+    "green"     : "#859900",
+    "green_bg"  : "#TECHNOLOGY"
+}
+!$shapes = {
+    "TECHNOLOGY" : {
+        "color" : "#859900",
+        "shapes" : [ "Node", "File"]
+    },
+    "APPLICATION" : {
+        "color" : "#268bd2",
+        "shapes" : [ "Participant", "Rectangle", "Component" ]
+    },
+    "BUSINESS" : {
+        "color" : "#b58900",
+        "shapes" : [ "Actor", "Note", "Hexagon", "Boundary", "Control", "Entity" ]
+    },
+    "IMPLEMENTATION" : {
+        "color" : "#dc322f",
+        "shapes" : [ "Class", "Map", "Json" ]
+    },
+    "MOTIVATION" : {
+        "color" : "#6c71c4",
+        "shapes" : [ "Cloud", "Frame", "Collections", "Database", "Queue" ]
+    },
+    "STRATEGY" : {
+        "color" : "#STRATEGY",
+        "shapes" : [ "Partition", "Folder", "Card" ]
+    }
+}
+!$thickness = 2
+<style>
+    !foreach $lib in %splitstr('root.wbsDiagram.mindmapDiagram.ganttDiagram.saltDiagram', '.')
+        $lib {
+            BackGroundColor $colors.bg
+            arrow {
+                LineColor $colors.font
+                Thickness $thickness
+            }
+            node {
+                LineColor $colors.green
+                BackgroundColor $colors.green_bg
+            }
+            task {
+                LineColor $colors.violet
+                BackGroundColor $colors.violet_bg
+            }
+            milestone {
+                LineColor $colors.red
+                BackGroundColor $colors.red_bg
+            }
+        }
+    !endfor
+</style>
+skinparam {
+    noteTextAlignment left
+    actorStyle awesome
+    Dpi 100
+    Shadowing false
+    BackgroundColor $colors.bg
+    WrapWidth 200
+    RoundCorner 15
+    Swimlane {
+        BorderColor $colors.font
+        Thickness $thickness
+        WrapTitleWidth 150
+    }
+    Arrow {
+        Color $colors.font
+        Thickness $thickness
+    }
+    Default {
+        TextAlignment center
+        FontName Dejavu Serif
+    }
+    Legend {
+        FontName VL Gothic
+        BorderColor transparent
+        BackgroundColor transparent
+    }
+    Sequence {
+        MessageAlign direction
+        ArrowThickness $thickness
+        LifeLineBorderColor $colors.yellow
+        BoxBorderThickness $thickness
+    }
+    !foreach $shape in %splitstr('Activity.State', '.')
+        $shape {
+            BackgroundColor transparent
+            Border {
+                Color  $colors.violet
+                Thickness $thickness
+            }
+            Diamond {
+                BorderColor $colors.red
+                BackgroundColor transparent
+            }
+        }
+    !endfor
+    !foreach $key in %get_json_keys($shapes)
+        !foreach $shape in $shapes[$key].shapes
+            $shape {
+                BackgroundColor #$key
+                Border {
+                    Color $shapes[$key].color
+                    Thickness $thickness
+                }
+            }
+        !endfor
+    !endfor
+}

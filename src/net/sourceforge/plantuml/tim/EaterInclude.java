@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.text.StringLocated;
 
 public class EaterInclude extends Eater {
 
-	private String location;
+	private String what;
 	private PreprocessorIncludeStrategy strategy = PreprocessorIncludeStrategy.DEFAULT;
 
 	public EaterInclude(StringLocated s) {
@@ -47,7 +47,7 @@ public class EaterInclude extends Eater {
 	}
 
 	@Override
-	public void analyze(TContext context, TMemory memory) throws EaterException, EaterExceptionLocated {
+	public void analyze(TContext context, TMemory memory) throws EaterException {
 		skipSpaces();
 		checkAndEatChar("!include");
 		final char peekChar = peekChar();
@@ -65,14 +65,15 @@ public class EaterInclude extends Eater {
 			}
 		}
 		skipSpaces();
-		this.location = context.applyFunctionsAndVariables(memory, getLineLocation(), this.eatAllToEnd());
+		this.what = context.applyFunctionsAndVariables(memory,
+				new StringLocated(this.eatAllToEnd(), getLineLocation()));
 //		final TValue value = eatExpression(context, memory);
 //		this.location = value.toString();
 
 	}
 
-	public final String getLocation() {
-		return location;
+	public final String getWhat() {
+		return what;
 	}
 
 	public final PreprocessorIncludeStrategy getPreprocessorIncludeStrategy() {

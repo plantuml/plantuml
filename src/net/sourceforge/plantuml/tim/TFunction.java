@@ -38,8 +38,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.expression.TValue;
-import net.sourceforge.plantuml.utils.LineLocation;
 
 public interface TFunction {
 
@@ -49,14 +49,11 @@ public interface TFunction {
 
 	public TFunctionType getFunctionType();
 
-	public void executeProcedure(TContext context, TMemory memory, LineLocation location, String s)
-			throws EaterException, EaterExceptionLocated;
+	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> args,
+			Map<String, TValue> named) throws EaterException;
 
-	public TValue executeReturnFunction(TContext context, TMemory memory, LineLocation location, List<TValue> args,
-			Map<String, TValue> named) throws EaterException, EaterExceptionLocated;
-
-	public void executeProcedureInternal(TContext context, TMemory memory, List<TValue> args, Map<String, TValue> named)
-			throws EaterException, EaterExceptionLocated;
+	public void executeProcedureInternal(TContext context, TMemory memory, StringLocated location, List<TValue> args,
+			Map<String, TValue> named) throws EaterException;
 
 	public boolean isUnquoted();
 

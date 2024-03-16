@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.AnnotatedBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.DisplaySection;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -165,7 +166,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)
 					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 			compTitle = style.createTextBlockBordered(page.getTitle(), diagram.getSkinParam().getIHtmlColorSet(),
-					diagram.getSkinParam(), Style.ID_TITLE);
+					diagram.getSkinParam(), Style.ID_TITLE, LineBreakStrategy.NONE);
 			final XDimension2D dimTitle = compTitle.calculateDimension(stringBounder);
 			area.setTitleArea(dimTitle.getWidth(), dimTitle.getHeight());
 		}
@@ -179,7 +180,8 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.legend)
 					.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 			legendBlock = style.createTextBlockBordered(diagram.getLegend().getDisplay(),
-					diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam(), Style.ID_LEGEND);
+					diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam(), Style.ID_LEGEND,
+					LineBreakStrategy.NONE);
 		}
 		final XDimension2D dimLegend = legendBlock.calculateDimension(stringBounder);
 		area.setLegend(dimLegend, isLegendTop(), diagram.getLegend().getHorizontalAlignment());

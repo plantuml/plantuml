@@ -40,17 +40,17 @@ import net.sourceforge.plantuml.project.time.Day;
 
 public class TimeScaleWink implements TimeScale {
 
-	private final double scale;
+	private final double cellWidth;
 	private final PrintScale printScale;
 
-	public TimeScaleWink(double scale, PrintScale printScale) {
-		this.scale = 16.0 * scale;
+	public TimeScaleWink(double size, double scale, PrintScale printScale) {
+		this.cellWidth = size * scale;
 		this.printScale = printScale;
 	}
 
 	public double getStartingPosition(Day instant) {
 		final long wink = instant.getMillis();
-		return wink * scale / Day.MILLISECONDS_PER_DAY;
+		return wink * cellWidth / Day.MILLISECONDS_PER_DAY;
 	}
 
 	public double getEndingPosition(Day instant) {
@@ -58,7 +58,7 @@ public class TimeScaleWink implements TimeScale {
 	}
 
 	public double getWidth(Day instant) {
-		return scale;
+		return cellWidth;
 	}
 
 	public boolean isBreaking(Day instant) {

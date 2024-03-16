@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.DisplaySection;
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -213,7 +214,8 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.title)
 				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 		final TextBlock compTitle = style.createTextBlockBordered(diagram.getTitle().getDisplay(),
-				diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam(), Style.ID_TITLE);
+				diagram.getSkinParam().getIHtmlColorSet(), diagram.getSkinParam(), Style.ID_TITLE,
+				LineBreakStrategy.NONE);
 		return compTitle;
 
 	}
