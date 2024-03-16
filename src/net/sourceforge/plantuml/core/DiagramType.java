@@ -127,6 +127,9 @@ public enum DiagramType {
 		if (StartUtils.startsWithSymbolAnd("startfiles", s))
 			return FILES;
 
+		if (StartUtils.startsWithSymbolAnd("startchen", s))
+				return CHEN_EER;
+
 		return UNKNOWN;
 	}
 }
