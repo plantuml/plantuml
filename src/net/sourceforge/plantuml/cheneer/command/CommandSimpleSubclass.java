@@ -54,58 +54,58 @@ import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandSimpleSubclass extends SingleLineCommand2<ChenEerDiagram> {
 
-  public CommandSimpleSubclass() {
-    super(getRegexConcat());
-  }
+	public CommandSimpleSubclass() {
+		super(getRegexConcat());
+	}
 
-  private static IRegex getRegexConcat() {
-    return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //
-        new RegexLeaf("NAME1", "([\\w-]+)"), //
-        RegexLeaf.spaceZeroOrMore(), //
-        new RegexLeaf("PARTICIPATION", "([-=])"), //
-        new RegexLeaf("DIRECTION", "([<>])"), //
-        new RegexLeaf("PARTICIPATION2", "([-=])"), //
-        RegexLeaf.spaceZeroOrMore(), //
-        new RegexLeaf("NAME2", "([\\w-]+)"), //
-        RegexLeaf.end());
-  }
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("NAME1", "([\\w-]+)"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("PARTICIPATION", "([-=])"), //
+				new RegexLeaf("DIRECTION", "([<>])"), //
+				new RegexLeaf("PARTICIPATION2", "([-=])"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("NAME2", "([\\w-]+)"), //
+				RegexLeaf.end());
+	}
 
-  @Override
-  protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg)
-      throws NoSuchColorException {
-    String name1 = diagram.cleanId(arg.get("NAME1", 0));
-    String name2 = diagram.cleanId(arg.get("NAME2", 0));
-    final boolean isDouble = arg.get("PARTICIPATION", 0).equals("=");
-    final boolean isSuperset = arg.get("DIRECTION", 0).equals(">");
+	@Override
+	protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
+		String name1 = diagram.cleanId(arg.get("NAME1", 0));
+		String name2 = diagram.cleanId(arg.get("NAME2", 0));
+		final boolean isDouble = arg.get("PARTICIPATION", 0).equals("=");
+		final boolean isSuperset = arg.get("DIRECTION", 0).equals(">");
 
-    final Quark<Entity> quark1 = diagram.quarkInContext(true, name1);
-    final Entity entity1 = quark1.getData();
-    if (entity1 == null) {
-      return CommandExecutionResult.error("No such entity: " + name1);
-    }
+		final Quark<Entity> quark1 = diagram.quarkInContext(true, name1);
+		final Entity entity1 = quark1.getData();
+		if (entity1 == null) {
+			return CommandExecutionResult.error("No such entity: " + name1);
+		}
 
-    final Quark<Entity> quark2 = diagram.quarkInContext(true, name2);
-    final Entity entity2 = quark2.getData();
-    if (entity2 == null) {
-      return CommandExecutionResult.error("No such entity: " + name2);
-    }
+		final Quark<Entity> quark2 = diagram.quarkInContext(true, name2);
+		final Entity entity2 = quark2.getData();
+		if (entity2 == null) {
+			return CommandExecutionResult.error("No such entity: " + name2);
+		}
 
-    LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);
-    if (isDouble) {
-      linkType = linkType.goBold();
-    }
-    if (isSuperset) {
-      linkType = linkType.withMiddleSuperset();
-    } else {
-      linkType = linkType.withMiddleSubset();
-    }
-    final Link link = new Link(diagram.getEntityFactory(), diagram.getCurrentStyleBuilder(), entity1, entity2,
-        linkType,
-        LinkArg.build(Display.NULL, 3));
-    link.setPortMembers(diagram.getPortId(entity1.getName()), diagram.getPortId(entity2.getName()));
-    diagram.addLink(link);
+		LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);
+		if (isDouble) {
+			linkType = linkType.goBold();
+		}
+		if (isSuperset) {
+			linkType = linkType.withMiddleSuperset();
+		} else {
+			linkType = linkType.withMiddleSubset();
+		}
+		final Link link = new Link(diagram.getEntityFactory(), diagram.getCurrentStyleBuilder(), entity1, entity2,
+				linkType,
+				LinkArg.build(Display.NULL, 3));
+		link.setPortMembers(diagram.getPortId(entity1.getName()), diagram.getPortId(entity2.getName()));
+		diagram.addLink(link);
 
-    return CommandExecutionResult.ok();
-  }
+		return CommandExecutionResult.ok();
+	}
 
 }

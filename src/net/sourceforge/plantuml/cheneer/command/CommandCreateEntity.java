@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.cheneer.command;
@@ -46,65 +46,78 @@ import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateEntity extends SingleLineCommand2<ChenEerDiagram> {
 
-  public CommandCreateEntity() {
-    super(getRegexConcat());
-  }
+	public CommandCreateEntity() {
+		super(getRegexConcat());
+	}
 
-  private static IRegex getRegexConcat() {
-    return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //
-        new RegexLeaf("TYPE", "(entity|relationship)"), //
-        RegexLeaf.spaceOneOrMore(), //
-        new RegexLeaf("NAME", "([^<>{}]+)"), //
-        RegexLeaf.spaceZeroOrMore(), //
-        new RegexLeaf("STEREO", "(<<.+>>)?"), //
-        RegexLeaf.spaceZeroOrMore(), //
-        new RegexLeaf("\\{"), //
-        RegexLeaf.end());
-  }
+	private static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("TYPE", "(entity|relationship)"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexOptional( // Copied from CommandCreatePackageBlock
+						new RegexConcat( //
+								new RegexLeaf("DISPLAY", "[%g]([^%g]+)[%g]"), //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("as"), //
+								RegexLeaf.spaceOneOrMore() //
+						)), //
+				new RegexLeaf("CODE", "([%pLN_.]+)"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("STEREO", "(<<.+>>)?"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("\\{"), //
+				RegexLeaf.end());
+	}
 
-  @Override
-  protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg)
-      throws NoSuchColorException {
-    LeafType type;
-    switch (arg.get("TYPE", 0)) {
-      case "entity":
-        type = LeafType.CHEN_ENTITY;
-        break;
-      case "relationship":
-        type = LeafType.CHEN_RELATIONSHIP;
-        break;
-      default:
-        throw new IllegalStateException();
-    }
+	@Override
+	protected CommandExecutionResult executeArg(ChenEerDiagram diagram, LineLocation location, RegexResult arg)
+			throws NoSuchColorException {
+		LeafType type;
+		switch (arg.get("TYPE", 0)) {
+			case "entity":
+				type = LeafType.CHEN_ENTITY;
+				break;
+			case "relationship":
+				type = LeafType.CHEN_RELATIONSHIP;
+				break;
+			default:
+				throw new IllegalStateException();
+		}
 
-    final String name = diagram.cleanId(arg.get("NAME", 0).trim());
-    final String stereo = arg.get("STEREO", 0);
+		final String idShort = arg.get("CODE", 0);
+		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(idShort));
+		String displayText = arg.get("DISPLAY", 0);
+		if (displayText == null)
+			displayText = quark.getName();
 
-    final Quark<Entity> quark = diagram.quarkInContext(true, name);
-    Entity entity = quark.getData();
+		final String stereo = arg.get("STEREO", 0);
 
-    if (entity == null) {
-      Display display = Display.getWithNewlines(name);
-      entity = diagram.reallyCreateLeaf(quark, display, type, null);
-    } else {
-      if (entity.muteToType(type, null) == false)
-        return CommandExecutionResult.error("Bad name");
-    }
+		Entity entity = quark.getData();
 
-    if (stereo != null) {
-      entity.setStereotype(Stereotype.build(stereo));
-      entity.setStereostyle(stereo);
-    }
+		if (entity == null) {
+			Display display = Display.getWithNewlines(displayText);
+			entity = diagram.reallyCreateLeaf(quark, display, type, null);
+		} else {
+			if (entity.muteToType(type, null) == false)
+				return CommandExecutionResult.error("Bad name");
+		}
 
-    diagram.pushOwner(entity);
+		if (stereo != null) {
+			entity.setStereotype(Stereotype.build(stereo));
+			entity.setStereostyle(stereo);
+		}
 
-    return CommandExecutionResult.ok();
-  }
+		diagram.pushOwner(entity);
+
+		return CommandExecutionResult.ok();
+	}
 
 }
