@@ -71,7 +71,7 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
 								new RegexLeaf("as"), //
 								RegexLeaf.spaceOneOrMore() //
 						)), //
-				new RegexLeaf("CODE", "([%pLN%s_.:<>]+)"), //
+				new RegexLeaf("CODE", "([%pLN%s_.:]+)"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREO", "(<<.*>>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -93,7 +93,7 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
 		final Quark<Entity> quark = diagram.quarkInContext(true, id);
 		String displayText = arg.get("DISPLAY", 0);
 		if (displayText == null)
-			displayText = quark.getName();
+			displayText = idShort;
 
 		final String stereo = arg.get("STEREO", 0);
 		final boolean composite = arg.get("COMPOSITE", 0) != null;
