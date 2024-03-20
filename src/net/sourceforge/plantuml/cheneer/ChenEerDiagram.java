@@ -50,10 +50,22 @@ public class ChenEerDiagram extends AbstractEntityDiagram {
 
 	private final Stack<Entity> ownerStack = new Stack<Entity>();
 
+	/**
+	 * Pushes the owner of the following attributes.
+	 *
+	 * @see #peekOwner()
+	 * @param group the entity that owns the following attributes
+	 */
 	public void pushOwner(Entity group) {
 		ownerStack.push(group);
 	}
 
+	/**
+	 * Pops an attribute owner from the stack. See also {@link #peekOwner()}.
+	 * 
+	 * @see #peekOwner()
+	 * @return true if an owner was popped, false if the stack was empty
+	 */
 	public boolean popOwner() {
 		if (ownerStack.isEmpty()) {
 			return false;
@@ -62,6 +74,17 @@ public class ChenEerDiagram extends AbstractEntityDiagram {
 		return true;
 	}
 
+	/**
+	 * Returns the owner of the current attribute.
+	 * 
+	 * <p>
+	 * This is used to link attributes based on their lexical position (how they
+	 * appear in sources) without nesting the entities (like how packages are
+	 * done). It is for this reason that we can't use CucaDiagram.getCurrentGroup,
+	 * as that method nests the entities.
+	 *
+	 * @return the owner of the current attribute, or null if there is no owner
+	 */
 	public Entity peekOwner() {
 		if (ownerStack.isEmpty()) {
 			return null;
