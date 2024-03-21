@@ -61,7 +61,7 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
 		super(getRegexConcat());
 	}
 
-	private static IRegex getRegexConcat() {
+	protected static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //
 				RegexLeaf.spaceZeroOrMore(),
 				new RegexOptional( // Copied from CommandCreatePackageBlock
