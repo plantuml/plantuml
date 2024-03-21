@@ -2,7 +2,7 @@ package net.sourceforge.plantuml.cheneer.command;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import net.sourceforge.plantuml.core.UmlSource;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 
@@ -10,19 +10,18 @@ import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.decoration.LinkMiddleDecor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.BlocLines;
 
-import java.util.List;
-
 public class CommandMultiSubclassTest {
 
 	private final Command<ChenEerDiagram> command = new CommandMultiSubclass();
 
-	private final ChenEerDiagram diagram = new ChenEerDiagram(UmlSource.create(List.of(), false), null);
+	private final ChenEerDiagram diagram = new ChenEerDiagram(UmlSource.create(new ArrayList<>(), false), null);
 
 	@Test
 	void test_parse() {

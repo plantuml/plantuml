@@ -2,7 +2,7 @@ package net.sourceforge.plantuml.cheneer.command;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +25,7 @@ public class CommandEndGroupTest {
 	private final Command<ChenEerDiagram> command = new CommandEndGroup();
 
 	@Spy
-	private final ChenEerDiagram diagram = new ChenEerDiagram(UmlSource.create(List.of(), false), null);
+	private final ChenEerDiagram diagram = new ChenEerDiagram(UmlSource.create(new ArrayList<>(), false), null);
 
 	@Test
 	void test_parse() {
