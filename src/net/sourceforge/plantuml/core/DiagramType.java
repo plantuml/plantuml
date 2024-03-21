@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -40,7 +40,7 @@ import net.sourceforge.plantuml.utils.StartUtils;
 public enum DiagramType {
 	// ::remove folder when __HAXE__
 	UML, BPM, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, MATH, LATEX, DEFINITION, GANTT, CHRONOLOGY, NW, MINDMAP,
-	WBS, WIRE, JSON, GIT, BOARD, YAML, HCL, EBNF, REGEX, FILES, UNKNOWN;
+	WBS, WIRE, JSON, GIT, BOARD, YAML, HCL, EBNF, REGEX, FILES, CHEN_EER, UNKNOWN;
 
 	static public DiagramType getTypeFromArobaseStart(String s) {
 		s = s.toLowerCase();
@@ -129,6 +129,9 @@ public enum DiagramType {
 
 		if (StartUtils.startsWithSymbolAnd("startchronology", s))
 			return CHRONOLOGY;
+
+		if (StartUtils.startsWithSymbolAnd("startchen", s))
+			return CHEN_EER;
 
 		return UNKNOWN;
 	}

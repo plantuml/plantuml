@@ -148,6 +148,14 @@ public class LinkType {
 		return new LinkType(decor1, decor2, LinkMiddleDecor.CIRCLE_CIRCLED2, linkStyle);
 	}
 
+	public LinkType withMiddleSubset() {
+		return new LinkType(decor1, decor2, LinkMiddleDecor.SUBSET, linkStyle);
+	}
+
+	public LinkType withMiddleSuperset() {
+		return new LinkType(decor1, decor2, LinkMiddleDecor.SUPERSET, linkStyle);
+	}
+
 	public LinkType getInvisible() {
 		return new LinkType(decor1, decor2, middleDecor, LinkStyle.INVISIBLE());
 	}

@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.activitydiagram3.ActivityDiagramFactory3;
 import net.sourceforge.plantuml.api.PSystemFactory;
 import net.sourceforge.plantuml.board.BoardDiagramFactory;
 import net.sourceforge.plantuml.bpm.BpmDiagramFactory;
+import net.sourceforge.plantuml.cheneer.ChenEerDiagramFactory;
 import net.sourceforge.plantuml.chronology.ChronologyDiagramFactory;
 import net.sourceforge.plantuml.classdiagram.ClassDiagramFactory;
 import net.sourceforge.plantuml.core.Diagram;
@@ -277,6 +278,8 @@ public class PSystemBuilder {
 		factories.add(new HclDiagramFactory());
 		factories.add(new PSystemEbnfFactory());
 		factories.add(new PSystemRegexFactory());
+
+		factories.add(new ChenEerDiagramFactory());
 	}
 
 	private boolean isOk(Diagram ps) {

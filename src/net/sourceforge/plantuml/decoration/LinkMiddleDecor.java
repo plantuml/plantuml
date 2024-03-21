@@ -40,10 +40,11 @@ import net.sourceforge.plantuml.svek.extremity.MiddleCircleCircledMode;
 import net.sourceforge.plantuml.svek.extremity.MiddleFactory;
 import net.sourceforge.plantuml.svek.extremity.MiddleFactoryCircle;
 import net.sourceforge.plantuml.svek.extremity.MiddleFactoryCircleCircled;
+import net.sourceforge.plantuml.svek.extremity.MiddleFactorySubset;
 
 public enum LinkMiddleDecor {
 
-	NONE, CIRCLE, CIRCLE_CIRCLED, CIRCLE_CIRCLED1, CIRCLE_CIRCLED2;
+	NONE, CIRCLE, CIRCLE_CIRCLED, CIRCLE_CIRCLED1, CIRCLE_CIRCLED2, SUBSET, SUPERSET;
 
 	public MiddleFactory getMiddleFactory(HColor backColor, HColor diagramBackColor) {
 		if (this == CIRCLE)
@@ -57,6 +58,12 @@ public enum LinkMiddleDecor {
 
 		if (this == CIRCLE_CIRCLED2)
 			return new MiddleFactoryCircleCircled(MiddleCircleCircledMode.MODE2, backColor, diagramBackColor);
+		
+		if (this == SUBSET)
+			return new MiddleFactorySubset(false);
+
+		if (this == SUPERSET)
+			return new MiddleFactorySubset(true);
 
 		throw new UnsupportedOperationException();
 	}

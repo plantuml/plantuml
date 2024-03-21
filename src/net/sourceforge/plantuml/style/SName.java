@@ -64,6 +64,10 @@ public enum SName {
 	component, //
 	composite, //
 	robust, //
+	chenAttribute, //
+	chenEerDiagram, //
+	chenEntity, //
+	chenRelationship, //
 	concise, //
 	clock, //
 	componentDiagram, //

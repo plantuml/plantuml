@@ -62,6 +62,8 @@ public enum LeafType {
 
 	PORTIN, PORTOUT,
 
+	CHEN_ENTITY, CHEN_RELATIONSHIP, CHEN_ATTRIBUTE, CHEN_CIRCLE,
+
 	STILL_UNKNOWN;
 
 	public static LeafType getLeafType(String type) {
