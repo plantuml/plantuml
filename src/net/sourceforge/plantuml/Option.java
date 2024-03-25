@@ -157,6 +157,9 @@ public class Option {
 			} else if (s.equalsIgnoreCase("-txmi:argo") || s.equalsIgnoreCase("-xmi:argo")) {
 				setFileFormatOption(new FileFormatOption(FileFormat.XMI_ARGO));
 
+			} else if (s.equalsIgnoreCase("-txmi:script") || s.equalsIgnoreCase("-xmi:script")) {
+				setFileFormatOption(new FileFormatOption(FileFormat.XMI_SCRIPT));
+
 			} else if (s.equalsIgnoreCase("-txmi:star") || s.equalsIgnoreCase("-xmi:star")) {
 				setFileFormatOption(new FileFormatOption(FileFormat.XMI_STAR));
 

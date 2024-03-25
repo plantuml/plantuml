@@ -73,6 +73,7 @@ public enum FileFormat {
 	XMI_STANDARD("application/vnd.xmi+xml"), //
 	XMI_STAR("application/vnd.xmi+xml"), //
 	XMI_ARGO("application/vnd.xmi+xml"), //
+	XMI_SCRIPT("application/vnd.xmi+xml"), //
 	SCXML("application/scxml+xml"), //
 	GRAPHML("application/graphml+xml"), //
 	PDF("application/pdf"), //

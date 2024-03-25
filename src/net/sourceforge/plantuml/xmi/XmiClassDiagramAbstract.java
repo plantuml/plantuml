@@ -107,7 +107,7 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 		model.appendChild(ownedElementRoot);
 
 	}
-
+	
 	private Element createXmiDocumentation() {
 		final Element documentation = document.createElement("XMI.documentation");
 		final Element exporter = document.createElement("XMI.exporter");
