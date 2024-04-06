@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.cheneer.command;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -84,15 +85,19 @@ public class CommandMultiSubclass extends SingleLineCommand2<ChenEerDiagram> {
 			throws NoSuchColorException {
 		final String superclass = diagram.cleanId(arg.get("SUPERCLASS", 0));
 		final String subclasses = arg.get("SUBCLASSES", 0);
-		final List<String> subclassIds = Arrays.stream(subclasses.split(","))
-				.map(String::trim)
-				.map(diagram::cleanId)
-				.collect(Collectors.toList());
+
+		final List<String> subclassIds = new ArrayList<String>();
+
+		for (String subclass : subclasses.split(","))
+			subclassIds.add(diagram.cleanId(subclass.trim()));
+
 		final boolean isDouble = arg.get("PARTICIPATION", 0).equals("=");
 		final String symbol = arg.get("SYMBOL", 0);
 
-		final Quark<Entity> centerQuark = diagram.quarkInContext(false, superclass + "/" + symbol + subclasses + "/center");
-		final Entity centerEntity = diagram.reallyCreateLeaf(centerQuark, Display.create(symbol), LeafType.CHEN_CIRCLE, null);
+		final Quark<Entity> centerQuark = diagram.quarkInContext(false,
+				superclass + "/" + symbol + subclasses + "/center");
+		final Entity centerEntity = diagram.reallyCreateLeaf(centerQuark, Display.create(symbol), LeafType.CHEN_CIRCLE,
+				null);
 
 		final Quark<Entity> superclassQuark = diagram.quarkInContext(true, superclass);
 		final Entity superclassEntity = superclassQuark.getData();
@@ -108,9 +113,7 @@ public class CommandMultiSubclass extends SingleLineCommand2<ChenEerDiagram> {
 			linkType = linkType.withMiddleSuperset();
 		}
 		final Link link = new Link(diagram.getEntityFactory(), diagram.getCurrentStyleBuilder(), superclassEntity,
-				centerEntity,
-				linkType,
-				LinkArg.build(Display.NULL, 2));
+				centerEntity, linkType, LinkArg.build(Display.NULL, 2));
 		link.setPortMembers(diagram.getPortId(superclassEntity.getName()), diagram.getPortId(centerEntity.getName()));
 		diagram.addLink(link);
 
@@ -125,10 +128,8 @@ public class CommandMultiSubclass extends SingleLineCommand2<ChenEerDiagram> {
 			if (!symbol.equals("U")) {
 				subclassLinkType = subclassLinkType.withMiddleSuperset();
 			}
-			final Link subclassLink = new Link(diagram.getEntityFactory(), diagram.getCurrentStyleBuilder(), centerEntity,
-					subclassEntity,
-					subclassLinkType,
-					LinkArg.build(Display.NULL, 3));
+			final Link subclassLink = new Link(diagram.getEntityFactory(), diagram.getCurrentStyleBuilder(),
+					centerEntity, subclassEntity, subclassLinkType, LinkArg.build(Display.NULL, 3));
 			diagram.addLink(subclassLink);
 		}
 
