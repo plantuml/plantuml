@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.utils.Log;
 
 public class XmiClassDiagramScript extends XmiClassDiagramAbstract implements XmlDiagramTransformer {
 
-
 	private static class MemberData {
 		public final String name;
 		public final String id;
@@ -103,7 +102,9 @@ public class XmiClassDiagramScript extends XmiClassDiagramAbstract implements Xm
 				continue;
 
 			element.appendChild(cla);
-			members.computeIfAbsent(ent.getUid(), (e) -> new ArrayList<>());
+			if (members.containsKey(ent.getUid()) == false)
+				members.put(ent.getUid(), new ArrayList<MemberData>());
+
 			NodeList attrs = cla.getElementsByTagName("UML:Attribute");
 			for (int i = 0; i < attrs.getLength(); i++) {
 				Element child = (Element) attrs.item(i);
@@ -287,6 +288,5 @@ public class XmiClassDiagramScript extends XmiClassDiagramAbstract implements Xm
 //		association.setAttribute("parent", uidParent);
 
 	}
-
 
 }

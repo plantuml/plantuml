@@ -86,9 +86,8 @@ public class CommandStyleImport extends SingleLineCommand2<TitledDiagram> {
 			if (path.startsWith("http://") || path.startsWith("https://")) {
 				SURL url = SURL.create(path);
 				try (InputStream remoteInputStream = url.openStream()) {
-					if (remoteInputStream != null) {
+					if (remoteInputStream != null)
 						lines = BlocLines.load(remoteInputStream, location);
-					}
 				}
 			} else {
 				final SFile styleFile = FileSystem.getInstance().getFile(path);
