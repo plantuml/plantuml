@@ -312,6 +312,9 @@ public class PlantUmlTask extends Task {
 		if ("xmi:argo".equalsIgnoreCase(s)) {
 			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_ARGO));
 		}
+		if ("xmi:script".equalsIgnoreCase(s)) {
+			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_SCRIPT));
+		}
 		if ("xmi:start".equalsIgnoreCase(s)) {
 			option.setFileFormatOption(new FileFormatOption(FileFormat.XMI_STAR));
 		}
