@@ -1,12 +1,9 @@
-'' NAME = Sunlust
-'' DESCRIPTION = sunlust theme based off of the [solarized theme](https://ethanschoonover.com/solarized)
-'' AUTHOR = Artem V. Ageev
-'' LICENCE = GPL 3+
+'' NAME = "Sunlust"
+'' DESCRIPTION = "Sunlust theme based off of the [solarized theme](https://ethanschoonover.com/solarized)"
+'' AUTHORS = ["Artem V. Ageev"]
+'' LICENCE = "GPL 3+"
 
 !$THEME = 'sunlust'
-!if %not(%variable_exists("$BGCOLOR"))
-!$BGCOLOR = '#fdf6e3'
-!endif
 scale max 2000 * 2000
 !$colors = {
     "font"      : "#657b83",
@@ -27,107 +24,127 @@ scale max 2000 * 2000
 !$shapes = {
     "TECHNOLOGY" : {
         "color" : "#859900",
-        "shapes" : [ "Node", "File"]
+        "shapes" : [
+            "Node",
+            "File",
+            "Artifact",
+            "Circle"
+        ]
     },
     "APPLICATION" : {
         "color" : "#268bd2",
-        "shapes" : [ "Participant", "Rectangle", "Component" ]
+        "shapes" : [
+            "Participant",
+            "Rectangle",
+            "Component",
+            "Hexagon",
+            "Agent"
+        ]
     },
     "BUSINESS" : {
         "color" : "#b58900",
-        "shapes" : [ "Actor", "Note", "Hexagon", "Boundary", "Control", "Entity" ]
+        "shapes" : [
+            "Actor",
+            "Note",
+            "Boundary",
+            "Control",
+            "Entity",
+            "Person"
+        ]
     },
     "IMPLEMENTATION" : {
         "color" : "#dc322f",
-        "shapes" : [ "Class", "Map", "Json" ]
+        "shapes" : [
+            "Class",
+            "Map",
+            "Json",
+            "Package",
+            "Frame",
+            "Interface"
+        ]
     },
     "MOTIVATION" : {
         "color" : "#6c71c4",
-        "shapes" : [ "Cloud", "Frame", "Collections", "Database", "Queue" ]
+        "shapes" : [
+            "Cloud",
+            "Collections",
+            "Database",
+            "Queue",
+            "Process",
+            "Stack",
+            "Storage"
+        ]
     },
     "STRATEGY" : {
-        "color" : "#STRATEGY",
-        "shapes" : [ "Partition", "Folder", "Card" ]
+        "color" : "#cb4b16",
+        "shapes" : [
+            "Action",
+            "Partition",
+            "Folder",
+            "Usecase",
+            "Card"
+        ]
     }
 }
 !$thickness = 2
 <style>
-    !foreach $lib in %splitstr('root.wbsDiagram.mindmapDiagram.ganttDiagram.saltDiagram', '.')
-        $lib {
-            BackGroundColor $colors.bg
-            arrow {
-                LineColor $colors.font
-                Thickness $thickness
-            }
-            node {
-                LineColor $colors.green
-                BackgroundColor $colors.green_bg
-            }
-            task {
-                LineColor $colors.violet
-                BackGroundColor $colors.violet_bg
-            }
-            milestone {
-                LineColor $colors.red
-                BackGroundColor $colors.red_bg
-            }
-        }
-    !endfor
-</style>
-skinparam {
-    noteTextAlignment left
-    actorStyle awesome
-    Dpi 100
-    Shadowing false
-    BackgroundColor $colors.bg
-    WrapWidth 200
-    RoundCorner 15
-    Swimlane {
-        BorderColor $colors.font
-        Thickness $thickness
-        WrapTitleWidth 150
-    }
-    Arrow {
-        Color $colors.font
+nwdiagDiagram, wbsDiagram, mindmapDiagram, ganttDiagram, saltDiagram, jsonDiagram, yamlDiagram {
+    BackGroundColor $colors.bg
+    arrow {
+        LineColor $colors.font
         Thickness $thickness
     }
-    Default {
-        TextAlignment center
-        FontName Dejavu Serif
+    node {
+        LineColor $colors.green
+        BackgroundColor $colors.green_bg
     }
-    Legend {
-        FontName VL Gothic
-        BorderColor transparent
-        BackgroundColor transparent
+    task {
+        LineColor $colors.violet
+        BackGroundColor $colors.violet_bg
     }
-    Sequence {
-        MessageAlign direction
-        ArrowThickness $thickness
-        LifeLineBorderColor $colors.yellow
-        BoxBorderThickness $thickness
+    milestone {
+        LineColor $colors.red
+        BackGroundColor $colors.red_bg
     }
-    !foreach $shape in %splitstr('Activity.State', '.')
-        $shape {
-            BackgroundColor transparent
-            Border {
-                Color  $colors.violet
-                Thickness $thickness
-            }
-            Diamond {
-                BorderColor $colors.red
-                BackgroundColor transparent
-            }
-        }
-    !endfor
-    !foreach $key in %get_json_keys($shapes)
-        !foreach $shape in $shapes[$key].shapes
-            $shape {
-                BackgroundColor #$key
-                Border {
-                    Color $shapes[$key].color
-                    Thickness $thickness
-                }
-            }
-        !endfor
-    !endfor
 }
+</style>
+
+skinparam noteTextAlignment left
+skinparam actorStyle awesome
+skinparam Dpi 100
+skinparam Shadowing false
+skinparam BackgroundColor $colors.bg
+skinparam WrapWidth 200
+skinparam RoundCorner 15
+skinparam SwimlaneBorderColor $colors.font
+skinparam SwimlaneThickness $thickness
+skinparam SwimlaneWrapTitleWidth 150
+skinparam ArrowColor $colors.font
+skinparam ArrowThickness $thickness
+skinparam DefaultTextAlignment center
+skinparam DefaultFontName Dejavu Serif
+skinparam LegendFontName VL Gothic
+skinparam LegendBorderColor transparent
+skinparam LegendBackgroundColor transparent
+skinparam SequenceMessageAlign direction
+skinparam SequenceArrowThickness $thickness
+skinparam SequenceLifeLineBorderColor $colors.yellow
+skinparam SequenceBoxBorderThickness $thickness
+!foreach $shape in %splitstr('Activity.State', '.')
+skinparam $shape {
+    BackgroundColor transparent
+    BorderColor  $colors.violet
+    BorderThickness $thickness
+    DiamondBorderColor $colors.red
+    DiamondBackgroundColor transparent
+}
+!endfor
+!foreach $key in %get_json_keys($shapes)
+    !foreach $shape in $shapes[$key].shapes
+skinparam $shape {
+    BackgroundColor #$key
+    BorderColor $shapes[$key].color
+    BorderThickness $thickness
+}
+    !endfor
+!endfor
