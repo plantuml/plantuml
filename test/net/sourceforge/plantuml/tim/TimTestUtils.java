@@ -2,6 +2,7 @@ package net.sourceforge.plantuml.tim;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,6 +31,13 @@ public class TimTestUtils {
 	public static void assertTimExpectedOutputFromInput(TFunction func, String input, String expected) throws EaterException {
 		List<TValue> values = Collections.singletonList(TValue.fromString(input));
 		TValue tValue = func.executeReturnFunction(null, null, null, values, null);
+		assertEquals(expected, tValue.toString());
+	}
+
+	// Tfunc: (String, String) -> (String)
+	public static void assertTimExpectedOutputFromInput(TFunction func, String input1, String input2, String expected) throws EaterException {
+		final List<TValue> values = Arrays.asList(TValue.fromString(input1), TValue.fromString(input2));
+		final TValue tValue = func.executeReturnFunction(null, null, null, values, null);
 		assertEquals(expected, tValue.toString());
 	}
 
