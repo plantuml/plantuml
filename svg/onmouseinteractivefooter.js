@@ -16,11 +16,11 @@
 				const N1 = res[1];
 				const N2 = res[2];
 				if (N1==nodeName) {
-					const N2selector = `[id^=elem_${N2}]`;
+					const N2selector = `[id=elem_${N2}]`;
 					nodes.add(topG.findOne(N2selector));
 					edges.add(link);
 				} else if (N2==nodeName) {
-					const N1selector = `[id^=elem_${N1}]`;
+					const N1selector = `[id=elem_${N1}]`;
 					nodes.add(topG.findOne(N1selector));
 					edges.add(link);
 				}
