@@ -60,7 +60,9 @@ PlantUML is a component that allows you to create various UML diagrams through s
   - [MindMap diagram](http://plantuml.com/mindmap-diagram)
   - [WBS (Work Breakdown Structure)](http://plantuml.com/wbs-diagram)
   - [Mathematical Notations (AsciiMath, JLaTeXMath)](http://plantuml.com/ascii-math)
-  - [IE/ER (Information Engineering/Entity Relationship)](http://plantuml.com/ie-diagram)
+  - Entity Relationship (ER) diagram
+    - [Information Engineering (IE) diagram](http://plantuml.com/ie-diagram)
+    - [Entity Relationship (ER) diagram (Chen's notation)](http://alphadoc.plantuml.com/doc/markdown/en/er-diagram)
 
 ### 📣 Additional Features
 

@@ -95,6 +95,7 @@ public class LanguageDescriptor {
 		type.add("json");
 		type.add("action");
 		type.add("process");
+		type.add("relationship");
 
 		keyword.add("@startwire");
 		keyword.add("@startbpm");
@@ -124,6 +125,7 @@ public class LanguageDescriptor {
 		keyword.add("@startregex");
 		keyword.add("@startfiles");
 		keyword.add("@startchronology");
+		keyword.add("@startchen");
 		keyword.add("@endwire");
 		keyword.add("@endbpm");
 		keyword.add("@enduml");
@@ -152,6 +154,7 @@ public class LanguageDescriptor {
 		keyword.add("@endregex");
 		keyword.add("@endfiles");
 		keyword.add("@endchronology");
+		keyword.add("@endchen");
 		keyword.add("as");
 		keyword.add("also");
 		keyword.add("autonumber");
