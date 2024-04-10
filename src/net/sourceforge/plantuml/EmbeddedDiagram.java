@@ -122,6 +122,9 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 		if (s.equals(EMBEDDED_START + "chronology"))
 			return "chronology";
 
+		if (s.equals(EMBEDDED_START + "chen"))
+			return "chen";
+
 		return null;
 	}
 
