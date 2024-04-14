@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.dot;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.concurrent.TimeUnit;
@@ -49,8 +48,8 @@ public class ProcessRunner {
 	// ::remove file when __CORE__
 
 	private final String[] cmd;
-	private String error = "";
-	private String out = "";
+	private String error;
+	private String out;
 
 	public ProcessRunner(String[] cmd) {
 		this.cmd = cmd;
@@ -61,14 +60,14 @@ public class ProcessRunner {
 	}
 
 	public ProcessState run(byte[] in, OutputStream redirection, SFile dir) {
+		Process process = null;
 		try {
 			final ProcessBuilder builder = new ProcessBuilder(cmd);
 			if (dir != null)
 				builder.directory(dir.conv());
-
 			builder.redirectErrorStream(true);
 
-			final Process process = builder.start();
+			process = builder.start();
 
 			// Handling input to the process
 			if (in != null)
@@ -96,20 +95,30 @@ public class ProcessRunner {
 				return ProcessState.TERMINATED_OK();
 			}
 
-			// Process did not finish in time, kill it
-			process.destroy();
-			this.error = "Timeout - kill";
-			if (process.waitFor(500, TimeUnit.MILLISECONDS) == false) {
-				process.destroyForcibly();
-				this.error = "Timeout - kill force";
-			}
-
 			return ProcessState.TIMEOUT();
 
 		} catch (Throwable e) {
 			Logme.error(e);
 			this.error = e.toString();
 			return ProcessState.EXCEPTION(e);
+		} finally {
+			if (process != null && out == null && process.isAlive()) {
+				// Process did not finish in time, kill it
+				process.destroy();
+				// Not really sure that we should overwrite "this.error" here
+				this.error = "Timeout - kill";
+				try {
+					if (process.waitFor(500, TimeUnit.MILLISECONDS) == false) {
+						process.destroyForcibly();
+						this.error = "Timeout - kill force";
+					}
+				} catch (InterruptedException e) {
+					// Nothing we can really do
+					e.printStackTrace();
+				}
+
+			}
+
 		}
 	}
 

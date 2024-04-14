@@ -113,7 +113,7 @@ public class OptionFlags {
 		systemExit = exit;
 		gui = false;
 		quiet = false;
-		checkDotError = false;
+		// checkDotError = false;
 		printFonts = false;
 		// failOnError = false;
 		encodesprite = false;
@@ -130,7 +130,7 @@ public class OptionFlags {
 	private boolean systemExit;
 	private boolean gui;
 	private boolean quiet;
-	private boolean checkDotError;
+	// private boolean checkDotError;
 	private boolean printFonts;
 	private boolean encodesprite;
 	private boolean dumpHtmlStats;
@@ -195,12 +195,12 @@ public class OptionFlags {
 		this.quiet = quiet;
 	}
 
-	public final boolean isCheckDotError() {
-		return checkDotError;
-	}
+//	public final boolean isCheckDotError() {
+//		return checkDotError;
+//	}
 
 	public final void setCheckDotError(boolean checkDotError) {
-		this.checkDotError = checkDotError;
+//		this.checkDotError = checkDotError;
 	}
 
 	private final AtomicBoolean logDataInitized = new AtomicBoolean(false);
