@@ -35,41 +35,27 @@
  */
 package net.sourceforge.plantuml.dot;
 
-import java.io.IOException;
-
 public class ProcessState {
 	// ::remove file when __CORE__
 
 	private final String name;
-	private final IOException cause;
+	private final Throwable cause;
 
-	private ProcessState(String name, IOException cause) {
+	private ProcessState(String name, Throwable cause) {
 		this.name = name;
 		this.cause = cause;
 	}
 
 	@Override
 	public String toString() {
-		if (cause == null) {
+		if (cause == null)
 			return name;
-		}
+
 		return name + " " + cause.toString();
 	}
 
-	private final static ProcessState INIT = new ProcessState("INIT", null);
-	private final static ProcessState RUNNING = new ProcessState("RUNNING", null);
 	private final static ProcessState TERMINATED_OK = new ProcessState("TERMINATED_OK", null);
 	private final static ProcessState TIMEOUT = new ProcessState("TIMEOUT", null);
-
-	// INIT, RUNNING, TERMINATED_OK, TIMEOUT, IO_EXCEPTION1, IO_EXCEPTION2;
-
-	public static ProcessState INIT() {
-		return INIT;
-	}
-
-	public static ProcessState RUNNING() {
-		return RUNNING;
-	}
 
 	public static ProcessState TERMINATED_OK() {
 		return TERMINATED_OK;
@@ -79,12 +65,8 @@ public class ProcessState {
 		return TIMEOUT;
 	}
 
-	public static ProcessState IO_EXCEPTION1(IOException e) {
-		return new ProcessState("IO_EXCEPTION1", e);
-	}
-
-	public static ProcessState IO_EXCEPTION2(IOException e) {
-		return new ProcessState("IO_EXCEPTION2", e);
+	public static ProcessState EXCEPTION(Throwable e) {
+		return new ProcessState("EXCEPTION", e);
 	}
 
 	public boolean differs(ProcessState other) {

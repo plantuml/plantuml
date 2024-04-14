@@ -35,15 +35,13 @@
  */
 package net.sourceforge.plantuml.dot;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.TimeUnit;
 
 import net.sourceforge.plantuml.OptionFlags;
-import net.sourceforge.plantuml.api.MyRunnable;
-import net.sourceforge.plantuml.api.TimeoutExecutor;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 
@@ -51,209 +49,67 @@ public class ProcessRunner {
 	// ::remove file when __CORE__
 
 	private final String[] cmd;
-
-	private String error;
-	private String out;
-
-	private volatile ProcessState state = ProcessState.INIT();
-	private final Lock changeState = new ReentrantLock();
+	private String error = "";
+	private String out = "";
 
 	public ProcessRunner(String[] cmd) {
 		this.cmd = cmd;
 	}
 
-	public ProcessState run(byte in[], OutputStream redirection) {
+	public ProcessState run(byte[] in, OutputStream redirection) {
 		return run(in, redirection, null);
 	}
 
-	public ProcessState run(byte in[], OutputStream redirection, SFile dir) {
-		if (this.state.differs(ProcessState.INIT())) {
-			throw new IllegalStateException();
-		}
-		this.state = ProcessState.RUNNING();
-		final MainThread mainThread = new MainThread(cmd, dir, redirection, in);
+	public ProcessState run(byte[] in, OutputStream redirection, SFile dir) {
 		try {
-			// http://steveliles.github.io/invoking_processes_from_java.html
+			final ProcessBuilder builder = new ProcessBuilder(cmd);
+			if (dir != null)
+				builder.directory(dir.conv());
+
+			builder.redirectErrorStream(true);
+
+			final Process process = builder.start();
+
+			// Handling input to the process
+			if (in != null)
+				try (OutputStream os = process.getOutputStream()) {
+					os.write(in);
+				}
+
+			final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			try (InputStream is = process.getInputStream()) {
+				final byte[] buffer = new byte[1024];
+				int length;
+				while ((length = is.read(buffer)) != -1) {
+					outputStream.write(buffer, 0, length);
+					if (redirection != null)
+						redirection.write(buffer, 0, length);
+				}
+			}
+
+			// Wait for process to terminate
 			final long timeoutMs = OptionFlags.getInstance().getTimeoutMs();
-			final boolean done = new TimeoutExecutor(timeoutMs).executeNow(mainThread);
-		} finally {
-			changeState.lock();
-			try {
-				if (state.equals(ProcessState.RUNNING())) {
-					state = ProcessState.TIMEOUT();
-					// mainThread.cancel();
-				}
-			} finally {
-				changeState.unlock();
-			}
-		}
-		if (state.equals(ProcessState.TERMINATED_OK())) {
-			assert mainThread != null;
-			this.error = mainThread.getError();
-			this.out = mainThread.getOut();
-		}
-		return state;
-	}
-
-	class MainThread implements MyRunnable {
-
-		private final String[] cmd;
-		private final SFile dir;
-		private final OutputStream redirection;
-		private final byte[] in;
-		private volatile Process process;
-		private volatile ThreadStream errorStream;
-		private volatile ThreadStream outStream;
-
-		public MainThread(String[] cmd, SFile dir, OutputStream redirection, byte[] in) {
-			this.cmd = cmd;
-			this.dir = dir;
-			this.redirection = redirection;
-			this.in = in;
-		}
-
-		public String getOut() {
-			return outStream.getString();
-		}
-
-		public String getError() {
-			return errorStream.getString();
-		}
-
-		public void runJob() throws InterruptedException {
-			try {
-				startThreads();
-				if (state.equals(ProcessState.RUNNING())) {
-					final int result = joinInternal();
-				}
-			} finally {
-				changeState.lock();
-				try {
-					if (state.equals(ProcessState.RUNNING())) {
-						state = ProcessState.TERMINATED_OK();
-					}
-				} finally {
-					changeState.unlock();
-				}
-				if (process != null) {
-					process.destroy();
-					close(process.getErrorStream());
-					close(process.getOutputStream());
-					close(process.getInputStream());
-				}
+			final boolean finished = process.waitFor(timeoutMs, TimeUnit.MILLISECONDS);
+			outputStream.close();
+			if (finished) {
+				this.out = new String(outputStream.toByteArray(), "UTF-8");
+				return ProcessState.TERMINATED_OK();
 			}
 
-		}
-
-		public void cancelJob() {
-			// The changeState lock is ok
-			// assert changeState.tryLock();
-			// assert state == ProcessState.TIMEOUT;
-			if (process != null) {
-				errorStream.cancel();
-				outStream.cancel();
-				process.destroy();
-				// interrupt();
-				close(process.getErrorStream());
-				close(process.getOutputStream());
-				close(process.getInputStream());
+			// Process did not finish in time, kill it
+			process.destroy();
+			this.error = "Timeout - kill";
+			if (process.waitFor(500, TimeUnit.MILLISECONDS) == false) {
+				process.destroyForcibly();
+				this.error = "Timeout - kill force";
 			}
-		}
 
-		private void startThreads() {
-			try {
-				process = Runtime.getRuntime().exec(cmd, null, dir == null ? null : dir.conv());
-			} catch (IOException e) {
-				Logme.error(e);
-				changeState.lock();
-				try {
-					state = ProcessState.IO_EXCEPTION1(e);
-				} finally {
-					changeState.unlock();
-				}
-				Logme.error(e);
-				return;
-			}
-			errorStream = new ThreadStream(process.getErrorStream(), null);
-			outStream = new ThreadStream(process.getInputStream(), redirection);
-			errorStream.start();
-			outStream.start();
-			if (in != null) {
-				final OutputStream os = process.getOutputStream();
-				try {
-					try {
-						os.write(in);
-					} finally {
-						os.close();
-					}
-				} catch (IOException e) {
-					changeState.lock();
-					try {
-						state = ProcessState.IO_EXCEPTION2(e);
-					} finally {
-						changeState.unlock();
-					}
-					Logme.error(e);
-				}
-			}
-		}
+			return ProcessState.TIMEOUT();
 
-		public int joinInternal() throws InterruptedException {
-			errorStream.join();
-			outStream.join();
-			final int result = process.waitFor();
-			return result;
-		}
-
-	}
-
-	class ThreadStream extends Thread {
-
-		private volatile InputStream streamToRead;
-		private volatile OutputStream redirection;
-		private volatile StringBuffer sb = new StringBuffer();
-
-		ThreadStream(InputStream streamToRead, OutputStream redirection) {
-			this.streamToRead = streamToRead;
-			this.redirection = redirection;
-		}
-
-		public String getString() {
-			if (sb == null) {
-				return "";
-			}
-			return sb.toString();
-		}
-
-		public void cancel() {
-			assert state.equals(ProcessState.TIMEOUT()) || state.equals(ProcessState.RUNNING()) : state;
-			this.interrupt();
-			sb = null;
-			streamToRead = null;
-			redirection = null;
-			// Because of this, some NPE may occurs in run() method, but we do not care
-		}
-
-		@Override
-		public void run() {
-			int read = 0;
-			try {
-				while ((read = streamToRead.read()) != -1) {
-					if (state.equals(ProcessState.TIMEOUT())) {
-						return;
-					}
-					if (redirection == null) {
-						sb.append((char) read);
-					} else {
-						redirection.write(read);
-					}
-				}
-			} catch (Throwable e) {
-				System.err.println("ProcessRunnerA " + e);
-				Logme.error(e);
-				sb.append('\n');
-				sb.append(e.toString());
-			}
+		} catch (Throwable e) {
+			Logme.error(e);
+			this.error = e.toString();
+			return ProcessState.EXCEPTION(e);
 		}
 	}
 
@@ -263,26 +119,6 @@ public class ProcessRunner {
 
 	public final String getOut() {
 		return out;
-	}
-
-	private void close(InputStream is) {
-		try {
-			if (is != null) {
-				is.close();
-			}
-		} catch (IOException e) {
-			Logme.error(e);
-		}
-	}
-
-	private void close(OutputStream os) {
-		try {
-			if (os != null) {
-				os.close();
-			}
-		} catch (IOException e) {
-			Logme.error(e);
-		}
 	}
 
 }

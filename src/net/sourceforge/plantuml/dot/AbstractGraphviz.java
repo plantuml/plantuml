@@ -61,14 +61,13 @@ abstract class AbstractGraphviz implements Graphviz {
 
 	private static String findExecutableOnPath(String name) {
 		final String path = System.getenv("PATH");
-		if (path != null) {
+		if (path != null) 
 			for (String dirname : path.split(SFile.pathSeparator)) {
 				final File file = new File(dirname, name);
-				if (file.isFile() && file.canExecute()) {
+				if (file.isFile() && file.canExecute())
 					return file.getAbsolutePath();
-				}
 			}
-		}
+		
 		return null;
 	}
 
@@ -84,12 +83,12 @@ abstract class AbstractGraphviz implements Graphviz {
 
 	final protected File searchDotExe() {
 		String getenv = GraphvizUtils.getenvGraphvizDot();
-		if (findExecutableOnPath() && getenv == null) {
+		if (findExecutableOnPath() && getenv == null)
 			getenv = findExecutableOnPath(getExeName());
-		}
-		if (getenv == null) {
+
+		if (getenv == null)
 			return specificDotExe();
-		}
+
 		return new File(getenv);
 	}
 
@@ -100,11 +99,9 @@ abstract class AbstractGraphviz implements Graphviz {
 	final public ProcessState createFile3(OutputStream os) {
 		Objects.requireNonNull(dotString);
 
-		if (getExeState() != ExeState.OK) {
-			// createPngNoGraphviz(os, new
-			// FileFormatOption(FileFormat.valueOf(type[0].goUpperCase())));
+		if (getExeState() != ExeState.OK)
 			throw new IllegalStateException();
-		}
+
 		final String cmd[] = getCommandLine();
 		ProcessRunner p = null;
 		ProcessState state = null;
@@ -113,9 +110,6 @@ abstract class AbstractGraphviz implements Graphviz {
 			Log.info("DotString size: " + dotString.length());
 			p = new ProcessRunner(cmd);
 			state = p.run(dotString.getBytes(), os);
-			// if (state == ProcessState.TERMINATED_OK) {
-			// result = true;
-			// }
 			Log.info("Ending process ok");
 		} catch (Throwable e) {
 			Logme.error(e);
@@ -129,15 +123,15 @@ abstract class AbstractGraphviz implements Graphviz {
 		}
 		if (OptionFlags.getInstance().isCheckDotError() && p != null && p.getError().length() > 0) {
 			Log.error("GraphViz error stream : " + p.getError());
-			if (OptionFlags.getInstance().isCheckDotError()) {
+			if (OptionFlags.getInstance().isCheckDotError())
 				throw new IllegalStateException("Dot error " + p.getError());
-			}
+
 		}
 		if (OptionFlags.getInstance().isCheckDotError() && p != null && p.getOut().length() > 0) {
 			Log.error("GraphViz out stream : " + p.getOut());
-			if (OptionFlags.getInstance().isCheckDotError()) {
+			if (OptionFlags.getInstance().isCheckDotError())
 				throw new IllegalStateException("Dot out " + p.getOut());
-			}
+
 		}
 		return state;
 	}
@@ -154,17 +148,17 @@ abstract class AbstractGraphviz implements Graphviz {
 	private String executeCmd(final String cmd[]) {
 		final ProcessRunner p = new ProcessRunner(cmd);
 		final ProcessState state = p.run(null, null);
-		if (state.differs(ProcessState.TERMINATED_OK())) {
+		if (state.differs(ProcessState.TERMINATED_OK()))
 			return "?";
-		}
+
 		final StringBuilder sb = new StringBuilder();
-		if (StringUtils.isNotEmpty(p.getOut())) {
+		if (StringUtils.isNotEmpty(p.getOut()))
 			sb.append(p.getOut());
-		}
+
 		if (StringUtils.isNotEmpty(p.getError())) {
-			if (sb.length() > 0) {
+			if (sb.length() > 0)
 				sb.append(' ');
-			}
+
 			sb.append(p.getError());
 		}
 		return StringUtils.trin(sb.toString().replace('\n', ' '));
@@ -177,16 +171,16 @@ abstract class AbstractGraphviz implements Graphviz {
 			result[1] = "-n";
 			result[2] = "10";
 			result[3] = getDotExe().getAbsolutePath();
-			for (int i = 0; i < type.length; i++) {
+			for (int i = 0; i < type.length; i++)
 				result[i + 4] = "-T" + type[i];
-			}
+
 			return result;
 		}
 		final String[] result = new String[type.length + 1];
 		result[0] = getDotExe().getAbsolutePath();
-		for (int i = 0; i < type.length; i++) {
+		for (int i = 0; i < type.length; i++)
 			result[i + 1] = "-T" + type[i];
-		}
+
 		return result;
 	}
 
