@@ -110,7 +110,9 @@ import net.sourceforge.plantuml.tim.stdlib.IntVal;
 import net.sourceforge.plantuml.tim.stdlib.InvokeProcedure;
 import net.sourceforge.plantuml.tim.stdlib.IsDark;
 import net.sourceforge.plantuml.tim.stdlib.IsLight;
+import net.sourceforge.plantuml.tim.stdlib.JsonAdd;
 import net.sourceforge.plantuml.tim.stdlib.JsonKeyExists;
+import net.sourceforge.plantuml.tim.stdlib.JsonRemove;
 import net.sourceforge.plantuml.tim.stdlib.Lighten;
 import net.sourceforge.plantuml.tim.stdlib.LoadJson;
 import net.sourceforge.plantuml.tim.stdlib.LogicalAnd;
@@ -132,6 +134,7 @@ import net.sourceforge.plantuml.tim.stdlib.SetVariableValue;
 import net.sourceforge.plantuml.tim.stdlib.Size;
 import net.sourceforge.plantuml.tim.stdlib.SplitStr;
 import net.sourceforge.plantuml.tim.stdlib.SplitStrRegex;
+import net.sourceforge.plantuml.tim.stdlib.Str2Json;
 import net.sourceforge.plantuml.tim.stdlib.StringFunction;
 import net.sourceforge.plantuml.tim.stdlib.Strlen;
 import net.sourceforge.plantuml.tim.stdlib.Strpos;
@@ -216,6 +219,9 @@ public class TContext {
 		functionsSet.addFunction(new GetAllTheme());
 		functionsSet.addFunction(new GetAllStdlib());
 		functionsSet.addFunction(new SplitStrRegex());
+		functionsSet.addFunction(new Str2Json());
+		functionsSet.addFunction(new JsonAdd());
+		functionsSet.addFunction(new JsonRemove());
 		// %standard_exists_function
 		// %str_replace
 		// !exit
