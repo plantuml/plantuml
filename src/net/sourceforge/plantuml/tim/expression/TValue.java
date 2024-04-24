@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.tim.expression;
 
 import java.util.Objects;
 
+import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonValue;
 
 public final class TValue {
@@ -221,4 +222,13 @@ public final class TValue {
 		return jsonValue;
 	}
 
+	public JsonValue toJsonValue() {
+		if (isNumber()) {
+			return Json.value(this.intValue);
+		}
+		if (isString()) {
+			return Json.value(this.stringValue);
+		}
+		return this.jsonValue;
+	}
 }

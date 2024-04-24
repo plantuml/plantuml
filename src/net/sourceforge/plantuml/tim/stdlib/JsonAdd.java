@@ -72,17 +72,15 @@ public class JsonAdd extends SimpleReturnFunction {
 		if (!json.isArray() && !json.isObject())
 			return data;
 		if (json.isArray()) {
-			final JsonValue value = values.get(1).toJson();
-			final JsonArray array = (JsonArray) json;
-			array.add(value);
-			return TValue.fromJson(array);
+			final JsonValue value = values.get(1).toJsonValue();
+			json.asArray().add(value);
+			return TValue.fromJson(json);
 		}
 		if (json.isObject()) {
 			final String name = values.get(1).toString();
-			final JsonValue value = values.get(2).toJson();
-			final JsonObject object = (JsonObject) json;
-			object.add(name, value);
-			return TValue.fromJson(object);
+			final JsonValue value = values.get(2).toJsonValue();
+			json.asObject().add(name, value);
+			return TValue.fromJson(json);
 		}
 		throw new EaterException("Bad JSON type", location);
 	}
