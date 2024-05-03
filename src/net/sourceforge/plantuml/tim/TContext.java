@@ -113,6 +113,7 @@ import net.sourceforge.plantuml.tim.stdlib.IsLight;
 import net.sourceforge.plantuml.tim.stdlib.JsonAdd;
 import net.sourceforge.plantuml.tim.stdlib.JsonKeyExists;
 import net.sourceforge.plantuml.tim.stdlib.JsonRemove;
+import net.sourceforge.plantuml.tim.stdlib.JsonSet;
 import net.sourceforge.plantuml.tim.stdlib.Lighten;
 import net.sourceforge.plantuml.tim.stdlib.LoadJson;
 import net.sourceforge.plantuml.tim.stdlib.LogicalAnd;
@@ -222,6 +223,7 @@ public class TContext {
 		functionsSet.addFunction(new Str2Json());
 		functionsSet.addFunction(new JsonAdd());
 		functionsSet.addFunction(new JsonRemove());
+		functionsSet.addFunction(new JsonSet());
 		// %standard_exists_function
 		// %str_replace
 		// !exit

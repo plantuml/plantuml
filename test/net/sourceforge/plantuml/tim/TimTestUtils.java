@@ -69,6 +69,27 @@ public class TimTestUtils {
 		assertEquals(expected, tValue.toString());
 	}
 
+	// Tfunc: (JsonValue, Int, Int) -> (String)
+	public static void assertTimExpectedOutputFromInput(TFunction func, JsonValue input1,  Integer input2, Integer input3, String expected) throws EaterException {
+		final List<TValue> values = Arrays.asList(TValue.fromJson(input1), TValue.fromInt(input2), TValue.fromInt(input3));
+		final TValue tValue = func.executeReturnFunction(null, null, null, values, null);
+		assertEquals(expected, tValue.toString());
+	}
+
+	// Tfunc: (JsonValue, Int, String) -> (String)
+	public static void assertTimExpectedOutputFromInput(TFunction func, JsonValue input1,  Integer input2, String input3, String expected) throws EaterException {
+		final List<TValue> values = Arrays.asList(TValue.fromJson(input1), TValue.fromInt(input2), TValue.fromString(input3));
+		final TValue tValue = func.executeReturnFunction(null, null, null, values, null);
+		assertEquals(expected, tValue.toString());
+	}
+
+	// Tfunc: (JsonValue, Int, JsonValue) -> (String)
+	public static void assertTimExpectedOutputFromInput(TFunction func, JsonValue input1,  Integer input2, JsonValue input3, String expected) throws EaterException {
+		final List<TValue> values = Arrays.asList(TValue.fromJson(input1), TValue.fromInt(input2), TValue.fromJson(input3));
+		final TValue tValue = func.executeReturnFunction(null, null, null, values, null);
+		assertEquals(expected, tValue.toString());
+	}
+
 	// Tfunc: (JsonValue, String) -> (String)
 	public static void assertTimExpectedOutputFromInput(TFunction func, JsonValue input1,  String input2, String expected) throws EaterException {
 		final List<TValue> values = Arrays.asList(TValue.fromJson(input1), TValue.fromString(input2));
