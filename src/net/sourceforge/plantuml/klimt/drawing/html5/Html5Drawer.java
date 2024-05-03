@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -37,10 +37,11 @@ package net.sourceforge.plantuml.klimt.drawing.html5;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 
 public class Html5Drawer {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private int maxX = 10;
 	private int maxY = 10;
@@ -121,13 +122,13 @@ public class Html5Drawer {
 		data.add("ctx.stroke();");
 	}
 
-	public void htmlLine(double x1, double y1, double x2, double y2, double deltaShadow) {
-		ensureVisible(x1 + 2 * deltaShadow, y1 + 2 * deltaShadow);
-		ensureVisible(x2 + 2 * deltaShadow, y2 + 2 * deltaShadow);
+	public void htmlLine(double deltaShadow, RectangleCoordinates rectangleCoordinates) {
+		ensureVisible(rectangleCoordinates.getX1() + 2 * deltaShadow, rectangleCoordinates.getY1() + 2 * deltaShadow);
+		ensureVisible(rectangleCoordinates.getX2() + 2 * deltaShadow, rectangleCoordinates.getY2() + 2 * deltaShadow);
 		data.add("ctx.strokeStyle='" + strokeStyle + "';");
 		data.add("ctx.beginPath();");
-		data.add("ctx.moveTo(" + format(x1) + "," + format(y1) + ");");
-		data.add("ctx.lineTo(" + format(x2) + "," + format(y2) + ");");
+		data.add("ctx.moveTo(" + format(rectangleCoordinates.getX1()) + "," + format(rectangleCoordinates.getY1()) + ");");
+		data.add("ctx.lineTo(" + format(rectangleCoordinates.getX2()) + "," + format(rectangleCoordinates.getY2()) + ");");
 		data.add("ctx.stroke();");
 		data.add("ctx.closePath();");
 	}

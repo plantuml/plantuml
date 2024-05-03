@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.elk;
@@ -39,28 +39,10 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
-
-/*
- * You can choose between real "org.eclipse.elk..." classes or proxied "net.sourceforge.plantuml.elk.proxy..."
- * 
- * Using proxied classes allows to compile PlantUML without having ELK available on the classpath.
- * Since GraphViz is the default layout engine up to now, we do not want to enforce the use of ELK just for compilation.
- * (for people not using maven)
- * 
- * If you are debugging, you should probably switch to "org.eclipse.elk..." classes
- * 
- */
-
-/*
-import org.eclipse.elk.graph.ElkBendPoint;
-import org.eclipse.elk.graph.ElkEdge;
-import org.eclipse.elk.graph.ElkEdgeSection;
-import org.eclipse.elk.graph.ElkLabel;
-*/
-
 import net.sourceforge.plantuml.elk.proxy.graph.ElkBendPoint;
 import net.sourceforge.plantuml.elk.proxy.graph.ElkEdge;
 import net.sourceforge.plantuml.elk.proxy.graph.ElkEdgeSection;
@@ -84,8 +66,25 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
 
+/*
+ * You can choose between real "org.eclipse.elk..." classes or proxied "net.sourceforge.plantuml.elk.proxy..."
+ *
+ * Using proxied classes allows to compile PlantUML without having ELK available on the classpath.
+ * Since GraphViz is the default layout engine up to now, we do not want to enforce the use of ELK just for compilation.
+ * (for people not using maven)
+ *
+ * If you are debugging, you should probably switch to "org.eclipse.elk..." classes
+ *
+ */
+/*
+import org.eclipse.elk.graph.ElkBendPoint;
+import org.eclipse.elk.graph.ElkEdge;
+import org.eclipse.elk.graph.ElkEdgeSection;
+import org.eclipse.elk.graph.ElkLabel;
+*/
+
 public class ElkPath implements UDrawable {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private final Link link;
 	private final ElkEdge edge;
@@ -100,7 +99,7 @@ public class ElkPath implements UDrawable {
 	private final double magicY2;
 
 	public ElkPath(ICucaDiagram diagram, SName styleName, Link link, ElkEdge edge, TextBlock centerLabel,
-			TextBlock tailLabel, TextBlock headLabel, double magicY2) {
+					TextBlock tailLabel, TextBlock headLabel, double magicY2) {
 		this.link = link;
 		this.edge = edge;
 
@@ -210,18 +209,18 @@ public class ElkPath implements UDrawable {
 			double y1 = section.getStartY();
 
 			for (ElkBendPoint pt : points) {
-				drawLine(ug, x1, y1, pt.getX(), pt.getY());
+				drawLine(ug, new RectangleCoordinates(x1, y1, pt.getX(), pt.getY()));
 				x1 = pt.getX();
 				y1 = pt.getY();
 			}
 
-			drawLine(ug, x1, y1, section.getEndX(), section.getEndY() + magicY2);
+			drawLine(ug, new RectangleCoordinates(x1, y1, section.getEndX(), section.getEndY() + magicY2));
 		}
 	}
 
-	private void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {
-		final ULine line = new ULine(x2 - x1, y2 - y1);
-		ug.apply(new UTranslate(x1, y1)).draw(line);
+	private void drawLine(UGraphic ug, RectangleCoordinates rectangleCoordinates) {
+		final ULine line = new ULine(rectangleCoordinates.getX2() - rectangleCoordinates.getX1(), rectangleCoordinates.getY2() - rectangleCoordinates.getY1());
+		ug.apply(new UTranslate(rectangleCoordinates.getX1(), rectangleCoordinates.getY1())).draw(line);
 	}
 
 }

@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.dot;
@@ -42,6 +42,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -92,7 +93,7 @@ public class Neighborhood {
 		for (Link link : allButSametails) {
 			final SvekLine line = bibliotekon.getLine(link);
 			final XPoint2D contact = link.getEntity1() == leaf ? line.getStartContactPoint()
-					: line.getEndContactPoint();
+							: line.getEndContactPoint();
 			if (contact == null) {
 				// assert false;
 				continue;
@@ -122,22 +123,22 @@ public class Neighborhood {
 	static XPoint2D intersection(XRectangle2D rect, XPoint2D pt1, XPoint2D pt2) {
 		XPoint2D p;
 		p = intersection(new XPoint2D(rect.getMinX(), rect.getMinY()), new XPoint2D(rect.getMaxX(), rect.getMinY()),
-				pt1, pt2);
+						pt1, pt2);
 		if (p != null)
 			return p;
 
 		p = intersection(new XPoint2D(rect.getMinX(), rect.getMaxY()), new XPoint2D(rect.getMaxX(), rect.getMaxY()),
-				pt1, pt2);
+						pt1, pt2);
 		if (p != null)
 			return p;
 
 		p = intersection(new XPoint2D(rect.getMinX(), rect.getMinY()), new XPoint2D(rect.getMinX(), rect.getMaxY()),
-				pt1, pt2);
+						pt1, pt2);
 		if (p != null)
 			return p;
 
 		p = intersection(new XPoint2D(rect.getMaxX(), rect.getMinY()), new XPoint2D(rect.getMaxX(), rect.getMaxY()),
-				pt1, pt2);
+						pt1, pt2);
 		if (p != null)
 			return p;
 
@@ -147,29 +148,33 @@ public class Neighborhood {
 	static private XPoint2D intersection(XPoint2D pt1, XPoint2D pt2, XPoint2D pt3, XPoint2D pt4) {
 		// System.err.println("Checking intersection of " + pt1 + "-" + pt2 + " and " +
 		// pt3 + "-" + pt4);
-		return intersection(pt1.getX(), pt1.getY(), pt2.getX(), pt2.getY(), pt3.getX(), pt3.getY(), pt4.getX(),
-				pt4.getY());
+		return intersection(pt3.getX(), pt3.getY(), pt4.getX(),
+						pt4.getY(), new RectangleCoordinates(
+										pt1.getX(),
+										pt1.getY(),
+										pt2.getX(),
+										pt2.getY()));
 	}
 
 	private static final double epsilon = .001;
 
-	static private XPoint2D intersection(double x1, double y1, double x2, double y2, double x3, double y3, double x4,
-			double y4) {
-		final double d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+	static private XPoint2D intersection(double x3, double y3, double x4,
+					double y4, RectangleCoordinates rectangleCoordinates) {
+		final double d = (rectangleCoordinates.getX1() - rectangleCoordinates.getX2()) * (y3 - y4) - (rectangleCoordinates.getY1() - rectangleCoordinates.getY2()) * (x3 - x4);
 		if (d == 0)
 			return null;
 
-		final double xi = ((x3 - x4) * (x1 * y2 - y1 * x2) - (x1 - x2) * (x3 * y4 - y3 * x4)) / d;
-		final double yi = ((y3 - y4) * (x1 * y2 - y1 * x2) - (y1 - y2) * (x3 * y4 - y3 * x4)) / d;
+		final double xi = ((x3 - x4) * (rectangleCoordinates.getX1() * rectangleCoordinates.getY2() - rectangleCoordinates.getY1() * rectangleCoordinates.getX2()) - (rectangleCoordinates.getX1() - rectangleCoordinates.getX2()) * (x3 * y4 - y3 * x4)) / d;
+		final double yi = ((y3 - y4) * (rectangleCoordinates.getX1() * rectangleCoordinates.getY2() - rectangleCoordinates.getY1() * rectangleCoordinates.getX2()) - (rectangleCoordinates.getY1() - rectangleCoordinates.getY2()) * (x3 * y4 - y3 * x4)) / d;
 
 		final XPoint2D p = new XPoint2D(xi, yi);
-		if (xi + epsilon < Math.min(x1, x2) || xi - epsilon > Math.max(x1, x2))
+		if (xi + epsilon < Math.min(rectangleCoordinates.getX1(), rectangleCoordinates.getX2()) || xi - epsilon > Math.max(rectangleCoordinates.getX1(), rectangleCoordinates.getX2()))
 			return null;
 
 		if (xi + epsilon < Math.min(x3, x4) || xi - epsilon > Math.max(x3, x4))
 			return null;
 
-		if (yi + epsilon < Math.min(y1, y2) || yi - epsilon > Math.max(y1, y2))
+		if (yi + epsilon < Math.min(rectangleCoordinates.getY1(), rectangleCoordinates.getY2()) || yi - epsilon > Math.max(rectangleCoordinates.getY1(), rectangleCoordinates.getY2()))
 			return null;
 
 		if (yi + epsilon < Math.min(y3, y4) || yi - epsilon > Math.max(y3, y4))
@@ -179,12 +184,12 @@ public class Neighborhood {
 	}
 
 	private void drawLine(UGraphic ug, XPoint2D pt1, XPoint2D pt2) {
-		drawLine(ug, pt1.getX(), pt1.getY(), pt2.getX(), pt2.getY());
+		drawLine(ug, new RectangleCoordinates(pt1.getX(), pt1.getY(), pt2.getX(), pt2.getY()));
 	}
 
-	private void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {
-		final ULine line = new ULine(x2 - x1, y2 - y1);
-		ug.apply(new UTranslate(x1, y1)).draw(line);
+	private void drawLine(UGraphic ug, RectangleCoordinates rectangleCoordinates) {
+		final ULine line = new ULine(rectangleCoordinates.getX2() - rectangleCoordinates.getX1(), rectangleCoordinates.getY2() - rectangleCoordinates.getY1());
+		ug.apply(new UTranslate(rectangleCoordinates.getX1(), rectangleCoordinates.getY1())).draw(line);
 	}
 
 }

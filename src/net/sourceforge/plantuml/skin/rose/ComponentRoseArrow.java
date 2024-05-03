@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,11 +30,12 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.skin.rose;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -66,8 +67,8 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 	private final int inclination2;
 
 	public ComponentRoseArrow(Style style, Display stringsToDisplay, ArrowConfiguration arrowConfiguration,
-			HorizontalAlignment messagePosition, ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize,
-			boolean niceArrow, boolean belowForResponse) {
+					HorizontalAlignment messagePosition, ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize,
+					boolean niceArrow, boolean belowForResponse) {
 		super(style, stringsToDisplay, arrowConfiguration, spriteContainer, maxMessageSize);
 		this.messagePosition = messagePosition;
 		this.niceArrow = niceArrow;
@@ -142,16 +143,24 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		}
 
 		drawDressing1(ug.apply(new UTranslate(pos1, posArrow + inclination1)), dressing1,
-				arrowConfiguration.getDecoration1(), lenFull);
+						arrowConfiguration.getDecoration1(), lenFull);
 		drawDressing2(ug.apply(new UTranslate(pos2, posArrow + inclination2)), dressing2,
-				arrowConfiguration.getDecoration2(), lenFull);
+						arrowConfiguration.getDecoration2(), lenFull);
 
 		if (inclination1 == 0 && inclination2 == 0)
 			arrowConfiguration.applyStroke(ug).apply(new UTranslate(start, posArrow)).draw(new ULine(len, 0));
 		else if (inclination1 != 0)
-			drawLine(arrowConfiguration.applyStroke(ug), start + len, posArrow, 0, posArrow + inclination1);
+			drawLine(arrowConfiguration.applyStroke(ug), new RectangleCoordinates(
+							start + len,
+							posArrow,
+							0,
+							posArrow + inclination1));
 		else if (inclination2 != 0)
-			drawLine(arrowConfiguration.applyStroke(ug), start, posArrow, pos2, posArrow + inclination2);
+			drawLine(arrowConfiguration.applyStroke(ug), new RectangleCoordinates(
+							start,
+							posArrow,
+							pos2,
+							posArrow + inclination2));
 
 		final ArrowDirection direction2 = getDirection2();
 		final double textPos;
@@ -161,19 +170,19 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		} else if (messagePosition == HorizontalAlignment.RIGHT) {
 			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();
 			textPos = dimensionToUse.getWidth() - textWidth - getMarginX2()
-					- (direction2 == ArrowDirection.LEFT_TO_RIGHT_NORMAL ? getArrowDeltaX() : 0);
+							- (direction2 == ArrowDirection.LEFT_TO_RIGHT_NORMAL ? getArrowDeltaX() : 0);
 		} else {
 			textPos = getMarginX1()
-					+ (direction2 == ArrowDirection.RIGHT_TO_LEFT_REVERSE || direction2 == ArrowDirection.BOTH_DIRECTION
+							+ (direction2 == ArrowDirection.RIGHT_TO_LEFT_REVERSE || direction2 == ArrowDirection.BOTH_DIRECTION
 							? getArrowDeltaX()
 							: 0);
 		}
 		getTextBlock().drawU(ug.apply(new UTranslate(textPos, yText)));
 	}
 
-	private void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {
-		ug = ug.apply(new UTranslate(x1, y1));
-		ug.draw(new ULine(x2 - x1, y2 - y1));
+	private void drawLine(UGraphic ug, RectangleCoordinates rectangleCoordinates) {
+		ug = ug.apply(new UTranslate(rectangleCoordinates.getX1(), rectangleCoordinates.getY1()));
+		ug.draw(new ULine(rectangleCoordinates.getX2() - rectangleCoordinates.getX1(), rectangleCoordinates.getY2() - rectangleCoordinates.getY1()));
 
 	}
 
@@ -193,7 +202,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		if (decoration == ArrowDecoration.CIRCLE) {
 			final UEllipse circle = UEllipse.build(diamCircle, diamCircle);
 			ug.apply(UStroke.withThickness(thinCircle)).apply(getForegroundColor())
-					.apply(new UTranslate(-diamCircle / 2 - thinCircle, -diamCircle / 2 - thinCircle / 2)).draw(circle);
+							.apply(new UTranslate(-diamCircle / 2 - thinCircle, -diamCircle / 2 - thinCircle / 2)).draw(circle);
 			if (dressing.getHead() != ArrowHead.CROSSX)
 				ug = ug.apply(UTranslate.dx(diamCircle / 2 + thinCircle));
 		}
@@ -201,18 +210,18 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		if (dressing.getHead() == ArrowHead.ASYNC) {
 			if (dressing.getPart() != ArrowPart.BOTTOM_PART)
 				getArrowConfiguration().applyThicknessOnly(ug).draw(
-						new ULine(getArrowDeltaX(), -getArrowDeltaY()).rotate(Math.atan2(-inclination1, lenFull)));
+								new ULine(getArrowDeltaX(), -getArrowDeltaY()).rotate(Math.atan2(-inclination1, lenFull)));
 
 			if (dressing.getPart() != ArrowPart.TOP_PART)
 				getArrowConfiguration().applyThicknessOnly(ug)
-						.draw(new ULine(getArrowDeltaX(), getArrowDeltaY()).rotate(Math.atan2(-inclination1, lenFull)));
+								.draw(new ULine(getArrowDeltaX(), getArrowDeltaY()).rotate(Math.atan2(-inclination1, lenFull)));
 
 		} else if (dressing.getHead() == ArrowHead.CROSSX) {
 			ug = ug.apply(UStroke.withThickness(2));
 			ug.apply(new UTranslate(spaceCrossX, -getArrowDeltaX() / 2))
-					.draw(new ULine(getArrowDeltaX(), getArrowDeltaX()));
+							.draw(new ULine(getArrowDeltaX(), getArrowDeltaX()));
 			ug.apply(new UTranslate(spaceCrossX, getArrowDeltaX() / 2))
-					.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));
+							.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));
 		} else if (dressing.getHead() == ArrowHead.NORMAL) {
 			final UPolygon polygon = getPolygonReverse(dressing.getPart());
 
@@ -237,18 +246,18 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		if (dressing.getHead() == ArrowHead.ASYNC) {
 			if (dressing.getPart() != ArrowPart.BOTTOM_PART)
 				getArrowConfiguration().applyThicknessOnly(ug).draw(
-						new ULine(-getArrowDeltaX(), -getArrowDeltaY()).rotate(Math.atan2(inclination2, lenFull)));
+								new ULine(-getArrowDeltaX(), -getArrowDeltaY()).rotate(Math.atan2(inclination2, lenFull)));
 
 			if (dressing.getPart() != ArrowPart.TOP_PART)
 				getArrowConfiguration().applyThicknessOnly(ug)
-						.draw(new ULine(-getArrowDeltaX(), getArrowDeltaY()).rotate(Math.atan2(inclination2, lenFull)));
+								.draw(new ULine(-getArrowDeltaX(), getArrowDeltaY()).rotate(Math.atan2(inclination2, lenFull)));
 
 		} else if (dressing.getHead() == ArrowHead.CROSSX) {
 			ug = ug.apply(UStroke.withThickness(2));
 			ug.apply(new UTranslate(-spaceCrossX - getArrowDeltaX(), -getArrowDeltaX() / 2))
-					.draw(new ULine(getArrowDeltaX(), getArrowDeltaX()));
+							.draw(new ULine(getArrowDeltaX(), getArrowDeltaX()));
 			ug.apply(new UTranslate(-spaceCrossX - getArrowDeltaX(), getArrowDeltaX() / 2))
-					.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));
+							.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));
 		} else if (dressing.getHead() == ArrowHead.NORMAL) {
 			final UPolygon polygon = getPolygonNormal(dressing.getPart());
 

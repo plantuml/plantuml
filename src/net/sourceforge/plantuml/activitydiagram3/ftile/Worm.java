@@ -89,7 +89,7 @@ public class Worm implements Iterable<XPoint2D> {
 	}
 
 	public void drawInternalOneColor(UPolygon startDecoration, UGraphic ug, HtmlColorAndStyle colorAndStyle,
-			double strokeValue, Direction emphasizeDirection, UPolygon endDecoration) {
+					double strokeValue, Direction emphasizeDirection, UPolygon endDecoration) {
 		final HColor arrowColor = Objects.requireNonNull(colorAndStyle.getArrowColor());
 		final LinkStyle linkStyle = colorAndStyle.getStyle();
 		if (linkStyle.isInvisible())
@@ -144,15 +144,15 @@ public class Worm implements Iterable<XPoint2D> {
 	}
 
 	private void drawLine(UGraphic ug, XLine2D line, Direction direction) {
-		drawLine(ug, line.getX1(), line.getY1(), line.getX2(), line.getY2(), direction);
+		drawLine(ug, direction, new RectangleCoordinates(line.getX1(), line.getY1(), line.getX2(), line.getY2()));
 	}
 
-	private void drawLine(UGraphic ug, double x1, double y1, double x2, double y2, Direction direction) {
-		ug = ug.apply(new UTranslate(x1, y1));
+	private void drawLine(UGraphic ug, Direction direction, RectangleCoordinates rectangleCoordinates) {
+		ug = ug.apply(new UTranslate(rectangleCoordinates.getX1(), rectangleCoordinates.getY1()));
 		if (direction != null)
-			ug.apply(new UTranslate((x2 - x1) / 2, (y2 - y1) / 2)).draw(arrows.asTo(direction));
+			ug.apply(new UTranslate((rectangleCoordinates.getX2() - rectangleCoordinates.getX1()) / 2, (rectangleCoordinates.getY2() - rectangleCoordinates.getY1()) / 2)).draw(arrows.asTo(direction));
 
-		ug.draw(new ULine(x2 - x1, y2 - y1));
+		ug.draw(new ULine(rectangleCoordinates.getX2() - rectangleCoordinates.getX1(), rectangleCoordinates.getY2() - rectangleCoordinates.getY1()));
 	}
 
 	public Worm move(double dx, double dy) {
@@ -272,7 +272,7 @@ public class Worm implements Iterable<XPoint2D> {
 
 	private List<Direction> getPatternAt(int i) {
 		return Arrays.asList(getDirectionAtPoint(i), getDirectionAtPoint(i + 1), getDirectionAtPoint(i + 2),
-				getDirectionAtPoint(i + 3));
+						getDirectionAtPoint(i + 3));
 	}
 
 	private boolean isForwardAndBackwardAt(int i) {
@@ -397,7 +397,7 @@ public class Worm implements Iterable<XPoint2D> {
 		for (int i = 0; i < points.size() - 5; i++) {
 			final List<Direction> patternAt = getPatternAt(i);
 			if (Arrays.asList(Direction.DOWN, Direction.LEFT, Direction.DOWN, Direction.RIGHT).equals(patternAt)
-					|| Arrays.asList(Direction.DOWN, Direction.RIGHT, Direction.DOWN, Direction.LEFT)
+							|| Arrays.asList(Direction.DOWN, Direction.RIGHT, Direction.DOWN, Direction.LEFT)
 							.equals(patternAt)) {
 				final XPoint2D newPoint = new XPoint2D(points.get(i + 1).x, points.get(i + 3).y);
 				points.remove(i + 3);
@@ -415,7 +415,7 @@ public class Worm implements Iterable<XPoint2D> {
 			final int i = 0;
 			final List<Direction> patternAt = getPatternAt(i);
 			if (Arrays.asList(Direction.RIGHT, Direction.DOWN, Direction.LEFT, Direction.DOWN).equals(patternAt)
-					&& points.get(i + 3).x > points.get(i).x) {
+							&& points.get(i + 3).x > points.get(i).x) {
 				final XPoint2D newPoint = new XPoint2D(points.get(i + 3).x, points.get(i).y);
 				points.remove(i + 2);
 				points.remove(i + 1);
@@ -430,7 +430,7 @@ public class Worm implements Iterable<XPoint2D> {
 		for (int i = 0; i < points.size() - 5; i++) {
 			final List<Direction> patternAt = getPatternAt(i);
 			if (Arrays.asList(Direction.RIGHT, Direction.DOWN, Direction.RIGHT, Direction.UP).equals(patternAt)
-					|| Arrays.asList(Direction.LEFT, Direction.DOWN, Direction.LEFT, Direction.UP).equals(patternAt)) {
+							|| Arrays.asList(Direction.LEFT, Direction.DOWN, Direction.LEFT, Direction.UP).equals(patternAt)) {
 				final XPoint2D newPoint = new XPoint2D(points.get(i + 3).x, points.get(i + 1).y);
 				points.remove(i + 3);
 				points.remove(i + 2);
@@ -446,7 +446,7 @@ public class Worm implements Iterable<XPoint2D> {
 		for (int i = 0; i < points.size() - 4; i++) {
 			final List<Direction> patternAt = getPatternAt(i);
 			if (Arrays.asList(Direction.DOWN, Direction.RIGHT, Direction.DOWN, Direction.RIGHT).equals(patternAt)
-					|| Arrays.asList(Direction.DOWN, Direction.LEFT, Direction.DOWN, Direction.LEFT)
+							|| Arrays.asList(Direction.DOWN, Direction.LEFT, Direction.DOWN, Direction.LEFT)
 							.equals(patternAt)) {
 				final XPoint2D newPoint = new XPoint2D(points.get(i + 1).x, points.get(i + 3).y);
 				points.remove(i + 3);
@@ -513,7 +513,7 @@ public class Worm implements Iterable<XPoint2D> {
 		for (int i = 0; i < points.size() - 4; i++) {
 			final List<Direction> patternAt = getPatternAt(i);
 			if (Arrays.asList(Direction.LEFT, Direction.DOWN, Direction.LEFT, Direction.DOWN).equals(patternAt)
-					|| Arrays.asList(Direction.RIGHT, Direction.DOWN, Direction.RIGHT, Direction.DOWN)
+							|| Arrays.asList(Direction.RIGHT, Direction.DOWN, Direction.RIGHT, Direction.DOWN)
 							.equals(patternAt)) {
 				final XPoint2D newPoint = new XPoint2D(points.get(i + 3).x, points.get(i + 1).y);
 				points.remove(i + 3);

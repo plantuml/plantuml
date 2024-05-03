@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -31,7 +31,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * 
+ *
  */
 package net.sourceforge.plantuml.klimt.geom;
 
@@ -111,7 +111,7 @@ public class RectangleArea {
 	}
 
 	public PointDirected getIntersection(XCubicCurve2D bez) {
-		if (contains(bez.x1, bez.y1) == contains(bez.x2, bez.y2))
+		if (contains(bez.rectangleCoordinates.getX1(), bez.rectangleCoordinates.getY1()) == contains(bez.rectangleCoordinates.getX2(), bez.rectangleCoordinates.getY2()))
 			return null;
 
 		final double dist = bez.getP1().distance(bez.getP2());

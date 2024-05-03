@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,18 +30,19 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.klimt.drawing.eps;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.geom.PathIterator;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
@@ -98,11 +99,11 @@ public class EpsGraphics {
 		roundrect.add(new PostScriptCommandRaw("newpath", true));
 		roundrect.add(new PostScriptCommandRaw("dup 3 index add 2 index 2 index add 2 index 180 270 arc", true));
 		roundrect.add(new PostScriptCommandRaw("2 index 5 index add 1 index sub 2 index 2 index add 2 index 270 0 arc",
-				true));
+						true));
 		roundrect.add(new PostScriptCommandRaw(
-				"2 index 5 index add 1 index sub 2 index 5 index add 2 index sub 2 index 0 90 arc", true));
+						"2 index 5 index add 1 index sub 2 index 5 index add 2 index sub 2 index 0 90 arc", true));
 		roundrect.add(
-				new PostScriptCommandRaw("dup 3 index add 2 index 5 index add 2 index sub 2 index 90 180 arc", true));
+						new PostScriptCommandRaw("dup 3 index add 2 index 5 index add 2 index sub 2 index 90 180 arc", true));
 		roundrect.add(new PostScriptCommandRaw("pop pop pop pop pop ", true));
 	}
 
@@ -232,25 +233,25 @@ public class EpsGraphics {
 
 	}
 
-	final public void epsLine(double x1, double y1, double x2, double y2) {
+	final public void epsLine(RectangleCoordinates rectangleCoordinates) {
 		if (isNull(color))
 			throw new IllegalStateException();
-		ensureVisible(x1, y1);
-		ensureVisible(x2, y2);
+		ensureVisible(rectangleCoordinates.getX1(), rectangleCoordinates.getY1());
+		ensureVisible(rectangleCoordinates.getX2(), rectangleCoordinates.getY2());
 		checkCloseDone();
 		append(strokeWidth + " setlinewidth", true);
 		appendColor(color);
 		append("newpath", true);
 		if (isDashed2()) {
-			append(format(x1) + " " + format(y1) + " moveto", true);
-			append(format(x2 - x1) + " " + format(y2 - y1) + " rlineto", true);
-		} else if (x1 == x2) {
-			epsHLine(x1, Math.min(y1, y2), Math.max(y1, y2));
-		} else if (y1 == y2) {
-			epsVLine(y1, Math.min(x1, x2), Math.max(x1, x2));
+			append(format(rectangleCoordinates.getX1()) + " " + format(rectangleCoordinates.getY1()) + " moveto", true);
+			append(format(rectangleCoordinates.getX2() - rectangleCoordinates.getX1()) + " " + format(rectangleCoordinates.getY2() - rectangleCoordinates.getY1()) + " rlineto", true);
+		} else if (rectangleCoordinates.getX1() == rectangleCoordinates.getX2()) {
+			epsHLine(rectangleCoordinates.getX1(), Math.min(rectangleCoordinates.getY1(), rectangleCoordinates.getY2()), Math.max(rectangleCoordinates.getY1(), rectangleCoordinates.getY2()));
+		} else if (rectangleCoordinates.getY1() == rectangleCoordinates.getY2()) {
+			epsVLine(rectangleCoordinates.getY1(), Math.min(rectangleCoordinates.getX1(), rectangleCoordinates.getX2()), Math.max(rectangleCoordinates.getX1(), rectangleCoordinates.getX2()));
 		}
 		append("stroke", true);
-		ensureVisible(Math.max(x1, x2), Math.max(y1, y2));
+		ensureVisible(Math.max(rectangleCoordinates.getX1(), rectangleCoordinates.getX2()), Math.max(rectangleCoordinates.getY1(), rectangleCoordinates.getY2()));
 	}
 
 	protected void epsHLine(final double x, final double ymin, final double ymax) {
@@ -296,7 +297,11 @@ public class EpsGraphics {
 				} else if (type == USegmentType.SEG_QUADTO) {
 					throw new UnsupportedOperationException();
 				} else if (type == USegmentType.SEG_CUBICTO) {
-					curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
+					curvetoNoMacro(coord[4] + x, coord[5] + y, new RectangleCoordinates(
+									coord[0] + x,
+									coord[1] + y,
+									coord[2] + x,
+									coord[3] + y));
 				} else if (type == USegmentType.SEG_CLOSE) {
 					// Nothing
 				} else if (type == USegmentType.SEG_ARCTO) {
@@ -322,7 +327,11 @@ public class EpsGraphics {
 				} else if (type == USegmentType.SEG_QUADTO) {
 					throw new UnsupportedOperationException();
 				} else if (type == USegmentType.SEG_CUBICTO) {
-					curvetoNoMacro(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
+					curvetoNoMacro(coord[4] + x, coord[5] + y, new RectangleCoordinates(
+									coord[0] + x,
+									coord[1] + y,
+									coord[2] + x,
+									coord[3] + y));
 				} else if (type == USegmentType.SEG_CLOSE) {
 					// Nothing
 				} else if (type == USegmentType.SEG_ARCTO) {
@@ -412,7 +421,7 @@ public class EpsGraphics {
 	}
 
 	final public void epsRectangle(double x, double y, double width, double height, double rx, double ry,
-			HColorGradient gr, ColorMapper mapper) {
+					HColorGradient gr, ColorMapper mapper) {
 		if (isNull(color))
 			throw new IllegalStateException();
 		checkCloseDone();
@@ -448,7 +457,7 @@ public class EpsGraphics {
 			appendColorShort(gr.getColor1().toColor(mapper));
 			appendColorShort(gr.getColor2().toColor(mapper));
 			append(format(width) + " " + format(height) + " " + format(x) + " " + format(y) + " "
-					+ format((rx + ry) / 2), true);
+							+ format((rx + ry) / 2), true);
 			append("100 -1 1 {", true);
 			append("100 div", true);
 			append("newpath", true);
@@ -471,7 +480,7 @@ public class EpsGraphics {
 	}
 
 	private void epsRectangleInternal(double x, double y, double width, double height, double rx, double ry,
-			boolean fill) {
+					boolean fill) {
 		if (rx == 0 && ry == 0)
 			simpleRectangle(x, y, width, height, fill);
 		else
@@ -485,7 +494,7 @@ public class EpsGraphics {
 
 		final double round = MathUtils.min((rx + ry) / 2, width / 2, height / 2);
 		append(format(width) + " " + format(height) + " " + format(x) + " " + format(y) + " " + format(round)
-				+ " roundrect", true);
+						+ " roundrect", true);
 		roundrectUsed = true;
 	}
 
@@ -502,7 +511,7 @@ public class EpsGraphics {
 	/**
 	 * Converts a counter clockwise angle to a clockwise angle. i.e. 0 -> 360, 90 ->
 	 * 270, 180 -> 180, 270 -> 90
-	 * 
+	 *
 	 * @param counterClockwise counter clockwise angle in degrees
 	 * @return clockwise angle in degrees
 	 */
@@ -640,11 +649,11 @@ public class EpsGraphics {
 		ensureVisible(x1, y1);
 	}
 
-	final public void curvetoNoMacro(double x1, double y1, double x2, double y2, double x3, double y3) {
-		append(format(x1) + " " + format(y1) + " " + format(x2) + " " + format(y2) + " " + format(x3) + " " + format(y3)
-				+ " curveto", true);
-		ensureVisible(x1, y1);
-		ensureVisible(x2, y2);
+	final public void curvetoNoMacro(double x3, double y3, RectangleCoordinates rectangleCoordinates) {
+		append(format(rectangleCoordinates.getX1()) + " " + format(rectangleCoordinates.getY1()) + " " + format(rectangleCoordinates.getX2()) + " " + format(rectangleCoordinates.getY2()) + " " + format(x3) + " " + format(y3)
+						+ " curveto", true);
+		ensureVisible(rectangleCoordinates.getX1(), rectangleCoordinates.getY1());
+		ensureVisible(rectangleCoordinates.getX2(), rectangleCoordinates.getY2());
 		ensureVisible(x3, y3);
 	}
 
@@ -659,19 +668,19 @@ public class EpsGraphics {
 		ensureVisible(x1, y1);
 	}
 
-	public void curveto(double x1, double y1, double x2, double y2, double x3, double y3) {
-		append(format(x1) + " " + format(y1) + " " + format(x2) + " " + format(y2) + " " + format(x3) + " " + format(y3)
-				+ " curveto", true);
-		ensureVisible(x1, y1);
-		ensureVisible(x2, y2);
+	public void curveto(double x3, double y3, RectangleCoordinates rectangleCoordinates) {
+		append(format(rectangleCoordinates.getX1()) + " " + format(rectangleCoordinates.getY1()) + " " + format(rectangleCoordinates.getX2()) + " " + format(rectangleCoordinates.getY2()) + " " + format(x3) + " " + format(y3)
+						+ " curveto", true);
+		ensureVisible(rectangleCoordinates.getX1(), rectangleCoordinates.getY1());
+		ensureVisible(rectangleCoordinates.getX2(), rectangleCoordinates.getY2());
 		ensureVisible(x3, y3);
 	}
 
-	public void quadto(double x1, double y1, double x2, double y2) {
-		append(format(x1) + " " + format(y1) + " " + format(x1) + " " + format(y1) + " " + format(x2) + " " + format(y2)
-				+ " curveto", true);
-		ensureVisible(x1, y1);
-		ensureVisible(x2, y2);
+	public void quadto(RectangleCoordinates rectangleCoordinates) {
+		append(format(rectangleCoordinates.getX1()) + " " + format(rectangleCoordinates.getY1()) + " " + format(rectangleCoordinates.getX1()) + " " + format(rectangleCoordinates.getY1()) + " " + format(rectangleCoordinates.getX2()) + " " + format(rectangleCoordinates.getY2())
+						+ " curveto", true);
+		ensureVisible(rectangleCoordinates.getX1(), rectangleCoordinates.getY1());
+		ensureVisible(rectangleCoordinates.getX2(), rectangleCoordinates.getY2());
 	}
 
 	public void newpath() {
@@ -813,13 +822,13 @@ public class EpsGraphics {
 	final private ShadowManager shadowManager = new ShadowManager(50, 200);
 
 	final public void epsRectangleShadow(double x, double y, double width, double height, double rx, double ry,
-			double deltaShadow) {
+					double deltaShadow) {
 		setStrokeColor(null);
 		for (double i = 0; i <= deltaShadow; i += 0.5) {
 			setFillColor(shadowManager.getColor(i, deltaShadow));
 			final double diff = i;
 			epsRectangle(x + deltaShadow + diff, y + deltaShadow + diff, width - 2 * diff, height - 2 * diff, rx + 1,
-					ry + 1);
+							ry + 1);
 		}
 	}
 
@@ -845,9 +854,9 @@ public class EpsGraphics {
 	public void drawOk(DotPath dotPath, double x, double y) {
 		// boolean first = true;
 		for (XCubicCurve2D bez : dotPath.getBeziers()) {
-			bez = new XCubicCurve2D(x + bez.x1, y + bez.y1, x + bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2,
-					y + bez.ctrly2, x + bez.x2, y + bez.y2);
-			this.epsLine(bez.x1, bez.y1, bez.x2, bez.y2);
+			bez = new XCubicCurve2D(x + bez.rectangleCoordinates.getX1(), y + bez.rectangleCoordinates.getY1(), x + bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2,
+							y + bez.ctrly2, x + bez.rectangleCoordinates.getX2(), y + bez.rectangleCoordinates.getY2());
+			this.epsLine(new RectangleCoordinates(bez.rectangleCoordinates.getX1(), bez.rectangleCoordinates.getY1(), bez.rectangleCoordinates.getX2(), bez.rectangleCoordinates.getY2()));
 		}
 	}
 
@@ -856,13 +865,13 @@ public class EpsGraphics {
 		final boolean dashed = false;
 		boolean first = true;
 		for (XCubicCurve2D bez : beziers) {
-			bez = new XCubicCurve2D(x + bez.x1, y + bez.y1, x + bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2,
-					y + bez.ctrly2, x + bez.x2, y + bez.y2);
+			bez = new XCubicCurve2D(x + bez.rectangleCoordinates.getX1(), y + bez.rectangleCoordinates.getY1(), x + bez.ctrlx1, y + bez.ctrly1, x + bez.ctrlx2,
+							y + bez.ctrly2, x + bez.rectangleCoordinates.getX2(), y + bez.rectangleCoordinates.getY2());
 			if (first) {
-				this.movetoNoMacro(bez.x1, bez.y1);
+				this.movetoNoMacro(bez.rectangleCoordinates.getX1(), bez.rectangleCoordinates.getY1());
 				first = dashed;
 			}
-			this.curvetoNoMacro(bez.ctrlx1, bez.ctrly1, bez.ctrlx2, bez.ctrly2, bez.x2, bez.y2);
+			this.curvetoNoMacro(bez.rectangleCoordinates.getX2(), bez.rectangleCoordinates.getY2(), new RectangleCoordinates(bez.ctrlx1, bez.ctrly1, bez.ctrlx2, bez.ctrly2));
 		}
 		this.closepathDot();
 	}

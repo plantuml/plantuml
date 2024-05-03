@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,12 +30,13 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.klimt.compress;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.CenteredText;
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.klimt.UBackground;
 import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.UShape;
@@ -49,12 +50,12 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 
 public class UGraphicCompressOnXorY extends UGraphicDelegator {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
 	public UGraphic apply(UChange change) {
 		if (change instanceof UTranslate)
 			return new UGraphicCompressOnXorY(mode, getUg(), compressionTransform,
-					translate.compose((UTranslate) change));
+							translate.compose((UTranslate) change));
 		else if (change instanceof UStroke || change instanceof UBackground || change instanceof HColor)
 			return new UGraphicCompressOnXorY(mode, getUg().apply(change), compressionTransform, translate);
 
@@ -71,12 +72,12 @@ public class UGraphicCompressOnXorY extends UGraphicDelegator {
 	}
 
 	public static UGraphicCompressOnXorY create(CompressionMode mode, UGraphic ug,
-			PiecewiseAffineTransform compressionTransform) {
+					PiecewiseAffineTransform compressionTransform) {
 		return new UGraphicCompressOnXorY(mode, ug, compressionTransform, UTranslate.none());
 	}
 
 	private UGraphicCompressOnXorY(CompressionMode mode, UGraphic ug, PiecewiseAffineTransform compressionTransform,
-			UTranslate translate) {
+					UTranslate translate) {
 		super(ug);
 		this.mode = mode;
 		this.compressionTransform = compressionTransform;
@@ -128,9 +129,9 @@ public class UGraphicCompressOnXorY extends UGraphicDelegator {
 
 	private void drawLine(double x, double y, ULine shape) {
 		if (mode == CompressionMode.ON_X)
-			drawLine(ct(x), y, ct(x + shape.getDX()), y + shape.getDY());
+			drawLine(new RectangleCoordinates(ct(x), y, ct(x + shape.getDX()), y + shape.getDY()));
 		else
-			drawLine(x, ct(y), x + shape.getDX(), ct(y + shape.getDY()));
+			drawLine(new RectangleCoordinates(x, ct(y), x + shape.getDX(), ct(y + shape.getDY())));
 
 	}
 
@@ -138,13 +139,17 @@ public class UGraphicCompressOnXorY extends UGraphicDelegator {
 		return compressionTransform.transform(v);
 	}
 
-	private void drawLine(double x1, double y1, double x2, double y2) {
-		if (y1 > y2) {
-			drawLine(x2, y2, x1, y1);
+	private void drawLine(RectangleCoordinates rectangleCoordinates) {
+		if (rectangleCoordinates.getY1() > rectangleCoordinates.getY2()) {
+			drawLine(new RectangleCoordinates(
+							rectangleCoordinates.getX2(),
+							rectangleCoordinates.getY2(),
+							rectangleCoordinates.getX1(),
+							rectangleCoordinates.getY1()));
 			return;
 		}
-		assert y1 <= y2;
-		getUg().apply(new UTranslate(x1, y1)).draw(new ULine(x2 - x1, y2 - y1));
+		assert rectangleCoordinates.getY1() <= rectangleCoordinates.getY2();
+		getUg().apply(new UTranslate(rectangleCoordinates.getX1(), rectangleCoordinates.getY1())).draw(new ULine(rectangleCoordinates.getX2() - rectangleCoordinates.getX1(), rectangleCoordinates.getY2() - rectangleCoordinates.getY1()));
 	}
 
 }

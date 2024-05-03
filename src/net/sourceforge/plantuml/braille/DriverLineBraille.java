@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.braille;
 
 import java.awt.geom.Line2D;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
@@ -67,6 +68,6 @@ public class DriverLineBraille implements UDriver<ULine, BrailleGrid> {
 			y2 = line.y2;
 		}
 
-		grid.line(x, y, x2, y2);
+		grid.line(new RectangleCoordinates(x, y, x2, y2));
 	}
 }

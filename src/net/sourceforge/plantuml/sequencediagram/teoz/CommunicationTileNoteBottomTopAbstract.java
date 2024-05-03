@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,11 +30,12 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -74,7 +75,7 @@ public abstract class CommunicationTileNoteBottomTopAbstract extends AbstractTil
 	}
 
 	public CommunicationTileNoteBottomTopAbstract(Tile tile, AbstractMessage message, Rose skin, ISkinParam skinParam,
-			Note noteOnMessage, YGauge currentY) {
+					Note noteOnMessage, YGauge currentY) {
 		super(((AbstractTile) tile).getStringBounder(), currentY);
 		this.tile = tile;
 		this.message = message;
@@ -97,8 +98,8 @@ public abstract class CommunicationTileNoteBottomTopAbstract extends AbstractTil
 
 	final protected Component getComponent(StringBounder stringBounder) {
 		final Component comp = skin.createComponentNote(noteOnMessage.getUsedStyles(), ComponentType.NOTE,
-				noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getDisplay(),
-				noteOnMessage.getColors());
+						noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getDisplay(),
+						noteOnMessage.getColors());
 		return comp;
 	}
 
@@ -109,16 +110,16 @@ public abstract class CommunicationTileNoteBottomTopAbstract extends AbstractTil
 
 	protected final double spacey = 10;
 
-	protected final void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {
+	protected final void drawLine(UGraphic ug, RectangleCoordinates rectangleCoordinates) {
 
 		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram)
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+						.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final HColor color = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 
-		final double dx = x2 - x1;
-		final double dy = y2 - y1;
+		final double dx = rectangleCoordinates.getX2() - rectangleCoordinates.getX1();
+		final double dy = rectangleCoordinates.getY2() - rectangleCoordinates.getY1();
 
-		ug.apply(new UTranslate(x1, y1)).apply(color).apply(new UStroke(2, 2, 1)).draw(new ULine(dx, dy));
+		ug.apply(new UTranslate(rectangleCoordinates.getX1(), rectangleCoordinates.getY1())).apply(color).apply(new UStroke(2, 2, 1)).draw(new ULine(dx, dy));
 
 	}
 

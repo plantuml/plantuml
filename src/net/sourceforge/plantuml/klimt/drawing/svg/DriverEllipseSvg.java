@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.svg;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
@@ -42,7 +43,7 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 
 public class DriverEllipseSvg implements UDriver<UEllipse, SvgGraphics> {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
 	private final ClipContainer clipContainer;
 
@@ -83,13 +84,13 @@ public class DriverEllipseSvg implements UDriver<UEllipse, SvgGraphics> {
 				final double y1 = cy + Math.cos(start * Math.PI / 180.) * height / 2;
 				final double x2 = cx + Math.sin((start + extend) * Math.PI / 180.) * width / 2;
 				final double y2 = cy + Math.cos((start + extend) * Math.PI / 180.) * height / 2;
-				svg.svgArcEllipse(width / 2, height / 2, x1, y1, x2, y2);
+				svg.svgArcEllipse(width / 2, height / 2, new RectangleCoordinates(x1, y1, x2, y2));
 			} else {
 				final double x1 = cx + Math.sin((start + extend) * Math.PI / 180.) * width / 2;
 				final double y1 = cy + Math.cos((start + extend) * Math.PI / 180.) * height / 2;
 				final double x2 = cx + Math.sin(start * Math.PI / 180.) * width / 2;
 				final double y2 = cy + Math.cos(start * Math.PI / 180.) * height / 2;
-				svg.svgArcEllipse(width / 2, height / 2, x1, y1, x2, y2);
+				svg.svgArcEllipse(width / 2, height / 2, new RectangleCoordinates(x1, y1, x2, y2));
 
 			}
 		}

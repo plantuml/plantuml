@@ -66,6 +66,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import net.sourceforge.plantuml.FileUtils;
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UPath;
@@ -84,7 +85,7 @@ import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.xml.XmlFactories;
 
 public class SvgGraphics {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
 	// http://tutorials.jenkov.com/svg/index.html
 	// http://www.svgbasics.com/
@@ -174,7 +175,7 @@ public class SvgGraphics {
 				this.backcolorString = null;
 				HColorGradient gr = (HColorGradient) backcolor;
 				final String id = this.createSvgGradient(gr.getColor1().toRGB(option.getColorMapper()),
-						gr.getColor2().toRGB(option.getColorMapper()), gr.getPolicy());
+								gr.getColor2().toRGB(option.getColorMapper()), gr.getPolicy());
 				this.paintBackcolor("url(#" + id + ")");
 			} else if (backcolor == null) {
 				this.backcolorString = null;
@@ -182,7 +183,7 @@ public class SvgGraphics {
 				this.backcolorString = backcolor.toSvg(option.getColorMapper());
 				final String color = backcolor.toSvg(option.getColorMapper());
 				if (color.equals("#00000000") == false && color.equals("#000000") == false
-						&& color.equals("#FFFFFF") == false)
+								&& color.equals("#FFFFFF") == false)
 					this.paintBackcolor(color);
 			}
 
@@ -199,7 +200,7 @@ public class SvgGraphics {
 		final Element style = document.createElement("style");
 		style.setAttribute("type", "text/css");
 		style.setTextContent(
-				"@import url('https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic');");
+						"@import url('https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic');");
 		defs.appendChild(style);
 		robotoAdded = true;
 	}
@@ -337,18 +338,18 @@ public class SvgGraphics {
 		ensureVisible(x + xRadius + deltaShadow * 2, y + yRadius + deltaShadow * 2);
 	}
 
-	public void svgArcEllipse(double rx, double ry, double x1, double y1, double x2, double y2) {
+	public void svgArcEllipse(double rx, double ry, RectangleCoordinates rectangleCoordinates) {
 		if (hidden == false) {
-			final String path = "M" + format(x1) + "," + format(y1) + " A" + format(rx) + "," + format(ry) + " 0 0 0 "
-					+ format(x2) + " " + format(y2);
+			final String path = "M" + format(rectangleCoordinates.getX1()) + "," + format(rectangleCoordinates.getY1()) + " A" + format(rx) + "," + format(ry) + " 0 0 0 "
+							+ format(rectangleCoordinates.getX2()) + " " + format(rectangleCoordinates.getY2());
 			final Element elt = (Element) document.createElement("path");
 			elt.setAttribute("d", path);
 			fillMe(elt);
 			elt.setAttribute("style", getStyle());
 			getG().appendChild(elt);
 		}
-		ensureVisible(x1, y1);
-		ensureVisible(x2, y2);
+		ensureVisible(rectangleCoordinates.getX1(), rectangleCoordinates.getY1());
+		ensureVisible(rectangleCoordinates.getX2(), rectangleCoordinates.getY2());
 	}
 
 	private Map<List<Object>, String> gradients = new HashMap<List<Object>, String>();
@@ -424,7 +425,7 @@ public class SvgGraphics {
 	}
 
 	public void svgRectangle(double x, double y, double width, double height, double rx, double ry, double deltaShadow,
-			String id, String codeLine) {
+					String id, String codeLine) {
 		if (height <= 0 || width <= 0) {
 			return;
 			// To be restored when Teoz will be finished
@@ -460,20 +461,20 @@ public class SvgGraphics {
 		return elt;
 	}
 
-	public void svgLine(double x1, double y1, double x2, double y2, double deltaShadow) {
+	public void svgLine(double deltaShadow, RectangleCoordinates rectangleCoordinates) {
 		manageShadow(deltaShadow);
 		if (hidden == false) {
 			final Element elt = (Element) document.createElement("line");
-			elt.setAttribute("x1", format(x1));
-			elt.setAttribute("y1", format(y1));
-			elt.setAttribute("x2", format(x2));
-			elt.setAttribute("y2", format(y2));
+			elt.setAttribute("x1", format(rectangleCoordinates.getX1()));
+			elt.setAttribute("y1", format(rectangleCoordinates.getY1()));
+			elt.setAttribute("x2", format(rectangleCoordinates.getX2()));
+			elt.setAttribute("y2", format(rectangleCoordinates.getY2()));
 			elt.setAttribute("style", getStyle());
 			addFilterShadowId(elt, deltaShadow);
 			getG().appendChild(elt);
 		}
-		ensureVisible(x1 + 2 * deltaShadow, y1 + 2 * deltaShadow);
-		ensureVisible(x2 + 2 * deltaShadow, y2 + 2 * deltaShadow);
+		ensureVisible(rectangleCoordinates.getX1() + 2 * deltaShadow, rectangleCoordinates.getY1() + 2 * deltaShadow);
+		ensureVisible(rectangleCoordinates.getX2() + 2 * deltaShadow, rectangleCoordinates.getY2() + 2 * deltaShadow);
 	}
 
 	private String getStyle() {
@@ -531,8 +532,8 @@ public class SvgGraphics {
 	}
 
 	public void text(String text, double x, double y, String fontFamily, int fontSize, String fontWeight,
-			String fontStyle, String textDecoration, double textLength, Map<String, String> attributes,
-			String textBackColor) {
+					String fontStyle, String textDecoration, double textLength, Map<String, String> attributes,
+					String textBackColor) {
 		if (hidden == false) {
 			final Element elt = (Element) document.createElement("text");
 			// required for web-kit based browsers
@@ -719,20 +720,20 @@ public class SvgGraphics {
 				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
 			} else if (type == USegmentType.SEG_QUADTO) {
 				sb.append("Q" + format(coord[0] + x) + "," + format(coord[1] + y) + " " + format(coord[2] + x) + ","
-						+ format(coord[3] + y) + " ");
+								+ format(coord[3] + y) + " ");
 				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
 				ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);
 			} else if (type == USegmentType.SEG_CUBICTO) {
 				sb.append("C" + format(coord[0] + x) + "," + format(coord[1] + y) + " " + format(coord[2] + x) + ","
-						+ format(coord[3] + y) + " " + format(coord[4] + x) + "," + format(coord[5] + y) + " ");
+								+ format(coord[3] + y) + " " + format(coord[4] + x) + "," + format(coord[5] + y) + " ");
 				ensureVisible(coord[0] + x + 2 * deltaShadow, coord[1] + y + 2 * deltaShadow);
 				ensureVisible(coord[2] + x + 2 * deltaShadow, coord[3] + y + 2 * deltaShadow);
 				ensureVisible(coord[4] + x + 2 * deltaShadow, coord[5] + y + 2 * deltaShadow);
 			} else if (type == USegmentType.SEG_ARCTO) {
 				// A25,25 0,0 5,395,40
 				sb.append("A" + format(coord[0]) + "," + format(coord[1]) + " " + format(coord[2]) + " "
-						+ formatBoolean(coord[3]) + " " + formatBoolean(coord[4]) + " " + format(coord[5] + x) + ","
-						+ format(coord[6] + y) + " ");
+								+ formatBoolean(coord[3]) + " " + formatBoolean(coord[4]) + " " + format(coord[5] + x) + ","
+								+ format(coord[6] + y) + " ");
 				ensureVisible(coord[5] + coord[0] + x + 2 * deltaShadow, coord[6] + coord[1] + y + 2 * deltaShadow);
 			} else if (type == USegmentType.SEG_CLOSE) {
 				// Nothing
@@ -800,19 +801,19 @@ public class SvgGraphics {
 
 	}
 
-	public void curveto(double x1, double y1, double x2, double y2, double x3, double y3) {
-		currentPath.append("C" + format(x1) + "," + format(y1) + " " + format(x2) + "," + format(y2) + " " + format(x3)
-				+ "," + format(y3) + " ");
-		ensureVisible(x1, y1);
-		ensureVisible(x2, y2);
+	public void curveto(double x3, double y3, RectangleCoordinates rectangleCoordinates) {
+		currentPath.append("C" + format(rectangleCoordinates.getX1()) + "," + format(rectangleCoordinates.getY1()) + " " + format(rectangleCoordinates.getX2()) + "," + format(rectangleCoordinates.getY2()) + " " + format(x3)
+						+ "," + format(y3) + " ");
+		ensureVisible(rectangleCoordinates.getX1(), rectangleCoordinates.getY1());
+		ensureVisible(rectangleCoordinates.getX2(), rectangleCoordinates.getY2());
 		ensureVisible(x3, y3);
 
 	}
 
-	public void quadto(double x1, double y1, double x2, double y2) {
-		currentPath.append("Q" + format(x1) + "," + format(y1) + " " + format(x2) + "," + format(y2) + " ");
-		ensureVisible(x1, y1);
-		ensureVisible(x2, y2);
+	public void quadto(RectangleCoordinates rectangleCoordinates) {
+		currentPath.append("Q" + format(rectangleCoordinates.getX1()) + "," + format(rectangleCoordinates.getY1()) + " " + format(rectangleCoordinates.getX2()) + "," + format(rectangleCoordinates.getY2()) + " ");
+		ensureVisible(rectangleCoordinates.getX1(), rectangleCoordinates.getY1());
+		ensureVisible(rectangleCoordinates.getX2(), rectangleCoordinates.getY2());
 	}
 
 	private String format(double xx) {
@@ -857,9 +858,13 @@ public class SvgGraphics {
 			else if (code == PathIterator.SEG_CLOSE)
 				this.closepath();
 			else if (code == PathIterator.SEG_CUBICTO)
-				this.curveto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
+				this.curveto(coord[4] + x, coord[5] + y, new RectangleCoordinates(
+								coord[0] + x,
+								coord[1] + y,
+								coord[2] + x,
+								coord[3] + y));
 			else if (code == PathIterator.SEG_QUADTO)
-				this.quadto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);
+				this.quadto(new RectangleCoordinates(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y));
 			else
 				throw new UnsupportedOperationException("code=" + code);
 
@@ -920,11 +925,11 @@ public class SvgGraphics {
 			final String svgHeader;
 			if (image.containsXlink())
 				svgHeader = "<svg height=\"" + (int) (image.getHeight() * option.getScale()) + "\" width=\""
-						+ (int) (image.getWidth() * option.getScale())
-						+ "\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns=\"http://www.w3.org/2000/svg\" >";
+								+ (int) (image.getWidth() * option.getScale())
+								+ "\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns=\"http://www.w3.org/2000/svg\" >";
 			else
 				svgHeader = "<svg height=\"" + (int) (image.getHeight() * option.getScale()) + "\" width=\""
-						+ (int) (image.getWidth() * option.getScale()) + "\" xmlns=\"http://www.w3.org/2000/svg\" >";
+								+ (int) (image.getWidth() * option.getScale()) + "\" xmlns=\"http://www.w3.org/2000/svg\" >";
 
 			svg = svgHeader + svg.substring(5);
 
@@ -983,9 +988,9 @@ public class SvgGraphics {
 				filter.setAttribute("height", "300%");
 				addFilter(filter, "feGaussianBlur", "result", "blurOut", "stdDeviation", "" + (2 * option.getScale()));
 				addFilter(filter, "feColorMatrix", "type", "matrix", "in", "blurOut", "result", "blurOut2", "values",
-						"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0");
+								"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0");
 				addFilter(filter, "feOffset", "result", "blurOut3", "in", "blurOut2", "dx",
-						"" + (4 * option.getScale()), "dy", "" + (4 * option.getScale()));
+								"" + (4 * option.getScale()), "dy", "" + (4 * option.getScale()));
 				addFilter(filter, "feBlend", "in", "SourceGraphic", "in2", "blurOut3", "mode", "normal");
 				defs.appendChild(filter);
 

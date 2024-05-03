@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -39,6 +39,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.klimt.geom.XCubicCurve2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.DotPath;
@@ -125,11 +126,11 @@ public class BrailleGrid {
 		return (int) Math.round(value / quanta);
 	}
 
-	public void line(double x1, double y1, double x2, double y2) {
-		if (x1 == x2) {
-			vline(x1, y1, y2);
-		} else if (y1 == y2) {
-			hline(y1, x1, x2);
+	public void line(RectangleCoordinates rectangleCoordinates) {
+		if (rectangleCoordinates.getX1() == rectangleCoordinates.getX2()) {
+			vline(rectangleCoordinates.getX1(), rectangleCoordinates.getY1(), rectangleCoordinates.getY2());
+		} else if (rectangleCoordinates.getY1() == rectangleCoordinates.getY2()) {
+			hline(rectangleCoordinates.getY1(), rectangleCoordinates.getX1(), rectangleCoordinates.getX2());
 		} else {
 			System.err.println("warning line");
 		}

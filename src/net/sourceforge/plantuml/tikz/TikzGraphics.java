@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,14 +30,14 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.tikz;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.geom.PathIterator;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -49,6 +49,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -61,7 +62,7 @@ import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
 
 public class TikzGraphics {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 	// ::remove folder when __CORE__
 
 	// https://www.sharelatex.com/blog/2013/08/27/tikz-series-pt1.html
@@ -234,7 +235,7 @@ public class TikzGraphics {
 	}
 
 	private void purgeStyles() {
-		for (Iterator<Map.Entry<String, Integer>> it = styles.entrySet().iterator(); it.hasNext();) {
+		for (Iterator<Map.Entry<String, Integer>> it = styles.entrySet().iterator(); it.hasNext(); ) {
 			final Map.Entry<String, Integer> ent = it.next();
 			if (ent.getValue().intValue() == 1)
 				it.remove();
@@ -246,7 +247,7 @@ public class TikzGraphics {
 		if (color.getAlpha() == 0)
 			color = Color.WHITE;
 		return "\\definecolor{" + name + "}{RGB}{" + color.getRed() + "," + color.getGreen() + "," + color.getBlue()
-				+ "}";
+						+ "}";
 	}
 
 	public void rectangle(double x, double y, double width, double height) {
@@ -402,7 +403,7 @@ public class TikzGraphics {
 		return text;
 	}
 
-	public void line(double x1, double y1, double x2, double y2) {
+	public void line(RectangleCoordinates rectangleCoordinates) {
 		final StringBuilder sb = new StringBuilder();
 		sb.append("\\draw[");
 		if (color != null)
@@ -413,9 +414,9 @@ public class TikzGraphics {
 			sb.append(",dash pattern=" + dash);
 
 		sb.append("] ");
-		sb.append(couple(x1, y1));
+		sb.append(couple(rectangleCoordinates.getX1(), rectangleCoordinates.getY1()));
 		sb.append(" -- ");
-		sb.append(couple(x2, y2));
+		sb.append(couple(rectangleCoordinates.getX2(), rectangleCoordinates.getY2()));
 		sb.append(";");
 		addCommand(sb);
 	}
@@ -596,7 +597,7 @@ public class TikzGraphics {
 			sb.append("fill=" + getColorName(fillcolor) + ",");
 
 		sb.append("line width=" + thickness + "pt] " + couple(x, y) + " ellipse (" + format(width) + "pt and "
-				+ format(height) + "pt);");
+						+ format(height) + "pt);");
 		addCommand(sb);
 	}
 
@@ -610,7 +611,7 @@ public class TikzGraphics {
 			sb.append("fill=" + getColorName(fillcolor) + ",");
 
 		sb.append("line width=" + thickness + "pt] " + couple(x, y) + " arc (" + angleStart + ":" + angleEnd + ":"
-				+ format(radius) + "pt);");
+						+ format(radius) + "pt);");
 		addCommand(sb);
 	}
 
@@ -624,7 +625,7 @@ public class TikzGraphics {
 
 	public void drawPathIterator(double x, double y, PathIterator path) {
 		final StringBuilder sb = new StringBuilder(
-				"\\draw[color=" + getColorName(color) + ",fill=" + getColorName(color) + "] ");
+						"\\draw[color=" + getColorName(color) + ",fill=" + getColorName(color) + "] ");
 		final double coord[] = new double[6];
 		while (path.isDone() == false) {
 			final int code = path.currentSegment(coord);

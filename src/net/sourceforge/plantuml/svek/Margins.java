@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -31,18 +31,16 @@
  *
  * Original Author:  Arnaud Roques
  *
- * 
+ *
  */
 package net.sourceforge.plantuml.svek;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
+
 public class Margins {
 
-	private final double x1;
-	private final double x2;
-	private final double y1;
-	private final double y2;
-
 	static public Margins NONE = new Margins(0, 0, 0, 0);
+	private RectangleCoordinates rectangleCoordinates = new RectangleCoordinates(0.0, 0.0, 0.0, 0.0);
 
 	public static Margins uniform(double value) {
 		return new Margins(value, value, value, value);
@@ -50,50 +48,50 @@ public class Margins {
 
 	@Override
 	public String toString() {
-		return "MARGIN[" + x1 + "," + x2 + "," + y1 + "," + y2 + "]";
+		return "MARGIN[" + rectangleCoordinates.getX1() + "," + rectangleCoordinates.getX2() + "," + rectangleCoordinates.getY1() + "," + rectangleCoordinates.getY2() + "]";
 	}
 
 	public Margins merge(Margins other) {
 		return new Margins(//
-				Math.max(this.x1, other.x1), //
-				Math.max(this.x2, other.x2), //
-				Math.max(this.y1, other.y1), //
-				Math.max(this.y2, other.y2));
+						Math.max(this.rectangleCoordinates.getX1(), other.rectangleCoordinates.getX1()), //
+						Math.max(this.rectangleCoordinates.getX2(), other.rectangleCoordinates.getX2()), //
+						Math.max(this.rectangleCoordinates.getY1(), other.rectangleCoordinates.getY1()), //
+						Math.max(this.rectangleCoordinates.getY2(), other.rectangleCoordinates.getY2()));
 	}
 
 	public Margins(double x1, double x2, double y1, double y2) {
-		this.x1 = x1;
-		this.x2 = x2;
-		this.y1 = y1;
-		this.y2 = y2;
+		this.rectangleCoordinates.setX1(x1);
+		this.rectangleCoordinates.setX2(x2);
+		this.rectangleCoordinates.setY1(y1);
+		this.rectangleCoordinates.setY2(y2);
 	}
 
 	public boolean isZero() {
-		return x1 == 0 && x2 == 0 && y1 == 0 && y2 == 0;
+		return rectangleCoordinates.getX1() == 0 && rectangleCoordinates.getX2() == 0 && rectangleCoordinates.getY1() == 0 && rectangleCoordinates.getY2() == 0;
 	}
 
 	public final double getX1() {
-		return x1;
+		return rectangleCoordinates.getX1();
 	}
 
 	public final double getX2() {
-		return x2;
+		return rectangleCoordinates.getX2();
 	}
 
 	public final double getY1() {
-		return y1;
+		return rectangleCoordinates.getY1();
 	}
 
 	public final double getY2() {
-		return y2;
+		return rectangleCoordinates.getY2();
 	}
 
 	public double getTotalWidth() {
-		return x1 + x2;
+		return rectangleCoordinates.getX1() + rectangleCoordinates.getX2();
 	}
 
 	public double getTotalHeight() {
-		return y1 + y2;
+		return rectangleCoordinates.getY1() + rectangleCoordinates.getY2();
 	}
 
 }

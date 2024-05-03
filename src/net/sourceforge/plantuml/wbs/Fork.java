@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.wbs;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -76,7 +77,7 @@ class Fork extends WBSTextBlock {
 
 		if (right.size() == 0) {
 			main.drawU(ug);
-			drawLine(ug, mainWidth / 2, y0, mainWidth / 2, y1);
+			drawLine(ug, new RectangleCoordinates(mainWidth / 2, y0, mainWidth / 2, y1));
 			return;
 		}
 
@@ -86,23 +87,23 @@ class Fork extends WBSTextBlock {
 
 		for (ITF child : right) {
 			lastX = x + child.getT1(stringBounder).getX();
-			drawLine(ug, lastX, y1, lastX, y2);
+			drawLine(ug, new RectangleCoordinates(lastX, y1, lastX, y2));
 			child.drawU(ug.apply(new UTranslate(x, y2)));
 			x += child.calculateDimension(stringBounder).getWidth() + delta1x;
 		}
 
 		final double posMain;
 		if (lastX > firstX) {
-			drawLine(ug, firstX, y1, lastX, y1);
+			drawLine(ug, new RectangleCoordinates(firstX, y1, lastX, y1));
 			posMain = firstX + (lastX - firstX - mainWidth) / 2;
 		} else {
 			assert lastX == firstX;
 			final XDimension2D fullDim = calculateDimension(stringBounder);
 			posMain = (fullDim.getWidth() - mainWidth) / 2;
-			drawLine(ug, firstX, y1, posMain + mainWidth / 2, y1);
+			drawLine(ug, new RectangleCoordinates(firstX, y1, posMain + mainWidth / 2, y1));
 		}
 		main.drawU(ug.apply(UTranslate.dx(posMain)));
-		drawLine(ug, posMain + mainWidth / 2, y0, posMain + mainWidth / 2, y1);
+		drawLine(ug, new RectangleCoordinates(posMain + mainWidth / 2, y0, posMain + mainWidth / 2, y1));
 
 	}
 

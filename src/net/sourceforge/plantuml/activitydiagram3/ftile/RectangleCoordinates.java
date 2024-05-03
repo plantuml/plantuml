@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -29,28 +29,57 @@
  * USA.
  *
  *
- * Original Author:  Arnaud Roques
- *
+ * Original Author:  Timo Schoemaker
+ * 
  *
  */
-package net.sourceforge.plantuml.klimt.drawing.eps;
+package net.sourceforge.plantuml.activitydiagram3.ftile;
+public class RectangleCoordinates{
+    private double x1;
 
-import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
+    public double getX1(){
+        return x1;
+    }
 
-public class PostScriptCommandQuadTo implements PostScriptCommand {
+    public void setX1(double x1){
+        this.x1=x1;
+    }
 
-	private RectangleCoordinates rectangleCoordinates = new RectangleCoordinates(0.0, 0.0, 0.0, 0.0);
+    private double y1;
 
-	public PostScriptCommandQuadTo(double x1, double y1, double x2, double y2) {
-		this.rectangleCoordinates.setX1(x1);
-		this.rectangleCoordinates.setY1(y1);
-		this.rectangleCoordinates.setX2(x2);
-		this.rectangleCoordinates.setY2(y2);
-	}
+    public double getY1(){
+        return y1;
+    }
 
-	public String toPostString() {
-		return EpsGraphics.format(rectangleCoordinates.getX1()) + " " + EpsGraphics.format(rectangleCoordinates.getY1()) + " " + EpsGraphics.format(rectangleCoordinates.getX2()) + " "
-						+ EpsGraphics.format(rectangleCoordinates.getY2()) + " rquadto";
-	}
+    public void setY1(double y1){
+        this.y1=y1;
+    }
 
+    private double x2;
+
+    public double getX2(){
+        return x2;
+    }
+
+    public void setX2(double x2){
+        this.x2=x2;
+    }
+
+    private double y2;
+
+    public double getY2(){
+        return y2;
+    }
+
+    public void setY2(double y2){
+        this.y2=y2;
+    }
+
+    public RectangleCoordinates(double x1,double y1,double x2,double y2){
+        this.x1=x1;
+        this.y1=y1;
+        this.x2=x2;
+        this.y2=y2;
+    }
 }
+

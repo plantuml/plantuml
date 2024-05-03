@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.klimt.drawing.visio;
@@ -41,6 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.golem.MinMaxDouble;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.geom.USegment;
@@ -68,7 +69,7 @@ public class VisioGraphics {
 		out(os, "<Masters/>");
 		out(os, "<Pages>");
 		out(os, "<Page ID='0' NameU='Page-1' Name='Page 1' ViewScale='1' ViewCenterX='" + (width / 2)
-				+ "' ViewCenterY='" + (height / 2) + "'>");
+						+ "' ViewCenterY='" + (height / 2) + "'>");
 		out(os, "<PageSheet LineStyle='0' FillStyle='0' TextStyle='0'>");
 		out(os, "<PageProps>");
 		out(os, "<PageWidth Unit='IN_F'>" + width + "</PageWidth>");
@@ -112,7 +113,7 @@ public class VisioGraphics {
 	}
 
 	public void text(String text, double x, double y, String family, int fontSize, double width, double height,
-			Map<String, String> attributes) {
+					Map<String, String> attributes) {
 		// System.err.println("x=" + x);
 		// System.err.println("y=" + y);
 		// System.err.println("text=" + text);
@@ -126,18 +127,22 @@ public class VisioGraphics {
 
 	}
 
-	public void line(double x1, double y1, double x2, double y2) {
-		ensureVisible(x1, y1);
-		if (x1 == x2 && y1 == y2) {
+	public void line(RectangleCoordinates rectangleCoordinates) {
+		ensureVisible(rectangleCoordinates.getX1(), rectangleCoordinates.getY1());
+		if (rectangleCoordinates.getX1() == rectangleCoordinates.getX2() && rectangleCoordinates.getY1() == rectangleCoordinates.getY2()) {
 			return;
 		}
-		ensureVisible(x2, y2);
-		final VisioLine line = VisioLine.createInches(shapes.size() + 1, x1, y1, x2, y2);
+		ensureVisible(rectangleCoordinates.getX2(), rectangleCoordinates.getY2());
+		final VisioLine line = VisioLine.createInches(shapes.size() + 1, new RectangleCoordinates(
+						rectangleCoordinates.getX1(),
+						rectangleCoordinates.getY1(),
+						rectangleCoordinates.getX2(),
+						rectangleCoordinates.getY2()));
 		shapes.add(line);
 	}
 
 	private void line(XPoint2D p1, XPoint2D p2) {
-		line(p1.getX(), p1.getY(), p2.getX(), p2.getY());
+		line(new RectangleCoordinates(p1.getX(), p1.getY(), p2.getX(), p2.getY()));
 	}
 
 	public void upath(final double x, final double y, UPath path) {
@@ -150,15 +155,15 @@ public class VisioGraphics {
 				lx = coord[0] + x;
 				ly = coord[1] + y;
 			} else if (type == USegmentType.SEG_LINETO) {
-				line(lx, ly, coord[0] + x, coord[1] + y);
+				line(new RectangleCoordinates(lx, ly, coord[0] + x, coord[1] + y));
 				lx = coord[0] + x;
 				ly = coord[1] + y;
 			} else if (type == USegmentType.SEG_QUADTO) {
-				line(lx, ly, coord[2] + x, coord[3] + y);
+				line(new RectangleCoordinates(lx, ly, coord[2] + x, coord[3] + y));
 				lx = coord[2] + x;
 				ly = coord[3] + y;
 			} else if (type == USegmentType.SEG_CUBICTO) {
-				line(lx, ly, coord[4] + x, coord[5] + y);
+				line(new RectangleCoordinates(lx, ly, coord[4] + x, coord[5] + y));
 				// linePoint(lx, ly, coord[0] + x, coord[1] + y);
 				// linePoint(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);
 				// linePoint(coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);

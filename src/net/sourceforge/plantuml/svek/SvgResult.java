@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -31,7 +31,7 @@
  *
  * Original Author:  Arnaud Roques
  *
- * 
+ *
  */
 package net.sourceforge.plantuml.svek;
 
@@ -159,7 +159,7 @@ public class SvgResult {
 		double x = start.getX();
 		double y = start.getY();
 		for (DotPath.TriPoints p : triPoints) {
-			final XCubicCurve2D bezier = new XCubicCurve2D(x, y, p.x1, p.y1, p.x2, p.y2, p.x, p.y);
+			final XCubicCurve2D bezier = new XCubicCurve2D(x, y, p.rectangleCoordinates.getX1(), p.rectangleCoordinates.getY1(), p.rectangleCoordinates.getX2(), p.rectangleCoordinates.getY2(), p.x, p.y);
 			beziers.add(bezier);
 			x = p.x;
 			y = p.y;
