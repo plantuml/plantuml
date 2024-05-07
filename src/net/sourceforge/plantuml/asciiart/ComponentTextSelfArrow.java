@@ -73,32 +73,32 @@ public class ComponentTextSelfArrow extends AbstractComponentText implements Arr
 		final int width = (int) dimensionToUse.getWidth();
 		final int height = (int) dimensionToUse.getHeight() - 1;
 
-		charArea.fillRect(' ', 0, 0, width, height);
+		charArea.fillRect(' ', 1, 0, width-2, height);
 
 		if (fileFormat == FileFormat.UTXT) {
 			if (config.isDotted()) {
-				charArea.drawStringLR("\u2500 \u2500 \u2510", 0, 0);
-				charArea.drawStringLR("|", 4, 1);
-				charArea.drawStringLR("< \u2500 \u2518", 0, 2);
+				charArea.drawStringLR("\u2500 \u2500 \u2510", 1, 0);
+				charArea.drawStringLR("|", 5, 1);
+				charArea.drawStringLR("< \u2500 \u2518", 1, 2);
 			} else {
-				charArea.drawStringLR("\u2500\u2500\u2500\u2500\u2510", 0, 0);
-				charArea.drawStringLR("\u2502", 4, 1);
-				charArea.drawStringLR("<\u2500\u2500\u2500\u2518", 0, 2);
+				charArea.drawStringLR("\u2500\u2500\u2500\u2500\u2510", 1, 0);
+				charArea.drawStringLR("\u2502", 5, 1);
+				charArea.drawStringLR("<\u2500\u2500\u2500\u2518", 1, 2);
 			}
 		} else if (config.isDotted()) {
-			charArea.drawStringLR("- - .", 0, 0);
-			charArea.drawStringLR("|", 4, 1);
-			charArea.drawStringLR("< - '", 0, 2);
+			charArea.drawStringLR("- - .", 1, 0);
+			charArea.drawStringLR("|", 5, 1);
+			charArea.drawStringLR("< - '", 1, 2);
 		} else {
-			charArea.drawStringLR("----.", 0, 0);
-			charArea.drawStringLR("|", 4, 1);
-			charArea.drawStringLR("<---'", 0, 2);
+			charArea.drawStringLR("----.", 1, 0);
+			charArea.drawStringLR("|", 5, 1);
+			charArea.drawStringLR("<---'", 1, 2);
 		}
 
 		if (fileFormat == FileFormat.UTXT) {
-			charArea.drawStringsLRUnicode(stringsToDisplay.asList(), 6, 1);
+			charArea.drawStringsLRUnicode(stringsToDisplay.asList(), 7, 1);
 		} else {
-			charArea.drawStringsLRSimple(stringsToDisplay.asList(), 6, 1);
+			charArea.drawStringsLRSimple(stringsToDisplay.asList(), 7, 1);
 		}
 	}
 
@@ -107,7 +107,7 @@ public class ComponentTextSelfArrow extends AbstractComponentText implements Arr
 	}
 
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return StringUtils.getWcWidth(stringsToDisplay) + 6;
+		return StringUtils.getWcWidth(stringsToDisplay) + 8;
 	}
 
 	public XPoint2D getStartPoint(StringBounder stringBounder, XDimension2D dimensionToUse) {
