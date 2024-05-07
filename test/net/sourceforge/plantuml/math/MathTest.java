@@ -14,14 +14,14 @@ class MathTest {
 			" abs(x),                       {\\left|{{x}}\\right|} ",
 			" y=ceil(x),                    {y}={\\left\\lceil{{x}}\\right\\rceil} ",
 			" f(t)=(a_0)/2 + sum_(n=1)^ooa_ncos((npit)/L)+sum_(n=1)^oo b_n\\ sin((npit)/L), {f{{\\left({t}\\right)}}}=\\frac{{{a}_{{0}}}}{{2}}+{\\sum_{{{n}={1}}}^{\\infty}}{a}_{{n}}{\\cos{{\\left(\\frac{{{n}\\pi{t}}}{{L}}\\right)}}}+{\\sum_{{{n}={1}}}^{\\infty}}{b}_{{n}}\\ {\\sin{{\\left(\\frac{{{n}\\pi{t}}}{{L}}\\right)}}} ",
-			" '[[a,b],[c,d]]',              {\\left[\\begin{matrix}{a}&{b}\\\\{c}&{d}\\end{matrix}\\right]} ",
+			" '[[a,b],[c,d]]',              {\\left[\\begin{array}{cc} {a}&{b}\\\\{c}&{d}\\end{array}\\right]} ",
 			" color(red)(x),                {\\textcolor{red}{{x}}} ",
 			" color(red)(t)=color(blue)(x), {\\textcolor{red}{{t}}}={\\textcolor{blue}{{x}}} ",
 			" f,                            {f} ",
-			" f_g,                          {{f}_{{g}}} ",
-			" '[[1,2,3],[4,5,6]]',          {\\left[\\begin{matrix}{1}&{2}&{3}\\\\{4}&{5}&{6}\\end{matrix}\\right]} ",
+			" f_g,                          {f}_{{g}} ",
+			" '[[1,2,3],[4,5,6]]',          {\\left[\\begin{array}{ccc} {1}&{2}&{3}\\\\{4}&{5}&{6}\\end{array}\\right]} ",
 	})
-	public void testMath(String input, String expected) {
+	void testMath(String input, String expected) {
 		final String res = new ASCIIMathTeXImg().getTeX(input);
 		assertEquals(expected, res);
 	}
