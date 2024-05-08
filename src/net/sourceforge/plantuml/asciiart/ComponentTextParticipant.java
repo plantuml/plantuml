@@ -63,9 +63,12 @@ public class ComponentTextParticipant extends AbstractComponentText {
 		final UmlCharArea charArea = ((UGraphicTxt) ug).getCharArea();
 		final int width = (int) dimensionToUse.getWidth();
 		final int height = (int) dimensionToUse.getHeight();
-		charArea.fillRect(' ', 0, 0, width, height);
+		int textWidth = StringUtils.getWcWidth(stringsToDisplay);
+		int boxWidth = textWidth+2;
+
+		charArea.fillRect(' ', 0, 0, boxWidth, height);
 		if (fileFormat == FileFormat.UTXT) {
-			charArea.drawBoxSimpleUnicode(0, 0, width, height);
+			charArea.drawBoxSimpleUnicode(0, 0, boxWidth, height);
 			if (type == ComponentType.PARTICIPANT_TAIL) {
 				charArea.drawChar('\u2534', (width - 1) / 2, 0);
 			}
@@ -73,7 +76,7 @@ public class ComponentTextParticipant extends AbstractComponentText {
 				charArea.drawChar('\u252c', (width - 1) / 2, height - 1);
 			}
 		} else {
-			charArea.drawBoxSimple(0, 0, width, height);
+			charArea.drawBoxSimple(0, 0, boxWidth, height);
 			if (type == ComponentType.PARTICIPANT_TAIL) {
 				charArea.drawChar('+', (width - 1) / 2, 0);
 			}
@@ -93,7 +96,10 @@ public class ComponentTextParticipant extends AbstractComponentText {
 	}
 
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return StringUtils.getWcWidth(stringsToDisplay) + 2;
+		// make all widths odd sized by converting the string widths to even,
+		// adding 3 to make it both odd and padded by 1 on each side, then return the result
+		// as a double.
+		return (double) ((StringUtils.getWcWidth(stringsToDisplay) / 2 * 2) + 3);
 	}
 
 }
