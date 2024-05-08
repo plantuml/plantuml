@@ -533,6 +533,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			return null;
 		}
 
+		// collect hide or show statements on stereotypes
 		List<EntityHideOrShow> commands = new ArrayList<>();
 		for (EntityHideOrShow hideOrShowEntry : hideOrShows) {
 			if (hideOrShowEntry.portion == EntityPortion.STEREOTYPE) {
@@ -542,7 +543,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 		List<String> visibleStereotypeLabels = new ArrayList<>();
 		for (String stereoTypeLabel : entity.getStereotype().getLabels(Guillemet.DOUBLE_COMPARATOR)) {
-			if (isHiddenStereotypeLabel(stereoTypeLabel, commands)) {
+			if (!isHiddenStereotypeLabel(stereoTypeLabel, commands)) {
 				visibleStereotypeLabels.add(stereoTypeLabel);
 			}
 		}
@@ -552,12 +553,16 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	private boolean isHiddenStereotypeLabel(String stereoTypeLabel, List<EntityHideOrShow> commands) {
 		for (EntityHideOrShow cmd : commands) {
+			// gender is here the stereotype name given in the hide or show command
 			String gender = cmd.gender.getGender();
 			if (gender != null && gender.equals(stereoTypeLabel)) {
-				return false;
+				return !cmd.show;
+			} else if (gender == null) {
+				// we have a hide or show command without a stereotype name => hide or show all stereotypes
+				return !cmd.show;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	public final void hideOrShow(EntityGender gender, EntityPortion portions, boolean show) {
