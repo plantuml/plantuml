@@ -148,6 +148,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		result.linkConstraint = this.linkConstraint;
 		result.stereotype = stereotype;
 		result.linkArg.setVisibilityModifier(this.linkArg.getVisibilityModifier());
+        result.linkArrow = linkArrow;
 		return result;
 	}
 
