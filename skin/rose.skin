@@ -486,6 +486,10 @@ timingDiagram {
 	  FontSize 11
     }
 	arrow {
+	    FontName Serif
+	    FontSize 14
+	    FontStyle plain
+	    FontColor darkblue
 	    LineColor darkblue
 	    LineThickness 1.5
 	}
