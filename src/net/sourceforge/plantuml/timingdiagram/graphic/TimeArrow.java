@@ -36,11 +36,9 @@ package net.sourceforge.plantuml.timingdiagram.graphic;
 
 import net.sourceforge.plantuml.decoration.WithLinkType;
 import net.sourceforge.plantuml.klimt.UTranslate;
-import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
-import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
@@ -48,17 +46,22 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
-import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
 public class TimeArrow implements UDrawable {
 
 	private final XPoint2D start;
 	private final XPoint2D end;
 	private final Display label;
-	private final ISkinSimple spriteContainer;
+	private final ISkinParam skinParam;
+	private StyleBuilder styleBuilder;
 	private final WithLinkType type;
 
-	public static TimeArrow create(IntricatedPoint pt1, IntricatedPoint pt2, Display label, ISkinSimple spriteContainer,
+	public static TimeArrow create(IntricatedPoint pt1, IntricatedPoint pt2, Display label, ISkinParam spriteContainer,
 			WithLinkType type) {
 		final TimeArrow arrow1 = new TimeArrow(pt1.getPointA(), pt2.getPointA(), label, spriteContainer, type);
 		final TimeArrow arrow2 = new TimeArrow(pt1.getPointA(), pt2.getPointB(), label, spriteContainer, type);
@@ -67,12 +70,13 @@ public class TimeArrow implements UDrawable {
 		return shorter(arrow1, arrow2, arrow3, arrow4);
 	}
 
-	private TimeArrow(XPoint2D start, XPoint2D end, Display label, ISkinSimple spriteContainer, WithLinkType type) {
+	private TimeArrow(XPoint2D start, XPoint2D end, Display label, ISkinParam skinParam, WithLinkType type) {
 		this.start = start;
 		this.type = type;
 		this.end = end;
 		this.label = label;
-		this.spriteContainer = spriteContainer;
+		this.skinParam = skinParam;
+		this.styleBuilder = skinParam.getCurrentStyleBuilder();
 	}
 
 	private double getAngle() {
@@ -95,7 +99,7 @@ public class TimeArrow implements UDrawable {
 	}
 
 	public TimeArrow translate(UTranslate translate) {
-		return new TimeArrow(translate.getTranslated(start), translate.getTranslated(end), label, spriteContainer,
+		return new TimeArrow(translate.getTranslated(start), translate.getTranslated(end), label, skinParam,
 				type);
 	}
 
@@ -107,10 +111,7 @@ public class TimeArrow implements UDrawable {
 	}
 
 	private FontConfiguration getFontConfiguration() {
-		final UFont font = UFont.serif(14);
-
-		final HColor color = type.getSpecificColor();
-		return FontConfiguration.create(font, color, color, null);
+		return getStyle().getFontConfiguration(skinParam.getIHtmlColorSet());
 	}
 
 	public void drawU(UGraphic ug) {
@@ -132,7 +133,7 @@ public class TimeArrow implements UDrawable {
 		ug = ug.apply(type.getSpecificColor().bg());
 		ug.draw(polygon);
 
-		final TextBlock textLabel = label.create(getFontConfiguration(), HorizontalAlignment.LEFT, spriteContainer);
+		final TextBlock textLabel = getTextBlock(label);
 		double xText = (pt1.getX() + pt2.getX()) / 2;
 		double yText = (pt1.getY() + pt2.getY()) / 2;
 		if (start.getY() < end.getY()) {
@@ -143,4 +144,15 @@ public class TimeArrow implements UDrawable {
 
 	}
 
+	private TextBlock getTextBlock(Display display) {
+		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
+	}
+
+	private Style getStyle() {
+		return getStyleSignature().getMergedStyle(styleBuilder);
+	}
+
+	private StyleSignatureBasic getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,SName.arrow);
+	}
 }
