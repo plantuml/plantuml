@@ -58,7 +58,7 @@ public class TimeArrow implements UDrawable {
 	private final XPoint2D end;
 	private final Display label;
 	private final ISkinParam skinParam;
-	private StyleBuilder styleBuilder;
+	private final StyleBuilder styleBuilder;
 	private final WithLinkType type;
 
 	public static TimeArrow create(IntricatedPoint pt1, IntricatedPoint pt2, Display label, ISkinParam spriteContainer,

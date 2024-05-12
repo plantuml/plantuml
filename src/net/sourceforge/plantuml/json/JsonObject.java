@@ -556,10 +556,11 @@ public class JsonObject extends JsonValue implements Iterable<Member> {
 	}
 
 	/**
-	 * Copies all members of the specified object into this object. When the specified object contains
-	 * members with names that also exist in this object, the existing values in this object will be
-	 * replaced by the corresponding values in the specified object, except for the case that both values
-	 * are JsonObjects themselves, which will trigger another merge of these objects.
+	 * Copies all members of the specified object into this object. When the
+	 * specified object contains members with names that also exist in this object,
+	 * the existing values in this object will be replaced by the corresponding
+	 * values in the specified object, except for the case that both values are
+	 * JsonObjects themselves, which will trigger another merge of these objects.
 	 *
 	 * @param object the object to deep merge
 	 * @return the object itself, to enable method chaining
