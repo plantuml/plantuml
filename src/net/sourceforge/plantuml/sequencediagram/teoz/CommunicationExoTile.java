@@ -188,6 +188,9 @@ public class CommunicationExoTile extends AbstractTile {
 		if (message.getType().isRightBorder())
 			return livingSpace.getPosC(stringBounder);
 
+		if (isShortArrow())
+			return livingSpace.getPosC(stringBounder).addFixed(-getPreferredWidth(stringBounder));
+
 		return tileArguments.getXOrigin();
 	}
 

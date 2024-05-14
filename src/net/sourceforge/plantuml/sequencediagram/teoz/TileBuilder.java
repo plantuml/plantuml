@@ -105,7 +105,10 @@ public class TileBuilder {
 			}
 			for (Note noteOnMessage : msg.getNoteOnMessages()) {
 				final NotePosition notePosition = noteOnMessage.getPosition();
-				if (notePosition == NotePosition.LEFT)
+				if (notePosition == NotePosition.LEFT && msg.isSelfMessage())
+					result = new CommunicationTileSelfNoteLeft((CommunicationTileSelf) result, msg, skin, skinParam,
+							noteOnMessage, currentY);
+				else if (notePosition == NotePosition.LEFT)
 					result = new CommunicationTileNoteLeft(result, msg, skin, skinParam,
 							reverse ? livingSpace2 : livingSpace1, noteOnMessage, currentY);
 				else if (notePosition == NotePosition.RIGHT && msg.isSelfMessage())

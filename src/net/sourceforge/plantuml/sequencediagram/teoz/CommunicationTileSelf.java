@@ -119,7 +119,7 @@ public class CommunicationTileSelf extends AbstractTile {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final Component comp = getComponent(stringBounder);
 		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
-		double x1 = getPoint1(stringBounder).getCurrentValue();
+		double x1 = getMinX().getCurrentValue();
 		final int levelIgnore = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_ACTIVATE);
 		final int levelConsidere = livingSpace1.getLevelAt(this, EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE);
 		Log.info("CommunicationTileSelf::drawU levelIgnore=" + levelIgnore + " levelConsidere=" + levelConsidere);
@@ -194,7 +194,7 @@ public class CommunicationTileSelf extends AbstractTile {
 
 	public Real getMinX() {
 		if (isReverseDefine()) {
-			return getPoint1(getStringBounder());
+			return livingSpace1.getPosC(getStringBounder()).addFixed(-getCompWidth());
 		}
 		return getPoint1(getStringBounder());
 	}

@@ -51,13 +51,15 @@ class MessageSelfArrow extends Arrow {
 	private final LivingParticipantBox p1;
 	private final double deltaX;
 	private final double deltaY;
+	private final boolean isReverse;
 
 	public MessageSelfArrow(double startingY, Rose skin, ArrowComponent arrow, LivingParticipantBox p1, double deltaY,
-			Url url, double deltaX) {
+													Url url, double deltaX, boolean isReverse) {
 		super(startingY, skin, arrow, url);
 		this.p1 = p1;
 		this.deltaY = deltaY;
 		this.deltaX = deltaX;
+		this.isReverse = isReverse;
 	}
 
 	@Override
@@ -92,7 +94,10 @@ class MessageSelfArrow extends Arrow {
 		// }
 		final double pos2 = p1.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment()
 				.getPos2();
-		return pos2 + deltaX;
+		if (isReverse)
+			return pos2 + deltaX - getPreferredWidth(stringBounder);
+		else
+			return pos2 + deltaX;
 	}
 
 	@Override
@@ -142,5 +147,9 @@ class MessageSelfArrow extends Arrow {
 	@Override
 	public double getActualWidth(StringBounder stringBounder) {
 		return getPreferredWidth(stringBounder);
+	}
+
+	public boolean isReverse() {
+		return isReverse;
 	}
 }

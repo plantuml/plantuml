@@ -106,10 +106,10 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 			x2 += 2 * ComponentRoseArrow.spaceCrossX;
 
 		if (getArrowConfiguration().isReverseDefine()) {
-			ug2.apply(new UTranslate(-xRight, textHeight)).draw(ULine.hline(xRight - x1));
-			ug2.apply(new UTranslate(-xRight, textHeight)).draw(ULine.vline(arrowHeight));
-			ug2.apply(new UTranslate(-xRight, textHeight + arrowHeight)).draw(ULine.hline(xRight - x2));
-			final UPolygon polygon = getPolygon().translate(0, textHeight + arrowHeight);
+			ug2.apply(new UTranslate(-xRight+getPreferredWidth(stringBounder), textHeight)).draw(ULine.hline(xRight - x1));
+			ug2.apply(new UTranslate(-xRight+getPreferredWidth(stringBounder), textHeight)).draw(ULine.vline(arrowHeight));
+			ug2.apply(new UTranslate(-xRight+getPreferredWidth(stringBounder), textHeight + arrowHeight)).draw(ULine.hline(xRight - x2));
+			final UPolygon polygon = getPolygon().translate(+getPreferredWidth(stringBounder), textHeight + arrowHeight);
 			ug.apply(getForegroundColor().bg()).apply(UTranslate.dx(x2)).draw(polygon);
 		} else {
 
@@ -153,11 +153,7 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 			}
 		}
 
-		if (getArrowConfiguration().isReverseDefine())
-			getTextBlock().drawU(ug.apply(UTranslate.dx(-getPureTextWidth(stringBounder))));
-		else
-			getTextBlock().drawU(ug.apply(UTranslate.dx(getMarginX1())));
-
+		getTextBlock().drawU(ug.apply(UTranslate.dx(getMarginX1())));
 	}
 
 	private UPolygon getPolygon() {

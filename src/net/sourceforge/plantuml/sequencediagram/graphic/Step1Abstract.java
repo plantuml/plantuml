@@ -119,8 +119,14 @@ abstract class Step1Abstract {
 		final NoteBox noteBox = new NoteBox(arrow.getStartingY(), noteComp, p, null, noteOnMessage.getPosition(),
 				noteOnMessage.getUrl());
 
-		if (arrow instanceof MessageSelfArrow && noteOnMessage.getPosition() == NotePosition.RIGHT) {
-			noteBox.pushToRight(arrow.getPreferredWidth(stringBounder));
+		if (arrow instanceof MessageSelfArrow) {
+			boolean isReverseSelfArrow = ((MessageSelfArrow) arrow).isReverse();
+			if (!isReverseSelfArrow && noteOnMessage.getPosition() == NotePosition.RIGHT) {
+				noteBox.pushToRight(arrow.getPreferredWidth(stringBounder));
+			}
+			if (isReverseSelfArrow && noteOnMessage.getPosition() == NotePosition.LEFT) {
+				noteBox.pushToRight(-arrow.getPreferredWidth(stringBounder));
+			}
 		}
 		// if (arrow instanceof MessageExoArrow) {
 		// final MessageExoType type = ((MessageExoArrow) arrow).getType();
