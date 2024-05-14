@@ -216,7 +216,7 @@ class Step1Message extends Step1Abstract {
 		final ArrowComponent comp = getDrawingSet().getSkin().createComponentArrow(styles, getConfig(),
 				getDrawingSet().getSkinParam(), getMessage().getLabelNumbered());
 		return new MessageSelfArrow(posY, getDrawingSet().getSkin(), comp, getLivingParticipantBox1(), deltaY,
-				getMessage().getUrl(), deltaX);
+				getMessage().getUrl(), deltaX,getConfig().isReverseDefine());
 	}
 
 	private double getHalfLifeWidth() {
