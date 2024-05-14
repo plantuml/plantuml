@@ -458,6 +458,26 @@ public class SURL {
 			return null;
 		}
 	}
+	
+
+	/**
+	 * Configures the given {@link URLConnection} with specific settings.
+	 * <p>
+	 * This method sets the connection to disallow user interactions and, if the 
+	 * connection is an instance of {@link HttpURLConnection}, it also disables 
+	 * automatic following of HTTP redirects.
+	 * </p>
+	 *
+	 * @param connection the {@link URLConnection} to be configured
+	 *
+	 * @see URLConnection#setAllowUserInteraction(boolean)
+	 * @see HttpURLConnection#setInstanceFollowRedirects(boolean)
+	 */
+	protected static void configure(URLConnection connection) {
+		connection.setAllowUserInteraction(false);
+		if (connection instanceof HttpURLConnection)
+			((HttpURLConnection) connection).setInstanceFollowRedirects(false);
+	}
 
 	/**
 	 * Creates a GET request and response handler
@@ -477,6 +497,7 @@ public class SURL {
 				final URLConnection connection = proxy == null ? url.openConnection() : url.openConnection(proxy);
 				if (connection == null)
 					return null;
+				configure(connection);
 
 				final HttpURLConnection http = (HttpURLConnection) connection;
 
@@ -486,19 +507,20 @@ public class SURL {
 			}
 
 			public byte[] call() throws IOException, URISyntaxException {
-				HttpURLConnection http = openConnection(url);
-				final int responseCode = http.getResponseCode();
+				final HttpURLConnection http = openConnection(url);
+				// final int responseCode = http.getResponseCode();
 
-				if (responseCode == HttpURLConnection.HTTP_MOVED_TEMP
-						|| responseCode == HttpURLConnection.HTTP_MOVED_PERM) {
-					final String newUrl = http.getHeaderField("Location");
-					http = openConnection(new URI(newUrl).toURL());
-				}
+//				if (responseCode == HttpURLConnection.HTTP_MOVED_TEMP
+//						|| responseCode == HttpURLConnection.HTTP_MOVED_PERM) {
+//					final String newUrl = http.getHeaderField("Location");
+//					http = openConnection(new URI(newUrl).toURL());
+//				}
 
 				return retrieveResponseAsBytes(http);
 			}
 		};
 	}
+
 
 	/**
 	 * Creates a POST request and response handler with a simple String content. The
@@ -521,6 +543,7 @@ public class SURL {
 				if (connection == null)
 					return null;
 
+				configure(connection);
 				final boolean withContent = StringUtils.isNotEmpty(data);
 
 				final HttpURLConnection http = (HttpURLConnection) connection;
