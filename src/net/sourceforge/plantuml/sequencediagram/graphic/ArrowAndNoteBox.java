@@ -105,6 +105,9 @@ class ArrowAndNoteBox extends Arrow implements InGroupable {
 		double result = w;
 		for (NoteBox noteBox : noteBoxes) {
 			result += noteBox.getPreferredWidth(stringBounder);
+			if (noteBox.getNotePosition() == NotePosition.RIGHT) {
+				result += noteBox.getRightShift(arrow.getStartingY());
+			}
 		}
 		return result;
 	}
