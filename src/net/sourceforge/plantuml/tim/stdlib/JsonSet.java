@@ -57,7 +57,7 @@ public class JsonSet extends SimpleReturnFunction {
 
 	@Override
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
-		return nbArg == 3;
+		return nbArg == 2 || nbArg == 3;
 	}
 
 	@Override
@@ -71,21 +71,35 @@ public class JsonSet extends SimpleReturnFunction {
 
 		if (!json.isArray() && !json.isObject())
 			return data;
-		if (json.isArray()) {
-			if (values.get(1).isNumber()) {
-				final Integer index = values.get(1).toInt();
-				final JsonValue value = values.get(2).toJsonValue();
-				if (0 <= index && index < json.asArray().size())
-					json.asArray().set(index, value);
+
+		switch (values.size()) {
+		case 2:
+			if (json.isObject()) {
+				final JsonValue value = values.get(1).toJsonValue();
+				if (value.isObject())
+					json.asObject().deepMerge(value.asObject());
+				return TValue.fromJson(json);
 			}
-			return TValue.fromJson(json);
+		case 3:
+			if (json.isArray()) {
+				if (values.get(1).isNumber()) {
+					final Integer index = values.get(1).toInt();
+					final JsonValue value = values.get(2).toJsonValue();
+					if (0 <= index && index < json.asArray().size())
+						json.asArray().set(index, value);
+				}
+				return TValue.fromJson(json);
+			}
+			if (json.isObject()) {
+				final String name = values.get(1).toString();
+				final JsonValue value = values.get(2).toJsonValue();
+				json.asObject().set(name, value);
+				return TValue.fromJson(json);
+			}
+
+		default:
+			assert false; // Should not append because of canCover()
+			throw new EaterException("Error on json_set: Too many arguments", location);
 		}
-		if (json.isObject()) {
-			final String name = values.get(1).toString();
-			final JsonValue value = values.get(2).toJsonValue();
-			json.asObject().set(name, value);
-			return TValue.fromJson(json);
-		}
-		throw new EaterException("Bad JSON type", location);
 	}
 }
