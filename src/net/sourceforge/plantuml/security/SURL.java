@@ -225,8 +225,11 @@ public class SURL {
 			// In SANDBOX, we cannot read any URL
 			return false;
 
-		if (SecurityUtils.getSecurityProfile() == SecurityProfile.LEGACY)
+		if (SecurityUtils.getSecurityProfile() == SecurityProfile.LEGACY) {
+			if (URLCheck.isURLforbidden(cleanPath(internal.toString())))
+				return false;
 			return true;
+		}
 
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
 			// We are UNSECURE anyway
@@ -238,7 +241,7 @@ public class SURL {
 		// ::comment when __CORE__
 
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET) {
-			if (forbiddenURL(cleanPath(internal.toString())))
+			if (URLCheck.isURLforbidden(cleanPath(internal.toString())))
 				return false;
 
 			final int port = internal.getPort();
@@ -293,21 +296,6 @@ public class SURL {
 	@Override
 	public String toString() {
 		return internal.toString();
-	}
-
-	private boolean forbiddenURL(String full) {
-		// Thanks to Agasthya Kasturi
-		if (full.contains("@"))
-			return true;
-		if (full.startsWith("https://") == false && full.startsWith("http://") == false)
-			return true;
-		if (full.matches("^https?://[-#.0-9:\\[\\]+]+/.*"))
-			return true;
-		if (full.matches("^https?://[^.]+/.*"))
-			return true;
-		if (full.matches("^https?://[^.]+$"))
-			return true;
-		return false;
 	}
 
 	private boolean isInUrlAllowList() {
