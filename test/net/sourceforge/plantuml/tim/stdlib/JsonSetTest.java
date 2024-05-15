@@ -127,4 +127,22 @@ class JsonSetTest {
 	void Test_with_Object_Json_add_Int(@ConvertWith(StringJsonConverter.class) JsonValue input1, String input2, Integer input3, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input1, input2, input3, expected);
 	}
+
+	@ParameterizedTest(name = "[{index}] " + cutName + "({0}, {1}) = {2}")
+	@CsvSource(value = {
+			" {},                                 {\"a\":1},        {\"a\":1}",
+			" {\"age\" : 30},                     {\"name\":123},  '{\"age\":30,\"name\":123}'",
+			" '{\"age\" : 30, \"name\":\"Bob\"}', {\"name\":123},  '{\"age\":30,\"name\":123}'",
+			" '{\"partlen\": \"2\", \"color\": {\"A\":\"red\", \"B\":\"blue\"}}', '{\"color\":{\"A\":\"black\"}}', '{\"partlen\":\"2\",\"color\":{\"A\":\"black\",\"B\":\"blue\"}}'",
+			" {}, \"a\", {}",
+			" {}, \"a b c\", {}",
+			" {}, 123, {}",
+			" {}, '[1,2]', {}",
+			" {}, true, {}",
+			" {}, false, {}",
+			" {}, null, {}",
+	})
+	void Test_with_Object_Json_add_Object(@ConvertWith(StringJsonConverter.class) JsonValue input1, @ConvertWith(StringJsonConverter.class) JsonValue input2, String expected) throws EaterException {
+		assertTimExpectedOutputFromInput(cut, input1, input2, expected);
+	}
 }
