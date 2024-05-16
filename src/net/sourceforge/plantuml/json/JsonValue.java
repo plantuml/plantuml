@@ -497,5 +497,15 @@ public abstract class JsonValue implements Serializable {
 	}
 
 	abstract void write(JsonWriter writer) throws IOException;
+	
+	
+	/**
+	 * Added for PlantUML.
+	 * The default implementation works for immutable objects.
+	 * Must be overriden for JsonArray and JsonObject.
+	 */
+	public JsonValue cloneMe() {
+		return this;
+	}
 
 }

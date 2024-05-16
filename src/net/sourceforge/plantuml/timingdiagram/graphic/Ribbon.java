@@ -260,14 +260,18 @@ public class Ribbon implements PDrawing {
 					getInitialWidth(stringBounder) + ruler.getWidth());
 		} else {
 			final double a = getPosInPixel(changes.get(0));
-			drawPentaA(ug.apply(UTranslate.dx(-getInitialWidth(stringBounder))), getInitialWidth(stringBounder) + a,
-					changes.get(0));
+			if (ChangeState.isFlat(initialState))
+				drawFlat(ug.apply(UTranslate.dx(-getInitialWidth(stringBounder))), getInitialWidth(stringBounder) + a,
+						changes.get(0));
+			else
+				drawPentaA(ug.apply(UTranslate.dx(-getInitialWidth(stringBounder))), getInitialWidth(stringBounder) + a,
+						changes.get(0));
 		}
 	}
 
 	private void drawBeforeZeroStateLabel(final UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		if (initialState != null) {
+		if (initialState != null && ChangeState.isFlat(initialState) == false) {
 			final TextBlock initial = createTextBlock(initialState);
 			final XDimension2D dimInital = initial.calculateDimension(stringBounder);
 			initial.drawU(ug.apply(new UTranslate(-getMarginX() - dimInital.getWidth(), -dimInital.getHeight() / 2)));
@@ -277,14 +281,21 @@ public class Ribbon implements PDrawing {
 	private void drawSingle(UGraphic ug, double len) {
 		final HColor back = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor line = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
-		Fashion context = new Fashion(back, back).withStroke(style.getStroke());
+		final Fashion context = new Fashion(back, back).withStroke(style.getStroke());
 		ug = context.apply(ug);
 
+		final ULine border = ULine.hline(len);
 		final double height = getRibbonHeight();
+
+		if (ChangeState.isFlat(initialState)) {
+			ug = ug.apply(line);
+			ug.apply(UTranslate.dy(height / 2)).draw(border);
+			return;
+		}
+
 		final URectangle rect = URectangle.build(len, height);
 		ug.draw(rect);
 
-		final ULine border = ULine.hline(len);
 		ug = ug.apply(line);
 		ug.draw(border);
 		ug.apply(UTranslate.dy(height)).draw(border);

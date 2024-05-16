@@ -79,6 +79,17 @@ import net.sourceforge.plantuml.json.JsonObject.Member;
  */
 @SuppressWarnings("serial") // use default serial UID
 public class JsonObject extends JsonValue implements Iterable<Member> {
+	
+	/**
+	 * Added for PlantUML
+	 */
+	public JsonValue cloneMe() {
+		final JsonObject copy = new JsonObject();
+		for (int i=0; i<names.size(); i++)
+			copy.add(this.names.get(i), this.values.get(i).cloneMe());
+		return copy;
+	}
+
 
 	private final List<String> names;
 	private final List<JsonValue> values;

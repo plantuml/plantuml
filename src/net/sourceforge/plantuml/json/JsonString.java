@@ -72,5 +72,5 @@ public class JsonString extends JsonValue {
 		JsonString other = (JsonString) object;
 		return string.equals(other.string);
 	}
-
+	
 }

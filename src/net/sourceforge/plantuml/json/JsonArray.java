@@ -66,6 +66,17 @@ import java.util.List;
  */
 @SuppressWarnings("serial") // use default serial UID
 public class JsonArray extends JsonValue implements Iterable<JsonValue> {
+	
+	/**
+	 * Added for PlantUML
+	 */
+	public JsonValue cloneMe() {
+		final JsonArray copy = new JsonArray();
+		for (JsonValue value : values)
+			copy.values.add(value.cloneMe());
+		return copy;
+	}
+
 
 	private final List<JsonValue> values;
 
@@ -75,7 +86,7 @@ public class JsonArray extends JsonValue implements Iterable<JsonValue> {
 	public JsonArray() {
 		values = new ArrayList<>();
 	}
-
+	
 	/**
 	 * Creates a new JsonArray with the contents of the specified JSON array.
 	 *
@@ -490,5 +501,5 @@ public class JsonArray extends JsonValue implements Iterable<JsonValue> {
 		JsonArray other = (JsonArray) object;
 		return values.equals(other.values);
 	}
-
+	
 }

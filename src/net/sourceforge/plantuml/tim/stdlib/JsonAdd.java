@@ -67,7 +67,7 @@ public class JsonAdd extends SimpleReturnFunction {
 		if (data.isJson() == false)
 			throw new EaterException("Not JSON data", location);
 
-		final JsonValue json = data.toJson();
+		final JsonValue json = data.toJson().cloneMe();
 
 		if (!json.isArray() && !json.isObject())
 			return data;

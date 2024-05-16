@@ -115,7 +115,11 @@ public class ChangeState implements Comparable<ChangeState> {
 	}
 
 	public final boolean isFlat() {
-		return states[0].equals("{-}");
+		return isFlat(states[0]);
+	}
+
+	public final static boolean isFlat(String state) {
+		return state.equals("{-}");
 	}
 
 	// public final boolean isUnknown() {
