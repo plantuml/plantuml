@@ -84,7 +84,7 @@ import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.xml.XmlFactories;
 
 public class SvgGraphics {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
 	// http://tutorials.jenkov.com/svg/index.html
 	// http://www.svgbasics.com/
@@ -649,10 +649,6 @@ public class SvgGraphics {
 	}
 
 	public void createXml(OutputStream os) throws TransformerException, IOException {
-		if (images.size() == 0) {
-			createXmlInternal(os);
-			return;
-		}
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		createXmlInternal(baos);
 		String s = new String(baos.toByteArray());

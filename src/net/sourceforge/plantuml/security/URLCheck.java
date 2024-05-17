@@ -36,8 +36,10 @@
 package net.sourceforge.plantuml.security;
 
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.net.UnknownHostException;
 
 public class URLCheck {
 
@@ -65,7 +67,7 @@ public class URLCheck {
 
 	}
 
-	public static boolean isURLforbidden(URL url) throws UnsupportedEncodingException {
+	public static boolean isURLforbidden(URL url) throws UnsupportedEncodingException, UnknownHostException {
 
 		// Check for '@' in the authority part (user info)
 		final String userInfo = url.getUserInfo();
@@ -74,18 +76,21 @@ public class URLCheck {
 
 		// Check protocol
 		final String protocol = url.getProtocol();
-		if (!protocol.equals("http") && !protocol.equals("https")) {
+		if (!protocol.equals("http") && !protocol.equals("https"))
 			return true;
-		}
 
 		// Check host for invalid patterns
 		final String host = url.getHost();
-		if (host == null || host.isEmpty() || !host.contains(".")) {
+		if (host == null || host.isEmpty() || !host.contains("."))
 			return true;
-		}
 
 		// Additional check for IP addresses or invalid host patterns
 		if (host.matches("^[-#.0-9:\\[\\]+]+$"))
+			return true;
+
+		final InetAddress inetAddress = InetAddress.getByName(host);
+		// Check host address
+		if (isInnerAddress(inetAddress))
 			return true;
 
 		// Additional checks (e.g., encoding)
@@ -94,6 +99,13 @@ public class URLCheck {
 			return true;
 
 		return false;
+	}
+
+	public static boolean isInnerAddress(InetAddress inetAddress) {
+		return inetAddress.isAnyLocalAddress() //
+				|| inetAddress.isLoopbackAddress() //
+				|| inetAddress.isLinkLocalAddress() //
+				|| inetAddress.isSiteLocalAddress();
 	}
 
 }
