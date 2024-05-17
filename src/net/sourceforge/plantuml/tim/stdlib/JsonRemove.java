@@ -67,24 +67,22 @@ public class JsonRemove extends SimpleReturnFunction {
 		if (data.isJson() == false)
 			throw new EaterException("Not JSON data", location);
 		
-		final JsonValue json = data.toJson();
+		final JsonValue json = data.toJson().cloneMe();
 		
 		if (!json.isArray() && !json.isObject())
 			return data;
 		if (json.isArray()) {
-			final JsonArray array = (JsonArray) json;
 			if (values.get(1).isNumber()) {
 				final Integer index = values.get(1).toInt();
-				if (0 <= index && index < array.size())
-					array.remove(index);
+				if (0 <= index && index < json.asArray().size())
+					json.asArray().remove(index);
 			}
-			return TValue.fromJson(array);
+			return TValue.fromJson(json);
 		}
 		if (json.isObject()) {
-			final JsonObject object = (JsonObject) json;
 			final String name = values.get(1).toString();
-			object.remove(name);
-			return TValue.fromJson(object);
+			json.asObject().remove(name);
+			return TValue.fromJson(json);
 		}
 		throw new EaterException("Bad JSON type", location);
 	}
