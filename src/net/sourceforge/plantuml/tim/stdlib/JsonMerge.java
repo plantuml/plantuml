@@ -70,7 +70,7 @@ public class JsonMerge extends SimpleReturnFunction {
 		if (!data1.isJson())
 			throw new EaterException("Not JSON data", location);
 
-		final JsonValue json0 = data0.toJson();
+		final JsonValue json0 = data0.toJson().cloneMe();
 		final JsonValue json1 = data1.toJson();
 
 		if ((!json0.isArray() && !json0.isObject() && !json1.isArray() && !json1.isObject())
