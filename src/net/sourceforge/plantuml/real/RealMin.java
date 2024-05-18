@@ -49,18 +49,24 @@ class RealMin extends AbstractReal implements Real {
 	}
 
 	public String getName() {
-		return "min " + all;
+		return "min " + all.size();
 	}
+
+	private double cache = Double.MAX_VALUE;
 
 	@Override
 	double getCurrentValueInternal() {
+		if (cache != Double.MAX_VALUE)
+			return cache;
+
 		double result = all.get(0).getCurrentValue();
 		for (int i = 1; i < all.size(); i++) {
 			final double v = all.get(i).getCurrentValue();
-			if (v < result) {
+			if (v < result)
 				result = v;
-			}
+
 		}
+		cache = result;
 		return result;
 	}
 
@@ -73,9 +79,9 @@ class RealMin extends AbstractReal implements Real {
 	}
 
 	public void ensureBiggerThan(Real other) {
-		for (Real r : all) {
+		for (Real r : all)
 			r.ensureBiggerThan(other);
-		}
+
 	}
 
 	public int size() {

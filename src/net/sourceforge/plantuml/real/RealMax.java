@@ -58,11 +58,15 @@ class RealMax extends AbstractReal implements Real {
 	}
 
 	public String getName() {
-		return "max " + all;
+		return "max " + all.size();
 	}
+
+	private double cache = Double.MAX_VALUE;
 
 	@Override
 	double getCurrentValueInternal() {
+		if (cache != Double.MAX_VALUE)
+			return cache;
 		double result = all.get(0).getCurrentValue();
 		for (int i = 1; i < all.size(); i++) {
 			Throwable t = new Throwable();
@@ -75,10 +79,11 @@ class RealMax extends AbstractReal implements Real {
 				throw new IllegalStateException("Infinite recursion?");
 			}
 			final double v = all.get(i).getCurrentValue();
-			if (v > result) {
+			if (v > result)
 				result = v;
-			}
+
 		}
+		cache = result;
 		return result;
 	}
 
