@@ -52,14 +52,18 @@ class MessageSelfArrow extends Arrow {
 	private final double deltaX;
 	private final double deltaY;
 	private final boolean isReverse;
+	private final int currentLevel;
+	private final double halfLifeWidth;
 
 	public MessageSelfArrow(double startingY, Rose skin, ArrowComponent arrow, LivingParticipantBox p1, double deltaY,
-													Url url, double deltaX, boolean isReverse) {
+													Url url, double deltaX, boolean isReverse, int currentLevel, double halfLifeWidth) {
 		super(startingY, skin, arrow, url);
 		this.p1 = p1;
 		this.deltaY = deltaY;
 		this.deltaX = deltaX;
 		this.isReverse = isReverse;
+		this.currentLevel = currentLevel;
+		this.halfLifeWidth = halfLifeWidth;
 	}
 
 	@Override
@@ -69,7 +73,8 @@ class MessageSelfArrow extends Arrow {
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-		return getArrowComponent().getPreferredWidth(stringBounder);
+		double length = p1.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment().getLength();
+		return getArrowComponent().getPreferredWidth(stringBounder) + length;
 	}
 
 	@Override
@@ -79,6 +84,8 @@ class MessageSelfArrow extends Arrow {
 		final Area area = new Area(
 				new XDimension2D(getPreferredWidth(stringBounder), getPreferredHeight(stringBounder)));
 		area.setDeltaX1(deltaY);
+		area.setLevel(currentLevel);
+		area.setLiveDeltaSize(halfLifeWidth);
 		startUrl(ug);
 		getArrowComponent().drawU(ug, area, context);
 		endUrl(ug);
@@ -94,9 +101,10 @@ class MessageSelfArrow extends Arrow {
 		// }
 		final double pos2 = p1.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment()
 				.getPos2();
-		if (isReverse)
-			return pos2 + deltaX - getPreferredWidth(stringBounder);
-		else
+		if (isReverse) {
+
+			return pos2  - getPreferredWidth(stringBounder);
+		} else
 			return pos2 + deltaX;
 	}
 

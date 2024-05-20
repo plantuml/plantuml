@@ -203,20 +203,31 @@ class Step1Message extends Step1Abstract {
 		final double posY = getFreeY().getFreeY(getParticipantRange());
 		double deltaY = 0;
 		double deltaX = 0;
+		double halfLifeWidth = getHalfLifeWidth();
 		if (getMessage().isActivate()) {
-			deltaY -= getHalfLifeWidth();
+			deltaY -= halfLifeWidth;
 			if (OptionFlags.STRICT_SELFMESSAGE_POSITION)
 				deltaX += 5;
-
 		}
 		if (getMessage().isDeactivate())
-			deltaY += getHalfLifeWidth();
+			deltaY += halfLifeWidth;
+
+
+		int currentLevel = getLevelAt(posY,halfLifeWidth);
 
 		final Style[] styles = getMessage().getUsedStyles();
 		final ArrowComponent comp = getDrawingSet().getSkin().createComponentArrow(styles, getConfig(),
 				getDrawingSet().getSkinParam(), getMessage().getLabelNumbered());
 		return new MessageSelfArrow(posY, getDrawingSet().getSkin(), comp, getLivingParticipantBox1(), deltaY,
-				getMessage().getUrl(), deltaX,getConfig().isReverseDefine());
+				getMessage().getUrl(), deltaX,getConfig().isReverseDefine(), currentLevel, halfLifeWidth);
+	}
+
+	private int getLevelAt(double posY,double halfLifeWidth) {
+		double length = getLivingParticipantBox1().getLiveThicknessAt(getStringBounder(), posY).getSegment().getLength();
+		if (length < halfLifeWidth)
+			return 0;
+
+		return ((int) (length / halfLifeWidth)) - 1;
 	}
 
 	private double getHalfLifeWidth() {
