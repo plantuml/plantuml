@@ -10,5 +10,8 @@ This package provides classes used to manage [Chen Enhanced or Extended Entity R
 - [Enhanced entity–relationship model _(on Wikipedia)_](https://en.wikipedia.org/wiki/Enhanced_entity%E2%80%93relationship_model)
 - [Entity–relationship model _(on Wikipedia)_](https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model)
 
+## Credit
+- Thank to the contribution of :octocat: [@Benjamin-Davies](https://github.com/Benjamin-Davies)
+
 ## Misc.
 - [Peter Chen _(on Wikipedia)_](https://en.wikipedia.org/wiki/Peter_Chen)
