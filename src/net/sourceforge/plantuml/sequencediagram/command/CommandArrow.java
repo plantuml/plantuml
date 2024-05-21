@@ -214,10 +214,12 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		final boolean circleAtStart;
 		final boolean circleAtEnd;
 
-		final boolean hasDressing2 = contains(dressing2, ">", "\\", "/", "x");
-		final boolean hasDressing1 = contains(dressing1, "x", "<", "\\", "/");
+		final boolean hasDressing2 = contains(dressing2, ">", "\\", "/");
+		final boolean hasDressing1 = contains(dressing1, "<", "\\", "/");
+		boolean xInDressing1 = dressing1.contains("x");
+		boolean xInDressing2 = dressing2.contains("x");
 		final boolean reverseDefine;
-		if (hasDressing2) {
+		if (hasDressing2 || (xInDressing1 && xInDressing2)) {
 			p1 = getOrCreateParticipant(diagram, arg, "PART1");
 			p2 = getOrCreateParticipant(diagram, arg, "PART2");
 			circleAtStart = dressing1.contains("o");
@@ -268,17 +270,17 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 			config = config.withDecoration1(ArrowDecoration.CIRCLE);
 
 		if (reverseDefine) {
-			if (dressing1.contains("x"))
+			if (xInDressing1)
 				config = config.withHead2(ArrowHead.CROSSX);
 
-			if (dressing2.contains("x"))
+			if (xInDressing2)
 				config = config.withHead1(ArrowHead.CROSSX);
 
 		} else {
-			if (dressing1.contains("x"))
+			if (xInDressing1)
 				config = config.withHead1(ArrowHead.CROSSX);
 
-			if (dressing2.contains("x"))
+			if (xInDressing2)
 				config = config.withHead2(ArrowHead.CROSSX);
 
 		}

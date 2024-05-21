@@ -123,9 +123,11 @@ public class CommunicationTileSelf extends AbstractTile {
 		final int levelIgnore = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_ACTIVATE);
 		final int levelConsidere = livingSpace1.getLevelAt(this, EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE);
 		Log.info("CommunicationTileSelf::drawU levelIgnore=" + levelIgnore + " levelConsidere=" + levelConsidere);
-		x1 += CommunicationTile.LIVE_DELTA_SIZE * levelIgnore;
-		if (levelIgnore < levelConsidere) {
-			x1 += CommunicationTile.LIVE_DELTA_SIZE;
+		if (!isReverseDefine()) {
+			x1 += CommunicationTile.LIVE_DELTA_SIZE * levelIgnore;
+			if (levelIgnore < levelConsidere) {
+				x1 += CommunicationTile.LIVE_DELTA_SIZE;
+			}
 		}
 
 		final Area area = Area.create(dim.getWidth(), dim.getHeight());
@@ -136,6 +138,8 @@ public class CommunicationTileSelf extends AbstractTile {
 		// // x1 += CommunicationTile.LIVE_DELTA_SIZE * levelConsidere;
 		// }
 		area.setDeltaX1((levelIgnore - levelConsidere) * CommunicationTile.LIVE_DELTA_SIZE);
+		area.setLevel(levelIgnore);
+		area.setLiveDeltaSize(CommunicationTile.LIVE_DELTA_SIZE);
 		ug = ug.apply(UTranslate.dx(x1));
 		comp.drawU(ug, area, (Context2D) ug);
 	}
@@ -151,8 +155,7 @@ public class CommunicationTileSelf extends AbstractTile {
 			final LivingSpace previous = getPrevious();
 			if (previous != null) {
 				livingSpace1.getPosC(getStringBounder())
-						.ensureBiggerThan(previous.getPosC(getStringBounder()).addFixed(getCompWidth()));
-
+						.ensureBiggerThan(previous.getPosC2(getStringBounder()).addFixed(getCompWidth()));
 			}
 		} else {
 			final LivingSpace next = getNext();
@@ -194,7 +197,10 @@ public class CommunicationTileSelf extends AbstractTile {
 
 	public Real getMinX() {
 		if (isReverseDefine()) {
-			return livingSpace1.getPosC(getStringBounder()).addFixed(-getCompWidth());
+			double liveDeltaWidthAdjustment = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_ACTIVATE) > 0
+					? CommunicationTile.LIVE_DELTA_SIZE
+					: 0.0;
+			return livingSpace1.getPosC(getStringBounder()).addFixed(-getCompWidth()-liveDeltaWidthAdjustment);
 		}
 		return getPoint1(getStringBounder());
 	}

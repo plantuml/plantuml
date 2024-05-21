@@ -100,19 +100,28 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		final double pos1 = start + 1;
 		final double pos2 = len - 1;
 
-		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE && dressing2.getHead() == ArrowHead.NONE)
-			len -= diamCircle / 2;
 
-		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE && dressing2.getHead() != ArrowHead.NONE)
-			len -= diamCircle / 2 + thinCircle;
+		if (arrowConfiguration.getDecoration2() == ArrowDecoration.CIRCLE) {
+			if (dressing2.getHead() == ArrowHead.NONE)
+				len -= diamCircle / 2;
 
-		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE && dressing1.getHead() == ArrowHead.NONE) {
-			start += diamCircle / 2;
-			len -= diamCircle / 2;
+			if (dressing2.getHead() != ArrowHead.NONE)
+				len -= diamCircle / 2 + thinCircle;
 		}
-		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE && dressing1.getHead() == ArrowHead.NORMAL) {
-			start += diamCircle + thinCircle;
-			len -= diamCircle + thinCircle;
+
+		if (arrowConfiguration.getDecoration1() == ArrowDecoration.CIRCLE) {
+			if (dressing1.getHead() == ArrowHead.NONE) {
+				start += diamCircle / 2 ;
+				len -= diamCircle / 2;
+			}
+			if (dressing1.getHead() == ArrowHead.ASYNC) {
+				start += diamCircle / 2 +thinCircle;
+				len -= diamCircle / 2 +thinCircle;
+			}
+			if (dressing1.getHead() == ArrowHead.NORMAL) {
+				start += diamCircle / 2 +thinCircle;
+				len -= diamCircle / 2 +thinCircle;
+			}
 		}
 
 		if (dressing2.getPart() == ArrowPart.FULL && dressing2.getHead() == ArrowHead.NORMAL)
@@ -267,9 +276,9 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 			polygon.addPoint(0, 0);
 			polygon.addPoint(-getArrowDeltaX(), 0);
 		} else if (part == ArrowPart.BOTTOM_PART) {
-			polygon.addPoint(-getArrowDeltaX(), 1);
-			polygon.addPoint(0, 1);
-			polygon.addPoint(-getArrowDeltaX(), getArrowDeltaY() + 1);
+			polygon.addPoint(-getArrowDeltaX(), 0);
+			polygon.addPoint(0, 0);
+			polygon.addPoint(-getArrowDeltaX(), getArrowDeltaY());
 		} else {
 			polygon.addPoint(-getArrowDeltaX(), -getArrowDeltaY());
 			polygon.addPoint(0, 0);
@@ -287,9 +296,9 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 			polygon.addPoint(0, 0);
 			polygon.addPoint(getArrowDeltaX(), 0);
 		} else if (part == ArrowPart.BOTTOM_PART) {
-			polygon.addPoint(getArrowDeltaX(), 1);
-			polygon.addPoint(0, 1);
-			polygon.addPoint(getArrowDeltaX(), getArrowDeltaY() + 1);
+			polygon.addPoint(getArrowDeltaX(), 0);
+			polygon.addPoint(0, 0);
+			polygon.addPoint(getArrowDeltaX(), getArrowDeltaY());
 		} else {
 			polygon.addPoint(getArrowDeltaX(), -getArrowDeltaY());
 			polygon.addPoint(0, 0);

@@ -42,6 +42,8 @@ public class Area {
 
 	private final XDimension2D dimensionToUse;
 	private double deltaX1;
+	private double liveDeltaSize = 0.0;
+	private int level = 0;
 
 	@Override
 	public String toString() {
@@ -68,4 +70,19 @@ public class Area {
 		return deltaX1;
 	}
 
+	public void setLevel(int level) {
+		this.level = level;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLiveDeltaSize(double liveDeltaSize) {
+		this.liveDeltaSize = liveDeltaSize;
+	}
+
+	public double getLiveDeltaSize() {
+		return liveDeltaSize;
+	}
 }

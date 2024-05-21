@@ -186,8 +186,10 @@ public class CommunicationTile extends AbstractTile {
 		if (isReverse(stringBounder)) {
 			final int level1 = livingSpace1.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
 			final int level2 = livingSpace2.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
-			if (level1 > 0)
+			if (level1 == 1)
 				x1 -= LIVE_DELTA_SIZE;
+			else if (level1 > 2)
+				x1 += LIVE_DELTA_SIZE*(level1-2);
 
 			x2 += LIVE_DELTA_SIZE * level2;
 			area = Area.create(x1 - x2, dim.getHeight());
