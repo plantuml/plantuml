@@ -320,17 +320,16 @@ public class GroupingTile extends AbstractTile {
 			if (result.size() > 0 && isParallel(tile)) {
 				if (pending == null) {
 					pending = new TileParallel(stringBounder, null);
-					final Tile tmp = result.get(result.size() - 1);
-					if (tmp instanceof LifeEventTile) {
-						pending.add(result.get(result.size() - 2));
-						pending.add(tmp);
-						// result.set(result.size() - 1, pending);
-						result.set(result.size() - 2, pending);
-						result.remove(result.size() - 1);
-					} else {
-						pending.add(tmp);
-						result.set(result.size() - 1, pending);
-					}
+					int capture = 1;
+					while (result.get(result.size()-capture) instanceof LifeEventTile)
+						capture++;
+
+					for (int i=result.size()-capture; i < result.size(); i++)
+						pending.add(result.get(i));
+
+					for (int i=1; i<=capture; i++)
+						result.remove(result.size()-1);
+					result.add(pending);
 				}
 				pending.add(tile);
 			} else {
