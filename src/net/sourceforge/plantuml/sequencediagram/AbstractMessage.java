@@ -111,6 +111,13 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 		return parallel;
 	}
 
+	public boolean isParallelWith(AbstractMessage message) {
+		boolean hasParallelBrother = parallelBrother != null;
+		return (this == message)
+				|| (hasParallelBrother && parallelBrother == message)
+				|| (hasParallelBrother && parallelBrother.isParallelWith(message));
+	}
+
 	final public Url getUrl() {
 		if (url == null)
 			for (Note n : noteOnMessages)

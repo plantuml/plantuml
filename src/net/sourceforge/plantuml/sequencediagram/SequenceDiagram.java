@@ -191,7 +191,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	private AbstractMessage getLastAbstractMessage() {
-		for (int i = events.size() - 1; i > 0; i--)
+		for (int i = events.size() - 1; i >= 0; i--)
 			if (events.get(i) instanceof AbstractMessage)
 				return (AbstractMessage) events.get(i);
 
