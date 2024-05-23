@@ -805,6 +805,8 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 		x += dx;
 		y += dy;
 
+		// Warning: duplicated from SmetanaPath and SvekLine
+
 		HColor arrowHeadColor = rainbow.getArrowHeadColor();
 		HColor color = rainbow.getColor();
 

@@ -45,10 +45,12 @@ import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkStrategy;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.decoration.LinkType;
+import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.geom.RectangleArea;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
@@ -60,6 +62,8 @@ import net.sourceforge.plantuml.skin.LineParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
@@ -99,15 +103,6 @@ public class SmetanaPath implements UDrawable {
 		if (link.isHidden())
 			return;
 
-		HColor color = getStyle().value(PName.LineColor).asColor(diagram.getSkinParam().getIHtmlColorSet());
-
-		if (this.link.getColors() != null) {
-			final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);
-			if (newColor != null)
-				color = newColor;
-		} else if (this.link.getSpecificColor() != null)
-			color = this.link.getSpecificColor();
-
 		DotPath dotPath = getDotPathInternal();
 
 		if (dotPath != null) {
@@ -128,8 +123,36 @@ public class SmetanaPath implements UDrawable {
 
 			dotPath = dotPath.simulateCompound(rectangleArea2, rectangleArea1);
 
+			final Style styleLine = getStyle();
+
+			final Rainbow rainbow = Rainbow.build(styleLine, diagram.getSkinParam().getIHtmlColorSet());
+
+			// Warning: duplicated from SmetanaPath and SvekLine
+			HColor arrowHeadColor = rainbow.getArrowHeadColor();
+			HColor color = rainbow.getColor();
+
+			if (this.link.getColors() != null) {
+				final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);
+				if (newColor != null) {
+					color = newColor;
+					arrowHeadColor = color;
+				}
+			} else if (this.link.getSpecificColor() != null) {
+				color = this.link.getSpecificColor();
+				arrowHeadColor = color;
+			}
+
+			ug = ug.apply(HColors.none().bg()).apply(color);
 			final LinkType linkType = link.getType();
-			UStroke stroke = linkType.getStroke3(diagram.getSkinParam().getThickness(LineParam.arrow, null));
+			final UStroke suggestedStroke = styleLine.getStroke();
+			final UStroke defaultThickness = diagram.getSkinParam().getThickness(LineParam.arrow, null);
+
+			UStroke stroke;
+			if (suggestedStroke == null || linkType.getStyle().isNormal() == false)
+				stroke = linkType.getStroke3(defaultThickness);
+			else
+				stroke = linkType.getStroke3(suggestedStroke);
+
 			if (link.getColors() != null && link.getColors().getSpecificLineStroke() != null)
 				stroke = link.getColors().getSpecificLineStroke();
 
@@ -159,9 +182,10 @@ public class SmetanaPath implements UDrawable {
 	}
 
 	private Style getStyle() {
-		return StyleSignatureBasic
+		final StyleSignature result = StyleSignatureBasic
 				.of(SName.root, SName.element, diagram.getUmlDiagramType().getStyleName(), SName.arrow)
-				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
+				.withTOBECHANGED(link.getStereotype());
+		return result.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 	}
 
 	public XPoint2D getStartPoint() {
