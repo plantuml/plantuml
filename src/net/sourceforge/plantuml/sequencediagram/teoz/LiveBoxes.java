@@ -107,17 +107,29 @@ public class LiveBoxes {
 			}
 			if (event == current) {
 				if (current instanceof AbstractMessage) {
-					final Event next = nextButSkippingNotes(it);
-					if (next instanceof LifeEvent) {
+					while (it.hasNext()) {
+						Event next = nextButSkippingNotes(it);
+						if (!(next instanceof LifeEvent)) continue;
+
 						final LifeEvent le = (LifeEvent) next;
 						final AbstractMessage msg = (AbstractMessage) current;
+
+						boolean sameMessage = msg == le.getMessage()
+								|| le.getMessage().isParallelWith(msg);
+						if (!sameMessage)
+							continue;
+
 						if (mode != EventsHistoryMode.IGNORE_FUTURE_ACTIVATE && le.isActivate() && msg.dealWith(p)
-								&& le.getParticipant() == p)
+								&& le.getParticipant() == p) {
 							level++;
+							break;
+						}
 
 						if (mode == EventsHistoryMode.CONSIDERE_FUTURE_DEACTIVATE && le.isDeactivateOrDestroy()
-								&& msg.dealWith(p) && le.getParticipant() == p)
+								&& msg.dealWith(p) && le.getParticipant() == p) {
 							level--;
+							break;
+						}
 
 						// System.err.println("Warning, this is message " + current + " next=" + next);
 					}
@@ -165,13 +177,13 @@ public class LiveBoxes {
 				continue;
 
 			if (current instanceof Message || current instanceof MessageExo) {
-				final Event next = nextButSkippingNotes(it);
-				if (next instanceof LifeEvent) {
+				Event next = nextButSkippingNotes(it);
+				while (next instanceof LifeEvent && ((LifeEvent) next).getMessage() ==current) {
 					final LifeEvent le = (LifeEvent) next;
-					if (le.isActivate())
+					if (le.isActivate() && le.getParticipant() == p)
 						return le.getSpecificColors();
 
-					return null;
+					next = nextButSkippingNotes(it);
 				}
 			}
 			return null;
