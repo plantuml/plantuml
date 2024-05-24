@@ -326,7 +326,7 @@ public class GroupingTile extends AbstractTile {
 				moveRecentParallelTilesToPending(result, pending);
 				pending.add(tile);
 				result.add(pending);
-			} else if (pending.isParallelWith(tile)){
+			} else if (pending.isParallelWith(tile)) {
 				moveRecentParallelTilesToPending(result, pending);
 				pending.add(tile);
 			} else {
@@ -338,13 +338,14 @@ public class GroupingTile extends AbstractTile {
 	}
 
 	private static void moveRecentParallelTilesToPending(List<Tile> result, TileParallel pending) {
-		if (result.size() == 0) return;
+		if (result.size() == 0)
+			return;
 
 		int capture = 1;
 		while (result.get(result.size() - capture) instanceof LifeEventTile)
 			capture++;
 
-		if (result.get(result.size()-capture) == pending)
+		if (result.get(result.size() - capture) == pending)
 			capture--;
 
 		for (int i = result.size() - capture; i < result.size(); i++)

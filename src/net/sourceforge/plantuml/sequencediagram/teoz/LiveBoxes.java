@@ -108,14 +108,14 @@ public class LiveBoxes {
 			if (event == current) {
 				if (current instanceof AbstractMessage) {
 					while (it.hasNext()) {
-						Event next = nextButSkippingNotes(it);
+						final Event next = nextButSkippingNotes(it);
 						if (!(next instanceof LifeEvent)) continue;
 
 						final LifeEvent le = (LifeEvent) next;
 						final AbstractMessage msg = (AbstractMessage) current;
 
-						boolean sameMessage = msg == le.getMessage()
-								|| le.getMessage().isParallelWith(msg);
+						final boolean sameMessage = msg == le.getMessage()
+								|| (le.getMessage() != null && le.getMessage().isParallelWith(msg));
 						if (!sameMessage)
 							continue;
 
