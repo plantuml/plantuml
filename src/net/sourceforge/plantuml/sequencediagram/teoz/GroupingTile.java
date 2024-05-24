@@ -317,27 +317,41 @@ public class GroupingTile extends AbstractTile {
 		tiles = removeEmptyCloseToParallel(tiles);
 		final List<Tile> result = new ArrayList<>();
 		for (Tile tile : tiles) {
-			if (result.size() > 0 && isParallel(tile)) {
-				if (pending == null) {
-					pending = new TileParallel(stringBounder, null);
-					int capture = 1;
-					while (result.get(result.size()-capture) instanceof LifeEventTile)
-						capture++;
-
-					for (int i=result.size()-capture; i < result.size(); i++)
-						pending.add(result.get(i));
-
-					for (int i=1; i<=capture; i++)
-						result.remove(result.size()-1);
-					result.add(pending);
-				}
+			if (!isParallel(tile) || result.size() == 0) {
+				result.add(tile);
+				if (tile instanceof LifeEventTile == false)
+					pending = null;
+			} else if (pending == null) {
+				pending = new TileParallel(stringBounder, null);
+				moveRecentParallelTilesToPending(result, pending);
+				pending.add(tile);
+				result.add(pending);
+			} else if (pending.isParallelWith(tile)){
+				moveRecentParallelTilesToPending(result, pending);
 				pending.add(tile);
 			} else {
-				result.add(tile);
 				pending = null;
+				result.add(tile);
 			}
 		}
 		return result;
+	}
+
+	private static void moveRecentParallelTilesToPending(List<Tile> result, TileParallel pending) {
+		if (result.size() == 0) return;
+
+		int capture = 1;
+		while (result.get(result.size() - capture) instanceof LifeEventTile)
+			capture++;
+
+		if (result.get(result.size()-capture) == pending)
+			capture--;
+
+		for (int i = result.size() - capture; i < result.size(); i++)
+			pending.add(result.get(i));
+
+		for (int i = 1; i <= capture; i++)
+			result.remove(result.size() - 1);
 	}
 
 	private static List<Tile> removeEmptyCloseToParallel(List<Tile> tiles) {
