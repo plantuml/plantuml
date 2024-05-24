@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealUtils;
+import net.sourceforge.plantuml.sequencediagram.AbstractMessage;
 import net.sourceforge.plantuml.sequencediagram.Event;
 
 public class TileParallel extends CommonTile {
@@ -71,9 +72,15 @@ public class TileParallel extends CommonTile {
 	@Override
 	final protected void callbackY_internal(TimeHook y) {
 		super.callbackY_internal(y);
-		for (Tile tile : tiles)
-			tile.callbackY(y);
-
+		final double yPointAll = getContactPointRelative();
+		for (Tile tile : tiles) {
+			final double yPoint = tile.getContactPointRelative();
+			final double adjustment = yPointAll - yPoint;
+			TimeHook y2 = y;
+			if (tile instanceof CommunicationTile)
+				y2 = new TimeHook(y.getValue() + adjustment);
+			tile.callbackY(y2);
+		}
 	}
 
 	public void add(Tile tile) {
@@ -178,4 +185,14 @@ public class TileParallel extends CommonTile {
 		return false;
 	}
 
+	public boolean isParallelWith(Tile tileToTest) {
+		if (tileToTest.getEvent() instanceof AbstractMessage) {
+			for (Tile tile : tiles) {
+				if (tile.getEvent() instanceof AbstractMessage) {
+					return ((AbstractMessage) tileToTest.getEvent()).isParallelWith((AbstractMessage) tile.getEvent());
+				}
+			}
+		}
+		return false;
+	}
 }
