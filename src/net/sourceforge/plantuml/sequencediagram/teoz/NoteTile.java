@@ -92,7 +92,7 @@ public class NoteTile extends AbstractTile implements Tile {
 		return comp;
 	}
 
-	private ComponentType getNoteComponentType(NoteStyle noteStyle) {
+	protected static ComponentType getNoteComponentType(NoteStyle noteStyle) {
 		if (noteStyle == NoteStyle.HEXAGONAL)
 			return ComponentType.NOTE_HEXAGONAL;
 
