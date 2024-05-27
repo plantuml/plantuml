@@ -4,7 +4,6 @@
 '' LICENCE = "GPL 3+"
 
 !$THEME = 'sunlust'
-scale max 2000 * 2000
 !$colors = {
     "font"      : "#657b83",
     "bg"        : "#fdf6e3",
