@@ -130,14 +130,20 @@ public class LifeEventTile extends AbstractTile {
 	}
 
 	public Real getMinX() {
-		// return tileArguments.getLivingSpace(lifeEvent.getParticipant()).getPosB();
-		return livingSpace.getPosB(getStringBounder());
+		final int levelAt = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_ACTIVATE);
+		final double liveDeltaWidthAdjustment = levelAt > 0
+				? CommunicationTile.LIVE_DELTA_SIZE
+				: 0;
+		return livingSpace.getPosC(getStringBounder()).addFixed(-liveDeltaWidthAdjustment);
 	}
 
 	public Real getMaxX() {
-		// final LivingSpace livingSpace2 =
-		// tileArguments.getLivingSpace(lifeEvent.getParticipant());
-		return RealUtils.max(livingSpace.getPosD(getStringBounder()), livingSpace.getPosC2(getStringBounder()));
+		final int levelAt = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_ACTIVATE);
+		final double liveDeltaWidthAdjustment = levelAt > 0
+				? levelAt * CommunicationTile.LIVE_DELTA_SIZE
+				: 0;
+
+		return livingSpace.getPosC(getStringBounder()).addFixed(liveDeltaWidthAdjustment);
 	}
 
 }
