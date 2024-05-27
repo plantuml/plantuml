@@ -94,7 +94,7 @@ public class CommunicationTileNoteLeft extends AbstractTile {
 	}
 
 	private Component getComponent(StringBounder stringBounder) {
-		final Component comp = skin.createComponentNote(noteOnMessage.getUsedStyles(), ComponentType.NOTE,
+		final Component comp = skin.createComponentNote(noteOnMessage.getUsedStyles(), NoteTile.getNoteComponentType(noteOnMessage.getNoteStyle()),
 				noteOnMessage.getSkinParamBackcolored(skinParam), noteOnMessage.getDisplay(),
 				noteOnMessage.getColors());
 		return comp;
