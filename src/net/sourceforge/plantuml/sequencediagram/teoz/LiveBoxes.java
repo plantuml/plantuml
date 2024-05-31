@@ -109,6 +109,7 @@ public class LiveBoxes {
 				if (current instanceof AbstractMessage) {
 					while (it.hasNext()) {
 						final Event next = nextButSkippingNotes(it);
+						if (!(next instanceof LifeEvent || next instanceof AbstractMessage)) break;
 						if (!(next instanceof LifeEvent)) continue;
 
 						final LifeEvent le = (LifeEvent) next;
