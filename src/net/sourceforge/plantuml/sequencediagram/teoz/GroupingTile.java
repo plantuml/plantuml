@@ -294,15 +294,33 @@ public class GroupingTile extends AbstractTile {
 			full.add((CommonTile) tile);
 			if (tile instanceof GroupingTile) {
 				final GroupingTile groupingTile = (GroupingTile) tile;
-				final double headerHeight = groupingTile.getHeaderHeight(stringBounder);
-				final ArrayList<CommonTile> local2 = new ArrayList<>();
-				fillPositionelTiles(stringBounder, new TimeHook(y.getValue() + headerHeight), groupingTile.tiles,
-						local2, full);
+				fillPositionalSubGroupTiles(stringBounder, y, full, groupingTile);
+			}
+			if (tile instanceof TileParallel) {
+				final TileParallel tileParallel = (TileParallel) tile;
+				fillPositionalParallelTiles(stringBounder, y, full, tileParallel);
 			}
 			y = new TimeHook(y.getValue() + tile.getPreferredHeight());
 		}
 		return y;
 
+	}
+
+	private static void fillPositionalSubGroupTiles(StringBounder stringBounder, TimeHook y, List<CommonTile> full, GroupingTile groupingTile) {
+		final double headerHeight = groupingTile.getHeaderHeight(stringBounder);
+		final ArrayList<CommonTile> local2 = new ArrayList<>();
+		fillPositionelTiles(stringBounder, new TimeHook(y.getValue() + headerHeight), groupingTile.tiles,
+				local2, full);
+	}
+
+	private static void fillPositionalParallelTiles(StringBounder stringBounder, TimeHook yArg, List<CommonTile> full, TileParallel tileParallel) {
+		for (Tile tile : tileParallel.getTiles()) {
+			if (tile instanceof GroupingTile) {
+				GroupingTile groupingTile = (GroupingTile) tile;
+				final double headerHeight = groupingTile.getHeaderHeight(stringBounder);
+				fillPositionalSubGroupTiles(stringBounder, new TimeHook(yArg.getValue()), full, groupingTile);
+			}
+		}
 	}
 
 	private double getHeaderHeight(StringBounder stringBounder) {
@@ -326,12 +344,9 @@ public class GroupingTile extends AbstractTile {
 				moveRecentParallelTilesToPending(result, pending);
 				pending.add(tile);
 				result.add(pending);
-			} else if (pending.isParallelWith(tile)) {
+			} else {
 				moveRecentParallelTilesToPending(result, pending);
 				pending.add(tile);
-			} else {
-				pending = null;
-				result.add(tile);
 			}
 		}
 		return result;

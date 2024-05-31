@@ -185,14 +185,8 @@ public class TileParallel extends CommonTile {
 		return false;
 	}
 
-	public boolean isParallelWith(Tile tileToTest) {
-		if (tileToTest.getEvent() instanceof AbstractMessage) {
-			for (Tile tile : tiles) {
-				if (tile.getEvent() instanceof AbstractMessage) {
-					return ((AbstractMessage) tileToTest.getEvent()).isParallelWith((AbstractMessage) tile.getEvent());
-				}
-			}
-		}
-		return false;
+	protected List<Tile> getTiles() {
+		return tiles;
 	}
+
 }
