@@ -98,7 +98,8 @@ final public class GroupingLeaf extends Grouping implements EventWithDeactivate,
 
 	@Override
 	public boolean isParallel() {
-		return start.isParallel();
+		// only Par2 Group Leafs should return true.
+		return start.isPar2GroupStart();
 	}
 
 	private double posYendLevel;
