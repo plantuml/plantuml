@@ -330,6 +330,22 @@ class PipeTest {
 		assertThat(option.getFileFormatOption().getFileFormat()).isEqualTo(FileFormat.PNG);
 	}
 
+	@ParameterizedTest
+	@ValueSource(strings = { "@@@format atxt", "atxt", "@@@format atxt <deadbeef>", "@@@format ATXT", "ATXT", "@@@format ATXT <deadbeef>" })
+	void should_manageFormat_handle_atxt(String valid) {
+		pipe.manageFormat(valid);
+
+		assertThat(option.getFileFormatOption().getFileFormat()).isEqualTo(FileFormat.ATXT);
+	}
+
+	@ParameterizedTest
+	@ValueSource(strings = { "@@@format utxt", "utxt", "@@@format utxt <deadbeef>", "@@@format UTXT", "UTXT", "@@@format UTXT <deadbeef>" })
+	void should_manageFormat_handle_utxt(String valid) {
+		pipe.manageFormat(valid);
+
+		assertThat(option.getFileFormatOption().getFileFormat()).isEqualTo(FileFormat.UTXT);
+	}
+
 	static class TestCase {
 
 		private final String options;

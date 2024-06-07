@@ -222,11 +222,15 @@ public class Pipe {
 	}
 
 	void manageFormat(String s) {
+		s = s.toLowerCase();
 		if (s.contains("png"))
 			option.setFileFormatOption(new FileFormatOption(FileFormat.PNG));
 		else if (s.contains("svg"))
 			option.setFileFormatOption(new FileFormatOption(FileFormat.SVG));
-
+		else if (s.contains("atxt"))
+			option.setFileFormatOption(new FileFormatOption(FileFormat.ATXT));
+		else if (s.contains("utxt"))
+			option.setFileFormatOption(new FileFormatOption(FileFormat.UTXT));
 	}
 
 	enum State {
