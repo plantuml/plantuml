@@ -13,6 +13,7 @@ plugins {
 	java
 	`maven-publish`
 	signing
+    eclipse
 //	id("com.adarshr.test-logger") version "3.2.0"
 }
 
