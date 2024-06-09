@@ -203,36 +203,41 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg)
 			throws NoSuchColorException {
 
-		Participant p1;
-		Participant p2;
-
 		final String dressing1 = getDressing(arg, "ARROW_DRESSING1");
 		final String dressing2 = getDressing(arg, "ARROW_DRESSING2");
 		final int inclination1 = getInclination(arg.get("ARROW_DRESSING1", 0));
 		final int inclination2 = getInclination(arg.get("ARROW_DRESSING2", 0));
 
+		// Sorry, this code is note very clear
+		final boolean hasDressing1butx = contains(dressing1, "<", "\\", "/");
+		final boolean xInDressing1 = dressing1.contains("x");
+		final boolean hasDressing2butx = contains(dressing2, ">", "\\", "/");
+		final boolean xInDressing2 = dressing2.contains("x");
+		final boolean reverseDefine;
+		if (hasDressing2butx || (xInDressing1 && xInDressing2))
+			reverseDefine = false;
+		else if (hasDressing1butx)
+			reverseDefine = true;
+		else if (xInDressing1 || xInDressing2)
+			reverseDefine = false;
+		else
+			return CommandExecutionResult.error("Illegal sequence arrow");
+
+		final Participant p1;
+		final Participant p2;
 		final boolean circleAtStart;
 		final boolean circleAtEnd;
 
-		final boolean hasDressing2 = contains(dressing2, ">", "\\", "/");
-		final boolean hasDressing1 = contains(dressing1, "<", "\\", "/");
-		boolean xInDressing1 = dressing1.contains("x");
-		boolean xInDressing2 = dressing2.contains("x");
-		final boolean reverseDefine;
-		if (hasDressing2 || (xInDressing1 && xInDressing2)) {
+		if (reverseDefine) {
+			p1 = getOrCreateParticipant(diagram, arg, "PART2");
+			p2 = getOrCreateParticipant(diagram, arg, "PART1");
+			circleAtStart = dressing2.contains("o");
+			circleAtEnd = dressing1.contains("o");
+		} else {
 			p1 = getOrCreateParticipant(diagram, arg, "PART1");
 			p2 = getOrCreateParticipant(diagram, arg, "PART2");
 			circleAtStart = dressing1.contains("o");
 			circleAtEnd = dressing2.contains("o");
-			reverseDefine = false;
-		} else if (hasDressing1) {
-			p2 = getOrCreateParticipant(diagram, arg, "PART1");
-			p1 = getOrCreateParticipant(diagram, arg, "PART2");
-			circleAtStart = dressing2.contains("o");
-			circleAtEnd = dressing1.contains("o");
-			reverseDefine = true;
-		} else {
-			return CommandExecutionResult.error("Illegal sequence arrow");
 
 		}
 
@@ -249,7 +254,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 			labels = Display.getWithNewlines(message);
 		}
 
-		ArrowConfiguration config = hasDressing1 && hasDressing2 ? ArrowConfiguration.withDirectionBoth()
+		ArrowConfiguration config = hasDressing1butx && hasDressing2butx ? ArrowConfiguration.withDirectionBoth()
 				: ArrowConfiguration.withDirectionNormal();
 		if (dotted)
 			config = config.withBody(ArrowBody.DOTTED);
