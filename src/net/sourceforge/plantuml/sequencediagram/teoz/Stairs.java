@@ -50,7 +50,7 @@ public class Stairs {
 		}
 		if (values.size() > 0) {
 			final double lastY = values.get(values.size() - 1).getValue();
-			if (step.getValue() <= lastY) {
+			if (step.getValue() < lastY) {
 				// throw new IllegalArgumentException();
 				return;
 			}

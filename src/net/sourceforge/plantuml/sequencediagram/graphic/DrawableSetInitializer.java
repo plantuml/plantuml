@@ -150,7 +150,7 @@ class DrawableSetInitializer {
 			final LivingParticipantBox living = drawableSet.getLivingParticipantBox(p);
 			for (int i = 0; i < p.getInitialLife(); i++)
 				living.getLifeLine().addSegmentVariation(LifeSegmentVariation.LARGER,
-						freeY2.getFreeY(getFullParticipantRange()), p.getLiveSpecificBackColors());
+						freeY2.getFreeY(getFullParticipantRange()), p.getLiveSpecificBackColors(i));
 
 		}
 

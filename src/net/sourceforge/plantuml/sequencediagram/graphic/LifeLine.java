@@ -205,9 +205,15 @@ public class LifeLine {
 
 		ug = ug.apply(UTranslate.dx(getStartingX(stringBounder)));
 
+		int eventLevel = 0;
 		for (int i = 0; i < events.size(); i++) {
 			ComponentType type = ComponentType.ALIVE_BOX_CLOSE_OPEN;
-			for (final Iterator<SegmentColored> it = getSegmentsCutted(stringBounder, i).iterator(); it.hasNext();) {
+			Collection<SegmentColored> segmentsCutted = getSegmentsCutted(stringBounder, i);
+			if (events.get(i).type == LifeSegmentVariation.LARGER)
+				eventLevel++;
+			else if (events.get(i).type == LifeSegmentVariation.SMALLER)
+				eventLevel = Math.max(0,eventLevel-1);
+			for (final Iterator<SegmentColored> it = segmentsCutted.iterator(); it.hasNext();) {
 				final SegmentColored seg = it.next();
 				final HColor specificBackColor = seg.getSpecificBackColor();
 				ISkinParam skinParam2 = new SkinParamBackcolored(skinParam, specificBackColor);
@@ -228,7 +234,7 @@ public class LifeLine {
 				final Component compAliveBox = skin.createComponent(new Style[] { style }, type, null, skinParam2,
 						null);
 				type = ComponentType.ALIVE_BOX_OPEN_OPEN;
-				final int currentLevel = getLevel(seg.getPos1Initial());
+				final int currentLevel = Math.min(eventLevel,getLevel(seg.getPos1Initial()));
 				seg.drawU(ug, compAliveBox, currentLevel);
 			}
 		}

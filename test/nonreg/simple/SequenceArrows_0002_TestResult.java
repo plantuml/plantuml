@@ -47,7 +47,7 @@ RECTANGLE:
   backcolor: ffffffff
 
 RECTANGLE:
-  pt1: [ 129.8059 ; 61.0000 ]
+  pt1: [ 129.8059 ; 42.0000 ]
   pt2: [ 139.8059 ; 3972.0000 ]
   xCorner: 0
   yCorner: 0
@@ -74,7 +74,27 @@ RECTANGLE:
   backcolor: ffffffff
 
 RECTANGLE:
-  pt1: [ 267.1377 ; 61.0000 ]
+  pt1: [ 257.1377 ; 42.0000 ]
+  pt2: [ 267.1377 ; 3972.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+  backcolor: ffffffff
+
+RECTANGLE:
+  pt1: [ 262.1377 ; 42.0000 ]
+  pt2: [ 272.1377 ; 3972.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-1.0
+  shadow: 0
+  color: ff181818
+  backcolor: ffffffff
+
+RECTANGLE:
+  pt1: [ 267.1377 ; 42.0000 ]
   pt2: [ 277.1377 ; 3972.0000 ]
   xCorner: 0
   yCorner: 0

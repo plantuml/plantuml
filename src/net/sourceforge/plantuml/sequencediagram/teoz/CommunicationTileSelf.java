@@ -126,7 +126,7 @@ public class CommunicationTileSelf extends AbstractTile {
 		if (!isReverseDefine()) {
 			x1 += CommunicationTile.LIVE_DELTA_SIZE * levelIgnore;
 			if (levelIgnore < levelConsidere) {
-				x1 += CommunicationTile.LIVE_DELTA_SIZE;
+				x1 += CommunicationTile.LIVE_DELTA_SIZE * (levelConsidere-levelIgnore);
 			}
 		}
 

@@ -143,6 +143,12 @@ public abstract class AbstractMessage extends AbstractEvent implements EventWith
 
 	public final boolean addLifeEvent(LifeEvent lifeEvent) {
 		lifeEvent.setMessage(this);
+
+		if (this.isSelfMessage()) {
+			if (lifeEvent.getParticipant() != this.getParticipant1())
+				return true;
+		}
+
 		lifeEventsType.add(lifeEvent.getType());
 		if (lifeEventsType.size() == 1 && isActivate())
 			firstIsActivate = true;
