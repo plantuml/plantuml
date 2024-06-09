@@ -231,11 +231,16 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 			circleAtStart = dressing2.contains("o");
 			circleAtEnd = dressing1.contains("o");
 			reverseDefine = true;
+		} else if (xInDressing1 || xInDressing2) {
+			p1 = getOrCreateParticipant(diagram, arg, "PART1");
+			p2 = getOrCreateParticipant(diagram, arg, "PART2");
+			circleAtStart = dressing1.contains("o");
+			circleAtEnd = dressing2.contains("o");
+			reverseDefine = false;
 		} else {
 			return CommandExecutionResult.error("Illegal sequence arrow");
 
 		}
-
 		final boolean sync = contains(dressing1, "<<", "\\\\", "//") || contains(dressing2, ">>", "\\\\", "//");
 
 		final boolean dotted = getLength(arg) > 1;
