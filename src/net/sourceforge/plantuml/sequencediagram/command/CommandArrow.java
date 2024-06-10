@@ -229,8 +229,10 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		final boolean circleAtEnd;
 
 		if (reverseDefine) {
-			p1 = getOrCreateParticipant(diagram, arg, "PART2");
+			// Keep the order
+			// See https://github.com/plantuml/plantuml/issues/1819#issuecomment-2158524871
 			p2 = getOrCreateParticipant(diagram, arg, "PART1");
+			p1 = getOrCreateParticipant(diagram, arg, "PART2");
 			circleAtStart = dressing2.contains("o");
 			circleAtEnd = dressing1.contains("o");
 		} else {
