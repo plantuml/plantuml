@@ -93,31 +93,31 @@ public class TrieImpl implements Trie {
 		return result;
 	}
 
-	public String getLonguestMatchStartingIn(String s) {
-		return getLonguestMatchStartingIn(this, s);
+	public String getLonguestMatchStartingIn(String s, int pos) {
+		return getLonguestMatchStartingIn(this, s, pos);
 	}
 
-	private static String getLonguestMatchStartingIn(TrieImpl current, String s) {
+	private static String getLonguestMatchStartingIn(TrieImpl current, String s, int pos) {
 		final StringBuilder result = new StringBuilder();
 		while (current != null) {
-			if (s.length() == 0) {
-				if (current.brothers.containsKey('\0')) {
+			if (s.length() == pos) {
+				if (current.brothers.containsKey('\0'))
 					return result.toString();
-				} else {
+				else
 					return "";
-				}
+
 			}
-			final TrieImpl child = current.brothers.get(s.charAt(0));
+			final TrieImpl child = current.brothers.get(s.charAt(pos));
 			if (child == null || child.brothers.size() == 0) {
-				if (current.brothers.containsKey('\0')) {
+				if (current.brothers.containsKey('\0'))
 					return result.toString();
-				} else {
+				else
 					return "";
-				}
+
 			}
-			result.append(s.charAt(0));
+			result.append(s.charAt(pos));
 			current = child;
-			s = s.substring(1);
+			pos++;
 		}
 		return "";
 

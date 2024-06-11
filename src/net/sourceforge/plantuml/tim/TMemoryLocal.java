@@ -141,10 +141,10 @@ public class TMemoryLocal extends ExecutionContexts implements TMemory {
 				throw new UnsupportedOperationException();
 			}
 
-			public String getLonguestMatchStartingIn(String s) {
-				final String s1 = memoryGlobal.variablesNames3().getLonguestMatchStartingIn(s);
-				final String s2 = overridenVariables00.getLonguestMatchStartingIn(s);
-				final String s3 = localVariables00.getLonguestMatchStartingIn(s);
+			public String getLonguestMatchStartingIn(String s, int pos) {
+				final String s1 = memoryGlobal.variablesNames3().getLonguestMatchStartingIn(s, pos);
+				final String s2 = overridenVariables00.getLonguestMatchStartingIn(s, pos);
+				final String s3 = localVariables00.getLonguestMatchStartingIn(s, pos);
 
 				if (s1.length() >= s2.length() && s1.length() >= s3.length())
 					return s1;

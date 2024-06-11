@@ -38,6 +38,6 @@ public interface Trie {
 
 	public void add(String s);
 
-	public String getLonguestMatchStartingIn(String s);
+	public String getLonguestMatchStartingIn(String s, int pos);
 
 }

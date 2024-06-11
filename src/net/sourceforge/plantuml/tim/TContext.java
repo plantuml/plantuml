@@ -759,7 +759,7 @@ public class TContext {
 				&& VariableManager.justAfterBackslashN(s, pos) == false)
 			return null;
 
-		final String fname = functionsSet.getLonguestMatchStartingIn(s.substring(pos));
+		final String fname = functionsSet.getLonguestMatchStartingIn(s, pos);
 		if (fname.length() == 0)
 			return null;
 

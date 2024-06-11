@@ -73,8 +73,8 @@ public class FunctionsSet {
 		return Collections.unmodifiableMap(functions);
 	}
 
-	public String getLonguestMatchStartingIn(String s) {
-		return functions3.getLonguestMatchStartingIn(s);
+	public String getLonguestMatchStartingIn(String s, int pos) {
+		return functions3.getLonguestMatchStartingIn(s, pos);
 	}
 
 	public TFunctionImpl pendingFunction() {

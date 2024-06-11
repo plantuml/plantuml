@@ -143,7 +143,7 @@ public class VariableManager {
 				&& justAfterBackslashN(s, pos) == false) {
 			return null;
 		}
-		final String varname = memory.variablesNames3().getLonguestMatchStartingIn(s.substring(pos));
+		final String varname = memory.variablesNames3().getLonguestMatchStartingIn(s, pos);
 		if (varname.length() == 0)
 			return null;
 
