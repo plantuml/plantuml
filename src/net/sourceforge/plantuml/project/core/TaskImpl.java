@@ -185,7 +185,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 
 	public String getPrettyDisplay() {
 		if (resources.size() > 0) {
-			final StringBuilder result = new StringBuilder(getCode().getSimpleDisplay2());
+			final StringBuilder result = new StringBuilder(getCode().getDisplay());
 			result.append(" ");
 			for (Iterator<Map.Entry<Resource, Integer>> it = resources.entrySet().iterator(); it.hasNext();) {
 				final Map.Entry<Resource, Integer> ent = it.next();
@@ -202,7 +202,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 			}
 			return result.toString();
 		}
-		return getCode().getSimpleDisplay2();
+		return getCode().getDisplay();
 	}
 
 	@Override

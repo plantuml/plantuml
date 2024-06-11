@@ -70,7 +70,7 @@ public class TaskCode {
 		return this.id.equals(other.id);
 	}
 
-	public String getSimpleDisplay2() {
+	public String getDisplay() {
 		return display;
 	}
 
