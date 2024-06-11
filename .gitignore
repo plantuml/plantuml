@@ -27,3 +27,6 @@ build/
 
 # for jenv users
 .java-version
+
+# output of dev tests
+/outputdev
