@@ -42,6 +42,7 @@ import java.util.StringTokenizer;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.core.TaskCode;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -70,7 +71,8 @@ public class SubjectTask implements Subject<GanttDiagram> {
 			final String then = arg.get("THEN", 0);
 			final String stereotype = arg.get("STEREOTYPE", 0);
 			
-			result = gantt.getOrCreateTask(subject, shortName, then != null);
+			final TaskCode code = TaskCode.fromIdAndDisplay(shortName, subject);
+			result = gantt.getOrCreateTask(code, then != null);
 			
 			if (stereotype != null)
 				result.setStereotype(Stereotype.build(arg.get("STEREOTYPE", 0)));

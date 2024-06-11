@@ -40,6 +40,7 @@ import java.util.Collection;
 
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.core.Task;
+import net.sourceforge.plantuml.project.core.TaskCode;
 import net.sourceforge.plantuml.project.lang.SentenceSimple;
 import net.sourceforge.plantuml.project.lang.Subject;
 import net.sourceforge.plantuml.project.lang.Words;
@@ -66,7 +67,8 @@ public class SubjectTask implements Subject<ChronologyDiagram> {
 		final String shortName = arg.get("SHORTNAME", 0);
 		final String stereotype = arg.get("STEREOTYPE", 0);
 
-		result = chronology.getOrCreateTask(subject, shortName, false);
+		final TaskCode code = TaskCode.fromIdAndDisplay(shortName, subject);
+		result = chronology.getOrCreateTask(code, false);
 
 		if (stereotype != null)
 			result.setStereotype(Stereotype.build(arg.get("STEREOTYPE", 0)));

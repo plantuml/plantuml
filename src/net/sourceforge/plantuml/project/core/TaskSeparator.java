@@ -48,7 +48,7 @@ public class TaskSeparator extends AbstractTask implements Task {
 	private final String comment;
 
 	public TaskSeparator(StyleBuilder styleBuilder, String comment, int id) {
-		super(styleBuilder, new TaskCode("##" + id));
+		super(styleBuilder, TaskCode.fromId("##" + id));
 		this.comment = comment;
 	}
 

@@ -35,32 +35,47 @@
  */
 package net.sourceforge.plantuml.project.core;
 
+import java.util.Objects;
+
 public class TaskCode {
 
-	private final String code;
+	private final String id;
+	private final String display;
 
-	public TaskCode(String code) {
-		this.code = code;
+	public static TaskCode fromId(String id) {
+		return new TaskCode(id, id);
+	}
+
+	public static TaskCode fromIdAndDisplay(String id, String display) {
+		if (id == null)
+			id = display;
+		if (display == null)
+			return fromId(id);
+		return new TaskCode(id, display);
+	}
+
+	private TaskCode(String id, String display) {
+		this.id = Objects.requireNonNull(id);
+		this.display = Objects.requireNonNull(display);
 	}
 
 	@Override
 	public int hashCode() {
-		return code.hashCode();
+		return id.hashCode();
 	}
 
 	@Override
 	public boolean equals(Object arg) {
 		final TaskCode other = (TaskCode) arg;
-		return this.code.equals(other.code);
+		return this.id.equals(other.id);
 	}
 
-	@Override
-	public String toString() {
-		return code.toString();
+	public String getSimpleDisplay2() {
+		return display;
 	}
 
-	public String getSimpleDisplay() {
-		return code;
+	public String getId() {
+		return id;
 	}
 
 }

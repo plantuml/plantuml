@@ -85,8 +85,8 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 
 	private final Map<Task, TaskDraw> draws = new LinkedHashMap<Task, TaskDraw>();
 	private final Map<TaskCode, Task> tasks = new LinkedHashMap<TaskCode, Task>();
-	private final Map<String, Task> byShortName = new HashMap<String, Task>();
-//	private final List<GanttConstraint> constraints = new ArrayList<>();
+
+	//	private final List<GanttConstraint> constraints = new ArrayList<>();
 	private final HColorSet colorSet = HColorSet.instance();
 //
 //	private final OpenClose openClose = new OpenClose();
@@ -370,7 +370,7 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 		y = y.addFixed(headerHeight);
 		for (Task task : tasks.values()) {
 			final TaskDraw draw;
-			final String disp = task.getCode().getSimpleDisplay();
+			final String disp = task.getCode().getSimpleDisplay2();
 			draw = new TaskDrawDiamond(timeScale, y, disp, task.getStart(), task, this, task.getStyleBuilder());
 			final double height = draw.getFullHeightTask(stringBounder);
 			y = y.addAtLeast(height);
@@ -534,18 +534,8 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 //		return result;
 //	}
 
-	public Task getOrCreateTask(String codeOrShortName, String shortName, boolean linkedToPrevious) {
-		Objects.requireNonNull(codeOrShortName);
-		Task result = shortName == null ? null : byShortName.get(shortName);
-		if (result != null)
-			return result;
-
-		result = byShortName.get(codeOrShortName);
-		if (result != null)
-			return result;
-
-		final TaskCode code = new TaskCode(codeOrShortName);
-		result = tasks.get(code);
+	public Task getOrCreateTask(TaskCode code, boolean linkedToPrevious) {
+		Task result = tasks.get(Objects.requireNonNull(code));
 		if (result == null) {
 
 			result = new TaskChronology(getSkinParam().getCurrentStyleBuilder(), code);
@@ -553,8 +543,6 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 				currentGroup.addTask(result);
 
 			tasks.put(code, result);
-			if (byShortName != null)
-				byShortName.put(shortName, result);
 
 		}
 		return result;

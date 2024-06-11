@@ -120,7 +120,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private final Map<Task, TaskDraw> draws = new LinkedHashMap<Task, TaskDraw>();
 	private final Map<TaskCode, Task> tasks = new LinkedHashMap<TaskCode, Task>();
-	private final Map<String, Task> byShortName = new HashMap<String, Task>();
+
 	private final List<GanttConstraint> constraints = new ArrayList<>();
 	private final HColorSet colorSet = HColorSet.instance();
 
@@ -442,11 +442,11 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 						getSkinParam().getIHtmlColorSet());
 			} else if (task instanceof TaskGroup) {
 				final TaskGroup taskGroup = (TaskGroup) task;
-				draw = new TaskDrawGroup(timeScale, y, taskGroup.getCode().getSimpleDisplay(), getStart(taskGroup),
+				draw = new TaskDrawGroup(timeScale, y, taskGroup.getCode().getSimpleDisplay2(), getStart(taskGroup),
 						getEnd(taskGroup), task, this, task.getStyleBuilder());
 			} else {
 				final TaskImpl tmp = (TaskImpl) task;
-				final String disp = hideResourceName ? tmp.getCode().getSimpleDisplay() : tmp.getPrettyDisplay();
+				final String disp = hideResourceName ? tmp.getCode().getSimpleDisplay2() : tmp.getPrettyDisplay();
 				if (tmp.isDiamond()) {
 					draw = new TaskDrawDiamond(timeScale, y, disp, getStart(tmp), task, this, task.getStyleBuilder());
 				} else {
@@ -584,11 +584,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	}
 
 	public Task getExistingTask(String id) {
-		final Task result = byShortName.get(Objects.requireNonNull(id));
-		if (result != null)
-			return result;
-
-		final TaskCode code = new TaskCode(id);
+		final TaskCode code = TaskCode.fromId(Objects.requireNonNull(id));
 		return tasks.get(code);
 	}
 
@@ -601,24 +597,14 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return result;
 	}
 
-	public Task getOrCreateTask(String codeOrShortName, String shortName, boolean linkedToPrevious) {
-		Objects.requireNonNull(codeOrShortName);
-		Task result = shortName == null ? null : byShortName.get(shortName);
-		if (result != null)
-			return result;
-
-		result = byShortName.get(codeOrShortName);
-		if (result != null)
-			return result;
-
-		final TaskCode code = new TaskCode(codeOrShortName);
-		result = tasks.get(code);
+	public Task getOrCreateTask(TaskCode code, boolean linkedToPrevious) {
+		Task result = tasks.get(Objects.requireNonNull(code));
 		if (result == null) {
 			Task previous = null;
 			if (linkedToPrevious)
 				previous = getLastCreatedTask();
 
-			final OpenClose except = this.openCloseForTask.get(codeOrShortName);
+			final OpenClose except = this.openCloseForTask.get(code.getId());
 
 			result = new TaskImpl(getSkinParam().getCurrentStyleBuilder(), code, openClose.mutateMe(except),
 					openClose.getStartingDay(), defaultCompletion);
@@ -626,9 +612,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 				currentGroup.addTask(result);
 
 			tasks.put(code, result);
-			if (byShortName != null)
-				byShortName.put(shortName, result);
-
+			
 			if (previous != null)
 				forceTaskOrder(previous, result);
 
@@ -652,8 +636,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private TaskGroup currentGroup = null;
 
-	public CommandExecutionResult addGroup(String name) {
-		TaskGroup group = new TaskGroup(this.currentGroup, getSkinParam().getCurrentStyleBuilder(), name);
+	public CommandExecutionResult addGroup(TaskCode code) {
+		TaskGroup group = new TaskGroup(this.currentGroup, getSkinParam().getCurrentStyleBuilder(), code);
 
 		if (this.currentGroup != null)
 			this.currentGroup.addTask(group);

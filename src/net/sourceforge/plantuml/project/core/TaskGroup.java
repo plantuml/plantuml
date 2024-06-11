@@ -51,8 +51,8 @@ public class TaskGroup extends AbstractTask implements Task {
 	private final TaskGroup parent;
 	private final List<Task> children = new ArrayList<>();
 
-	public TaskGroup(TaskGroup parent, StyleBuilder styleBuilder, String name) {
-		super(styleBuilder, new TaskCode(name));
+	public TaskGroup(TaskGroup parent, StyleBuilder styleBuilder, TaskCode code) {
+		super(styleBuilder, code);
 		this.parent = parent;
 	}
 

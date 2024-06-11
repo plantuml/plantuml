@@ -18,20 +18,18 @@ import net.sourceforge.plantuml.preproc.Defines;
 /*
  * 
 
+https://github.com/plantuml/plantuml/issues/1809
 
-@startuml
-a <- b ++
-alt a
-a -> b --
-else b
-a -> b --
-else c
-a <- b ++
-end
+@startgantt
+[Prototype design] as [D] requires 15 days
+[Test prototype] as [T] requires 10 days
+[T] starts at [D]'s end
+[Test prototype] as [Z] requires 3 days
+@endgantt
 
-@enduml
+
  */
-public class Test_72s8u66810oqjxsz2mkbjqcvghzy57d {
+public class Test_pending {
 
 	protected File getJavaFile() {
 		final String name = getClass().getName();
