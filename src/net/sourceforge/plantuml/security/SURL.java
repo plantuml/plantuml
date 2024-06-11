@@ -225,6 +225,11 @@ public class SURL {
 			// In SANDBOX, we cannot read any URL
 			return false;
 
+		if (isInUrlAllowList())
+			// ::done
+			return true;
+		// ::comment when __CORE__
+
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.LEGACY) {
 			if (URLCheck.isURLforbidden(cleanPath(internal.toString())))
 				return false;
@@ -234,11 +239,6 @@ public class SURL {
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE)
 			// We are UNSECURE anyway
 			return true;
-
-		if (isInUrlAllowList())
-			// ::done
-			return true;
-		// ::comment when __CORE__
 
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.INTERNET) {
 			if (URLCheck.isURLforbidden(cleanPath(internal.toString())))
