@@ -36,11 +36,21 @@ package net.sourceforge.plantuml.jsondiagram;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.ScaleSimple;
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.command.CommandControl;
+import net.sourceforge.plantuml.command.CommandScale;
+import net.sourceforge.plantuml.command.CommandScaleMaxHeight;
+import net.sourceforge.plantuml.command.CommandScaleMaxWidth;
+import net.sourceforge.plantuml.command.CommandScaleMaxWidthAndHeight;
+import net.sourceforge.plantuml.command.CommandScaleWidthAndHeight;
+import net.sourceforge.plantuml.command.CommandScaleWidthOrHeight;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -58,6 +68,7 @@ import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.yaml.Highlighted;
 
 public class JsonDiagram extends TitledDiagram {
@@ -77,7 +88,20 @@ public class JsonDiagram extends TitledDiagram {
 			this.root = json;
 		}
 		this.highlighted = highlighted;
-		setScale(new ScaleSimple(styleExtractor.getScale()));
+		final String scale = styleExtractor.getScale();
+		if (scale != null) {
+			final List<SingleLineCommand2<AbstractPSystem>> cmds = new ArrayList<>();
+			cmds.add(CommandScale.ME);
+			cmds.add(CommandScaleWidthAndHeight.ME);
+			cmds.add(CommandScaleWidthOrHeight.ME);
+			cmds.add(CommandScaleMaxWidth.ME);
+			cmds.add(CommandScaleMaxHeight.ME);
+			cmds.add(CommandScaleMaxWidthAndHeight.ME);
+			final BlocLines lines = BlocLines.singleString(scale);
+			for (SingleLineCommand2<AbstractPSystem> cmd : cmds)
+				if (cmd.isValid(lines) == CommandControl.OK)
+					cmd.execute(this, lines);
+		}
 	}
 
 	public DiagramDescription getDescription() {
