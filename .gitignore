@@ -6,7 +6,7 @@
 .idea
 *.iml
 out
-
+/bin
 #vscode files
 **/bin/
 
