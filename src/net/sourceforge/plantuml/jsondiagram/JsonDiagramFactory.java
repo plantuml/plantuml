@@ -40,6 +40,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.command.PSystemAbstractFactory;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
@@ -47,6 +48,9 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.json.ParseException;
+import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
@@ -89,13 +93,17 @@ public class JsonDiagramFactory extends PSystemAbstractFactory {
 			json = null;
 		}
 		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.JSON, json, highlighted, styleExtractor);
-		if (styleExtractor != null)
+		if (styleExtractor != null) {
 			try {
 				styleExtractor.applyStyles(result.getSkinParam());
 			} catch (StyleParsingException e) {
 				Logme.error(e);
 			}
-
+			final String title = styleExtractor.getTitle();
+			if (title != null)
+				result.setTitle(DisplayPositioned.single(Display.getWithNewlines(title), HorizontalAlignment.CENTER,
+						VerticalAlignment.CENTER));
+		}
 		return result;
 	}
 

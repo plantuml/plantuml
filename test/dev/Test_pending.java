@@ -18,14 +18,12 @@ import net.sourceforge.plantuml.preproc.Defines;
 /*
  * 
 
-https://github.com/plantuml/plantuml/issues/1809
+https://github.com/plantuml/plantuml/issues/1077
 
-@startgantt
-[Prototype design] as [D] requires 15 days
-[Test prototype] as [T] requires 10 days
-[T] starts at [D]'s end
-[Test prototype] as [Z] requires 3 days
-@endgantt
+@startjson
+title this is a title 
+{"a": 61}
+@endjson
 
 
  */
