@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.stereo.Stereotype;
 
 // Created from Luc Trudeau original work
 public enum BoxStyle {
@@ -192,6 +193,12 @@ public enum BoxStyle {
 
 	public final double getShield() {
 		return shield;
+	}
+
+	public Stereotype getStereotype() {
+		if (stereotype == null)
+			return null;
+		return Stereotype.build("<<" + stereotype + ">>");
 	}
 
 }
