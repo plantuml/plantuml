@@ -95,7 +95,7 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 	}
 
 	public InstructionRepeat(Swimlanes swimlanes, Instruction parent, LinkRendering nextLinkRenderer, HColor color,
-			Display startLabel, BoxStyle boxStyleIn, Colors colors) {
+			Display startLabel, BoxStyle boxStyleIn, Colors colors, Stereotype stereotype) {
 		this.currentStyleBuilder = swimlanes.getCurrentStyleBuilder();
 		this.swimlanes = swimlanes;
 		this.swimlane = swimlanes.getCurrentSwimlane();
@@ -105,6 +105,7 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 		this.parent = parent;
 		this.nextLinkRenderer = Objects.requireNonNull(nextLinkRenderer);
 		this.colors = colors;
+		this.stereotype = stereotype;
 	}
 
 	private boolean isLastOfTheParent() {
@@ -160,7 +161,7 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 		final Ftile decorateOut = factory.decorateOut(repeatList.createFtile(factory), endRepeatLinkRendering);
 		if (this.testCalled == false && incoming1.isNone())
 			incoming1 = swimlanes.nextLinkRenderer();
-		final Ftile result = factory.repeat(boxStyleIn, swimlane, swimlaneOut, startLabel, decorateOut, test, yes, out,
+		final Ftile result = factory.repeat(boxStyleIn, stereotype, swimlane, swimlaneOut, startLabel, decorateOut, test, yes, out,
 				colors, back, isLastOfTheParent(), incoming1, incoming2, currentStyleBuilder);
 		if (killed)
 			return new FtileKilled(result);

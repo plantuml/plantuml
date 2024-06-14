@@ -92,13 +92,16 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 			boxStyle = BoxStyle.fromString(styleString);
 
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
-		final String stereo = arg.get("STEREO", 0);
+		String stereo = arg.get("STEREO", 0);
+		if (stereo == null)
+			stereo = arg.get("STYLE", 1);
+		Stereotype stereotype = null;
 		if (stereo != null) {
-			final Stereotype stereotype = Stereotype.build(stereo);
+			stereotype = Stereotype.build(stereo);
 			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);
 		}
 
-		diagram.startRepeat(color, label, boxStyle, colors);
+		diagram.startRepeat(color, label, boxStyle, colors, stereotype);
 
 		return CommandExecutionResult.ok();
 	}
