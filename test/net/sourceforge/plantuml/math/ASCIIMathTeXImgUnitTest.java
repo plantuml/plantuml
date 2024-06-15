@@ -493,6 +493,10 @@ class ASCIIMathTeXImgUnitTest {
 		" f'''                                                     , {f}''' ",
 		" uArr                                                     , \\Uparrow ",
 		" dArr                                                     , \\Downarrow ",
+		" newline                                                  , \\\\ ",
+		" a newline b                                              , {a}\\\\{b} ",
+		" anewlineb                                                , {a}\\\\{b} ",
+		" a^2newlinea^3                                            , {a}^{{2}}\\\\{a}^{{3}} ",
 	})
 	void mathUnitTest(String input, String expected) {
 		final String res = cut.getTeX(input);

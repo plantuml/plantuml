@@ -432,6 +432,9 @@ public class ASCIIMathTeXImg {
 			new Tuple("mathtt"  , "mstyle", "mathtt"  , null      , Ttype.UNARY                 ), //
 			new Tuple("fr"      , "mstyle", "fr"      , "mathfrak", Ttype.UNARY , Flag.NOTEXCOPY), //
 			new Tuple("mathfrak", "mstyle", "mathfrak", null      , Ttype.UNARY                 ), //
+
+			// newline for formatting: in order to add a new line between multiple formulas
+			new Tuple("newline", "mo", "newline", "\\\\", Ttype.CONST, Flag.VAL, Flag.NOTEXCOPY), //
 	} //
 	));
 
