@@ -76,6 +76,12 @@ To create a JAR file of the PlantUML project, run the following command:
 gradle jar
 ```
 
+To create a JAR file with PDF output support, run the following command:
+
+```sh
+gradle pdfJar
+```
+
 The JAR file will be created in the `build/libs` directory.
 
 ### Contributing
