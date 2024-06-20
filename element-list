@@ -36,6 +36,7 @@ net.sourceforge.plantuml.ant
 net.sourceforge.plantuml.api
 net.sourceforge.plantuml.api.mda.option2
 net.sourceforge.plantuml.api.mda.option3
+net.sourceforge.plantuml.api.v2
 net.sourceforge.plantuml.argon2
 net.sourceforge.plantuml.argon2.algorithm
 net.sourceforge.plantuml.argon2.blake2
