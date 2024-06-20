@@ -33,11 +33,15 @@ public class PlantUmlTestUtils {
 
 	@SuppressWarnings("unused")
 	public static class ExportDiagram {
-		private final Diagram diagram;
+		public final Diagram diagram;
 		private boolean metadata;
 
 		public ExportDiagram(Diagram diagram) {
 			this.diagram = diagram;
+		}
+
+		public Diagram getDiagram(){
+			return diagram;
 		}
 
 		public ExportDiagram assertDiagramType(Class<? extends Diagram> klass) {
