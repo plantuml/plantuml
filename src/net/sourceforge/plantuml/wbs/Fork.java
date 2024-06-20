@@ -52,7 +52,7 @@ class Fork extends WBSTextBlock {
 	private final List<ITF> right = new ArrayList<>();
 
 	public Fork(ISkinParam skinParam, WElement idea) {
-		super(idea.withBackColor(skinParam), idea.getStyleBuilder(), idea.getLevel());
+		super(idea.withBackColor(skinParam), idea.getStyleBuilder(), idea.getLevel(), idea.getStereotype());
 		if (idea.getLevel() != 0)
 			throw new IllegalArgumentException();
 

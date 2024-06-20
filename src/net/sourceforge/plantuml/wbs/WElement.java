@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.mindmap.IdeaShape;
 import net.sourceforge.plantuml.skin.SkinParamColors;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.SName;
@@ -188,6 +189,12 @@ final public class WElement {
 
 	public final XDimension2D getDimension() {
 		return dimension;
+	}
+
+	public Stereotype getStereotype() {
+		if (stereotype == null)
+			return null;
+		return Stereotype.build("<<" + stereotype + ">>");
 	}
 
 }

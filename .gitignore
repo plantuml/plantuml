@@ -30,3 +30,5 @@ build/
 
 # output of dev tests
 /outputdev
+
+*.patch

@@ -40,14 +40,20 @@ import java.util.Collection;
 import java.util.List;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.utils.Direction;
 
 class ITFComposed extends WBSTextBlock implements ITF {
@@ -62,7 +68,7 @@ class ITFComposed extends WBSTextBlock implements ITF {
 	private final WElement idea;
 
 	private ITFComposed(ISkinParam skinParam, WElement idea, List<ITF> left, List<ITF> right) {
-		super(skinParam, idea.getStyleBuilder(), idea.getLevel());
+		super(skinParam, idea.getStyleBuilder(), idea.getLevel(), idea.getStereotype());
 		this.idea = idea;
 		this.left = left;
 		this.right = right;
@@ -148,23 +154,32 @@ class ITFComposed extends WBSTextBlock implements ITF {
 			y += marginBottom;
 			final XDimension2D childDim = child.calculateDimension(stringBounder);
 			lastY1 = y + child.getF2(stringBounder).getY();
-			drawLine(ug, x - childDim.getWidth() - delta1x + child.getF2(stringBounder).getX(), lastY1, x, lastY1);
+			drawLine(ug, x - childDim.getWidth() - delta1x + child.getF2(stringBounder).getX(), lastY1, x,
+					lastY1);
 			child.drawU(ug.apply(new UTranslate(x - childDim.getWidth() - delta1x, y)));
 			y += childDim.getHeight();
 		}
 
 		y = mainDim.getHeight();
+		HColor lineColor = getLinkColor();
+		lineColor = HColors.BLUE;
 		double lastY2 = y;
 		for (ITF child : right) {
 			y += marginBottom;
 			final XDimension2D childDim = child.calculateDimension(stringBounder);
 			lastY2 = y + child.getF1(stringBounder).getY();
-			drawLine(ug, x, lastY2, x + delta1x + child.getF1(stringBounder).getX(), lastY2);
+			drawLine(ug.apply(lineColor), x, lastY2, x + delta1x + child.getF1(stringBounder).getX(), lastY2);
 			child.drawU(ug.apply(new UTranslate(x + delta1x, y)));
 			y += childDim.getHeight();
 
 		}
-		drawLine(ug, x, mainDim.getHeight(), x, Math.max(lastY1, lastY2));
+		drawLine(ug.apply(lineColor), x, mainDim.getHeight(), x, Math.max(lastY1, lastY2));
+	}
+
+	private HColor getLinkColor() {
+		final Style styleArrow = idea.getStyle().getSignature().withTOBECHANGED(idea.getStereotype())
+				.getMergedStyle(idea.getStyleBuilder());
+		return styleArrow.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 	}
 
 	final private double getCollWidth(StringBounder stringBounder, Collection<? extends TextBlock> all) {
