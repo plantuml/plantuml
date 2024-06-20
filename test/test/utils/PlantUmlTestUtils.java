@@ -33,7 +33,7 @@ public class PlantUmlTestUtils {
 
 	@SuppressWarnings("unused")
 	public static class ExportDiagram {
-		public final Diagram diagram;
+		private final Diagram diagram;
 		private boolean metadata;
 
 		public ExportDiagram(Diagram diagram) {
