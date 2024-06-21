@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.klimt.drawing.eps;
@@ -38,6 +38,8 @@ package net.sourceforge.plantuml.klimt.drawing.eps;
 import java.awt.geom.PathIterator;
 import java.util.HashMap;
 import java.util.Map;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 
 public class EpsGraphicsMacro extends EpsGraphics {
 
@@ -121,25 +123,25 @@ public class EpsGraphicsMacro extends EpsGraphics {
 	}
 
 	@Override
-	public void curveto(double x1, double y1, double x2, double y2, double x3, double y3) {
-		final PostScriptCommandCurveTo cmd = new PostScriptCommandCurveTo(x1 - posX, y1 - posY, x2 - posX, y2 - posY,
-				x3 - posX, y3 - posY);
+	public void curveto(double x3, double y3, RectangleCoordinates rectangleCoordinates) {
+		final PostScriptCommandCurveTo cmd = new PostScriptCommandCurveTo(rectangleCoordinates.getX1() - posX, rectangleCoordinates.getY1() - posY, rectangleCoordinates.getX2() - posX, rectangleCoordinates.getY2() - posY,
+						x3 - posX, y3 - posY);
 		macroInProgress.add(cmd);
 		this.posX = x3;
 		this.posY = y3;
-		ensureVisible(x1, y1);
-		ensureVisible(x2, y2);
+		ensureVisible(rectangleCoordinates.getX1(), rectangleCoordinates.getY1());
+		ensureVisible(rectangleCoordinates.getX2(), rectangleCoordinates.getY2());
 		ensureVisible(x3, y3);
 	}
 
 	@Override
-	public void quadto(double x1, double y1, double x2, double y2) {
-		final PostScriptCommandQuadTo cmd = new PostScriptCommandQuadTo(x1 - posX, y1 - posY, x2 - posX, y2 - posY);
+	public void quadto(RectangleCoordinates rectangleCoordinates) {
+		final PostScriptCommandQuadTo cmd = new PostScriptCommandQuadTo(rectangleCoordinates.getX1() - posX, rectangleCoordinates.getY1() - posY, rectangleCoordinates.getX2() - posX, rectangleCoordinates.getY2() - posY);
 		macroInProgress.add(cmd);
-		this.posX = x2;
-		this.posY = y2;
-		ensureVisible(x1, y1);
-		ensureVisible(x2, y2);
+		this.posX = rectangleCoordinates.getX2();
+		this.posY = rectangleCoordinates.getY2();
+		ensureVisible(rectangleCoordinates.getX1(), rectangleCoordinates.getY1());
+		ensureVisible(rectangleCoordinates.getX2(), rectangleCoordinates.getY2());
 	}
 
 	private void openMacro() {

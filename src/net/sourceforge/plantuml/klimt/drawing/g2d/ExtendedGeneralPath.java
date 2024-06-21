@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,13 +30,12 @@
  *
  *
  * Original Author:  Thierry Kormann
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.klimt.drawing.g2d;
 
-import java.awt.Rectangle;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Arc2D;
 import java.awt.geom.GeneralPath;
@@ -45,6 +44,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Arrays;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.log.Logme;
 
@@ -54,17 +54,19 @@ import net.sourceforge.plantuml.log.Logme;
  * elliptical arc. This class delegates lines and curves to an enclosed
  * <code>GeneralPath</code>. Elliptical arc is implemented using an
  * <code>Arc2D</code> in double precision.
- * 
+ *
  * <p>
  * <b>Warning</b> : An elliptical arc may be composed of several path segments.
  * For further details, see the SVG Appendix&nbsp;F.6
- * 
+ *
  * @author <a href="mailto:Thierry.Kormann@sophia.inria.fr">Thierry Kormann</a>
  * @version $Id: ExtendedGeneralPath.java 594018 2007-11-12 04:17:41Z cam $
  */
 public class ExtendedGeneralPath implements Shape, Cloneable {
 
-	/** The enclosed general path. */
+	/**
+	 * The enclosed general path.
+	 */
 	private GeneralPath path;
 
 	private int numVals = 0;
@@ -114,21 +116,17 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 	 * Adds an elliptical arc, defined by two radii, an angle from the x-axis, a
 	 * flag to choose the large arc or not, a flag to indicate if we increase or
 	 * decrease the angles and the final point of the arc.
-	 * 
+	 *
 	 * @param rx           the x radius of the ellipse
 	 * @param ry           the y radius of the ellipse
-	 * 
 	 * @param angle        the angle from the x-axis of the current coordinate
 	 *                     system to the x-axis of the ellipse in degrees.
-	 * 
 	 * @param largeArcFlag the large arc flag. If true the arc spanning less than or
 	 *                     equal to 180 degrees is chosen, otherwise the arc
 	 *                     spanning greater than 180 degrees is chosen
-	 * 
 	 * @param sweepFlag    the sweep flag. If true the line joining center to arc
 	 *                     sweeps through decreasing angles otherwise it sweeps
 	 *                     through increasing angles
-	 * 
 	 * @param x            the absolute x coordinate of the final point of the arc.
 	 * @param y            the absolute y coordinate of the final point of the arc.
 	 */
@@ -157,7 +155,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 		}
 
 		final AffineTransform t = AffineTransform.getRotateInstance(Math.toRadians(angle), arc.getCenterX(),
-				arc.getCenterY());
+						arc.getCenterY());
 		final Shape s = t.createTransformedShape(arc);
 		path.append(s, true);
 
@@ -176,12 +174,12 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 	 * This constructs an unrotated Arc2D from the SVG specification of an
 	 * Elliptical arc. To get the final arc you need to apply a rotation transform
 	 * such as:
-	 * 
+	 * <p>
 	 * AffineTransform.getRotateInstance (angle, arc.getX()+arc.getWidth()/2,
 	 * arc.getY()+arc.getHeight()/2);
 	 */
 	public static Arc2D computeArc(double x0, double y0, double rx, double ry, double angle, boolean largeArcFlag,
-			boolean sweepFlag, double x, double y) {
+					boolean sweepFlag, double x, double y) {
 		//
 		// Elliptical arc implementation based on the SVG specification notes
 		//
@@ -300,32 +298,36 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
+	 *
+	 * @param rectangleCoordinates The RectangleCoordinates object
 	 */
-	public void quadTo(double x1, double y1, double x2, double y2) {
+	public void quadTo(RectangleCoordinates rectangleCoordinates) {
 		checkMoveTo(); // check if prev command was moveto
-		path.quadTo(x1, y1, x2, y2);
+		path.quadTo(rectangleCoordinates.getX1(), rectangleCoordinates.getY1(), rectangleCoordinates.getX2(), rectangleCoordinates.getY2());
 
 		makeRoom(4);
 		types[numSeg++] = PathIterator.SEG_QUADTO;
-		values[numVals++] = x1;
-		values[numVals++] = y1;
-		cx = values[numVals++] = x2;
-		cy = values[numVals++] = y2;
+		values[numVals++] = rectangleCoordinates.getX1();
+		values[numVals++] = rectangleCoordinates.getY1();
+		cx = values[numVals++] = rectangleCoordinates.getX2();
+		cy = values[numVals++] = rectangleCoordinates.getY2();
 	}
 
 	/**
 	 * Delegates to the enclosed <code>GeneralPath</code>.
+	 *
+	 * @param rectangleCoordinates The RectangleCoordinates object
 	 */
-	public void curveTo(double x1, double y1, double x2, double y2, double x3, double y3) {
+	public void curveTo(double x3, double y3, RectangleCoordinates rectangleCoordinates) {
 		checkMoveTo(); // check if prev command was moveto
-		path.curveTo(x1, y1, x2, y2, x3, y3);
+		path.curveTo(rectangleCoordinates.getX1(), rectangleCoordinates.getY1(), rectangleCoordinates.getX2(), rectangleCoordinates.getY2(), x3, y3);
 
 		makeRoom(6);
 		types[numSeg++] = PathIterator.SEG_CUBICTO;
-		values[numVals++] = x1;
-		values[numVals++] = y1;
-		values[numVals++] = x2;
-		values[numVals++] = y2;
+		values[numVals++] = rectangleCoordinates.getX1();
+		values[numVals++] = rectangleCoordinates.getY1();
+		values[numVals++] = rectangleCoordinates.getX2();
+		values[numVals++] = rectangleCoordinates.getY2();
 		cx = values[numVals++] = x3;
 		cy = values[numVals++] = y3;
 	}
@@ -361,21 +363,21 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 
 		switch (types[numSeg - 1]) {
 
-		case PathIterator.SEG_MOVETO:
-			path.moveTo(values[numVals - 2], values[numVals - 1]);
-			break;
-
-		case PathIterator.SEG_CLOSE:
-			if (numSeg == 1) {
-				return;
-			}
-			if (types[numSeg - 2] == PathIterator.SEG_MOVETO) {
+			case PathIterator.SEG_MOVETO:
 				path.moveTo(values[numVals - 2], values[numVals - 1]);
-			}
-			break;
+				break;
 
-		default:
-			break;
+			case PathIterator.SEG_CLOSE:
+				if (numSeg == 1) {
+					return;
+				}
+				if (types[numSeg - 2] == PathIterator.SEG_MOVETO) {
+					path.moveTo(values[numVals - 2], values[numVals - 1]);
+				}
+				break;
+
+			default:
+				break;
 		}
 	}
 
@@ -416,21 +418,21 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 			}
 
 			switch (type) {
-			case PathIterator.SEG_CLOSE:
-				closePath();
-				break;
-			case PathIterator.SEG_MOVETO:
-				moveTo(vals[0], vals[1]);
-				break;
-			case PathIterator.SEG_LINETO:
-				lineTo(vals[0], vals[1]);
-				break;
-			case PathIterator.SEG_QUADTO:
-				quadTo(vals[0], vals[1], vals[2], vals[3]);
-				break;
-			case PathIterator.SEG_CUBICTO:
-				curveTo(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5]);
-				break;
+				case PathIterator.SEG_CLOSE:
+					closePath();
+					break;
+				case PathIterator.SEG_MOVETO:
+					moveTo(vals[0], vals[1]);
+					break;
+				case PathIterator.SEG_LINETO:
+					lineTo(vals[0], vals[1]);
+					break;
+				case PathIterator.SEG_QUADTO:
+					quadTo(new RectangleCoordinates(vals[0], vals[1], vals[2], vals[3]));
+					break;
+				case PathIterator.SEG_CUBICTO:
+					curveTo(vals[4], vals[5], new RectangleCoordinates(vals[0], vals[1], vals[2], vals[3]));
+					break;
 			}
 		}
 	}
@@ -464,24 +466,24 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 			}
 
 			switch (type) {
-			case PathIterator.SEG_CLOSE:
-				closePath();
-				break;
-			case PathIterator.SEG_MOVETO:
-				moveTo(vals[0], vals[1]);
-				break;
-			case PathIterator.SEG_LINETO:
-				lineTo(vals[0], vals[1]);
-				break;
-			case PathIterator.SEG_QUADTO:
-				quadTo(vals[0], vals[1], vals[2], vals[3]);
-				break;
-			case PathIterator.SEG_CUBICTO:
-				curveTo(vals[0], vals[1], vals[2], vals[3], vals[4], vals[5]);
-				break;
-			case ExtendedPathIterator.SEG_ARCTO:
-				arcTo(vals[0], vals[1], vals[2], vals[3] != 0, vals[4] != 0, vals[5], vals[6]);
-				break;
+				case PathIterator.SEG_CLOSE:
+					closePath();
+					break;
+				case PathIterator.SEG_MOVETO:
+					moveTo(vals[0], vals[1]);
+					break;
+				case PathIterator.SEG_LINETO:
+					lineTo(vals[0], vals[1]);
+					break;
+				case PathIterator.SEG_QUADTO:
+					quadTo(new RectangleCoordinates(vals[0], vals[1], vals[2], vals[3]));
+					break;
+				case PathIterator.SEG_CUBICTO:
+					curveTo(vals[4], vals[5], new RectangleCoordinates(vals[0], vals[1], vals[2], vals[3]));
+					break;
+				case ExtendedPathIterator.SEG_ARCTO:
+					arcTo(vals[0], vals[1], vals[2], vals[3] != 0, vals[4] != 0, vals[5], vals[6]);
+					break;
 			}
 		}
 	}
@@ -626,36 +628,36 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 		public int currentSegment(double[] coords) {
 			final int ret = types[segNum];
 			switch (ret) {
-			case SEG_CLOSE:
-				break;
-			case SEG_MOVETO:
-			case SEG_LINETO:
-				coords[0] = values[valsIdx];
-				coords[1] = values[valsIdx + 1];
-				break;
-			case SEG_QUADTO:
-				coords[0] = values[valsIdx];
-				coords[1] = values[valsIdx + 1];
-				coords[2] = values[valsIdx + 2];
-				coords[3] = values[valsIdx + 3];
-				break;
-			case SEG_CUBICTO:
-				coords[0] = values[valsIdx];
-				coords[1] = values[valsIdx + 1];
-				coords[2] = values[valsIdx + 2];
-				coords[3] = values[valsIdx + 3];
-				coords[4] = values[valsIdx + 4];
-				coords[5] = values[valsIdx + 5];
-				break;
-			case SEG_ARCTO:
-				coords[0] = values[valsIdx];
-				coords[1] = values[valsIdx + 1];
-				coords[2] = values[valsIdx + 2];
-				coords[3] = values[valsIdx + 3];
-				coords[4] = values[valsIdx + 4];
-				coords[5] = values[valsIdx + 5];
-				coords[6] = values[valsIdx + 6];
-				break;
+				case SEG_CLOSE:
+					break;
+				case SEG_MOVETO:
+				case SEG_LINETO:
+					coords[0] = values[valsIdx];
+					coords[1] = values[valsIdx + 1];
+					break;
+				case SEG_QUADTO:
+					coords[0] = values[valsIdx];
+					coords[1] = values[valsIdx + 1];
+					coords[2] = values[valsIdx + 2];
+					coords[3] = values[valsIdx + 3];
+					break;
+				case SEG_CUBICTO:
+					coords[0] = values[valsIdx];
+					coords[1] = values[valsIdx + 1];
+					coords[2] = values[valsIdx + 2];
+					coords[3] = values[valsIdx + 3];
+					coords[4] = values[valsIdx + 4];
+					coords[5] = values[valsIdx + 5];
+					break;
+				case SEG_ARCTO:
+					coords[0] = values[valsIdx];
+					coords[1] = values[valsIdx + 1];
+					coords[2] = values[valsIdx + 2];
+					coords[3] = values[valsIdx + 3];
+					coords[4] = values[valsIdx + 4];
+					coords[5] = values[valsIdx + 5];
+					coords[6] = values[valsIdx + 6];
+					break;
 			}
 			return ret;
 		}
@@ -671,21 +673,21 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 		public void next() {
 			final int type = types[segNum++];
 			switch (type) {
-			case SEG_CLOSE:
-				break;
-			case SEG_MOVETO: // fallthrough is intended
-			case SEG_LINETO:
-				valsIdx += 2;
-				break;
-			case SEG_QUADTO:
-				valsIdx += 4;
-				break;
-			case SEG_CUBICTO:
-				valsIdx += 6;
-				break;
-			case SEG_ARCTO:
-				valsIdx += 7;
-				break;
+				case SEG_CLOSE:
+					break;
+				case SEG_MOVETO: // fallthrough is intended
+				case SEG_LINETO:
+					valsIdx += 2;
+					break;
+				case SEG_QUADTO:
+					valsIdx += 4;
+					break;
+				case SEG_CUBICTO:
+					valsIdx += 6;
+					break;
+				case SEG_ARCTO:
+					valsIdx += 7;
+					break;
 			}
 		}
 	}
@@ -721,7 +723,7 @@ public class ExtendedGeneralPath implements Shape, Cloneable {
 	 * Make sure, that the requested number of slots in vales[] are available. Must
 	 * be called even for numValues = 0, because it is also used for initialization
 	 * of those arrays.
-	 * 
+	 *
 	 * @param numValues number of requested coordinates
 	 */
 	private void makeRoom(int numValues) {

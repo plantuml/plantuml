@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,15 +30,17 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
+
 public class TileUtils {
 
-	public static Tile withMargin(Tile tile, double x1, double x2, double y1, double y2) {
-		return new TileMarged(tile, x1, x2, y1, y2);
+	public static Tile withMargin(Tile tile, RectangleCoordinates rectangleCoordinates) {
+		return new TileMarged(tile, rectangleCoordinates.getX1(), rectangleCoordinates.getX2(), rectangleCoordinates.getY1(), rectangleCoordinates.getY2());
 	}
 
 }

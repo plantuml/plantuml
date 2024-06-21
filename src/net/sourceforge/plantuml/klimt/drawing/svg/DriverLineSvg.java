@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -36,6 +36,7 @@ package net.sourceforge.plantuml.klimt.drawing.svg;
 
 import java.awt.geom.Line2D;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
@@ -46,7 +47,7 @@ import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 
 public class DriverLineSvg implements UDriver<ULine, SvgGraphics> {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
 	private final ClipContainer clipContainer;
 
@@ -83,6 +84,6 @@ public class DriverLineSvg implements UDriver<ULine, SvgGraphics> {
 			svg.setStrokeColor(color.toSvg(mapper));
 		}
 		svg.setStrokeWidth(param.getStroke().getThickness(), param.getStroke().getDasharraySvg());
-		svg.svgLine(x, y, x2, y2, shape.getDeltaShadow());
+		svg.svgLine(shape.getDeltaShadow(), new RectangleCoordinates(x, y, x2, y2));
 	}
 }

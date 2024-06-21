@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.klimt.drawing.visio;
@@ -38,16 +38,15 @@ package net.sourceforge.plantuml.klimt.drawing.visio;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
+
 public class VisioLine implements VisioShape {
 
 	private final int id;
-	private final double x1;
-	private final double y1;
-	private final double x2;
-	private final double y2;
+	private RectangleCoordinates rectangleCoordinates = new RectangleCoordinates(0.0, 0.0, 0.0, 0.0);
 
-	public static VisioLine createInches(int id, double x1, double y1, double x2, double y2) {
-		return new VisioLine(id, toInches(x1), toInches(y1), toInches(x2), toInches(y2));
+	public static VisioLine createInches(int id, RectangleCoordinates rectangleCoordinates) {
+		return new VisioLine(id, toInches(rectangleCoordinates.getX1()), toInches(rectangleCoordinates.getY1()), toInches(rectangleCoordinates.getX2()), toInches(rectangleCoordinates.getY2()));
 	}
 
 	private VisioLine(int id, double x1, double y1, double x2, double y2) {
@@ -55,14 +54,14 @@ public class VisioLine implements VisioShape {
 			throw new IllegalArgumentException();
 		}
 		this.id = id;
-		this.x1 = x1;
-		this.y1 = y1;
-		this.x2 = x2;
-		this.y2 = y2;
+		this.rectangleCoordinates.setX1(x1);
+		this.rectangleCoordinates.setY1(y1);
+		this.rectangleCoordinates.setX2(x2);
+		this.rectangleCoordinates.setY2(y2);
 	}
 
 	public VisioShape yReverse(double maxY) {
-		return new VisioLine(id, x1, maxY - y1, x2, maxY - y2);
+		return new VisioLine(id, rectangleCoordinates.getX1(), maxY - rectangleCoordinates.getY1(), rectangleCoordinates.getX2(), maxY - rectangleCoordinates.getY2());
 	}
 
 	private static double toInches(double val) {
@@ -72,10 +71,10 @@ public class VisioLine implements VisioShape {
 	public void print(OutputStream os) throws IOException {
 		out(os, "<Shape ID='" + id + "' Type='Shape' LineStyle='3' FillStyle='3' TextStyle='3'>");
 		out(os, "<XForm>");
-		final double ddx = x2 - x1;
-		final double ddy = y2 - y1;
-		out(os, "<PinX F='(BeginX+EndX)/2'>" + ((x1 + x2) / 2) + "</PinX>");
-		out(os, "<PinY F='(BeginY+EndY)/2'>" + ((y1 + y2) / 2) + "</PinY>");
+		final double ddx = rectangleCoordinates.getX2() - rectangleCoordinates.getX1();
+		final double ddy = rectangleCoordinates.getY2() - rectangleCoordinates.getY1();
+		out(os, "<PinX F='(BeginX+EndX)/2'>" + ((rectangleCoordinates.getX1() + rectangleCoordinates.getX2()) / 2) + "</PinX>");
+		out(os, "<PinY F='(BeginY+EndY)/2'>" + ((rectangleCoordinates.getY1() + rectangleCoordinates.getY2()) / 2) + "</PinY>");
 		final double len = Math.sqrt(ddx * ddx + ddy * ddy);
 		out(os, "<Width F='Sqrt((EndX-BeginX)^2+(EndY-BeginY)^2)'>" + len + "</Width>");
 		out(os, "<Height>0</Height>");
@@ -88,10 +87,10 @@ public class VisioLine implements VisioShape {
 		out(os, "<ResizeMode>0</ResizeMode>");
 		out(os, "</XForm>");
 		out(os, "<XForm1D>");
-		out(os, "<BeginX>" + x1 + "</BeginX>");
-		out(os, "<BeginY>" + y1 + "</BeginY>");
-		out(os, "<EndX>" + x2 + "</EndX>");
-		out(os, "<EndY>" + y2 + "</EndY>");
+		out(os, "<BeginX>" + rectangleCoordinates.getX1() + "</BeginX>");
+		out(os, "<BeginY>" + rectangleCoordinates.getY1() + "</BeginY>");
+		out(os, "<EndX>" + rectangleCoordinates.getX2() + "</EndX>");
+		out(os, "<EndY>" + rectangleCoordinates.getY2() + "</EndY>");
 		out(os, "</XForm1D>");
 		out(os, "<Geom IX='0'>");
 		out(os, "<NoFill>1</NoFill>");

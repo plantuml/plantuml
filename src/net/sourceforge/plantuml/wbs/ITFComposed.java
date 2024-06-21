@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -123,9 +124,9 @@ class ITFComposed extends WBSTextBlock implements ITF {
 		final XDimension2D mainDim = main.calculateDimension(stringBounder);
 		final double mainWidth = mainDim.getWidth();
 		final double height = mainDim.getHeight() + Math.max(getCollHeight(stringBounder, left, marginBottom),
-				getCollHeight(stringBounder, right, marginBottom));
+						getCollHeight(stringBounder, right, marginBottom));
 		final double width = Math.max(mainWidth / 2, delta1x + getCollWidth(stringBounder, left))
-				+ Math.max(mainWidth / 2, delta1x + getCollWidth(stringBounder, right));
+						+ Math.max(mainWidth / 2, delta1x + getCollWidth(stringBounder, right));
 		return new XDimension2D(width, height);
 	}
 
@@ -148,7 +149,11 @@ class ITFComposed extends WBSTextBlock implements ITF {
 			y += marginBottom;
 			final XDimension2D childDim = child.calculateDimension(stringBounder);
 			lastY1 = y + child.getF2(stringBounder).getY();
-			drawLine(ug, x - childDim.getWidth() - delta1x + child.getF2(stringBounder).getX(), lastY1, x, lastY1);
+			drawLine(ug, new RectangleCoordinates(
+							x - childDim.getWidth() - delta1x + child.getF2(stringBounder).getX(),
+							lastY1,
+							x,
+							lastY1));
 			child.drawU(ug.apply(new UTranslate(x - childDim.getWidth() - delta1x, y)));
 			y += childDim.getHeight();
 		}
@@ -159,12 +164,12 @@ class ITFComposed extends WBSTextBlock implements ITF {
 			y += marginBottom;
 			final XDimension2D childDim = child.calculateDimension(stringBounder);
 			lastY2 = y + child.getF1(stringBounder).getY();
-			drawLine(ug, x, lastY2, x + delta1x + child.getF1(stringBounder).getX(), lastY2);
+			drawLine(ug, new RectangleCoordinates(x, lastY2, x + delta1x + child.getF1(stringBounder).getX(), lastY2));
 			child.drawU(ug.apply(new UTranslate(x + delta1x, y)));
 			y += childDim.getHeight();
 
 		}
-		drawLine(ug, x, mainDim.getHeight(), x, Math.max(lastY1, lastY2));
+		drawLine(ug, new RectangleCoordinates(x, mainDim.getHeight(), x, Math.max(lastY1, lastY2)));
 	}
 
 	final private double getCollWidth(StringBounder stringBounder, Collection<? extends TextBlock> all) {
@@ -176,7 +181,7 @@ class ITFComposed extends WBSTextBlock implements ITF {
 	}
 
 	final private double getCollHeight(StringBounder stringBounder, Collection<? extends TextBlock> all,
-			double deltay) {
+					double deltay) {
 		double result = 0;
 		for (TextBlock child : all)
 			result += deltay + child.calculateDimension(stringBounder).getHeight();

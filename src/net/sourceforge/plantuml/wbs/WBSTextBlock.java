@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.wbs;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vertical.FtileBoxOld;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
@@ -73,8 +74,8 @@ abstract class WBSTextBlock extends AbstractTextBlock {
 		return getDefaultStyleDefinitionArrow().getMergedStyle(styleBuilder);
 	}
 
-	final protected void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {
-		drawLine(ug, new XPoint2D(Math.min(x1, x2), y1), new XPoint2D(Math.max(x1, x2), y2));
+	final protected void drawLine(UGraphic ug, RectangleCoordinates rectangleCoordinates) {
+		drawLine(ug, new XPoint2D(Math.min(rectangleCoordinates.getX1(), rectangleCoordinates.getX2()), rectangleCoordinates.getY1()), new XPoint2D(Math.max(rectangleCoordinates.getX1(), rectangleCoordinates.getX2()), rectangleCoordinates.getY2()));
 	}
 
 	final public StyleSignatureBasic getDefaultStyleDefinitionArrow() {
@@ -88,7 +89,7 @@ abstract class WBSTextBlock extends AbstractTextBlock {
 			return FtileBoxOld.createWbs(style, idea.withBackColor(skinParam), label);
 
 		final TextBlock text = label.create0(style.getFontConfiguration(skinParam.getIHtmlColorSet()),
-				style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);
+						style.getHorizontalAlignment(), skinParam, style.wrapWidth(), CreoleMode.FULL, null, null);
 		return TextBlockUtils.withMargin(text, 0, 3, 1, 1);
 	}
 

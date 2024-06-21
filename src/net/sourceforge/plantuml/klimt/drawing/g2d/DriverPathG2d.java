@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,14 +30,14 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.klimt.drawing.g2d;
 
-import java.awt.GradientPaint;
-import java.awt.Graphics2D;
+import java.awt.*;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -74,7 +74,11 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver<UPath, G
 				p.lineTo(x + coord[0], y + coord[1]);
 				minMax = minMax.addPoint(x + coord[0], y + coord[1]);
 			} else if (type == USegmentType.SEG_CUBICTO) {
-				p.curveTo(x + coord[0], y + coord[1], x + coord[2], y + coord[3], x + coord[4], y + coord[5]);
+				p.curveTo(x + coord[4], y + coord[5], new RectangleCoordinates(
+								x + coord[0],
+								y + coord[1],
+								x + coord[2],
+								y + coord[3]));
 				minMax = minMax.addPoint(x + coord[4], y + coord[5]);
 			} else if (type == USegmentType.SEG_ARCTO) {
 				p.arcTo(coord[0], coord[1], coord[2], coord[3] != 0, coord[4] != 0, x + coord[5], y + coord[6]);
@@ -103,20 +107,20 @@ public class DriverPathG2d extends DriverShadowedG2d implements UDriver<UPath, G
 			final GradientPaint paint;
 			if (policy == '|') {
 				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY() / 2,
-						gr.getColor1().toColor(mapper), (float) minMax.getMaxX(), (float) minMax.getMaxY() / 2,
-						gr.getColor2().toColor(mapper));
+								gr.getColor1().toColor(mapper), (float) minMax.getMaxX(), (float) minMax.getMaxY() / 2,
+								gr.getColor2().toColor(mapper));
 			} else if (policy == '\\') {
 				paint = new GradientPaint((float) minMax.getMinX(), (float) minMax.getMaxY(),
-						gr.getColor1().toColor(mapper), (float) minMax.getMaxX(), (float) minMax.getMinY(),
-						gr.getColor2().toColor(mapper));
+								gr.getColor1().toColor(mapper), (float) minMax.getMaxX(), (float) minMax.getMinY(),
+								gr.getColor2().toColor(mapper));
 			} else if (policy == '-') {
 				paint = new GradientPaint((float) minMax.getMaxX() / 2, (float) minMax.getMinY(),
-						gr.getColor1().toColor(mapper), (float) minMax.getMaxX() / 2, (float) minMax.getMaxY(),
-						gr.getColor2().toColor(mapper));
+								gr.getColor1().toColor(mapper), (float) minMax.getMaxX() / 2, (float) minMax.getMaxY(),
+								gr.getColor2().toColor(mapper));
 			} else {
 				// for /
 				paint = new GradientPaint((float) x, (float) y, gr.getColor1().toColor(mapper),
-						(float) minMax.getMaxX(), (float) minMax.getMaxY(), gr.getColor2().toColor(mapper));
+								(float) minMax.getMaxX(), (float) minMax.getMaxY(), gr.getColor2().toColor(mapper));
 			}
 			g2d.setPaint(paint);
 			g2d.fill(p);

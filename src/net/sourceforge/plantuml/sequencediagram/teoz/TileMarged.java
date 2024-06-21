@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,11 +30,12 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
@@ -44,27 +45,24 @@ import net.sourceforge.plantuml.sequencediagram.Event;
 public class TileMarged extends AbstractTile implements Tile {
 
 	private final Tile tile;
-	private final double x1;
-	private final double x2;
-	private final double y1;
-	private final double y2;
+	private RectangleCoordinates rectangleCoordinates = new RectangleCoordinates(0.0, 0.0, 0.0, 0.0);
 
 	public TileMarged(Tile tile, double x1, double x2, double y1, double y2) {
 		super(((AbstractTile) tile).getStringBounder());
 		this.tile = tile;
-		this.x1 = x1;
-		this.x2 = x2;
-		this.y1 = y1;
-		this.y2 = y2;
+		this.rectangleCoordinates.setX1(x1);
+		this.rectangleCoordinates.setX2(x2);
+		this.rectangleCoordinates.setY1(y1);
+		this.rectangleCoordinates.setY2(y2);
 	}
 
 	public void drawU(UGraphic ug) {
-		((UDrawable) tile).drawU(ug.apply(new UTranslate(x1, y1)));
+		((UDrawable) tile).drawU(ug.apply(new UTranslate(rectangleCoordinates.getX1(), rectangleCoordinates.getY1())));
 
 	}
 
 	public double getPreferredHeight() {
-		return tile.getPreferredHeight() + y1 + y2;
+		return tile.getPreferredHeight() + rectangleCoordinates.getY1() + rectangleCoordinates.getY2();
 	}
 
 	public void addConstraints() {
@@ -76,7 +74,7 @@ public class TileMarged extends AbstractTile implements Tile {
 	}
 
 	public Real getMaxX() {
-		return tile.getMaxX().addFixed(x1 + x2);
+		return tile.getMaxX().addFixed(rectangleCoordinates.getX1() + rectangleCoordinates.getX2());
 	}
 
 	public Event getEvent() {

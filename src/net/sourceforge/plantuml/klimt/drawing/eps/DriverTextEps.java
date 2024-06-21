@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -34,13 +34,13 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.eps;
 
-import java.awt.Color;
-import java.awt.Shape;
+import java.awt.*;
 import java.awt.font.TextLayout;
 import java.awt.geom.PathIterator;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UParam;
@@ -106,7 +106,7 @@ public class DriverTextEps implements UDriver<UText, EpsGraphics> {
 				dim = getMinMax(x, y, getOutline(textLayout).getPathIterator(null));
 
 			eps.setStrokeWidth(1.1, 0, 0);
-			eps.epsLine(x, y + 1.5, x + dim.getWidth(), y + 1.5);
+			eps.epsLine(new RectangleCoordinates(x, y + 1.5, x + dim.getWidth(), y + 1.5));
 			eps.setStrokeWidth(1, 0, 0);
 		}
 		if (fontConfiguration.containsStyle(FontStyle.WAVE)) {
@@ -120,8 +120,8 @@ public class DriverTextEps implements UDriver<UText, EpsGraphics> {
 
 			eps.setStrokeWidth(1.1, 0, 0);
 			for (int i = (int) x; i < x + dim.getWidth() - 5; i += 6) {
-				eps.epsLine(i, ypos - 0, i + 3, ypos + 1);
-				eps.epsLine(i + 3, ypos + 1, i + 6, ypos - 0);
+				eps.epsLine(new RectangleCoordinates(i, ypos - 0, i + 3, ypos + 1));
+				eps.epsLine(new RectangleCoordinates(i + 3, ypos + 1, i + 6, ypos - 0));
 			}
 			eps.setStrokeWidth(1, 0, 0);
 		}
@@ -136,7 +136,7 @@ public class DriverTextEps implements UDriver<UText, EpsGraphics> {
 			// final FontMetrics fm = font.getFontMetrics();
 			final double ypos = (dim.getMinY() + dim.getMaxY() * 2) / 3;
 			eps.setStrokeWidth(1.3, 0, 0);
-			eps.epsLine(x, ypos, x + dim.getWidth(), ypos);
+			eps.epsLine(new RectangleCoordinates(x, ypos, x + dim.getWidth(), ypos));
 			eps.setStrokeWidth(1, 0, 0);
 		}
 
@@ -189,9 +189,13 @@ public class DriverTextEps implements UDriver<UText, EpsGraphics> {
 			else if (code == PathIterator.SEG_CLOSE)
 				eps.closepath();
 			else if (code == PathIterator.SEG_CUBICTO)
-				eps.curveto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y, coord[4] + x, coord[5] + y);
+				eps.curveto(coord[4] + x, coord[5] + y, new RectangleCoordinates(
+								coord[0] + x,
+								coord[1] + y,
+								coord[2] + x,
+								coord[3] + y));
 			else if (code == PathIterator.SEG_QUADTO)
-				eps.quadto(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y);
+				eps.quadto(new RectangleCoordinates(coord[0] + x, coord[1] + y, coord[2] + x, coord[3] + y));
 			else
 				throw new UnsupportedOperationException("code=" + code);
 

@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,34 +30,32 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.klimt.geom;
 
-public class CoordinateChange {
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 
-	private final double x1;
-	private final double y1;
-	private final double x2;
-	private final double y2;
+public class CoordinateChange {
 
 	private final double vect_u_x;
 	private final double vect_u_y;
 	private final double vect_v_x;
 	private final double vect_v_y;
 	private final double len;
+	private RectangleCoordinates rectangleCoordinates = new RectangleCoordinates(0.0, 0.0, 0.0, 0.0);
 
 	public static CoordinateChange create(XPoint2D p1, XPoint2D p2) {
 		return new CoordinateChange(p1.getX(), p1.getY(), p2.getX(), p2.getY());
 	}
 
 	public CoordinateChange(double x1, double y1, double x2, double y2) {
-		this.x1 = x1;
-		this.y1 = y1;
-		this.x2 = x2;
-		this.y2 = y2;
-		this.len = XPoint2D.distance(x1, y1, x2, y2);
+		this.rectangleCoordinates.setX1(x1);
+		this.rectangleCoordinates.setY1(y1);
+		this.rectangleCoordinates.setX2(x2);
+		this.rectangleCoordinates.setY2(y2);
+		this.len = XPoint2D.distance(new RectangleCoordinates(x1, y1, x2, y2));
 		if (this.len == 0) {
 			throw new IllegalArgumentException();
 		}
@@ -73,7 +71,7 @@ public class CoordinateChange {
 	public XPoint2D getTrueCoordinate(double a, double b) {
 		final double x = a * vect_u_x + b * vect_v_x;
 		final double y = a * vect_u_y + b * vect_v_y;
-		return new XPoint2D(x1 + x, y1 + y);
+		return new XPoint2D(rectangleCoordinates.getX1() + x, rectangleCoordinates.getY1() + y);
 	}
 
 	public final double getLength() {

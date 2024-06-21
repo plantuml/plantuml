@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -31,9 +31,11 @@
  *
  * Original Author:  Arnaud Roques
  *
- * 
+ *
  */
 package net.sourceforge.plantuml.klimt.geom;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 
 public class BezierUtils {
 	static public double getEndingAngle(final XCubicCurve2D left) {
@@ -58,21 +60,25 @@ public class BezierUtils {
 	}
 
 	private static boolean isCutting(XCubicCurve2D bez, XRectangle2D shape) {
-		final boolean contains1 = shape.contains(bez.x1, bez.y1);
-		final boolean contains2 = shape.contains(bez.x2, bez.y2);
+		final boolean contains1 = shape.contains(bez.rectangleCoordinates.getX1(), bez.rectangleCoordinates.getY1());
+		final boolean contains2 = shape.contains(bez.rectangleCoordinates.getX2(), bez.rectangleCoordinates.getY2());
 		return contains1 ^ contains2;
 	}
 
 	private static void shorten(XCubicCurve2D bez, XRectangle2D shape) {
-		final boolean contains1 = shape.contains(bez.x1, bez.y1);
-		final boolean contains2 = shape.contains(bez.x2, bez.y2);
+		final boolean contains1 = shape.contains(bez.rectangleCoordinates.getX1(), bez.rectangleCoordinates.getY1());
+		final boolean contains2 = shape.contains(bez.rectangleCoordinates.getX2(), bez.rectangleCoordinates.getY2());
 		if (contains1 ^ contains2 == false)
 			throw new IllegalArgumentException();
 
 		if (contains1 == false)
-			bez.setCurve(bez.x2, bez.y2, bez.ctrlx2, bez.ctrly2, bez.ctrlx1, bez.ctrly1, bez.x1, bez.y1);
+			bez.setCurve(bez.ctrlx2, bez.ctrly2, bez.ctrlx1, bez.ctrly1, new RectangleCoordinates(
+							bez.rectangleCoordinates.getX2(),
+							bez.rectangleCoordinates.getY2(),
+							bez.rectangleCoordinates.getX1(),
+							bez.rectangleCoordinates.getY1()));
 
-		assert shape.contains(bez.x1, bez.y1) && shape.contains(bez.x2, bez.y2) == false;
+		assert shape.contains(bez.rectangleCoordinates.getX1(), bez.rectangleCoordinates.getY1()) && shape.contains(bez.rectangleCoordinates.getX2(), bez.rectangleCoordinates.getY2()) == false;
 		final XCubicCurve2D left = XCubicCurve2D.none();
 		final XCubicCurve2D right = XCubicCurve2D.none();
 		subdivide(bez, left, right, 0.5);
@@ -108,20 +114,20 @@ public class BezierUtils {
 		final double ctrly21 = ctrly2 * coef1 + centeryA * coef1;
 		final double centerxB = ctrlx12 * coef1 + ctrlx21 * coef1;
 		final double centeryB = ctrly12 * coef1 + ctrly21 * coef1;
-		left.setCurve(x1, y1, ctrlx1, ctrly1, ctrlx12, ctrly12, centerxB, centeryB);
-		right.setCurve(centerxB, centeryB, ctrlx21, ctrly21, ctrlx2, ctrly2, x2, y2);
+		left.setCurve(ctrlx1, ctrly1, ctrlx12, ctrly12, new RectangleCoordinates(x1, y1, centerxB, centeryB));
+		right.setCurve(ctrlx21, ctrly21, ctrlx2, ctrly2, new RectangleCoordinates(centerxB, centeryB, x2, y2));
 	}
 
 	static double dist(XCubicCurve2D seg) {
-		return XPoint2D.distance(seg.x1, seg.y1, seg.x2, seg.y2);
+		return XPoint2D.distance(new RectangleCoordinates(seg.rectangleCoordinates.getX1(), seg.rectangleCoordinates.getY1(), seg.rectangleCoordinates.getX2(), seg.rectangleCoordinates.getY2()));
 	}
 
 	static double dist(XLine2D seg) {
-		return XPoint2D.distance(seg.x1, seg.y1, seg.x2, seg.y2);
+		return XPoint2D.distance(new RectangleCoordinates(seg.rectangleCoordinates.getX1(), seg.rectangleCoordinates.getY1(), seg.rectangleCoordinates.getX2(), seg.rectangleCoordinates.getY2()));
 	}
 
 	static public XPoint2D middle(XLine2D seg) {
-		return new XPoint2D((seg.x1 + seg.x2) / 2, (seg.y1 + seg.y2) / 2);
+		return new XPoint2D((seg.rectangleCoordinates.getX1() + seg.rectangleCoordinates.getX2()) / 2, (seg.rectangleCoordinates.getY1() + seg.rectangleCoordinates.getY2()) / 2);
 	}
 
 	static public XPoint2D middle(XPoint2D p1, XPoint2D p2) {
@@ -129,9 +135,9 @@ public class BezierUtils {
 	}
 
 	public static XPoint2D intersect(XLine2D orig, XRectangle2D shape) {
-		XLine2D copy = new XLine2D(orig.x1, orig.y1, orig.x2, orig.y2);
-		final boolean contains1 = shape.contains(copy.x1, copy.y1);
-		final boolean contains2 = shape.contains(copy.x2, copy.y2);
+		XLine2D copy = new XLine2D(orig.rectangleCoordinates.getX1(), orig.rectangleCoordinates.getY1(), orig.rectangleCoordinates.getX2(), orig.rectangleCoordinates.getY2());
+		final boolean contains1 = shape.contains(copy.rectangleCoordinates.getX1(), copy.rectangleCoordinates.getY1());
+		final boolean contains2 = shape.contains(copy.rectangleCoordinates.getX2(), copy.rectangleCoordinates.getY2());
 		if (contains1 ^ contains2 == false) {
 			// return new XPoint2D(orig.x2, orig.y2);
 			throw new IllegalArgumentException();

@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,11 +30,12 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.decoration.symbol;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -46,42 +47,39 @@ public abstract class USymbol {
 	abstract public SName getSName();
 
 	public abstract TextBlock asSmall(TextBlock name, TextBlock label, TextBlock stereotype, Fashion symbolContext,
-			HorizontalAlignment stereoAlignment);
+					HorizontalAlignment stereoAlignment);
 
 	public abstract TextBlock asBig(TextBlock label, HorizontalAlignment labelAlignment, TextBlock stereotype,
-			double width, double height, Fashion symbolContext, HorizontalAlignment stereoAlignment);
+					double width, double height, Fashion symbolContext, HorizontalAlignment stereoAlignment);
 
 	static class Margin {
-		private final double x1;
-		private final double x2;
-		private final double y1;
-		private final double y2;
+		private RectangleCoordinates rectangleCoordinates = new RectangleCoordinates(0.0, 0.0, 0.0, 0.0);
 
 		Margin(double x1, double x2, double y1, double y2) {
-			this.x1 = x1;
-			this.x2 = x2;
-			this.y1 = y1;
-			this.y2 = y2;
+			this.rectangleCoordinates.setX1(x1);
+			this.rectangleCoordinates.setX2(x2);
+			this.rectangleCoordinates.setY1(y1);
+			this.rectangleCoordinates.setY2(y2);
 		}
 
 		double getWidth() {
-			return x1 + x2;
+			return rectangleCoordinates.getX1() + rectangleCoordinates.getX2();
 		}
 
 		double getHeight() {
-			return y1 + y2;
+			return rectangleCoordinates.getY1() + rectangleCoordinates.getY2();
 		}
 
 		public XDimension2D addDimension(XDimension2D dim) {
-			return new XDimension2D(dim.getWidth() + x1 + x2, dim.getHeight() + y1 + y2);
+			return new XDimension2D(dim.getWidth() + rectangleCoordinates.getX1() + rectangleCoordinates.getX2(), dim.getHeight() + rectangleCoordinates.getY1() + rectangleCoordinates.getY2());
 		}
 
 		public double getX1() {
-			return x1;
+			return rectangleCoordinates.getX1();
 		}
 
 		public double getY1() {
-			return y1;
+			return rectangleCoordinates.getY1();
 		}
 	}
 

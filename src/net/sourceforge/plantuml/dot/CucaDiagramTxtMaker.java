@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.dot;
@@ -135,12 +135,12 @@ public final class CucaDiagramTxtMaker {
 
 	private void drawDotPath(DotPath dotPath, BasicCharArea area, double pixelXPerChar, double pixelYPerChar) {
 		for (XCubicCurve2D bez : dotPath.getBeziers())
-			if (bez.x1 == bez.x2)
-				area.drawVLine('|', (int) (bez.x1 / pixelXPerChar), (int) (bez.y1 / pixelYPerChar),
-						(int) (bez.y2 / pixelYPerChar));
-			else if (bez.y1 == bez.y2)
-				area.drawHLine('-', (int) (bez.y1 / pixelYPerChar), (int) (bez.x1 / pixelXPerChar),
-						(int) (bez.x2 / pixelXPerChar));
+			if (bez.rectangleCoordinates.getX1() == bez.rectangleCoordinates.getX2())
+				area.drawVLine('|', (int) (bez.rectangleCoordinates.getX1() / pixelXPerChar), (int) (bez.rectangleCoordinates.getY1() / pixelYPerChar),
+						(int) (bez.rectangleCoordinates.getY2() / pixelYPerChar));
+			else if (bez.rectangleCoordinates.getY1() == bez.rectangleCoordinates.getY2())
+				area.drawHLine('-', (int) (bez.rectangleCoordinates.getY1() / pixelYPerChar), (int) (bez.rectangleCoordinates.getX1() / pixelXPerChar),
+						(int) (bez.rectangleCoordinates.getX2() / pixelXPerChar));
 
 	}
 

@@ -1,8 +1,11 @@
 package net.sourceforge.plantuml.klimt.geom;
 
 // ::comment when __HAXE__
+
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 // ::done
 
 public class XPoint2D {
@@ -59,10 +62,10 @@ public class XPoint2D {
 		return px * px + py * py;
 	}
 
-	public static double distance(double x1, double y1, double x2, double y2) {
-		x1 -= x2;
-		y1 -= y2;
-		return Math.sqrt(x1 * x1 + y1 * y1);
+	public static double distance(RectangleCoordinates rectangleCoordinates) {
+		rectangleCoordinates.setX1(rectangleCoordinates.getX1() - rectangleCoordinates.getX2());
+		rectangleCoordinates.setY1(rectangleCoordinates.getY1() - rectangleCoordinates.getY2());
+		return Math.sqrt(rectangleCoordinates.getX1() * rectangleCoordinates.getX1() + rectangleCoordinates.getY1() * rectangleCoordinates.getY1());
 	}
 
 	public double distance(double px, double py) {

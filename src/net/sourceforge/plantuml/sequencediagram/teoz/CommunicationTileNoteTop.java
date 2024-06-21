@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,11 +30,12 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.sequencediagram.teoz;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -51,7 +52,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 public class CommunicationTileNoteTop extends CommunicationTileNoteBottomTopAbstract {
 
 	public CommunicationTileNoteTop(Tile tile, AbstractMessage message, Rose skin, ISkinParam skinParam,
-			Note noteOnMessage, YGauge currentY) {
+					Note noteOnMessage, YGauge currentY) {
 		super(tile, message, skin, skinParam, noteOnMessage, currentY);
 	}
 
@@ -73,8 +74,12 @@ public class CommunicationTileNoteTop extends CommunicationTileNoteBottomTopAbst
 
 		comp.drawU(ug.apply(UTranslate.dx(xNote)), area, (Context2D) ug);
 
-		drawLine(ug, middleMsg, tile.getContactPointRelative() + dim.getHeight() + spacey, xNote + dim.getWidth() / 2,
-				dim.getHeight() - 2 * Rose.paddingY);
+		drawLine(ug, new RectangleCoordinates(
+						middleMsg,
+						tile.getContactPointRelative() + dim.getHeight() + spacey,
+						xNote + dim.getWidth() / 2,
+						dim.getHeight() - 2 * Rose.paddingY)
+		);
 
 	}
 

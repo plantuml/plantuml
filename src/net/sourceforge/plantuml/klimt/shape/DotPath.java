@@ -36,7 +36,7 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.RectangleCoordinates;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -64,19 +65,17 @@ import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 public class DotPath implements UShape, Moveable {
 
 	public static class TriPoints {
+		public RectangleCoordinates rectangleCoordinates = new RectangleCoordinates(0.0, 0.0, 0.0, 0.0);
+
 		public TriPoints(XPoint2D p1, XPoint2D p2, XPoint2D p) {
-			x1 = p1.getX();
-			y1 = p1.getY();
-			x2 = p2.getX();
-			y2 = p2.getY();
+			rectangleCoordinates.setX1(p1.getX());
+			rectangleCoordinates.setY1(p1.getY());
+			rectangleCoordinates.setX2(p2.getX());
+			rectangleCoordinates.setY2(p2.getY());
 			x = p.getX();
 			y = p.getY();
 		}
 
-		public final double x1;
-		public final double y1;
-		public final double x2;
-		public final double y2;
 		public final double x;
 		public final double y;
 
@@ -94,7 +93,7 @@ public class DotPath implements UShape, Moveable {
 	public DotPath copy() {
 		final DotPath result = new DotPath();
 		for (XCubicCurve2D c : this.beziers)
-			result.beziers.add(new XCubicCurve2D(c.x1, c.y1, c.ctrlx1, c.ctrly1, c.ctrlx2, c.ctrly2, c.x2, c.y2));
+			result.beziers.add(new XCubicCurve2D(c.rectangleCoordinates.getX1(), c.rectangleCoordinates.getY1(), c.ctrlx1, c.ctrly1, c.ctrlx2, c.ctrly2, c.rectangleCoordinates.getX2(), c.rectangleCoordinates.getY2()));
 
 		return result;
 	}
@@ -111,7 +110,7 @@ public class DotPath implements UShape, Moveable {
 	public DotPath addCurve(XPoint2D pt1, XPoint2D pt2, XPoint2D pt3, XPoint2D pt4) {
 		final List<XCubicCurve2D> beziersNew = new ArrayList<>(beziers);
 		beziersNew.add(new XCubicCurve2D(pt1.getX(), pt1.getY(), pt2.getX(), pt2.getY(), pt3.getX(), pt3.getY(),
-				pt4.getX(), pt4.getY()));
+						pt4.getX(), pt4.getY()));
 		return fromBeziers(beziersNew);
 	}
 
@@ -204,12 +203,12 @@ public class DotPath implements UShape, Moveable {
 
 	public void moveStartPoint(double dx, double dy) {
 		if (beziers.size() > 1 && Math.sqrt(dx * dx + dy * dy) >= beziers.get(0).getLength()) {
-			dx -= beziers.get(1).x1 - beziers.get(0).x1;
-			dy -= beziers.get(1).y1 - beziers.get(0).y1;
+			dx -= beziers.get(1).rectangleCoordinates.getX1() - beziers.get(0).rectangleCoordinates.getX1();
+			dy -= beziers.get(1).rectangleCoordinates.getY1() - beziers.get(0).rectangleCoordinates.getY1();
 			beziers.remove(0);
 		}
-		beziers.get(0).x1 += dx;
-		beziers.get(0).y1 += dy;
+		beziers.get(0).rectangleCoordinates.setX1(beziers.get(0).rectangleCoordinates.getX1() + dx);
+		beziers.get(0).rectangleCoordinates.setY1(beziers.get(0).rectangleCoordinates.getY1() + dy);
 		beziers.get(0).ctrlx1 += dx;
 		beziers.get(0).ctrly1 += dy;
 	}
@@ -226,8 +225,8 @@ public class DotPath implements UShape, Moveable {
 //	}
 
 	public void moveEndPoint(double dx, double dy) {
-		beziers.get(beziers.size() - 1).x2 += dx;
-		beziers.get(beziers.size() - 1).y2 += dy;
+		beziers.get(beziers.size() - 1).rectangleCoordinates.setX2(beziers.get(beziers.size() - 1).rectangleCoordinates.getX2() + dx);
+		beziers.get(beziers.size() - 1).rectangleCoordinates.setY2(beziers.get(beziers.size() - 1).rectangleCoordinates.getY2() + dy);
 		beziers.get(beziers.size() - 1).ctrlx2 += dx;
 		beziers.get(beziers.size() - 1).ctrly2 += dy;
 	}
@@ -235,8 +234,8 @@ public class DotPath implements UShape, Moveable {
 	public MinFinder getMinFinder() {
 		final MinFinder result = new MinFinder();
 		for (XCubicCurve2D c : beziers) {
-			result.manage(c.x1, c.y1);
-			result.manage(c.x2, c.y2);
+			result.manage(c.rectangleCoordinates.getX1(), c.rectangleCoordinates.getY1());
+			result.manage(c.rectangleCoordinates.getX2(), c.rectangleCoordinates.getY2());
 			result.manage(c.ctrlx1, c.ctrly1);
 			result.manage(c.ctrlx2, c.ctrly2);
 		}
@@ -246,8 +245,8 @@ public class DotPath implements UShape, Moveable {
 	public MinMax getMinMax() {
 		MinMax result = MinMax.getEmpty(false);
 		for (XCubicCurve2D c : beziers) {
-			result = result.addPoint(c.x1, c.y1);
-			result = result.addPoint(c.x2, c.y2);
+			result = result.addPoint(c.rectangleCoordinates.getX1(), c.rectangleCoordinates.getY1());
+			result = result.addPoint(c.rectangleCoordinates.getX2(), c.rectangleCoordinates.getY2());
 			result = result.addPoint(c.ctrlx1, c.ctrly1);
 			result = result.addPoint(c.ctrlx2, c.ctrly2);
 		}
@@ -257,11 +256,11 @@ public class DotPath implements UShape, Moveable {
 	public double getMinDist(XPoint2D ref) {
 		double result = Double.MAX_VALUE;
 		for (XCubicCurve2D c : beziers) {
-			final double d1 = ref.distance(c.x1, c.y1);
+			final double d1 = ref.distance(c.rectangleCoordinates.getX1(), c.rectangleCoordinates.getY1());
 			if (d1 < result)
 				result = d1;
 
-			final double d2 = ref.distance(c.x2, c.y2);
+			final double d2 = ref.distance(c.rectangleCoordinates.getX2(), c.rectangleCoordinates.getY2());
 			if (d2 < result)
 				result = d2;
 
@@ -280,13 +279,13 @@ public class DotPath implements UShape, Moveable {
 
 	public Line2D getEndTangeante() {
 		final XCubicCurve2D last = beziers.get(beziers.size() - 1);
-		double dx = last.x2 - last.ctrlx2;
-		double dy = last.y2 - last.ctrly2;
+		double dx = last.rectangleCoordinates.getX2() - last.ctrlx2;
+		double dy = last.rectangleCoordinates.getY2() - last.ctrly2;
 		if (dx == 0 && dy == 0) {
-			dx = last.x2 - last.x1;
-			dy = last.y2 - last.y1;
+			dx = last.rectangleCoordinates.getX2() - last.rectangleCoordinates.getX1();
+			dy = last.rectangleCoordinates.getY2() - last.rectangleCoordinates.getY1();
 		}
-		return new Line2D.Double(last.x2, last.y2, last.x2 + dx, last.y2 + dy);
+		return new Line2D.Double(last.rectangleCoordinates.getX2(), last.rectangleCoordinates.getY2(), last.rectangleCoordinates.getX2() + dx, last.rectangleCoordinates.getY2() + dy);
 	}
 
 	public double getEndAngle() {
@@ -303,13 +302,13 @@ public class DotPath implements UShape, Moveable {
 
 	public Line2D getStartTangeante() {
 		final XCubicCurve2D first = beziers.get(0);
-		double dx = first.ctrlx1 - first.x1;
-		double dy = first.ctrly1 - first.y1;
+		double dx = first.ctrlx1 - first.rectangleCoordinates.getX1();
+		double dy = first.ctrly1 - first.rectangleCoordinates.getY1();
 		if (dx == 0 && dy == 0) {
-			dx = first.x2 - first.x1;
-			dy = first.y2 - first.y1;
+			dx = first.rectangleCoordinates.getX2() - first.rectangleCoordinates.getX1();
+			dy = first.rectangleCoordinates.getY2() - first.rectangleCoordinates.getY1();
 		}
-		return new Line2D.Double(first.x1, first.y1, first.x1 + dx, first.y1 + dy);
+		return new Line2D.Double(first.rectangleCoordinates.getX1(), first.rectangleCoordinates.getY1(), first.rectangleCoordinates.getX1() + dx, first.rectangleCoordinates.getY1() + dy);
 	}
 
 	public DotPath addBefore(XCubicCurve2D before) {
@@ -339,8 +338,8 @@ public class DotPath implements UShape, Moveable {
 	public void draw(Graphics2D g2d, double x, double y) {
 		final GeneralPath p = new GeneralPath();
 		for (XCubicCurve2D bez : beziers) {
-			final CubicCurve2D.Double bez2 = new CubicCurve2D.Double(x + bez.x1, y + bez.y1, x + bez.ctrlx1,
-					y + bez.ctrly1, x + bez.ctrlx2, y + bez.ctrly2, x + bez.x2, y + bez.y2);
+			final CubicCurve2D.Double bez2 = new CubicCurve2D.Double(x + bez.rectangleCoordinates.getX1(), y + bez.rectangleCoordinates.getY1(), x + bez.ctrlx1,
+							y + bez.ctrly1, x + bez.ctrlx2, y + bez.ctrly2, x + bez.rectangleCoordinates.getX2(), y + bez.rectangleCoordinates.getY2());
 			p.append(bez2, true);
 		}
 		g2d.draw(p);
@@ -348,8 +347,8 @@ public class DotPath implements UShape, Moveable {
 
 	public void manageEnsureVisible(double x, double y, EnsureVisible visible) {
 		for (XCubicCurve2D bez : beziers) {
-			visible.ensureVisible(x + bez.x1, y + bez.y1);
-			visible.ensureVisible(x + bez.x2, y + bez.y2);
+			visible.ensureVisible(x + bez.rectangleCoordinates.getX1(), y + bez.rectangleCoordinates.getY1());
+			visible.ensureVisible(x + bez.rectangleCoordinates.getX2(), y + bez.rectangleCoordinates.getY2());
 		}
 
 	}
@@ -359,19 +358,19 @@ public class DotPath implements UShape, Moveable {
 		boolean start = true;
 		for (XCubicCurve2D bez : beziers) {
 			if (start) {
-				result.add(new double[] { bez.x1, bez.y1 }, USegmentType.SEG_MOVETO);
+				result.add(new double[]{bez.rectangleCoordinates.getX1(), bez.rectangleCoordinates.getY1()}, USegmentType.SEG_MOVETO);
 				start = false;
 			}
-			result.add(new double[] { bez.ctrlx1, bez.ctrly1, bez.ctrlx2, bez.ctrly2, bez.x2, bez.y2 },
-					USegmentType.SEG_CUBICTO);
+			result.add(new double[]{bez.ctrlx1, bez.ctrly1, bez.ctrlx2, bez.ctrly2, bez.rectangleCoordinates.getX2(), bez.rectangleCoordinates.getY2()},
+							USegmentType.SEG_CUBICTO);
 
 		}
 		return result;
 	}
 
 	static public String toString(XCubicCurve2D c) {
-		return "(" + c.x1 + "," + c.y1 + ") " + "(" + c.ctrlx1 + "," + c.ctrly1 + ") " + "(" + c.ctrlx2 + "," + c.ctrly2
-				+ ") " + "(" + c.x2 + "," + c.y2 + ") ";
+		return "(" + c.rectangleCoordinates.getX1() + "," + c.rectangleCoordinates.getY1() + ") " + "(" + c.ctrlx1 + "," + c.ctrly1 + ") " + "(" + c.ctrlx2 + "," + c.ctrly2
+						+ ") " + "(" + c.rectangleCoordinates.getX2() + "," + c.rectangleCoordinates.getY2() + ") ";
 
 	}
 
@@ -387,7 +386,7 @@ public class DotPath implements UShape, Moveable {
 
 	public static XCubicCurve2D reverse(XCubicCurve2D curv) {
 		return new XCubicCurve2D(curv.getX2(), curv.getY2(), curv.getCtrlX2(), curv.getCtrlY2(), curv.getCtrlX1(),
-				curv.getCtrlY1(), curv.getX1(), curv.getY1());
+						curv.getCtrlY1(), curv.getX1(), curv.getY1());
 	}
 
 	public DotPath reverse() {
@@ -404,8 +403,8 @@ public class DotPath implements UShape, Moveable {
 	public void moveSvek(double deltaX, double deltaY) {
 		for (int i = 0; i < beziers.size(); i++) {
 			final XCubicCurve2D c = beziers.get(i);
-			beziers.set(i, new XCubicCurve2D(c.x1 + deltaX, c.y1 + deltaY, c.ctrlx1 + deltaX, c.ctrly1 + deltaY,
-					c.ctrlx2 + deltaX, c.ctrly2 + deltaY, c.x2 + deltaX, c.y2 + deltaY));
+			beziers.set(i, new XCubicCurve2D(c.rectangleCoordinates.getX1() + deltaX, c.rectangleCoordinates.getY1() + deltaY, c.ctrlx1 + deltaX, c.ctrly1 + deltaY,
+							c.ctrlx2 + deltaX, c.ctrly2 + deltaY, c.rectangleCoordinates.getX2() + deltaX, c.rectangleCoordinates.getY2() + deltaY));
 		}
 
 	}
