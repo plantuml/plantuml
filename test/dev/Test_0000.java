@@ -18,16 +18,21 @@ import net.sourceforge.plantuml.preproc.Defines;
 /*
  * 
 
-https://github.com/plantuml/plantuml/issues/1077
+You can use this file to put a test you are working on.
+Here is a simple example:
 
-@startjson
-title this is a title 
-{"a": 61}
-@endjson
+@startuml
+alice->bob: this is a test
+@enduml
 
+So you can edit this file, but please do not push any modification in the "main" branch.
+Put your own tests on your own branches.
+
+However, if your test are interesting, you can add them to the "pdiff" project.
+See https://github.com/plantuml/pdiff
 
  */
-public class Test_pending {
+public class Test_0000 {
 
 	protected File getJavaFile() {
 		final String name = getClass().getName();
