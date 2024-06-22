@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.elk;
@@ -45,13 +45,13 @@ import net.sourceforge.plantuml.decoration.LinkType;
 
 /*
  * You can choose between real "org.eclipse.elk..." classes or proxied "net.sourceforge.plantuml.elk.proxy..."
- * 
+ *
  * Using proxied classes allows to compile PlantUML without having ELK available on the classpath.
  * Since GraphViz is the default layout engine up to now, we do not want to enforce the use of ELK just for compilation.
  * (for people not using maven)
- * 
+ *
  * If you are debugging, you should probably switch to "org.eclipse.elk..." classes
- * 
+ *
  */
 
 /*
@@ -80,6 +80,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
@@ -114,8 +115,10 @@ public class ElkPath implements UDrawable {
 	}
 
 	private Style getStyle() {
-		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow);
-		return signature.getMergedStyle(diagram.getCurrentStyleBuilder());
+		final StyleSignature result = StyleSignatureBasic
+						.of(SName.root, SName.element, diagram.getUmlDiagramType().getStyleName(), SName.arrow)
+						.withTOBECHANGED(link.getStereotype());
+		return result.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 	}
 
 	public void drawU(UGraphic ug) {
@@ -123,9 +126,12 @@ public class ElkPath implements UDrawable {
 		if (link.isHidden())
 			return;
 
-		final ISkinParam skinParam = diagram.getSkinParam();
+		UGraphic ugOrig = ug;
 
-		HColor color = getStyle().value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		final ISkinParam skinParam = diagram.getSkinParam();
+		final Style styleLine = getStyle();
+
+		HColor color = styleLine.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 
 		if (this.link.getColors() != null) {
 			final HColor newColor = this.link.getColors().getColor(ColorType.ARROW, ColorType.LINE);
@@ -136,7 +142,15 @@ public class ElkPath implements UDrawable {
 		}
 
 		final LinkType linkType = link.getType();
-		UStroke stroke = linkType.getStroke3(skinParam.getThickness(LineParam.arrow, null));
+		final UStroke suggestedStroke = styleLine.getStroke();
+		final UStroke defaultThickness = diagram.getSkinParam().getThickness(LineParam.arrow, null);
+
+		UStroke stroke;
+		if (suggestedStroke == null || linkType.getStyle().isNormal() == false)
+			stroke = linkType.getStroke3(defaultThickness);
+		else
+			stroke = linkType.getStroke3(suggestedStroke);
+
 		if (link.getColors() != null && link.getColors().getSpecificLineStroke() != null)
 			stroke = link.getColors().getSpecificLineStroke();
 
@@ -157,17 +171,18 @@ public class ElkPath implements UDrawable {
 		if (extremityFactory1 != null) {
 			final double x = sections.get(0).getEndX();
 			final double y = sections.get(0).getEndY();
-			extremityFactory1.drawU(ug.apply(new UTranslate(x, y)));
+			extremityFactory1.drawU(ug.apply(stroke.onlyThickness()).apply(new UTranslate(x, y)));
 		}
 
 		if (extremityFactory2 != null) {
 			final double x = sections.get(0).getStartX();
 			final double y = sections.get(0).getStartY();
-			extremityFactory2.drawU(ug.apply(new UTranslate(x, y)));
+			extremityFactory2.drawU(ug.apply(stroke.onlyThickness()).apply(new UTranslate(x, y)));
 		}
 
-		drawLabels(ug);
-
+		// ugOrig..remove thickness and line stroke (e.g. if arrow text is drawn with table)
+		// correct text color is missing
+		drawLabels(ugOrig);
 	}
 
 	private UDrawable getDecors(LinkDecor decors, double angle, HColor backColor) {
