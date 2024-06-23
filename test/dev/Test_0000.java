@@ -22,7 +22,27 @@ You can use this file to put a test you are working on.
 Here is a simple example:
 
 @startuml
-alice->bob: this is a test
+!pragma layout elk
+ 
+cloud F
+actor G
+node H {
+    package A <<program>> {
+        component B <<lib>>
+    }
+
+    package C <<program>>
+
+    package D <<program>> {
+        component E <<lib>>
+    }
+}
+
+A -[bold,#green]- "2 (bla)" F
+F -[bold,#green]- "3 (bla ok)" A 
+G -[bold,#green]- C
+A "4 (argh)" -[bold,#red]- C
+E  -[bold,#blue]- "1 (url)" A
 @enduml
 
 So you can edit this file, but please do not push any modification in the "main" branch.
