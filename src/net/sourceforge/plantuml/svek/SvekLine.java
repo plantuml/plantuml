@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArrow;
 import net.sourceforge.plantuml.abel.LinkStrategy;
 import net.sourceforge.plantuml.abel.NoteLinkStrategy;
+import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.cucadiagram.EntityPort;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkMiddleDecor;
@@ -110,6 +111,7 @@ import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.utils.Position;
 
+@DuplicateCode(reference = "SvekLine, CucaDiagramFileMakerElk, CucaDiagramFileMakerSmetana")
 public class SvekLine implements Moveable, Hideable, GuideLine {
 
 	private static final XDimension2D CONSTRAINT_SPOT = new XDimension2D(10, 10);

@@ -68,12 +68,15 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.abel.LinkArrow;
+import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.eggs.QuoteUtils;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -88,9 +91,15 @@ import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.skin.AlignmentParam;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.skin.VisibilityModifier;
+import net.sourceforge.plantuml.skin.rose.Rose;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
@@ -110,6 +119,7 @@ import smetana.core.JUtils;
 import smetana.core.Macro;
 import smetana.core.debug.SmetanaDebug;
 
+@DuplicateCode(reference = "SvekLine, CucaDiagramFileMakerElk, CucaDiagramFileMakerSmetana")
 public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 	// ::remove folder when __HAXE__
 
@@ -520,14 +530,82 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 	}
 
+	// Duplication from SvekLine
+	final public StyleSignature getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
+		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow);
+		if (stereotype != null)
+			result = result.withTOBECHANGED(stereotype);
+
+		return result;
+	}
+
+	private FontConfiguration getFontForLink(Link link, final ISkinParam skinParam) {
+		final SName styleName = skinParam.getUmlDiagramType().getStyleName();
+		
+		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype(), styleName).getMergedStyle(link.getStyleBuilder());
+		return style.getFontConfiguration(skinParam.getIHtmlColorSet());
+	}
+
+	private HorizontalAlignment getMessageTextAlignment(UmlDiagramType umlDiagramType, ISkinParam skinParam) {
+		if (umlDiagramType == UmlDiagramType.STATE)
+			return skinParam.getHorizontalAlignment(AlignmentParam.stateMessageAlignment, null, false, null);
+
+		return skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER);
+	}
+
+	private TextBlock addVisibilityModifier(TextBlock block, Link link, ISkinParam skinParam) {
+		final VisibilityModifier visibilityModifier = link.getVisibilityModifier();
+		if (visibilityModifier != null) {
+			final Rose rose = new Rose();
+			final HColor fore = rose.getHtmlColor(skinParam, visibilityModifier.getForeground());
+			TextBlock visibility = visibilityModifier.getUBlock(skinParam.classAttributeIconSize(), fore, null, false);
+			visibility = TextBlockUtils.withMargin(visibility, 0, 1, 2, 0);
+			block = TextBlockUtils.mergeLR(visibility, block, VerticalAlignment.CENTER);
+		}
+		final double marginLabel = 1; // startUid.equalsId(endUid) ? 6 : 1;
+		return TextBlockUtils.withMargin(block, marginLabel, marginLabel);
+	}
+
+	private LinkArrow getLinkArrow(Link link) {
+		return link.getLinkArrow();
+	}
+
 	private TextBlock getLabel(Link link) {
 		ISkinParam skinParam = diagram.getSkinParam();
 		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;
-		final Style style = getStyle();
 
-		final FontConfiguration labelFont = style.getFontConfiguration(skinParam.getIHtmlColorSet());
-		TextBlock labelOnly = link.getLabel().create(labelFont,
-				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
+		// final FontConfiguration labelFont =
+		// style.getFontConfiguration(skinParam.getIHtmlColorSet());
+//		TextBlock labelOnly = link.getLabel().create(labelFont,
+//				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
+
+		final UmlDiagramType type = skinParam.getUmlDiagramType();
+		final FontConfiguration font = getFontForLink(link, skinParam);
+
+		TextBlock labelOnly;
+		// toto2
+		if (Display.isNull(link.getLabel())) {
+			labelOnly = TextBlockUtils.EMPTY_TEXT_BLOCK;
+			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL) {
+				// labelOnly = StringWithArrow.addMagicArrow(labelOnly, this, font);
+			}
+
+		} else {
+			final HorizontalAlignment alignment = getMessageTextAlignment(type, skinParam);
+			final boolean hasSeveralGuideLines = link.getLabel().hasSeveralGuideLines();
+			final TextBlock block;
+			// if (hasSeveralGuideLines)
+				// block = StringWithArrow.addSeveralMagicArrows(link.getLabel(), this, font, alignment, skinParam);
+			// else
+				block = link.getLabel().create0(font, alignment, skinParam, skinParam.maxMessageSize(),
+						CreoleMode.SIMPLE_LINE, null, null);
+
+			labelOnly = addVisibilityModifier(block, link, skinParam);
+			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL && hasSeveralGuideLines == false) {
+				// labelOnly = StringWithArrow.addMagicArrow(labelOnly, this, font);
+			}
+
+		}
 
 		final CucaNote note = link.getNote();
 		if (note == null) {
