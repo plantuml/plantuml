@@ -25,7 +25,7 @@ jobs:
               body: welcomeMessage
             })
       - uses: peter-evans/close-issue@v3
-      - uses: actions/add-to-project@v1.0.1
+      - uses: actions/add-to-project@v1.0.2
         with:
           project-url: https://github.com/orgs/plantuml/projects/4
           github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
