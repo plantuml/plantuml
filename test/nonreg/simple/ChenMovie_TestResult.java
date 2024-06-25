@@ -5,7 +5,7 @@ public class ChenMovie_TestResult {
 /*
 """
 DPI: 96
-dimension: [ 1357.2949 ; 320.0000 ]
+dimension: [ 1361.2949 ; 320.0000 ]
 scaleFactor: 1.0000
 seed: 1893551533522493087
 svgLinkTarget: _top
@@ -31,8 +31,8 @@ TEXT:
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 654.5000 ; 209.0000 ]
-  pt2: [ 773.7119 ; 237.6424 ]
+  pt1: [ 656.5000 ; 209.0000 ]
+  pt2: [ 775.7119 ; 237.6424 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-0.5
@@ -42,7 +42,7 @@ ELLIPSE:
 
 TEXT:
   text: Number
-  position: [ 669.6174 ; 225.8889 ]
+  position: [ 671.6174 ; 225.8889 ]
   orientation: 0
   font: SansSerif.plain/14 [UNDERLINE]
   color: ff000000
@@ -157,8 +157,8 @@ TEXT:
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 917.0000 ; 281.0000 ]
-  pt2: [ 1049.4781 ; 315.0000 ]
+  pt1: [ 920.0000 ; 281.0000 ]
+  pt2: [ 1052.4781 ; 315.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.5
@@ -168,15 +168,15 @@ RECTANGLE:
 
 TEXT:
   text: CUSTOMER
-  position: [ 927.0000 ; 301.8889 ]
+  position: [ 930.0000 ; 301.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 1091.5000 ; 209.0000 ]
-  pt2: [ 1210.7119 ; 237.6424 ]
+  pt1: [ 1095.5000 ; 209.0000 ]
+  pt2: [ 1214.7119 ; 237.6424 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-0.5
@@ -186,15 +186,15 @@ ELLIPSE:
 
 TEXT:
   text: Number
-  position: [ 1106.6174 ; 225.8889 ]
+  position: [ 1110.6174 ; 225.8889 ]
   orientation: 0
   font: SansSerif.plain/14 [UNDERLINE]
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 791.5000 ; 209.5000 ]
-  pt2: [ 906.1275 ; 237.2255 ]
+  pt1: [ 793.5000 ; 209.5000 ]
+  pt2: [ 908.1275 ; 237.2255 ]
   start: 0.0
   extend: 0.0
   stroke: 10.0-10.0-0.5
@@ -204,15 +204,15 @@ ELLIPSE:
 
 TEXT:
   text: Bonus
-  position: [ 807.2808 ; 226.3889 ]
+  position: [ 809.2808 ; 226.3889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 973.0000 ; 210.5000 ]
-  pt2: [ 1073.4750 ; 236.2990 ]
+  pt1: [ 977.0000 ; 210.5000 ]
+  pt2: [ 1077.4750 ; 236.2990 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-0.5
@@ -221,8 +221,8 @@ ELLIPSE:
   backcolor: fff1f1f1
 
 ELLIPSE:
-  pt1: [ 976.0000 ; 213.5000 ]
-  pt2: [ 1070.4750 ; 233.2990 ]
+  pt1: [ 980.0000 ; 213.5000 ]
+  pt2: [ 1074.4750 ; 233.2990 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-0.5
@@ -232,15 +232,15 @@ ELLIPSE:
 
 TEXT:
   text: Name
-  position: [ 989.8355 ; 227.3889 ]
+  position: [ 993.8355 ; 227.3889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 RECTANGLE:
-  pt1: [ 1274.0000 ; 281.0000 ]
-  pt2: [ 1352.2949 ; 315.0000 ]
+  pt1: [ 1278.0000 ; 281.0000 ]
+  pt2: [ 1356.2949 ; 315.0000 ]
   xCorner: 0
   yCorner: 0
   stroke: 0.0-0.0-0.5
@@ -250,15 +250,15 @@ RECTANGLE:
 
 TEXT:
   text: MOVIE
-  position: [ 1284.0000 ; 301.8889 ]
+  position: [ 1288.0000 ; 301.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 1228.5000 ; 210.5000 ]
-  pt2: [ 1317.6043 ; 236.2990 ]
+  pt1: [ 1232.5000 ; 210.5000 ]
+  pt2: [ 1321.6043 ; 236.2990 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-0.5
@@ -268,7 +268,7 @@ ELLIPSE:
 
 TEXT:
   text: Code
-  position: [ 1243.6703 ; 227.3889 ]
+  position: [ 1247.6703 ; 227.3889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
@@ -276,10 +276,10 @@ TEXT:
 
 POLYGON:
   points:
-   - [ 852.5000 ; 120.3553 ]
-   - [ 943.2105 ; 75.0000 ]
-   - [ 1033.9210 ; 120.3553 ]
-   - [ 943.2105 ; 165.7105 ]
+   - [ 854.5000 ; 120.3553 ]
+   - [ 945.2105 ; 75.0000 ]
+   - [ 1035.9210 ; 120.3553 ]
+   - [ 945.2105 ; 165.7105 ]
   stroke: 0.0-0.0-0.5
   shadow: 0
   color: ff181818
@@ -287,15 +287,15 @@ POLYGON:
 
 TEXT:
   text: RENTED_TO
-  position: [ 877.6803 ; 124.2441 ]
+  position: [ 879.6803 ; 124.2441 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
   extendedColor: NULL_COLOR
 
 ELLIPSE:
-  pt1: [ 901.0000 ; 12.0000 ]
-  pt2: [ 984.5211 ; 37.7990 ]
+  pt1: [ 903.0000 ; 12.0000 ]
+  pt2: [ 986.5211 ; 37.7990 ]
   start: 0.0
   extend: 0.0
   stroke: 0.0-0.0-0.5
@@ -305,7 +305,7 @@ ELLIPSE:
 
 TEXT:
   text: Date
-  position: [ 915.3527 ; 28.8889 ]
+  position: [ 917.3527 ; 28.8889 ]
   orientation: 0
   font: SansSerif.plain/14 []
   color: ff000000
@@ -313,15 +313,15 @@ TEXT:
 
 PATH:
    - type: SEG_MOVETO
-     pt1: [ 665.3328 ; 232.0606 ]
+     pt1: [ 666.6291 ; 232.0168 ]
    - type: SEG_CUBICTO
-     pt1: [ 641.4594 ; 239.5693 ]
-     pt2: [ 611.1286 ; 248.9786 ]
+     pt1: [ 642.3658 ; 239.5121 ]
+     pt2: [ 611.5462 ; 248.9225 ]
      pt3: [ 584.0000 ; 257.0000 ]
    - type: SEG_CUBICTO
-     pt1: [ 563.3889 ; 263.0943 ]
-     pt2: [ 540.7253 ; 269.5323 ]
-     pt3: [ 520.6400 ; 275.1474 ]
+     pt1: [ 563.3752 ; 263.0479 ]
+     pt2: [ 540.7085 ; 269.4752 ]
+     pt3: [ 520.6245 ; 275.0947 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -405,11 +405,11 @@ PATH:
 
 PATH:
    - type: SEG_MOVETO
-     pt1: [ 1113.4005 ; 232.1367 ]
+     pt1: [ 1117.2124 ; 232.1367 ]
    - type: SEG_CUBICTO
-     pt1: [ 1085.2657 ; 244.2782 ]
-     pt2: [ 1044.0729 ; 262.0549 ]
-     pt3: [ 1014.3238 ; 274.8930 ]
+     pt1: [ 1088.9102 ; 244.2782 ]
+     pt2: [ 1047.4721 ; 262.0549 ]
+     pt3: [ 1017.5459 ; 274.8930 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -417,11 +417,11 @@ PATH:
 
 PATH:
    - type: SEG_MOVETO
-     pt1: [ 867.2664 ; 231.6292 ]
+     pt1: [ 869.4475 ; 231.6292 ]
    - type: SEG_CUBICTO
-     pt1: [ 889.7416 ; 243.7893 ]
-     pt2: [ 923.2277 ; 261.9068 ]
-     pt3: [ 947.2935 ; 274.9275 ]
+     pt1: [ 892.0904 ; 243.7893 ]
+     pt2: [ 925.8264 ; 261.9068 ]
+     pt3: [ 950.0718 ; 274.9275 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -429,11 +429,11 @@ PATH:
 
 PATH:
    - type: SEG_MOVETO
-     pt1: [ 1010.2145 ; 230.7986 ]
+     pt1: [ 1014.0449 ; 230.7986 ]
    - type: SEG_CUBICTO
-     pt1: [ 1003.5277 ; 242.9185 ]
-     pt2: [ 993.2737 ; 261.5039 ]
-     pt3: [ 985.9285 ; 274.8170 ]
+     pt1: [ 1007.1909 ; 242.9185 ]
+     pt2: [ 996.6806 ; 261.5039 ]
+     pt3: [ 989.1518 ; 274.8170 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -441,11 +441,11 @@ PATH:
 
 PATH:
    - type: SEG_MOVETO
-     pt1: [ 1273.7855 ; 230.7986 ]
+     pt1: [ 1277.7855 ; 230.7986 ]
    - type: SEG_CUBICTO
-     pt1: [ 1280.4723 ; 242.9185 ]
-     pt2: [ 1290.7263 ; 261.5039 ]
-     pt3: [ 1298.0715 ; 274.8170 ]
+     pt1: [ 1284.4723 ; 242.9185 ]
+     pt2: [ 1294.7263 ; 261.5039 ]
+     pt3: [ 1302.0715 ; 274.8170 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -453,11 +453,11 @@ PATH:
 
 PATH:
    - type: SEG_MOVETO
-     pt1: [ 937.0000 ; 32.2235 ]
+     pt1: [ 939.0000 ; 32.2235 ]
    - type: SEG_CUBICTO
-     pt1: [ 937.0000 ; 41.6286 ]
-     pt2: [ 937.0000 ; 55.2460 ]
-     pt3: [ 937.0000 ; 68.6542 ]
+     pt1: [ 939.0000 ; 41.6286 ]
+     pt2: [ 939.0000 ; 55.2460 ]
+     pt3: [ 939.0000 ; 68.6542 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
@@ -465,27 +465,31 @@ PATH:
 
 PATH:
    - type: SEG_MOVETO
-     pt1: [ 935.4608 ; 160.0549 ]
+     pt1: [ 937.3196 ; 160.0993 ]
    - type: SEG_CUBICTO
-     pt1: [ 935.8346 ; 183.6946 ]
-     pt2: [ 938.2163 ; 212.9522 ]
-     pt3: [ 946.0000 ; 238.0000 ]
+     pt1: [ 937.6534 ; 183.7516 ]
+     pt2: [ 940.0419 ; 213.0070 ]
+     pt3: [ 948.0000 ; 238.0000 ]
    - type: SEG_CUBICTO
-     pt1: [ 950.1123 ; 251.2335 ]
-     pt2: [ 958.0422 ; 264.6940 ]
-     pt3: [ 964.8519 ; 274.7384 ]
+     pt1: [ 952.2395 ; 251.3144 ]
+     pt2: [ 960.4252 ; 264.7736 ]
+     pt3: [ 967.4560 ; 274.7972 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: NULL_COLOR
 
 EMPTY:
-  pt1: [ 952.0000 ; 217.0000 ]
-  pt2: [ 964.3969 ; 230.0000 ]
+  pt1: [ 954.0000 ; 216.0000 ]
+  pt2: [ 968.3969 ; 231.0000 ]
+
+EMPTY:
+  pt1: [ 955.0000 ; 217.0000 ]
+  pt2: [ 967.3969 ; 230.0000 ]
 
 TEXT:
   text: 1
-  position: [ 953.0000 ; 226.5556 ]
+  position: [ 956.0000 ; 226.5556 ]
   orientation: 0
   font: SansSerif.plain/11 []
   color: ff000000
@@ -493,27 +497,31 @@ TEXT:
 
 PATH:
    - type: SEG_MOVETO
-     pt1: [ 1027.7972 ; 121.8769 ]
+     pt1: [ 1029.8108 ; 121.7652 ]
    - type: SEG_CUBICTO
-     pt1: [ 1129.4735 ; 131.1293 ]
-     pt2: [ 1284.8054 ; 152.3173 ]
-     pt3: [ 1321.0000 ; 197.0000 ]
+     pt1: [ 1132.0025 ; 130.9280 ]
+     pt2: [ 1288.5475 ; 152.0472 ]
+     pt3: [ 1325.0000 ; 197.0000 ]
    - type: SEG_CUBICTO
-     pt1: [ 1338.9667 ; 219.1802 ]
-     pt2: [ 1326.2568 ; 254.3104 ]
-     pt3: [ 1316.1265 ; 274.7586 ]
+     pt1: [ 1342.9784 ; 219.1707 ]
+     pt2: [ 1330.2643 ; 254.3043 ]
+     pt3: [ 1320.1302 ; 274.7556 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
   backcolor: NULL_COLOR
 
 EMPTY:
-  pt1: [ 1336.0000 ; 217.0000 ]
-  pt2: [ 1348.5088 ; 230.0000 ]
+  pt1: [ 1340.0000 ; 216.0000 ]
+  pt2: [ 1354.5088 ; 231.0000 ]
+
+EMPTY:
+  pt1: [ 1341.0000 ; 217.0000 ]
+  pt2: [ 1353.5088 ; 230.0000 ]
 
 TEXT:
   text: N
-  position: [ 1337.0000 ; 226.5556 ]
+  position: [ 1342.0000 ; 226.5556 ]
   orientation: 0
   font: SansSerif.plain/11 []
   color: ff000000
@@ -521,13 +529,13 @@ TEXT:
 
 PATH:
    - type: SEG_MOVETO
-     pt1: [ 846.3294 ; 120.6490 ]
+     pt1: [ 848.2078 ; 120.5027 ]
    - type: SEG_CUBICTO
-     pt1: [ 770.3065 ; 128.4455 ]
-     pt2: [ 661.2914 ; 148.0025 ]
+     pt1: [ 771.7459 ; 128.2067 ]
+     pt2: [ 661.8959 ; 147.7101 ]
      pt3: [ 579.0000 ; 197.0000 ]
    - type: SEG_CUBICTO
-     pt1: [ 558.1640 ; 209.4060 ]
+     pt1: [ 558.1565 ; 209.3935 ]
      pt2: [ 561.2682 ; 222.0525 ]
      pt3: [ 543.0000 ; 238.0000 ]
    - type: SEG_CUBICTO
@@ -540,12 +548,16 @@ PATH:
   backcolor: NULL_COLOR
 
 EMPTY:
-  pt1: [ 585.0000 ; 217.0000 ]
-  pt2: [ 645.5178 ; 230.0000 ]
+  pt1: [ 585.0000 ; 216.0000 ]
+  pt2: [ 647.5178 ; 231.0000 ]
+
+EMPTY:
+  pt1: [ 586.0000 ; 217.0000 ]
+  pt2: [ 646.5178 ; 230.0000 ]
 
 TEXT:
   text: (N,M)
-  position: [ 586.0000 ; 226.5556 ]
+  position: [ 587.0000 ; 226.5556 ]
   orientation: 0
   font: SansSerif.plain/11 []
   color: ff000000
