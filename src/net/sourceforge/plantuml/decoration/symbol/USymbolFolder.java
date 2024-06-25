@@ -148,32 +148,32 @@ public class USymbolFolder extends USymbol {
 	}
 
 	@Override
-	public TextBlock asSmall(final TextBlock name, final TextBlock label, final TextBlock stereotype,
+	public TextBlock asSmall(final TextBlock title, final TextBlock label, final TextBlock stereotype,
 			final Fashion symbolContext, final HorizontalAlignment stereoAlignment) {
-		Objects.requireNonNull(name);
+		Objects.requireNonNull(title);
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
 				final XDimension2D dim = calculateDimension(ug.getStringBounder());
 				ug = UGraphicStencil.create(ug, dim);
 				ug = symbolContext.apply(ug);
-				final XDimension2D dimName = getDimName(ug.getStringBounder());
-				drawFolder(ug, dim.getWidth(), dim.getHeight(), dimName, symbolContext.getDeltaShadow(),
+				final XDimension2D dimTitle = getDimTitle(ug.getStringBounder());
+				drawFolder(ug, dim.getWidth(), dim.getHeight(), dimTitle, symbolContext.getDeltaShadow(),
 						symbolContext.getRoundCorner());
 				final Margin margin = getMargin();
 				final TextBlock tb = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);
 				if (showTitle)
-					name.drawU(ug.apply(new UTranslate(4, 3)));
+					title.drawU(ug.apply(new UTranslate(4, 3)));
 
-				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1() + dimName.getHeight())));
+				tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1() + dimTitle.getHeight())));
 			}
 
-			private XDimension2D getDimName(StringBounder stringBounder) {
-				return showTitle ? name.calculateDimension(stringBounder) : new XDimension2D(40, 15);
+			private XDimension2D getDimTitle(StringBounder stringBounder) {
+				return showTitle ? title.calculateDimension(stringBounder) : new XDimension2D(40, 15);
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
-				final XDimension2D dimName = getDimName(stringBounder);
+				final XDimension2D dimName = getDimTitle(stringBounder);
 				final XDimension2D dimLabel = label.calculateDimension(stringBounder);
 				final XDimension2D dimStereo = stereotype.calculateDimension(stringBounder);
 				return getMargin().addDimension(dimName.mergeTB(dimStereo, dimLabel));
@@ -186,9 +186,9 @@ public class USymbolFolder extends USymbol {
 					@Override
 					public UTranslate getForceAt(StringBounder stringBounder, XPoint2D position) {
 						final XDimension2D dim = calculateDimension(stringBounder);
-						final XDimension2D dimName = getDimName(stringBounder);
-						final double wtitle = getWTitle(dim.getWidth(), dimName);
-						final double htitle = getHTitle(dimName);
+						final XDimension2D dimTitle = getDimTitle(stringBounder);
+						final double wtitle = getWTitle(dim.getWidth(), dimTitle);
+						final double htitle = getHTitle(dimTitle);
 
 						if (position.getX() >= wtitle && position.getY() >= 0 && position.getY() <= htitle)
 							return new UTranslate(0, htitle);
@@ -232,6 +232,34 @@ public class USymbolFolder extends USymbol {
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				return new XDimension2D(width, height);
+			}
+
+			@Override
+			public MagneticBorder getMagneticBorder() {
+				return new MagneticBorder() {
+
+					@Override
+					public UTranslate getForceAt(StringBounder stringBounder, XPoint2D position) {
+						final XDimension2D dim = calculateDimension(stringBounder);
+						final XDimension2D dimTitle = title.calculateDimension(stringBounder);
+						final double wtitle = getWTitle(dim.getWidth(), dimTitle);
+						final double htitle = getHTitle(dimTitle);
+
+						if (position.getX() >= wtitle && position.getY() >= 0 && position.getY() <= htitle)
+							return new UTranslate(0, htitle);
+
+						if (position.getY() <= 0 && position.getX() >= wtitle + marginTitleX3)
+							return new UTranslate(0, htitle);
+
+						if (position.getY() <= 0 && position.getX() >= wtitle - marginTitleX3) {
+							final double delta = position.getX() - (wtitle - marginTitleX3);
+							final double how = delta / (2 * marginTitleX3);
+							return new UTranslate(0, htitle * how);
+						}
+						return UTranslate.none();
+					}
+				};
+
 			}
 
 		};

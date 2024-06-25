@@ -68,6 +68,8 @@ import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorderNone;
 import net.sourceforge.plantuml.klimt.geom.Moveable;
 import net.sourceforge.plantuml.klimt.geom.RectangleArea;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -302,7 +304,7 @@ public class Cluster implements Moveable {
 			ug.draw(new UComment("cluster " + fullName));
 
 		final USymbol uSymbol = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();
-		Style style = getDefaultStyleDefinition(umlDiagramType.getStyleName(), uSymbol, group.getGroupType())
+		final Style style = getDefaultStyleDefinition(umlDiagramType.getStyleName(), uSymbol, group.getGroupType())
 				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final double shadowing = style.value(PName.Shadowing).asDouble();
 		HColor borderColor;
@@ -485,9 +487,9 @@ public class Cluster implements Moveable {
 
 	private int togetherCounter = 0;
 
-	private void printTogether(Together together, Collection<Together> otherTogethers, StringBuilder sb, List<SvekNode> nodesOrderedWithoutTop,
-			StringBounder stringBounder, Collection<SvekLine> lines, DotMode dotMode, GraphvizVersion graphvizVersion,
-			UmlDiagramType type) {
+	private void printTogether(Together together, Collection<Together> otherTogethers, StringBuilder sb,
+			List<SvekNode> nodesOrderedWithoutTop, StringBounder stringBounder, Collection<SvekLine> lines,
+			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type) {
 		sb.append("subgraph " + getClusterId() + "t" + togetherCounter + " {\n");
 		for (SvekNode node : nodesOrderedWithoutTop)
 			if (node.getTogether() == together)
@@ -496,10 +498,11 @@ public class Cluster implements Moveable {
 		for (Cluster child : children)
 			if (child.group.getTogether() == together)
 				child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);
-		
+
 		for (Together otherTogether : otherTogethers)
 			if (otherTogether.getParent() == together)
-				printTogether(otherTogether, otherTogethers, sb, nodesOrderedWithoutTop, stringBounder, lines, dotMode, graphvizVersion, type);
+				printTogether(otherTogether, otherTogethers, sb, nodesOrderedWithoutTop, stringBounder, lines, dotMode,
+						graphvizVersion, type);
 
 		sb.append("}\n");
 		togetherCounter++;
@@ -527,7 +530,8 @@ public class Cluster implements Moveable {
 
 		for (Together together : togethers)
 			if (together.getParent() == null)
-				printTogether(together, togethers, sb, nodesOrderedWithoutTop, stringBounder, lines, dotMode, graphvizVersion, type);
+				printTogether(together, togethers, sb, nodesOrderedWithoutTop, stringBounder, lines, dotMode,
+						graphvizVersion, type);
 
 		if (skinParam.useRankSame() && dotMode != DotMode.NO_LEFT_RIGHT_AND_XLABEL
 				&& graphvizVersion.ignoreHorizontalLinks() == false)
@@ -691,6 +695,40 @@ public class Cluster implements Moveable {
 
 	public XDimension2D getTitleDimension(StringBounder stringBounder) {
 		return clusterHeader.getTitle().calculateDimension(stringBounder);
+	}
+
+	public MagneticBorder getMagneticBorder() {
+
+		if (group.getUSymbol() == null)
+			return new MagneticBorderNone();
+
+		final USymbol uSymbol = group.getUSymbol();
+		PackageStyle packageStyle = group.getPackageStyle();
+		if (packageStyle == null)
+			packageStyle = skinParam.packageStyle();
+
+		final UmlDiagramType umlDiagramType = UmlDiagramType.CLASS;
+
+		final Style style = getDefaultStyleDefinition(umlDiagramType.getStyleName(), uSymbol, group.getGroupType())
+				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		final UStroke stroke = getStrokeInternal(group, style);
+
+		final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),
+				clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);
+
+		final TextBlock textBlock = decoration.getTextBlock(HColors.BLACK, HColors.BLACK, 0, 0,
+				skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null),
+				skinParam.getStereotypeAlignment(), 0);
+
+		final MagneticBorder orig = textBlock.getMagneticBorder();
+
+		return new MagneticBorder() {
+			public UTranslate getForceAt(StringBounder stringBounder, XPoint2D position) {
+				return orig.getForceAt(stringBounder,
+						position.move(-rectangleArea.getMinX(), -rectangleArea.getMinY()));
+			}
+		};
 	}
 
 	// public XPoint2D projection(double x, double y) {
