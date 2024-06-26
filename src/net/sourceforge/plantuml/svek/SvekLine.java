@@ -780,6 +780,7 @@ public class SvekLine implements Moveable, Hideable, GuideLine {
 
 	}
 
+	@DuplicateCode(reference = "ElkPath")
 	public void drawU(UGraphic ug, Set<String> ids, UStroke suggestedStroke, Rainbow rainbow) {
 		if (opale)
 			return;

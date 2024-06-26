@@ -37,8 +37,11 @@ package net.sourceforge.plantuml.elk;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
+import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
@@ -71,6 +74,8 @@ import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
+import net.sourceforge.plantuml.klimt.geom.MagneticBorderNone;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
@@ -82,11 +87,12 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
 
 public class ElkPath implements UDrawable {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private final Link link;
 	private final ElkEdge edge;
@@ -98,12 +104,21 @@ public class ElkPath implements UDrawable {
 
 	private final SName styleName;
 
+	private final Map<Entity, ElkCluster> elkClusters;
+
+	private final Map<Entity, IEntityImage> nodeImages;
+
 	private final double magicY2;
 
+	private final UTranslate translate;
+
 	public ElkPath(ICucaDiagram diagram, SName styleName, Link link, ElkEdge edge, TextBlock centerLabel,
-			TextBlock tailLabel, TextBlock headLabel, double magicY2) {
+			TextBlock tailLabel, TextBlock headLabel, double magicY2, Map<Entity, ElkCluster> elkClusters,
+			UTranslate translate, Map<Entity, IEntityImage> nodeImages) {
 		this.link = link;
 		this.edge = edge;
+		this.translate = translate;
+		this.nodeImages = nodeImages;
 
 		this.diagram = diagram;
 		this.centerLabel = centerLabel;
@@ -111,21 +126,24 @@ public class ElkPath implements UDrawable {
 		this.headLabel = headLabel;
 		this.styleName = styleName;
 		this.magicY2 = magicY2;
+		this.elkClusters = elkClusters;
 
 	}
 
 	private Style getStyle() {
 		final StyleSignature result = StyleSignatureBasic
-						.of(SName.root, SName.element, diagram.getUmlDiagramType().getStyleName(), SName.arrow)
-						.withTOBECHANGED(link.getStereotype());
+				.of(SName.root, SName.element, diagram.getUmlDiagramType().getStyleName(), SName.arrow)
+				.withTOBECHANGED(link.getStereotype());
 		return result.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 	}
 
+	@DuplicateCode(reference = "SvekLine")
 	public void drawU(UGraphic ug) {
 
 		if (link.isHidden())
 			return;
 
+		ug = ug.apply(translate);
 		UGraphic ugOrig = ug;
 
 		final ISkinParam skinParam = diagram.getSkinParam();
@@ -154,6 +172,22 @@ public class ElkPath implements UDrawable {
 		if (link.getColors() != null && link.getColors().getSpecificLineStroke() != null)
 			stroke = link.getColors().getSpecificLineStroke();
 
+		final ElkCluster elkCluster1 = elkClusters.get(link.getEntity1());
+		final ElkCluster elkCluster2 = elkClusters.get(link.getEntity2());
+		final IEntityImage elkNode1 = nodeImages.get(link.getEntity1());
+		final IEntityImage elkNode2 = nodeImages.get(link.getEntity2());
+		MagneticBorder magneticBorder1 = new MagneticBorderNone();
+		MagneticBorder magneticBorder2 = new MagneticBorderNone();
+		if (elkNode1 != null)
+			magneticBorder1 = elkNode1.getMagneticBorder();
+		else if (elkCluster1 != null)
+			magneticBorder1 = elkCluster1.getMagneticBorder(ug.getStringBounder());
+
+		if (elkNode2 != null)
+			magneticBorder2 = elkNode2.getMagneticBorder();
+		if (elkCluster2 != null)
+			magneticBorder2 = elkCluster2.getMagneticBorder(ug.getStringBounder());
+
 		ug = ug.apply(stroke).apply(color);
 
 		final List<ElkEdgeSection> sections = edge.getSections();
@@ -162,7 +196,7 @@ public class ElkPath implements UDrawable {
 			System.err.println("Maybe a 'Long hierarchical edge' " + edge.isHierarchical());
 			return;
 		} else {
-			drawSections(ug, sections);
+			drawSections(ug, sections, magneticBorder1, magneticBorder2);
 		}
 
 		final UDrawable extremityFactory1 = getDecors(link.getType().getDecor1(), Math.PI / 2, HColors.WHITE);
@@ -180,7 +214,8 @@ public class ElkPath implements UDrawable {
 			extremityFactory2.drawU(ug.apply(stroke.onlyThickness()).apply(new UTranslate(x, y)));
 		}
 
-		// ugOrig..remove thickness and line stroke (e.g. if arrow text is drawn with table)
+		// ugOrig..remove thickness and line stroke (e.g. if arrow text is drawn with
+		// table)
 		// correct text color is missing
 		drawLabels(ugOrig);
 	}
@@ -217,12 +252,20 @@ public class ElkPath implements UDrawable {
 		}
 	}
 
-	private void drawSections(UGraphic ug, final Collection<ElkEdgeSection> sections) {
+	private void drawSections(UGraphic ug, final Collection<ElkEdgeSection> sections, MagneticBorder magneticBorder1,
+			MagneticBorder magneticBorder2) {
 		for (ElkEdgeSection section : sections) {
 			final Collection<ElkBendPoint> points = section.getBendPoints();
 
 			double x1 = section.getStartX();
 			double y1 = section.getStartY();
+
+			final XPoint2D tmpStart = new XPoint2D(x1, y1);
+			final UTranslate force1 = magneticBorder1.getForceAt(ug.getStringBounder(),
+					translate.getTranslated(tmpStart));
+			final XPoint2D start = force1.getTranslated(tmpStart);
+			x1 = start.x;
+			y1 = start.y;
 
 			for (ElkBendPoint pt : points) {
 				drawLine(ug, x1, y1, pt.getX(), pt.getY());
@@ -230,7 +273,12 @@ public class ElkPath implements UDrawable {
 				y1 = pt.getY();
 			}
 
-			drawLine(ug, x1, y1, section.getEndX(), section.getEndY() + magicY2);
+			final XPoint2D tmpEnd = new XPoint2D(section.getEndX(), section.getEndY() + magicY2);
+			final UTranslate force2 = magneticBorder2.getForceAt(ug.getStringBounder(),
+					translate.getTranslated(tmpEnd));
+			final XPoint2D end = force2.getTranslated(tmpEnd);
+
+			drawLine(ug, x1, y1, end.x, end.y);
 		}
 	}
 

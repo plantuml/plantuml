@@ -115,7 +115,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		this.links = links;
 		USymbol symbol = getUSymbol(entity);
-		if (symbol == USymbols.FOLDER)
+		if (symbol == USymbols.FOLDER || symbol == USymbols.PACKAGE)
 			this.shapeType = ShapeType.FOLDER;
 		else if (symbol == USymbols.HEXAGON)
 			this.shapeType = ShapeType.HEXAGON;
@@ -201,8 +201,11 @@ public class EntityImageDescription extends AbstractEntityImage {
 	}
 
 	private USymbol getUSymbol(Entity entity) {
-		final USymbol result = entity.getUSymbol() == null ? getSkinParam().componentStyle().toUSymbol()
-				: entity.getUSymbol();
+		final USymbol result;
+		if (entity.getUSymbol() == null)
+			result = getSkinParam().componentStyle().toUSymbol();
+		else
+			result = entity.getUSymbol();
 		return Objects.requireNonNull(result);
 	}
 
