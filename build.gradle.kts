@@ -42,10 +42,12 @@ dependencies {
 		testImplementation("org.mockito:mockito-core:5.+")
 		testImplementation("org.mockito:mockito-junit-jupiter:5.+")
 	}
-	testImplementation("org.scilab.forge:jlatexmath:1.0.7")
-
-	"pdfRuntimeOnly"("org.apache.xmlgraphics:fop:2.9")
-	"pdfRuntimeOnly"("org.apache.xmlgraphics:batik-all:1.17")
+	implementation("org.scilab.forge:jlatexmath:1.0.7")
+	
+    implementation("org.eclipse.elk:org.eclipse.elk.core:0.9.1")
+    implementation("org.eclipse.elk:org.eclipse.elk.alg.layered:0.9.1")
+    implementation("org.eclipse.elk:org.eclipse.elk.alg.mrtree:0.9.1")
+    
 }
 
 repositories {
@@ -87,19 +89,26 @@ tasks.compileJava {
 }
 
 tasks.withType<Jar>().configureEach {
-	manifest {
-		attributes["Main-Class"] = "net.sourceforge.plantuml.Run"
-		attributes["Implementation-Version"] = archiveVersion
-		attributes["Build-Jdk-Spec"] = System.getProperty("java.specification.version")
-		from("manifest.txt")
-	}
-	from("skin") { into("skin") }
-	from("stdlib") { into("stdlib") }
-	from("svg") { into("svg") }
-	from("themes") { into("themes") }
-	// source sets for java and resources are on "src", only put once into the jar
-	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes["Main-Class"] = "net.sourceforge.plantuml.Run"
+        attributes["Implementation-Version"] = archiveVersion
+        attributes["Build-Jdk-Spec"] = System.getProperty("java.specification.version")
+        from("manifest.txt")
+    }
+    from("skin") { into("skin") }
+    from("stdlib") { into("stdlib") }
+    from("svg") { into("svg") }
+    from("themes") { into("themes") }
+
+    // Add dependencies to the JAR
+    val runtimeClasspath = configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) }
+    from(runtimeClasspath) {
+        exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA") // Avoid conflict on signature
+    }
+    
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
+
 
 publishing {
 	publications.create<MavenPublication>("maven") {
