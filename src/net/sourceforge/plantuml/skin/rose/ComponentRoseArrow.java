@@ -166,10 +166,10 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		final double textPos;
 		if (messagePosition == HorizontalAlignment.CENTER) {
 			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();
-			textPos = (dimensionToUse.getWidth() - textWidth) / 2;
+			textPos = (dimensionToUse.getWidth() - Math.abs(area.getTextDeltaX()) - textWidth) / 2;
 		} else if (messagePosition == HorizontalAlignment.RIGHT) {
 			final double textWidth = getTextBlock().calculateDimension(stringBounder).getWidth();
-			textPos = dimensionToUse.getWidth() - textWidth - getMarginX2()
+			textPos = dimensionToUse.getWidth() - Math.abs(area.getTextDeltaX()) - textWidth - getMarginX2()
 					- (direction2 == ArrowDirection.LEFT_TO_RIGHT_NORMAL ? getArrowDeltaX() : 0);
 		} else {
 			textPos = getMarginX1()
@@ -177,7 +177,7 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 							? getArrowDeltaX()
 							: 0);
 		}
-		getTextBlock().drawU(ug.apply(new UTranslate(textPos, yText)));
+		getTextBlock().drawU(ug.apply(new UTranslate(textPos + Math.max(0,area.getTextDeltaX()), yText)));
 	}
 
 	private void drawLine(UGraphic ug, double x1, double y1, double x2, double y2) {

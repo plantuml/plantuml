@@ -3762,7 +3762,7 @@ LINE:
 
 TEXT:
   text: [->   
-  position: [ 12.0000 ; 2896.1111 ]
+  position: [ 22.2029 ; 2896.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -3791,7 +3791,7 @@ LINE:
 
 TEXT:
   text: [->>  
-  position: [ 12.0000 ; 2923.1111 ]
+  position: [ 18.0801 ; 2923.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -3816,7 +3816,7 @@ LINE:
 
 TEXT:
   text: [-\   
-  position: [ 12.0000 ; 2950.1111 ]
+  position: [ 24.7792 ; 2950.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -3838,7 +3838,7 @@ LINE:
 
 TEXT:
   text: [-\\
-  position: [ 12.0000 ; 2977.1111 ]
+  position: [ 60.0815 ; 2977.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -3863,7 +3863,7 @@ LINE:
 
 TEXT:
   text: [-/   
-  position: [ 12.0000 ; 3004.1111 ]
+  position: [ 39.3681 ; 3004.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -3885,7 +3885,7 @@ LINE:
 
 TEXT:
   text: [-//  
-  position: [ 12.0000 ; 3031.1111 ]
+  position: [ 28.5969 ; 3031.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -3914,7 +3914,7 @@ LINE:
 
 TEXT:
   text: [->x  
-  position: [ 12.0000 ; 3058.1111 ]
+  position: [ 38.2190 ; 3058.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -3954,7 +3954,7 @@ LINE:
 
 TEXT:
   text: [x->  
-  position: [ 22.0000 ; 3085.1111 ]
+  position: [ 26.5628 ; 3085.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -3990,7 +3990,7 @@ LINE:
 
 TEXT:
   text: [o->  
-  position: [ 18.0000 ; 3112.1111 ]
+  position: [ 19.9221 ; 3112.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -4026,7 +4026,7 @@ LINE:
 
 TEXT:
   text: [->o  
-  position: [ 12.0000 ; 3139.1111 ]
+  position: [ 49.7972 ; 3139.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -4072,7 +4072,7 @@ LINE:
 
 TEXT:
   text: [o->o 
-  position: [ 18.0000 ; 3166.1111 ]
+  position: [ 53.9506 ; 3166.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -4109,7 +4109,7 @@ LINE:
 
 TEXT:
   text: [<->  
-  position: [ 22.0000 ; 3193.1111 ]
+  position: [ 43.7847 ; 3193.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -4166,7 +4166,7 @@ LINE:
 
 TEXT:
   text: [o<->o
-  position: [ 28.0000 ; 3220.1111 ]
+  position: [ 50.5086 ; 3220.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -4209,7 +4209,7 @@ LINE:
 
 TEXT:
   text: [x<->x
-  position: [ 22.0000 ; 3247.1111 ]
+  position: [ 30.4877 ; 3247.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -4248,7 +4248,7 @@ LINE:
 
 TEXT:
   text: [->>o 
-  position: [ 12.0000 ; 3274.1111 ]
+  position: [ 36.7767 ; 3274.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -4315,7 +4315,7 @@ LINE:
 
 TEXT:
   text: [-\\o
-  position: [ 12.0000 ; 3328.1111 ]
+  position: [ 55.0132 ; 3328.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -4350,7 +4350,7 @@ LINE:
 
 TEXT:
   text: [-/o  
-  position: [ 12.0000 ; 3355.1111 ]
+  position: [ 48.1693 ; 3355.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -4382,7 +4382,7 @@ LINE:
 
 TEXT:
   text: [-//o 
-  position: [ 12.0000 ; 3382.1111 ]
+  position: [ 20.2854 ; 3382.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000
@@ -4432,7 +4432,7 @@ LINE:
 
 TEXT:
   text: [x->o 
-  position: [ 22.0000 ; 3409.1111 ]
+  position: [ 46.5188 ; 3409.1111 ]
   orientation: 0
   font: Monospaced.plain/13 []
   color: ff000000

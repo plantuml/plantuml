@@ -65,7 +65,7 @@ public abstract class CommonTile implements Tile, UDrawable {
 		return stringBounder;
 	}
 
-	final public double getMiddleX() {
+	public double getMiddleX() {
 		final double max = getMaxX().getCurrentValue();
 		final double min = getMinX().getCurrentValue();
 		return (min + max) / 2;

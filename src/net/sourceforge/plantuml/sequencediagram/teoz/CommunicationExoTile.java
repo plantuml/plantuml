@@ -105,13 +105,19 @@ public class CommunicationExoTile extends AbstractTile {
 		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
 		double x1 = getPoint1Value(stringBounder);
 		double x2 = getPoint2Value(stringBounder);
+
+		final double textDeltaX = isFromLeftBorderMessage()
+																? getPoint1(stringBounder).getCurrentValue() - x1
+																: isFromRightBorderMessage()
+																		? getPoint2(stringBounder).getCurrentValue() - x2
+																		: 0;
+
 		final int level = livingSpace.getLevelAt(this, EventsHistoryMode.IGNORE_FUTURE_DEACTIVATE);
 		if (level > 0) {
 			if (message.getType().isRightBorder())
 				x1 += CommunicationTile.LIVE_DELTA_SIZE * level;
 			else
 				x2 += CommunicationTile.LIVE_DELTA_SIZE * (level - 2);
-
 		}
 
 		final ArrowConfiguration arrowConfiguration = message.getArrowConfiguration();
@@ -129,6 +135,7 @@ public class CommunicationExoTile extends AbstractTile {
 			x2 -= ComponentRoseArrow.diamCircle / 2 + 2;
 
 		final Area area = Area.create(x2 - x1, dim.getHeight());
+		area.setTextDeltaX(textDeltaX);
 		ug = ug.apply(UTranslate.dx(x1));
 		comp.drawU(ug, area, (Context2D) ug);
 	}
@@ -188,30 +195,28 @@ public class CommunicationExoTile extends AbstractTile {
 		if (message.getType().isRightBorder())
 			return livingSpace.getPosC(stringBounder);
 
-		if (isShortArrow())
-			return livingSpace.getPosC(stringBounder).addFixed(-getPreferredWidth(stringBounder));
+		return livingSpace.getPosC(stringBounder).addFixed(-getPreferredWidth(stringBounder));
+	}
 
-		return tileArguments.getXOrigin();
+	private Real getPoint2(final StringBounder stringBounder) {
+		if (message.getType().isLeftBorder())
+			return livingSpace.getPosC(stringBounder);
+
+		return getPoint1(stringBounder).addFixed(getPreferredWidth(stringBounder));
 	}
 
 	private double getPoint1Value(final StringBounder stringBounder) {
-		if (message.getType().isRightBorder())
-			return livingSpace.getPosC(stringBounder).getCurrentValue();
+		if (isFromLeftBorderMessage())
+			return tileArguments.getBorder1();
 
-		if (isShortArrow())
-			return getPoint2Value(stringBounder) - getPreferredWidth(stringBounder);
-
-		return tileArguments.getBorder1();
+		return getPoint1(stringBounder).getCurrentValue();
 	}
 
 	private double getPoint2Value(final StringBounder stringBounder) {
-		if (message.getType().isRightBorder()) {
-			if (isShortArrow())
-				return getPoint1Value(stringBounder) + getPreferredWidth(stringBounder);
-
+		if (isFromRightBorderMessage())
 			return tileArguments.getBorder2();
-		}
-		return livingSpace.getPosC(stringBounder).getCurrentValue();
+
+		return getPoint2(stringBounder).getCurrentValue();
 	}
 
 	public Real getMinX() {
@@ -219,10 +224,27 @@ public class CommunicationExoTile extends AbstractTile {
 	}
 
 	public Real getMaxX() {
-		final Component comp = getComponent(getStringBounder());
-		final XDimension2D dim = comp.getPreferredDimension(getStringBounder());
-		final double width = dim.getWidth();
-		return getPoint1(getStringBounder()).addFixed(width);
+		return getPoint2(getStringBounder());
 	}
 
+	final public double getMiddleX() {
+		if (!isFromLeftBorderMessage())
+			return super.getMiddleX();
+
+		final double min = getPoint1Value(getStringBounder());
+
+		final double max = isFromLeftBorderMessage()
+												? min + getPreferredWidth(getStringBounder())
+												: getPoint2Value(getStringBounder());
+
+		return (min + max) / 2;
+	}
+
+	public boolean isFromRightBorderMessage() {
+		return message.getType().isRightBorder() && !isShortArrow();
+	}
+
+	public boolean isFromLeftBorderMessage() {
+		return message.getType().isLeftBorder() && !isShortArrow();
+	}
 }

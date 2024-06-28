@@ -44,6 +44,7 @@ public class Area {
 	private double deltaX1;
 	private double liveDeltaSize = 0.0;
 	private int level = 0;
+	private double textDeltaX = 0.0;
 
 	@Override
 	public String toString() {
@@ -84,5 +85,13 @@ public class Area {
 
 	public double getLiveDeltaSize() {
 		return liveDeltaSize;
+	}
+
+	public double getTextDeltaX() {
+		return textDeltaX;
+	}
+
+	public void setTextDeltaX(double textDeltaX) {
+		this.textDeltaX = textDeltaX;
 	}
 }
