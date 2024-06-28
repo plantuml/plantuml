@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -159,6 +159,18 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 
 	final public List<GeneratedImage> getGeneratedImages() throws IOException {
 		Log.info("Reading file: " + file);
+		List<GeneratedImage> result = null;
+		for (FileFormat format : fileFormatOption.getAllFormats()) {
+			fileFormatOption = fileFormatOption.withFileFormat(format);
+			result = getGeneratedCurrentFormat();
+		}
+		if (result != null) {
+			return result;
+		}
+		return getGeneratedCurrentFormat();
+	}
+
+	final private List<GeneratedImage> getGeneratedCurrentFormat() throws IOException {
 
 		cpt = 0;
 		final List<GeneratedImage> result = new ArrayList<>();
