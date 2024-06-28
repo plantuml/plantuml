@@ -33,43 +33,40 @@
  *
  *
  */
-package net.sourceforge.plantuml.api;
+package net.sourceforge.plantuml.api.v2;
 
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.url.CMapData;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Optional;
 
-public class ImageDataComplex extends ImageDataAbstract {
+import net.sourceforge.plantuml.core.Diagram;
 
-	private final CMapData cmap;
-	private final String warningOrError;
+class DiagramReturnError implements DiagramReturn {
 
-	@SuppressWarnings("unused") // available publicly so retained for backwards compatibility
-	public ImageDataComplex(XDimension2D info, CMapData cmap, String warningOrError) {
-		super(info);
-		this.cmap = cmap;
-		this.warningOrError = warningOrError;
-	}
+	private final String errorMessage;
 
-	public ImageDataComplex(XDimension2D info, CMapData cmap, String warningOrError, int status) {
-		super(info);
-		this.cmap = cmap;
-		this.warningOrError = warningOrError;
-		setStatus(status);
+	DiagramReturnError(String errorMessage) {
+		this.errorMessage = errorMessage;
 	}
 
 	@Override
-	public boolean containsCMapData() {
-		return cmap != null && cmap.containsData();
+	public Diagram getDiagram() {
+		return null;
 	}
 
 	@Override
-	public String getCMapData(String nameId) {
-		return cmap.asString(nameId);
+	public String error() {
+		return errorMessage;
 	}
 
 	@Override
-	public String getWarningOrError() {
-		return warningOrError;
+	public Optional<Integer> getErrorLine() {
+		return Optional.empty();
+	}
+
+	@Override
+	public BufferedImage asImage() throws IOException {
+		throw new IOException("No diagram available: " + errorMessage);
 	}
 
 	@Override

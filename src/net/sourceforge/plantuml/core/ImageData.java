@@ -83,5 +83,7 @@ public interface ImageData {
 	public String getWarningOrError();
 
 	public int getStatus();
+	
+	public Throwable getRootCause();
 
 }

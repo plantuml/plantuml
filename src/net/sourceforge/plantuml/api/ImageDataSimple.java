@@ -40,6 +40,8 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class ImageDataSimple extends ImageDataAbstract {
 
+	private Throwable rootCause;
+
 	public ImageDataSimple(int width, int height) {
 		super(width, height);
 	}
@@ -77,6 +79,18 @@ public class ImageDataSimple extends ImageDataAbstract {
 
 	public static ImageData ok() {
 		return new ImageDataSimple();
+	}
+
+	public static ImageData error(Throwable e) {
+		final ImageDataSimple result = new ImageDataSimple();
+		result.setStatus(503);
+		result.rootCause = e;
+		return result;
+	}
+
+	@Override
+	public Throwable getRootCause() {
+		return rootCause;
 	}
 
 }

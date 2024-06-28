@@ -460,18 +460,10 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	public List<? extends CharSequence> asList() {
+		if (displayData == null)
+			return Collections.emptyList();
 		return Collections.unmodifiableList(displayData);
 	}
-
-//	public List<StringLocated> as2() {
-//		final List<StringLocated> result = new ArrayList<>();
-//		LineLocationImpl location = new LineLocationImpl("inner", null);
-//		for (CharSequence cs : displayData) {
-//			location = location.oneLineRead();
-//			result.add(new StringLocated(cs.toString(), location));
-//		}
-//		return Collections.unmodifiableList(result);
-//	}
 
 	public boolean hasUrl() {
 		final UrlBuilder urlBuilder = new UrlBuilder(null, UrlMode.ANYWHERE);

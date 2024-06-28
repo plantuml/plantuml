@@ -243,7 +243,7 @@ public abstract class AbstractPSystem implements Diagram {
 
 	@Override
 	public Display getTitleDisplay() {
-		return null;
+		return Display.NULL;
 	}
 
 	@Override

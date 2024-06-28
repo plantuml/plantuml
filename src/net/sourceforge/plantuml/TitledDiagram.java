@@ -147,7 +147,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 	@ApiStable
 	final public Display getTitleDisplay() {
 		if (title == null)
-			return null;
+			return Display.NULL;
 		return title.getDisplay();
 	}
 
