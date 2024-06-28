@@ -9,11 +9,14 @@ println("Running settings.gradle.kts")
 // println(rootProject.projectDir)
 println("Version is " + version)
 
-include("plantuml-asl")
-include("plantuml-bsd")
-include("plantuml-epl")
-include("plantuml-lgpl")
-include("plantuml-mit")
-include("plantuml-gplv2")
-
+if (isCiBuild) {
+	include("plantuml-asl")
+	include("plantuml-bsd")
+	include("plantuml-epl")
+	include("plantuml-lgpl")
+	include("plantuml-mit")
+	include("plantuml-gplv2")
+} else {
+	println("Not a CI build: only GPL will be generated")
+}
 
