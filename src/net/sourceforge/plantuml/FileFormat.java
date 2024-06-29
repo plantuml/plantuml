@@ -127,8 +127,8 @@ public enum FileFormat {
 	final static private BufferedImage imDummy = new BufferedImage(100, 100, BufferedImage.TYPE_INT_RGB);
 	final static public Graphics2D gg = imDummy.createGraphics();
 	static {
-		// KEY_FRACTIONALMETRICS
 		gg.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		gg.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
 	}
 
 	public StringBounder getDefaultStringBounder() {
