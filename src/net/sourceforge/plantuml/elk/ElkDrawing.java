@@ -78,6 +78,7 @@ import net.sourceforge.plantuml.svek.DotStringFactory;
 import net.sourceforge.plantuml.svek.GeneralImageBuilder;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.IEntityImageUtils;
+import net.sourceforge.plantuml.svek.SvekNode;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 import net.sourceforge.plantuml.utils.Position;
 
@@ -129,6 +130,9 @@ class ElkDrawing extends AbstractTextBlock {
 			final Entity entity = ent.getKey();
 			// Retrieve coord from ELK
 			final XPoint2D corner = CucaDiagramFileMakerElk.getPosition(ent.getValue());
+			final SvekNode svekNode = dotStringFactory.getBibliotekon().getNode(entity);
+			svekNode.resetMoveSvek();
+			svekNode.moveSvek(corner.x, corner.y);
 
 			final IEntityImage image = IEntityImageUtils.translate(printEntityInternal(entity),
 					UTranslate.point(corner));

@@ -129,6 +129,7 @@ import net.sourceforge.plantuml.svek.DotStringFactory;
 import net.sourceforge.plantuml.svek.GeneralImageBuilder;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.IEntityImage;
+import net.sourceforge.plantuml.svek.SvekNode;
 import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 import net.sourceforge.plantuml.utils.Position;
 
@@ -339,7 +340,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 		} catch (Throwable e) {
 			UmlDiagram.exportDiagramError(os, e, fileFormatOption, diagram.seed(), diagram.getMetadata(),
 					diagram.getFlashData(), getFailureText3(e));
-			return ImageDataSimple.error();
+			return ImageDataSimple.error(e);
 		}
 
 	}
@@ -351,7 +352,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 			}
 			if (diagram.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE) {
 				g.muteToType(LeafType.EMPTY_PACKAGE);
-				manageSingleNode(cluster, g);
+				prinEntity(g, cluster);
 			} else {
 
 				// We create the "cluster" in ELK for this group
@@ -392,7 +393,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 			if (ent.isRemoved())
 				continue;
 
-			manageSingleNode(parent, ent);
+			prinEntity(ent, parent);
 		}
 	}
 
@@ -403,19 +404,25 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 	}
 
-	private void manageSingleNode(ElkNode parent, Entity leaf) {
-		final IEntityImage image = printEntityInternal(leaf);
+	@DuplicateCode(reference = "CucaDiagramFileMakerSmetana::printEntity")
+	private void prinEntity(Entity ent, ElkNode parent) {
+		final IEntityImage image = printEntityInternal(ent);
 
 		// Expected dimension of the node
 		final XDimension2D dimension = image.calculateDimension(stringBounder);
+		
+		final SvekNode node = getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(),
+				stringBounder);
+		dotStringFactory.addNode(node);
+
 
 		// Here, we try to tell ELK to use this dimension as node dimension
-		final ElkNode node = ElkGraphUtil.createNode(parent);
-		node.setDimensions(dimension.getWidth(), dimension.getHeight());
+		final ElkNode elkNode = ElkGraphUtil.createNode(parent);
+		elkNode.setDimensions(dimension.getWidth(), dimension.getHeight());
 
 		// There is no real "label" here
 		// We just would like to force node dimension
-		final ElkLabel label = ElkGraphUtil.createLabel(node);
+		final ElkLabel label = ElkGraphUtil.createLabel(elkNode);
 		label.setText("X");
 
 		// I don't know why we have to do this hack, but somebody has to fix it
@@ -437,7 +444,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 		// EnumSet.noneOf(SizeOptions.class));
 
 		// Let's store this
-		nodes.put(leaf, node);
+		nodes.put(ent, elkNode);
 	}
 
 	private void manageSingleEdge(final Link link) {
