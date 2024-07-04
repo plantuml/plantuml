@@ -91,7 +91,7 @@ import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
 
-public class ElkPath implements UDrawable {
+public class MyElkPath implements UDrawable {
 	// ::remove folder when __HAXE__
 
 	private final Link link;
@@ -104,7 +104,7 @@ public class ElkPath implements UDrawable {
 
 	private final SName styleName;
 
-	private final Map<Entity, ElkCluster> elkClusters;
+	private final Map<Entity, MyElkCluster> elkClusters;
 
 	private final Map<Entity, IEntityImage> nodeImages;
 
@@ -112,8 +112,8 @@ public class ElkPath implements UDrawable {
 
 	private final UTranslate translate;
 
-	public ElkPath(ICucaDiagram diagram, SName styleName, Link link, ElkEdge edge, TextBlock centerLabel,
-			TextBlock tailLabel, TextBlock headLabel, double magicY2, Map<Entity, ElkCluster> elkClusters,
+	public MyElkPath(ICucaDiagram diagram, SName styleName, Link link, ElkEdge edge, TextBlock centerLabel,
+			TextBlock tailLabel, TextBlock headLabel, double magicY2, Map<Entity, MyElkCluster> elkClusters,
 			UTranslate translate, Map<Entity, IEntityImage> nodeImages) {
 		this.link = link;
 		this.edge = edge;
@@ -137,7 +137,7 @@ public class ElkPath implements UDrawable {
 		return result.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 	}
 
-	@DuplicateCode(reference = "SvekLine")
+	@DuplicateCode(reference = "SvekEdge")
 	public void drawU(UGraphic ug) {
 
 		if (link.isHidden())
@@ -172,8 +172,8 @@ public class ElkPath implements UDrawable {
 		if (link.getColors() != null && link.getColors().getSpecificLineStroke() != null)
 			stroke = link.getColors().getSpecificLineStroke();
 
-		final ElkCluster elkCluster1 = elkClusters.get(link.getEntity1());
-		final ElkCluster elkCluster2 = elkClusters.get(link.getEntity2());
+		final MyElkCluster elkCluster1 = elkClusters.get(link.getEntity1());
+		final MyElkCluster elkCluster2 = elkClusters.get(link.getEntity2());
 		final IEntityImage elkNode1 = nodeImages.get(link.getEntity1());
 		final IEntityImage elkNode2 = nodeImages.get(link.getEntity2());
 		MagneticBorder magneticBorder1 = new MagneticBorderNone();

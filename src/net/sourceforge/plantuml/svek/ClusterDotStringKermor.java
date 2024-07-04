@@ -67,12 +67,12 @@ public class ClusterDotStringKermor {
 		this.skinParam = skinParam;
 	}
 
-	void printInternal(StringBuilder sb, Collection<SvekLine> lines, StringBounder stringBounder, DotMode dotMode,
+	void printInternal(StringBuilder sb, Collection<SvekEdge> lines, StringBounder stringBounder, DotMode dotMode,
 			GraphvizVersion graphvizVersion, UmlDiagramType type) {
 
 		final Set<EntityPosition> entityPositionsExceptNormal = entityPositionsExceptNormal();
 		if (entityPositionsExceptNormal.size() > 0)
-			for (SvekLine line : lines)
+			for (SvekEdge line : lines)
 				if (line.isLinkFromOrTo(cluster.getGroup()))
 					line.setProjectionCluster(cluster);
 
@@ -91,7 +91,7 @@ public class ClusterDotStringKermor {
 			} else {
 				final XDimension2D dim = noteTop.calculateDimension(stringBounder);
 				final StringBuilder sblabel = new StringBuilder("<");
-				SvekLine.appendTable(sblabel, (int) dim.getWidth(), (int) dim.getHeight(), cluster.getColorNoteTop());
+				SvekEdge.appendTable(sblabel, (int) dim.getWidth(), (int) dim.getHeight(), cluster.getColorNoteTop());
 				sblabel.append(">");
 				sb.append("label=" + sblabel + ";");
 				SvekUtils.println(sb);
@@ -114,7 +114,7 @@ public class ClusterDotStringKermor {
 		} else {
 			final XDimension2D dim = noteBottom.calculateDimension(stringBounder);
 			final StringBuilder sblabel = new StringBuilder("<");
-			SvekLine.appendTable(sblabel, (int) dim.getWidth(), (int) dim.getHeight(), cluster.getColorNoteBottom());
+			SvekEdge.appendTable(sblabel, (int) dim.getWidth(), (int) dim.getHeight(), cluster.getColorNoteBottom());
 			sblabel.append(">");
 			sb.append("label=" + sblabel + ";");
 			SvekUtils.println(sb);
@@ -135,7 +135,7 @@ public class ClusterDotStringKermor {
 		final String label;
 		if (cluster.isLabel()) {
 			final StringBuilder sblabel = new StringBuilder("<");
-			SvekLine.appendTable(sblabel, cluster.getTitleAndAttributeWidth(), cluster.getTitleAndAttributeHeight() - 5,
+			SvekEdge.appendTable(sblabel, cluster.getTitleAndAttributeWidth(), cluster.getTitleAndAttributeHeight() - 5,
 					cluster.getTitleColor());
 			sblabel.append(">");
 			label = sblabel.toString();
@@ -273,8 +273,8 @@ public class ClusterDotStringKermor {
 		return true;
 	}
 
-	private boolean isThereALinkFromOrToGroup(Collection<SvekLine> lines) {
-		for (SvekLine line : lines)
+	private boolean isThereALinkFromOrToGroup(Collection<SvekEdge> lines) {
+		for (SvekEdge line : lines)
 			if (line.isLinkFromOrTo(cluster.getGroup()))
 				return true;
 

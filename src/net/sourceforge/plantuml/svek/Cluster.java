@@ -119,7 +119,7 @@ public class Cluster implements Moveable {
 
 	private RectangleArea rectangleArea;
 
-	public void moveSvek(double deltaX, double deltaY) {
+	public void moveDelta(double deltaX, double deltaY) {
 		if (this.xyNoteTop != null)
 			this.xyNoteTop = this.xyNoteTop.move(deltaX, deltaY);
 		if (this.xyNoteBottom != null)
@@ -186,7 +186,7 @@ public class Cluster implements Moveable {
 		return Collections.unmodifiableList(result);
 	}
 
-	private List<SvekNode> getNodesOrderedTop(Collection<SvekLine> lines) {
+	private List<SvekNode> getNodesOrderedTop(Collection<SvekEdge> lines) {
 		final List<SvekNode> firsts = new ArrayList<>();
 		final Map<String, SvekNode> shs = new HashMap<String, SvekNode>();
 
@@ -195,7 +195,7 @@ public class Cluster implements Moveable {
 			shs.put(node.getUid(), node);
 		}
 
-		for (SvekLine l : lines)
+		for (SvekEdge l : lines)
 			if (l.isInverted()) {
 				final SvekNode sh = shs.get(l.getStartUidPrefix());
 				if (sh != null && isNormalPosition(sh))
@@ -209,7 +209,7 @@ public class Cluster implements Moveable {
 		return sh.getEntityPosition() == EntityPosition.NORMAL;
 	}
 
-	private List<SvekNode> getNodesOrderedWithoutTop(Collection<SvekLine> lines) {
+	private List<SvekNode> getNodesOrderedWithoutTop(Collection<SvekEdge> lines) {
 		final List<SvekNode> all = new ArrayList<>(nodes);
 		final Map<String, SvekNode> shs = new HashMap<String, SvekNode>();
 
@@ -222,7 +222,7 @@ public class Cluster implements Moveable {
 			shs.put(sh.getUid(), sh);
 		}
 
-		for (SvekLine l : lines)
+		for (SvekEdge l : lines)
 			if (l.isInverted()) {
 				final SvekNode sh = shs.get(l.getStartUidPrefix());
 				if (sh != null)
@@ -474,7 +474,7 @@ public class Cluster implements Moveable {
 	}
 
 	// ::comment when __CORE__
-	public boolean printCluster1(StringBuilder sb, Collection<SvekLine> lines, StringBounder stringBounder) {
+	public boolean printCluster1(StringBuilder sb, Collection<SvekEdge> lines, StringBounder stringBounder) {
 		final List<SvekNode> tmp = getNodesOrderedTop(lines);
 		if (tmp.size() == 0)
 			return false;
@@ -488,7 +488,7 @@ public class Cluster implements Moveable {
 	private int togetherCounter = 0;
 
 	private void printTogether(Together together, Collection<Together> otherTogethers, StringBuilder sb,
-			List<SvekNode> nodesOrderedWithoutTop, StringBounder stringBounder, Collection<SvekLine> lines,
+			List<SvekNode> nodesOrderedWithoutTop, StringBounder stringBounder, Collection<SvekEdge> lines,
 			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type) {
 		sb.append("subgraph " + getClusterId() + "t" + togetherCounter + " {\n");
 		for (SvekNode node : nodesOrderedWithoutTop)
@@ -509,7 +509,7 @@ public class Cluster implements Moveable {
 
 	}
 
-	public SvekNode printCluster2(StringBuilder sb, Collection<SvekLine> lines, StringBounder stringBounder,
+	public SvekNode printCluster2(StringBuilder sb, Collection<SvekEdge> lines, StringBounder stringBounder,
 			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type) {
 
 		SvekNode added = null;
@@ -552,7 +552,7 @@ public class Cluster implements Moveable {
 		}
 	}
 
-	public void printCluster3_forKermor(StringBuilder sb, Collection<SvekLine> lines, StringBounder stringBounder,
+	public void printCluster3_forKermor(StringBuilder sb, Collection<SvekEdge> lines, StringBounder stringBounder,
 			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type) {
 		final List<SvekNode> tmp = getNodes(EntityPosition.getNormals());
 
@@ -568,12 +568,12 @@ public class Cluster implements Moveable {
 			child.printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);
 	}
 
-	private void printInternal(StringBuilder sb, Collection<SvekLine> lines, StringBounder stringBounder,
+	private void printInternal(StringBuilder sb, Collection<SvekEdge> lines, StringBounder stringBounder,
 			DotMode dotMode, GraphvizVersion graphvizVersion, UmlDiagramType type) {
 		new ClusterDotString(this, skinParam).printInternal(sb, lines, stringBounder, dotMode, graphvizVersion, type);
 	}
 
-	private void appendRankSame(StringBuilder sb, Collection<SvekLine> lines) {
+	private void appendRankSame(StringBuilder sb, Collection<SvekEdge> lines) {
 		for (String same : getRankSame(lines)) {
 			sb.append(same);
 			SvekUtils.println(sb);
@@ -581,9 +581,9 @@ public class Cluster implements Moveable {
 	}
 	// ::done
 
-	private Set<String> getRankSame(Collection<SvekLine> lines) {
+	private Set<String> getRankSame(Collection<SvekEdge> lines) {
 		final Set<String> rankSame = new HashSet<>();
-		for (SvekLine l : lines) {
+		for (SvekEdge l : lines) {
 			if (l.hasEntryPoint())
 				continue;
 

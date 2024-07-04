@@ -70,10 +70,10 @@ public class TextBlockArrow2 extends AbstractTextBlock implements TextBlock {
 
 		final UPolygon triangle = new UPolygon();
 		final double beta = Math.PI * 4 / 5;
-		triangle.addPoint(getPoint(triSize / 2, angle.getArrowDirection2()));
-		triangle.addPoint(getPoint(triSize / 2, angle.getArrowDirection2() + beta));
-		triangle.addPoint(getPoint(triSize / 2, angle.getArrowDirection2() - beta));
-		triangle.addPoint(getPoint(triSize / 2, angle.getArrowDirection2()));
+		triangle.addPoint(getPoint(triSize / 2, angle.getArrowDirectionInRadian()));
+		triangle.addPoint(getPoint(triSize / 2, angle.getArrowDirectionInRadian() + beta));
+		triangle.addPoint(getPoint(triSize / 2, angle.getArrowDirectionInRadian() - beta));
+		triangle.addPoint(getPoint(triSize / 2, angle.getArrowDirectionInRadian()));
 		ug.draw(triangle);
 	}
 

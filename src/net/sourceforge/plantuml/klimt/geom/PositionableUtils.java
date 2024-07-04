@@ -62,8 +62,8 @@ public class PositionableUtils {
 				return pos.getSize().delta(2 * widthMargin, 2 * heightMargin);
 			}
 
-			public void moveSvek(double deltaX, double deltaY) {
-				pos.moveSvek(deltaX, deltaY);
+			public void moveDelta(double deltaX, double deltaY) {
+				pos.moveDelta(deltaX, deltaY);
 			}
 		};
 	}

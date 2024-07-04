@@ -96,15 +96,10 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 
 		computeKal();
 
-		for (SvekLine line : dotStringFactory.getBibliotekon().allLines()) {
-			final UGraphic ug2 = line.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;
-
-			final StyleBuilder currentStyleBuilder = line.getCurrentStyleBuilder();
-			final Style styleLine = getDefaultStyleDefinition(line.getStereotype()).getMergedStyle(currentStyleBuilder);
-
-			final Rainbow rainbow = Rainbow.build(styleLine, dotData.getSkinParam().getIHtmlColorSet());
-
-			line.drawU(ug2, ids, styleLine.getStroke(), rainbow);
+		for (SvekEdge svekEdge : dotStringFactory.getBibliotekon().allLines()) {
+			final UGraphic ug2 = svekEdge.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;
+			svekEdge.setSharedIds(ids);
+			svekEdge.drawU(ug2);
 		}
 
 		for (SvekNode node : dotStringFactory.getBibliotekon().allNodes())
@@ -113,7 +108,7 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 	}
 
 	private void computeKal() {
-		for (SvekLine line : dotStringFactory.getBibliotekon().allLines())
+		for (SvekEdge line : dotStringFactory.getBibliotekon().allLines())
 			line.computeKal();
 		for (SvekNode node : dotStringFactory.getBibliotekon().allNodes())
 			node.fixOverlap();
@@ -138,7 +133,7 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		if (minMax == null) {
 			minMax = TextBlockUtils.getMinMax(this, stringBounder, false);
-			dotStringFactory.moveSvek(6 - minMax.getMinX(), 6 - minMax.getMinY());
+			dotStringFactory.moveDelta(6 - minMax.getMinX(), 6 - minMax.getMinY());
 		}
 		return minMax.getDimension().delta(0, 12);
 	}

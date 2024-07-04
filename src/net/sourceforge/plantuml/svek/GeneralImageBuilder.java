@@ -434,7 +434,7 @@ public final class GeneralImageBuilder {
 				final ISkinParam skinParam = dotData.getSkinParam();
 				final FontConfiguration labelFont = getFontForLink(link, skinParam);
 
-				final SvekLine line = new SvekLine(link, dotStringFactory.getColorSequence(), skinParam, stringBounder,
+				final SvekEdge line = new SvekEdge(link, dotStringFactory.getColorSequence(), skinParam, stringBounder,
 						labelFont, dotStringFactory.getBibliotekon(), pragma, dotStringFactory.getGraphvizVersion());
 
 				dotStringFactory.getBibliotekon().addLine(line);

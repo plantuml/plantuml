@@ -144,7 +144,7 @@ Long hierarchical edge
 https://rtsys.informatik.uni-kiel.de/~biblio/downloads/theses/yab-bt.pdf
 https://rtsys.informatik.uni-kiel.de/~biblio/downloads/theses/thw-bt.pdf
  */
-@DuplicateCode(reference = "SvekLine, CucaDiagramFileMakerElk, CucaDiagramFileMakerSmetana")
+@DuplicateCode(reference = "SvekEdge, CucaDiagramFileMakerElk, CucaDiagramFileMakerSmetana")
 public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 	// ::remove folder when __CORE__
 
@@ -163,7 +163,7 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 	}
 
-	// Duplication from SvekLine
+	// Duplication from SvekEdge
 	final public StyleSignature getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
 		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow);
 		if (stereotype != null)
@@ -329,10 +329,10 @@ public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
 
 			new RecursiveGraphLayoutEngine().layout(root, new NullElkProgressMonitor());
 
-			final MinMax minMax = TextBlockUtils.getMinMax(new ElkDrawing(dotStringFactory, diagram, null, clusters, edges, nodes),
+			final MinMax minMax = TextBlockUtils.getMinMax(new MyElkDrawing(dotStringFactory, diagram, null, clusters, edges, nodes),
 					stringBounder, false);
 
-			final TextBlock drawable = new ElkDrawing(dotStringFactory, diagram, minMax, clusters, edges, nodes);
+			final TextBlock drawable = new MyElkDrawing(dotStringFactory, diagram, minMax, clusters, edges, nodes);
 			return diagram.createImageBuilder(fileFormatOption) //
 					.drawable(drawable) //
 					.write(os); //

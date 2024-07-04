@@ -152,7 +152,7 @@ public class Cluster implements Clusterable {
 		return titleHeight;
 	}
 
-	public void moveSvek(double deltaX, double deltaY) {
+	public void moveDelta(double deltaX, double deltaY) {
 		throw new UnsupportedOperationException();
 	}
 

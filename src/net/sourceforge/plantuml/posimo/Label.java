@@ -83,7 +83,7 @@ public class Label implements Positionable {
 		this.y = y;
 	}
 
-	public void moveSvek(double deltaX, double deltaY) {
+	public void moveDelta(double deltaX, double deltaY) {
 		throw new UnsupportedOperationException();
 	}
 

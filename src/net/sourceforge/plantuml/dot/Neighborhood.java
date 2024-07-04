@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.svek.Bibliotekon;
-import net.sourceforge.plantuml.svek.SvekLine;
+import net.sourceforge.plantuml.svek.SvekEdge;
 
 public class Neighborhood {
 
@@ -68,7 +68,7 @@ public class Neighborhood {
 	public void drawU(UGraphic ug, double minX, double minY, Bibliotekon bibliotekon, XDimension2D shapeDim) {
 		final Set<XPoint2D> contactPoints = new HashSet<>();
 		for (Link link : sametailLinks) {
-			final SvekLine line = bibliotekon.getLine(link);
+			final SvekEdge line = bibliotekon.getLine(link);
 			final XPoint2D contact = line.getStartContactPoint();
 			contactPoints.add(contact);
 		}
@@ -90,7 +90,7 @@ public class Neighborhood {
 		}
 
 		for (Link link : allButSametails) {
-			final SvekLine line = bibliotekon.getLine(link);
+			final SvekEdge line = bibliotekon.getLine(link);
 			final XPoint2D contact = link.getEntity1() == leaf ? line.getStartContactPoint()
 					: line.getEndContactPoint();
 			if (contact == null) {

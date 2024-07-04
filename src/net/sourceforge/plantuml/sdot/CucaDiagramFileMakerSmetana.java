@@ -119,7 +119,7 @@ import smetana.core.JUtils;
 import smetana.core.Macro;
 import smetana.core.debug.SmetanaDebug;
 
-@DuplicateCode(reference = "SvekLine, CucaDiagramFileMakerElk, CucaDiagramFileMakerSmetana")
+@DuplicateCode(reference = "SvekEdge, CucaDiagramFileMakerElk, CucaDiagramFileMakerSmetana")
 public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 	// ::remove folder when __HAXE__
 
@@ -129,7 +129,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 	private final Map<Entity, ST_Agnode_s> nodes = new LinkedHashMap<Entity, ST_Agnode_s>();
 	private final Map<Entity, ST_Agnode_s> coreNodes = new LinkedHashMap<Entity, ST_Agnode_s>();
 	private final Map<Link, ST_Agedge_s> edges = new LinkedHashMap<Link, ST_Agedge_s>();
-	private final Map<Link, SmetanaPath> smetanaPathes = new LinkedHashMap<Link, SmetanaPath>();
+	private final Map<Link, SmetanaEdge> smetanaPathes = new LinkedHashMap<Link, SmetanaEdge>();
 	private final Map<Entity, ST_Agraph_s> clusters = new LinkedHashMap<Entity, ST_Agraph_s>();
 
 	private final DotStringFactory dotStringFactory;
@@ -179,8 +179,8 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 					continue;
 
 				final ST_Agedge_s edge = ent.getValue();
-				final SmetanaPath smetanaPath = new SmetanaPath(link, edge, ymirror, diagram, getLabel(link),
-						getQuantifier(link, 1), getQuantifier(link, 2), dotStringFactory.getBibliotekon());
+				final SmetanaEdge smetanaPath = new SmetanaEdge(link, edge, ymirror, getLabel(link),
+						getQuantifier(link, 1), getQuantifier(link, 2), dotStringFactory.getBibliotekon(), diagram.getSkinParam());
 				smetanaPathes.put(link, smetanaPath);
 			}
 
@@ -193,13 +193,13 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 				final XPoint2D corner = getCorner(agnode);
 
 				final SvekNode node = dotStringFactory.getBibliotekon().getNode(leaf);
-				node.resetMoveSvek();
-				node.moveSvek(corner.getX(), corner.getY());
+				node.resetMove();
+				node.moveDelta(corner.getX(), corner.getY());
 				final IEntityImage image = node.getImage();
 				image.drawU(ug.apply(UTranslate.point(corner)));
 			}
 
-			for (Entry<Link, SmetanaPath> ent : smetanaPathes.entrySet())
+			for (Entry<Link, SmetanaEdge> ent : smetanaPathes.entrySet())
 				if (ent.getKey().isOpale() == false)
 					ent.getValue().drawU(ug);
 
@@ -530,7 +530,7 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 				.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
 	}
 
-	// Duplication from SvekLine
+	// Duplication from SvekEdge
 	final public StyleSignature getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
 		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow);
 		if (stereotype != null)

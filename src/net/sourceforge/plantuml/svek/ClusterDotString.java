@@ -70,7 +70,7 @@ public class ClusterDotString {
 		return cluster.getGroup().isPacked();
 	}
 
-	void printInternal(StringBuilder sb, Collection<SvekLine> lines, StringBounder stringBounder, DotMode dotMode,
+	void printInternal(StringBuilder sb, Collection<SvekEdge> lines, StringBounder stringBounder, DotMode dotMode,
 			GraphvizVersion graphvizVersion, UmlDiagramType type) {
 		if (cluster.diagram.getPragma().useKermor()) {
 			new ClusterDotStringKermor(cluster, skinParam).printInternal(sb, lines, stringBounder, dotMode,
@@ -97,7 +97,7 @@ public class ClusterDotString {
 
 		final Set<EntityPosition> entityPositionsExceptNormal = entityPositionsExceptNormal();
 		if (entityPositionsExceptNormal.size() > 0)
-			for (SvekLine line : lines)
+			for (SvekEdge line : lines)
 				if (line.isLinkFromOrTo(cluster.getGroup()))
 					line.setProjectionCluster(cluster);
 
@@ -118,7 +118,7 @@ public class ClusterDotString {
 		final String label;
 		if (cluster.isLabel()) {
 			final StringBuilder sblabel = new StringBuilder("<");
-			SvekLine.appendTable(sblabel, cluster.getTitleAndAttributeWidth(), cluster.getTitleAndAttributeHeight() - 5,
+			SvekEdge.appendTable(sblabel, cluster.getTitleAndAttributeWidth(), cluster.getTitleAndAttributeHeight() - 5,
 					cluster.getTitleColor());
 			sblabel.append(">");
 			label = sblabel.toString();
@@ -311,8 +311,8 @@ public class ClusterDotString {
 		return true;
 	}
 
-	private boolean isThereALinkFromOrToGroup(Collection<SvekLine> lines) {
-		for (SvekLine line : lines)
+	private boolean isThereALinkFromOrToGroup(Collection<SvekEdge> lines) {
+		for (SvekEdge line : lines)
 			if (line.isLinkFromOrTo(cluster.getGroup()))
 				return true;
 

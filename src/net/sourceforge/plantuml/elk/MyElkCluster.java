@@ -62,14 +62,14 @@ import net.sourceforge.plantuml.svek.ClusterDecoration;
 import net.sourceforge.plantuml.svek.ClusterHeader;
 import net.sourceforge.plantuml.svek.PackageStyle;
 
-public class ElkCluster {
+public class MyElkCluster {
 
 	private final Entity group;
 	private final ElkNode elkNode;
 	private final ICucaDiagram diagram;
 	private final ISkinParam skinParam;
 
-	public ElkCluster(ICucaDiagram diagram, Entity group, ElkNode elkNode) {
+	public MyElkCluster(ICucaDiagram diagram, Entity group, ElkNode elkNode) {
 		this.group = group;
 		this.elkNode = elkNode;
 		this.diagram = diagram;

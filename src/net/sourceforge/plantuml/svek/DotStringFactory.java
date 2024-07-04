@@ -113,7 +113,7 @@ public class DotStringFactory implements Moveable {
 
 	private double getHorizontalDzeta() {
 		double max = 0;
-		for (SvekLine l : bibliotekon.allLines()) {
+		for (SvekEdge l : bibliotekon.allLines()) {
 			final double c = l.getHorizontalDzeta(stringBounder);
 			if (c > max)
 				max = c;
@@ -124,7 +124,7 @@ public class DotStringFactory implements Moveable {
 
 	private double getVerticalDzeta() {
 		double max = 0;
-		for (SvekLine l : bibliotekon.allLines()) {
+		for (SvekEdge l : bibliotekon.allLines()) {
 			final double c = l.getVerticalDzeta(stringBounder);
 			if (c > max)
 				max = c;
@@ -199,9 +199,9 @@ public class DotStringFactory implements Moveable {
 		manageMinMaxCluster(sb);
 
 		if (root.diagram.getPragma().useKermor()) {
-			for (SvekLine line : bibliotekon.lines0())
+			for (SvekEdge line : bibliotekon.lines0())
 				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
-			for (SvekLine line : bibliotekon.lines1())
+			for (SvekEdge line : bibliotekon.lines1())
 				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
 
 			root.printCluster3_forKermor(sb, bibliotekon.allLines(), stringBounder, dotMode, getGraphvizVersion(),
@@ -210,13 +210,13 @@ public class DotStringFactory implements Moveable {
 		} else {
 			root.printCluster1(sb, bibliotekon.allLines(), stringBounder);
 
-			for (SvekLine line : bibliotekon.lines0())
+			for (SvekEdge line : bibliotekon.lines0())
 				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
 
 			root.printCluster2(sb, bibliotekon.allLines(), stringBounder, dotMode, getGraphvizVersion(),
 					umlDiagramType);
 
-			for (SvekLine line : bibliotekon.lines1())
+			for (SvekEdge line : bibliotekon.lines1())
 				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
 
 		}
@@ -378,7 +378,7 @@ public class DotStringFactory implements Moveable {
 					|| node.getType() == ShapeType.DIAMOND || node.getType() == ShapeType.RECTANGLE_PORT) {
 				final List<XPoint2D> points = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);
 				final XPoint2D min = SvekUtils.getMinXY(points);
-				node.moveSvek(min.getX(), min.getY());
+				node.moveDelta(min.getX(), min.getY());
 			} else if (node.getType() == ShapeType.ROUND_RECTANGLE) {
 				final int idx2 = svg.indexOf("d=\"", idx + 1);
 				idx = svg.indexOf("points=\"", idx + 1);
@@ -394,21 +394,21 @@ public class DotStringFactory implements Moveable {
 					}
 				}
 				final XPoint2D min = SvekUtils.getMinXY(points);
-				node.moveSvek(min.getX(), min.getY());
+				node.moveDelta(min.getX(), min.getY());
 			} else if (node.getType() == ShapeType.OCTAGON || node.getType() == ShapeType.HEXAGON) {
 				idx = svg.indexOf("points=\"", idx + 1);
 				final int starting = idx;
 				final List<XPoint2D> points = svgResult.substring(starting).extractList(SvgResult.POINTS_EQUALS);
 				final XPoint2D min = SvekUtils.getMinXY(points);
 				// corner1.manage(minX, minY);
-				node.moveSvek(min.getX(), min.getY());
+				node.moveDelta(min.getX(), min.getY());
 				node.setPolygon(min.getX(), min.getY(), points);
 			} else if (node.getType() == ShapeType.CIRCLE || node.getType() == ShapeType.OVAL) {
 				final double cx = SvekUtils.getValue(svg, idx, "cx");
 				final double cy = SvekUtils.getValue(svg, idx, "cy") + fullHeight;
 				final double rx = SvekUtils.getValue(svg, idx, "rx");
 				final double ry = SvekUtils.getValue(svg, idx, "ry");
-				node.moveSvek(cx - rx, cy - ry);
+				node.moveDelta(cx - rx, cy - ry);
 			} else {
 				throw new IllegalStateException(node.getType().toString() + " " + node.getUid());
 			}
@@ -447,10 +447,10 @@ public class DotStringFactory implements Moveable {
 			}
 		}
 
-		for (SvekLine line : bibliotekon.allLines())
+		for (SvekEdge line : bibliotekon.allLines())
 			line.solveLine(svgResult);
 
-		for (SvekLine line : bibliotekon.allLines())
+		for (SvekEdge line : bibliotekon.allLines())
 			line.manageCollision(bibliotekon.allNodes());
 
 	}
@@ -482,15 +482,15 @@ public class DotStringFactory implements Moveable {
 		this.current = current.getParentCluster();
 	}
 
-	public void moveSvek(double deltaX, double deltaY) {
+	public void moveDelta(double deltaX, double deltaY) {
 		for (SvekNode sh : bibliotekon.allNodes())
-			sh.moveSvek(deltaX, deltaY);
+			sh.moveDelta(deltaX, deltaY);
 
-		for (SvekLine line : bibliotekon.allLines())
-			line.moveSvek(deltaX, deltaY);
+		for (SvekEdge line : bibliotekon.allLines())
+			line.moveDelta(deltaX, deltaY);
 
 		for (Cluster cl : bibliotekon.allCluster())
-			cl.moveSvek(deltaX, deltaY);
+			cl.moveDelta(deltaX, deltaY);
 
 	}
 

@@ -401,7 +401,7 @@ public class DotPath implements UShape, Moveable {
 
 	}
 
-	public void moveSvek(double deltaX, double deltaY) {
+	public void moveDelta(double deltaX, double deltaY) {
 		for (int i = 0; i < beziers.size(); i++) {
 			final XCubicCurve2D c = beziers.get(i);
 			beziers.set(i, new XCubicCurve2D(c.x1 + deltaX, c.y1 + deltaY, c.ctrlx1 + deltaX, c.ctrly1 + deltaY,

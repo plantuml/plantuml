@@ -40,15 +40,14 @@ import java.util.List;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPosition;
-import net.sourceforge.plantuml.abel.Hideable;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.Together;
+import net.sourceforge.plantuml.cruise.XNode;
 import net.sourceforge.plantuml.klimt.Shadowable;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
-import net.sourceforge.plantuml.klimt.geom.Positionable;
 import net.sourceforge.plantuml.klimt.geom.RectangleArea;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
@@ -58,7 +57,7 @@ import net.sourceforge.plantuml.svek.image.EntityImagePort;
 import net.sourceforge.plantuml.svek.image.EntityImageStateBorder;
 import net.sourceforge.plantuml.utils.Direction;
 
-public class SvekNode implements Positionable, Hideable {
+public class SvekNode implements XNode {
 
 	private final ShapeType type;
 	private XDimension2D dimImage;
@@ -383,7 +382,7 @@ public class SvekNode implements Positionable, Hideable {
 
 	public boolean isShielded() {
 		// Avoid calculating "shield" size through this.shield() before finishing
-		// creation of all SvekLines (https://github.com/plantuml/plantuml/issues/1467)
+		// creation of all SvekEdges (https://github.com/plantuml/plantuml/issues/1467)
 		// Instead, only check if we will have a shield (size is irrelevant here)
 		// This node will have a shield if it is target of a qualified association (will
 		// have a qualifier label
@@ -396,12 +395,12 @@ public class SvekNode implements Positionable, Hideable {
 		return shield().isZero() == false;
 	}
 
-	public void resetMoveSvek() {
+	public void resetMove() {
 		this.minX = 0;
 		this.minY = 0;
 	}
 
-	public void moveSvek(double deltaX, double deltaY) {
+	public void moveDelta(double deltaX, double deltaY) {
 		this.minX += deltaX;
 		this.minY += deltaY;
 	}

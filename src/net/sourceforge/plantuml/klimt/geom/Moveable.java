@@ -37,6 +37,6 @@ package net.sourceforge.plantuml.klimt.geom;
 
 public interface Moveable {
 
-	void moveSvek(double deltaX, double deltaY);
+	void moveDelta(double deltaX, double deltaY);
 
 }

@@ -83,7 +83,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 import net.sourceforge.plantuml.utils.Position;
 
 // The Drawing class does the real drawing
-class ElkDrawing extends AbstractTextBlock {
+class MyElkDrawing extends AbstractTextBlock {
 
 	// min and max of all coord
 	private final MinMax minMax;
@@ -96,7 +96,7 @@ class ElkDrawing extends AbstractTextBlock {
 
 	private final DotStringFactory dotStringFactory;
 
-	public ElkDrawing(DotStringFactory dotStringFactory, ICucaDiagram diagram, MinMax minMax,
+	public MyElkDrawing(DotStringFactory dotStringFactory, ICucaDiagram diagram, MinMax minMax,
 			Map<Entity, ElkNode> clusters, Map<Link, ElkEdge> edges, Map<Entity, ElkNode> nodes) {
 		this.dotStringFactory = dotStringFactory;
 		this.minMax = minMax;
@@ -107,16 +107,16 @@ class ElkDrawing extends AbstractTextBlock {
 	}
 
 	public void drawU(UGraphic ug) {
-		final Map<Entity, ElkCluster> clusters = drawAllClusters(ug);
+		final Map<Entity, MyElkCluster> clusters = drawAllClusters(ug);
 		final Map<Entity, IEntityImage> nodes = drawAllNodes(ug);
 		drawAllEdges(ug, clusters, nodes);
 	}
 
-	private Map<Entity, ElkCluster> drawAllClusters(UGraphic ug) {
-		final Map<Entity, ElkCluster> elkClusters = new HashMap<>();
+	private Map<Entity, MyElkCluster> drawAllClusters(UGraphic ug) {
+		final Map<Entity, MyElkCluster> elkClusters = new HashMap<>();
 		for (Entry<Entity, ElkNode> ent : clusters.entrySet()) {
 			final Entity entity = ent.getKey();
-			final ElkCluster elkCluster = new ElkCluster(diagram, entity, ent.getValue());
+			final MyElkCluster elkCluster = new MyElkCluster(diagram, entity, ent.getValue());
 			elkCluster.drawSingleCluster(ug);
 			elkClusters.put(entity, elkCluster);
 		}
@@ -131,8 +131,8 @@ class ElkDrawing extends AbstractTextBlock {
 			// Retrieve coord from ELK
 			final XPoint2D corner = CucaDiagramFileMakerElk.getPosition(ent.getValue());
 			final SvekNode svekNode = dotStringFactory.getBibliotekon().getNode(entity);
-			svekNode.resetMoveSvek();
-			svekNode.moveSvek(corner.x, corner.y);
+			svekNode.resetMove();
+			svekNode.moveDelta(corner.x, corner.y);
 
 			final IEntityImage image = IEntityImageUtils.translate(printEntityInternal(entity),
 					UTranslate.point(corner));
@@ -146,7 +146,7 @@ class ElkDrawing extends AbstractTextBlock {
 
 	}
 
-	private void drawAllEdges(UGraphic ug, Map<Entity, ElkCluster> elkClusters, Map<Entity, IEntityImage> nodeImages) {
+	private void drawAllEdges(UGraphic ug, Map<Entity, MyElkCluster> elkClusters, Map<Entity, IEntityImage> nodeImages) {
 		for (Entry<Link, ElkEdge> ent : edges.entrySet()) {
 			final Link link = ent.getKey();
 			if (link.isInvis())
@@ -175,7 +175,7 @@ class ElkDrawing extends AbstractTextBlock {
 		return dotStringFactory.getBibliotekon();
 	}
 
-	private void drawSingleEdge(UGraphic ug, Link link, ElkEdge edge, Map<Entity, ElkCluster> elkClusters,
+	private void drawSingleEdge(UGraphic ug, Link link, ElkEdge edge, Map<Entity, MyElkCluster> elkClusters,
 			Map<Entity, IEntityImage> nodeImages) {
 		// Unfortunately, we have to translate "edge" in its own "cluster" coordinate
 		final XPoint2D translate = CucaDiagramFileMakerElk.getPosition(edge.getContainingNode());
@@ -191,7 +191,7 @@ class ElkDrawing extends AbstractTextBlock {
 		final TextBlock label = getLabel(ug.getStringBounder(), link);
 		final TextBlock quantifier1 = getQuantifier(ug.getStringBounder(), link, 1);
 		final TextBlock quantifier2 = getQuantifier(ug.getStringBounder(), link, 2);
-		final ElkPath elkPath = new ElkPath(diagram, SName.classDiagram, link, edge, label, quantifier1, quantifier2,
+		final MyElkPath elkPath = new MyElkPath(diagram, SName.classDiagram, link, edge, label, quantifier1, quantifier2,
 				magicY2, elkClusters, UTranslate.point(translate), nodeImages);
 		elkPath.drawU(ug);
 	}
@@ -204,7 +204,7 @@ class ElkDrawing extends AbstractTextBlock {
 		return style.getFontConfiguration(skinParam.getIHtmlColorSet());
 	}
 
-	// Duplication from SvekLine
+	// Duplication from SvekEdge
 	final public StyleSignature getDefaultStyleDefinitionArrow(Stereotype stereotype, SName styleName) {
 		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow);
 		if (stereotype != null)

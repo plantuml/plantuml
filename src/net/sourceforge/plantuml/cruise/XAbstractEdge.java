@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -31,35 +31,31 @@
  *
  * Original Author:  Arnaud Roques
  *
- * 
+ *
  */
-package net.sourceforge.plantuml.klimt.geom;
+package net.sourceforge.plantuml.cruise;
 
-public final class PositionableImpl implements Positionable {
+import java.util.Objects;
 
-	private XPoint2D pos;
+import net.sourceforge.plantuml.abel.Link;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.svek.Bibliotekon;
 
-	private final XDimension2D dim;
+public abstract class XAbstractEdge implements XEdge {
 
-	public PositionableImpl(double x, double y, XDimension2D dim) {
-		this.pos = new XPoint2D(x, y);
-		this.dim = dim;
+	protected final Link link;
+	protected final ISkinParam skinParam;
+	protected final Bibliotekon bibliotekon;
+
+	protected XAbstractEdge(Link link, ISkinParam skinParam, Bibliotekon bibliotekon) {
+		this.link = Objects.requireNonNull(link);
+		this.skinParam = Objects.requireNonNull(skinParam);
+		this.bibliotekon = Objects.requireNonNull(bibliotekon);
 	}
 
-	public static PositionableImpl create(XPoint2D pt, XDimension2D dim) {
-		return new PositionableImpl(pt.getX(), pt.getY(), dim);
-	}
-
-	public XPoint2D getPosition() {
-		return pos;
-	}
-
-	public XDimension2D getSize() {
-		return dim;
-	}
-
-	public void moveDelta(double deltaX, double deltaY) {
-		this.pos = this.pos.move(deltaX, deltaY);
+	protected final UmlDiagramType diagramType() {
+		return this.skinParam.getUmlDiagramType();
 	}
 
 }

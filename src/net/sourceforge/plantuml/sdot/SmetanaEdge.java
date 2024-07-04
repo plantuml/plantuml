@@ -43,7 +43,8 @@ import h.ST_splines;
 import h.ST_textlabel_t;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkStrategy;
-import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
+import net.sourceforge.plantuml.cruise.XAbstractEdge;
+import net.sourceforge.plantuml.cruise.XEdge;
 import net.sourceforge.plantuml.decoration.LinkType;
 import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -59,10 +60,10 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.LineParam;
-import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.Bibliotekon;
@@ -70,25 +71,21 @@ import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.extremity.Extremity;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.utils.Direction;
 
-public class SmetanaPath implements UDrawable {
+public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 
-	private final Link link;
 	private final ST_Agedge_s edge;
 	private final YMirror ymirror;
-	private final ICucaDiagram diagram;
 	private final TextBlock label;
 	private final TextBlock headLabel;
 	private final TextBlock tailLabel;
-	private final Bibliotekon bibliotekon;
 
-	public SmetanaPath(Link link, ST_Agedge_s edge, YMirror ymirror, ICucaDiagram diagram, TextBlock label,
-			TextBlock tailLabel, TextBlock headLabel, Bibliotekon bibliotekon) {
-		this.bibliotekon = bibliotekon;
-		this.link = link;
+	public SmetanaEdge(Link link, ST_Agedge_s edge, YMirror ymirror, TextBlock label,
+			TextBlock tailLabel, TextBlock headLabel, Bibliotekon bibliotekon, ISkinParam skinParam) {
+		super(link, skinParam, bibliotekon);
 		this.edge = edge;
 		this.ymirror = ymirror;
-		this.diagram = diagram;
 		this.label = label;
 		this.tailLabel = tailLabel;
 		this.headLabel = headLabel;
@@ -125,9 +122,9 @@ public class SmetanaPath implements UDrawable {
 
 			final Style styleLine = getStyle();
 
-			final Rainbow rainbow = Rainbow.build(styleLine, diagram.getSkinParam().getIHtmlColorSet());
+			final Rainbow rainbow = Rainbow.build(styleLine, skinParam.getIHtmlColorSet());
 
-			// Warning: duplicated from SmetanaPath and SvekLine
+			// Warning: duplicated from SmetanaPath and SvekEdge
 			HColor arrowHeadColor = rainbow.getArrowHeadColor();
 			HColor color = rainbow.getColor();
 
@@ -145,7 +142,7 @@ public class SmetanaPath implements UDrawable {
 			ug = ug.apply(HColors.none().bg()).apply(color);
 			final LinkType linkType = link.getType();
 			final UStroke suggestedStroke = styleLine.getStroke();
-			final UStroke defaultThickness = diagram.getSkinParam().getThickness(LineParam.arrow, null);
+			final UStroke defaultThickness = skinParam.getThickness(LineParam.arrow, null);
 
 			UStroke stroke;
 			if (suggestedStroke == null || linkType.getStyle().isNormal() == false)
@@ -183,9 +180,9 @@ public class SmetanaPath implements UDrawable {
 
 	private Style getStyle() {
 		final StyleSignature result = StyleSignatureBasic
-				.of(SName.root, SName.element, diagram.getUmlDiagramType().getStyleName(), SName.arrow)
+				.of(SName.root, SName.element, diagramType().getStyleName(), SName.arrow)
 				.withTOBECHANGED(link.getStereotype());
-		return result.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder());
+		return result.getMergedStyle(skinParam.getCurrentStyleBuilder());
 	}
 
 	public XPoint2D getStartPoint() {
@@ -208,7 +205,7 @@ public class SmetanaPath implements UDrawable {
 
 	private void printExtremityAtStart(DotPath dotPath, UGraphic ug) {
 		final ExtremityFactory extremityFactory2 = link.getType().getDecor2()
-				.getExtremityFactoryComplete(diagram.getSkinParam().getBackgroundColor());
+				.getExtremityFactoryComplete(skinParam.getBackgroundColor());
 		if (extremityFactory2 == null)
 			return;
 
@@ -233,7 +230,7 @@ public class SmetanaPath implements UDrawable {
 
 	private void printExtremityAtEnd(DotPath dotPath, UGraphic ug) {
 		final ExtremityFactory extremityFactory1 = link.getType().getDecor1()
-				.getExtremityFactoryComplete(diagram.getSkinParam().getBackgroundColor());
+				.getExtremityFactoryComplete(skinParam.getBackgroundColor());
 		if (extremityFactory1 == null)
 			return;
 
@@ -337,6 +334,27 @@ public class SmetanaPath implements UDrawable {
 		final ST_bezier beziers = (ST_bezier) splines.list.get__(0);
 		final ST_pointf pt = beziers.list.get__(i);
 		return new XPoint2D(pt.x, pt.y);
+	}
+
+	@Override
+	public void moveDelta(double deltaX, double deltaY) {
+		throw new UnsupportedOperationException("refactor in progress");
+		
+	}
+
+	@Override
+	public boolean isHidden() {
+		throw new UnsupportedOperationException("refactor in progress");
+	}
+
+	@Override
+	public Direction getArrowDirection() {
+		throw new UnsupportedOperationException("refactor in progress");
+	}
+
+	@Override
+	public double getArrowDirectionInRadian() {
+		throw new UnsupportedOperationException("refactor in progress");
 	}
 
 }
