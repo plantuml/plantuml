@@ -60,6 +60,7 @@ net.sourceforge.plantuml.command.note.sequence
 net.sourceforge.plantuml.compositediagram
 net.sourceforge.plantuml.compositediagram.command
 net.sourceforge.plantuml.core
+net.sourceforge.plantuml.cruise
 net.sourceforge.plantuml.cucadiagram
 net.sourceforge.plantuml.decoration
 net.sourceforge.plantuml.decoration.symbol
