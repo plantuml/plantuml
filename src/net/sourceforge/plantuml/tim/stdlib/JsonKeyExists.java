@@ -70,13 +70,12 @@ public class JsonKeyExists extends SimpleReturnFunction {
 			return TValue.fromBoolean(false);
 
 		final TValue arg1 = values.get(1);
-		if (arg1.isString() == false)
-			return TValue.fromBoolean(false);
-
-		final String keyname = arg1.toString();
-		final JsonObject object = (JsonObject) json;
-		if (object.contains(keyname))
-			return TValue.fromBoolean(true);
+		if (arg1.isString() || (arg1.isJson() && arg1.toJson().isString())) {
+			final String keyname = arg1.toString();
+			final JsonObject object = (JsonObject) json;
+			if (object.contains(keyname))
+				return TValue.fromBoolean(true);
+		}
 		return TValue.fromBoolean(false);
 	}
 
