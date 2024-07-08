@@ -43,7 +43,8 @@ dependencies {
 		testImplementation("org.mockito:mockito-junit-jupiter:5.+")
 	}
 	implementation("org.scilab.forge:jlatexmath:1.0.7")
-	
+	"pdfRuntimeOnly"("org.apache.xmlgraphics:fop:2.9")
+	"pdfRuntimeOnly"("org.apache.xmlgraphics:batik-all:1.17")
     implementation("org.eclipse.elk:org.eclipse.elk.core:0.9.1")
     implementation("org.eclipse.elk:org.eclipse.elk.alg.layered:0.9.1")
     implementation("org.eclipse.elk:org.eclipse.elk.alg.mrtree:0.9.1")
@@ -183,7 +184,9 @@ val pdfJar by tasks.registering(Jar::class) {
 	manifest.attributes["Main-Class"] = "net.sourceforge.plantuml.Run"
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 	val dependencies = configurations.runtimeClasspath.get().map(::zipTree)
-	from(dependencies)
+	from(dependencies) {
+        exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA") // Avoid conflict on signature
+    }
 	with(tasks.jar.get())
 	archiveAppendix.set("pdf")
 }
