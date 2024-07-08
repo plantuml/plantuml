@@ -43,10 +43,14 @@ dependencies {
 		testImplementation("org.mockito:mockito-junit-jupiter:5.+")
 	}
 	implementation("org.scilab.forge:jlatexmath:1.0.7")
-	
     implementation("org.eclipse.elk:org.eclipse.elk.core:0.9.1")
     implementation("org.eclipse.elk:org.eclipse.elk.alg.layered:0.9.1")
     implementation("org.eclipse.elk:org.eclipse.elk.alg.mrtree:0.9.1")
+
+    // Custom configuration for pdfJar task
+    configurations.create("pdfJarDeps")
+    "pdfJarDeps"("org.apache.xmlgraphics:fop:2.9")
+    "pdfJarDeps"("org.apache.xmlgraphics:batik-all:1.17")
     
 }
 
@@ -182,8 +186,10 @@ val pdfJar by tasks.registering(Jar::class) {
 	description = "Assembles a jar containing dependencies to create PDFs."
 	manifest.attributes["Main-Class"] = "net.sourceforge.plantuml.Run"
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-	val dependencies = configurations.runtimeClasspath.get().map(::zipTree)
-	from(dependencies)
+  val dependencies = configurations["pdfJarDeps"].map(::zipTree) + configurations.runtimeClasspath.get().map(::zipTree)
+	from(dependencies) {
+        exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA") // Avoid conflict on signature
+    }
 	with(tasks.jar.get())
 	archiveAppendix.set("pdf")
 }
