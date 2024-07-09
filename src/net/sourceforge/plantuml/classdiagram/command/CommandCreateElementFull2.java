@@ -200,7 +200,7 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
 
 		entity.setDisplay(display);
-		entity.setUSymbol(usymbol);
+
 		if (stereotype != null)
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),

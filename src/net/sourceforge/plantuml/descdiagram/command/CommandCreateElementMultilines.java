@@ -167,7 +167,6 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 		if (CommandCreateElementFull.existsWithBadType3(diagram, quark, type, usymbol))
 			return CommandExecutionResult.error("This element (" + quark.getName() + ") is already defined");
 
-		result.setUSymbol(usymbol);
 		if (stereotype != null)
 			result.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),

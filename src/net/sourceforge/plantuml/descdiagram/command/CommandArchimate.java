@@ -119,7 +119,7 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 		final String icon = StereotypePattern.removeChevronBrackets(arg.getLazzy("STEREOTYPE", 0));
 
 		entity.setDisplay(Display.getWithNewlines(display));
-		entity.setUSymbol(USymbols.ARCHIMATE);
+
 		if (icon != null)
 			entity.setStereotype(
 					Stereotype.build("<<$archimate/" + icon + ">>", diagram.getSkinParam().getCircledCharacterRadius(),

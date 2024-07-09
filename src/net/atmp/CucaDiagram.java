@@ -272,6 +272,11 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	}
 
 	final public CommandExecutionResult gotoGroup(Quark<Entity> quark, Display display, GroupType type) {
+		return gotoGroup(quark, display, type, null);
+	}
+
+	final public CommandExecutionResult gotoGroup(Quark<Entity> quark, Display display, GroupType type,
+			USymbol usymbol) {
 		if (quark.getData() == null) {
 			final Entity result = entityFactory.createGroup(quark, type, getHides());
 			result.setTogether(currentTogether());
@@ -279,6 +284,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		}
 		final Entity ent = quark.getData();
 		ent.muteToGroupType(type);
+		if (usymbol != null)
+			ent.setUSymbol(usymbol);
 
 		this.stacks.add(quark.getData());
 
@@ -558,7 +565,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			if (gender != null && gender.equals(stereoTypeLabel)) {
 				return !cmd.show;
 			} else if (gender == null) {
-				// we have a hide or show command without a stereotype name => hide or show all stereotypes
+				// we have a hide or show command without a stereotype name => hide or show all
+				// stereotypes
 				return !cmd.show;
 			}
 		}

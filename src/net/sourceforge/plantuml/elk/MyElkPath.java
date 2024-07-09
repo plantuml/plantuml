@@ -39,6 +39,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import javax.sound.midi.SysexMessage;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
@@ -205,18 +207,17 @@ public class MyElkPath implements UDrawable {
 		if (extremityFactory1 != null) {
 			final double x = sections.get(0).getEndX();
 			final double y = sections.get(0).getEndY();
-			extremityFactory1.drawU(ug.apply(stroke.onlyThickness()).apply(new UTranslate(x, y)));
+			final UTranslate force = magneticBorder2.getForceAt(ug.getStringBounder(), new XPoint2D(x, y));
+			extremityFactory1.drawU(ug.apply(stroke.onlyThickness()).apply(new UTranslate(x, y).compose(force)));
 		}
 
 		if (extremityFactory2 != null) {
 			final double x = sections.get(0).getStartX();
 			final double y = sections.get(0).getStartY();
-			extremityFactory2.drawU(ug.apply(stroke.onlyThickness()).apply(new UTranslate(x, y)));
+			final UTranslate force = magneticBorder1.getForceAt(ug.getStringBounder(), new XPoint2D(x, y));
+			extremityFactory2.drawU(ug.apply(stroke.onlyThickness()).apply(new UTranslate(x, y).compose(force)));
 		}
 
-		// ugOrig..remove thickness and line stroke (e.g. if arrow text is drawn with
-		// table)
-		// correct text color is missing
 		drawLabels(ugOrig);
 	}
 

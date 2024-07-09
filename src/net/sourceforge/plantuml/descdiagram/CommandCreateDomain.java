@@ -95,34 +95,6 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 		final GroupType type = typeString.equalsIgnoreCase("domain") ? GroupType.DOMAIN : GroupType.REQUIREMENT;
 		final LeafType type2 = typeString.equalsIgnoreCase("domain") ? LeafType.DOMAIN : LeafType.REQUIREMENT;
 
-		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(codeString));
-		if (quark.getData() != null)
-			return CommandExecutionResult.error("Object already exists : " + codeString);
-
-		Display display = Display.getWithNewlines(displayString);
-		final String urlString = arg.get("URL", 0);
-		final String group = arg.get("GROUP", 0);
-		Entity entity;
-		if (group != null) {
-			// final Entity currentGroup = diagram.getCurrentGroup();
-			diagram.gotoGroup(quark, display, type);
-			entity = diagram.getCurrentGroup();
-		} else {
-			entity = diagram.reallyCreateLeaf(quark, display, type2, null);
-		}
-		if (stereotype != null)
-			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
-					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
-					diagram.getSkinParam().getIHtmlColorSet()));
-
-		if (urlString != null) {
-			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
-			final Url url = urlBuilder.getUrl(urlString);
-			entity.addUrl(url);
-		}
-		final String s = arg.get("COLOR", 0);
-		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
-				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		if (typeString.equalsIgnoreCase("domain")) {
 			if (stereotype != null && stereotype.equalsIgnoreCase("<<Machine>>"))
 				typeString = "machine";
@@ -140,8 +112,36 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 				typeString = "biddable";
 
 		}
-		USymbol usymbol = USymbols.fromString(typeString, diagram.getSkinParam());
-		entity.setUSymbol(usymbol);
+		final USymbol usymbol = USymbols.fromString(typeString, diagram.getSkinParam());
+
+		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(codeString));
+		if (quark.getData() != null)
+			return CommandExecutionResult.error("Object already exists : " + codeString);
+
+		Display display = Display.getWithNewlines(displayString);
+		final String urlString = arg.get("URL", 0);
+		final String group = arg.get("GROUP", 0);
+		Entity entity;
+		if (group != null) {
+			diagram.gotoGroup(quark, display, type, usymbol);
+			entity = diagram.getCurrentGroup();
+		} else {
+			entity = diagram.reallyCreateLeaf(quark, display, type2, usymbol);
+		}
+		if (stereotype != null)
+			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
+					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
+					diagram.getSkinParam().getIHtmlColorSet()));
+
+		if (urlString != null) {
+			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
+			final Url url = urlBuilder.getUrl(urlString);
+			entity.addUrl(url);
+		}
+		final String s = arg.get("COLOR", 0);
+		entity.setSpecificColorTOBEREMOVED(ColorType.BACK,
+				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));
+
 		return CommandExecutionResult.ok();
 	}
 

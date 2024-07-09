@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
@@ -147,16 +148,18 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 		else
 			display = displayArg;
 
+		final String symbol = arg.get("SYMBOL", 0);
+
+		final USymbol usymbol = USymbols.fromString(symbol, diagram.getSkinParam().actorStyle(),
+				diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());
+
 		final CommandExecutionResult status = diagram.gotoGroup(ident, Display.getWithNewlines(display),
-				GroupType.PACKAGE);
+				GroupType.PACKAGE, usymbol);
 		if (status.isOk() == false)
 			return status;
 
 		final Entity p = diagram.getCurrentGroup();
-		final String symbol = arg.get("SYMBOL", 0);
-
-		p.setUSymbol(USymbols.fromString(symbol, diagram.getSkinParam().actorStyle(),
-				diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle()));
+		
 		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
 		if (stereotype != null)
 			p.setStereotype(Stereotype.build(stereotype, false));

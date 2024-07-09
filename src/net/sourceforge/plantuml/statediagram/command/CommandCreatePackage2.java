@@ -114,12 +114,11 @@ public class CommandCreatePackage2 extends SingleLineCommand2<StateDiagram> {
 		if (display == null)
 			display = quark.getName();
 
-		diagram.gotoGroup(quark, Display.getWithNewlines(display), GroupType.PACKAGE);
+		diagram.gotoGroup(quark, Display.getWithNewlines(display), GroupType.PACKAGE, USymbols.FRAME);
 		final Entity p = diagram.getCurrentGroup();
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		if (stereotype != null)
 			p.setStereotype(Stereotype.build(stereotype));
-		p.setUSymbol(USymbols.FRAME);
 
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {

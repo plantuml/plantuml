@@ -164,7 +164,7 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2<ClassDia
 
 		final Entity entity = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(display), type, usymbol);
 		entity.setDisplay(Display.getWithNewlines(display));
-		entity.setUSymbol(usymbol);
+
 		if (stereotype != null)
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),

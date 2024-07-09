@@ -82,21 +82,19 @@ public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
 			throws NoSuchColorException {
 		final String idShort = arg.get("NAME", 0);
 		final Quark<Entity> quark = diagram.quarkInContext(false, diagram.cleanId(idShort));
+		
+		final String stereotype = arg.get("STEREOTYPE", 0);
+		final USymbol usymbol = USymbols.fromString(stereotype, diagram.getSkinParam().actorStyle(),
+				diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());
+		
 		final CommandExecutionResult status = diagram.gotoGroup(quark, Display.getWithNewlines(quark.getName()),
-				GroupType.PACKAGE);
+				GroupType.PACKAGE, usymbol);
 		if (status.isOk() == false)
 			return status;
+		
 		final Entity p = diagram.getCurrentGroup();
-		final String stereotype = arg.get("STEREOTYPE", 0);
-		if (stereotype != null) {
-			final USymbol usymbol = USymbols.fromString(stereotype, diagram.getSkinParam().actorStyle(),
-					diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());
-			if (usymbol == null)
-				p.setStereotype(Stereotype.build(stereotype));
-			else
-				p.setUSymbol(usymbol);
-
-		}
+		if (stereotype != null && usymbol == null)
+			p.setStereotype(Stereotype.build(stereotype));
 
 		final String urlString = arg.get("URL", 0);
 		if (urlString != null) {
