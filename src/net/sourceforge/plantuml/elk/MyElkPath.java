@@ -39,8 +39,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import javax.sound.midi.SysexMessage;
-
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
