@@ -352,12 +352,12 @@ public class Display implements Iterable<CharSequence> {
 		return this;
 	}
 
-	public final static Pattern2 patternStereotype = MyPattern.cmpile("^(.*?)(?:\\<\\<\\s*(.*)\\s*\\>\\>)\\s*$");
+	public final static Pattern2 patternStereotype = MyPattern.cmpile("^(.*?)(\\<\\<\\s*(.*)\\s*\\>\\>)\\s*$");
 
-	public String getEndingStereotype() {
+	public Stereotype getEndingStereotype() {
 		final Matcher2 m = patternStereotype.matcher(displayData.get(displayData.size() - 1));
 		if (m.matches())
-			return m.group(2);
+			return Stereotype.build(m.group(2));
 
 		return null;
 	}

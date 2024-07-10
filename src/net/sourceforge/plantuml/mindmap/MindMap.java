@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
 
@@ -111,7 +112,7 @@ public class MindMap implements UDrawable {
 
 	private int multiplier = 0;
 
-	CommandExecutionResult addIdeaInternal(String stereotype, HColor backColor, int level, Display label,
+	CommandExecutionResult addIdeaInternal(Stereotype stereotype, HColor backColor, int level, Display label,
 			IdeaShape shape, boolean direction) {
 		try {
 			if (this.reverse.hasRoot() == false && this.regular.hasRoot() == false)

@@ -131,7 +131,7 @@ public class WBSDiagram extends UmlDiagram {
 	}
 
 	public final static Pattern2 patternStereotype = MyPattern
-			.cmpile("^\\s*(.*?)(?:\\s*\\<\\<\\s*(.*)\\s*\\>\\>)\\s*$");
+			.cmpile("^\\s*(.*?)\\s*(\\<\\<\\s*(.*)\\s*\\>\\>)\\s*$");
 
 	public CommandExecutionResult addIdea(String code, HColor backColor, int level, String label, Direction direction,
 			IdeaShape shape) {
@@ -142,10 +142,10 @@ public class WBSDiagram extends UmlDiagram {
 			stereotype = m.group(2);
 		}
 		final Display display = Display.getWithNewlines(label);
-		return addIdea(code, backColor, level, display, stereotype, direction, shape);
+		return addIdea(code, backColor, level, display, Stereotype.build(stereotype), direction, shape);
 	}
 
-	public CommandExecutionResult addIdea(String code, HColor backColor, int level, Display display, String stereotype,
+	public CommandExecutionResult addIdea(String code, HColor backColor, int level, Display display, Stereotype stereotype,
 			Direction direction, IdeaShape shape) {
 		try {
 			if (level == 0) {
@@ -162,7 +162,7 @@ public class WBSDiagram extends UmlDiagram {
 		}
 	}
 
-	private void initRoot(HColor backColor, Display display, String stereotype, IdeaShape shape) {
+	private void initRoot(HColor backColor, Display display, Stereotype stereotype, IdeaShape shape) {
 		root = new WElement(backColor, display, stereotype, getSkinParam().getCurrentStyleBuilder(), shape);
 		last = root;
 	}
@@ -197,7 +197,7 @@ public class WBSDiagram extends UmlDiagram {
 		throw new UnsupportedOperationException("type=<" + type + ">[" + first + "]");
 	}
 
-	private CommandExecutionResult add(String code, HColor backColor, int level, Display display, String stereotype,
+	private CommandExecutionResult add(String code, HColor backColor, int level, Display display, Stereotype stereotype,
 			Direction direction, IdeaShape shape) {
 		try {
 			if (level == last.getLevel() + 1) {

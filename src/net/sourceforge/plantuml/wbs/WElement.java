@@ -62,7 +62,7 @@ final public class WElement {
 	private final HColor backColor;
 	private final Display label;
 	private final int level;
-	private final String stereotype;
+	private final Stereotype stereotype;
 	private final WElement parent;
 	private final StyleBuilder styleBuilder;
 	private final List<WElement> childrenLeft = new ArrayList<>();
@@ -115,11 +115,11 @@ final public class WElement {
 		return result;
 	}
 
-	public WElement(HColor backColor, Display label, String stereotype, StyleBuilder styleBuilder, IdeaShape shape) {
+	public WElement(HColor backColor, Display label, Stereotype stereotype, StyleBuilder styleBuilder, IdeaShape shape) {
 		this(backColor, 0, label, stereotype, null, shape, styleBuilder);
 	}
 
-	private WElement(HColor backColor, int level, Display label, String stereotype, WElement parent, IdeaShape shape,
+	private WElement(HColor backColor, int level, Display label, Stereotype stereotype, WElement parent, IdeaShape shape,
 			StyleBuilder styleBuilder) {
 		this.label = label;
 		this.backColor = backColor;
@@ -134,7 +134,7 @@ final public class WElement {
 		return childrenLeft.size() == 0 && childrenRight.size() == 0;
 	}
 
-	public WElement createElement(HColor backColor, int newLevel, Display newLabel, String stereotype,
+	public WElement createElement(HColor backColor, int newLevel, Display newLabel, Stereotype stereotype,
 			Direction direction, IdeaShape shape, StyleBuilder styleBuilder) {
 		final WElement result = new WElement(backColor, newLevel, newLabel, stereotype, this, shape, styleBuilder);
 		if (direction == Direction.LEFT && newLevel == 1)
@@ -192,9 +192,7 @@ final public class WElement {
 	}
 
 	public Stereotype getStereotype() {
-		if (stereotype == null)
-			return null;
-		return Stereotype.build("<<" + stereotype + ">>");
+		return stereotype;
 	}
 
 }

@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.BlocLines;
 
 public class CommandMindMapOrgmodeMultiline extends CommandMultilines2<MindMapDiagram> {
@@ -70,7 +71,7 @@ public class CommandMindMapOrgmodeMultiline extends CommandMultilines2<MindMapDi
 
 	@Override
 	public String getPatternEnd() {
-		return "^(.*);(?:\\s*\\<\\<(.+)\\>\\>)?$";
+		return "^(.*);\\s*(\\<\\<(.+)\\>\\>)?$";
 	}
 
 	@Override
@@ -82,22 +83,20 @@ public class CommandMindMapOrgmodeMultiline extends CommandMultilines2<MindMapDi
 		lines = lines.removeStartingAndEnding(line0.get("DATA", 0), 1);
 
 		final String stereotype = lineLast.get(1);
-		if (stereotype != null) {
+		if (stereotype != null)
 			lines = lines.overrideLastLine(lineLast.get(0));
-		}
 
 		final String type = line0.get("TYPE", 0);
 		final String stringColor = line0.get("BACKCOLOR", 0);
 		HColor backColor = null;
-		if (stringColor != null) {
+		if (stringColor != null)
 			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);
-		}
 
-		if (stereotype == null) {
+		if (stereotype == null)
 			return diagram.addIdea(backColor, type.length() - 1, lines.toDisplay(),
 					IdeaShape.fromDesc(line0.get("SHAPE", 0)));
-		}
-		return diagram.addIdea(stereotype, backColor, type.length() - 1, lines.toDisplay(),
+
+		return diagram.addIdea(Stereotype.build(stereotype), backColor, type.length() - 1, lines.toDisplay(),
 				IdeaShape.fromDesc(line0.get("SHAPE", 0)));
 	}
 

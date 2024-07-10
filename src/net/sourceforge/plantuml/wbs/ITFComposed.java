@@ -150,19 +150,17 @@ class ITFComposed extends WBSTextBlock implements ITF {
 		final double x = getw1(stringBounder);
 		double y = mainDim.getHeight();
 		double lastY1 = y;
+		final HColor lineColor = getLinkColor();
 		for (ITF child : left) {
 			y += marginBottom;
 			final XDimension2D childDim = child.calculateDimension(stringBounder);
 			lastY1 = y + child.getF2(stringBounder).getY();
-			drawLine(ug, x - childDim.getWidth() - delta1x + child.getF2(stringBounder).getX(), lastY1, x,
-					lastY1);
+			drawLine(ug.apply(lineColor), x - childDim.getWidth() - delta1x + child.getF2(stringBounder).getX(), lastY1, x, lastY1);
 			child.drawU(ug.apply(new UTranslate(x - childDim.getWidth() - delta1x, y)));
 			y += childDim.getHeight();
 		}
 
 		y = mainDim.getHeight();
-		HColor lineColor = getLinkColor();
-		lineColor = HColors.BLUE;
 		double lastY2 = y;
 		for (ITF child : right) {
 			y += marginBottom;

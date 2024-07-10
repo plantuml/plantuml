@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.Direction;
 
@@ -72,7 +73,7 @@ public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 
 	@Override
 	public String getPatternEnd() {
-		return "^(.*);(?:\\s*\\<\\<(.+)\\>\\>)?$";
+		return "^(.*);\\s*(\\<\\<(.+)\\>\\>)?$";
 	}
 
 	static IRegex getRegexConcatOld() {
@@ -105,7 +106,7 @@ public class CommandWBSItemMultiline extends CommandMultilines2<WBSDiagram> {
 
 		Direction dir = Direction.RIGHT;
 
-		return diagram.addIdea(null, backColor, diagram.getSmartLevel(type), lines.toDisplay(), stereotype, dir,
+		return diagram.addIdea(null, backColor, diagram.getSmartLevel(type), lines.toDisplay(), Stereotype.build(stereotype), dir,
 				IdeaShape.fromDesc(line0.get("SHAPE", 0)));
 
 	}

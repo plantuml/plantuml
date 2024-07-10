@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.StyleBuilder;
 
@@ -49,7 +50,7 @@ class Branch implements UDrawable {
 	private Idea last;
 	private Finger finger;
 
-	void initRoot(StyleBuilder styleBuilder, HColor backColor, Display label, IdeaShape shape, String stereotype) {
+	void initRoot(StyleBuilder styleBuilder, HColor backColor, Display label, IdeaShape shape, Stereotype stereotype) {
 		root = Idea.createIdeaSimple(styleBuilder, backColor, label, shape, stereotype);
 		last = root;
 	}
@@ -67,7 +68,7 @@ class Branch implements UDrawable {
 	}
 
 	CommandExecutionResult add(StyleBuilder styleBuilder, HColor backColor, int level, Display label, IdeaShape shape,
-			String stereotype) {
+			Stereotype stereotype) {
 		if (last == null)
 			return CommandExecutionResult.error("Check your indentation ?");
 

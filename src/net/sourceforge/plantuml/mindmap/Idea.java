@@ -42,6 +42,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -58,7 +59,7 @@ class Idea {
 	private final IdeaShape shape;
 	private final HColor backColor;
 	private final StyleBuilder styleBuilder;
-	private final String stereotype;
+	private final Stereotype stereotype;
 
 	private StyleSignatureBasic getDefaultStyleDefinitionNode(int level) {
 		final String depth = SName.depth(level);
@@ -105,19 +106,19 @@ class Idea {
 	}
 
 	public static Idea createIdeaSimple(StyleBuilder styleBuilder, HColor backColor, Display label, IdeaShape shape,
-			String stereotype) {
+			Stereotype stereotype) {
 		return new Idea(styleBuilder, backColor, 0, null, label, shape, stereotype);
 	}
 
 	public Idea createIdea(StyleBuilder styleBuilder, HColor backColor, int newLevel, Display newDisplay,
-			IdeaShape newShape, String stereotype) {
+			IdeaShape newShape, Stereotype stereotype) {
 		final Idea result = new Idea(styleBuilder, backColor, newLevel, this, newDisplay, newShape, stereotype);
 		this.children.add(result);
 		return result;
 	}
 
 	private Idea(StyleBuilder styleBuilder, HColor backColor, int level, Idea parent, Display label, IdeaShape shape,
-			String stereotype) {
+			Stereotype stereotype) {
 		this.backColor = backColor;
 		this.styleBuilder = styleBuilder;
 		this.label = label;
@@ -164,7 +165,7 @@ class Idea {
 		return styleBuilder;
 	}
 
-	public final String getStereotype() {
+	public final Stereotype getStereotype1() {
 		return stereotype;
 	}
 
