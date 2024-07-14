@@ -271,9 +271,6 @@ class Step1Message extends Step1Abstract {
 		if (m.getArrowConfiguration().isHidden())
 			result = result.withBody(ArrowBody.HIDDEN);
 
-		if (m.getArrowConfiguration().isAsync())
-			result = result.withHead(ArrowHead.ASYNC);
-
 		result = result.withHead1(m.getArrowConfiguration().getDressing1().getHead());
 		result = result.withHead2(m.getArrowConfiguration().getDressing2().getHead());
 		result = result.withPart(m.getArrowConfiguration().getPart());

@@ -209,8 +209,11 @@ public class ArrowConfiguration {
 		return dressing1.getHead();
 	}
 
-	public boolean isAsync() {
-		return dressing1.getHead() == ArrowHead.ASYNC || dressing2.getHead() == ArrowHead.ASYNC;
+	public boolean isAsync1() {
+		return dressing1.getHead() == ArrowHead.ASYNC;
+	}
+	public boolean isAsync2() {
+		return dressing2.getHead() == ArrowHead.ASYNC;
 	}
 
 	public final ArrowPart getPart() {
