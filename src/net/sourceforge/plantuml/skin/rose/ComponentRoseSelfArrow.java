@@ -132,6 +132,15 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 			ug.apply(UStroke.withThickness(2))
 					.apply(new UTranslate(ComponentRoseArrow.spaceCrossX, textHeight + getArrowDeltaX() / 2.0))
 					.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));
+		}  else if (getArrowConfiguration().isAsync1()) {
+			if (getArrowConfiguration().getPart() != ArrowPart.BOTTOM_PART) {
+				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x1, textHeight))
+						.draw(new ULine(getArrowDeltaX(), getArrowDeltaY()));
+			}
+			if (getArrowConfiguration().getPart() != ArrowPart.TOP_PART) {
+				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x1, textHeight))
+						.draw(new ULine(getArrowDeltaX(), -getArrowDeltaY()));
+			}
 		} else if (getArrowConfiguration().getDressing1().getHead() == ArrowHead.NORMAL) {
 			final UPolygon polygon = getPolygon().translate(0, textHeight);
 			ug.apply(getForegroundColor().bg()).apply(UTranslate.dx(x1)).draw(polygon);
@@ -146,7 +155,7 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 					.apply(new UTranslate(ComponentRoseArrow.spaceCrossX,
 							textHeight + getArrowDeltaX() / 2.0 + arrowHeight))
 					.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));
-		} else if (getArrowConfiguration().isAsync()) {
+		} else if (getArrowConfiguration().isAsync2()) {
 			if (getArrowConfiguration().getPart() != ArrowPart.BOTTOM_PART) {
 				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(x2, textHeight + arrowHeight))
 						.draw(new ULine(getArrowDeltaX(), -getArrowDeltaY()));
@@ -243,7 +252,7 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 					.apply(new UTranslate(prefTextWidth-x2-ComponentRoseArrow.spaceCrossX/2,
 							textHeight + getArrowDeltaX() / 2.0 + arrowHeight))
 					.draw(new ULine(getArrowDeltaX(), -getArrowDeltaX()));
-		} else if (getArrowConfiguration().isAsync()) {
+		} else if (getArrowConfiguration().isAsync2()) {
 			if (getArrowConfiguration().getPart() != ArrowPart.BOTTOM_PART) {
 				getArrowConfiguration().applyThicknessOnly(ug).apply(new UTranslate(prefTextWidth - x2 , textHeight + arrowHeight))
 						.draw(new ULine(-getArrowDeltaX(), -getArrowDeltaY()));

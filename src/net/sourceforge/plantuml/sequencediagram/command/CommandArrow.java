@@ -227,7 +227,8 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		final Participant p2;
 		final boolean circleAtStart;
 		final boolean circleAtEnd;
-
+		final boolean sync1;
+		final boolean sync2;
 		if (reverseDefine) {
 			// Keep the order
 			// See https://github.com/plantuml/plantuml/issues/1819#issuecomment-2158524871
@@ -235,15 +236,17 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 			p1 = getOrCreateParticipant(diagram, arg, "PART2");
 			circleAtStart = dressing2.contains("o");
 			circleAtEnd = dressing1.contains("o");
+			sync2 = contains(dressing1, "<<", "\\\\", "//");
+			sync1 = contains(dressing2, ">>", "\\\\", "//");
 		} else {
 			p1 = getOrCreateParticipant(diagram, arg, "PART1");
 			p2 = getOrCreateParticipant(diagram, arg, "PART2");
 			circleAtStart = dressing1.contains("o");
 			circleAtEnd = dressing2.contains("o");
-
+			sync1 = contains(dressing1, "<<", "\\\\", "//");
+			sync2 = contains(dressing2, ">>", "\\\\", "//");
 		}
 
-		final boolean sync = contains(dressing1, "<<", "\\\\", "//") || contains(dressing2, ">>", "\\\\", "//");
 
 		final boolean dotted = getLength(arg) > 1;
 
@@ -261,8 +264,10 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		if (dotted)
 			config = config.withBody(ArrowBody.DOTTED);
 
-		if (sync)
-			config = config.withHead(ArrowHead.ASYNC);
+		if (sync1)
+			config = config.withHead1(ArrowHead.ASYNC);
+		if (sync2)
+			config = config.withHead2(ArrowHead.ASYNC);
 
 		if (dressing2.contains("\\") || dressing1.contains("/"))
 			config = config.withPart(ArrowPart.TOP_PART);
