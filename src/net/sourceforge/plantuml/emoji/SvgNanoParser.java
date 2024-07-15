@@ -36,8 +36,11 @@
 package net.sourceforge.plantuml.emoji;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -83,6 +86,15 @@ public class SvgNanoParser implements Sprite {
 		return null;
 	}
 
+	private String extractDataStyle(String name, String s) {
+		final Pattern p = Pattern.compile(Pattern.quote(name) + ":([^;\"]+)");
+		final Matcher m = p.matcher(s);
+		if (m.find())
+			return m.group(1);
+
+		return null;
+	}
+
 	public SvgNanoParser(String svg, boolean keepColors) {
 		this(Collections.singletonList(svg), keepColors);
 	}
@@ -117,15 +129,19 @@ public class SvgNanoParser implements Sprite {
 		}
 
 		final List<UGraphicWithScale> stack = new ArrayList<>();
+		final Deque<String> stackG = new ArrayDeque<>();
 		for (String s : data) {
 			if (s.startsWith("<path ")) {
 				drawPath(ugs, s, colorForMonochrome);
 			} else if (s.startsWith("</g>")) {
 				ugs = stack.remove(0);
+				stackG.removeFirst();
 			} else if (s.startsWith("<g>")) {
 				stack.add(0, ugs);
+				stackG.addFirst(s);
 			} else if (s.startsWith("<g ")) {
 				stack.add(0, ugs);
+				stackG.addFirst(s);
 				ugs = applyFill(ugs, s, colorForMonochrome);
 				ugs = applyTransform(ugs, s);
 			} else if (s.startsWith("<circle ")) {
@@ -133,7 +149,7 @@ public class SvgNanoParser implements Sprite {
 			} else if (s.startsWith("<ellipse ")) {
 				drawEllipse(ugs, s, colorForMonochrome);
 			} else if (s.startsWith("<text ")) {
-				drawText(ugs, s, colorForMonochrome);
+				drawText(ugs, s, colorForMonochrome, stackG);
 			} else {
 				System.err.println("**?=" + s);
 			}
@@ -161,7 +177,7 @@ public class SvgNanoParser implements Sprite {
 	}
 
 	private UGraphicWithScale applyFill(UGraphicWithScale ugs, String s, HColor colorForMonochrome) {
-		final String fillString = extractData("fill", s);
+		final String fillString = getTextFontColor(s, null);
 		if (fillString == null)
 			return ugs;
 
@@ -187,7 +203,7 @@ public class SvgNanoParser implements Sprite {
 	}
 
 	private HColor justExtractColor(String s) {
-		final String fillString = extractData("fill", s);
+		final String fillString = getTextFontColor(s, null);
 		if (fillString == null)
 			return null;
 
@@ -277,23 +293,79 @@ public class SvgNanoParser implements Sprite {
 
 	}
 
-	private void drawText(UGraphicWithScale ugs, String s, HColor colorForMonochrome) {
+	private void drawText(UGraphicWithScale ugs, String s, HColor colorForMonochrome, Deque<String> stackG) {
 		final double x = Double.parseDouble(extractData("x", s));
 		final double y = Double.parseDouble(extractData("y", s));
-		final String fill = extractData("fill", s);
-		final int fontSize = Integer.parseInt(extractData("font-size", s));
+		final String fontColor = getTextFontColor(s, stackG);
+		final int fontSize = getTextFontSize(s);
 
 		final Pattern p = Pattern.compile("\\<text[^<>]*\\>(.*?)\\</text\\>");
 		final Matcher m = p.matcher(s);
 		if (m.find()) {
 			final String text = m.group(1);
-			HColor color = HColorSet.instance().getColorOrWhite(fill);
-			final FontConfiguration fc = FontConfiguration.create(UFont.sansSerif(fontSize), color, color, null);
+			final HColor color = HColorSet.instance().getColorOrWhite(fontColor);
+			String fontFamily = getTextFontFamily(s, stackG);
+			if (fontFamily == null)
+				fontFamily = "SansSerif";
+			final UFont font = UFont.build(fontFamily, Font.PLAIN, fontSize);
+			final FontConfiguration fc = FontConfiguration.create(font, color, color, null);
 			final UText utext = UText.build(text, fc);
 			UGraphic ug = ugs.getUg();
 			ug = ug.apply(new UTranslate(x, y));
 			ug.draw(utext);
 		}
+	}
+
+	private String getTextFontFamily(String s, Deque<String> stackG) {
+		String family = extractData("font-family", s);
+		if (family == null) {
+			final String style = extractData("style", s);
+			if (style != null)
+				family = extractDataStyle("font-family", style);
+		}
+		if (family == null && stackG != null) {
+			for (String g : stackG) {
+				family = getTextFontFamily(g, null);
+				if (family != null)
+					return family;
+			}
+		}
+		return family;
+	}
+
+	private String getTextFontColor(String s, Deque<String> stackG) {
+		String color = extractData("fill", s);
+		if (color == null) {
+			final String style = extractData("style", s);
+			if (style != null)
+				color = extractDataStyle("fill", style);
+		}
+		if (color == null && stackG != null) {
+			for (String g : stackG) {
+				color = getTextFontColor(g, null);
+				if (color != null)
+					return color;
+			}
+		}
+		return color;
+	}
+
+	private int getTextFontSize(String s) {
+		String fontSize = extractData("font-size", s);
+		if (fontSize == null) {
+			final String style = extractData("style", s);
+			if (style != null)
+				fontSize = extractDataStyle("font-size", style);
+
+		}
+		if (fontSize == null)
+			// Not perfect, by let's take a default value
+			return 14;
+
+		if (fontSize.matches("^\\d+p[tx]$"))
+			return Integer.parseInt(fontSize.replaceAll("[a-z]", ""));
+
+		return Integer.parseInt(fontSize);
 	}
 
 	private void drawPath(UGraphicWithScale ugs, String s, HColor colorForMonochrome) {
