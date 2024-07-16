@@ -152,7 +152,6 @@ public class StyleSignatureBasic implements StyleSignature {
 	}
 
 	public boolean matchAll(StyleSignatureBasic other) {
-		System.err.println("names=" + names);
 		final boolean namesContainsStar = names.contains(STAR);
 		if (other.isStarred() && namesContainsStar == false)
 			return false;
