@@ -154,7 +154,7 @@ public class SubjectResource implements Subject<GanttDiagram> {
 
 		public IsOffDates() {
 			super(SubjectResource.this, Verbs.isOff,
-					Words.zeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), new ComplementDates());
+					Words.zeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), new ComplementIntervals());
 		}
 
 		@Override
@@ -205,7 +205,7 @@ public class SubjectResource implements Subject<GanttDiagram> {
 
 		public IsOnDates() {
 			super(SubjectResource.this, Verbs.isOn,
-					Words.zeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), new ComplementDates());
+					Words.zeroOrMore(Words.FROM, Words.ON, Words.FOR, Words.THE, Words.AT), new ComplementIntervals());
 		}
 
 		@Override

@@ -38,65 +38,44 @@ package net.sourceforge.plantuml.project.lang;
 import net.sourceforge.plantuml.project.DaysAsDates;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.core.Moment;
+import net.sourceforge.plantuml.project.core.TaskAttribute;
+import net.sourceforge.plantuml.project.core.TaskInstant;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 
-public class ComplementDates implements Something<GanttDiagram> {
+public class ComplementIntervalsSmart implements Something<GanttDiagram> {
 
 	public IRegex toRegex(String suffix) {
-		return new RegexOr(toRegexB(suffix), toRegexE(suffix));
+		return toRegexB(suffix);
 	}
 
 	private IRegex toRegexB(String suffix) {
 		final DayPattern dayPattern1 = new DayPattern("1");
-		final DayPattern dayPattern2 = new DayPattern("2");
 		return new RegexConcat( //
 				dayPattern1.toRegex(), //
 				Words.exactly(Words.TO), //
-				Words.zeroOrMore(Words.THE), //
 				RegexLeaf.spaceOneOrMore(), //
-				dayPattern2.toRegex() //
+				new RegexLeaf("TASKREF", "\\[([^\\[\\]]+?)\\]"), //
+				new RegexLeaf("TASKBOUND", ".?s[%s]+(start|end)") //
 		);
 	}
 
-	private IRegex toRegexE(String suffix) {
-		return new RegexConcat( //
-				new RegexLeaf("[dD]\\+"), //
-				new RegexLeaf("ECOUNT1" + suffix, "([\\d]+)"), //
-				Words.exactly(Words.TO), //
-				Words.zeroOrMore(Words.THE), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("[dD]\\+"), //
-				new RegexLeaf("ECOUNT2" + suffix, "([\\d]+)") //
-		);
-	}
-
-	public Failable<DaysAsDates> getMe(GanttDiagram project, RegexResult arg, String suffix) {
+	public Failable<DaysAsDates> getMe(GanttDiagram system, RegexResult arg, String suffix) {
 		final Day d1 = new DayPattern("1").getDay(arg);
-		if (d1 != null) {
-			final Day d2 = new DayPattern("2").getDay(arg);
-			return Failable.ok(new DaysAsDates(d1, d2));
-		}
 
-		if (arg.get("ECOUNT1" + suffix, 0) != null)
-			return Failable.ok(resultE(project, arg, suffix));
+		final String code = arg.get("TASKREF", 0);
+		final Moment task = system.getExistingMoment(code);
+		if (task == null)
+			return Failable.error("No such task " + code);
 
-		throw new IllegalStateException();
+		final String startOrEnd = arg.get("TASKBOUND", 0);
+		final TaskInstant result = new TaskInstant(task, TaskAttribute.fromString(startOrEnd));
+		return Failable.ok(new DaysAsDates(d1, result.getInstantTheorical()));
 
-	}
-
-	private DaysAsDates resultE(GanttDiagram project, RegexResult arg, String suffix) {
-		final int day1 = Integer.parseInt(arg.get("ECOUNT1" + suffix, 0));
-		final Day date1 = project.getStartingDate().addDays(day1);
-
-		final int day2 = Integer.parseInt(arg.get("ECOUNT2" + suffix, 0));
-		final Day date2 = project.getStartingDate().addDays(day2);
-
-		return new DaysAsDates(date1, date2);
 	}
 
 }

@@ -41,11 +41,11 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.time.Day;
 
-public class SentencePausesDates extends SentenceSimple<GanttDiagram> {
+public class SentencePausesAbsoluteIntervalsSmart extends SentenceSimple<GanttDiagram> {
 
-	public SentencePausesDates() {
+	public SentencePausesAbsoluteIntervalsSmart() {
 		super(SubjectTask.ME, Verbs.pauses, Words.zeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),
-				new ComplementDates());
+				new ComplementIntervalsSmart());
 	}
 
 	@Override
@@ -54,8 +54,8 @@ public class SentencePausesDates extends SentenceSimple<GanttDiagram> {
 		final DaysAsDates pauses = (DaysAsDates) complement;
 		for (Day day : pauses)
 			task.addPause(day);
-
 		return CommandExecutionResult.ok();
+
 	}
 
 }

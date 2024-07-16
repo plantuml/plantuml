@@ -33,65 +33,29 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project;
+package net.sourceforge.plantuml.project.lang;
 
-import java.util.Iterator;
-
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.project.DaysAsDates;
+import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.time.Day;
 
-public class DaysAsDates implements Iterable<Day> {
+public class SentencePausesAbsoluteIntervals extends SentenceSimple<GanttDiagram> {
 
-	private final Day date1;
-	private final Day date2;
-
-	public DaysAsDates(Day date1, Day date2) {
-		this.date1 = date1;
-		this.date2 = date2;
+	public SentencePausesAbsoluteIntervals() {
+		super(SubjectTask.ME, Verbs.pauses, Words.zeroOrMore(Words.THE, Words.ON, Words.AT, Words.FROM),
+				new ComplementIntervals());
 	}
 
 	@Override
-	public String toString() {
-		return "{ " + date1 + " , " + date2 + " }";
-	}
+	public CommandExecutionResult execute(GanttDiagram project, Object subject, Object complement) {
+		final Task task = (Task) subject;
+		final DaysAsDates pauses = (DaysAsDates) complement;
+		for (Day day : pauses)
+			task.addPause(day);
 
-	public DaysAsDates(GanttDiagram gantt, Day date1, int count) {
-		this.date1 = date1;
-		Day tmp = date1;
-		while (count > 0) {
-			if (gantt.isOpen(tmp)) {
-				count--;
-			}
-			tmp = tmp.increment();
-		}
-		this.date2 = tmp;
-	}
-
-	class MyIterator implements Iterator<Day> {
-
-		private Day current;
-
-		public MyIterator(Day current) {
-			this.current = current;
-		}
-
-		public boolean hasNext() {
-			return current.compareTo(date2) <= 0;
-		}
-
-		public Day next() {
-			final Day result = current;
-			current = current.increment();
-			return result;
-		}
-
-		public void remove() {
-			throw new UnsupportedOperationException();
-		}
-
-	}
-
-	public Iterator<Day> iterator() {
-		return new MyIterator(date1);
+		return CommandExecutionResult.ok();
 	}
 
 }
