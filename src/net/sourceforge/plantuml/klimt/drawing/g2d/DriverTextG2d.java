@@ -106,12 +106,13 @@ public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 		// https://stackoverflow.com/questions/31536952/how-to-fix-text-quality-in-java-graphics
 		// https://stackoverflow.com/questions/72818320/improve-java2d-drawing-quality-on-hi-resolution-monitors
 		/*
-		 * g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-		 * g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
+		 * g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
+		 * RenderingHints.VALUE_RENDER_QUALITY);
+		 * g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+		 * RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
 		 */
 
 		g2d.setFont(font.getUnderlayingFont(UFontContext.G2D));
-		g2d.setColor(fontConfiguration.getColor().toColor(mapper));
 
 		if (orientation == 90) {
 			final AffineTransform orig = g2d.getTransform();
@@ -141,6 +142,7 @@ public class DriverTextG2d implements UDriver<UText, Graphics2D> {
 			visible.ensureVisible(x, y - height + 1.5);
 			visible.ensureVisible(x + width, y + 1.5);
 
+			g2d.setColor(fontConfiguration.getColor().toColor(mapper));
 			g2d.drawString(text, (float) x, (float) y);
 
 			if (fontConfiguration.containsStyle(FontStyle.UNDERLINE)) {

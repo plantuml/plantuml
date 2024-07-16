@@ -86,7 +86,7 @@ class Context {
 		boolean star = false;
 		for (Iterator<String> it = data.iterator(); it.hasNext();) {
 			String s = it.next();
-			if (s.endsWith("*")) {
+			if (s.endsWith(StyleSignatureBasic.STAR)) {
 				star = true;
 				s = s.substring(0, s.length() - 1);
 			}

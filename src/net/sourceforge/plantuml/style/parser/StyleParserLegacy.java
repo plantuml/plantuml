@@ -113,7 +113,7 @@ public class StyleParserLegacy {
 				String names = mKeyNames.group(1);
 				final boolean isRecurse = mKeyNames.group(2) != null;
 				if (isRecurse)
-					names += "*";
+					names += StyleSignatureBasic.STAR;
 
 				context = context.push(names);
 				maps.add(new EnumMap<PName, Value>(PName.class));

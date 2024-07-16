@@ -51,11 +51,12 @@ import net.sourceforge.plantuml.url.Url;
 public class StyleSignatureBasic implements StyleSignature {
 	// ::remove file when __HAXE__
 
+	public static final String STAR = "*";
 	private final Set<String> names = new LinkedHashSet<>();
 	private final boolean withDot;
 
 	public StyleSignatureBasic(String s) {
-		if (s.contains("*") || s.contains("&") || s.contains("-"))
+		if (s.contains(STAR) || s.contains("&") || s.contains("-"))
 			throw new IllegalArgumentException();
 
 		this.withDot = s.contains(".");
@@ -119,12 +120,12 @@ public class StyleSignatureBasic implements StyleSignature {
 
 	public StyleSignatureBasic addStar() {
 		final Set<String> result = new LinkedHashSet<>(names);
-		result.add("*");
+		result.add(STAR);
 		return new StyleSignatureBasic(withDot, result);
 	}
 
 	public boolean isStarred() {
-		return names.contains("*");
+		return names.contains(STAR);
 	}
 
 	@Override
@@ -151,14 +152,15 @@ public class StyleSignatureBasic implements StyleSignature {
 	}
 
 	public boolean matchAll(StyleSignatureBasic other) {
-		final boolean namesContainsStar = names.contains("*");
+		System.err.println("names=" + names);
+		final boolean namesContainsStar = names.contains(STAR);
 		if (other.isStarred() && namesContainsStar == false)
 			return false;
 
 		final int depthInNames = depthFromTokens(other.names);
 
 		for (String token : names) {
-			if (token.equals("*"))
+			if (token.equals(STAR))
 				continue;
 
 			if (namesContainsStar && depthInNames != -1 && depthFromToken(token) != -1) {

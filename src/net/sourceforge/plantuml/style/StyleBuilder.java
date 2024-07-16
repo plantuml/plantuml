@@ -73,7 +73,7 @@ public class StyleBuilder implements AutomaticCounter {
 	}
 
 	public Style createStyle(String name) {
-		if (name.contains("*"))
+		if (name.contains(StyleSignatureBasic.STAR))
 			throw new IllegalArgumentException();
 
 		name = name.toLowerCase();
