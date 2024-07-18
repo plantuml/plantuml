@@ -49,11 +49,17 @@ public class Words {
 	public final static String AT = "at";
 	public final static String BEFORE = "before";
 	public final static String COMPLETION = "completion";
+	public final static String DAY = "day";
+	public final static String END = "end";
 	public final static String FOR = "for";
 	public final static String FROM = "from";
 	public final static String ON = "on";
+	public final static String START = "start";
 	public final static String THE = "the";
 	public final static String TO = "to";
+	public final static String WEEK = "week";
+	public final static String WITH = "with";
+	public final static String WORKING = "working";
 
 	public static IRegex zeroOrMore(String... words) {
 		final IRegex tmp[] = new IRegex[words.length];
@@ -70,6 +76,22 @@ public class Words {
 			tmp[i] = new RegexConcat(RegexLeaf.spaceOneOrMore(), new RegexLeaf(words[i]));
 
 		return new RegexConcat(tmp);
+	}
+
+	public static IRegex single(String word) {
+		return new RegexLeaf(word);
+	}
+
+	public static IRegex namedSingle(String name, String word) {
+		return new RegexLeaf(name, word);
+	}
+
+	public static IRegex namedOneOf(String name, String... words) {
+		final IRegex tmp[] = new IRegex[words.length];
+		for (int i = 0; i < words.length; i++)
+			tmp[i] = new RegexLeaf(words[i]);
+
+		return new RegexOr(name, tmp);
 	}
 
 	public static IRegex concat(IRegex... expressions) {

@@ -42,57 +42,77 @@ import net.sourceforge.plantuml.project.core.Moment;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
 import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOptional;
+import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 
 public class ComplementBeforeOrAfterOrAtTaskStartOrEnd implements Something<GanttDiagram> {
 
-	private static final int POS_NB1 = 0;
-	private static final int POS_WORKING1 = 1;
-	private static final int POS_DAY_OR_WEEK1 = 2;
-	private static final int POS_NB2 = 3;
-	private static final int POS_WORKING2 = 4;
-	private static final int POS_DAY_OR_WEEK2 = 5;
-	private static final int POS_BEFORE_OR_AFTER = 6;
-	private static final int POS_CODE_OTHER = 7;
-	private static final int POS_START_OR_END = 8;
-
-	public IRegex toRegex(String suffix) { // "+"
-		return new RegexLeaf("COMPLEMENT" + suffix, "(?:at|with|after|" + //
-				"(\\d+)[%s]+(working[%s]+)?(day|week)s?" + //
-				"(?:[%s]+and[%s]+(\\d+)[%s]+(working[%s]+)?(day|week)s?)?" + //
-				"[%s]+(before|after))[%s]+\\[([^\\[\\]]+?)\\].?s[%s]+(start|end)");
+	public IRegex toRegex(String suffix) {
+		return new RegexConcat( //
+				new RegexOptional(new RegexOr( //
+						Words.single(Words.AT), //
+						Words.single(Words.WITH), //
+						Words.single(Words.AFTER), //
+						new RegexConcat( //
+								new RegexLeaf("COMPLEMENT_NB1" + suffix, "(\\d+)"), //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexOptional(
+										new RegexConcat(Words.namedSingle("COMPLEMENT_WORKING1", Words.WORKING),
+												RegexLeaf.spaceOneOrMore())),
+								Words.namedOneOf("COMPLEMENT_DAY_OR_WEEK1" + suffix, Words.DAY, Words.WEEK), //
+								new RegexLeaf("s?"), //
+								new RegexOptional(new RegexConcat( //
+										Words.exactly(Words.AND), //
+										RegexLeaf.spaceOneOrMore(), //
+										new RegexLeaf("COMPLEMENT_NB2" + suffix, "(\\d+)"), //
+										RegexLeaf.spaceOneOrMore(), //
+										new RegexOptional(
+												new RegexConcat(Words.namedSingle("COMPLEMENT_WORKING2", Words.WORKING),
+														RegexLeaf.spaceOneOrMore())),
+										Words.namedOneOf("COMPLEMENT_DAY_OR_WEEK2" + suffix, Words.DAY, Words.WEEK), //
+										new RegexLeaf("s?"))),
+								RegexLeaf.spaceOneOrMore(), //
+								Words.namedOneOf("COMPLEMENT_BEFORE_OR_AFTER" + suffix, Words.BEFORE, Words.AFTER)))), //
+				//
+				RegexLeaf.spaceOneOrMore(),
+				//
+				new RegexLeaf("COMPLEMENT_CODE_OTHER" + suffix, "\\[([^\\[\\]]+?)\\].?s"), //
+				RegexLeaf.spaceOneOrMore(), //
+				Words.namedOneOf("COMPLEMENT_START_OR_END" + suffix, Words.START, Words.END));
 	}
 
 	public Failable<TaskInstant> getMe(GanttDiagram system, RegexResult arg, String suffix) {
-		final String code = arg.get("COMPLEMENT" + suffix, POS_CODE_OTHER);
-		final String startOrEnd = arg.get("COMPLEMENT" + suffix, POS_START_OR_END);
+		final String code = arg.get("COMPLEMENT_CODE_OTHER" + suffix, 0);
+		final String startOrEnd = arg.get("COMPLEMENT_START_OR_END" + suffix, 0);
+
 		final Moment task = system.getExistingMoment(code);
 		if (task == null)
 			return Failable.error("No such task " + code);
 
 		TaskInstant result = new TaskInstant(task, TaskAttribute.fromString(startOrEnd));
-		final String nb1 = arg.get("COMPLEMENT" + suffix, POS_NB1);
+		final String nb1 = arg.get("COMPLEMENT_NB1" + suffix, 0);
 		if (nb1 != null) {
-			final int factor1 = arg.get("COMPLEMENT" + suffix, POS_DAY_OR_WEEK1).startsWith("w") ? system.daysInWeek()
+			final int factor1 = arg.get("COMPLEMENT_DAY_OR_WEEK1" + suffix, 0).startsWith("w") ? system.daysInWeek()
 					: 1;
 			final int days1 = Integer.parseInt(nb1) * factor1;
 
-			final String nb2 = arg.get("COMPLEMENT" + suffix, POS_NB2);
+			final String nb2 = arg.get("COMPLEMENT_NB2" + suffix, 0);
 			int days2 = 0;
 			if (nb2 != null) {
-				final int factor2 = arg.get("COMPLEMENT" + suffix, POS_DAY_OR_WEEK2).startsWith("w")
-						? system.daysInWeek()
+				final int factor2 = arg.get("COMPLEMENT_DAY_OR_WEEK2" + suffix, 0).startsWith("w") ? system.daysInWeek()
 						: 1;
 				days2 = Integer.parseInt(nb2) * factor2;
 			}
 
 			int delta = days1 + days2;
-			if ("before".equalsIgnoreCase(arg.get("COMPLEMENT" + suffix, POS_BEFORE_OR_AFTER)))
+			if ("before".equalsIgnoreCase(arg.get("COMPLEMENT_BEFORE_OR_AFTER" + suffix, 0)))
 				delta = -delta;
 
-			final boolean working = arg.get("COMPLEMENT" + suffix, POS_WORKING1) != null
-					|| arg.get("COMPLEMENT" + suffix, POS_WORKING2) != null;
+			final boolean working = arg.get("COMPLEMENT_WORKING1" + suffix, 0) != null
+					|| arg.get("COMPLEMENT_WORKING2" + suffix, 0) != null;
 
 			final GanttConstraintMode mode = working ? GanttConstraintMode.DO_NOT_COUNT_CLOSE_DAY
 					: GanttConstraintMode.IGNORE_CALENDAR;
