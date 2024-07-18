@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.stereo.StereotypePattern;
 public class SubjectTask implements Subject<GanttDiagram> {
 
 	public static final Subject<GanttDiagram> ME = new SubjectTask();
+	public static final String REGEX_TASK_CODE = "\\[([^\\[\\]]+?)\\]";
 
 	private SubjectTask() {
 	}
@@ -114,12 +115,12 @@ public class SubjectTask implements Subject<GanttDiagram> {
 		return new RegexOr( //
 				new RegexLeaf("IT", "(it)"), //
 				new RegexConcat(new RegexLeaf("THEN", "(then[%s]+)?"), //
-						new RegexLeaf("SUBJECT", "\\[([^\\[\\]]+?)\\]"), //
+						new RegexLeaf("SUBJECT", REGEX_TASK_CODE), //
 						StereotypePattern.optional("STEREOTYPE"), //
 						new RegexOptional(new RegexConcat(//
 								Words.exactly(Words.AS), //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("SHORTNAME", "\\[([^\\[\\]]+?)\\]"))), //
+								new RegexLeaf("SHORTNAME", REGEX_TASK_CODE))), //
 						new RegexOptional(new RegexConcat( //
 								Words.exactly(Words.ON), //
 								RegexLeaf.spaceOneOrMore(), //

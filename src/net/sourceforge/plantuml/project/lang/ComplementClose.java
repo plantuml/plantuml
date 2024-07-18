@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.regex.RegexResult;
 public class ComplementClose implements Something<GanttDiagram> {
 
 	public IRegex toRegex(String suffix) {
-		return new RegexLeaf("CLOSED" + suffix, "(closed?(?: for \\[([^\\[\\]]+?)\\])?)");
+		return new RegexLeaf("CLOSED" + suffix, "(closed?(?: for " + SubjectTask.REGEX_TASK_CODE + ")?)");
 	}
 
 	public Failable<String> getMe(GanttDiagram project, RegexResult arg, String suffix) {
