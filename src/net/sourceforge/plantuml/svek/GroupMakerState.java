@@ -67,6 +67,7 @@ public final class GroupMakerState {
 	private final ICucaDiagram diagram;
 	private final Entity group;
 	private final StringBounder stringBounder;
+	private final DotMode dotMode;
 
 	class InnerGroupHierarchy implements GroupHierarchy {
 
@@ -96,10 +97,11 @@ public final class GroupMakerState {
 
 	}
 
-	public GroupMakerState(ICucaDiagram diagram, Entity group, StringBounder stringBounder) {
+	public GroupMakerState(ICucaDiagram diagram, Entity group, StringBounder stringBounder, DotMode dotMode) {
 		this.diagram = diagram;
 		this.stringBounder = stringBounder;
 		this.group = group;
+		this.dotMode = dotMode;
 		if (group.isGroup() == false)
 			throw new IllegalArgumentException();
 
@@ -170,13 +172,13 @@ public final class GroupMakerState {
 
 	}
 
-	protected GeneralImageBuilder createGeneralImageBuilder(Collection<Entity> leafs, ISkinParam skinParam) {
+	protected GraphvizImageBuilder createGeneralImageBuilder(Collection<Entity> leafs, ISkinParam skinParam) {
 		final DotData dotData = new DotData(group, getPureInnerLinks(), leafs, diagram.getUmlDiagramType(), skinParam,
 				new InnerGroupHierarchy(), diagram.getEntityFactory(), diagram.isHideEmptyDescriptionForState(),
-				DotMode.NORMAL, diagram.getNamespaceSeparator(), diagram.getPragma());
+				diagram.getNamespaceSeparator(), diagram.getPragma());
 
-		return new GeneralImageBuilder(dotData, diagram.getEntityFactory(), diagram.getSource(), diagram.getPragma(),
-				stringBounder, SName.stateDiagram);
+		return new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(), SName.stateDiagram, dotMode,
+				new DotStringFactory(stringBounder, dotData));
 	}
 
 	private Collection<Entity> filter(Collection<Entity> leafs) {

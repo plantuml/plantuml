@@ -91,7 +91,7 @@ import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactoryExtends;
 
-public class MyElkPath implements UDrawable {
+public class MyElkEdge implements UDrawable {
 	// ::remove folder when __HAXE__
 
 	private final Link link;
@@ -112,7 +112,7 @@ public class MyElkPath implements UDrawable {
 
 	private final UTranslate translate;
 
-	public MyElkPath(ICucaDiagram diagram, SName styleName, Link link, ElkEdge edge, TextBlock centerLabel,
+	public MyElkEdge(ICucaDiagram diagram, SName styleName, Link link, ElkEdge edge, TextBlock centerLabel,
 			TextBlock tailLabel, TextBlock headLabel, double magicY2, Map<Entity, MyElkCluster> elkClusters,
 			UTranslate translate, Map<Entity, IEntityImage> nodeImages) {
 		this.link = link;

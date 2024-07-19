@@ -64,6 +64,7 @@ public final class GroupMakerActivity {
 	private final ICucaDiagram diagram;
 	private final Entity group;
 	private final StringBounder stringBounder;
+	private final DotMode dotMode;
 
 	class InnerGroupHierarchy implements GroupHierarchy {
 
@@ -84,10 +85,11 @@ public final class GroupMakerActivity {
 
 	}
 
-	public GroupMakerActivity(ICucaDiagram diagram, Entity group, StringBounder stringBounder) {
+	public GroupMakerActivity(ICucaDiagram diagram, Entity group, StringBounder stringBounder, DotMode dotMode) {
 		this.diagram = diagram;
 		this.group = group;
 		this.stringBounder = stringBounder;
+		this.dotMode = dotMode;
 	}
 
 	private List<Link> getPureInnerLinks() {
@@ -115,11 +117,11 @@ public final class GroupMakerActivity {
 		final ISkinParam skinParam = diagram.getSkinParam();
 
 		final DotData dotData = new DotData(group, links, group.leafs(), diagram.getUmlDiagramType(), skinParam,
-				new InnerGroupHierarchy(), diagram.getEntityFactory(), false, DotMode.NORMAL,
-				diagram.getNamespaceSeparator(), diagram.getPragma());
+				new InnerGroupHierarchy(), diagram.getEntityFactory(), false, diagram.getNamespaceSeparator(),
+				diagram.getPragma());
 
-		final GeneralImageBuilder svek2 = new GeneralImageBuilder(dotData, diagram.getEntityFactory(),
-				diagram.getSource(), diagram.getPragma(), stringBounder, SName.activityDiagram);
+		final GraphvizImageBuilder svek2 = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),
+				SName.activityDiagram, dotMode, new DotStringFactory(stringBounder, dotData));
 
 		if (group.getGroupType() == GroupType.INNER_ACTIVITY) {
 			final Stereotype stereo = group.getStereotype();

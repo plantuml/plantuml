@@ -41,12 +41,24 @@ import java.util.List;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
-public interface CucaDiagramFileMaker {
+public abstract class CucaDiagramFileMaker {
 
-	public ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
+	protected final ICucaDiagram diagram;
+	protected final StringBounder stringBounder;
+	protected final DotStringFactory dotStringFactory;
+
+	public CucaDiagramFileMaker(ICucaDiagram diagram, StringBounder stringBounder) {
+		this.diagram = diagram;
+		this.stringBounder = stringBounder;
+		this.dotStringFactory = new DotStringFactory(stringBounder, diagram);
+	}
+
+	public abstract ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException;
 
-	public void createOneGraphic(UGraphic ug);
+	public abstract void createOneGraphic(UGraphic ug);
 }

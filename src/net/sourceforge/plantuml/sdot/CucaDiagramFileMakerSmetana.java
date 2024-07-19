@@ -120,20 +120,48 @@ import smetana.core.Macro;
 import smetana.core.debug.SmetanaDebug;
 
 @DuplicateCode(reference = "SvekEdge, CucaDiagramFileMakerElk, CucaDiagramFileMakerSmetana")
-public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
+public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	// ::remove folder when __HAXE__
 
-	private final ICucaDiagram diagram;
-
-	private final StringBounder stringBounder;
 	private final Map<Entity, ST_Agnode_s> nodes = new LinkedHashMap<Entity, ST_Agnode_s>();
 	private final Map<Entity, ST_Agnode_s> coreNodes = new LinkedHashMap<Entity, ST_Agnode_s>();
 	private final Map<Link, ST_Agedge_s> edges = new LinkedHashMap<Link, ST_Agedge_s>();
 	private final Map<Link, SmetanaEdge> smetanaPathes = new LinkedHashMap<Link, SmetanaEdge>();
 	private final Map<Entity, ST_Agraph_s> clusters = new LinkedHashMap<Entity, ST_Agraph_s>();
 
-	private final DotStringFactory dotStringFactory;
 	private final Rankdir rankdir;
+
+	public CucaDiagramFileMakerSmetana(ICucaDiagram diagram, StringBounder stringBounder) {
+		super(diagram, stringBounder);
+		this.rankdir = diagram.getSkinParam().getRankdir();
+
+		printAllSubgroups(diagram.getRootGroup());
+		printEntities(getUnpackagedEntities());
+
+		for (Link link : diagram.getLinks()) {
+			if (link.isRemoved())
+				continue;
+
+			if (isOpalisable(link.getEntity1())) {
+				final SvekNode node = dotStringFactory.getBibliotekon().getNode(link.getEntity1());
+				final SvekNode other = dotStringFactory.getBibliotekon().getNode(link.getEntity2());
+				if (other != null) {
+					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);
+					link.setOpale(true);
+				}
+			} else if (isOpalisable(link.getEntity2())) {
+				final SvekNode node = dotStringFactory.getBibliotekon().getNode(link.getEntity2());
+				final SvekNode other = dotStringFactory.getBibliotekon().getNode(link.getEntity1());
+				if (other != null) {
+					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);
+					link.setOpale(true);
+				}
+			}
+
+		}
+
+	}
+
 
 	private MinMaxMutable getSmetanaMinMax() {
 		final MinMaxMutable result = MinMaxMutable.getEmpty(false);
@@ -216,39 +244,6 @@ public class CucaDiagramFileMakerSmetana implements CucaDiagramFileMaker {
 
 		public HColor getBackcolor() {
 			return null;
-		}
-
-	}
-
-	public CucaDiagramFileMakerSmetana(ICucaDiagram diagram, StringBounder stringBounder) {
-		this.diagram = diagram;
-		this.stringBounder = stringBounder;
-		this.dotStringFactory = new DotStringFactory(stringBounder, diagram);
-		this.rankdir = diagram.getSkinParam().getRankdir();
-
-		printAllSubgroups(diagram.getRootGroup());
-		printEntities(getUnpackagedEntities());
-
-		for (Link link : diagram.getLinks()) {
-			if (link.isRemoved())
-				continue;
-
-			if (isOpalisable(link.getEntity1())) {
-				final SvekNode node = dotStringFactory.getBibliotekon().getNode(link.getEntity1());
-				final SvekNode other = dotStringFactory.getBibliotekon().getNode(link.getEntity2());
-				if (other != null) {
-					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);
-					link.setOpale(true);
-				}
-			} else if (isOpalisable(link.getEntity2())) {
-				final SvekNode node = dotStringFactory.getBibliotekon().getNode(link.getEntity2());
-				final SvekNode other = dotStringFactory.getBibliotekon().getNode(link.getEntity1());
-				if (other != null) {
-					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);
-					link.setOpale(true);
-				}
-			}
-
 		}
 
 	}

@@ -67,7 +67,7 @@ import net.sourceforge.plantuml.utils.Position;
 import net.sourceforge.plantuml.vizjs.GraphvizJs;
 import net.sourceforge.plantuml.vizjs.GraphvizJsRuntimeException;
 
-public class DotStringFactory implements Moveable {
+public final class DotStringFactory implements Moveable {
 
 	private final Bibliotekon bibliotekon;
 
@@ -77,7 +77,7 @@ public class DotStringFactory implements Moveable {
 	private Cluster current;
 	private final UmlDiagramType umlDiagramType;
 	private final ISkinParam skinParam;
-	private final DotMode dotMode;
+
 	private DotSplines dotSplines;
 
 	private final StringBounder stringBounder;
@@ -85,7 +85,6 @@ public class DotStringFactory implements Moveable {
 	public DotStringFactory(StringBounder stringBounder, DotData dotData) {
 		this.skinParam = dotData.getSkinParam();
 		this.umlDiagramType = dotData.getUmlDiagramType();
-		this.dotMode = dotData.getDotMode();
 
 		this.colorSequence = new ColorSequence();
 		this.stringBounder = stringBounder;
@@ -98,7 +97,6 @@ public class DotStringFactory implements Moveable {
 	public DotStringFactory(StringBounder stringBounder, ICucaDiagram diagram) {
 		this.skinParam = diagram.getSkinParam();
 		this.umlDiagramType = diagram.getUmlDiagramType();
-		this.dotMode = DotMode.NORMAL;
 
 		this.colorSequence = new ColorSequence();
 		this.stringBounder = stringBounder;
@@ -136,7 +134,7 @@ public class DotStringFactory implements Moveable {
 	}
 
 	// ::comment when __CORE__
-	String createDotString(String... dotStrings) {
+	private String createDotString(DotMode dotMode, String... dotStrings) {
 		final StringBuilder sb = new StringBuilder();
 
 		double nodesep = getHorizontalDzeta();
@@ -305,8 +303,8 @@ public class DotStringFactory implements Moveable {
 		return GraphvizVersions.getInstance().getVersion(f);
 	}
 
-	public String getSvg(BaseFile basefile, String[] dotOptions) throws IOException {
-		String dotString = createDotString(dotOptions);
+	public String getSvg(DotMode dotMode, BaseFile basefile, String[] dotOptions) throws IOException {
+		String dotString = createDotString(dotMode, dotOptions);
 
 		if (basefile != null) {
 			final SFile f = basefile.getTraceFile("svek.dot");
@@ -324,7 +322,7 @@ public class DotStringFactory implements Moveable {
 		} catch (GraphvizJsRuntimeException e) {
 			System.err.println("GraphvizJsRuntimeException");
 			graphvizVersion = GraphvizJs.getGraphvizVersion(true);
-			dotString = createDotString(dotOptions);
+			dotString = createDotString(dotMode, dotOptions);
 			graphviz = GraphvizUtils.create(skinParam, dotString, "svg");
 			baos = new ByteArrayOutputStream();
 			final ProcessState state = graphviz.createFile3(baos);
@@ -417,7 +415,7 @@ public class DotStringFactory implements Moveable {
 		for (Cluster cluster : bibliotekon.allCluster()) {
 			if (cluster.getGroup().isPacked())
 				continue;
-			
+
 			int idx = getClusterIndex(svg, cluster.getColor());
 			final int starting = idx;
 			final List<XPoint2D> points = svgResult.substring(starting).extractList(SvgResult.POINTS_EQUALS);
@@ -500,6 +498,10 @@ public class DotStringFactory implements Moveable {
 
 	public ColorSequence getColorSequence() {
 		return colorSequence;
+	}
+
+	public StringBounder getStringBounder() {
+		return stringBounder;
 	}
 
 }

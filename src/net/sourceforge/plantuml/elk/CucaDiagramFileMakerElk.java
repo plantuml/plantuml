@@ -44,6 +44,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.checkerframework.checker.units.qual.s;
+
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
@@ -145,22 +147,15 @@ https://rtsys.informatik.uni-kiel.de/~biblio/downloads/theses/yab-bt.pdf
 https://rtsys.informatik.uni-kiel.de/~biblio/downloads/theses/thw-bt.pdf
  */
 @DuplicateCode(reference = "SvekEdge, CucaDiagramFileMakerElk, CucaDiagramFileMakerSmetana")
-public class CucaDiagramFileMakerElk implements CucaDiagramFileMaker {
+public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 	// ::remove folder when __CORE__
-
-	private final ICucaDiagram diagram;
-	private final StringBounder stringBounder;
-	private final DotStringFactory dotStringFactory;
 
 	private final Map<Entity, ElkNode> nodes = new LinkedHashMap<Entity, ElkNode>();
 	private final Map<Entity, ElkNode> clusters = new LinkedHashMap<Entity, ElkNode>();
 	private final Map<Link, ElkEdge> edges = new LinkedHashMap<Link, ElkEdge>();
 
 	public CucaDiagramFileMakerElk(ICucaDiagram diagram, StringBounder stringBounder) {
-		this.diagram = diagram;
-		this.stringBounder = stringBounder;
-		this.dotStringFactory = new DotStringFactory(stringBounder, diagram);
-
+		super(diagram, stringBounder);
 	}
 
 	// Duplication from SvekEdge

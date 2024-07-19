@@ -61,12 +61,12 @@ final public class DotData implements PortionShower {
 	final private Collection<Entity> leafs;
 	final private UmlDiagramType umlDiagramType;
 	final private ISkinParam skinParam;
-	// final private Rankdir rankdir;
+
 	final private GroupHierarchy groupHierarchy;
 	final private Entity topParent;
 	final private PortionShower portionShower;
 	final private boolean isHideEmptyDescriptionForState;
-	final private DotMode dotMode;
+
 	final private String namespaceSeparator;
 	final private Pragma pragma;
 
@@ -78,18 +78,18 @@ final public class DotData implements PortionShower {
 
 	public DotData(Entity topParent, List<Link> links, Collection<Entity> leafs, UmlDiagramType umlDiagramType,
 			ISkinParam skinParam, GroupHierarchy groupHierarchy, PortionShower portionShower,
-			EntityFactory entityFactory, boolean isHideEmptyDescriptionForState, DotMode dotMode,
-			String namespaceSeparator, Pragma pragma) {
+			EntityFactory entityFactory, boolean isHideEmptyDescriptionForState, String namespaceSeparator,
+			Pragma pragma) {
 		this.namespaceSeparator = namespaceSeparator;
 		this.pragma = pragma;
 		this.topParent = Objects.requireNonNull(topParent);
-		this.dotMode = dotMode;
+
 		this.isHideEmptyDescriptionForState = isHideEmptyDescriptionForState;
 		this.links = links;
 		this.leafs = leafs;
 		this.umlDiagramType = umlDiagramType;
 		this.skinParam = skinParam;
-		// this.rankdir = rankdir;
+
 		this.groupHierarchy = groupHierarchy;
 		this.portionShower = portionShower;
 		this.entityFactory = entityFactory;
@@ -97,7 +97,7 @@ final public class DotData implements PortionShower {
 
 	public DotData(Entity topParent, List<Link> links, Collection<Entity> leafs, UmlDiagramType umlDiagramType,
 			ISkinParam skinParam, GroupHierarchy groupHierarchy, EntityFactory entityFactory,
-			boolean isHideEmptyDescriptionForState, DotMode dotMode, String namespaceSeparator, Pragma pragma) {
+			boolean isHideEmptyDescriptionForState, String namespaceSeparator, Pragma pragma) {
 		this(topParent, links, leafs, umlDiagramType, skinParam, groupHierarchy, new PortionShower() {
 			public boolean showPortion(EntityPortion portion, Entity entity) {
 				return true;
@@ -107,7 +107,7 @@ final public class DotData implements PortionShower {
 				return Collections.emptyList();
 			}
 
-		}, entityFactory, isHideEmptyDescriptionForState, dotMode, namespaceSeparator, pragma);
+		}, entityFactory, isHideEmptyDescriptionForState, namespaceSeparator, pragma);
 	}
 
 	public UmlDiagramType getUmlDiagramType() {
@@ -158,10 +158,6 @@ final public class DotData implements PortionShower {
 		return isHideEmptyDescriptionForState;
 	}
 
-	public final DotMode getDotMode() {
-		return dotMode;
-	}
-
 	public final String getNamespaceSeparator() {
 		return namespaceSeparator;
 	}
@@ -173,13 +169,13 @@ final public class DotData implements PortionShower {
 	public void removeIrrelevantSametail() {
 		final Map<String, Integer> sametails = new HashMap<String, Integer>();
 		for (Link link : links) {
-			if (link.getType().getDecor2().isExtendsLike()) {
+			if (link.getType().getDecor2().isExtendsLike())
 				link.setSametail(link.getEntity1().getUid());
-			}
+
 			final String sametail = link.getSametail();
-			if (sametail == null) {
+			if (sametail == null)
 				continue;
-			}
+
 			final Integer value = sametails.get(sametail);
 			sametails.put(sametail, value == null ? 1 : value + 1);
 		}
@@ -191,11 +187,10 @@ final public class DotData implements PortionShower {
 				toremove.add(key);
 			} else {
 				final List<Link> some = new ArrayList<>();
-				for (Link link : links) {
-					if (key.equals(link.getSametail())) {
+				for (Link link : links)
+					if (key.equals(link.getSametail()))
 						some.add(link);
-					}
-				}
+
 				final Entity leaf = getLeaf(key);
 				final Neighborhood neighborhood = new Neighborhood(leaf, some, getLinksOfThisLeaf(leaf));
 				leaf.setNeighborhood(neighborhood);
@@ -204,31 +199,29 @@ final public class DotData implements PortionShower {
 
 		for (Link link : links) {
 			final String sametail = link.getSametail();
-			if (sametail == null) {
+			if (sametail == null)
 				continue;
-			}
-			if (toremove.contains(sametail)) {
+
+			if (toremove.contains(sametail))
 				link.setSametail(null);
-			}
+
 		}
 	}
 
 	private List<Link> getLinksOfThisLeaf(Entity leaf) {
 		final List<Link> result = new ArrayList<>();
-		for (Link link : links) {
-			if (link.contains(leaf)) {
+		for (Link link : links)
+			if (link.contains(leaf))
 				result.add(link);
-			}
-		}
+
 		return result;
 	}
 
 	private Entity getLeaf(String key) {
-		for (Entity entity : leafs) {
-			if (entity.getUid().equals(key)) {
+		for (Entity entity : leafs)
+			if (entity.getUid().equals(key))
 				return entity;
-			}
-		}
+
 		return null;
 
 	}

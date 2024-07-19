@@ -438,7 +438,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			maker = new CucaDiagramFileMakerSmetana(this, fileFormatOption.getDefaultStringBounder(getSkinParam()));
 		// ::comment when __CORE__
 		else
-			maker = new CucaDiagramFileMakerSvek(this);
+			maker = new CucaDiagramFileMakerSvek(this, fileFormatOption.getDefaultStringBounder(getSkinParam()));
 		// ::done
 
 		final ImageData result = maker.createFile(os, getDotStrings(), fileFormatOption);

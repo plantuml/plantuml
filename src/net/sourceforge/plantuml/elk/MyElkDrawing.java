@@ -191,7 +191,7 @@ class MyElkDrawing extends AbstractTextBlock {
 		final TextBlock label = getLabel(ug.getStringBounder(), link);
 		final TextBlock quantifier1 = getQuantifier(ug.getStringBounder(), link, 1);
 		final TextBlock quantifier2 = getQuantifier(ug.getStringBounder(), link, 2);
-		final MyElkPath elkPath = new MyElkPath(diagram, SName.classDiagram, link, edge, label, quantifier1, quantifier2,
+		final MyElkEdge elkPath = new MyElkEdge(diagram, SName.classDiagram, link, edge, label, quantifier1, quantifier2,
 				magicY2, elkClusters, UTranslate.point(translate), nodeImages);
 		elkPath.drawU(ug);
 	}
