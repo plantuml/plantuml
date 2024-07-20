@@ -140,8 +140,6 @@ public class OptionPrint {
 		System.out.println("    -theme xxx\t\tTo use a specific theme");
 		System.out.println("    -timeout N\t\tProcessing timeout in (N) seconds. Defaults to 15 minutes (900 seconds).");
 		System.out.println("    -teps\t\tTo generate images using EPS format");
-		System.out.println("    -testdot\t\tTo test the installation of graphviz");
-		System.out.println("    -theme xxx\t\tTo use a specific theme");
 		System.out.println("    -thtml\t\tTo generate HTML file for class diagram");
 		System.out.println("    -tlatex:nopreamble\tTo generate images using LaTeX/Tikz format without preamble");
 		System.out.println("    -tlatex\t\tTo generate images using LaTeX/Tikz format");
