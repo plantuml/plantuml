@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -55,6 +55,7 @@ public abstract class AbstractComponentRoseArrow extends AbstractTextualComponen
 	private final int arrowDeltaX = 10;
 	private final int arrowDeltaY = 4;
 	private final HColor foregroundColor;
+	private final HColor backgroundColor;
 	private final ArrowConfiguration arrowConfiguration;
 
 	public AbstractComponentRoseArrow(Style style, Display stringsToDisplay, ArrowConfiguration arrowConfiguration,
@@ -62,6 +63,7 @@ public abstract class AbstractComponentRoseArrow extends AbstractTextualComponen
 		super(style, maxMessageSize, 7, 7, 1, spriteContainer, stringsToDisplay, false);
 
 		this.foregroundColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
+		this.backgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 		final UStroke stroke = style.getStroke();
 		this.arrowConfiguration = arrowConfiguration.withThickness(stroke.getThickness());
 
@@ -80,6 +82,10 @@ public abstract class AbstractComponentRoseArrow extends AbstractTextualComponen
 
 	protected final HColor getForegroundColor() {
 		return foregroundColor;
+	}
+
+	protected final HColor getBackgroundColor() {
+		return backgroundColor;
 	}
 
 	final protected int getArrowDeltaX() {

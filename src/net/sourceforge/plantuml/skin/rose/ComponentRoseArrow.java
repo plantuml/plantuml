@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -202,7 +202,9 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 		if (decoration == ArrowDecoration.CIRCLE) {
 			final UEllipse circle = UEllipse.build(diamCircle, diamCircle);
 			ug.apply(UStroke.withThickness(thinCircle)).apply(getForegroundColor())
-					.apply(new UTranslate(-diamCircle / 2 - thinCircle, -diamCircle / 2 - thinCircle / 2)).draw(circle);
+					.apply(getBackgroundColor().bg())
+					.apply(new UTranslate(-diamCircle / 2 - thinCircle, -diamCircle / 2 - thinCircle / 2))
+					.draw(circle);
 			if (dressing.getHead() != ArrowHead.CROSSX)
 				ug = ug.apply(UTranslate.dx(diamCircle / 2 + thinCircle));
 		}
@@ -236,7 +238,8 @@ public class ComponentRoseArrow extends AbstractComponentRoseArrow {
 	private void drawDressing2(UGraphic ug, ArrowDressing dressing, ArrowDecoration decoration, double lenFull) {
 
 		if (decoration == ArrowDecoration.CIRCLE) {
-			ug = ug.apply(UStroke.withThickness(thinCircle)).apply(getForegroundColor());
+			ug = ug.apply(UStroke.withThickness(thinCircle)).apply(getForegroundColor())
+							.apply(getBackgroundColor().bg());
 			final UEllipse circle = UEllipse.build(diamCircle, diamCircle);
 			ug.apply(new UTranslate(-diamCircle / 2 + thinCircle, -diamCircle / 2 - thinCircle / 2)).draw(circle);
 			ug = ug.apply(UStroke.simple());
