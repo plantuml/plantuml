@@ -220,7 +220,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ffff0000
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 28.6213 ; 48.0000 ]
@@ -372,7 +372,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 28.6213 ; 163.0000 ]
@@ -532,7 +532,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 28.6213 ; 278.0000 ]

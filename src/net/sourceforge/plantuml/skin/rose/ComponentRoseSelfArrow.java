@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.skin.rose;
@@ -94,6 +94,7 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 		final UEllipse circle = UEllipse.build(ComponentRoseArrow.diamCircle, ComponentRoseArrow.diamCircle);
 		if (getArrowConfiguration().getDecoration1() == ArrowDecoration.CIRCLE) {
 			ug2.apply(UStroke.withThickness(ComponentRoseArrow.thinCircle)).apply(getForegroundColor())
+					.apply(getBackgroundColor().bg())
 					.apply(new UTranslate(x1 + 1 - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle,
 							textHeight - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle / 2))
 					.draw(circle);
@@ -101,7 +102,9 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 			x1 -= getArrowConfiguration().getDressing1().getHead() == ArrowHead.NONE ? ComponentRoseArrow.thinCircle+1 : 0;
 		}
 		if (getArrowConfiguration().getDecoration2() == ArrowDecoration.CIRCLE) {
-			ug2.apply(UStroke.withThickness(ComponentRoseArrow.thinCircle)).apply(getForegroundColor()).apply(new UTranslate(
+			ug2.apply(UStroke.withThickness(ComponentRoseArrow.thinCircle)).apply(getForegroundColor())
+					.apply(getBackgroundColor().bg())
+					.apply(new UTranslate(
 							x2 - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle,
 							textHeight + arrowHeight - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle / 2))
 					.draw(circle);
@@ -192,6 +195,7 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 		final UEllipse circle = UEllipse.build(ComponentRoseArrow.diamCircle, ComponentRoseArrow.diamCircle);
 		if (getArrowConfiguration().getDecoration1() == ArrowDecoration.CIRCLE) {
 			ug2.apply(UStroke.withThickness(ComponentRoseArrow.thinCircle)).apply(getForegroundColor())
+					.apply(getBackgroundColor().bg())
 					.apply(new UTranslate(prefTextWidth - x1 + 1 - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle,
 							textHeight - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle / 2))
 					.draw(circle);
@@ -200,6 +204,7 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 		}
 		if (getArrowConfiguration().getDecoration2() == ArrowDecoration.CIRCLE) {
 			ug2.apply(UStroke.withThickness(ComponentRoseArrow.thinCircle)).apply(getForegroundColor())
+					.apply(getBackgroundColor().bg())
 					.apply(new UTranslate(prefTextWidth - x2 + 2 - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle,
 							textHeight + arrowHeight - ComponentRoseArrow.diamCircle / 2 - ComponentRoseArrow.thinCircle / 2))
 					.draw(circle);
