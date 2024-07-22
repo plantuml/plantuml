@@ -170,7 +170,7 @@ sequenceDiagram {
 
 	destroy {
 	}
-	
+
 	reference {
 	  FontSize 12
 	  LineColor black
@@ -178,7 +178,7 @@ sequenceDiagram {
 	  LineThickness 2.0
 	  HorizontalAlignment center
 	}
-	
+
 	referenceHeader {
 	  LineColor black
 	  BackGroundColor #e
@@ -187,19 +187,19 @@ sequenceDiagram {
 	  FontStyle bold
 	  LineThickness 2.0
 	}
-	
+
 	box {
 	  BackGroundColor #d
-	
+
 	  FontSize 13
 	  FontStyle bold
 	}
-	
+
 	separator {
 	  LineColor black
 	  LineThickness 2.0
 	  BackGroundColor #e
-	  
+
 	  FontSize 13
 	  FontStyle bold
 	}
@@ -329,6 +329,7 @@ diamond {
 
 arrow {
   FontSize 13
+  BackGroundColor black
 }
 
 note {

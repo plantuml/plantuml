@@ -238,7 +238,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 61.6837 ; 77.0000 ]
@@ -280,7 +280,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 ELLIPSE:
   pt1: [ 99.1837 ; 112.2500 ]
@@ -290,7 +290,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 61.6837 ; 104.0000 ]
@@ -485,7 +485,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 61.6837 ; 266.0000 ]
@@ -527,7 +527,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 61.6837 ; 293.0000 ]
@@ -569,7 +569,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 ELLIPSE:
   pt1: [ 99.1837 ; 328.2500 ]
@@ -579,7 +579,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 61.6837 ; 320.0000 ]
@@ -621,7 +621,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 61.6837 ; 347.0000 ]
@@ -666,7 +666,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 61.6837 ; 374.0000 ]
@@ -707,7 +707,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 61.6837 ; 401.0000 ]
@@ -745,7 +745,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 61.6837 ; 428.0000 ]
@@ -786,7 +786,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 61.6837 ; 455.0000 ]

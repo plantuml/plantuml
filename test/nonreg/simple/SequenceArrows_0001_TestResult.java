@@ -410,7 +410,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -446,7 +446,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -482,7 +482,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 ELLIPSE:
   pt1: [ 242.6377 ; 326.2500 ]
@@ -492,7 +492,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -565,7 +565,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -586,7 +586,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -665,7 +665,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 239.6377 ; 439.0000 ]
@@ -704,7 +704,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -739,7 +739,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 239.6377 ; 493.0000 ]
@@ -771,7 +771,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -806,7 +806,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 239.6377 ; 547.0000 ]
@@ -852,7 +852,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -1117,7 +1117,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 134.8059 ; 817.0000 ]
@@ -1142,7 +1142,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -1178,7 +1178,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -1199,7 +1199,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 140.3059 ; 871.0000 ]
@@ -1261,7 +1261,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -1282,7 +1282,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -1361,7 +1361,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 136.3059 ; 979.0000 ]
@@ -1400,7 +1400,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -1435,7 +1435,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 136.3059 ; 1033.0000 ]
@@ -1467,7 +1467,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -1502,7 +1502,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 136.3059 ; 1087.0000 ]
@@ -1534,7 +1534,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -1817,7 +1817,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 133.8059 ; 1381.0000 ]
@@ -1867,7 +1867,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 129.8059 ; 1421.0000 ]
@@ -1917,7 +1917,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 ELLIPSE:
   pt1: [ 125.3059 ; 1469.2500 ]
@@ -1927,7 +1927,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 133.8059 ; 1461.0000 ]
@@ -2028,7 +2028,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 ELLIPSE:
   pt1: [ 125.3059 ; 1549.2500 ]
@@ -2038,7 +2038,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 136.3059 ; 1541.0000 ]
@@ -2099,7 +2099,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 129.8059 ; 1581.0000 ]
@@ -2152,7 +2152,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 129.8059 ; 1621.0000 ]
@@ -2201,7 +2201,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 129.8059 ; 1661.0000 ]
@@ -2247,7 +2247,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 129.8059 ; 1701.0000 ]
@@ -2296,7 +2296,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 129.8059 ; 1741.0000 ]
@@ -2382,7 +2382,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 205.1377 ; 1821.0000 ]
@@ -2432,7 +2432,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 ELLIPSE:
   pt1: [ 242.6377 ; 1869.2500 ]
@@ -2442,7 +2442,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 205.1377 ; 1861.0000 ]
@@ -2685,7 +2685,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 205.1377 ; 2101.0000 ]
@@ -2735,7 +2735,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 205.1377 ; 2141.0000 ]
@@ -2785,7 +2785,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 ELLIPSE:
   pt1: [ 242.6377 ; 2189.2500 ]
@@ -2795,7 +2795,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 205.1377 ; 2181.0000 ]
@@ -2845,7 +2845,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 205.1377 ; 2221.0000 ]
@@ -2898,7 +2898,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 205.1377 ; 2261.0000 ]
@@ -2947,7 +2947,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 205.1377 ; 2301.0000 ]
@@ -2993,7 +2993,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 205.1377 ; 2341.0000 ]
@@ -3042,7 +3042,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 205.1377 ; 2381.0000 ]
@@ -3139,7 +3139,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 ELLIPSE:
   pt1: [ 125.3059 ; 2469.2500 ]
@@ -3149,7 +3149,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 136.3059 ; 2461.0000 ]
@@ -3267,7 +3267,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 141.8059 ; 2541.0000 ]
@@ -3525,7 +3525,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 87.8059 ; 2741.0000 ]
@@ -3686,7 +3686,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 205.1377 ; 2861.0000 ]
@@ -3968,7 +3968,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -4004,7 +4004,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -4040,7 +4040,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 ELLIPSE:
   pt1: [ 125.3059 ; 3166.2500 ]
@@ -4050,7 +4050,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -4123,7 +4123,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -4144,7 +4144,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -4223,7 +4223,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 122.3059 ; 3279.0000 ]
@@ -4262,7 +4262,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -4297,7 +4297,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 122.3059 ; 3333.0000 ]
@@ -4329,7 +4329,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -4364,7 +4364,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 122.3059 ; 3387.0000 ]
@@ -4410,7 +4410,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -4664,7 +4664,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -4700,7 +4700,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -4736,7 +4736,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 ELLIPSE:
   pt1: [ 322.5490 ; 3706.2500 ]
@@ -4746,7 +4746,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -4819,7 +4819,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -4840,7 +4840,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -4919,7 +4919,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 319.5490 ; 3819.0000 ]
@@ -4958,7 +4958,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -4993,7 +4993,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 319.5490 ; 3873.0000 ]
@@ -5025,7 +5025,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
@@ -5060,7 +5060,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 LINE:
   pt1: [ 319.5490 ; 3927.0000 ]
@@ -5106,7 +5106,7 @@ ELLIPSE:
   stroke: 0.0-0.0-1.5
   shadow: 0
   color: ff181818
-  backcolor: NULL_COLOR
+  backcolor: ff000000
 
 POLYGON:
   points:
