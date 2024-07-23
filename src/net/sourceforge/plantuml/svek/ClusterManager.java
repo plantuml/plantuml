@@ -30,57 +30,45 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
+ * 
  */
-package net.sourceforge.plantuml.cucadiagram;
+package net.sourceforge.plantuml.svek;
 
-import java.io.IOException;
-import java.util.Collection;
+import net.sourceforge.plantuml.abel.Entity;
 
-import net.atmp.ImageBuilder;
-import net.sourceforge.plantuml.Annotated;
-import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.abel.EntityFactory;
-import net.sourceforge.plantuml.abel.Link;
-import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.skin.Pragma;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
-import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.StyleBuilder;
+public class ClusterManager {
 
-public interface ICucaDiagram extends GroupHierarchy, PortionShower, Annotated {
+	private final Bibliotekon bibliotekon;
+	private Cluster current;
 
-	ISkinParam getSkinParam();
+	public ClusterManager(Bibliotekon bibliotekon, Cluster root) {
+		this.bibliotekon = bibliotekon;
+		this.current = root;
+	}
 
-	UmlDiagramType getUmlDiagramType();
+	public void addNode(SvekNode node) {
+		current.addNode(node);
+	}
 
-	EntityFactory getEntityFactory();
+	public void openCluster(Entity g, ClusterHeader clusterHeader) {
+		this.current = current.createChild(clusterHeader, bibliotekon.getColorSequence(), g);
+		bibliotekon.addCluster(this.current);
+	}
 
-	StyleBuilder getCurrentStyleBuilder();
+	public void closeCluster() {
+		if (current.getParentCluster() == null)
+			throw new IllegalStateException();
 
-	boolean isHideEmptyDescriptionForState();
+		this.current = current.getParentCluster();
+	}
 
-	Collection<Link> getLinks();
+	public final Bibliotekon getBibliotekon() {
+		return bibliotekon;
+	}
 
-	Pragma getPragma();
-
-	long seed();
-
-	String getMetadata();
-
-	String getFlashData();
-
-	ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException;
-
-	String getNamespaceSeparator();
-
-	UmlSource getSource();
-
-	String[] getDotStringSkek();
-
-	// boolean isAutarkic(Entity g);
-
-	int getUniqueSequence();
+	public Cluster getCurrent() {
+		return current;
+	}
 
 }

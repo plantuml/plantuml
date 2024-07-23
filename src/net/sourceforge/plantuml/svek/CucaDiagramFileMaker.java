@@ -39,22 +39,28 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
+import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public abstract class CucaDiagramFileMaker {
 
-	protected final ICucaDiagram diagram;
-	protected final StringBounder stringBounder;
-	protected final DotStringFactory dotStringFactory;
+	protected final CucaDiagram diagram;
+	protected final Bibliotekon bibliotekon;
+	protected final ClusterManager clusterManager;
 
-	public CucaDiagramFileMaker(ICucaDiagram diagram, StringBounder stringBounder) {
+	public CucaDiagramFileMaker(CucaDiagram diagram) {
 		this.diagram = diagram;
-		this.stringBounder = stringBounder;
-		this.dotStringFactory = new DotStringFactory(stringBounder, diagram);
+		this.bibliotekon = new Bibliotekon(diagram.getLinks());
+		final Cluster root = new Cluster(diagram, bibliotekon.getColorSequence(),
+				diagram.getEntityFactory().getRootGroup());
+		this.clusterManager = new ClusterManager(bibliotekon, root);
+
+	}
+
+	protected final Bibliotekon getBibliotekon() {
+		return bibliotekon;
 	}
 
 	public abstract ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)

@@ -58,13 +58,18 @@ public class Bibliotekon {
 	private final List<SvekEdge> allLines = new ArrayList<>();
 
 	private final Collection<Link> links;
+	private final ColorSequence colorSequence;
 
 	public Bibliotekon(Collection<Link> links) {
 		this.links = links;
+		this.colorSequence = new ColorSequence();
 	}
 
-	public SvekNode createNode(Entity ent, IEntityImage image, ColorSequence colorSequence,
-			StringBounder stringBounder) {
+	public ColorSequence getColorSequence() {
+		return colorSequence;
+	}
+
+	public SvekNode createNode(Entity ent, IEntityImage image, StringBounder stringBounder) {
 		final SvekNode node = new SvekNode(ent, image, colorSequence, stringBounder);
 		nodeMap.put(ent, node);
 		// System.err.println("createNode " + ent + " " + nodeMap.size());

@@ -39,11 +39,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.abel.CucaNote;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
-import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.decoration.symbol.USymbolFolder;
 import net.sourceforge.plantuml.elk.proxy.graph.ElkEdge;
 import net.sourceforge.plantuml.elk.proxy.graph.ElkNode;
@@ -74,7 +74,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.svek.Bibliotekon;
-import net.sourceforge.plantuml.svek.DotStringFactory;
+import net.sourceforge.plantuml.svek.ClusterManager;
 import net.sourceforge.plantuml.svek.GeneralImageBuilder;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.IEntityImageUtils;
@@ -88,17 +88,17 @@ class MyElkDrawing extends AbstractTextBlock {
 	// min and max of all coord
 	private final MinMax minMax;
 
-	private final ICucaDiagram diagram;
+	private final CucaDiagram diagram;
 
 	private final Map<Entity, ElkNode> clusters;
 	private final Map<Link, ElkEdge> edges;
 	private final Map<Entity, ElkNode> nodes;
 
-	private final DotStringFactory dotStringFactory;
+	private final ClusterManager clusterManager;
 
-	public MyElkDrawing(DotStringFactory dotStringFactory, ICucaDiagram diagram, MinMax minMax,
+	public MyElkDrawing(ClusterManager clusterManager, CucaDiagram diagram, MinMax minMax,
 			Map<Entity, ElkNode> clusters, Map<Link, ElkEdge> edges, Map<Entity, ElkNode> nodes) {
-		this.dotStringFactory = dotStringFactory;
+		this.clusterManager = clusterManager;
 		this.minMax = minMax;
 		this.diagram = diagram;
 		this.clusters = clusters;
@@ -130,7 +130,7 @@ class MyElkDrawing extends AbstractTextBlock {
 			final Entity entity = ent.getKey();
 			// Retrieve coord from ELK
 			final XPoint2D corner = CucaDiagramFileMakerElk.getPosition(ent.getValue());
-			final SvekNode svekNode = dotStringFactory.getBibliotekon().getNode(entity);
+			final SvekNode svekNode = clusterManager.getBibliotekon().getNode(entity);
 			svekNode.resetMove();
 			svekNode.moveDelta(corner.x, corner.y);
 
@@ -172,7 +172,7 @@ class MyElkDrawing extends AbstractTextBlock {
 	}
 
 	private Bibliotekon getBibliotekon() {
-		return dotStringFactory.getBibliotekon();
+		return clusterManager.getBibliotekon();
 	}
 
 	private void drawSingleEdge(UGraphic ug, Link link, ElkEdge edge, Map<Entity, MyElkCluster> elkClusters,

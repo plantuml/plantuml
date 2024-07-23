@@ -39,13 +39,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityUtils;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.cucadiagram.GroupHierarchy;
-import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
+import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.dot.DotData;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.ColorType;
@@ -64,7 +65,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
 
 public final class GroupMakerState {
 
-	private final ICucaDiagram diagram;
+	private final CucaDiagram diagram;
 	private final Entity group;
 	private final StringBounder stringBounder;
 	private final DotMode dotMode;
@@ -97,7 +98,7 @@ public final class GroupMakerState {
 
 	}
 
-	public GroupMakerState(ICucaDiagram diagram, Entity group, StringBounder stringBounder, DotMode dotMode) {
+	public GroupMakerState(CucaDiagram diagram, Entity group, StringBounder stringBounder, DotMode dotMode) {
 		this.diagram = diagram;
 		this.stringBounder = stringBounder;
 		this.group = group;
@@ -135,7 +136,7 @@ public final class GroupMakerState {
 			return new EntityImageState(group, diagram.getSkinParam());
 
 		if (group.getGroupType() == GroupType.CONCURRENT_STATE)
-			return createGeneralImageBuilder(group.leafs(), skinParam).buildImage(null, new String[0], false);
+			return createGeneralImageBuilder(group.leafs()).buildImage(stringBounder, null, new String[0], false);
 
 		if (group.getGroupType() != GroupType.STATE)
 			throw new UnsupportedOperationException(group.getGroupType().toString());
@@ -155,14 +156,15 @@ public final class GroupMakerState {
 		final IEntityImage image;
 		if (containsSomeConcurrentStates()) {
 			final List<IEntityImage> inners = new ArrayList<>();
-			inners.add(
-					createGeneralImageBuilder(filter(group.leafs()), skinParam).buildImage(null, new String[0], false));
+			inners.add(createGeneralImageBuilder(filter(group.leafs())).buildImage(stringBounder, null, new String[0],
+					false));
 			for (Entity inner : group.leafs())
 				if (inner.getLeafType() == LeafType.STATE_CONCURRENT)
 					inners.add(inner.getSvekImage());
 			image = new ConcurrentStates(inners, group.getConcurrentSeparator(), skinParam, group.getStereotype());
 		} else {
-			image = createGeneralImageBuilder(filter(group.leafs()), skinParam).buildImage(null, new String[0], false);
+			image = createGeneralImageBuilder(filter(group.leafs())).buildImage(stringBounder, null, new String[0],
+					false);
 		}
 
 		final HColor bodyColor = styleBody.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
@@ -172,13 +174,21 @@ public final class GroupMakerState {
 
 	}
 
-	protected GraphvizImageBuilder createGeneralImageBuilder(Collection<Entity> leafs, ISkinParam skinParam) {
-		final DotData dotData = new DotData(group, getPureInnerLinks(), leafs, diagram.getUmlDiagramType(), skinParam,
-				new InnerGroupHierarchy(), diagram.getEntityFactory(), diagram.isHideEmptyDescriptionForState(),
-				diagram.getNamespaceSeparator(), diagram.getPragma());
+	protected GraphvizImageBuilder createGeneralImageBuilder(Collection<Entity> leafs) {
 
+		final List<Link> links = getPureInnerLinks();
+		final Bibliotekon bibliotekon = new Bibliotekon(links);
+
+		final DotData dotData = new DotData(diagram.getEntityFactory(), group, links, leafs, new InnerGroupHierarchy(),
+				PortionShower.ALL);
+
+		final Cluster root = new Cluster(diagram, bibliotekon.getColorSequence(), dotData.getRootGroup());
+
+		final ClusterManager clusterManager = new ClusterManager(bibliotekon, root);
+		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, root, diagram.getUmlDiagramType(),
+				diagram.getSkinParam());
 		return new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(), SName.stateDiagram, dotMode,
-				new DotStringFactory(stringBounder, dotData));
+				dotStringFactory, clusterManager);
 	}
 
 	private Collection<Entity> filter(Collection<Entity> leafs) {

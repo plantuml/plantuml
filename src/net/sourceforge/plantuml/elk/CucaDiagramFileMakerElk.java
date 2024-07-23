@@ -44,6 +44,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
@@ -56,7 +57,6 @@ import net.sourceforge.plantuml.abel.LinkArrow;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.eggs.QuoteUtils;
 
 /*
@@ -122,10 +122,8 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.ClusterHeader;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
-import net.sourceforge.plantuml.svek.DotStringFactory;
 import net.sourceforge.plantuml.svek.GeneralImageBuilder;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.IEntityImage;
@@ -152,8 +150,8 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 	private final Map<Entity, ElkNode> clusters = new LinkedHashMap<Entity, ElkNode>();
 	private final Map<Link, ElkEdge> edges = new LinkedHashMap<Link, ElkEdge>();
 
-	public CucaDiagramFileMakerElk(ICucaDiagram diagram, StringBounder stringBounder) {
-		super(diagram, stringBounder);
+	public CucaDiagramFileMakerElk(CucaDiagram diagram) {
+		super(diagram);
 	}
 
 	// Duplication from SvekEdge
@@ -197,7 +195,7 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 		return link.getLinkArrow();
 	}
 
-	private TextBlock getLabel(Link link) {
+	private TextBlock getLabel(StringBounder stringBounder, Link link) {
 		ISkinParam skinParam = diagram.getSkinParam();
 		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;
 
@@ -255,7 +253,7 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 
 	}
 
-	private TextBlock getQuantifier(Link link, int n) {
+	private TextBlock getQuantifier(StringBounder stringBounder, Link link, int n) {
 		final String tmp = n == 1 ? link.getQuantifier1() : link.getQuantifier2();
 		if (tmp == null)
 			return null;
@@ -315,17 +313,19 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 			root.setProperty(CoreOptions.DIRECTION, Direction.DOWN);
 			root.setProperty(CoreOptions.HIERARCHY_HANDLING, HierarchyHandling.INCLUDE_CHILDREN);
 
-			printAllSubgroups(root, diagram.getRootGroup());
-			printEntities(root, getUnpackagedEntities());
+			final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());
 
-			manageAllEdges();
+			this.printAllSubgroups(stringBounder, root, diagram.getRootGroup());
+			this.printEntities(stringBounder, root, getUnpackagedEntities());
+
+			this.manageAllEdges(stringBounder);
 
 			new RecursiveGraphLayoutEngine().layout(root, new NullElkProgressMonitor());
 
-			final MinMax minMax = TextBlockUtils.getMinMax(new MyElkDrawing(dotStringFactory, diagram, null, clusters, edges, nodes),
-					stringBounder, false);
+			final MinMax minMax = TextBlockUtils.getMinMax(
+					new MyElkDrawing(clusterManager, diagram, null, clusters, edges, nodes), stringBounder, false);
 
-			final TextBlock drawable = new MyElkDrawing(dotStringFactory, diagram, minMax, clusters, edges, nodes);
+			final TextBlock drawable = new MyElkDrawing(clusterManager, diagram, minMax, clusters, edges, nodes);
 			return diagram.createImageBuilder(fileFormatOption) //
 					.drawable(drawable) //
 					.write(os); //
@@ -338,14 +338,14 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 
 	}
 
-	private void printAllSubgroups(ElkNode cluster, Entity group) {
+	private void printAllSubgroups(StringBounder stringBounder, ElkNode cluster, Entity group) {
 		for (Entity g : diagram.getChildrenGroups(group)) {
-			if (g.isRemoved()) {
+			if (g.isRemoved())
 				continue;
-			}
+
 			if (diagram.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE) {
 				g.muteToType(LeafType.EMPTY_PACKAGE);
-				prinEntity(g, cluster);
+				this.prinEntity(stringBounder, g, cluster);
 			} else {
 
 				// We create the "cluster" in ELK for this group
@@ -366,48 +366,46 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 				// We need it anyway to recurse up to the real "root"
 
 				this.clusters.put(g, elkCluster);
-				printSingleGroup(g);
+				this.printSingleGroup(stringBounder, g);
 			}
 		}
 
 	}
 
-	private void printSingleGroup(Entity g) {
+	private void printSingleGroup(StringBounder stringBounder, Entity g) {
 		if (g.getGroupType() == GroupType.CONCURRENT_STATE)
 			return;
 
-		this.printEntities(clusters.get(g), g.leafs());
-		printAllSubgroups(clusters.get(g), g);
+		this.printEntities(stringBounder, clusters.get(g), g.leafs());
+		this.printAllSubgroups(stringBounder, clusters.get(g), g);
 	}
 
-	private void printEntities(ElkNode parent, Collection<Entity> entities) {
+	private void printEntities(StringBounder stringBounder, ElkNode parent, Collection<Entity> entities) {
 		// Convert all "leaf" to ELK node
 		for (Entity ent : entities) {
 			if (ent.isRemoved())
 				continue;
 
-			prinEntity(ent, parent);
+			this.prinEntity(stringBounder, ent, parent);
 		}
 	}
 
-	private void manageAllEdges() {
+	private void manageAllEdges(StringBounder stringBounder) {
 		// Convert all "link" to ELK edge
 		for (final Link link : diagram.getLinks())
-			manageSingleEdge(link);
+			this.manageSingleEdge(stringBounder, link);
 
 	}
 
 	@DuplicateCode(reference = "CucaDiagramFileMakerSmetana::printEntity")
-	private void prinEntity(Entity ent, ElkNode parent) {
+	private void prinEntity(StringBounder stringBounder, Entity ent, ElkNode parent) {
 		final IEntityImage image = printEntityInternal(ent);
 
 		// Expected dimension of the node
 		final XDimension2D dimension = image.calculateDimension(stringBounder);
-		
-		final SvekNode node = getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(),
-				stringBounder);
-		dotStringFactory.addNode(node);
 
+		final SvekNode node = getBibliotekon().createNode(ent, image, stringBounder);
+		clusterManager.addNode(node);
 
 		// Here, we try to tell ELK to use this dimension as node dimension
 		final ElkNode elkNode = ElkGraphUtil.createNode(parent);
@@ -440,13 +438,13 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 		nodes.put(ent, elkNode);
 	}
 
-	private void manageSingleEdge(final Link link) {
+	private void manageSingleEdge(StringBounder stringBounder, final Link link) {
 		final ElkNode node1 = getElkNode(link.getEntity1());
 		final ElkNode node2 = getElkNode(link.getEntity2());
 
 		final ElkEdge edge = ElkGraphUtil.createSimpleEdge(node1, node2);
 
-		final TextBlock labelLink = getLabel(link);
+		final TextBlock labelLink = getLabel(stringBounder, link);
 		if (labelLink != null) {
 			final ElkLabel edgeLabel = ElkGraphUtil.createLabel(edge);
 			final XDimension2D dim = labelLink.calculateDimension(stringBounder);
@@ -458,7 +456,7 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 		}
 		if (link.getQuantifier1() != null) {
 			final ElkLabel edgeLabel = ElkGraphUtil.createLabel(edge);
-			final XDimension2D dim = getQuantifier(link, 1).calculateDimension(stringBounder);
+			final XDimension2D dim = getQuantifier(stringBounder, link, 1).calculateDimension(stringBounder);
 			// Nasty trick, we store the kind of label in the text
 			edgeLabel.setText("1");
 			edgeLabel.setDimensions(dim.getWidth(), dim.getHeight());
@@ -469,7 +467,7 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 		}
 		if (link.getQuantifier2() != null) {
 			final ElkLabel edgeLabel = ElkGraphUtil.createLabel(edge);
-			final XDimension2D dim = getQuantifier(link, 2).calculateDimension(stringBounder);
+			final XDimension2D dim = getQuantifier(stringBounder, link, 2).calculateDimension(stringBounder);
 			// Nasty trick, we store the kind of label in the text
 			edgeLabel.setText("2");
 			edgeLabel.setDimensions(dim.getWidth(), dim.getHeight());
@@ -497,10 +495,6 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 		strings.add("post to <b>https://plantuml.com/qa</b> to solve this issue.");
 		strings.add(" ");
 		return strings;
-	}
-
-	private Bibliotekon getBibliotekon() {
-		return dotStringFactory.getBibliotekon();
 	}
 
 	private IEntityImage printEntityInternal(Entity ent) {

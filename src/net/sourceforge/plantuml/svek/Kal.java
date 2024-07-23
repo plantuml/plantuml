@@ -51,7 +51,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.svek.extremity.Extremity;
 import net.sourceforge.plantuml.utils.Direction;
 
 public class Kal implements UDrawable {

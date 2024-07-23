@@ -38,7 +38,6 @@ package net.sourceforge.plantuml.svek;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.dot.DotData;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -54,7 +53,6 @@ import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
@@ -62,16 +60,16 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 	// ::remove file when __CORE__
 
 	private final DotData dotData;
-	private final DotStringFactory dotStringFactory;
+	private final DotStringFactory clusterManager;
 
-	public SvekResult(DotData dotData, DotStringFactory dotStringFactory) {
+	public SvekResult(DotData dotData, DotStringFactory clusterManager) {
 		this.dotData = dotData;
-		this.dotStringFactory = dotStringFactory;
+		this.clusterManager = clusterManager;
 	}
 
 	public void drawU(UGraphic ug) {
 
-		for (Cluster cluster : dotStringFactory.getBibliotekon().allCluster())
+		for (Cluster cluster : clusterManager.getBibliotekon().allCluster())
 			if (cluster.getGroup().isPacked() == false)
 				cluster.drawU(ug, dotData.getUmlDiagramType());
 
@@ -81,7 +79,7 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 		final HColor borderColor = HColors
 				.noGradient(style2.value(PName.LineColor).asColor(dotData.getSkinParam().getIHtmlColorSet()));
 
-		for (SvekNode node : dotStringFactory.getBibliotekon().allNodes()) {
+		for (SvekNode node : clusterManager.getBibliotekon().allNodes()) {
 			final double minX = node.getMinX();
 			final double minY = node.getMinY();
 			final UGraphic ug2 = node.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;
@@ -96,21 +94,21 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 
 		computeKal();
 
-		for (SvekEdge svekEdge : dotStringFactory.getBibliotekon().allLines()) {
+		for (SvekEdge svekEdge : clusterManager.getBibliotekon().allLines()) {
 			final UGraphic ug2 = svekEdge.isHidden() ? ug.apply(UHidden.HIDDEN) : ug;
 			svekEdge.setSharedIds(ids);
 			svekEdge.drawU(ug2);
 		}
 
-		for (SvekNode node : dotStringFactory.getBibliotekon().allNodes())
+		for (SvekNode node : clusterManager.getBibliotekon().allNodes())
 			node.drawKals(ug);
 
 	}
 
 	private void computeKal() {
-		for (SvekEdge line : dotStringFactory.getBibliotekon().allLines())
+		for (SvekEdge line : clusterManager.getBibliotekon().allLines())
 			line.computeKal();
-		for (SvekNode node : dotStringFactory.getBibliotekon().allNodes())
+		for (SvekNode node : clusterManager.getBibliotekon().allNodes())
 			node.fixOverlap();
 	}
 
@@ -133,7 +131,7 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		if (minMax == null) {
 			minMax = TextBlockUtils.getMinMax(this, stringBounder, false);
-			dotStringFactory.moveDelta(6 - minMax.getMinX(), 6 - minMax.getMinY());
+			clusterManager.moveDelta(6 - minMax.getMinX(), 6 - minMax.getMinY());
 		}
 		return minMax.getDimension().delta(0, 12);
 	}

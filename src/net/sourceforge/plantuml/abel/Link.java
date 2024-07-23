@@ -37,9 +37,9 @@ package net.sourceforge.plantuml.abel;
 
 import java.util.Objects;
 
+import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.cucadiagram.EntityPort;
-import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.LinkConstraint;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
@@ -91,7 +91,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	private String sametail;
 	private final StyleBuilder styleBuilder;
 	private Stereotype stereotype;
-	private final IEntityFactory entityFactory;
+	private final EntityFactory entityFactory;
 
 	private Url url;
 
@@ -117,7 +117,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return new UComment("link " + getEntity1().getName() + " to " + getEntity2().getName());
 	}
 
-	public Link(IEntityFactory entityFactory, StyleBuilder styleBuilder, Entity cl1, Entity cl2, LinkType type,
+	public Link(EntityFactory entityFactory, StyleBuilder styleBuilder, Entity cl1, Entity cl2, LinkType type,
 			LinkArg linkArg) {
 		if (linkArg.getLength() < 1)
 			throw new IllegalArgumentException();
@@ -128,7 +128,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		this.cl2 = Objects.requireNonNull(cl2);
 
 		this.type = type;
-		final ICucaDiagram diagram = ((Entity) cl1).getDiagram();
+		final CucaDiagram diagram = ((Entity) cl1).getDiagram();
 		this.uid = "LNK" + diagram.getUniqueSequence();
 
 		this.linkArg = linkArg;

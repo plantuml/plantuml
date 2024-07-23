@@ -46,13 +46,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPortion;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.asciiart.BasicCharArea;
-import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -90,7 +90,7 @@ public final class CucaDiagramTxtMaker {
 		return showMethods || showFields;
 	}
 
-	public CucaDiagramTxtMaker(ICucaDiagram diagram, FileFormat fileFormat) throws IOException {
+	public CucaDiagramTxtMaker(CucaDiagram diagram, FileFormat fileFormat) throws IOException {
 		this.fileFormat = fileFormat;
 		this.portionShower = diagram;
 

@@ -35,12 +35,23 @@
  */
 package net.sourceforge.plantuml.cucadiagram;
 
+import java.util.Collections;
+import java.util.List;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPortion;
 
-import java.util.List;
-
 public interface PortionShower {
+
+	public static final PortionShower ALL = new PortionShower() {
+		public boolean showPortion(EntityPortion portion, Entity entity) {
+			return true;
+		}
+
+		public List<String> getVisibleStereotypeLabels(Entity entity) {
+			return Collections.emptyList();
+		}
+	};
 
 	boolean showPortion(EntityPortion portion, Entity entity);
 

@@ -97,15 +97,17 @@ public final class GraphvizImageBuilder {
 
 	private final SName styleName;
 	private final DotStringFactory dotStringFactory;
+	private final ClusterManager clusterManager;
 
 	public GraphvizImageBuilder(DotData dotData, UmlSource source, Pragma pragma, SName styleName, DotMode dotMode,
-			DotStringFactory dotStringFactory) {
+			DotStringFactory dotStringFactory, ClusterManager clusterManager) {
 		this.dotData = dotData;
 		this.dotMode = dotMode;
 		this.styleName = styleName;
 		this.source = source;
 		this.pragma = pragma;
 		this.dotStringFactory = dotStringFactory;
+		this.clusterManager = clusterManager;
 
 	}
 
@@ -191,7 +193,8 @@ public final class GraphvizImageBuilder {
 		return style.value(PName.BackGroundColor).asColor(dotData.getSkinParam().getIHtmlColorSet());
 	}
 
-	public IEntityImage buildImage(BaseFile basefile, String dotStrings[], boolean fileFormatOptionIsDebugSvek) {
+	public IEntityImage buildImage(StringBounder stringBounder, BaseFile basefile, String dotStrings[],
+			boolean fileFormatOptionIsDebugSvek) {
 		// ::comment when __CORE__
 		if (dotData.isDegeneratedWithFewEntities(0))
 			return new EntityImageSimpleEmpty(dotData.getSkinParam().getBackgroundColor());
@@ -201,15 +204,15 @@ public final class GraphvizImageBuilder {
 			final Entity group = single.getParentContainer();
 			if (group.isRoot() && single.getUSymbol() instanceof USymbolHexagon == false) {
 				final IEntityImage tmp = GeneralImageBuilder.createEntityImageBlock(single, dotData.getSkinParam(),
-						dotData.isHideEmptyDescriptionForState(), dotData, null, null, dotData.getUmlDiagramType(),
-						dotData.getLinks());
+						dotData.isHideEmptyDescriptionForState(), dotData.getPortionShower(), null, null,
+						dotData.getUmlDiagramType(), dotData.getLinks());
 				return new EntityImageDegenerated(tmp, getBackcolor());
 			}
 		}
 		dotData.removeIrrelevantSametail();
 
-		printGroups(dotStringFactory, dotData.getRootGroup());
-		printEntities(dotStringFactory, getUnpackagedEntities());
+		printGroups(stringBounder, dotData.getRootGroup());
+		printEntities(stringBounder, getUnpackagedEntities());
 
 		for (Link link : dotData.getLinks()) {
 			if (link.isRemoved())
@@ -219,9 +222,8 @@ public final class GraphvizImageBuilder {
 				final ISkinParam skinParam = dotData.getSkinParam();
 				final FontConfiguration labelFont = getFontForLink(link, skinParam);
 
-				final SvekEdge line = new SvekEdge(link, dotStringFactory.getColorSequence(), skinParam,
-						dotStringFactory.getStringBounder(), labelFont, dotStringFactory.getBibliotekon(), pragma,
-						dotStringFactory.getGraphvizVersion());
+				final SvekEdge line = new SvekEdge(link, skinParam, stringBounder, labelFont,
+						dotStringFactory.getBibliotekon(), pragma, dotStringFactory.getGraphvizVersion());
 
 				dotStringFactory.getBibliotekon().addLine(line);
 
@@ -256,7 +258,7 @@ public final class GraphvizImageBuilder {
 
 		final String svg;
 		try {
-			svg = dotStringFactory.getSvg(dotMode, basefile, dotStrings);
+			svg = dotStringFactory.getSvg(stringBounder, dotMode, basefile, dotStrings);
 		} catch (IOException e) {
 			return new GraphvizCrash(source.getPlainString(BackSlash.lineSeparator()),
 					GraphvizUtils.graphviz244onWindows(), e);
@@ -267,7 +269,7 @@ public final class GraphvizImageBuilder {
 
 		final String graphvizVersion = extractGraphvizVersion(svg);
 		try {
-			dotStringFactory.solve(dotData.getEntityFactory(), svg);
+			dotStringFactory.solve(svg);
 			final SvekResult result = new SvekResult(dotData, dotStringFactory);
 			this.maxX = dotStringFactory.getBibliotekon().getMaxX();
 			return result;
@@ -337,51 +339,50 @@ public final class GraphvizImageBuilder {
 	}
 	// ::done
 
-	private void printEntities(DotStringFactory dotStringFactory, Collection<Entity> entities2) {
+	private void printEntities(StringBounder stringBounder, Collection<Entity> entities2) {
 		for (Entity ent : entities2) {
 			if (ent.isRemoved())
 				continue;
 
-			printEntity(dotStringFactory, ent);
+			printEntity(stringBounder, ent);
 		}
 	}
 
-	private void printEntity(DotStringFactory dotStringFactory, Entity ent) {
+	private void printEntity(StringBounder stringBounder, Entity ent) {
 		if (ent.isRemoved())
 			throw new IllegalStateException();
 
-		final IEntityImage image = printEntityInternal(dotStringFactory, ent);
-		final SvekNode node = dotStringFactory.getBibliotekon().createNode(ent, image,
-				dotStringFactory.getColorSequence(), dotStringFactory.getStringBounder());
-		dotStringFactory.addNode(node);
+		final IEntityImage image = printEntityInternal(stringBounder, ent);
+		final SvekNode node = dotStringFactory.getBibliotekon().createNode(ent, image, stringBounder);
+		clusterManager.addNode(node);
 	}
 
-	private IEntityImage printEntityInternal(DotStringFactory dotStringFactory, Entity ent) {
+	private IEntityImage printEntityInternal(StringBounder stringBounder, Entity ent) {
 		if (ent.isRemoved())
 			throw new IllegalStateException();
 
 		if (ent.getSvekImage() == null) {
 			ISkinParam skinParam = dotData.getSkinParam();
 			if (skinParam.sameClassWidth()) {
-				final double width = getMaxWidth();
+				final double width = getMaxWidth(stringBounder);
 				((SkinParam) skinParam).setParamSameClassWidth(width);
 			}
 
 			return GeneralImageBuilder.createEntityImageBlock(ent, skinParam, dotData.isHideEmptyDescriptionForState(),
-					dotData, dotStringFactory.getBibliotekon(), dotStringFactory.getGraphvizVersion(),
-					dotData.getUmlDiagramType(), dotData.getLinks());
+					dotData.getPortionShower(), dotStringFactory.getBibliotekon(),
+					dotStringFactory.getGraphvizVersion(), dotData.getUmlDiagramType(), dotData.getLinks());
 		}
 		return ent.getSvekImage();
 	}
 
-	private double getMaxWidth() {
+	private double getMaxWidth(StringBounder stringBounder) {
 		double result = 0;
 		for (Entity ent : dotData.getLeafs()) {
 			if (ent.getLeafType().isLikeClass() == false)
 				continue;
 
-			final IEntityImage im = new EntityImageClass(ent, dotData.getSkinParam(), dotData);
-			final double w = im.calculateDimension(dotStringFactory.getStringBounder()).getWidth();
+			final IEntityImage im = new EntityImageClass(ent, dotData.getSkinParam(), dotData.getPortionShower());
+			final double w = im.calculateDimension(stringBounder).getWidth();
 			if (w > result)
 				result = w;
 
@@ -398,7 +399,7 @@ public final class GraphvizImageBuilder {
 		return result;
 	}
 
-	private void printGroups(DotStringFactory dotStringFactory, Entity parent) {
+	private void printGroups(StringBounder stringBounder, Entity parent) {
 		// System.err.println("PARENT=" + parent);
 		final Collection<Entity> groups = dotData.getGroupHierarchy().getChildrenGroups(parent);
 		// System.err.println("groups=" + groups);
@@ -408,25 +409,25 @@ public final class GraphvizImageBuilder {
 
 			if (dotData.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE) {
 				g.muteToType(LeafType.EMPTY_PACKAGE);
-				printEntity(dotStringFactory, g);
+				printEntity(stringBounder, g);
 			} else {
-				printGroup(dotStringFactory, g);
+				printGroup(stringBounder, g);
 			}
 		}
 	}
 
-	private void printGroup(DotStringFactory dotStringFactory, Entity g) {
+	private void printGroup(StringBounder stringBounder, Entity g) {
 		if (g.getGroupType() == GroupType.CONCURRENT_STATE)
 			return;
 
-		final ClusterHeader clusterHeader = new ClusterHeader(g, dotData.getSkinParam(), dotData,
-				dotStringFactory.getStringBounder());
-		dotStringFactory.openCluster(g, clusterHeader);
-		this.printEntities(dotStringFactory, g.leafs());
+		final ClusterHeader clusterHeader = new ClusterHeader(g, dotData.getSkinParam(), dotData.getPortionShower(),
+				stringBounder);
+		clusterManager.openCluster(g, clusterHeader);
+		this.printEntities(stringBounder, g.leafs());
 
-		printGroups(dotStringFactory, g);
+		printGroups(stringBounder, g);
 
-		dotStringFactory.closeCluster();
+		clusterManager.closeCluster();
 	}
 
 	public String getWarningOrError(int warningOrError) {

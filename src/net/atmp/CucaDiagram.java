@@ -66,7 +66,6 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.GroupHierarchy;
 import net.sourceforge.plantuml.cucadiagram.HideOrShow;
-import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.LinkConstraint;
 import net.sourceforge.plantuml.cucadiagram.Magma;
 import net.sourceforge.plantuml.cucadiagram.MagmaList;
@@ -93,7 +92,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.xmi.CucaDiagramXmiMaker;
 import net.sourceforge.plantuml.xmlsc.StateDiagramScxmlMaker;
 
-public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, PortionShower, ICucaDiagram {
+public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, PortionShower {
 
 	private final List<HideOrShow> hides2 = new ArrayList<>();
 	private final List<HideOrShow> removed = new ArrayList<>();
@@ -173,7 +172,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		if (Display.isNull(display))
 			throw new IllegalArgumentException();
 
-		final Entity result = entityFactory.createLeaf(ident, type, getHides());
+		final Entity result = entityFactory.createLeaf(ident, this, type, getHides());
 		result.setUSymbol(symbol);
 		this.lastEntity = result;
 
@@ -384,7 +383,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	@Override
 	final public void exportDiagramGraphic(UGraphic ug, FileFormatOption fileFormatOption) {
-		final CucaDiagramFileMaker maker = new CucaDiagramFileMakerSmetana(this, ug.getStringBounder());
+		final CucaDiagramFileMaker maker = new CucaDiagramFileMakerSmetana(this);
 		maker.createOneGraphic(ug);
 	}
 
@@ -432,13 +431,13 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		final CucaDiagramFileMaker maker;
 		// ::comment when __CORE__
 		if (this.isUseElk())
-			maker = new CucaDiagramFileMakerElk(this, fileFormatOption.getDefaultStringBounder(getSkinParam()));
+			maker = new CucaDiagramFileMakerElk(this);
 		else if (this.isUseSmetana())
 			// ::done
-			maker = new CucaDiagramFileMakerSmetana(this, fileFormatOption.getDefaultStringBounder(getSkinParam()));
+			maker = new CucaDiagramFileMakerSmetana(this);
 		// ::comment when __CORE__
 		else
-			maker = new CucaDiagramFileMakerSvek(this, fileFormatOption.getDefaultStringBounder(getSkinParam()));
+			maker = new CucaDiagramFileMakerSvek(this);
 		// ::done
 
 		final ImageData result = maker.createFile(os, getDotStrings(), fileFormatOption);
@@ -727,5 +726,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	public String getUniqueSequence(String prefix) {
 		return prefix + getUniqueSequence();
 	}
+	
+	
+	// Coming from EntityFactory
 
 }

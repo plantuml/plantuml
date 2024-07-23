@@ -49,12 +49,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.abel.CucaNote;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPosition;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.Together;
-import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.dot.GraphvizVersion;
@@ -108,7 +108,7 @@ public class Cluster implements Moveable {
 	private final int colorNoteTop;
 	private final int colorNoteBottom;
 	private final ISkinParam skinParam;
-	protected final ICucaDiagram diagram;
+	protected final CucaDiagram diagram;
 
 	private ClusterHeader clusterHeader;
 
@@ -140,12 +140,11 @@ public class Cluster implements Moveable {
 		return Collections.unmodifiableSet(result);
 	}
 
-	public Cluster(ICucaDiagram diagram, ColorSequence colorSequence, ISkinParam skinParam, Entity root) {
-		this(diagram, null, colorSequence, skinParam, root);
+	public Cluster(CucaDiagram diagram, ColorSequence colorSequence, Entity root) {
+		this(diagram, null, colorSequence, root);
 	}
 
-	private Cluster(ICucaDiagram diagram, Cluster parentCluster, ColorSequence colorSequence, ISkinParam skinParam,
-			Entity group) {
+	private Cluster(CucaDiagram diagram, Cluster parentCluster, ColorSequence colorSequence, Entity group) {
 		if (group == null)
 			throw new IllegalStateException();
 
@@ -157,7 +156,7 @@ public class Cluster implements Moveable {
 		this.colorTitle = colorSequence.getValue();
 		this.colorNoteTop = colorSequence.getValue();
 		this.colorNoteBottom = colorSequence.getValue();
-		this.skinParam = group.getColors().mute(skinParam);
+		this.skinParam = group.getColors().mute(diagram.getSkinParam());
 	}
 
 	@Override
@@ -236,9 +235,8 @@ public class Cluster implements Moveable {
 		return Collections.unmodifiableList(children);
 	}
 
-	public Cluster createChild(ClusterHeader clusterHeader, ColorSequence colorSequence, ISkinParam skinParam,
-			Entity g) {
-		final Cluster child = new Cluster(diagram, this, colorSequence, skinParam, g);
+	public Cluster createChild(ClusterHeader clusterHeader, ColorSequence colorSequence, Entity g) {
+		final Cluster child = new Cluster(diagram, this, colorSequence, g);
 		child.clusterHeader = clusterHeader;
 		this.children.add(child);
 		return child;

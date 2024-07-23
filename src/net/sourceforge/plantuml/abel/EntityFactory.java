@@ -42,18 +42,20 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
 import net.sourceforge.plantuml.cucadiagram.BodierJSon;
 import net.sourceforge.plantuml.cucadiagram.BodierMap;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.HideOrShow;
-import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.plasma.Plasma;
 import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.style.ISkinParam;
 
-public final class EntityFactory implements IEntityFactory {
+public final class EntityFactory {
 
 	private final List<Link> links = new ArrayList<>();
 
@@ -66,16 +68,16 @@ public final class EntityFactory implements IEntityFactory {
 
 	private final List<HideOrShow> hides2;
 	private final List<HideOrShow> removed;
-	final private ICucaDiagram diagram;
+	private final CucaDiagram diagram;
 
 	//
-	public EntityFactory(List<HideOrShow> hides2, List<HideOrShow> removed, ICucaDiagram diagram) {
+	public EntityFactory(List<HideOrShow> hides2, List<HideOrShow> removed, CucaDiagram diagram) {
 		this.hides2 = hides2;
 		this.removed = removed;
 		this.diagram = diagram;
 		this.namespace = new Plasma<Entity>();
 		this.root = namespace.root();
-		this.rootGroup = new Entity(this.root, this, null, GroupType.ROOT, 0);
+		this.rootGroup = new Entity(this.root, diagram, null, GroupType.ROOT, 0);
 	}
 
 	public boolean isHidden(Entity leaf) {
@@ -140,7 +142,8 @@ public final class EntityFactory implements IEntityFactory {
 		return result;
 	}
 
-	final public Entity createLeaf(Quark<Entity> quark, LeafType entityType, Set<VisibilityModifier> hides) {
+	final public Entity createLeaf(Quark<Entity> quark, CucaDiagram diagram, LeafType entityType,
+			Set<VisibilityModifier> hides) {
 		final Bodier bodier;
 		if (Objects.requireNonNull(entityType) == LeafType.MAP)
 			bodier = new BodierMap();
@@ -149,7 +152,7 @@ public final class EntityFactory implements IEntityFactory {
 		else
 			bodier = BodyFactory.createLeaf(entityType, hides);
 
-		final Entity result = new Entity(quark, this, bodier, entityType, rawLayout);
+		final Entity result = new Entity(quark, diagram, bodier, entityType, rawLayout);
 		bodier.setLeaf(result);
 		return result;
 	}
@@ -160,13 +163,25 @@ public final class EntityFactory implements IEntityFactory {
 			return quark.getData();
 
 		final Bodier bodier = BodyFactory.createGroup(hides);
-		final Entity result = new Entity(quark, this, bodier, groupType, rawLayout);
+		final Entity result = new Entity(quark, diagram, bodier, groupType, rawLayout);
 
 		return result;
 	}
 
 	public Entity getRootGroup() {
 		return rootGroup;
+	}
+
+	public final boolean isHideEmptyDescriptionForState() {
+		return diagram.isHideEmptyDescriptionForState();
+	}
+
+	public UmlDiagramType getUmlDiagramType() {
+		return diagram.getUmlDiagramType();
+	}
+
+	public ISkinParam getSkinParam() {
+		return diagram.getSkinParam();
 	}
 
 	public final Collection<Entity> leafs() {
@@ -236,7 +251,7 @@ public final class EntityFactory implements IEntityFactory {
 
 	}
 
-	public ICucaDiagram getDiagram() {
+	private CucaDiagram getDiagram() {
 		return diagram;
 	}
 

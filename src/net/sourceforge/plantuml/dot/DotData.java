@@ -46,76 +46,33 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityFactory;
-import net.sourceforge.plantuml.abel.EntityPortion;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.cucadiagram.GroupHierarchy;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
-import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.svek.DotMode;
 
-final public class DotData implements PortionShower {
+final public class DotData {
 
+	private final EntityFactory entityFactory;
 	final private List<Link> links;
 	final private Collection<Entity> leafs;
-	final private UmlDiagramType umlDiagramType;
-	final private ISkinParam skinParam;
 
 	final private GroupHierarchy groupHierarchy;
 	final private Entity topParent;
 	final private PortionShower portionShower;
-	final private boolean isHideEmptyDescriptionForState;
 
-	final private String namespaceSeparator;
-	final private Pragma pragma;
-
-	private final EntityFactory entityFactory;
-
-	public EntityFactory getEntityFactory() {
-		return entityFactory;
-	}
-
-	public DotData(Entity topParent, List<Link> links, Collection<Entity> leafs, UmlDiagramType umlDiagramType,
-			ISkinParam skinParam, GroupHierarchy groupHierarchy, PortionShower portionShower,
-			EntityFactory entityFactory, boolean isHideEmptyDescriptionForState, String namespaceSeparator,
-			Pragma pragma) {
-		this.namespaceSeparator = namespaceSeparator;
-		this.pragma = pragma;
+	public DotData(EntityFactory entityFactory, Entity topParent, List<Link> links, Collection<Entity> leafs,
+			GroupHierarchy groupHierarchy, PortionShower portionShower) {
 		this.topParent = Objects.requireNonNull(topParent);
 
-		this.isHideEmptyDescriptionForState = isHideEmptyDescriptionForState;
 		this.links = links;
 		this.leafs = leafs;
-		this.umlDiagramType = umlDiagramType;
-		this.skinParam = skinParam;
 
 		this.groupHierarchy = groupHierarchy;
 		this.portionShower = portionShower;
 		this.entityFactory = entityFactory;
-	}
 
-	public DotData(Entity topParent, List<Link> links, Collection<Entity> leafs, UmlDiagramType umlDiagramType,
-			ISkinParam skinParam, GroupHierarchy groupHierarchy, EntityFactory entityFactory,
-			boolean isHideEmptyDescriptionForState, String namespaceSeparator, Pragma pragma) {
-		this(topParent, links, leafs, umlDiagramType, skinParam, groupHierarchy, new PortionShower() {
-			public boolean showPortion(EntityPortion portion, Entity entity) {
-				return true;
-			}
-
-			public List<String> getVisibleStereotypeLabels(Entity entity) {
-				return Collections.emptyList();
-			}
-
-		}, entityFactory, isHideEmptyDescriptionForState, namespaceSeparator, pragma);
-	}
-
-	public UmlDiagramType getUmlDiagramType() {
-		return umlDiagramType;
-	}
-
-	public ISkinParam getSkinParam() {
-		return skinParam;
 	}
 
 	public GroupHierarchy getGroupHierarchy() {
@@ -123,11 +80,11 @@ final public class DotData implements PortionShower {
 	}
 
 	public List<Link> getLinks() {
-		return links;
+		return Collections.unmodifiableList(links);
 	}
 
 	public Collection<Entity> getLeafs() {
-		return leafs;
+		return Collections.unmodifiableCollection(leafs);
 	}
 
 	public final Entity getTopParent() {
@@ -138,12 +95,8 @@ final public class DotData implements PortionShower {
 		return groupHierarchy.isEmpty(g);
 	}
 
-	public boolean showPortion(EntityPortion portion, Entity entity) {
-		return portionShower.showPortion(portion, entity);
-	}
-
-	public List<String> getVisibleStereotypeLabels(Entity entity) {
-		return portionShower.getVisibleStereotypeLabels(entity);
+	public PortionShower getPortionShower() {
+		return portionShower;
 	}
 
 	public Entity getRootGroup() {
@@ -155,15 +108,15 @@ final public class DotData implements PortionShower {
 	}
 
 	public final boolean isHideEmptyDescriptionForState() {
-		return isHideEmptyDescriptionForState;
+		return entityFactory.isHideEmptyDescriptionForState();
 	}
 
-	public final String getNamespaceSeparator() {
-		return namespaceSeparator;
+	public UmlDiagramType getUmlDiagramType() {
+		return entityFactory.getUmlDiagramType();
 	}
 
-	public Pragma getPragma() {
-		return pragma;
+	public ISkinParam getSkinParam() {
+		return entityFactory.getSkinParam();
 	}
 
 	public void removeIrrelevantSametail() {
@@ -180,7 +133,7 @@ final public class DotData implements PortionShower {
 			sametails.put(sametail, value == null ? 1 : value + 1);
 		}
 		final Collection<String> toremove = new HashSet<>();
-		final int limit = skinParam.groupInheritance();
+		final int limit = getSkinParam().groupInheritance();
 		for (Map.Entry<String, Integer> ent : sametails.entrySet()) {
 			final String key = ent.getKey();
 			if (ent.getValue() < limit) {

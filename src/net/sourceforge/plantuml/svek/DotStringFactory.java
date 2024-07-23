@@ -46,10 +46,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.abel.Entity;
-import net.sourceforge.plantuml.abel.EntityFactory;
-import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
-import net.sourceforge.plantuml.dot.DotData;
 import net.sourceforge.plantuml.dot.DotSplines;
 import net.sourceforge.plantuml.dot.Graphviz;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
@@ -69,49 +65,22 @@ import net.sourceforge.plantuml.vizjs.GraphvizJsRuntimeException;
 
 public final class DotStringFactory implements Moveable {
 
-	private final Bibliotekon bibliotekon;
-
-	private final ColorSequence colorSequence;
-	private final Cluster root;
-
-	private Cluster current;
 	private final UmlDiagramType umlDiagramType;
 	private final ISkinParam skinParam;
+	private final Bibliotekon bibliotekon;
+	private final Cluster root;
 
-	private DotSplines dotSplines;
-
-	private final StringBounder stringBounder;
-
-	public DotStringFactory(StringBounder stringBounder, DotData dotData) {
-		this.skinParam = dotData.getSkinParam();
-		this.umlDiagramType = dotData.getUmlDiagramType();
-
-		this.colorSequence = new ColorSequence();
-		this.stringBounder = stringBounder;
-		this.root = new Cluster(dotData.getEntityFactory().getDiagram(), colorSequence, skinParam,
-				dotData.getRootGroup());
-		this.current = root;
-		this.bibliotekon = new Bibliotekon(dotData.getLinks());
+	public DotStringFactory(Bibliotekon bibliotekon, Cluster root, UmlDiagramType umlDiagramType,
+			ISkinParam skinParam) {
+		this.bibliotekon = bibliotekon;
+		this.skinParam = skinParam;
+		this.umlDiagramType = umlDiagramType;
+		this.root = root;
 	}
 
-	public DotStringFactory(StringBounder stringBounder, ICucaDiagram diagram) {
-		this.skinParam = diagram.getSkinParam();
-		this.umlDiagramType = diagram.getUmlDiagramType();
-
-		this.colorSequence = new ColorSequence();
-		this.stringBounder = stringBounder;
-		this.root = new Cluster(diagram, colorSequence, skinParam, diagram.getEntityFactory().getRootGroup());
-		this.current = root;
-		this.bibliotekon = new Bibliotekon(diagram.getLinks());
-	}
-
-	public void addNode(SvekNode node) {
-		current.addNode(node);
-	}
-
-	private double getHorizontalDzeta() {
+	private double getHorizontalDzeta(StringBounder stringBounder) {
 		double max = 0;
-		for (SvekEdge l : bibliotekon.allLines()) {
+		for (SvekEdge l : getBibliotekon().allLines()) {
 			final double c = l.getHorizontalDzeta(stringBounder);
 			if (c > max)
 				max = c;
@@ -120,9 +89,13 @@ public final class DotStringFactory implements Moveable {
 		return max / 10;
 	}
 
-	private double getVerticalDzeta() {
+	public Bibliotekon getBibliotekon() {
+		return bibliotekon;
+	}
+
+	private double getVerticalDzeta(StringBounder stringBounder) {
 		double max = 0;
-		for (SvekEdge l : bibliotekon.allLines()) {
+		for (SvekEdge l : getBibliotekon().allLines()) {
 			final double c = l.getVerticalDzeta(stringBounder);
 			if (c > max)
 				max = c;
@@ -134,10 +107,10 @@ public final class DotStringFactory implements Moveable {
 	}
 
 	// ::comment when __CORE__
-	private String createDotString(DotMode dotMode, String... dotStrings) {
+	private String createDotString(StringBounder stringBounder, DotMode dotMode, String... dotStrings) {
 		final StringBuilder sb = new StringBuilder();
 
-		double nodesep = getHorizontalDzeta();
+		double nodesep = getHorizontalDzeta(stringBounder);
 		if (nodesep < getMinNodeSep())
 			nodesep = getMinNodeSep();
 
@@ -146,7 +119,7 @@ public final class DotStringFactory implements Moveable {
 
 		final String nodesepInches = SvekUtils.pixelToInches(nodesep);
 		// Log.println("nodesep=" + nodesepInches);
-		double ranksep = getVerticalDzeta();
+		double ranksep = getVerticalDzeta(stringBounder);
 		if (ranksep < getMinRankSep())
 			ranksep = getMinRankSep();
 
@@ -179,7 +152,7 @@ public final class DotStringFactory implements Moveable {
 		// SvekUtils.println(sb);
 		// }
 
-		dotSplines = skinParam.getDotSplines();
+		final DotSplines dotSplines = skinParam.getDotSplines();
 		if (dotSplines == DotSplines.POLYLINE) {
 			sb.append("splines=polyline;");
 			SvekUtils.println(sb);
@@ -197,24 +170,24 @@ public final class DotStringFactory implements Moveable {
 		manageMinMaxCluster(sb);
 
 		if (root.diagram.getPragma().useKermor()) {
-			for (SvekEdge line : bibliotekon.lines0())
+			for (SvekEdge line : getBibliotekon().lines0())
 				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
-			for (SvekEdge line : bibliotekon.lines1())
+			for (SvekEdge line : getBibliotekon().lines1())
 				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
 
-			root.printCluster3_forKermor(sb, bibliotekon.allLines(), stringBounder, dotMode, getGraphvizVersion(),
+			root.printCluster3_forKermor(sb, getBibliotekon().allLines(), stringBounder, dotMode, getGraphvizVersion(),
 					umlDiagramType);
 
 		} else {
-			root.printCluster1(sb, bibliotekon.allLines(), stringBounder);
+			root.printCluster1(sb, getBibliotekon().allLines(), stringBounder);
 
-			for (SvekEdge line : bibliotekon.lines0())
+			for (SvekEdge line : getBibliotekon().lines0())
 				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
 
-			root.printCluster2(sb, bibliotekon.allLines(), stringBounder, dotMode, getGraphvizVersion(),
+			root.printCluster2(sb, getBibliotekon().allLines(), stringBounder, dotMode, getGraphvizVersion(),
 					umlDiagramType);
 
-			for (SvekEdge line : bibliotekon.lines1())
+			for (SvekEdge line : getBibliotekon().lines1())
 				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
 
 		}
@@ -229,7 +202,7 @@ public final class DotStringFactory implements Moveable {
 	private void manageMinMaxCluster(final StringBuilder sb) {
 		final List<String> minPointCluster = new ArrayList<>();
 		final List<String> maxPointCluster = new ArrayList<>();
-		for (Cluster cluster : bibliotekon.allCluster()) {
+		for (Cluster cluster : getBibliotekon().allCluster()) {
 			final String minPoint = cluster.getMinPoint(umlDiagramType);
 			if (minPoint != null)
 				minPointCluster.add(minPoint);
@@ -303,8 +276,9 @@ public final class DotStringFactory implements Moveable {
 		return GraphvizVersions.getInstance().getVersion(f);
 	}
 
-	public String getSvg(DotMode dotMode, BaseFile basefile, String[] dotOptions) throws IOException {
-		String dotString = createDotString(dotMode, dotOptions);
+	public String getSvg(StringBounder stringBounder, DotMode dotMode, BaseFile basefile, String[] dotOptions)
+			throws IOException {
+		String dotString = createDotString(stringBounder, dotMode, dotOptions);
 
 		if (basefile != null) {
 			final SFile f = basefile.getTraceFile("svek.dot");
@@ -322,7 +296,7 @@ public final class DotStringFactory implements Moveable {
 		} catch (GraphvizJsRuntimeException e) {
 			System.err.println("GraphvizJsRuntimeException");
 			graphvizVersion = GraphvizJs.getGraphvizVersion(true);
-			dotString = createDotString(dotMode, dotOptions);
+			dotString = createDotString(stringBounder, dotMode, dotOptions);
 			graphviz = GraphvizUtils.create(skinParam, dotString, "svg");
 			baos = new ByteArrayOutputStream();
 			final ProcessState state = graphviz.createFile3(baos);
@@ -356,7 +330,7 @@ public final class DotStringFactory implements Moveable {
 		return graphviz.getDotExe();
 	}
 
-	public void solve(EntityFactory entityFactory, final String svg) throws IOException, InterruptedException {
+	public void solve(final String svg) throws IOException, InterruptedException {
 		if (svg.length() == 0)
 			throw new EmptySvgException();
 
@@ -369,7 +343,7 @@ public final class DotStringFactory implements Moveable {
 
 		final Point2DFunction move = new YDelta(fullHeight);
 		final SvgResult svgResult = new SvgResult(svg, move);
-		for (SvekNode node : bibliotekon.allNodes()) {
+		for (SvekNode node : getBibliotekon().allNodes()) {
 			int idx = svg.indexOf("<title>" + node.getUid() + "</title>");
 			if (node.getType() == ShapeType.RECTANGLE || node.getType() == ShapeType.RECTANGLE_HTML_FOR_PORTS
 					|| node.getType() == ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE || node.getType() == ShapeType.FOLDER
@@ -412,7 +386,7 @@ public final class DotStringFactory implements Moveable {
 			}
 		}
 
-		for (Cluster cluster : bibliotekon.allCluster()) {
+		for (Cluster cluster : getBibliotekon().allCluster()) {
 			if (cluster.getGroup().isPacked())
 				continue;
 
@@ -445,11 +419,11 @@ public final class DotStringFactory implements Moveable {
 			}
 		}
 
-		for (SvekEdge line : bibliotekon.allLines())
+		for (SvekEdge line : getBibliotekon().allLines())
 			line.solveLine(svgResult);
 
-		for (SvekEdge line : bibliotekon.allLines())
-			line.manageCollision(bibliotekon.allNodes());
+		for (SvekEdge line : getBibliotekon().allLines())
+			line.manageCollision(getBibliotekon().allNodes());
 
 	}
 
@@ -468,40 +442,16 @@ public final class DotStringFactory implements Moveable {
 	}
 	// ::done
 
-	public void openCluster(Entity g, ClusterHeader clusterHeader) {
-		this.current = current.createChild(clusterHeader, colorSequence, skinParam, g);
-		bibliotekon.addCluster(this.current);
-	}
-
-	public void closeCluster() {
-		if (current.getParentCluster() == null)
-			throw new IllegalStateException();
-
-		this.current = current.getParentCluster();
-	}
-
 	public void moveDelta(double deltaX, double deltaY) {
-		for (SvekNode sh : bibliotekon.allNodes())
+		for (SvekNode sh : getBibliotekon().allNodes())
 			sh.moveDelta(deltaX, deltaY);
 
-		for (SvekEdge line : bibliotekon.allLines())
+		for (SvekEdge line : getBibliotekon().allLines())
 			line.moveDelta(deltaX, deltaY);
 
-		for (Cluster cl : bibliotekon.allCluster())
+		for (Cluster cl : getBibliotekon().allCluster())
 			cl.moveDelta(deltaX, deltaY);
 
-	}
-
-	public final Bibliotekon getBibliotekon() {
-		return bibliotekon;
-	}
-
-	public ColorSequence getColorSequence() {
-		return colorSequence;
-	}
-
-	public StringBounder getStringBounder() {
-		return stringBounder;
 	}
 
 }

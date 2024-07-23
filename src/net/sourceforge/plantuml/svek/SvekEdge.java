@@ -220,8 +220,8 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		throw new IllegalArgumentException();
 	}
 
-	public SvekEdge(Link link, ColorSequence colorSequence, ISkinParam skinParam, StringBounder stringBounder,
-			FontConfiguration font, Bibliotekon bibliotekon, Pragma pragma, GraphvizVersion graphvizVersion) {
+	public SvekEdge(Link link, ISkinParam skinParam, StringBounder stringBounder, FontConfiguration font,
+			Bibliotekon bibliotekon, Pragma pragma, GraphvizVersion graphvizVersion) {
 		super(link, skinParam, bibliotekon);
 		// ::comment when __CORE__
 		if (graphvizVersion.useShieldForQuantifier() && link.getLinkArg().getQuantifier1() != null)
@@ -266,10 +266,10 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		this.ltail = ltail;
 		this.lhead = lhead;
 
-		this.lineColor = colorSequence.getValue();
-		this.noteLabelColor = colorSequence.getValue();
-		this.startTailColor = colorSequence.getValue();
-		this.endHeadColor = colorSequence.getValue();
+		this.lineColor = bibliotekon.getColorSequence().getValue();
+		this.noteLabelColor = bibliotekon.getColorSequence().getValue();
+		this.startTailColor = bibliotekon.getColorSequence().getValue();
+		this.endHeadColor = bibliotekon.getColorSequence().getValue();
 
 		TextBlock labelOnly;
 		if (Display.isNull(link.getLabel())) {

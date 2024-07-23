@@ -35,9 +35,9 @@
  */
 package net.sourceforge.plantuml.elk;
 
+import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
-import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.elk.proxy.graph.ElkNode;
@@ -67,10 +67,10 @@ public class MyElkCluster {
 
 	private final Entity group;
 	private final ElkNode elkNode;
-	private final ICucaDiagram diagram;
+	private final CucaDiagram diagram;
 	private final ISkinParam skinParam;
 
-	public MyElkCluster(ICucaDiagram diagram, Entity group, ElkNode elkNode) {
+	public MyElkCluster(CucaDiagram diagram, Entity group, ElkNode elkNode) {
 		this.group = group;
 		this.elkNode = elkNode;
 		this.diagram = diagram;

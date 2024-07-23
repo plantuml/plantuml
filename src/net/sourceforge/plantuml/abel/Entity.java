@@ -48,9 +48,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
-import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.dot.Neighborhood;
@@ -85,7 +85,7 @@ import net.sourceforge.plantuml.utils.Position;
 
 final public class Entity implements SpecificBackcolorable, Hideable, Removeable, LineConfigurable, Bag {
 
-	private final EntityFactory entityFactory;
+	private final CucaDiagram diagram;
 
 	private final Quark<Entity> quark;
 
@@ -146,25 +146,25 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 	}
 
 	// Back to Entity
-	private Entity(Quark<Entity> quark, EntityFactory entityFactory, Bodier bodier, int rawLayout) {
+	private Entity(Quark<Entity> quark, CucaDiagram diagram, Bodier bodier, int rawLayout) {
 		this.quark = Objects.requireNonNull(quark);
+		this.diagram = diagram;
 		if (quark.isRoot())
 			this.uid = "clroot";
 		else
-			this.uid = StringUtils.getUid("cl", entityFactory.getDiagram().getUniqueSequence());
-		this.entityFactory = entityFactory;
+			this.uid = StringUtils.getUid("cl", diagram.getUniqueSequence());
 		this.bodier = bodier;
 		this.rawLayout = rawLayout;
 		this.quark.setData(this);
 	}
 
-	Entity(Quark<Entity> quark, EntityFactory entityFactory, Bodier bodier, LeafType leafType, int rawLayout) {
-		this(Objects.requireNonNull(quark), entityFactory, bodier, rawLayout);
+	Entity(Quark<Entity> quark, CucaDiagram diagram, Bodier bodier, LeafType leafType, int rawLayout) {
+		this(Objects.requireNonNull(quark), diagram, bodier, rawLayout);
 		this.leafType = leafType;
 	}
 
-	Entity(Quark<Entity> quark, EntityFactory entityFactory, Bodier bodier, GroupType groupType, int rawLayout) {
-		this(Objects.requireNonNull(quark), entityFactory, bodier, rawLayout);
+	Entity(Quark<Entity> quark, CucaDiagram diagram, Bodier bodier, GroupType groupType, int rawLayout) {
+		this(Objects.requireNonNull(quark), diagram, bodier, rawLayout);
 		this.groupType = groupType;
 	}
 
@@ -375,9 +375,9 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		this.svekImage = img;
 		this.url = null;
 
-		for (final Link link : new ArrayList<>(entityFactory.getLinks()))
+		for (final Link link : new ArrayList<>(this.diagram.getEntityFactory().getLinks()))
 			if (EntityUtils.isPureInnerLink12(this, link))
-				entityFactory.removeLink(link);
+				this.diagram.getEntityFactory().removeLink(link);
 
 		this.groupType = null;
 		this.leafType = leafType;
@@ -409,7 +409,7 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		if (quark.isRoot())
 			return false;
 		if (isGroup()) {
-			if (entityFactory.isHidden(this))
+			if (this.diagram.getEntityFactory().isHidden(this))
 				return true;
 
 			if (leafs().size() == 0)
@@ -425,7 +425,7 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 
 			return true;
 		}
-		return entityFactory.isHidden(this);
+		return this.diagram.getEntityFactory().isHidden(this);
 	}
 
 	public boolean isRemoved() {
@@ -437,7 +437,7 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 
 	private boolean isRemovedInternal() {
 		if (isGroup()) {
-			if (entityFactory.isRemoved(this))
+			if (this.diagram.getEntityFactory().isRemoved(this))
 				return true;
 
 			if (leafs().size() == 0 && groups().size() == 0)
@@ -453,17 +453,17 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 
 			return true;
 		}
-		return entityFactory.isRemoved(this);
+		return this.diagram.getEntityFactory().isRemoved(this);
 	}
 
 	public boolean isAloneAndUnlinked() {
 		if (isGroup())
 			return false;
 
-		for (Link link : entityFactory.getLinks())
+		for (Link link : this.diagram.getEntityFactory().getLinks())
 			if (link.contains(this)) {
 				final Entity other = (Entity) link.getOther(this);
-				final boolean removed = entityFactory.isRemovedIgnoreUnlinked(other);
+				final boolean removed = this.diagram.getEntityFactory().isRemovedIgnoreUnlinked(other);
 				if (removed == false && link.getType().isInvisible() == false)
 					return false;
 			}
@@ -601,8 +601,8 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		return Collections.unmodifiableList(result);
 	}
 
-	public ICucaDiagram getDiagram() {
-		return entityFactory.getDiagram();
+	public CucaDiagram getDiagram() {
+		return diagram;
 	}
 
 	private boolean isStatic;
@@ -708,7 +708,7 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 //		if (diag.getChildrenGroups(this).size() > 0)
 //			return false;
 
-		for (Link link : entityFactory.getLinks())
+		for (Link link : this.diagram.getEntityFactory().getLinks())
 			if (EntityUtils.isPureInnerLink3(this, link) == false)
 				return false;
 
@@ -726,7 +726,7 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 			return false;
 		if (leafs().size() != 0)
 			return false;
-		for (Link link : entityFactory.getLinks())
+		for (Link link : this.diagram.getEntityFactory().getLinks())
 			if (link.contains(this))
 				return false;
 

@@ -40,11 +40,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.cucadiagram.GroupHierarchy;
-import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
+import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.dot.DotData;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -61,7 +62,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageState;
 
 public final class GroupMakerActivity {
 
-	private final ICucaDiagram diagram;
+	private final CucaDiagram diagram;
 	private final Entity group;
 	private final StringBounder stringBounder;
 	private final DotMode dotMode;
@@ -85,7 +86,7 @@ public final class GroupMakerActivity {
 
 	}
 
-	public GroupMakerActivity(ICucaDiagram diagram, Entity group, StringBounder stringBounder, DotMode dotMode) {
+	public GroupMakerActivity(CucaDiagram diagram, Entity group, StringBounder stringBounder, DotMode dotMode) {
 		this.diagram = diagram;
 		this.group = group;
 		this.stringBounder = stringBounder;
@@ -115,13 +116,18 @@ public final class GroupMakerActivity {
 
 		final List<Link> links = getPureInnerLinks();
 		final ISkinParam skinParam = diagram.getSkinParam();
+		final Bibliotekon bibliotekon = new Bibliotekon(links);
 
-		final DotData dotData = new DotData(group, links, group.leafs(), diagram.getUmlDiagramType(), skinParam,
-				new InnerGroupHierarchy(), diagram.getEntityFactory(), false, diagram.getNamespaceSeparator(),
-				diagram.getPragma());
+		final DotData dotData = new DotData(diagram.getEntityFactory(), group, links, group.leafs(),
+				new InnerGroupHierarchy(), PortionShower.ALL);
 
+		final Cluster root = new Cluster(diagram, bibliotekon.getColorSequence(), dotData.getRootGroup());
+
+		final ClusterManager clusterManager = new ClusterManager(bibliotekon, root);
+		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, root, diagram.getUmlDiagramType(),
+				diagram.getSkinParam());
 		final GraphvizImageBuilder svek2 = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),
-				SName.activityDiagram, dotMode, new DotStringFactory(stringBounder, dotData));
+				SName.activityDiagram, dotMode, dotStringFactory, clusterManager);
 
 		if (group.getGroupType() == GroupType.INNER_ACTIVITY) {
 			final Stereotype stereo = group.getStereotype();
@@ -133,7 +139,8 @@ public final class GroupMakerActivity {
 			final Style style = getDefaultStyleDefinitionGroup().getMergedStyle(skinParam.getCurrentStyleBuilder());
 			final double shadowing = style.value(PName.Shadowing).asDouble();
 
-			return new InnerActivity(svek2.buildImage(null, new String[0], false), borderColor, backColor, shadowing);
+			return new InnerActivity(svek2.buildImage(stringBounder, null, new String[0], false), borderColor,
+					backColor, shadowing);
 		}
 
 		throw new UnsupportedOperationException(group.getGroupType().toString());

@@ -60,6 +60,7 @@ import h.ST_Agraph_s;
 import h.ST_Agraphinfo_t;
 import h.ST_Agrec_s;
 import h.ST_GVC_s;
+import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
@@ -72,7 +73,6 @@ import net.sourceforge.plantuml.abel.LinkArrow;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.cucadiagram.ICucaDiagram;
 import net.sourceforge.plantuml.eggs.QuoteUtils;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -101,11 +101,9 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ClusterHeader;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
-import net.sourceforge.plantuml.svek.DotStringFactory;
 import net.sourceforge.plantuml.svek.GeneralImageBuilder;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.IEntityImage;
@@ -131,37 +129,11 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	private final Rankdir rankdir;
 
-	public CucaDiagramFileMakerSmetana(ICucaDiagram diagram, StringBounder stringBounder) {
-		super(diagram, stringBounder);
+	public CucaDiagramFileMakerSmetana(CucaDiagram diagram) {
+		super(diagram);
 		this.rankdir = diagram.getSkinParam().getRankdir();
 
-		printAllSubgroups(diagram.getRootGroup());
-		printEntities(getUnpackagedEntities());
-
-		for (Link link : diagram.getLinks()) {
-			if (link.isRemoved())
-				continue;
-
-			if (isOpalisable(link.getEntity1())) {
-				final SvekNode node = dotStringFactory.getBibliotekon().getNode(link.getEntity1());
-				final SvekNode other = dotStringFactory.getBibliotekon().getNode(link.getEntity2());
-				if (other != null) {
-					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);
-					link.setOpale(true);
-				}
-			} else if (isOpalisable(link.getEntity2())) {
-				final SvekNode node = dotStringFactory.getBibliotekon().getNode(link.getEntity2());
-				final SvekNode other = dotStringFactory.getBibliotekon().getNode(link.getEntity1());
-				if (other != null) {
-					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);
-					link.setOpale(true);
-				}
-			}
-
-		}
-
 	}
-
 
 	private MinMaxMutable getSmetanaMinMax() {
 		final MinMaxMutable result = MinMaxMutable.getEmpty(false);
@@ -207,8 +179,9 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 					continue;
 
 				final ST_Agedge_s edge = ent.getValue();
-				final SmetanaEdge smetanaPath = new SmetanaEdge(link, edge, ymirror, getLabel(link),
-						getQuantifier(link, 1), getQuantifier(link, 2), dotStringFactory.getBibliotekon(), diagram.getSkinParam());
+				final SmetanaEdge smetanaPath = new SmetanaEdge(link, edge, ymirror,
+						getLabel(ug.getStringBounder(), link), getQuantifier(ug.getStringBounder(), link, 1),
+						getQuantifier(ug.getStringBounder(), link, 2), getBibliotekon(), diagram.getSkinParam());
 				smetanaPathes.put(link, smetanaPath);
 			}
 
@@ -220,7 +193,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 				final ST_Agnode_s agnode = ent.getValue();
 				final XPoint2D corner = getCorner(agnode);
 
-				final SvekNode node = dotStringFactory.getBibliotekon().getNode(leaf);
+				final SvekNode node = getBibliotekon().getNode(leaf);
 				node.resetMove();
 				node.moveDelta(corner.getX(), corner.getY());
 				final IEntityImage image = node.getImage();
@@ -288,7 +261,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			final XPoint2D upperRight = ymirror.getMirrored(boxInfo.getUpperRight());
 			final XPoint2D lowerLeft = ymirror.getMirrored(boxInfo.getLowerLeft());
 
-			final Cluster cluster = dotStringFactory.getBibliotekon().getCluster(group);
+			final Cluster cluster = getBibliotekon().getCluster(group);
 			cluster.setPosition(upperRight, lowerLeft);
 
 			final XDimension2D dimTitle = cluster.getTitleDimension(ug.getStringBounder());
@@ -305,44 +278,43 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		}
 	}
 
-	private void printAllSubgroups(Entity parent) {
+	private void printAllSubgroups(StringBounder stringBounder, Entity parent) {
 		for (Entity g : diagram.getChildrenGroups(parent)) {
 			if (g.isRemoved())
 				continue;
 
 			if (diagram.isEmpty(g) && g.getGroupType() == GroupType.PACKAGE) {
 				g.muteToType(LeafType.EMPTY_PACKAGE);
-				printEntity(g);
+				this.printEntity(stringBounder, g);
 			} else {
-				printSingleGroup(g);
+				this.printSingleGroup(stringBounder, g);
 			}
 		}
 	}
 
-	private void printSingleGroup(Entity g) {
+	private void printSingleGroup(StringBounder stringBounder, Entity g) {
 		if (g.getGroupType() == GroupType.CONCURRENT_STATE)
 			return;
 
 		if (g.isPacked() == false) {
 			final ClusterHeader clusterHeader = new ClusterHeader(g, diagram.getSkinParam(), diagram, stringBounder);
-			dotStringFactory.openCluster(g, clusterHeader);
+			clusterManager.openCluster(g, clusterHeader);
 		}
 
-		this.printEntities(g.leafs());
+		this.printEntities(stringBounder, g.leafs());
+		this.printAllSubgroups(stringBounder, g);
 
-		printAllSubgroups(g);
+		if (g.isPacked() == false)
+			clusterManager.closeCluster();
 
-		if (g.isPacked() == false) {
-			dotStringFactory.closeCluster();
-		}
 	}
 
-	private void printEntities(Collection<Entity> entities) {
+	private void printEntities(StringBounder stringBounder, Collection<Entity> entities) {
 		for (Entity ent : entities) {
 			if (ent.isRemoved())
 				continue;
 
-			printEntity(ent);
+			this.printEntity(stringBounder, ent);
 		}
 	}
 
@@ -378,7 +350,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	}
 
 	private void exportEntity(Globals zz, ST_Agraph_s cluster, Entity leaf) {
-		final SvekNode node = dotStringFactory.getBibliotekon().getNode(leaf);
+		final SvekNode node = getBibliotekon().getNode(leaf);
 		if (node == null) {
 			System.err.println("CANNOT FIND NODE");
 			return;
@@ -393,14 +365,13 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		nodes.put(leaf, agnode);
 	}
 
-	private void printEntity(Entity ent) {
+	private void printEntity(StringBounder stringBounder, Entity ent) {
 		if (ent.isRemoved())
 			throw new IllegalStateException();
 
 		final IEntityImage image = printEntityInternal(ent);
-		final SvekNode node = getBibliotekon().createNode(ent, image, dotStringFactory.getColorSequence(),
-				stringBounder);
-		dotStringFactory.addNode(node);
+		final SvekNode node = getBibliotekon().createNode(ent, image, stringBounder);
+		clusterManager.addNode(node);
 	}
 
 	private Collection<Entity> getUnpackagedEntities() {
@@ -416,6 +387,34 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	public ImageData createFile(OutputStream os, List<String> dotStrings, FileFormatOption fileFormatOption)
 			throws IOException {
+
+		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());
+
+		this.printAllSubgroups(stringBounder, diagram.getRootGroup());
+		this.printEntities(stringBounder, getUnpackagedEntities());
+
+		for (Link link : diagram.getLinks()) {
+			if (link.isRemoved())
+				continue;
+
+			if (isOpalisable(link.getEntity1())) {
+				final SvekNode node = getBibliotekon().getNode(link.getEntity1());
+				final SvekNode other = getBibliotekon().getNode(link.getEntity2());
+				if (other != null) {
+					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);
+					link.setOpale(true);
+				}
+			} else if (isOpalisable(link.getEntity2())) {
+				final SvekNode node = getBibliotekon().getNode(link.getEntity2());
+				final SvekNode other = getBibliotekon().getNode(link.getEntity1());
+				if (other != null) {
+					((EntityImageNote) node.getImage()).setOpaleLink(link, node, other, smetanaPathes);
+					link.setOpale(true);
+				}
+			}
+
+		}
+
 		lock.lock();
 		try {
 			return createFileLocked(os, dotStrings, fileFormatOption);
@@ -428,7 +427,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	public void createOneGraphic(UGraphic ug) {
 		final Globals zz = Globals.open();
 		try {
-			final TextBlock textBlock = getTextBlock(zz);
+			final TextBlock textBlock = getTextBlock(ug.getStringBounder(), zz);
 			textBlock.drawU(ug);
 		} catch (Throwable e) {
 			SmetanaDebug.printMe();
@@ -442,7 +441,9 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 		final Globals zz = Globals.open();
 		try {
-			final TextBlock drawable = getTextBlock(zz);
+			final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());
+
+			final TextBlock drawable = getTextBlock(stringBounder, zz);
 			return diagram.createImageBuilder(fileFormatOption).drawable(drawable).write(os);
 		} catch (Throwable e) {
 			SmetanaDebug.printMe();
@@ -454,14 +455,14 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		}
 	}
 
-	private TextBlock getTextBlock(Globals zz) {
+	private TextBlock getTextBlock(StringBounder stringBounder, Globals zz) {
 		final ST_Agraph_s g = agopen(zz, new CString("g"), zz.Agdirected, null);
 
 		exportEntities(zz, g, getUnpackagedEntities());
 		exportGroups(zz, g, diagram.getEntityFactory().getRootGroup());
 
 		for (Link link : diagram.getLinks()) {
-			final ST_Agedge_s e = createEdge(zz, g, link);
+			final ST_Agedge_s e = createEdge(stringBounder, zz, g, link);
 			if (e != null)
 				edges.put(link, e);
 
@@ -536,8 +537,9 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	private FontConfiguration getFontForLink(Link link, final ISkinParam skinParam) {
 		final SName styleName = skinParam.getUmlDiagramType().getStyleName();
-		
-		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype(), styleName).getMergedStyle(link.getStyleBuilder());
+
+		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype(), styleName)
+				.getMergedStyle(link.getStyleBuilder());
 		return style.getFontConfiguration(skinParam.getIHtmlColorSet());
 	}
 
@@ -565,8 +567,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		return link.getLinkArrow();
 	}
 
-	private TextBlock getLabel(Link link) {
-		ISkinParam skinParam = diagram.getSkinParam();
+	private TextBlock getLabel(StringBounder stringBounder, Link link) {
+		final ISkinParam skinParam = diagram.getSkinParam();
 		final double marginLabel = 1; // startUid.equals(endUid) ? 6 : 1;
 
 		// final FontConfiguration labelFont =
@@ -590,10 +592,11 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			final boolean hasSeveralGuideLines = link.getLabel().hasSeveralGuideLines();
 			final TextBlock block;
 			// if (hasSeveralGuideLines)
-				// block = StringWithArrow.addSeveralMagicArrows(link.getLabel(), this, font, alignment, skinParam);
+			// block = StringWithArrow.addSeveralMagicArrows(link.getLabel(), this, font,
+			// alignment, skinParam);
 			// else
-				block = link.getLabel().create0(font, alignment, skinParam, skinParam.maxMessageSize(),
-						CreoleMode.SIMPLE_LINE, null, null);
+			block = link.getLabel().create0(font, alignment, skinParam, skinParam.maxMessageSize(),
+					CreoleMode.SIMPLE_LINE, null, null);
 
 			labelOnly = addVisibilityModifier(block, link, skinParam);
 			if (getLinkArrow(link) != LinkArrow.NONE_OR_SEVERAL && hasSeveralGuideLines == false) {
@@ -622,7 +625,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	}
 
-	private TextBlock getQuantifier(Link link, int n) {
+	private TextBlock getQuantifier(StringBounder stringBounder, Link link, int n) {
 		final String tmp = n == 1 ? link.getQuantifier1() : link.getQuantifier2();
 		if (tmp == null)
 			return null;
@@ -657,7 +660,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	}
 
-	private ST_Agedge_s createEdge(Globals zz, final ST_Agraph_s g, Link link) {
+	private ST_Agedge_s createEdge(StringBounder stringBounder, Globals zz, final ST_Agraph_s g, Link link) {
 
 		final ST_Agnode_s node1;
 		final ST_Agnode_s node2;
@@ -683,19 +686,19 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		int length = link.getLength();
 		agsafeset(zz, e, new CString("minlen"), new CString("" + (length - 1)), new CString(""));
 
-		final TextBlock label = getLabel(link);
+		final TextBlock label = getLabel(stringBounder, link);
 		if (TextBlockUtils.isEmpty(label, stringBounder) == false) {
 			final XDimension2D dimLabel = label.calculateDimension(stringBounder);
 			final CString hackDim = createLabelDim(dimLabel.getWidth(), dimLabel.getHeight());
 			agsafeset(zz, e, new CString("label"), hackDim, new CString(""));
 		}
-		final TextBlock q1 = getQuantifier(link, 1);
+		final TextBlock q1 = getQuantifier(stringBounder, link, 1);
 		if (q1 != null) {
 			final XDimension2D dimLabel = q1.calculateDimension(stringBounder);
 			final CString hackDim = createLabelDim(dimLabel.getWidth(), dimLabel.getHeight());
 			agsafeset(zz, e, new CString("taillabel"), hackDim, new CString(""));
 		}
-		final TextBlock q2 = getQuantifier(link, 2);
+		final TextBlock q2 = getQuantifier(stringBounder, link, 2);
 		if (q2 != null) {
 			final XDimension2D dimLabel = q2.calculateDimension(stringBounder);
 			final CString hackDim = createLabelDim(dimLabel.getWidth(), dimLabel.getHeight());
@@ -719,10 +722,6 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		strings.add("post to <b>https://plantuml.com/qa</b> to solve this issue.");
 		strings.add(" ");
 		return strings;
-	}
-
-	private Bibliotekon getBibliotekon() {
-		return dotStringFactory.getBibliotekon();
 	}
 
 	private IEntityImage printEntityInternal(Entity ent) {

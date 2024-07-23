@@ -214,6 +214,7 @@ public class StateDiagram extends AbstractEntityDiagram {
 		this.hideEmptyDescription = hideEmptyDescription;
 	}
 
+	@Override
 	public final boolean isHideEmptyDescriptionForState() {
 		return hideEmptyDescription;
 	}
