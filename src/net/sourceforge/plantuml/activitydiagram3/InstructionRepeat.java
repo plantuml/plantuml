@@ -76,7 +76,8 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 
 	private Display backward = Display.NULL;
 
-	private Stereotype stereotype;
+	private Stereotype stereotypeLoop;
+	private Stereotype stereotypeBack;
 	private LinkRendering incoming1 = LinkRendering.none();
 	private LinkRendering incoming2 = LinkRendering.none();
 	private List<PositionedNote> backwardNotes = new ArrayList<>();
@@ -105,7 +106,7 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 		this.parent = parent;
 		this.nextLinkRenderer = Objects.requireNonNull(nextLinkRenderer);
 		this.colors = colors;
-		this.stereotype = stereotype;
+		this.stereotypeLoop = stereotype;
 	}
 
 	private boolean isLastOfTheParent() {
@@ -122,7 +123,7 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 		this.boxStyle = boxStyle;
 		this.incoming1 = incoming1;
 		this.incoming2 = incoming2;
-		this.stereotype = stereotype;
+		this.stereotypeBack = stereotype;
 	}
 
 	public boolean hasBackward() {
@@ -161,8 +162,8 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 		final Ftile decorateOut = factory.decorateOut(repeatList.createFtile(factory), endRepeatLinkRendering);
 		if (this.testCalled == false && incoming1.isNone())
 			incoming1 = swimlanes.nextLinkRenderer();
-		final Ftile result = factory.repeat(boxStyleIn, stereotype, swimlane, swimlaneOut, startLabel, decorateOut, test, yes, out,
-				colors, back, isLastOfTheParent(), incoming1, incoming2, currentStyleBuilder);
+		final Ftile result = factory.repeat(boxStyleIn, stereotypeLoop, swimlane, swimlaneOut, startLabel, decorateOut,
+				test, yes, out, colors, back, isLastOfTheParent(), incoming1, incoming2, currentStyleBuilder);
 		if (killed)
 			return new FtileKilled(result);
 
@@ -173,7 +174,7 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 		if (Display.isNull(backward))
 			return null;
 
-		Ftile result = factory.activity(backward, swimlaneBackward, boxStyle, Colors.empty(), stereotype);
+		Ftile result = factory.activity(backward, swimlaneBackward, boxStyle, Colors.empty(), stereotypeBack);
 		if (backwardNotes.size() > 0)
 			result = factory.addNote(result, swimlaneBackward, backwardNotes, VerticalAlignment.CENTER);
 
