@@ -88,8 +88,13 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 
 	@Override
 	public String checkFinalError() {
+		
+		if (getPragma().useIntermediatePackages() == false)
+			packSomePackage();
+
 		this.applySingleStrategy();
 		return super.checkFinalError();
 	}
+	
 
 }

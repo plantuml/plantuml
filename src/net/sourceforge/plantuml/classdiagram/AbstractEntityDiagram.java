@@ -42,8 +42,10 @@ import java.util.List;
 import java.util.Map;
 
 import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public abstract class AbstractEntityDiagram extends CucaDiagram {
@@ -77,5 +79,31 @@ public abstract class AbstractEntityDiagram extends CucaDiagram {
 		result.append(")");
 		return new DiagramDescription(result.toString());
 	}
+	
+	
+	protected final void packSomePackage() {
+		String separator = getNamespaceSeparator();
+		if (separator == null)
+			separator = ".";
+
+		while (true) {
+			boolean changed = false;
+			for (Entity group : this.entityFactory.groups()) {
+				if (group.canBePacked()) {
+					final Entity child = group.groups().iterator().next();
+					final String appended = group.getDisplay().get(0) + separator;
+					final Display newDisplay = child.getDisplay().appendFirstLine(appended);
+					child.setDisplay(newDisplay);
+					group.setPacked(true);
+					changed = true;
+				}
+			}
+			if (changed == false)
+				return;
+		}
+
+	}
+
+
 
 }

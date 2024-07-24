@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.classdiagram.command.CommandHideShow2;
 import net.sourceforge.plantuml.classdiagram.command.CommandLayoutNewLine;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkLollipop;
-import net.sourceforge.plantuml.classdiagram.command.CommandNamespaceSeparator;
 import net.sourceforge.plantuml.classdiagram.command.CommandRemoveRestore;
 import net.sourceforge.plantuml.classdiagram.command.CommandStereotype;
 import net.sourceforge.plantuml.classdiagram.command.CommandUrl;

@@ -39,7 +39,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShow2;
-import net.sourceforge.plantuml.classdiagram.command.CommandNamespaceSeparator;
 import net.sourceforge.plantuml.classdiagram.command.CommandRemoveRestore;
 import net.sourceforge.plantuml.classdiagram.command.CommandUrl;
 import net.sourceforge.plantuml.command.Command;
