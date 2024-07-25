@@ -79,11 +79,17 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>final <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#reallyCreateLeaf(net.sourceforge.plantuml.plasma.Quark,net.sourceforge.plantuml.klimt.creole.Display,net.sourceforge.plantuml.abel.LeafType,net.sourceforge.plantuml.decoration.symbol.USymbol)" class="member-name-link">reallyCreateLeaf</a><wbr>(<a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;ident,
+<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#createLeaf(net.sourceforge.plantuml.plasma.Quark,net.atmp.CucaDiagram,net.sourceforge.plantuml.abel.LeafType,java.util.Set)" class="member-name-link">createLeaf</a><wbr>(<a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;quark,
+ <a href="../../../../atmp/CucaDiagram.html" title="class in net.atmp">CucaDiagram</a>&nbsp;diagram,
+ <a href="../LeafType.html" title="enum class in net.sourceforge.plantuml.abel">LeafType</a>&nbsp;entityType,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../skin/VisibilityModifier.html" title="enum class in net.sourceforge.plantuml.skin">VisibilityModifier</a>&gt;&nbsp;hides)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>final <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#reallyCreateLeaf(net.sourceforge.plantuml.plasma.Quark,net.sourceforge.plantuml.klimt.creole.Display,net.sourceforge.plantuml.abel.LeafType,net.sourceforge.plantuml.decoration.symbol.USymbol)" class="member-name-link">reallyCreateLeaf</a><wbr>(<a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;ident,
  <a href="../../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;display,
  <a href="../LeafType.html" title="enum class in net.sourceforge.plantuml.abel">LeafType</a>&nbsp;type,
  <a href="../../decoration/symbol/USymbol.html" title="class in net.sourceforge.plantuml.decoration.symbol">USymbol</a>&nbsp;symbol)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -124,23 +130,30 @@ the order they are declared.</div>
 <div class="col-first odd-row-color"><code>boolean</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">Link.</span><code><a href="../Link.html#containsType(net.sourceforge.plantuml.abel.LeafType)" class="member-name-link">containsType</a><wbr>(<a href="../LeafType.html" title="enum class in net.sourceforge.plantuml.abel">LeafType</a>&nbsp;type)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>final <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">EntityFactory.</span><code><a href="../EntityFactory.html#createLeaf(net.sourceforge.plantuml.plasma.Quark,net.atmp.CucaDiagram,net.sourceforge.plantuml.abel.LeafType,java.util.Set)" class="member-name-link">createLeaf</a><wbr>(<a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;quark,
- <a href="../../../../atmp/CucaDiagram.html" title="class in net.atmp">CucaDiagram</a>&nbsp;diagram,
- <a href="../LeafType.html" title="enum class in net.sourceforge.plantuml.abel">LeafType</a>&nbsp;entityType,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../skin/VisibilityModifier.html" title="enum class in net.sourceforge.plantuml.skin">VisibilityModifier</a>&gt;&nbsp;hides)</code></div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Entity.</span><code><a href="../Entity.html#muteToType(net.sourceforge.plantuml.abel.LeafType)" class="member-name-link">muteToType</a><wbr>(<a href="../LeafType.html" title="enum class in net.sourceforge.plantuml.abel">LeafType</a>&nbsp;newType)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Entity.</span><code><a href="../Entity.html#muteToType(net.sourceforge.plantuml.abel.LeafType)" class="member-name-link">muteToType</a><wbr>(<a href="../LeafType.html" title="enum class in net.sourceforge.plantuml.abel">LeafType</a>&nbsp;newType)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Entity.</span><code><a href="../Entity.html#muteToType(net.sourceforge.plantuml.abel.LeafType,net.sourceforge.plantuml.decoration.symbol.USymbol)" class="member-name-link">muteToType</a><wbr>(<a href="../LeafType.html" title="enum class in net.sourceforge.plantuml.abel">LeafType</a>&nbsp;newType,
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Entity.</span><code><a href="../Entity.html#muteToType(net.sourceforge.plantuml.abel.LeafType,net.sourceforge.plantuml.decoration.symbol.USymbol)" class="member-name-link">muteToType</a><wbr>(<a href="../LeafType.html" title="enum class in net.sourceforge.plantuml.abel">LeafType</a>&nbsp;newType,
  <a href="../../decoration/symbol/USymbol.html" title="class in net.sourceforge.plantuml.decoration.symbol">USymbol</a>&nbsp;newSymbol)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Entity.</span><code><a href="../Entity.html#overrideImage(net.sourceforge.plantuml.svek.IEntityImage,net.sourceforge.plantuml.abel.LeafType)" class="member-name-link">overrideImage</a><wbr>(<a href="../../svek/IEntityImage.html" title="interface in net.sourceforge.plantuml.svek">IEntityImage</a>&nbsp;img,
- <a href="../LeafType.html" title="enum class in net.sourceforge.plantuml.abel">LeafType</a>&nbsp;leafType)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Entity.</span><code><a href="../Entity.html#overrideImage(net.sourceforge.plantuml.svek.IEntityImage,net.sourceforge.plantuml.abel.LeafType)" class="member-name-link">overrideImage</a><wbr>(<a href="../../svek/IEntityImage.html" title="interface in net.sourceforge.plantuml.svek">IEntityImage</a>&nbsp;img,
+ <a href="../LeafType.html" title="enum class in net.sourceforge.plantuml.abel">LeafType</a>&nbsp;leafType)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Constructors in <a href="../package-summary.html">net.sourceforge.plantuml.abel</a> with parameters of type <a href="../LeafType.html" title="enum class in net.sourceforge.plantuml.abel">LeafType</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../Entity.html#%3Cinit%3E(net.sourceforge.plantuml.plasma.Quark,net.atmp.CucaDiagram,net.sourceforge.plantuml.cucadiagram.Bodier,net.sourceforge.plantuml.abel.LeafType,int)" class="member-name-link">Entity</a><wbr>(<a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;quark,
+ <a href="../../../../atmp/CucaDiagram.html" title="class in net.atmp">CucaDiagram</a>&nbsp;diagram,
+ <a href="../../cucadiagram/Bodier.html" title="interface in net.sourceforge.plantuml.cucadiagram">Bodier</a>&nbsp;bodier,
+ <a href="../LeafType.html" title="enum class in net.sourceforge.plantuml.abel">LeafType</a>&nbsp;leafType,
+ int&nbsp;rawLayout)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

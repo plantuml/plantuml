@@ -149,20 +149,22 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="net.atmp">
 <h2>Uses of <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a> in <a href="../../../../atmp/package-summary.html">net.atmp</a></h2>
-<div class="caption"><span>Fields in <a href="../../../../atmp/package-summary.html">net.atmp</a> declared as <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Field</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>protected <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#lastEntity" class="member-name-link">lastEntity</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-</div>
 <div class="caption"><span>Methods in <a href="../../../../atmp/package-summary.html">net.atmp</a> that return <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#createGroup(net.sourceforge.plantuml.plasma.Quark,net.sourceforge.plantuml.abel.GroupType,java.util.Set)" class="member-name-link">createGroup</a><wbr>(<a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;quark,
+ <a href="../GroupType.html" title="enum class in net.sourceforge.plantuml.abel">GroupType</a>&nbsp;groupType,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../skin/VisibilityModifier.html" title="enum class in net.sourceforge.plantuml.skin">VisibilityModifier</a>&gt;&nbsp;hides)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>final <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#createLeaf(net.sourceforge.plantuml.plasma.Quark,net.atmp.CucaDiagram,net.sourceforge.plantuml.abel.LeafType,java.util.Set)" class="member-name-link">createLeaf</a><wbr>(<a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;quark,
+ <a href="../../../../atmp/CucaDiagram.html" title="class in net.atmp">CucaDiagram</a>&nbsp;diagram,
+ <a href="../LeafType.html" title="enum class in net.sourceforge.plantuml.abel">LeafType</a>&nbsp;entityType,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../skin/VisibilityModifier.html" title="enum class in net.sourceforge.plantuml.skin">VisibilityModifier</a>&gt;&nbsp;hides)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>final <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#getCurrentGroup()" class="member-name-link">getCurrentGroup</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -188,14 +190,26 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#firstWithName(java.lang.String)" class="member-name-link">firstWithName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#firstWithName(java.lang.String)" class="member-name-link">firstWithName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;full)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#getChildrenGroups(net.sourceforge.plantuml.abel.Entity)" class="member-name-link">getChildrenGroups</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;entity)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>final <a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#quarkInContext(boolean,java.lang.String)" class="member-name-link">quarkInContext</a><wbr>(boolean&nbsp;reuseExistingChild,
+<div class="col-first even-row-color"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#groups()" class="member-name-link">groups</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#groupsAndRoot()" class="member-name-link">groupsAndRoot</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#leafs()" class="member-name-link">leafs</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>final <a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#quarkInContext(boolean,java.lang.String)" class="member-name-link">quarkInContext</a><wbr>(boolean&nbsp;reuseExistingChild,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;full)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#quarks()" class="member-name-link">quarks</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../../../../atmp/package-summary.html">net.atmp</a> with parameters of type <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></span></div>
@@ -212,28 +226,48 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>final boolean</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#isEmpty(net.sourceforge.plantuml.abel.Entity)" class="member-name-link">isEmpty</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;entity)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#isHidden(net.sourceforge.plantuml.abel.Entity)" class="member-name-link">isHidden</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;leaf)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#isRemoved(net.sourceforge.plantuml.abel.Entity)" class="member-name-link">isRemoved</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;leaf)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#isRemovedIgnoreUnlinked(net.sourceforge.plantuml.abel.Entity)" class="member-name-link">isRemovedIgnoreUnlinked</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;leaf)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>final boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#isStandalone(net.sourceforge.plantuml.abel.Entity)" class="member-name-link">isStandalone</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;ent)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>final boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#isStandalone(net.sourceforge.plantuml.abel.Entity)" class="member-name-link">isStandalone</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;ent)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#isStandaloneForArgo(net.sourceforge.plantuml.abel.Entity)" class="member-name-link">isStandaloneForArgo</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;ent)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>final boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#isStandaloneForArgo(net.sourceforge.plantuml.abel.Entity)" class="member-name-link">isStandaloneForArgo</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;ent)</code></div>
+<div class="col-first even-row-color"><code>final void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#setLastEntity(net.sourceforge.plantuml.abel.Entity)" class="member-name-link">setLastEntity</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;foo)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>final void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#setLastEntity(net.sourceforge.plantuml.abel.Entity)" class="member-name-link">setLastEntity</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;foo)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>final boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#showPortion(net.sourceforge.plantuml.abel.EntityPortion,net.sourceforge.plantuml.abel.Entity)" class="member-name-link">showPortion</a><wbr>(<a href="../EntityPortion.html" title="enum class in net.sourceforge.plantuml.abel">EntityPortion</a>&nbsp;portion,
+<div class="col-first odd-row-color"><code>final boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#showPortion(net.sourceforge.plantuml.abel.EntityPortion,net.sourceforge.plantuml.abel.Entity)" class="member-name-link">showPortion</a><wbr>(<a href="../EntityPortion.html" title="enum class in net.sourceforge.plantuml.abel">EntityPortion</a>&nbsp;portion,
  <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;entity)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#updateLasts(net.sourceforge.plantuml.abel.Entity)" class="member-name-link">updateLasts</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;result)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#updateLasts(net.sourceforge.plantuml.abel.Entity)" class="member-name-link">updateLasts</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;result)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Method parameters in <a href="../../../../atmp/package-summary.html">net.atmp</a> with type arguments of type <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#createGroup(net.sourceforge.plantuml.plasma.Quark,net.sourceforge.plantuml.abel.GroupType,java.util.Set)" class="member-name-link">createGroup</a><wbr>(<a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;quark,
+ <a href="../GroupType.html" title="enum class in net.sourceforge.plantuml.abel">GroupType</a>&nbsp;groupType,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../skin/VisibilityModifier.html" title="enum class in net.sourceforge.plantuml.skin">VisibilityModifier</a>&gt;&nbsp;hides)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>final <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#createLeaf(net.sourceforge.plantuml.plasma.Quark,net.atmp.CucaDiagram,net.sourceforge.plantuml.abel.LeafType,java.util.Set)" class="member-name-link">createLeaf</a><wbr>(<a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;quark,
+ <a href="../../../../atmp/CucaDiagram.html" title="class in net.atmp">CucaDiagram</a>&nbsp;diagram,
+ <a href="../LeafType.html" title="enum class in net.sourceforge.plantuml.abel">LeafType</a>&nbsp;entityType,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../skin/VisibilityModifier.html" title="enum class in net.sourceforge.plantuml.skin">VisibilityModifier</a>&gt;&nbsp;hides)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#getPortFor(java.lang.String,net.sourceforge.plantuml.plasma.Quark)" class="member-name-link">getPortFor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;entString,
  <a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;ident)</code></div>
@@ -270,17 +304,6 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">EntityFactory.</span><code><a href="../EntityFactory.html#createGroup(net.sourceforge.plantuml.plasma.Quark,net.sourceforge.plantuml.abel.GroupType,java.util.Set)" class="member-name-link">createGroup</a><wbr>(<a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;quark,
- <a href="../GroupType.html" title="enum class in net.sourceforge.plantuml.abel">GroupType</a>&nbsp;groupType,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../skin/VisibilityModifier.html" title="enum class in net.sourceforge.plantuml.skin">VisibilityModifier</a>&gt;&nbsp;hides)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>final <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">EntityFactory.</span><code><a href="../EntityFactory.html#createLeaf(net.sourceforge.plantuml.plasma.Quark,net.atmp.CucaDiagram,net.sourceforge.plantuml.abel.LeafType,java.util.Set)" class="member-name-link">createLeaf</a><wbr>(<a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;quark,
- <a href="../../../../atmp/CucaDiagram.html" title="class in net.atmp">CucaDiagram</a>&nbsp;diagram,
- <a href="../LeafType.html" title="enum class in net.sourceforge.plantuml.abel">LeafType</a>&nbsp;entityType,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../skin/VisibilityModifier.html" title="enum class in net.sourceforge.plantuml.skin">VisibilityModifier</a>&gt;&nbsp;hides)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">Link.</span><code><a href="../Link.html#getEntity1()" class="member-name-link">getEntity1</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></code></div>
@@ -302,32 +325,17 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">EntityFactory.</span><code><a href="../EntityFactory.html#firstWithName(java.lang.String)" class="member-name-link">firstWithName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;full)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Entity.</span><code><a href="../Entity.html#getQuark()" class="member-name-link">getQuark</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Entity.</span><code><a href="../Entity.html#getQuark()" class="member-name-link">getQuark</a>()</code></div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Entity.</span><code><a href="../Entity.html#groups()" class="member-name-link">groups</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Entity.</span><code><a href="../Entity.html#groups()" class="member-name-link">groups</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">EntityFactory.</span><code><a href="../EntityFactory.html#groups()" class="member-name-link">groups</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">EntityFactory.</span><code><a href="../EntityFactory.html#groupsAndRoot()" class="member-name-link">groupsAndRoot</a>()</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">EntityFactory.</span><code><a href="../EntityFactory.html#groups()" class="member-name-link">groups</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">Entity.</span><code><a href="../Entity.html#leafs()" class="member-name-link">leafs</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">EntityFactory.</span><code><a href="../EntityFactory.html#leafs()" class="member-name-link">leafs</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&gt;</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">EntityFactory.</span><code><a href="../EntityFactory.html#quarks()" class="member-name-link">quarks</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">EntityFactory.</span><code><a href="../EntityFactory.html#root()" class="member-name-link">root</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.abel</a> with parameters of type <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></span></div>
 <div class="summary-table three-column-summary">
@@ -353,39 +361,13 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><span class="type-name-label">Link.</span><code><a href="../Link.html#isBetween(net.sourceforge.plantuml.abel.Entity,net.sourceforge.plantuml.abel.Entity)" class="member-name-link">isBetween</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;cl1,
  <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;cl2)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">EntityFactory.</span><code><a href="../EntityFactory.html#isHidden(net.sourceforge.plantuml.abel.Entity)" class="member-name-link">isHidden</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;leaf)</code></div>
+<div class="col-first even-row-color"><code>static boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">EntityUtils.</span><code><a href="../EntityUtils.html#isPureInnerLink12(net.sourceforge.plantuml.abel.Entity,net.sourceforge.plantuml.abel.Link)" class="member-name-link">isPureInnerLink12</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;group,
+ <a href="../Link.html" title="class in net.sourceforge.plantuml.abel">Link</a>&nbsp;link)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">EntityUtils.</span><code><a href="../EntityUtils.html#isPureInnerLink12(net.sourceforge.plantuml.abel.Entity,net.sourceforge.plantuml.abel.Link)" class="member-name-link">isPureInnerLink12</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;group,
+<div class="col-second odd-row-color"><span class="type-name-label">EntityUtils.</span><code><a href="../EntityUtils.html#isPureInnerLink3(net.sourceforge.plantuml.abel.Entity,net.sourceforge.plantuml.abel.Link)" class="member-name-link">isPureInnerLink3</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;group,
  <a href="../Link.html" title="class in net.sourceforge.plantuml.abel">Link</a>&nbsp;link)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">EntityUtils.</span><code><a href="../EntityUtils.html#isPureInnerLink3(net.sourceforge.plantuml.abel.Entity,net.sourceforge.plantuml.abel.Link)" class="member-name-link">isPureInnerLink3</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;group,
- <a href="../Link.html" title="class in net.sourceforge.plantuml.abel">Link</a>&nbsp;link)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">EntityFactory.</span><code><a href="../EntityFactory.html#isRemoved(net.sourceforge.plantuml.abel.Entity)" class="member-name-link">isRemoved</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;leaf)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">EntityFactory.</span><code><a href="../EntityFactory.html#isRemovedIgnoreUnlinked(net.sourceforge.plantuml.abel.Entity)" class="member-name-link">isRemovedIgnoreUnlinked</a><wbr>(<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;leaf)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-</div>
-<div class="caption"><span>Method parameters in <a href="../package-summary.html">net.sourceforge.plantuml.abel</a> with type arguments of type <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">EntityFactory.</span><code><a href="../EntityFactory.html#createGroup(net.sourceforge.plantuml.plasma.Quark,net.sourceforge.plantuml.abel.GroupType,java.util.Set)" class="member-name-link">createGroup</a><wbr>(<a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;quark,
- <a href="../GroupType.html" title="enum class in net.sourceforge.plantuml.abel">GroupType</a>&nbsp;groupType,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../skin/VisibilityModifier.html" title="enum class in net.sourceforge.plantuml.skin">VisibilityModifier</a>&gt;&nbsp;hides)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>final <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">EntityFactory.</span><code><a href="../EntityFactory.html#createLeaf(net.sourceforge.plantuml.plasma.Quark,net.atmp.CucaDiagram,net.sourceforge.plantuml.abel.LeafType,java.util.Set)" class="member-name-link">createLeaf</a><wbr>(<a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;quark,
- <a href="../../../../atmp/CucaDiagram.html" title="class in net.atmp">CucaDiagram</a>&nbsp;diagram,
- <a href="../LeafType.html" title="enum class in net.sourceforge.plantuml.abel">LeafType</a>&nbsp;entityType,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../skin/VisibilityModifier.html" title="enum class in net.sourceforge.plantuml.skin">VisibilityModifier</a>&gt;&nbsp;hides)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Constructors in <a href="../package-summary.html">net.sourceforge.plantuml.abel</a> with parameters of type <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></span></div>
@@ -394,13 +376,33 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../Link.html#%3Cinit%3E(net.sourceforge.plantuml.abel.EntityFactory,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.abel.Entity,net.sourceforge.plantuml.abel.Entity,net.sourceforge.plantuml.decoration.LinkType,net.sourceforge.plantuml.abel.LinkArg)" class="member-name-link">Link</a><wbr>(<a href="../EntityFactory.html" title="class in net.sourceforge.plantuml.abel">EntityFactory</a>&nbsp;entityFactory,
+<div class="col-second even-row-color"><code><a href="../Link.html#%3Cinit%3E(net.atmp.CucaDiagram,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.abel.Entity,net.sourceforge.plantuml.abel.Entity,net.sourceforge.plantuml.decoration.LinkType,net.sourceforge.plantuml.abel.LinkArg)" class="member-name-link">Link</a><wbr>(<a href="../../../../atmp/CucaDiagram.html" title="class in net.atmp">CucaDiagram</a>&nbsp;cucaDiagram,
  <a href="../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
  <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;cl1,
  <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;cl2,
  <a href="../../decoration/LinkType.html" title="class in net.sourceforge.plantuml.decoration">LinkType</a>&nbsp;type,
  <a href="../LinkArg.html" title="class in net.sourceforge.plantuml.abel">LinkArg</a>&nbsp;linkArg)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Constructor parameters in <a href="../package-summary.html">net.sourceforge.plantuml.abel</a> with type arguments of type <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../Entity.html#%3Cinit%3E(net.sourceforge.plantuml.plasma.Quark,net.atmp.CucaDiagram,net.sourceforge.plantuml.cucadiagram.Bodier,net.sourceforge.plantuml.abel.GroupType,int)" class="member-name-link">Entity</a><wbr>(<a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;quark,
+ <a href="../../../../atmp/CucaDiagram.html" title="class in net.atmp">CucaDiagram</a>&nbsp;diagram,
+ <a href="../../cucadiagram/Bodier.html" title="interface in net.sourceforge.plantuml.cucadiagram">Bodier</a>&nbsp;bodier,
+ <a href="../GroupType.html" title="enum class in net.sourceforge.plantuml.abel">GroupType</a>&nbsp;groupType,
+ int&nbsp;rawLayout)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../Entity.html#%3Cinit%3E(net.sourceforge.plantuml.plasma.Quark,net.atmp.CucaDiagram,net.sourceforge.plantuml.cucadiagram.Bodier,net.sourceforge.plantuml.abel.LeafType,int)" class="member-name-link">Entity</a><wbr>(<a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;quark,
+ <a href="../../../../atmp/CucaDiagram.html" title="class in net.atmp">CucaDiagram</a>&nbsp;diagram,
+ <a href="../../cucadiagram/Bodier.html" title="interface in net.sourceforge.plantuml.cucadiagram">Bodier</a>&nbsp;bodier,
+ <a href="../LeafType.html" title="enum class in net.sourceforge.plantuml.abel">LeafType</a>&nbsp;leafType,
+ int&nbsp;rawLayout)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -736,7 +738,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../dot/DotData.html#%3Cinit%3E(net.sourceforge.plantuml.abel.EntityFactory,net.sourceforge.plantuml.abel.Entity,java.util.List,java.util.Collection,net.sourceforge.plantuml.cucadiagram.GroupHierarchy,net.sourceforge.plantuml.cucadiagram.PortionShower)" class="member-name-link">DotData</a><wbr>(<a href="../EntityFactory.html" title="class in net.sourceforge.plantuml.abel">EntityFactory</a>&nbsp;entityFactory,
+<div class="col-second even-row-color"><code><a href="../../dot/DotData.html#%3Cinit%3E(net.sourceforge.plantuml.abel.EntityFactory,net.sourceforge.plantuml.abel.Entity,java.util.List,java.util.Collection,net.sourceforge.plantuml.cucadiagram.GroupHierarchy,net.sourceforge.plantuml.cucadiagram.PortionShower)" class="member-name-link">DotData</a><wbr>(<a href="../EntityFactory.html" title="interface in net.sourceforge.plantuml.abel">EntityFactory</a>&nbsp;entityFactory,
  <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;topParent,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../Link.html" title="class in net.sourceforge.plantuml.abel">Link</a>&gt;&nbsp;links,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;leafs,
@@ -755,7 +757,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../dot/DotData.html#%3Cinit%3E(net.sourceforge.plantuml.abel.EntityFactory,net.sourceforge.plantuml.abel.Entity,java.util.List,java.util.Collection,net.sourceforge.plantuml.cucadiagram.GroupHierarchy,net.sourceforge.plantuml.cucadiagram.PortionShower)" class="member-name-link">DotData</a><wbr>(<a href="../EntityFactory.html" title="class in net.sourceforge.plantuml.abel">EntityFactory</a>&nbsp;entityFactory,
+<div class="col-second even-row-color"><code><a href="../../dot/DotData.html#%3Cinit%3E(net.sourceforge.plantuml.abel.EntityFactory,net.sourceforge.plantuml.abel.Entity,java.util.List,java.util.Collection,net.sourceforge.plantuml.cucadiagram.GroupHierarchy,net.sourceforge.plantuml.cucadiagram.PortionShower)" class="member-name-link">DotData</a><wbr>(<a href="../EntityFactory.html" title="interface in net.sourceforge.plantuml.abel">EntityFactory</a>&nbsp;entityFactory,
  <a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;topParent,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../Link.html" title="class in net.sourceforge.plantuml.abel">Link</a>&gt;&nbsp;links,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;leafs,

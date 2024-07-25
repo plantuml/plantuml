@@ -90,7 +90,7 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.abel.EntityFactory,net.sourceforge.plantuml.abel.Entity,java.util.List,java.util.Collection,net.sourceforge.plantuml.cucadiagram.GroupHierarchy,net.sourceforge.plantuml.cucadiagram.PortionShower)" class="member-name-link">DotData</a><wbr>(<a href="../abel/EntityFactory.html" title="class in net.sourceforge.plantuml.abel">EntityFactory</a>&nbsp;entityFactory,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.abel.EntityFactory,net.sourceforge.plantuml.abel.Entity,java.util.List,java.util.Collection,net.sourceforge.plantuml.cucadiagram.GroupHierarchy,net.sourceforge.plantuml.cucadiagram.PortionShower)" class="member-name-link">DotData</a><wbr>(<a href="../abel/EntityFactory.html" title="interface in net.sourceforge.plantuml.abel">EntityFactory</a>&nbsp;entityFactory,
  <a href="../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;topParent,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../abel/Link.html" title="class in net.sourceforge.plantuml.abel">Link</a>&gt;&nbsp;links,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;leafs,
@@ -167,7 +167,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.abel.EntityFactory,net.sourceforge.plantuml.abel.Entity,java.util.List,java.util.Collection,net.sourceforge.plantuml.cucadiagram.GroupHierarchy,net.sourceforge.plantuml.cucadiagram.PortionShower)">
 <h3>DotData</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DotData</span><wbr><span class="parameters">(<a href="../abel/EntityFactory.html" title="class in net.sourceforge.plantuml.abel">EntityFactory</a>&nbsp;entityFactory,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DotData</span><wbr><span class="parameters">(<a href="../abel/EntityFactory.html" title="interface in net.sourceforge.plantuml.abel">EntityFactory</a>&nbsp;entityFactory,
  <a href="../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;topParent,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../abel/Link.html" title="class in net.sourceforge.plantuml.abel">Link</a>&gt;&nbsp;links,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;leafs,
@@ -183,6 +183,36 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="getRootGroup()">
+<h3>getRootGroup</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></span>&nbsp;<span class="element-name">getRootGroup</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isDegeneratedWithFewEntities(int)">
+<h3>isDegeneratedWithFewEntities</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isDegeneratedWithFewEntities</span><wbr><span class="parameters">(int&nbsp;nb)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="isHideEmptyDescriptionForState()">
+<h3>isHideEmptyDescriptionForState</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isHideEmptyDescriptionForState</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getUmlDiagramType()">
+<h3>getUmlDiagramType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../skin/UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a></span>&nbsp;<span class="element-name">getUmlDiagramType</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getSkinParam()">
+<h3>getSkinParam</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></span>&nbsp;<span class="element-name">getSkinParam</span>()</div>
+</section>
+</li>
 <li>
 <section class="detail" id="getGroupHierarchy()">
 <h3>getGroupHierarchy</h3>
@@ -217,36 +247,6 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getPortionShower()">
 <h3>getPortionShower</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../cucadiagram/PortionShower.html" title="interface in net.sourceforge.plantuml.cucadiagram">PortionShower</a></span>&nbsp;<span class="element-name">getPortionShower</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getRootGroup()">
-<h3>getRootGroup</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></span>&nbsp;<span class="element-name">getRootGroup</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="isDegeneratedWithFewEntities(int)">
-<h3>isDegeneratedWithFewEntities</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isDegeneratedWithFewEntities</span><wbr><span class="parameters">(int&nbsp;nb)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="isHideEmptyDescriptionForState()">
-<h3>isHideEmptyDescriptionForState</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isHideEmptyDescriptionForState</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getUmlDiagramType()">
-<h3>getUmlDiagramType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../skin/UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a></span>&nbsp;<span class="element-name">getUmlDiagramType</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getSkinParam()">
-<h3>getSkinParam</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></span>&nbsp;<span class="element-name">getSkinParam</span>()</div>
 </section>
 </li>
 <li>
