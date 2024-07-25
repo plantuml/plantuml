@@ -288,8 +288,8 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 
 	private Collection<Entity> getUnpackagedEntities() {
 		final List<Entity> result = new ArrayList<>();
-		for (Entity ent : diagram.getEntityFactory().leafs())
-			if (diagram.getEntityFactory().getRootGroup() == ent.getParentContainer())
+		for (Entity ent : diagram.leafs())
+			if (diagram.getRootGroup() == ent.getParentContainer())
 				result.add(ent);
 
 		return result;

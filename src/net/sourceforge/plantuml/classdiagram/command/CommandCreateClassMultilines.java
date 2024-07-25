@@ -293,9 +293,9 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 					typeLink = typeLink.goDashed();
 
 				final LinkArg linkArg = LinkArg.noDisplay(2);
-				final Link link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
-						cl2, entity, typeLink, linkArg.withQuantifier(null, null)
-								.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
+				final Link link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(),
+						cl2, entity, typeLink, linkArg.withQuantifier(null, null).withDistanceAngle(diagram.getLabeldistance(),
+								diagram.getLabelangle()));
 				diagram.addLink(link);
 			}
 		}

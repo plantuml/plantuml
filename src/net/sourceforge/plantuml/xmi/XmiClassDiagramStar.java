@@ -50,7 +50,7 @@ public class XmiClassDiagramStar extends XmiClassDiagramAbstract implements XmlD
 	public XmiClassDiagramStar(ClassDiagram classDiagram) throws ParserConfigurationException {
 		super(classDiagram);
 
-		for (final Entity ent : classDiagram.getEntityFactory().leafs()) {
+		for (final Entity ent : classDiagram.leafs()) {
 			final Element cla = createEntityNode(ent);
 			if (cla == null)
 				continue;

@@ -54,7 +54,6 @@ import org.w3c.dom.Element;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
-import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.xml.XmlFactories;
@@ -97,11 +96,11 @@ public abstract class XmiDescriptionDiagramAbstract implements XmlDiagramTransfo
 		this.ownedElement = document.createElement("UML:Namespace.ownedElement");
 		model.appendChild(ownedElement);
 
-		for (final Entity gr : diagram.getEntityFactory().groups())
+		for (final Entity gr : diagram.groups())
 			if (gr.getParentContainer().isRoot())
 				addElement(gr, ownedElement);
 
-		for (final Entity ent : diagram.getEntityFactory().leafs())
+		for (final Entity ent : diagram.leafs())
 			if (ent.getParentContainer().isRoot())
 				addElement(ent, ownedElement);
 
@@ -113,11 +112,11 @@ public abstract class XmiDescriptionDiagramAbstract implements XmlDiagramTransfo
 	protected void addElement(final Entity tobeAdded, Element container) {
 		final Element element = createEntityNode(tobeAdded);
 		container.appendChild(element);
-		for (final Entity ent : diagram.getEntityFactory().groups())
+		for (final Entity ent : diagram.groups())
 			if (ent.getParentContainer() == tobeAdded)
 				addElement(ent, element);
 
-		for (final Entity ent : diagram.getEntityFactory().leafs())
+		for (final Entity ent : diagram.leafs())
 			if (ent.getParentContainer() == tobeAdded)
 				addElement(ent, element);
 

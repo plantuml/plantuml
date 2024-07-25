@@ -118,8 +118,8 @@ public final class GroupMakerActivity {
 		final ISkinParam skinParam = diagram.getSkinParam();
 		final Bibliotekon bibliotekon = new Bibliotekon(links);
 
-		final DotData dotData = new DotData(diagram.getEntityFactory(), group, links, group.leafs(),
-				new InnerGroupHierarchy(), PortionShower.ALL);
+		final DotData dotData = new DotData(diagram, group, links, group.leafs(), new InnerGroupHierarchy(),
+				PortionShower.ALL);
 
 		final Cluster root = new Cluster(diagram, bibliotekon.getColorSequence(), dotData.getRootGroup());
 

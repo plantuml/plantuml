@@ -63,8 +63,7 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
 
 	protected static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreateEntity.class.getName(), RegexLeaf.start(), //
-				RegexLeaf.spaceZeroOrMore(),
-				new RegexOptional( // Copied from CommandCreatePackageBlock
+				RegexLeaf.spaceZeroOrMore(), new RegexOptional( // Copied from CommandCreatePackageBlock
 						new RegexConcat( //
 								new RegexLeaf("DISPLAY", "[%g]([^%g]+)[%g]"), //
 								RegexLeaf.spaceOneOrMore(), //
@@ -84,7 +83,8 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
 			throws NoSuchColorException {
 		final Entity owner = diagram.peekOwner();
 		if (owner == null) {
-			return CommandExecutionResult.error("Attribute must be inside an entity, relationship or another attribute");
+			return CommandExecutionResult
+					.error("Attribute must be inside an entity, relationship or another attribute");
 		}
 
 		final LeafType type = LeafType.CHEN_ATTRIBUTE;
@@ -112,7 +112,7 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
 		}
 
 		final LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);
-		final Link link = new Link(diagram.getEntityFactory(), diagram.getCurrentStyleBuilder(), entity, owner, linkType,
+		final Link link = new Link(diagram, diagram.getCurrentStyleBuilder(), entity, owner, linkType,
 				LinkArg.build(Display.NULL, 2));
 		diagram.addLink(link);
 

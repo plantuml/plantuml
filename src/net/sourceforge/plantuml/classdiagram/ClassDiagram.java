@@ -97,7 +97,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
 	private RowLayout getRawLayout(int raw) {
 		final RowLayout rawLayout = new RowLayout();
-		for (Entity leaf : entityFactory.leafs())
+		for (Entity leaf : this.leafs())
 			if (leaf.getRawLayout() == raw)
 				rawLayout.addLeaf(getEntityImageClass(leaf));
 

@@ -99,7 +99,7 @@ public final class CucaDiagramTxtMaker {
 
 		final Map<Entity, Block> blocks = new HashMap<Entity, Block>();
 
-		for (Entity ent : diagram.getEntityFactory().leafs()) {
+		for (Entity ent : diagram.leafs()) {
 			// printClass(ent);
 			// ug.translate(0, getHeight(ent) + 1);
 			final double width = getWidth(ent) * getXPixelPerChar();
@@ -119,12 +119,12 @@ public final class CucaDiagramTxtMaker {
 		}
 		solver.solve(root, paths);
 		for (Path p : paths) {
-			if (p.isInvis()) {
+			if (p.isInvis())
 				continue;
-			}
+
 			drawDotPath(p.getDotPath(), globalUg.getCharArea(), getXPixelPerChar(), getYPixelPerChar());
 		}
-		for (Entity ent : diagram.getEntityFactory().leafs()) {
+		for (Entity ent : diagram.leafs()) {
 			final Block b = blocks.get(ent);
 			final XPoint2D p = b.getPosition();
 			printClass(ent, (UGraphicTxt) globalUg
@@ -174,20 +174,20 @@ public final class CucaDiagramTxtMaker {
 	}
 
 	public List<SFile> createFiles(SFile suggestedFile) throws IOException {
-		if (fileFormat == FileFormat.UTXT) {
+		if (fileFormat == FileFormat.UTXT)
 			globalUg.getCharArea().print(suggestedFile.createPrintStream(UTF_8));
-		} else {
+		else
 			globalUg.getCharArea().print(suggestedFile.createPrintStream());
-		}
+
 		return Collections.singletonList(suggestedFile);
 	}
 
 	private int getHeight(Entity entity) {
 		int result = StringUtils.getHeight(entity.getDisplay());
 		if (showMember(entity)) {
-			for (CharSequence att : entity.getBodier().getRawBody()) {
+			for (CharSequence att : entity.getBodier().getRawBody())
 				result += StringUtils.getHeight(Display.getWithNewlines(att.toString()));
-			}
+
 //			for (Member att : entity.getBodier().getMethodsToDisplay()) {
 //				result += StringUtils.getHeight(Display.getWithNewlines(att.getDisplay(true)));
 //			}
@@ -205,9 +205,9 @@ public final class CucaDiagramTxtMaker {
 		if (showMember(entity)) {
 			for (CharSequence att : entity.getBodier().getRawBody()) {
 				final int w = StringUtils.getWcWidth(Display.getWithNewlines(att.toString()));
-				if (w > result) {
+				if (w > result)
 					result = w;
-				}
+
 			}
 //			for (Member att : entity.getBodier().getMethodsToDisplay()) {
 //			final int w = StringUtils.getWcWidth(Display.getWithNewlines(att.getDisplay(true)));

@@ -43,7 +43,6 @@ import java.util.List;
 import net.sourceforge.plantuml.BlockUml;
 import net.sourceforge.plantuml.SourceStringReader;
 import net.sourceforge.plantuml.abel.Entity;
-import net.sourceforge.plantuml.abel.EntityFactory;
 import net.sourceforge.plantuml.api.mda.option2.MDADiagram;
 import net.sourceforge.plantuml.api.mda.option2.MDAPackage;
 import net.sourceforge.plantuml.classdiagram.ClassDiagram;
@@ -56,26 +55,25 @@ public class MDADiagramImpl implements MDADiagram {
 		if (blocks.size() == 0) {
 			uml = "@startuml\n" + uml + "\n@enduml";
 			blocks = new SourceStringReader(uml).getBlocks();
-			if (blocks.size() == 0) {
+			if (blocks.size() == 0)
 				return null;
-			}
+
 		}
 		final BlockUml block = blocks.get(0);
 		final Diagram diagram = block.getDiagram();
-		if (diagram instanceof ClassDiagram) {
+		if (diagram instanceof ClassDiagram)
 			return new MDADiagramImpl((ClassDiagram) diagram);
-		}
+
 		return null;
 	}
 
 	private final Collection<MDAPackage> packages = new ArrayList<>();
 
 	private MDADiagramImpl(ClassDiagram classDiagram) {
-		final EntityFactory entityFactory = classDiagram.getEntityFactory();
-		packages.add(new MDAPackageImpl(entityFactory.getRootGroup()));
-		for (Entity group : entityFactory.groups()) {
+		packages.add(new MDAPackageImpl(classDiagram.getRootGroup()));
+		for (Entity group : classDiagram.groups())
 			packages.add(new MDAPackageImpl(group));
-		}
+
 	}
 
 	public Collection<MDAPackage> getPackages() {

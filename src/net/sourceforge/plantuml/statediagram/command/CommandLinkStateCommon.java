@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	CommandLinkStateCommon(IRegex pattern) {
 		super(pattern);
@@ -115,7 +115,7 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 
 		final Display label = Display.getWithNewlines(arg.get("LABEL", 0));
 		final LinkArg linkArg = LinkArg.build(label, lenght, diagram.getSkinParam().classAttributeIconSize() > 0);
-		Link link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
+		Link link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
 				linkType, linkArg);
 		if (dir == Direction.LEFT || dir == Direction.UP)
 			link = link.getInv();

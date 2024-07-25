@@ -128,7 +128,7 @@ public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> 
 
 				final LinkType linkType = new LinkType(LinkDecor.ARROW, LinkDecor.NONE);
 				final int length = linkStr.length() - 2;
-				final Link link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
+				final Link link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(),
 						entity1, entity2, linkType, LinkArg.noDisplay(length));
 				link.setPortMembers(key, null);
 				diagram.addLink(link);

@@ -85,11 +85,11 @@ public class ScxmlStateDiagramStandard {
 
 		document.appendChild(scxml);
 
-		for (final Entity ent : diagram.getEntityFactory().leafs())
+		for (final Entity ent : diagram.leafs())
 			if (ent.getParentContainer().isRoot())
 				scxml.appendChild(createState(ent));
 
-		for (Entity ent : diagram.getEntityFactory().groups())
+		for (Entity ent : diagram.groups())
 			if (ent.getParentContainer().isRoot())
 				exportGroup(scxml, ent);
 
@@ -106,7 +106,7 @@ public class ScxmlStateDiagramStandard {
 	}
 
 	private String getInitial() {
-		for (final Entity ent : diagram.getEntityFactory().leafs())
+		for (final Entity ent : diagram.leafs())
 			if (ent.getLeafType() == LeafType.CIRCLE_START)
 				return getId(ent);
 

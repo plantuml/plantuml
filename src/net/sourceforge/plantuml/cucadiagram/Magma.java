@@ -58,12 +58,12 @@ public class Magma {
 	public void putInSquare() {
 		final SquareLinker<Entity> linker = new SquareLinker<Entity>() {
 			public void topDown(Entity top, Entity down) {
-				diagram.addLink(new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
+				diagram.addLink(new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(),
 						top, down, linkType, LinkArg.noDisplay(2)));
 			}
 
 			public void leftRight(Entity left, Entity right) {
-				diagram.addLink(new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
+				diagram.addLink(new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(),
 						left, right, linkType, LinkArg.noDisplay(1)));
 			}
 		};
@@ -110,14 +110,14 @@ public class Magma {
 	}
 
 	public void linkToDown(Magma down) {
-		diagram.addLink(new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
-				this.getBottomLeft(), down.getTopLeft(), linkType, LinkArg.noDisplay(2)));
+		diagram.addLink(new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), this.getBottomLeft(),
+				down.getTopLeft(), linkType, LinkArg.noDisplay(2)));
 
 	}
 
 	public void linkToRight(Magma right) {
-		diagram.addLink(new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
-				this.getTopRight(), right.getTopLeft(), linkType, LinkArg.noDisplay(1)));
+		diagram.addLink(new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), this.getTopRight(),
+				right.getTopLeft(), linkType, LinkArg.noDisplay(1)));
 	}
 
 }

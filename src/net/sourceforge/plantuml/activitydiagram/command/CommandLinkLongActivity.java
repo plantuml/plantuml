@@ -215,7 +215,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			type = type.goDotted();
 
 		final LinkArg linkArg = LinkArg.build(linkLabel, lenght, diagram.getSkinParam().classAttributeIconSize() > 0);
-		Link link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), entity1,
+		Link link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1,
 				entity2, type, linkArg);
 		final Direction direction = StringUtils.getArrowDirection(arrowBody1 + arrowDirection + arrowBody2 + ">");
 		if (direction == Direction.LEFT || direction == Direction.UP)

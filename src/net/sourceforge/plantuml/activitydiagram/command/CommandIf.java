@@ -125,7 +125,7 @@ public class CommandIf extends SingleLineCommand2<ActivityDiagram> {
 		final Entity branch = diagram.getCurrentContext().getBranch();
 
 		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(arg.get("BRACKET", 0)), lenght);
-		Link link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), entity1,
+		Link link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1,
 				branch, new LinkType(LinkDecor.ARROW, LinkDecor.NONE), linkArg.withQuantifier(null, ifLabel)
 						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
 		if (arg.get("ARROW", 0) != null) {

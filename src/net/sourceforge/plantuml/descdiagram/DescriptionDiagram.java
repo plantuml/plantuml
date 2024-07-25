@@ -66,7 +66,7 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 	}
 
 	private boolean isUsecase() {
-		for (Entity leaf : getEntityFactory().leafs()) {
+		for (Entity leaf : this.leafs()) {
 			final LeafType type = leaf.getLeafType();
 			final USymbol usymbol = leaf.getUSymbol();
 			if (type == LeafType.USECASE || usymbol == getSkinParam().actorStyle().toUSymbol())
@@ -81,20 +81,19 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 		super.makeDiagramReady();
 		final LeafType defaultType = LeafType.DESCRIPTION;
 		final USymbol defaultSymbol = isUsecase() ? getSkinParam().actorStyle().toUSymbol() : USymbols.INTERFACE;
-		for (Entity leaf : getEntityFactory().leafs())
+		for (Entity leaf : this.leafs())
 			if (leaf.getLeafType() == LeafType.STILL_UNKNOWN)
 				leaf.muteToType(defaultType, defaultSymbol);
 	}
 
 	@Override
 	public String checkFinalError() {
-		
+
 		if (getPragma().useIntermediatePackages() == false)
 			packSomePackage();
 
 		this.applySingleStrategy();
 		return super.checkFinalError();
 	}
-	
 
 }

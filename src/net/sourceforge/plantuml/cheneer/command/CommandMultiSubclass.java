@@ -36,9 +36,7 @@
 package net.sourceforge.plantuml.cheneer.command;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -112,7 +110,7 @@ public class CommandMultiSubclass extends SingleLineCommand2<ChenEerDiagram> {
 		if (symbol.equals("U")) {
 			linkType = linkType.withMiddleSuperset();
 		}
-		final Link link = new Link(diagram.getEntityFactory(), diagram.getCurrentStyleBuilder(), superclassEntity,
+		final Link link = new Link(diagram, diagram.getCurrentStyleBuilder(), superclassEntity,
 				centerEntity, linkType, LinkArg.build(Display.NULL, 2));
 		link.setPortMembers(diagram.getPortId(superclassEntity.getName()), diagram.getPortId(centerEntity.getName()));
 		diagram.addLink(link);
@@ -128,8 +126,8 @@ public class CommandMultiSubclass extends SingleLineCommand2<ChenEerDiagram> {
 			if (!symbol.equals("U")) {
 				subclassLinkType = subclassLinkType.withMiddleSuperset();
 			}
-			final Link subclassLink = new Link(diagram.getEntityFactory(), diagram.getCurrentStyleBuilder(),
-					centerEntity, subclassEntity, subclassLinkType, LinkArg.build(Display.NULL, 3));
+			final Link subclassLink = new Link(diagram, diagram.getCurrentStyleBuilder(), centerEntity,
+					subclassEntity, subclassLinkType, LinkArg.build(Display.NULL, 3));
 			diagram.addLink(subclassLink);
 		}
 

@@ -275,13 +275,13 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		}
 		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(labels.getLabelLink()), queue.length(),
 				diagram.getSkinParam().classAttributeIconSize() > 0);
-		Link link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
+		Link link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
 				linkType, linkArg.withQuantifier(labels.getFirstLabel(), labels.getSecondLabel())
 						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
 		if (dir == Direction.LEFT || dir == Direction.UP)
 			link = link.getInv();
 
-        link.setLinkArrow(labels.getLinkArrow());
+		link.setLinkArrow(labels.getLinkArrow());
 		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));
 		link.applyStyle(arg.getLazzy("ARROW_STYLE", 0));
 		if (arg.get("STEREOTYPE", 0) != null) {

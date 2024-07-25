@@ -161,7 +161,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			type = type.goDotted();
 
 		final LinkArg linkArg = LinkArg.build(linkLabel, lenght, diagram.getSkinParam().classAttributeIconSize() > 0);
-		Link link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), entity1,
+		Link link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1,
 				entity2, type, linkArg);
 		if (arrowDirection.contains("*"))
 			link.setConstraint(false);

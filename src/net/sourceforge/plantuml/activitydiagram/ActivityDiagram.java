@@ -116,7 +116,7 @@ public class ActivityDiagram extends CucaDiagram {
 	}
 
 	public DiagramDescription getDescription() {
-		return new DiagramDescription("(" + getEntityFactory().leafs().size() + " activities)");
+		return new DiagramDescription("(" + this.leafs().size() + " activities)");
 	}
 
 	public Entity getLastEntityConsulted() {

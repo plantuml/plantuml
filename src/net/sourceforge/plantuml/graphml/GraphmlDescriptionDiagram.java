@@ -80,7 +80,7 @@ public class GraphmlDescriptionDiagram implements XmlDiagramTransformer {
 		graph.setAttribute("edgedefault", "undirected");
 		graphml.appendChild(graph);
 
-		for (final Entity ent : diagram.getEntityFactory().leafs())
+		for (final Entity ent : diagram.leafs())
 			if (ent.getParentContainer().isRoot())
 				addElement(ent, graph);
 

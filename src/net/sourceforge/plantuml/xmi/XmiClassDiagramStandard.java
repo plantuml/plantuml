@@ -47,14 +47,14 @@ public class XmiClassDiagramStandard extends XmiClassDiagramAbstract implements 
 	public XmiClassDiagramStandard(ClassDiagram classDiagram) throws ParserConfigurationException {
 		super(classDiagram);
 
-		for (final Entity ent : classDiagram.getEntityFactory().leafs()) {
+		for (final Entity ent : classDiagram.leafs()) {
 			// if (fileFormat == FileFormat.XMI_ARGO && isStandalone(ent) == false) {
 			// continue;
 			// }
 			final Element cla = createEntityNode(ent);
-			if (cla == null) {
+			if (cla == null) 
 				continue;
-			}
+			
 			ownedElementRoot.appendChild(cla);
 			done.add(ent);
 		}

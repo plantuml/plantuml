@@ -185,11 +185,11 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 			final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();
 			final Link link;
 			if (position == Position.RIGHT)
-				link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
-						(Entity) tips, type, LinkArg.noDisplay(1));
+				link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
+						tips, type, LinkArg.noDisplay(1));
 			else
-				link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(),
-						(Entity) tips, cl1, type, LinkArg.noDisplay(1));
+				link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), tips,
+						cl1, type, LinkArg.noDisplay(1));
 
 			diagram.addLink(link);
 		}

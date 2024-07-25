@@ -179,8 +179,7 @@ public final class GroupMakerState {
 		final List<Link> links = getPureInnerLinks();
 		final Bibliotekon bibliotekon = new Bibliotekon(links);
 
-		final DotData dotData = new DotData(diagram.getEntityFactory(), group, links, leafs, new InnerGroupHierarchy(),
-				PortionShower.ALL);
+		final DotData dotData = new DotData(diagram, group, links, leafs, new InnerGroupHierarchy(), PortionShower.ALL);
 
 		final Cluster root = new Cluster(diagram, bibliotekon.getColorSequence(), dotData.getRootGroup());
 

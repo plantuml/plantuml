@@ -54,7 +54,7 @@ public final class CucaDiagramSimplifierActivity {
 		boolean changed;
 		do {
 			changed = false;
-			final Collection<Entity> groups = new ArrayList<>(diagram.getEntityFactory().groups());
+			final Collection<Entity> groups = new ArrayList<>(diagram.groups());
 			for (Entity g : groups)
 				if (g.isAutarkic()) {
 					final GroupMakerActivity maker = new GroupMakerActivity(diagram, g, stringBounder, dotMode);

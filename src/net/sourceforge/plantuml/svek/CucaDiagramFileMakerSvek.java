@@ -91,8 +91,8 @@ public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, clusterManager.getCurrent(),
 				diagram.getUmlDiagramType(), diagram.getSkinParam());
 
-		final DotData dotData = new DotData(diagram.getEntityFactory(), diagram.getEntityFactory().getRootGroup(),
-				getOrderedLinks(), diagram.getEntityFactory().leafs(), diagram, diagram);
+		final DotData dotData = new DotData(diagram, diagram.getRootGroup(), getOrderedLinks(), diagram.leafs(),
+				diagram, diagram);
 
 		GraphvizImageBuilder imageBuilder = new GraphvizImageBuilder(dotData, diagram.getSource(), diagram.getPragma(),
 				diagram.getUmlDiagramType().getStyleName(), DotMode.NORMAL, dotStringFactory, clusterManager);

@@ -98,11 +98,11 @@ public class XmiStateDiagram implements XmlDiagramTransformer {
 		this.ownedElement = document.createElement("UML:Namespace.ownedElement");
 		model.appendChild(ownedElement);
 
-		for (final Entity gr : diagram.getEntityFactory().groups())
+		for (final Entity gr : diagram.groups())
 			if (gr.getParentContainer().isRoot())
 				addState(gr, ownedElement);
 
-		for (final Entity ent : diagram.getEntityFactory().leafs())
+		for (final Entity ent : diagram.leafs())
 			if (ent.getParentContainer().isRoot())
 				addState(ent, ownedElement);
 
@@ -114,11 +114,11 @@ public class XmiStateDiagram implements XmlDiagramTransformer {
 	private void addState(final Entity tobeAdded, Element container) {
 		final Element elementState = createEntityNode(tobeAdded);
 		container.appendChild(elementState);
-		for (final Entity ent : diagram.getEntityFactory().groups())
+		for (final Entity ent : diagram.groups())
 			if (ent.getParentContainer() == tobeAdded)
 				addState(ent, elementState);
 
-		for (final Entity ent : diagram.getEntityFactory().leafs())
+		for (final Entity ent : diagram.leafs())
 			if (ent.getParentContainer() == tobeAdded)
 				addState(ent, elementState);
 

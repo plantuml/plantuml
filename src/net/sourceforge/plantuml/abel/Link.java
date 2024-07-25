@@ -91,7 +91,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	private String sametail;
 	private final StyleBuilder styleBuilder;
 	private Stereotype stereotype;
-	private final EntityFactory entityFactory;
+	private final CucaDiagram cucaDiagram;
 
 	private Url url;
 
@@ -117,30 +117,29 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return new UComment("link " + getEntity1().getName() + " to " + getEntity2().getName());
 	}
 
-	public Link(EntityFactory entityFactory, StyleBuilder styleBuilder, Entity cl1, Entity cl2, LinkType type,
+	public Link(CucaDiagram cucaDiagram, StyleBuilder styleBuilder, Entity cl1, Entity cl2, LinkType type,
 			LinkArg linkArg) {
 		if (linkArg.getLength() < 1)
 			throw new IllegalArgumentException();
 
-		this.entityFactory = entityFactory;
+		this.cucaDiagram = cucaDiagram;
 		this.styleBuilder = styleBuilder;
 		this.cl1 = Objects.requireNonNull(cl1);
 		this.cl2 = Objects.requireNonNull(cl2);
 
 		this.type = type;
-		final CucaDiagram diagram = ((Entity) cl1).getDiagram();
-		this.uid = "LNK" + diagram.getUniqueSequence();
+		this.uid = "LNK" + cucaDiagram.getUniqueSequence();
 
 		this.linkArg = linkArg;
 
-		if (diagram.getPragma().useKermor()) {
+		if (cucaDiagram.getPragma().useKermor())
 			if (cl1.getEntityPosition().isNormal() == false ^ cl2.getEntityPosition().isNormal() == false)
 				setConstraint(false);
-		}
+
 	}
 
 	public Link getInv() {
-		final Link result = new Link(entityFactory, styleBuilder, cl2, cl1, getType().getInversed(), linkArg.getInv());
+		final Link result = new Link(cucaDiagram, styleBuilder, cl2, cl1, getType().getInversed(), linkArg.getInv());
 		result.inverted = !this.inverted;
 		result.port1 = this.port2;
 		result.port2 = this.port1;
@@ -148,7 +147,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		result.linkConstraint = this.linkConstraint;
 		result.stereotype = stereotype;
 		result.linkArg.setVisibilityModifier(this.linkArg.getVisibilityModifier());
-        result.linkArrow = linkArrow;
+		result.linkArrow = linkArrow;
 		return result;
 	}
 
@@ -208,7 +207,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	public String getPortName1() {
 		return port1;
 	}
-	
+
 	public String getPortName2() {
 		return port2;
 	}
@@ -480,7 +479,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 	public boolean isRemoved() {
 		final Stereotype stereotype = getStereotype();
-		if (stereotype != null && entityFactory.isRemoved(stereotype))
+		if (stereotype != null && cucaDiagram.isRemoved(stereotype))
 			return true;
 
 		return cl1.isRemoved() || cl2.isRemoved();

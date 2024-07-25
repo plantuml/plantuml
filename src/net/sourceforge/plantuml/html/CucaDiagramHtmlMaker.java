@@ -65,9 +65,9 @@ public final class CucaDiagramHtmlMaker {
 
 	public List<FileImageData> create() throws IOException {
 		dir.mkdirs();
-		if (dir.exists() == false) {
+		if (dir.exists() == false)
 			throw new IOException("Cannot create " + dir);
-		}
+
 		final SFile f = dir.file("index.html");
 		final PrintWriter pw = f.createPrintWriter();
 		pw.println("<html>");
@@ -83,10 +83,10 @@ public final class CucaDiagramHtmlMaker {
 	private void printAllType(final PrintWriter pw, LeafType type) throws IOException {
 		if (hasSome(type)) {
 			pw.println("<h2>" + type.toHtml() + "</h2>");
-			for (final Entity ent : diagram.getEntityFactory().leafs()) {
-				if (ent.getLeafType() != type) {
+			for (final Entity ent : diagram.leafs()) {
+				if (ent.getLeafType() != type)
 					continue;
-				}
+
 				export(ent);
 				pw.println("<li>");
 				pw.println(LinkHtmlPrinter.htmlLink(ent));
@@ -106,11 +106,10 @@ public final class CucaDiagramHtmlMaker {
 	}
 
 	private boolean hasSome(final LeafType type) {
-		for (Entity ent : diagram.getEntityFactory().leafs()) {
-			if (ent.getLeafType() == type) {
+		for (Entity ent : diagram.leafs())
+			if (ent.getLeafType() == type)
 				return true;
-			}
-		}
+
 		return false;
 	}
 
@@ -207,12 +206,12 @@ public final class CucaDiagramHtmlMaker {
 	private Collection<Entity> getNotes(Entity ent) {
 		final List<Entity> result = new ArrayList<>();
 		for (Link link : diagram.getLinks()) {
-			if (link.contains(ent) == false) {
+			if (link.contains(ent) == false)
 				continue;
-			}
-			if (link.getEntity1().getLeafType() == LeafType.NOTE || link.getEntity2().getLeafType() == LeafType.NOTE) {
+
+			if (link.getEntity1().getLeafType() == LeafType.NOTE || link.getEntity2().getLeafType() == LeafType.NOTE)
 				result.add(link.getOther(ent));
-			}
+
 		}
 		return Collections.unmodifiableList(result);
 	}
@@ -220,12 +219,12 @@ public final class CucaDiagramHtmlMaker {
 	private Collection<Link> getLinksButNotes(Entity ent) {
 		final List<Link> result = new ArrayList<>();
 		for (Link link : diagram.getLinks()) {
-			if (link.contains(ent) == false) {
+			if (link.contains(ent) == false)
 				continue;
-			}
-			if (link.getEntity1().getLeafType() == LeafType.NOTE || link.getEntity2().getLeafType() == LeafType.NOTE) {
+
+			if (link.getEntity1().getLeafType() == LeafType.NOTE || link.getEntity2().getLeafType() == LeafType.NOTE)
 				continue;
-			}
+
 			result.add(link);
 		}
 		return Collections.unmodifiableList(result);

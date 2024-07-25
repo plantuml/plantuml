@@ -62,6 +62,26 @@ final public class DotData {
 	final private Entity topParent;
 	final private PortionShower portionShower;
 
+	public Entity getRootGroup() {
+		return entityFactory.getRootGroup();
+	}
+
+	public boolean isDegeneratedWithFewEntities(int nb) {
+		return entityFactory.groups().size() == 0 && getLinks().size() == 0 && getLeafs().size() == nb;
+	}
+
+	public final boolean isHideEmptyDescriptionForState() {
+		return entityFactory.isHideEmptyDescriptionForState();
+	}
+
+	public UmlDiagramType getUmlDiagramType() {
+		return entityFactory.getUmlDiagramType();
+	}
+
+	public ISkinParam getSkinParam() {
+		return entityFactory.getSkinParam();
+	}
+
 	public DotData(EntityFactory entityFactory, Entity topParent, List<Link> links, Collection<Entity> leafs,
 			GroupHierarchy groupHierarchy, PortionShower portionShower) {
 		this.topParent = Objects.requireNonNull(topParent);
@@ -97,26 +117,6 @@ final public class DotData {
 
 	public PortionShower getPortionShower() {
 		return portionShower;
-	}
-
-	public Entity getRootGroup() {
-		return entityFactory.getRootGroup();
-	}
-
-	public boolean isDegeneratedWithFewEntities(int nb) {
-		return entityFactory.groups().size() == 0 && getLinks().size() == 0 && getLeafs().size() == nb;
-	}
-
-	public final boolean isHideEmptyDescriptionForState() {
-		return entityFactory.isHideEmptyDescriptionForState();
-	}
-
-	public UmlDiagramType getUmlDiagramType() {
-		return entityFactory.getUmlDiagramType();
-	}
-
-	public ISkinParam getSkinParam() {
-		return entityFactory.getSkinParam();
 	}
 
 	public void removeIrrelevantSametail() {

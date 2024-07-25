@@ -162,16 +162,16 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();
 
 		if (position == Position.RIGHT)
-			link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), activity, note,
-					type, LinkArg.noDisplay(1));
+			link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), activity,
+					note, type, LinkArg.noDisplay(1));
 		else if (position == Position.LEFT)
-			link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), note, activity,
+			link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, activity,
 					type, LinkArg.noDisplay(1));
 		else if (position == Position.BOTTOM)
-			link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), activity, note,
-					type, LinkArg.noDisplay(2));
+			link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), activity,
+					note, type, LinkArg.noDisplay(2));
 		else if (position == Position.TOP)
-			link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), note, activity,
+			link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, activity,
 					type, LinkArg.noDisplay(2));
 		else
 			throw new IllegalArgumentException();

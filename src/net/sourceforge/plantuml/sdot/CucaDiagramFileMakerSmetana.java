@@ -376,8 +376,8 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	private Collection<Entity> getUnpackagedEntities() {
 		final List<Entity> result = new ArrayList<>();
-		for (Entity ent : diagram.getEntityFactory().leafs())
-			if (diagram.getEntityFactory().getRootGroup() == ent.getParentContainer())
+		for (Entity ent : diagram.leafs())
+			if (diagram.getRootGroup() == ent.getParentContainer())
 				result.add(ent);
 
 		return result;
@@ -459,7 +459,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		final ST_Agraph_s g = agopen(zz, new CString("g"), zz.Agdirected, null);
 
 		exportEntities(zz, g, getUnpackagedEntities());
-		exportGroups(zz, g, diagram.getEntityFactory().getRootGroup());
+		exportGroups(zz, g, diagram.getRootGroup());
 
 		for (Link link : diagram.getLinks()) {
 			final ST_Agedge_s e = createEdge(stringBounder, zz, g, link);

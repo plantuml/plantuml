@@ -224,7 +224,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				.withQuantifier(labels.getFirstLabel(), labels.getSecondLabel())
 				.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()).withKal(kal1, kal2);
 
-		Link link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
+		Link link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
 				linkType, linkArg);
 		if (arg.get("URL", 0) != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
@@ -294,7 +294,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final String firstLabel = arg.get("FIRST_LABEL", 0);
 		final String secondLabel = arg.get("SECOND_LABEL", 0);
 		final LinkArg linkArg = LinkArg.build(labelLink, queue, diagram.getSkinParam().classAttributeIconSize() > 0);
-		final Link link = new Link(diagram.getEntityFactory(), diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
+		final Link link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
 				cl2, linkType, linkArg.withQuantifier(firstLabel, secondLabel)
 						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
 		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));

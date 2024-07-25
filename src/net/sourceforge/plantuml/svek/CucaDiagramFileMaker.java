@@ -53,8 +53,7 @@ public abstract class CucaDiagramFileMaker {
 	public CucaDiagramFileMaker(CucaDiagram diagram) {
 		this.diagram = diagram;
 		this.bibliotekon = new Bibliotekon(diagram.getLinks());
-		final Cluster root = new Cluster(diagram, bibliotekon.getColorSequence(),
-				diagram.getEntityFactory().getRootGroup());
+		final Cluster root = new Cluster(diagram, bibliotekon.getColorSequence(), diagram.getRootGroup());
 		this.clusterManager = new ClusterManager(bibliotekon, root);
 
 	}
