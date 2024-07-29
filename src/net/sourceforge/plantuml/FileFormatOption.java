@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -37,6 +37,8 @@ package net.sourceforge.plantuml;
 
 import java.awt.geom.AffineTransform;
 import java.io.Serializable;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -45,10 +47,10 @@ import net.sourceforge.plantuml.text.SvgCharSizeHack;
 
 /**
  * A FileFormat with some parameters.
- * 
- * 
+ *
+ *
  * @author Arnaud Roques
- * 
+ *
  */
 public final class FileFormatOption implements Serializable {
 	// ::remove file when __HAXE__
@@ -63,6 +65,7 @@ public final class FileFormatOption implements Serializable {
 	private final String preserveAspectRatio;
 	private final String watermark;
 	private final ColorMapper colorMapper;
+	private List<FileFormat> allFormats = new ArrayList<>();
 
 	public double getScaleCoef() {
 		return scale;
@@ -150,6 +153,11 @@ public final class FileFormatOption implements Serializable {
 				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
 	}
 
+	public FileFormatOption withFileFormat(FileFormat fileFormat) {
+		return new FileFormatOption(fileFormat, withMetadata, useRedForError, svgLinkTarget, debugsvek, hoverColor,
+				tikzFontDistortion, scale, preserveAspectRatio, watermark, colorMapper);
+	}
+
 	@Override
 	public String toString() {
 		return fileFormat.toString();
@@ -198,4 +206,7 @@ public final class FileFormatOption implements Serializable {
 		return colorMapper;
 	}
 
+	public List<FileFormat> getAllFormats() {
+		return allFormats;
+	}
 }
