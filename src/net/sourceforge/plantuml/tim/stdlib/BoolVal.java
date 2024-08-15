@@ -30,10 +30,12 @@
  *
  *
  * Original Author:  Arnaud Roques
+ * Contribution:  Aravind Pai
  *
  */
 package net.sourceforge.plantuml.tim.stdlib;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -44,12 +46,11 @@ import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
-import net.sourceforge.plantuml.utils.Log;
 
-public class IntVal extends SimpleReturnFunction {
+public class BoolVal extends SimpleReturnFunction {
 
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%intval", 1);
+		return new TFunctionSignature("%boolval", 1);
 	}
 
 	@Override
@@ -60,11 +61,16 @@ public class IntVal extends SimpleReturnFunction {
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException {
-		final String s = values.get(0).toString();
-		try {
-			return TValue.fromInt(Integer.parseInt(s));
-		} catch (NumberFormatException e) {
-			throw new EaterException("Cannot convert " + s + " to integer.", location);
+		final String s = values.get(0).toString().toLowerCase();
+		if (trueValues.contains(s)) {
+			return TValue.fromBoolean(true);
+		} else if (falseValues.contains(s)) {
+			return TValue.fromBoolean(false);
 		}
+
+		throw new EaterException("Cannot convert " + s + " to boolean.", location);
 	}
+
+	private final List<String> trueValues = Arrays.asList("true", "1");
+	private final List<String> falseValues = Arrays.asList("false", "0");
 }

@@ -30,6 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
+ * Contribution:  Aravind Pai
  *
  */
 package net.sourceforge.plantuml.tim.stdlib;
