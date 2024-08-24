@@ -10,6 +10,8 @@ plugins {
 	java
 	`maven-publish`
 	signing
+	id("org.graalvm.buildtools.native") version "0.10.2"
+	application
 }
 
 group = "net.sourceforge.plantuml"
@@ -181,4 +183,17 @@ signing {
 	if (hasProperty("signing.gnupg.passphrase") || hasProperty("signingPassword")) {
 		sign(publishing.publications["maven"])
 	}
+}
+
+application {
+	mainClass = "net.sourceforge.plantuml.Run"
+}
+
+graalvmNative {
+	binaries.all {
+		resources.autodetect()
+		buildArgs(listOf("-Djava.awt.headless=false"))
+	}
+
+	toolchainDetection = false
 }
