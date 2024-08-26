@@ -105,24 +105,14 @@ jobs:
           distribution: temurin
           cache: gradle
 
-        # Compile / Test / Package are separate steps so the reason for any failure is more obvious in GitHub UI
+      # Compile / Test / Package are separate steps so the reason for any failure is more obvious in GitHub UI
       - name: Compile
         if: needs.workflow_config.outputs.do_test_linux == 'true'
-        run: |
-          if [ "${{ matrix.java_version }}" == "8" ]; then
-            gradle -q compileJava --no-daemon -x :plantuml-gplv2:compileJava
-          else
-            gradle -q compileJava --no-daemon
-          fi
+        run: gradle -q compileJava --no-daemon
 
       - name: Test
         if: needs.workflow_config.outputs.do_test_linux == 'true'
-        run: |
-          if [ "${{ matrix.java_version }}" == "8" ]; then
-            gradle test --no-daemon -x :plantuml-gplv2:test -i
-          else
-            gradle test --no-daemon -i
-          fi
+        run: gradle test --no-daemon -i
 
       - name: Upload test reports
         uses: actions/upload-artifact@v4
