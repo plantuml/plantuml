@@ -84,14 +84,17 @@ public class URLCheck {
 		if (host == null || host.isEmpty() || !host.contains("."))
 			return true;
 
-		// Additional check for IP addresses or invalid host patterns
-		if (host.matches("^[-#.0-9:\\[\\]+]+$"))
-			return true;
+		// When UNSECURE, we allow localhost
+		if (SecurityUtils.getSecurityProfile() != SecurityProfile.UNSECURE) {
+			// Additional check for IP addresses or invalid host patterns
+			if (host.matches("^[-#.0-9:\\[\\]+]+$"))
+				return true;
 
-		final InetAddress inetAddress = InetAddress.getByName(host);
-		// Check host address
-		if (isInnerAddress(inetAddress))
-			return true;
+			final InetAddress inetAddress = InetAddress.getByName(host);
+			// Check host address
+			if (isInnerAddress(inetAddress))
+				return true;
+		}
 
 		// Additional checks (e.g., encoding)
 		final String decodedHost = URLDecoder.decode(host, "UTF-8");
@@ -101,7 +104,7 @@ public class URLCheck {
 		return false;
 	}
 
-	public static boolean isInnerAddress(InetAddress inetAddress) {
+	private static boolean isInnerAddress(InetAddress inetAddress) {
 		return inetAddress.isAnyLocalAddress() //
 				|| inetAddress.isLoopbackAddress() //
 				|| inetAddress.isLinkLocalAddress() //
