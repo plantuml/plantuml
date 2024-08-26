@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.BoxStyle;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Ftile;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory;
 import net.sourceforge.plantuml.activitydiagram3.ftile.FtileKilled;
+import net.sourceforge.plantuml.activitydiagram3.ftile.FtileUtils;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlanes;
 import net.sourceforge.plantuml.activitydiagram3.gtile.Gtile;
@@ -159,15 +160,17 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 
 	public Ftile createFtile(FtileFactory factory) {
 		final Ftile back = getFtileBackward(factory);
-		final Ftile decorateOut = factory.decorateOut(repeatList.createFtile(factory), endRepeatLinkRendering);
+		Ftile tmp = repeatList.createFtile(factory);
+		tmp = factory.decorateOut(tmp, endRepeatLinkRendering);
 		if (this.testCalled == false && incoming1.isNone())
 			incoming1 = swimlanes.nextLinkRenderer();
-		final Ftile result = factory.repeat(boxStyleIn, stereotypeLoop, swimlane, swimlaneOut, startLabel, decorateOut,
-				test, yes, out, colors, back, isLastOfTheParent(), incoming1, incoming2, currentStyleBuilder);
+		tmp = factory.repeat(boxStyleIn, stereotypeLoop, swimlane, swimlaneOut, startLabel, tmp, test,
+				yes, out, colors, back, isLastOfTheParent(), incoming1, incoming2, currentStyleBuilder);
+		tmp = FtileUtils.withSwimlaneIn(tmp, swimlane);
 		if (killed)
-			return new FtileKilled(result);
+			return new FtileKilled(tmp);
 
-		return result;
+		return tmp;
 	}
 
 	private Ftile getFtileBackward(FtileFactory factory) {

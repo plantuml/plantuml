@@ -54,6 +54,10 @@ public class FtileUtils {
 		return new FtileWithSwimlanes(ftile, ftile.getSwimlaneIn(), out);
 	}
 
+	public static Ftile withSwimlaneIn(Ftile ftile, Swimlane in) {
+		return new FtileWithSwimlanes(ftile, in, ftile.getSwimlaneOut());
+	}
+
 	public static Ftile addBottom(Ftile ftile, double marginBottom) {
 		return new FtileMargedVertically(ftile, 0, marginBottom);
 	}
