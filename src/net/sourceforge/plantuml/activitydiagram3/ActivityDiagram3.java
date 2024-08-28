@@ -202,7 +202,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 	protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
 			throws IOException {
 		final StringBounder stringBounder = fileFormatOption.getDefaultStringBounder(getSkinParam());
-		TextBlock result = getTextBlock(stringBounder);
+		final TextBlock result = getTextBlock(stringBounder);
 		return createImageBuilder(fileFormatOption).drawable(result).write(os);
 	}
 

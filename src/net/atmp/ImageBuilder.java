@@ -359,6 +359,8 @@ public class ImageBuilder {
 		option = option.withColorMapper(fileFormatOption.getColorMapper());
 		option = option.withLinkTarget(getSvgLinkTarget());
 		option = option.withFont(pragma.getValue("svgfont"));
+		if (titledDiagram != null)
+			option = option.withTitle(titledDiagram.getTitleDisplay());
 
 		if ("true".equalsIgnoreCase(pragma.getValue("svginteractive")))
 			option = option.withInteractive();

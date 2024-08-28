@@ -318,6 +318,13 @@ public class SvgGraphics {
 		svg.setAttribute("xmlns:xlink", "http://www.w3.org/1999/xlink");
 		svg.setAttribute("version", "1.1");
 
+		if (option.getTitle() != null) {
+			// Create a title element and set its text
+			final Element title = (Element) document.createElement("title");
+			title.setTextContent(option.getTitle());
+			svg.appendChild(title);
+		}
+
 		return svg;
 	}
 
