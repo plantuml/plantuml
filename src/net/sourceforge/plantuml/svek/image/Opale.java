@@ -53,8 +53,8 @@ public class Opale extends AbstractTextBlock implements TextBlock {
 	private static final int cornersize = 10;
 	private final HColor noteBackgroundColor;
 	private final HColor borderColor;
-	private final int marginX1 = 6;
-	private final int marginX2 = 15;
+	public static final int marginX1 = 6;
+	public static final int marginX2 = 15;
 	private final int marginY = 5;
 	private final double shadowing2;
 	private Direction strategy;

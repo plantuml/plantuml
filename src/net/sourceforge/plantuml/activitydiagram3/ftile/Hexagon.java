@@ -86,9 +86,9 @@ public class Hexagon {
 
 			private final double getDeltaX(double height, double y) {
 				final double p = y / height * 2;
-				if (p <= 1) {
+				if (p <= 1)
 					return hexagonHalfSize * p;
-				}
+
 				return hexagonHalfSize * (2 - p);
 			}
 

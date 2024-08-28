@@ -49,6 +49,8 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Sheet;
 import net.sourceforge.plantuml.klimt.creole.SheetBlock1;
+import net.sourceforge.plantuml.klimt.creole.SheetBlock2;
+import net.sourceforge.plantuml.klimt.creole.Stencil;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -122,8 +124,24 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 				false, null);
 		final Sheet sheet = skinParam.sheet(fc, align, CreoleMode.FULL).createSheet(first.getDisplay());
 		final SheetBlock1 tmp1 = new SheetBlock1(sheet, wrapWidth, skinParam.getPadding());
-		// final TextBlock text = new SheetBlock2(tmp1, this, stroke);
-		return new Opale(shadowing, borderColor, noteBackgroundColor, tmp1, false, stroke);
+		final SheetBlock2 tmp2 = new SheetBlock2(tmp1, asStencil(tmp1), stroke);
+
+		return new Opale(shadowing, borderColor, noteBackgroundColor, tmp2, false, stroke);
+	}
+
+	private static Stencil asStencil(final SheetBlock1 tmp1) {
+		return new Stencil() {
+
+			@Override
+			public double getStartingX(StringBounder stringBounder, double y) {
+				return tmp1.getStartingX(stringBounder, y) - Opale.marginX1;
+			}
+
+			@Override
+			public double getEndingX(StringBounder stringBounder, double y) {
+				return tmp1.getEndingX(stringBounder, y) + Opale.marginX2;
+			}
+		};
 	}
 
 	private static StyleSignatureBasic getStyleSignature() {
