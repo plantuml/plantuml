@@ -76,8 +76,7 @@ class TextBlockMarged extends AbstractTextBlock implements TextBlock, WithPorts 
 	}
 
 	public void drawU(UGraphic ug) {
-		// ug.apply(HColorUtils.BLUE).draw(new
-		// URectangle(calculateDimension(ug.getStringBounder())));
+		// ug.apply(HColors.BLUE).draw(URectangle.build(calculateDimension(ug.getStringBounder())));
 		final XDimension2D dim = calculateDimension(ug.getStringBounder());
 		if (dim.getWidth() > 0) {
 			ug.draw(UEmpty.create(dim));
@@ -89,9 +88,9 @@ class TextBlockMarged extends AbstractTextBlock implements TextBlock, WithPorts 
 	@Override
 	public XRectangle2D getInnerPosition(String member, StringBounder stringBounder, InnerStrategy strategy) {
 		final XRectangle2D parent = textBlock.getInnerPosition(member, stringBounder, strategy);
-		if (parent == null) {
+		if (parent == null)
 			return null;
-		}
+
 		final UTranslate translate = new UTranslate(left, top);
 		return translate.apply(parent);
 	}

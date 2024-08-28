@@ -73,13 +73,13 @@ public class AtomOpenIcon extends AbstractAtom implements Atom {
 	}
 
 	public void drawU(UGraphic ug) {
-		if (url != null) {
+		if (url != null)
 			ug.startUrl(url);
-		}
+
 		asTextBlock().drawU(ug);
-		if (url != null) {
+		if (url != null)
 			ug.closeUrl();
-		}
+
 	}
 
 }

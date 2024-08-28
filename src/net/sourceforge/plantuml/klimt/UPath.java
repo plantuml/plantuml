@@ -92,6 +92,8 @@ public class UPath extends AbstractShadowable implements Iterable<USegment>, USh
 	}
 
 	public UPath translate(double dx, double dy) {
+		if (dx == 0 && dy == 0)
+			return this;
 		final UPath result = new UPath(comment, codeLine);
 		for (USegment seg : segments)
 			result.addInternal(seg.translate(dx, dy));

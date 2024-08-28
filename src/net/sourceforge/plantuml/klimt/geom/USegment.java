@@ -72,11 +72,14 @@ public class USegment {
 					new double[] { coord[0], coord[1], coord[2], coord[3], coord[4], coord[5] + dx, coord[6] + dy },
 					pathType);
 
+		if (pathType == USegmentType.SEG_CUBICTO) {
+			return new USegment(new double[] { coord[0] + dx, coord[1] + dy, coord[2] + dx, coord[3] + dy,
+					coord[4] + dx, coord[5] + dy }, pathType);
+		}
 		if (coord.length != 2)
 			throw new UnsupportedOperationException();
 
-		XPoint2D p1 = new XPoint2D(coord[0] + dx, coord[1] + dy);
-		return new USegment(new double[] { p1.getX(), p1.getY() }, pathType);
+		return new USegment(new double[] { coord[0] + dx, coord[1] + dy }, pathType);
 	}
 
 	// ::comment when __HAXE__

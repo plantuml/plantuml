@@ -45,9 +45,9 @@ public class StringDecipher {
 		path = path.replaceAll("([a-df-zA-Z])(\\S)", "$1 $2");
 		path = path.replaceAll("(\\S)([a-df-zA-Z])", "$1 $2");
 		path = path.replaceAll("([a-df-zA-Z])(\\S)", "$1 $2");
-		while (path.matches(".*\\.\\d+\\..*")) {
+		while (path.matches(".*\\.\\d+\\..*"))
 			path = path.replaceAll("(\\.\\d+)\\.", "$1 .");
-		}
+
 		return path;
 	}
 
