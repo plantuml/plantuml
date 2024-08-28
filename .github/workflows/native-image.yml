@@ -53,6 +53,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: "plantuml-gplv2/build/native/nativeCompile/plantuml-${{ matrix. platform }}-${{ env.VERSION }}.zip"
-          tag: ${{ env.VERSION }}
+          tag: native
+          release_name: native (~${{ env.VERSION }})
           overwrite: true
-          make_latest: true
+          make_latest: false
