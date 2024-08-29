@@ -377,7 +377,7 @@ public class SvgNanoParser implements Sprite {
 		final int x2 = s.indexOf('"', x1 + 3);
 		final String tmp = s.substring(x1 + 3, x2);
 
-		final SvgPath svgPath = new SvgPath(tmp);
+		final SvgPath svgPath = new SvgPath(tmp, UTranslate.none());
 		svgPath.drawMe(ugs.getUg(), ugs.getAffineTransform());
 
 	}

@@ -71,17 +71,17 @@ public class CreoleHorizontalLine extends AbstractAtom implements Atom {
 	}
 
 	private UHorizontalLine getHorizontalLine() {
-		if (line.length() == 0) {
+		if (line.length() == 0)
 			return UHorizontalLine.infinite(defaultThickness, 0, 0, style);
-		}
+
 		final TextBlock tb = getTitle();
 		return UHorizontalLine.infinite(defaultThickness, 0, 0, tb, style);
 	}
 
 	private TextBlock getTitle() {
-		if (line.length() == 0) {
+		if (line.length() == 0)
 			return TextBlockUtils.empty(0, 0);
-		}
+
 		final SheetBuilder parser = skinParam.sheet(fontConfiguration, HorizontalAlignment.LEFT, CreoleMode.FULL);
 		final Sheet sheet = parser.createSheet(Display.getWithNewlines(line));
 		final TextBlock tb = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
@@ -96,9 +96,9 @@ public class CreoleHorizontalLine extends AbstractAtom implements Atom {
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		if (line.length() == 0) {
+		if (line.length() == 0)
 			return new XDimension2D(10, 10);
-		}
+
 		final TextBlock tb = getTitle();
 		return tb.calculateDimension(stringBounder);
 	}

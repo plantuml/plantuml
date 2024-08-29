@@ -283,9 +283,11 @@ public class SequenceDiagram extends UmlDiagram {
 		return OptionFlags.FORCE_TEOZ || getPragma().useTeozLayout();
 	}
 
+	
+	@Override
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
-		return super.createImageBuilder(fileFormatOption).annotations(false); // they are managed in the
-																				// SequenceDiagramFileMaker* classes
+		return super.createImageBuilder(fileFormatOption).annotations(false);
+		// they are managed in the SequenceDiagramFileMaker* classes
 	}
 
 	@Override

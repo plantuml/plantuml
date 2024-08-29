@@ -37,96 +37,90 @@ package net.sourceforge.plantuml.klimt.drawing.svg;
 
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class SvgOption {
 
-	private final boolean interactive;
-	private final LengthAdjust lengthAdjust;
-	private final String preserveAspectRatio;
-	private final String hover;
-	private final boolean svgDimensionStyle;
-	private final XDimension2D minDim;
-	private final HColor backcolor;
-	private final double scale;
-	private final ColorMapper colorMapper;
-	private final String linkTarget;
-	private final String font;
+	private boolean interactive = false;
+	private LengthAdjust lengthAdjust = LengthAdjust.defaultValue();
+	private String preserveAspectRatio = "none";
+	private String hover;
+	private boolean svgDimensionStyle = true;
+	private XDimension2D minDim = new XDimension2D(0, 0);
+	private HColor backcolor;
+	private double scale = 1.0;
+	private ColorMapper colorMapper = ColorMapper.IDENTITY;
+	private String linkTarget;
+	private String font;
+	private String title;
 
 	public static SvgOption basic() {
-		return new SvgOption(false, LengthAdjust.defaultValue(), "none", null, true, new XDimension2D(0, 0), null, 1.0,
-				ColorMapper.IDENTITY, null, null);
+		return new SvgOption();
 	}
 
-	private SvgOption(boolean interactive, LengthAdjust lengthAdjust, String preserveAspectRatio, String hover,
-			boolean svgDimensionStyle, XDimension2D minDim, HColor backcolor, double scale, ColorMapper colorMapper,
-			String linkTarget, String font) {
-		this.interactive = interactive;
-		this.lengthAdjust = lengthAdjust;
-		this.preserveAspectRatio = preserveAspectRatio;
-		this.hover = hover;
-		this.svgDimensionStyle = svgDimensionStyle;
-		this.minDim = minDim;
-		this.backcolor = backcolor;
-		this.scale = scale;
-		this.colorMapper = colorMapper;
-		this.linkTarget = linkTarget;
-		this.font = font;
+	private SvgOption() {
+	}
+
+	public SvgOption withTitle(Display titleDisplay) {
+		if (titleDisplay.size() > 0)
+			title = titleDisplay.get(0).toString();
+		return this;
 	}
 
 	public SvgOption withInteractive() {
-		return new SvgOption(true, lengthAdjust, preserveAspectRatio, hover, svgDimensionStyle, minDim, backcolor,
-				scale, colorMapper, linkTarget, font);
+		this.interactive = true;
+		return this;
 	}
 
 	public SvgOption withLengthAdjust(LengthAdjust lengthAdjust) {
-		return new SvgOption(interactive, lengthAdjust, preserveAspectRatio, hover, svgDimensionStyle, minDim,
-				backcolor, scale, colorMapper, linkTarget, font);
+		this.lengthAdjust = lengthAdjust;
+		return this;
 	}
 
 	public SvgOption withPreserveAspectRatio(String preserveAspectRatio) {
-		return new SvgOption(interactive, lengthAdjust, preserveAspectRatio, hover, svgDimensionStyle, minDim,
-				backcolor, scale, colorMapper, linkTarget, font);
+		this.preserveAspectRatio = preserveAspectRatio;
+		return this;
 	}
 
 	public SvgOption withHoverPathColorRGB(String hover) {
-		return new SvgOption(interactive, lengthAdjust, preserveAspectRatio, hover, svgDimensionStyle, minDim,
-				backcolor, scale, colorMapper, linkTarget, font);
+		this.hover = hover;
+		return this;
 	}
 
 	public SvgOption withSvgDimensionStyle(boolean svgDimensionStyle) {
-		return new SvgOption(interactive, lengthAdjust, preserveAspectRatio, hover, svgDimensionStyle, minDim,
-				backcolor, scale, colorMapper, linkTarget, font);
+		this.svgDimensionStyle = svgDimensionStyle;
+		return this;
 	}
 
 	public SvgOption withMinDim(XDimension2D minDim) {
-		return new SvgOption(interactive, lengthAdjust, preserveAspectRatio, hover, svgDimensionStyle, minDim,
-				backcolor, scale, colorMapper, linkTarget, font);
+		this.minDim = minDim;
+		return this;
 	}
 
 	public SvgOption withBackcolor(HColor backcolor) {
-		return new SvgOption(interactive, lengthAdjust, preserveAspectRatio, hover, svgDimensionStyle, minDim,
-				backcolor, scale, colorMapper, linkTarget, font);
+		this.backcolor = backcolor;
+		return this;
 	}
 
 	public SvgOption withScale(double scale) {
-		return new SvgOption(interactive, lengthAdjust, preserveAspectRatio, hover, svgDimensionStyle, minDim,
-				backcolor, scale, colorMapper, linkTarget, font);
+		this.scale = scale;
+		return this;
 	}
 
 	public SvgOption withColorMapper(ColorMapper colorMapper) {
-		return new SvgOption(interactive, lengthAdjust, preserveAspectRatio, hover, svgDimensionStyle, minDim,
-				backcolor, scale, colorMapper, linkTarget, font);
+		this.colorMapper = colorMapper;
+		return this;
 	}
 
 	public SvgOption withLinkTarget(String linkTarget) {
-		return new SvgOption(interactive, lengthAdjust, preserveAspectRatio, hover, svgDimensionStyle, minDim,
-				backcolor, scale, colorMapper, linkTarget, font);
+		this.linkTarget = linkTarget;
+		return this;
 	}
 
 	public SvgOption withFont(String font) {
-		return new SvgOption(interactive, lengthAdjust, preserveAspectRatio, hover, svgDimensionStyle, minDim,
-				backcolor, scale, colorMapper, linkTarget, font);
+		this.font = font;
+		return this;
 	}
 
 	public String getPreserveAspectRatio() {
@@ -165,12 +159,16 @@ public class SvgOption {
 		return colorMapper;
 	}
 
-	public final String getLinkTarget() {
+	public String getLinkTarget() {
 		return linkTarget;
 	}
 
-	public final String getFont() {
+	public String getFont() {
 		return font;
+	}
+
+	public String getTitle() {
+		return title;
 	}
 
 }

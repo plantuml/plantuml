@@ -42,7 +42,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -54,6 +57,8 @@ import net.sourceforge.plantuml.openiconic.data.DummyIcon;
 import net.sourceforge.plantuml.security.SFile;
 
 public class OpenIcon {
+
+	private final static Pattern patternTranslate = Pattern.compile("translate\\((\\d+)\\s*(\\d*)\\)");
 
 	private SvgPath svgPath;
 	private List<String> rawData = new ArrayList<>();
@@ -83,20 +88,39 @@ public class OpenIcon {
 
 	private OpenIcon(InputStream is, String id) throws IOException {
 		this.id = id;
+		UTranslate translate = UTranslate.none();
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
 			String s = null;
 			while ((s = br.readLine()) != null) {
 				rawData.add(s);
-				if (s.contains("<path")) {
-					final int x1 = s.indexOf('"');
-					final int x2 = s.indexOf('"', x1 + 1);
-					svgPath = new SvgPath(s.substring(x1 + 1, x2));
-				}
+				if (s.contains("transform=\""))
+					translate = getTranslate(s);
 			}
 		}
 		if (rawData.size() != 3 && rawData.size() != 4)
 			throw new IllegalStateException();
 
+		for (String s : rawData)
+			if (s.contains("<path")) {
+				final int x1 = s.indexOf('"');
+				final int x2 = s.indexOf('"', x1 + 1);
+				svgPath = new SvgPath(s.substring(x1 + 1, x2), translate);
+			}
+	}
+
+	private static UTranslate getTranslate(String s) {
+		final Matcher matcher = patternTranslate.matcher(s);
+
+		if (matcher.find()) {
+			final String xStr = matcher.group(1);
+			final String yStr = matcher.group(2);
+			final int x = Integer.parseInt(xStr);
+			final int y = (yStr == null || yStr.isEmpty()) ? 0 : Integer.parseInt(yStr);
+
+			return new UTranslate(x, y);
+		}
+
+		return UTranslate.none();
 	}
 
 	// ::comment when __CORE__
@@ -134,7 +158,7 @@ public class OpenIcon {
 	public TextBlock asTextBlock(final HColor color, final double factor) {
 		return new AbstractTextBlock() {
 			public void drawU(UGraphic ug) {
-				HColor textColor = color.getAppropriateColor(ug.getParam().getBackcolor());
+				final HColor textColor = color.getAppropriateColor(ug.getParam().getBackcolor());
 				svgPath.drawMe(ug.apply(textColor), factor);
 			}
 

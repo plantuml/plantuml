@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.klimt.UPath;
+import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 
@@ -52,10 +53,12 @@ public class SvgPath {
 	// http://tutorials.jenkov.com/svg/path-element.html
 	// https://www.w3.org/TR/SVG/paths.html#PathDataQuadraticBezierCommands
 
-	private List<Movement> movements = new ArrayList<>();
+	private final List<Movement> movements = new ArrayList<>();
 	private List<SvgCommand> commands = new ArrayList<>();
+	private final UTranslate translate;
 
-	public SvgPath(String path) {
+	public SvgPath(String path, UTranslate translate) {
+		this.translate = translate;
 		// System.err.println("before=" + path);
 		path = StringDecipher.decipher(path);
 		// System.err.println("after=" + path);
@@ -63,11 +66,11 @@ public class SvgPath {
 		for (final StringTokenizer st = new StringTokenizer(path); st.hasMoreTokens();) {
 			final String token = st.nextToken();
 
-			if (token.matches("[a-zA-Z]")) {
+			if (token.matches("[a-zA-Z]"))
 				commands.add(new SvgCommandLetter(token));
-			} else {
+			else
 				commands.add(new SvgCommandNumber(token));
-			}
+
 		}
 		commands = insertMissingLetter(commands);
 		checkArguments(commands);
@@ -145,7 +148,7 @@ public class SvgPath {
 	}
 
 	private UPath toUPath(double factorx, double factory) {
-		final UPath result = UPath.none();
+		UPath result = UPath.none();
 		Movement previous = null;
 		for (Movement move : movements) {
 			final char letter = move.getLetter();
@@ -186,12 +189,13 @@ public class SvgPath {
 				throw new UnsupportedOperationException("letter " + letter);
 			}
 		}
+		result = result.translate(translate.getDx() * factorx, translate.getDy() * factory);
 		result.setOpenIconic(true);
 		return result;
 	}
 
 	private UPath toUPath(AffineTransform at) {
-		final UPath result = UPath.none();
+		UPath result = UPath.none();
 		Movement previous = null;
 		for (Movement move : movements) {
 			final char letter = move.getLetter();
@@ -231,6 +235,7 @@ public class SvgPath {
 			}
 			previous = move;
 		}
+		result = result.translate(translate.getDx() * at.getScaleX(), translate.getDy() * at.getScaleY());
 		result.setOpenIconic(true);
 		return result;
 	}

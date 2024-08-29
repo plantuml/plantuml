@@ -80,9 +80,9 @@ public class AtomTextUtils {
 		final Display display = Display.getWithNewlines(url.getLabel());
 		if (display.size() > 1) {
 			final List<Atom> all = new ArrayList<>();
-			for (CharSequence s : display.asList()) {
+			for (CharSequence s : display.asList())
 				all.add(createAtomText(s.toString(), url, fontConfiguration, skinSimple));
-			}
+
 			return new AtomVerticalTexts(all);
 
 		}
@@ -99,9 +99,9 @@ public class AtomTextUtils {
 		while (m.find()) {
 			final StringBuffer sb = new StringBuffer();
 			m.appendReplacement(sb, "");
-			if (sb.length() > 0) {
+			if (sb.length() > 0)
 				result.add(new AtomText(sb.toString(), fontConfiguration, url, ZERO, ZERO, true));
-			}
+
 			final String valOpenicon = m.group(1);
 			final String valSprite = m.group(3);
 			final String valImg = m.group(5);
@@ -129,12 +129,12 @@ public class AtomTextUtils {
 		}
 		final StringBuffer sb = new StringBuffer();
 		m.appendTail(sb);
-		if (sb.length() > 0) {
+		if (sb.length() > 0)
 			result.add(new AtomText(sb.toString(), fontConfiguration, url, ZERO, ZERO, true));
-		}
-		if (result.size() == 1) {
+
+		if (result.size() == 1)
 			return result.get(0);
-		}
+
 		return new AtomHorizontalTexts(result);
 	}
 
