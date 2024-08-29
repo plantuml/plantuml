@@ -59,8 +59,9 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: "plantuml-gplv2/build/native/nativeCompile/plantuml-*-${{ matrix. platform }}-${{ env.VERSION }}.zip"
+          file: "plantuml-gplv2/build/native/native*/plantuml-*-${{ matrix. platform }}-${{ env.VERSION }}.zip"
           tag: native
+          file_glob: true
           release_name: native (~${{ env.VERSION }})
           overwrite: true
           make_latest: false
