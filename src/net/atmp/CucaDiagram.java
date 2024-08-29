@@ -192,8 +192,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return false;
 	}
 
-	final public void setLastEntity(Entity foo) {
-		this.lastEntity = (Entity) foo;
+	final public void setLastEntity(Entity last) {
+		this.lastEntity = last;
 	}
 
 	protected void updateLasts(Entity result) {
@@ -436,9 +436,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		}
 		// ::done
 
-		if (getUmlDiagramType() == UmlDiagramType.COMPOSITE) 
+		if (getUmlDiagramType() == UmlDiagramType.COMPOSITE)
 			throw new UnsupportedOperationException();
-		
 
 		this.eventuallyBuildPhantomGroups();
 		final CucaDiagramFileMaker maker;
@@ -592,11 +591,23 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	}
 
 	public void hideOrShow2(String what, boolean show) {
+		what = fixWhat(what);
 		this.hides2.add(new HideOrShow(what, show));
 	}
 
 	public void removeOrRestore(String what, boolean show) {
+		what = fixWhat(what);
 		this.removed.add(new HideOrShow(what, show));
+	}
+
+	private String fixWhat(String what) {
+		final String sep = getNamespaceSeparator();
+		if (sep != null) {
+			final Quark<Entity> currentQuark = getCurrentGroup().getQuark();
+			if (currentQuark.getQualifiedName().length() > 0)
+				what = currentQuark.getQualifiedName() + sep + what;
+		}
+		return what;
 	}
 
 	public final Set<VisibilityModifier> getHides() {
