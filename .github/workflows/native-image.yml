@@ -7,7 +7,7 @@ on:
       - master
 
 jobs:
-  build_non_win_images:
+  build_images:
     name: 'Build Native Image ${{ matrix.platform }}'
     strategy:
       matrix:
@@ -39,21 +39,29 @@ jobs:
 
       - name: Build GPLv2 native image
         shell: bash
-        run: ./gradlew :plantuml-gplv2:nativeCompile -x test
+        run: ./gradlew :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile -x test
 
-      - name: Archive Release
+      - name: Archive Full Release
         uses: thedoctor0/zip-release@0.7.5
         with:
           type: 'zip'
-          filename: "plantuml-${{ matrix.platform }}-${{ env.VERSION }}.zip"
-          directory: plantuml-gplv2/build/native/nativeCompile/
+          filename: "plantuml-full-${{ matrix.platform }}-${{ env.VERSION }}.zip"
+          directory: plantuml-gplv2/build/native/nativeFullCompile/
+
+      - name: Archive Headless Release
+        uses: thedoctor0/zip-release@0.7.5
+        with:
+          type: 'zip'
+          filename: "plantuml-headless-${{ matrix.platform }}-${{ env.VERSION }}.zip"
+          directory: plantuml-gplv2/build/native/nativeHeadlessCompile/
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: "plantuml-gplv2/build/native/nativeCompile/plantuml-${{ matrix. platform }}-${{ env.VERSION }}.zip"
+          file: "plantuml-gplv2/build/native/native*/plantuml-*-${{ matrix. platform }}-${{ env.VERSION }}.zip"
           tag: native
+          file_glob: true
           release_name: native (~${{ env.VERSION }})
           overwrite: true
           make_latest: false

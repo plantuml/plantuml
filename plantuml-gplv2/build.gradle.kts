@@ -190,10 +190,20 @@ application {
 }
 
 graalvmNative {
-	binaries.all {
-		resources.autodetect()
+  binaries.all { resources.autodetect() }
+	binaries.create("full") {
 		buildArgs(listOf("-Djava.awt.headless=false"))
+		runtimeArgs(listOf("-Djava.awt.headless=false"))
+		imageName.set("plantuml-full")
+		mainClass.set(application.mainClass)
+		classpath(binaries.named("main").get().classpath)
 	}
-
-	toolchainDetection = false
+	binaries.create("headless") {
+		imageName.set("plantuml-headless")
+		mainClass.set(application.mainClass)
+		classpath(binaries.named("main").get().classpath)
+		runtimeArgs(listOf("-Djava.awt.headless=true"))
+		buildArgs(listOf("-Djava.awt.headless=true"))
+	}
+  toolchainDetection = false
 }
