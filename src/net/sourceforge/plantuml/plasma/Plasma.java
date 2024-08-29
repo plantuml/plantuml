@@ -49,7 +49,9 @@ import java.util.Map;
  */
 public class Plasma<DATA> {
 
-	private String separator = "\u0000";
+	public static final String MAGIC_SEPARATOR = "\u0001";
+	
+	private String separator = MAGIC_SEPARATOR;
 	private final Quark<DATA> root;
 	private final List<Quark<DATA>> quarks = new ArrayList<>();
 	private final Map<String, PEntry<DATA>> stats = new HashMap<String, PEntry<DATA>>();
@@ -79,12 +81,12 @@ public class Plasma<DATA> {
 
 	public final void setSeparator(String separator) {
 		if (separator == null)
-			separator = "\u0000";
+			separator = MAGIC_SEPARATOR;
 		this.separator = separator;
 	}
 
 	public final boolean hasSeparator() {
-		return this.separator.equals("\u0000") == false;
+		return this.separator.equals(MAGIC_SEPARATOR) == false;
 	}
 
 	public Collection<Quark<DATA>> quarks() {
