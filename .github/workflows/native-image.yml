@@ -42,14 +42,14 @@ jobs:
         run: ./gradlew :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile -x test
 
       - name: Archive Full Release
-        uses: thedoctor0/zip-release@0.7.5
+        uses: thedoctor0/zip-release@0.7.6
         with:
           type: 'zip'
           filename: "plantuml-full-${{ matrix.platform }}-${{ env.VERSION }}.zip"
           directory: plantuml-gplv2/build/native/nativeFullCompile/
 
       - name: Archive Headless Release
-        uses: thedoctor0/zip-release@0.7.5
+        uses: thedoctor0/zip-release@0.7.6
         with:
           type: 'zip'
           filename: "plantuml-headless-${{ matrix.platform }}-${{ env.VERSION }}.zip"
