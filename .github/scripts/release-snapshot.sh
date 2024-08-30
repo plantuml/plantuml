@@ -72,7 +72,7 @@ echo -n "${DATE_TIME_UTC}" > "github_release/plantuml-SNAPSHOT.timestamp"
 
 cat <<-EOF >notes.txt
   ## Version ~v${RELEASE_VERSION%-SNAPSHOT} of the ${DATE_TIME_UTC}
-  This is a pre-release of [the latest development work](https://github.com/plantuml/plantuml/commits/).
+  This is a [JAR](https://en.wikipedia.org/wiki/JAR_(file_format)) pre-release of [the latest development work](https://github.com/plantuml/plantuml/commits/).
   ⚠️  **It is not ready for general use** ⚠️
   ⏱  _Snapshot taken the ${DATE_TIME_UTC}_
 EOF
@@ -80,8 +80,8 @@ EOF
 gh release create \
   --prerelease \
   --target "${GITHUB_SHA}" \
-  --title "${TAG} (~v${RELEASE_VERSION%-SNAPSHOT})" \
+  --title "${TAG} - JAR (~v${RELEASE_VERSION%-SNAPSHOT})" \
   --notes-file notes.txt \
   "${TAG}" github_release/*
 
-echo "::notice title=release snapshot::Snapshot (~v${RELEASE_VERSION%-SNAPSHOT}) released at ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${TAG} and taken the ${DATE_TIME_UTC}"
+echo "::notice title=release snapshot::snapshot - JAR (~v${RELEASE_VERSION%-SNAPSHOT}) released at ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${TAG} and taken the ${DATE_TIME_UTC}"
