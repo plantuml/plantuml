@@ -350,7 +350,7 @@ public final class GraphvizImageBuilder {
 
 	private void printEntity(StringBounder stringBounder, Entity ent) {
 		if (ent.isRemoved())
-			throw new IllegalStateException();
+			throw new IllegalStateException(ent.toString());
 
 		final IEntityImage image = printEntityInternal(stringBounder, ent);
 		final SvekNode node = dotStringFactory.getBibliotekon().createNode(ent, image, stringBounder);

@@ -407,6 +407,9 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 	}
 
 	public boolean isHidden() {
+		if (isRoot())
+			return false;
+
 		if (getParentContainer() != null && getParentContainer().isHidden())
 			return true;
 
@@ -414,29 +417,33 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 	}
 
 	private boolean isHiddenInternal() {
-		if (quark.isRoot())
+		if (isRoot())
 			return false;
-		if (isGroup()) {
-			if (this.diagram.isHidden(this))
-				return true;
 
-			if (leafs().size() == 0)
-				return false;
-
-			for (Entity leaf : leafs())
-				if (leaf.isHiddenInternal() == false)
-					return false;
-
-			for (Entity g : groups())
-				if (g.isHiddenInternal() == false)
-					return false;
-
-			return true;
-		}
+//		if (isGroup()) {
+//			if (this.diagram.isHidden(this))
+//				return true;
+//
+//			if (leafs().size() == 0)
+//				return false;
+//
+//			for (Entity leaf : leafs())
+//				if (leaf.isHiddenInternal() == false)
+//					return false;
+//
+//			for (Entity g : groups())
+//				if (g.isHiddenInternal() == false)
+//					return false;
+//
+//			return true;
+//		}
 		return this.diagram.isHidden(this);
 	}
 
 	public boolean isRemoved() {
+		if (isRoot())
+			return false;
+
 		if (getParentContainer() != null && getParentContainer().isRemoved())
 			return true;
 
@@ -444,33 +451,39 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 	}
 
 	private boolean isRemovedInternal() {
-		if (isGroup()) {
-			if (this.diagram.isRemoved(this))
-				return true;
-
-			if (leafs().size() == 0 && groups().size() == 0)
-				return false;
-
-			for (Entity leaf : leafs())
-				if (((Entity) leaf).isRemovedInternal() == false)
-					return false;
-
-			for (Entity g : groups())
-				if (((Entity) g).isRemovedInternal() == false)
-					return false;
-
-			return true;
-		}
+//		if (isGroup()) {
+//			if (this.diagram.isRemoved(this))
+//				return true;
+//
+//			if (leafs().size() == 0 && groups().size() == 0)
+//				return false;
+//
+//			for (Entity leaf : leafs())
+//				if (leaf.isRemovedInternal() == false)
+//					return false;
+//
+//			for (Entity g : groups())
+//				if (g.isRemovedInternal() == false)
+//					return false;
+//
+//			return true;
+//		}
 		return this.diagram.isRemoved(this);
 	}
 
 	public boolean isAloneAndUnlinked() {
-		if (isGroup())
-			return false;
+		if (isGroup()) {
+			for (Quark<Entity> quarkChild : getQuark().getChildren()) {
+				final Entity child = quarkChild.getData();
+				if (child.isAloneAndUnlinked() == false)
+					return false;
+			}
+			return true;
+		}
 
 		for (Link link : this.diagram.getLinks())
 			if (link.contains(this)) {
-				final Entity other = (Entity) link.getOther(this);
+				final Entity other = link.getOther(this);
 				final boolean removed = this.diagram.isRemovedIgnoreUnlinked(other);
 				if (removed == false && link.getType().isInvisible() == false)
 					return false;
@@ -572,12 +585,10 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		this.codeLine = codeLine;
 	}
 
-	//
 	public void setStereostyle(String stereo) {
 		this.stereostyles = Stereostyles.build(stereo);
 	}
 
-	//
 	public Stereostyles getStereostyles() {
 		return stereostyles;
 	}
@@ -603,12 +614,10 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		return diagram;
 	}
 
-	//
 	public void setStatic(boolean isStatic) {
 		this.isStatic = isStatic;
 	}
 
-	//
 	public boolean isStatic() {
 		return isStatic;
 	}
@@ -681,7 +690,12 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 	}
 
 	final public boolean isEmpty() {
-		return countChildren() == 0;
+		for (Quark<Entity> quarkChild : getQuark().getChildren()) {
+			final Entity child = quarkChild.getData();
+			if (this.diagram.isRemoved(child) == false)
+				return false;
+		}
+		return true;
 	}
 
 	public String getName() {

@@ -52,8 +52,8 @@ public class HideOrShow {
 
 	private boolean isApplyable(Entity leaf) {
 		if (leaf.isRoot())
-			return false;
-		
+			throw new IllegalArgumentException();
+
 		if (what.startsWith("$"))
 			return isApplyableTag(leaf, what.substring(1));
 

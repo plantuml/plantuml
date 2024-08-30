@@ -720,6 +720,9 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	// Coming from EntityFactory
 
 	public boolean isHidden(Entity leaf) {
+		if (leaf.isRoot())
+			return false;
+		
 		final Entity other = isNoteWithSingleLinkAttachedTo(leaf);
 		if (other != null && other != leaf)
 			return isHidden(other);
@@ -740,6 +743,9 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	}
 
 	public boolean isRemoved(Entity leaf) {
+		if (leaf.isRoot())
+			return false;
+		
 		final Entity other = isNoteWithSingleLinkAttachedTo(leaf);
 		if (other != null)
 			return isRemoved(other);
