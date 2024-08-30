@@ -7,7 +7,7 @@
 'm:docs':
 - changed-files:
   - any-glob-to-any-file:
-    - '*.md'
+    - '**.md'
     - 'docs/**/*'
 
 'm:workflow':
@@ -52,4 +52,5 @@
 'm:native':
 - changed-files:
   - any-glob-to-any-file:
-    - .github/workflows/native-image.yml
+    - .github/workflows/native-image-snapshot.yml
+    - .github/workflows/native-image-release.yml
