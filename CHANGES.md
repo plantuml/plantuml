@@ -1,5 +1,6 @@
 ## V1.2024.7beta (not released yet)
 
+- [[Class][Deployment] Some issues about arrow between nested elements](https://github.com/plantuml/plantuml/issues/1815)
 - [Crash happened on plantuml 1.2024.7beta5, related to "headless"](https://github.com/plantuml/plantuml/issues/1879)
 - [hide does not work inside package](https://github.com/plantuml/plantuml/issues/1870)
 - [After v1.2023.10, Remove command does not remove nested shapes](https://github.com/plantuml/plantuml/issues/1769)
@@ -7,7 +8,7 @@
 - [Custom Theme loading](https://github.com/plantuml/plantuml/issues/1878)
 - [[Creole] Fix <back> color](https://github.com/plantuml/plantuml/issues/1856)
 - [repeat starting point is in wrong swimlane](https://github.com/plantuml/plantuml/issues/1874)
-- [Generate a <svg:title> tag when generating Svg](https://github.com/plantuml/plantuml/issues/1877)
+- [Generate a svg:title tag when generating Svg](https://github.com/plantuml/plantuml/issues/1877)
 - [fix: make native release as snapshot release](https://github.com/plantuml/plantuml/pull/1882)
 - [feat: add builtin function %boolval](https://github.com/plantuml/plantuml/pull/1873)
 - [feat: add builtin function %mod (modulo operator)](https://github.com/plantuml/plantuml/pull/1865)
