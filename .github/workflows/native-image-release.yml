@@ -1,0 +1,78 @@
+name: Native Image - Release
+
+on:
+  workflow_dispatch:
+  release:
+    types: [released]
+
+jobs:
+  build_images:
+    name: 'Build Native Image ${{ matrix.platform }}'
+    strategy:
+      matrix:
+        os: [ macos-latest, windows-latest, ubuntu-latest ]
+        include:
+          - os: 'ubuntu-latest'
+            platform: 'linux-amd64'
+          - os: 'macos-latest'
+            platform: 'darwin-arm64'
+          - os: 'macos-13'
+            platform: 'darwin-amd64'
+          - os: 'windows-latest'
+            platform: 'win-amd64'
+    runs-on: ${{matrix.os}}
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          distribution: liberica
+          cache: gradle
+
+      - name: Set the release version
+        shell: bash
+        run: echo "VERSION=$(grep 'version =' gradle.properties | cut -d' ' -f 3)" >> $GITHUB_ENV
+
+      - name: Set the DateTime
+        shell: bash
+        run: echo "DATETIME=$(date -u +'%F at %T (UTC)')" >> $GITHUB_ENV
+
+      - name: Build GPLv2 native image
+        shell: bash
+        run: ./gradlew :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile -x test
+
+      - name: Archive Full Release
+        uses: thedoctor0/zip-release@0.7.6
+        with:
+          type: 'zip'
+          filename: "plantuml-full-${{ matrix.platform }}-${{ env.VERSION }}.zip"
+          directory: plantuml-gplv2/build/native/nativeFullCompile/
+
+      - name: Archive Headless Release
+        uses: thedoctor0/zip-release@0.7.6
+        with:
+          type: 'zip'
+          filename: "plantuml-headless-${{ matrix.platform }}-${{ env.VERSION }}.zip"
+          directory: plantuml-gplv2/build/native/nativeHeadlessCompile/
+
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: "plantuml-gplv2/build/native/native*/plantuml-*-${{ matrix.platform }}-${{ env.VERSION }}.zip"
+          file_glob: true
+          tag: v${{ env.VERSION }}-native
+          release_name: Release - Native Image (v${{ env.VERSION }})
+          overwrite: true
+          make_latest: false
+          prerelease: false
+          body: |
+              ## Version v${{ env.VERSION }} of the ${{ env.DATETIME }}
+              This is a [Native Image](https://www.graalvm.org/latest/reference-manual/native-image/) release of [the latest development work](https://github.com/plantuml/plantuml/commits/).
+              ## Credit or GitHub Action used
+              - [`graalvm/setup-graalvm`](https://github.com/graalvm/setup-graalvm)
+              - [`thedoctor0/zip-release`](https://github.com/TheDoctor0/zip-release)
+              - [`svenstaro/upload-release-action`](https://github.com/svenstaro/upload-release-action)
