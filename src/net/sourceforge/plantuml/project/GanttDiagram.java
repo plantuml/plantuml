@@ -98,6 +98,7 @@ import net.sourceforge.plantuml.project.draw.TimeHeaderQuarterly;
 import net.sourceforge.plantuml.project.draw.TimeHeaderSimple;
 import net.sourceforge.plantuml.project.draw.TimeHeaderWeekly;
 import net.sourceforge.plantuml.project.draw.TimeHeaderYearly;
+import net.sourceforge.plantuml.project.draw.WeeklyHeaderStrategy;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.solver.ImpossibleSolvingException;
 import net.sourceforge.plantuml.project.time.Day;
@@ -309,7 +310,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		else if (printScale == PrintScale.DAILY)
 			return new TimeHeaderDaily(stringBounder, thParam(), nameDays, printStart);
 		else if (printScale == PrintScale.WEEKLY)
-			return new TimeHeaderWeekly(stringBounder, thParam(), weekNumberStrategy, withCalendarDate, printStart);
+			return new TimeHeaderWeekly(stringBounder, thParam(), weekNumberStrategy, weeklyHeaderStrategy, printStart);
 		else if (printScale == PrintScale.MONTHLY)
 			return new TimeHeaderMonthly(stringBounder, thParam(), printStart);
 		else if (printScale == PrintScale.QUARTERLY)
@@ -843,10 +844,10 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		this.labelStrategy = strategy;
 	}
 
-	private boolean withCalendarDate;
+	private WeeklyHeaderStrategy weeklyHeaderStrategy;
 
-	public void setWithCalendarDate(boolean withCalendarDate) {
-		this.withCalendarDate = withCalendarDate;
+	public void setWeeklyHeaderStrategy(WeeklyHeaderStrategy weeklyHeaderStrategy) {
+		this.weeklyHeaderStrategy = weeklyHeaderStrategy;
 	}
 
 	private boolean hideResourceName;

@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.project.core.PrintScale;
+import net.sourceforge.plantuml.project.draw.WeeklyHeaderStrategy;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -67,11 +68,9 @@ public class CommandPrintScale extends SingleLineCommand2<GanttDiagram> {
 						new RegexLeaf("weekly")), //
 				new RegexOptional(new RegexConcat( //
 						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf("DATE", "(with)"), //
-						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf("calendar"), //
-						RegexLeaf.spaceOneOrMore(), //
-						new RegexLeaf("date"))), //
+						new RegexOr("OPTION", //
+								new RegexLeaf("(with\\s+calendar\\s+date)"),
+								new RegexLeaf("(with\\s+week\\s+numbering\\s+from\\s+1)")))), //
 				new RegexOptional(new RegexConcat( //
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("zoom"), //
@@ -90,9 +89,12 @@ public class CommandPrintScale extends SingleLineCommand2<GanttDiagram> {
 		if (zoom != null)
 			diagram.setFactorScale(Double.parseDouble(zoom));
 
-		final String withCalendarDate = arg.get("DATE", 0);
-		if (withCalendarDate != null)
-			diagram.setWithCalendarDate(true);
+		final String option = arg.get("OPTION", 0);
+		if (option != null)
+			if (option.contains("date"))
+				diagram.setWeeklyHeaderStrategy(WeeklyHeaderStrategy.DAY_OF_MONTH);
+			else if (option.contains("1"))
+				diagram.setWeeklyHeaderStrategy(WeeklyHeaderStrategy.FROM_1);
 
 		return CommandExecutionResult.ok();
 	}

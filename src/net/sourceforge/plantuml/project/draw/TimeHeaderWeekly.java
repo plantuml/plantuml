@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.style.SName;
 public class TimeHeaderWeekly extends TimeHeaderCalendar {
 
 	private final WeekNumberStrategy weekNumberStrategy;
-	private final boolean withCalendarDate;
+	private final WeeklyHeaderStrategy headerStrategy;
 
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
@@ -76,11 +76,11 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	}
 
 	public TimeHeaderWeekly(StringBounder stringBounder, TimeHeaderParameters thParam,
-			WeekNumberStrategy weekNumberStrategy, boolean withCalendarDate, Day printStart) {
+			WeekNumberStrategy weekNumberStrategy, WeeklyHeaderStrategy headerStrategy, Day printStart) {
 		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),
 				thParam.getScale(), printStart));
 		this.weekNumberStrategy = weekNumberStrategy;
-		this.withCalendarDate = withCalendarDate;
+		this.headerStrategy = headerStrategy;
 	}
 
 	@Override
@@ -140,10 +140,13 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	}
 
 	private void printDaysOfMonth(final UGraphic ug) {
+		int counter = 1;
 		for (Day wink = getMin(); wink.compareTo(getMax()) < 0; wink = wink.increment()) {
 			if (wink.getDayOfWeek() == weekNumberStrategy.getFirstDayOfWeek()) {
 				final String num;
-				if (withCalendarDate)
+				if (headerStrategy == WeeklyHeaderStrategy.FROM_1)
+					num = "" + (counter++);
+				else if (headerStrategy == WeeklyHeaderStrategy.DAY_OF_MONTH)
 					num = "" + wink.getDayOfMonth();
 				else
 					num = "" + wink.getWeekOfYear(weekNumberStrategy);
