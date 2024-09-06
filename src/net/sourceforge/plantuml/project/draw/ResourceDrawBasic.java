@@ -80,16 +80,17 @@ public class ResourceDrawBasic implements ResourceDraw {
 
 		double startingPosition = -1;
 		int totalLoad = 0;
-		int totalLimit = 0;
+		boolean isRed = false;
 		for (Day i = min; i.compareTo(max) <= 0; i = i.increment()) {
 			final boolean isBreaking = timeScale.isBreaking(i);
-			totalLoad += gantt.getLoadForResource(res, i);
-			totalLimit += 100;
+			final int load = gantt.getLoadForResource(res, i);
+			if (load > 100)
+				isRed = true;
+			totalLoad += load;
 			if (isBreaking) {
 				if (totalLoad > 0) {
-					final boolean over = totalLoad > totalLimit;
 					final FontConfiguration fontConfiguration = getFontConfiguration(9,
-							over ? HColors.RED : HColors.BLACK);
+							isRed ? HColors.RED : HColors.BLACK);
 					final TextBlock value = Display.getWithNewlines("" + totalLoad).create(fontConfiguration,
 							HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 					if (startingPosition == -1)
@@ -101,7 +102,7 @@ public class ResourceDrawBasic implements ResourceDraw {
 				}
 				startingPosition = -1;
 				totalLoad = 0;
-				totalLimit = 0;
+				isRed = false;
 			} else {
 				if (startingPosition == -1)
 					startingPosition = timeScale.getStartingPosition(i);
