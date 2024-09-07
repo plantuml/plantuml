@@ -23,6 +23,7 @@
 - [Allow multiple style stereotypes for Mindmap, WBS](https://github.com/plantuml/plantuml/issues/1527)
 - [Gantt: Weekscale with weeknumbers](https://github.com/plantuml/plantuml/issues/525)
 - [The utilization of resources does not color red correctly when week partly closed](https://github.com/plantuml/plantuml/issues/1654)
+- [Remove and restore not working as expected](https://github.com/plantuml/plantuml/issues/1428)
 
 ## V1.2024.6 (Jul 6, 2024)
 
