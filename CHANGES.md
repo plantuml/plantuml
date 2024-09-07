@@ -1,4 +1,4 @@
-## V1.2024.7beta (not released yet)
+## V1.2024.7 (Sep 9, 2024)
 
 - [[Class][Deployment] Some issues about arrow between nested elements](https://github.com/plantuml/plantuml/issues/1815)
 - [Crash happened on plantuml 1.2024.7beta5, related to "headless"](https://github.com/plantuml/plantuml/issues/1879)
@@ -21,6 +21,8 @@
 - [Pause a task up to end of another task](https://github.com/plantuml/plantuml/issues/1838)
 - [Rendering issue when nesting different elements](https://github.com/plantuml/plantuml/issues/1550)
 - [Allow multiple style stereotypes for Mindmap, WBS](https://github.com/plantuml/plantuml/issues/1527)
+- [Gantt: Weekscale with weeknumbers](https://github.com/plantuml/plantuml/issues/525)
+- [The utilization of resources does not color red correctly when week partly closed](https://github.com/plantuml/plantuml/issues/1654)
 
 ## V1.2024.6 (Jul 6, 2024)
 
