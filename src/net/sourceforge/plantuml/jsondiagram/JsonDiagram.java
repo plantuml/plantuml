@@ -81,9 +81,13 @@ public class JsonDiagram extends TitledDiagram {
 			StyleExtractor styleExtractor) {
 		super(source, type, null);
 		this.handwritten = styleExtractor.isHandwritten();
-		if (json != null && (json.isString() || json.isBoolean() || json.isNumber())) {
+		if (json != null && (json.isString() || json.isBoolean() || json.isNumber() || json.isNull())) {
 			this.root = new JsonArray();
 			((JsonArray) this.root).add(json);
+		} else if (json != null && ((json.isArray() && json.asArray().isEmpty())
+									|| (json.isObject() && json.asObject().isEmpty()))) {
+			this.root = new JsonArray();
+			((JsonArray) this.root).add("");
 		} else {
 			this.root = json;
 		}
