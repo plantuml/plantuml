@@ -10,8 +10,23 @@ on:
       - 'docs/**'
 
 jobs:
+  clean_release:
+    name: 'Clean the snapshot-native pre-release'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+ 
+      - name: Clean release and tag
+        run: |
+          gh release delete snapshot-native --cleanup-tag -y || true
+          echo "::notice title=release snapshot-native::snapshot - Native Image at ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/snapshot-native"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   build_images:
     name: 'Build Native Image ${{ matrix.platform }}'
+    needs: clean_release
     strategy:
       matrix:
         os: [ macos-latest, windows-latest, ubuntu-latest ]
