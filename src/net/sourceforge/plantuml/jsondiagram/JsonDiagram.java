@@ -85,7 +85,7 @@ public class JsonDiagram extends TitledDiagram {
 			this.root = new JsonArray();
 			((JsonArray) this.root).add(json);
 		} else if (json != null && ((json.isArray() && json.asArray().isEmpty())
-						|| (json.isObject() && json.asObject().isEmpty()))) {
+									|| (json.isObject() && json.asObject().isEmpty()))) {
 			this.root = new JsonArray();
 			((JsonArray) this.root).add("");
 		} else {
