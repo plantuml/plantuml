@@ -14,6 +14,9 @@ jobs:
     name: 'Clean the snapshot-native pre-release'
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+ 
       - name: Clean release and tag
         run: |
           gh release delete snapshot-native --cleanup-tag -y || true
