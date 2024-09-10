@@ -24,17 +24,17 @@ java {
 }
 
 dependencies {
-	compileOnly("org.apache.ant:ant:1.10.15")
-	testImplementation("org.assertj:assertj-core:3.26.3")
-	testImplementation("org.junit.jupiter:junit-jupiter:5.11.0")
-	testImplementation("org.scilab.forge:jlatexmath:1.0.7")
-	testImplementation("org.xmlunit:xmlunit-core:2.10.+")
+	compileOnly(libs.ant)
+	testImplementation(libs.assertj.core)
+	testImplementation(libs.junit.jupiter)
+	testImplementation(libs.jlatexmath)
+	testImplementation(libs.xmlunit.core)
 
-	implementation("org.scilab.forge:jlatexmath:1.0.7")
+	implementation(libs.jlatexmath)
 	
-    implementation("org.eclipse.elk:org.eclipse.elk.core:0.9.1")
-    implementation("org.eclipse.elk:org.eclipse.elk.alg.layered:0.9.1")
-    implementation("org.eclipse.elk:org.eclipse.elk.alg.mrtree:0.9.1")
+    implementation(libs.elk.core)
+    implementation(libs.elk.alg.layered)
+    implementation(libs.elk.alg.mrtree)
 
 }
 

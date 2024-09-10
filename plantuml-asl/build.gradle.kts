@@ -24,11 +24,11 @@ java {
 }
 
 dependencies {
-	compileOnly("org.apache.ant:ant:1.10.15")
-	testImplementation("org.assertj:assertj-core:3.26.3")
-	testImplementation("org.junit.jupiter:junit-jupiter:5.11.0")
-	testImplementation("org.scilab.forge:jlatexmath:1.0.7")
-	testImplementation("org.xmlunit:xmlunit-core:2.10.+")
+	compileOnly(libs.ant)
+	testImplementation(libs.assertj.core)
+	testImplementation(libs.junit.jupiter)
+	testImplementation(libs.jlatexmath)
+	testImplementation(libs.xmlunit.core)
 }
 
 repositories {
