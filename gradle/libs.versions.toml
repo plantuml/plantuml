@@ -1,0 +1,43 @@
+#
+# libs.versions.toml
+#
+# https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
+
+[versions]
+ant                 = "1.10.15"
+assertj             = "3.26.3"
+batik               = "1.17"
+elk                 = "0.9.1"
+fop                 = "2.9"
+glytching-junit-ext = "2.6.0"
+graalvm-native      = "0.10.2"
+jlatexmath          = "1.0.7"
+junit-jupiter       = "5.11.0"
+mockito-j8          = "4.+"
+mockito             = "5.+"
+adarshr-test-logger = "3.2.0"
+xmlunit-core        = "2.10.+"
+
+
+[libraries]
+# name                      = { module = "", version.ref = "" }
+ant                         = { module = "org.apache.ant:ant", version.ref = "ant" }
+assertj-core                = { module = "org.assertj:assertj-core", version.ref = "assertj" }
+batik-all                   = { module = "org.apache.xmlgraphics:batik-all", version.ref = "batik" }
+elk-core                    = { module = "org.eclipse.elk:org.eclipse.elk.core", version.ref = "elk" }
+elk-alg-layered             = { module = "org.eclipse.elk:org.eclipse.elk.alg.layered", version.ref = "elk" }
+elk-alg-mrtree              = { module = "org.eclipse.elk:org.eclipse.elk.alg.mrtree", version.ref = "elk" }
+fop                         = { module = "org.apache.xmlgraphics:fop", version.ref = "fop" }
+glytching-junit-extensions  = { module = "io.github.glytching:junit-extensions", version.ref = "glytching-junit-ext" }
+jlatexmath                  = { module = "org.scilab.forge:jlatexmath", version.ref = "jlatexmath" }
+junit-jupiter               = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
+mockito-core-j8             = { module = "org.mockito:mockito-core", version.ref = "mockito-j8" }
+mockito-core                = { module = "org.mockito:mockito-core", version.ref = "mockito" }
+mockito-junit-jupiter-j8    = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito-j8" }
+mockito-junit-jupiter       = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito" }
+xmlunit-core                = { module = "org.xmlunit:xmlunit-core", version.ref = "xmlunit-core" }
+
+
+[plugins]
+adarshr-test-logger = { id = "com.adarshr.test-logger", version.ref = "adarshr-test-logger" }
+graalvm-native = { id = "org.graalvm.buildtools.native", version.ref = "graalvm-native" }

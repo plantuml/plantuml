@@ -14,7 +14,7 @@ plugins {
 	`maven-publish`
 	signing
     eclipse
-//	id("com.adarshr.test-logger") version "3.2.0"
+//	alias(libs.plugins.adarshr.test.logger)
 }
 
 group = "net.sourceforge.plantuml"
@@ -29,28 +29,28 @@ java {
 }
 
 dependencies {
-	compileOnly("org.apache.ant:ant:1.10.15")
+	compileOnly(libs.ant)
 
-	testImplementation("io.github.glytching:junit-extensions:2.6.0")
-	testImplementation("org.assertj:assertj-core:3.26.3")
-	testImplementation("org.junit.jupiter:junit-jupiter:5.11.0")
-	testImplementation("org.xmlunit:xmlunit-core:2.10.+")
+	testImplementation(libs.glytching.junit.extensions)
+	testImplementation(libs.assertj.core)
+	testImplementation(libs.junit.jupiter)
+	testImplementation(libs.xmlunit.core)
 	if (JavaVersion.current().isJava8) {
-		testImplementation("org.mockito:mockito-core:4.+")
-		testImplementation("org.mockito:mockito-junit-jupiter:4.+")
+		testImplementation(libs.mockito.core.j8)
+		testImplementation(libs.mockito.junit.jupiter.j8)
 	} else {
-		testImplementation("org.mockito:mockito-core:5.+")
-		testImplementation("org.mockito:mockito-junit-jupiter:5.+")
+		testImplementation(libs.mockito.core)
+		testImplementation(libs.mockito.junit.jupiter)
 	}
-	implementation("org.scilab.forge:jlatexmath:1.0.7")
-    implementation("org.eclipse.elk:org.eclipse.elk.core:0.9.1")
-    implementation("org.eclipse.elk:org.eclipse.elk.alg.layered:0.9.1")
-    implementation("org.eclipse.elk:org.eclipse.elk.alg.mrtree:0.9.1")
+	implementation(libs.jlatexmath)
+    implementation(libs.elk.core)
+    implementation(libs.elk.alg.layered)
+    implementation(libs.elk.alg.mrtree)
 
     // Custom configuration for pdfJar task
     configurations.create("pdfJarDeps")
-    "pdfJarDeps"("org.apache.xmlgraphics:fop:2.9")
-    "pdfJarDeps"("org.apache.xmlgraphics:batik-all:1.17")
+    "pdfJarDeps"(libs.fop)
+    "pdfJarDeps"(libs.batik.all)
     
 }
 
