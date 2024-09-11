@@ -15,7 +15,7 @@ jlatexmath          = "1.0.7"
 junit-jupiter       = "5.11.0"
 mockito-j8          = "4.+"
 mockito             = "5.+"
-adarshr-test-logger = "3.2.0"
+adarshr-test-logger = "4.0.0"
 xmlunit-core        = "2.10.+"
 
 
