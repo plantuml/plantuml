@@ -43,6 +43,8 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
@@ -67,7 +69,13 @@ public class CommandSimpleSubclass extends SingleLineCommand2<ChenEerDiagram> {
 				new RegexLeaf("PARTICIPATION2", "([-=])"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("NAME2", "([\\w-]+)"), //
+				RegexLeaf.spaceZeroOrMore(), //
+				color().getRegex(), //
 				RegexLeaf.end());
+	}
+
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.LINE);
 	}
 
 	@Override
@@ -102,6 +110,7 @@ public class CommandSimpleSubclass extends SingleLineCommand2<ChenEerDiagram> {
 		final Link link = new Link(diagram, diagram.getCurrentStyleBuilder(), entity1, entity2,
 				linkType, LinkArg.build(Display.NULL, 3));
 		link.setPortMembers(diagram.getPortId(entity1.getName()), diagram.getPortId(entity2.getName()));
+		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));
 		diagram.addLink(link);
 
 		return CommandExecutionResult.ok();
