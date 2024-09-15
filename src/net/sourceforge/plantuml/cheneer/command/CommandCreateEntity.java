@@ -40,6 +40,8 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
@@ -73,8 +75,14 @@ public class CommandCreateEntity extends SingleLineCommand2<ChenEerDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREO", "(<<.+>>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
+				color().getRegex(), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("\\{"), //
 				RegexLeaf.end());
+	}
+
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.BACK);
 	}
 
 	@Override
@@ -114,6 +122,8 @@ public class CommandCreateEntity extends SingleLineCommand2<ChenEerDiagram> {
 			entity.setStereotype(Stereotype.build(stereo));
 			entity.setStereostyle(stereo);
 		}
+
+		entity.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));
 
 		diagram.pushOwner(entity);
 

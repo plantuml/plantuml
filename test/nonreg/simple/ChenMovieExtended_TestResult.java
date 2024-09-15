@@ -7,7 +7,7 @@ public class ChenMovieExtended_TestResult {
 DPI: 96
 dimension: [ 1617.3106 ; 720.0000 ]
 scaleFactor: 1.0000
-seed: -7760046765121812191
+seed: -8173812650123393805
 svgLinkTarget: _top
 hoverPathColorRGB: null
 preserveAspectRatio: none
@@ -163,8 +163,8 @@ RECTANGLE:
   yCorner: 0
   stroke: 0.0-0.0-0.5
   shadow: 0
-  color: ff181818
-  backcolor: fff1f1f1
+  color: ff0000ff
+  backcolor: ffadd8e6
 
 TEXT:
   text: CUSTOMER
@@ -181,7 +181,7 @@ ELLIPSE:
   extend: 0.0
   stroke: 0.0-0.0-0.5
   shadow: 0
-  color: ff181818
+  color: ffffa500
   backcolor: fff1f1f1
 
 TEXT:
@@ -282,8 +282,8 @@ POLYGON:
    - [ 744.2105 ; 173.7105 ]
   stroke: 0.0-0.0-0.5
   shadow: 0
-  color: ff181818
-  backcolor: fff1f1f1
+  color: ffff0000
+  backcolor: ffffc0cb
 
 TEXT:
   text: RENTED_TO
@@ -574,8 +574,8 @@ ELLIPSE:
   extend: 0.0
   stroke: 0.0-0.0-0.5
   shadow: 0
-  color: ff181818
-  backcolor: fff1f1f1
+  color: ff008000
+  backcolor: ff00ff00
 
 TEXT:
   text: U
@@ -686,7 +686,7 @@ PATH:
      pt3: [ 1189.8552 ; 303.8761 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ff181818
+  color: ffffa500
   backcolor: NULL_COLOR
 
 PATH:
@@ -754,7 +754,7 @@ PATH:
      pt3: [ 1157.8461 ; 313.3561 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ff181818
+  color: ff00ff00
   backcolor: NULL_COLOR
 
 EMPTY:
@@ -842,7 +842,7 @@ PATH:
      pt3: [ 1283.8492 ; 458.6705 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ff181818
+  color: ff800080
   backcolor: NULL_COLOR
 
 PATH:
@@ -862,7 +862,7 @@ PATH:
      pt3: [ 1252.5110 ; 303.9427 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ff181818
+  color: ff800080
   backcolor: NULL_COLOR
 
 PATH:
@@ -1046,7 +1046,7 @@ PATH:
      pt3: [ 909.0000 ; 109.9627 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ff181818
+  color: ff008000
   backcolor: NULL_COLOR
 
 PATH:
@@ -1066,7 +1066,7 @@ PATH:
      pt3: [ 1258.4998 ; 303.8713 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ff181818
+  color: ff008000
   backcolor: NULL_COLOR
 
 PATH:
@@ -1086,7 +1086,7 @@ PATH:
      pt3: [ 407.8635 ; 314.6541 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
-  color: ff181818
+  color: ff008000
   backcolor: NULL_COLOR
 
 """

@@ -44,6 +44,9 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.ColorType;
+import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
@@ -74,8 +77,14 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("STEREO", "(<<.*>>)?"), //
 				RegexLeaf.spaceZeroOrMore(), //
+				color().getRegex(), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("COMPOSITE", "(\\{)?"), //
 				RegexLeaf.end());
+	}
+
+	private static ColorParser color() {
+		return ColorParser.simpleColor(ColorType.LINE);
 	}
 
 	@Override
@@ -98,6 +107,8 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
 		final String stereo = arg.get("STEREO", 0);
 		final boolean composite = arg.get("COMPOSITE", 0) != null;
 
+		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+
 		Entity entity = quark.getData();
 		if (entity == null) {
 			final Display display = Display.getWithNewlines(displayText);
@@ -111,9 +122,12 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
 			entity.setStereostyle(stereo);
 		}
 
+		entity.setColors(colors);
+
 		final LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);
 		final Link link = new Link(diagram, diagram.getCurrentStyleBuilder(), entity, owner, linkType,
 				LinkArg.build(Display.NULL, 2));
+		link.setColors(colors);
 		diagram.addLink(link);
 
 		if (composite) {

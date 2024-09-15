@@ -24,8 +24,8 @@ entity DIRECTOR {
   Age
 }
 
-entity CUSTOMER {
-  Number <<key>>
+entity CUSTOMER #lightblue;line:blue {
+  Number <<key>> #lime;line:orange
   Bonus <<derived>>
   Name <<multi>>
 }
@@ -34,11 +34,11 @@ entity MOVIE {
   Code
 }
 
-relationship RENTED_TO {
+relationship RENTED_TO #pink;line:red {
   Date
 }
 
-RENTED_TO -1- CUSTOMER
+RENTED_TO -1- CUSTOMER #lime
 RENTED_TO -N- MOVIE
 RENTED_TO -(N,M)- DIRECTOR
 
@@ -48,8 +48,8 @@ entity PARENT {
 entity MEMBER {
 }
 
-CUSTOMER ->- PARENT
-MEMBER -<- CUSTOMER
+CUSTOMER ->- PARENT #line:purple
+MEMBER -<- CUSTOMER #line:purple
 
 entity CHILD <<weak>> {
   Name <<key>>
@@ -78,7 +78,7 @@ CHILD =>= d { TODDLER, PRIMARY_AGE, TEEN }
 entity PERSON {
 }
 
-PERSON ->- U { CUSTOMER, DIRECTOR }
+PERSON ->- U { CUSTOMER, DIRECTOR } #lime;line:green
 
 @endchen
 """
