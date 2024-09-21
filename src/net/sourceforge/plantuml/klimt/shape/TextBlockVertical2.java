@@ -107,13 +107,13 @@ public class TextBlockVertical2 extends AbstractTextBlock implements TextBlock, 
 						.draw(URectangle.build(dimtotal.getWidth(), dimb.getHeight()));
 
 			if (horizontalAlignment == HorizontalAlignment.LEFT) {
-				block.drawU(ug.apply(UTranslate.dy(y)));
+				block.drawU(ug.apply(UTranslate.dy(y, dimtotal)));
 			} else if (horizontalAlignment == HorizontalAlignment.CENTER) {
 				final double dx = (dimtotal.getWidth() - dimb.getWidth()) / 2;
-				block.drawU(ug.apply(new UTranslate(dx, y)));
+				block.drawU(ug.apply(new UTranslate(dx, y, dimtotal)));
 			} else if (horizontalAlignment == HorizontalAlignment.RIGHT) {
 				final double dx = dimtotal.getWidth() - dimb.getWidth();
-				block.drawU(ug.apply(new UTranslate(dx, y)));
+				block.drawU(ug.apply(new UTranslate(dx, y, dimtotal)));
 			} else {
 				throw new UnsupportedOperationException();
 			}

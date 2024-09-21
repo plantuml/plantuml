@@ -37,11 +37,13 @@ package net.sourceforge.plantuml.klimt.drawing.tikz;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Position;
 import net.sourceforge.plantuml.klimt.creole.legacy.AtomText;
 import net.sourceforge.plantuml.klimt.drawing.UDriver;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontStyle;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 
 public class DriverAtomTextTikz implements UDriver<AtomText, TikzGraphics> {
@@ -55,7 +57,16 @@ public class DriverAtomTextTikz implements UDriver<AtomText, TikzGraphics> {
 		final boolean underline = fontConfiguration.containsStyle(FontStyle.UNDERLINE);
 		final boolean italic = font.isItalic();
 		final boolean bold = font.isBold();
-		tikz.text(x, y, text.getText(), underline, italic, bold);
+		XDimension2D parentDimension = text.getParentDimension();
+		Position position = text.getPosition();
+		if (parentDimension != null && position != null) {
+			double diffX = (parentDimension.getWidth() - position.getWidth()) / 2;
+			double diffY = (parentDimension.getHeight() - position.getHeight()) / 2;
+			tikz.text(x - diffX, y - diffY, text.getText(), underline, italic, bold,
+							parentDimension.getWidth(), parentDimension.getHeight());
+		} else {
+			tikz.text(x, y, text.getText(), underline, italic, bold);
+		}
 	}
 
 }

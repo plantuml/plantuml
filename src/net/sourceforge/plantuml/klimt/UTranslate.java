@@ -37,12 +37,14 @@ package net.sourceforge.plantuml.klimt;
 
 import java.awt.geom.AffineTransform;
 
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 
 public class UTranslate implements UChange {
 	private final double dx;
 	private final double dy;
+	private final XDimension2D dimension;
 
 	@Override
 	public String toString() {
@@ -54,16 +56,29 @@ public class UTranslate implements UChange {
 	}
 
 	public UTranslate(double dx, double dy) {
+		this(dx, dy, null);
+	}
+
+	public UTranslate(double dx, double dy, XDimension2D dimension) {
 		this.dx = dx;
 		this.dy = dy;
+		this.dimension = dimension;
 	}
 
 	public static UTranslate dx(double dx) {
 		return new UTranslate(dx, 0);
 	}
 
+	public static UTranslate dx(double dx, XDimension2D dimension) {
+		return new UTranslate(dx, 0, dimension);
+	}
+
 	public static UTranslate dy(double dy) {
 		return new UTranslate(0, dy);
+	}
+
+	public static UTranslate dy(double dy, XDimension2D dimension) {
+		return new UTranslate(0, dy, dimension);
 	}
 
 	public static UTranslate point(XPoint2D p) {
@@ -76,6 +91,10 @@ public class UTranslate implements UChange {
 
 	public double getDy() {
 		return dy;
+	}
+
+	public XDimension2D getDimension() {
+		return dimension;
 	}
 
 	public boolean isAlmostSame(UTranslate other) {
@@ -94,7 +113,7 @@ public class UTranslate implements UChange {
 	}
 
 	public UTranslate compose(UTranslate other) {
-		return new UTranslate(dx + other.dx, dy + other.dy);
+		return new UTranslate(dx + other.dx, dy + other.dy, other.dimension);
 	}
 
 	public UTranslate reverse() {

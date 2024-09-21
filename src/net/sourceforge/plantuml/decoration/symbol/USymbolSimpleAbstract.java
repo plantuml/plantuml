@@ -71,7 +71,7 @@ abstract class USymbolSimpleAbstract extends USymbol {
 
 				// Actor bug?
 				final UGraphic ug2 = UGraphicStencil.create(ug, dimLabel);
-				label.drawU(ug2.apply(new UTranslate(labelX, labelY)));
+				label.drawU(ug2.apply(new UTranslate(labelX, labelY, dimTotal)));
 				// label.drawU(ug.apply(new UTranslate(labelX, labelY)));
 
 				final double stereoX = (dimTotal.getWidth() - dimStereo.getWidth()) / 2;

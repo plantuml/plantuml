@@ -183,10 +183,10 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 			yForNote = 0;
 
 		if (notePosition == NotePosition.LEFT)
-			return UTranslate.dy(yForNote);
+			return UTranslate.dy(yForNote, dimTotal);
 
 		final double dx = dimTotal.getWidth() - dimNote.getWidth();
-		return new UTranslate(dx, yForNote);
+		return new UTranslate(dx, yForNote, dimTotal);
 	}
 
 	public void drawU(UGraphic ug) {

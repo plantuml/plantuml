@@ -83,18 +83,18 @@ public class FtileDiamondInside2 extends FtileDiamondWIP {
 		ug = ug.apply(borderColor).apply(getThickness(getStyle())).apply(backColor.bg());
 		ug.draw(Hexagon.asPolygon(shadowing, dimTotal.getWidth(), dimTotal.getHeight()));
 
-		north.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));
-		south.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));
+		north.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight(), dimTotal)));
+		south.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight(), dimTotal)));
 
 		final double lx = (dimTotal.getWidth() - dimLabel.getWidth()) / 2;
 		final double ly = (dimTotal.getHeight() - dimLabel.getHeight()) / 2;
-		label.drawU(ug.apply(new UTranslate(lx, ly)));
+		label.drawU(ug.apply(new UTranslate(lx, ly, dimTotal)));
 
 		final XDimension2D dimWeat = west.calculateDimension(stringBounder);
-		west.drawU(ug.apply(new UTranslate(-dimWeat.getWidth(), -dimWeat.getHeight() + dimTotal.getHeight() / 2)));
+		west.drawU(ug.apply(new UTranslate(-dimWeat.getWidth(), -dimWeat.getHeight() + dimTotal.getHeight() / 2, dimTotal)));
 
 		final XDimension2D dimEast = east.calculateDimension(stringBounder);
-		east.drawU(ug.apply(new UTranslate(dimTotal.getWidth(), -dimEast.getHeight() + dimTotal.getHeight() / 2)));
+		east.drawU(ug.apply(new UTranslate(dimTotal.getWidth(), -dimEast.getHeight() + dimTotal.getHeight() / 2, dimTotal)));
 
 	}
 

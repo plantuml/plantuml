@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UHorizontalLine;
 
 public abstract class AbstractUGraphicHorizontalLine extends UGraphicDelegator {
@@ -76,6 +77,15 @@ public abstract class AbstractUGraphicHorizontalLine extends UGraphicDelegator {
 		else
 			getUg().apply(translate).draw(shape);
 
+	}
+
+	@Override
+	public XDimension2D getDimension() {
+		XDimension2D dimension = super.getDimension();
+		if (dimension != null) {
+			return dimension;
+		}
+		return translate.getDimension();
 	}
 
 }

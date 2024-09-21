@@ -211,14 +211,14 @@ public class FtileBox extends AbstractFtile {
 		shape.drawU(ug);
 
 		if (horizontalAlignment == HorizontalAlignment.LEFT) {
-			tb.drawU(ug.apply(new UTranslate(padding.getLeft(), padding.getTop())));
+			tb.drawU(ug.apply(new UTranslate(padding.getLeft(), padding.getTop(), dimTotal)));
 		} else if (horizontalAlignment == HorizontalAlignment.RIGHT) {
 			final XDimension2D dimTb = tb.calculateDimension(ug.getStringBounder());
 			tb.drawU(ug.apply(
-					new UTranslate(dimTotal.getWidth() - dimTb.getWidth() - padding.getRight(), padding.getBottom())));
+					new UTranslate(dimTotal.getWidth() - dimTb.getWidth() - padding.getRight(), padding.getBottom(), dimTotal)));
 		} else if (horizontalAlignment == HorizontalAlignment.CENTER) {
 			final XDimension2D dimTb = tb.calculateDimension(ug.getStringBounder());
-			tb.drawU(ug.apply(new UTranslate((dimTotal.getWidth() - dimTb.getWidth()) / 2, padding.getBottom())));
+			tb.drawU(ug.apply(new UTranslate((dimTotal.getWidth() - dimTb.getWidth()) / 2, padding.getBottom(), dimTotal)));
 		}
 	}
 

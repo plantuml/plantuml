@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Neutron;
 import net.sourceforge.plantuml.klimt.creole.NeutronType;
+import net.sourceforge.plantuml.klimt.creole.Position;
 import net.sourceforge.plantuml.klimt.creole.atom.AbstractAtom;
 import net.sourceforge.plantuml.klimt.creole.atom.Atom;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -68,6 +69,8 @@ public final class AtomText extends AbstractAtom implements Atom {
 	private final DelayedDouble marginRight;
 	private final Url url;
 	private final boolean manageSpecialChars;
+	private XDimension2D parentDimension;
+	private Position position;
 
 	protected AtomText(String text, FontConfiguration style, Url url, DelayedDouble marginLeft,
 			DelayedDouble marginRight, boolean manageSpecialChars) {
@@ -246,6 +249,22 @@ public final class AtomText extends AbstractAtom implements Atom {
 
 	public FontConfiguration getFontConfiguration() {
 		return fontConfiguration;
+	}
+
+	public void setParentDimension(XDimension2D parentDimension) {
+		this.parentDimension = parentDimension;
+	}
+
+	public XDimension2D getParentDimension() {
+		return this.parentDimension;
+	}
+
+	public void setPosition(Position position) {
+		this.position = position;
+	}
+
+	public Position getPosition() {
+		return this.position;
 	}
 
 }

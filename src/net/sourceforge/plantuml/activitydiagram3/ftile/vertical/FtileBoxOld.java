@@ -201,11 +201,11 @@ public class FtileBoxOld extends AbstractFtile {
 		shape.drawU(ug);
 
 		if (horizontalAlignment == HorizontalAlignment.LEFT)
-			tb.drawU(ug);
+			tb.drawU(ug.apply(new UTranslate(0, 0, dimTotal)));
 		else if (horizontalAlignment == HorizontalAlignment.RIGHT)
-			tb.drawU(ug.apply(new UTranslate(dimTotal.getWidth() - tbWidth(stringBounder), 0)));
+			tb.drawU(ug.apply(new UTranslate(dimTotal.getWidth() - tbWidth(stringBounder), 0, dimTotal)));
 		else if (horizontalAlignment == HorizontalAlignment.CENTER)
-			tb.drawU(ug.apply(new UTranslate((dimTotal.getWidth() - tbWidth(stringBounder)) / 2, 0)));
+			tb.drawU(ug.apply(new UTranslate((dimTotal.getWidth() - tbWidth(stringBounder)) / 2, 0, dimTotal)));
 
 //		if (horizontalAlignment == HorizontalAlignment.LEFT)
 //			tb.drawU(ug.apply(new UTranslate(padding.getLeft(), padding.getTop())));

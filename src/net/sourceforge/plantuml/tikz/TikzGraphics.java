@@ -315,11 +315,25 @@ public class TikzGraphics {
 	}
 
 	public void text(double x, double y, String text, boolean underline, boolean italic, boolean bold) {
+		text(x, y, text, underline, italic, bold, 0, 0);
+	}
+
+	public void text(double x, double y, String text, boolean underline, boolean italic, boolean bold, double width, double height) {
 		final StringBuilder sb = new StringBuilder("\\node at " + couple(x, y));
 		sb.append("[below right");
 		if (color != null) {
 			sb.append(",color=");
 			sb.append(getColorName(color));
+		}
+		if (width > 0 && height > 0) {
+			sb.append(",minimum width=");
+			sb.append(width);
+			sb.append("pt");
+			sb.append(",minimum height=");
+			sb.append(height);
+			sb.append("pt");
+			sb.append(",align=center");
+			// sb.append(",draw,thick");
 		}
 		sb.append("]{");
 		if (pendingUrl == null || urlIgnoreText) {

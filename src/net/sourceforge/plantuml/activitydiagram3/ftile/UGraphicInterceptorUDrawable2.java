@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.drawing.UGraphicDelegator;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
@@ -56,7 +57,11 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 	private final Map<String, UTranslate> positions;
 
 	public UGraphicInterceptorUDrawable2(UGraphic ug, Map<String, UTranslate> positions) {
-		super(ug);
+		this(ug, positions, null);
+	}
+
+	private UGraphicInterceptorUDrawable2(UGraphic ug, Map<String, UTranslate> positions, XDimension2D dimension) {
+		super(ug, dimension);
 		this.positions = positions;
 	}
 
@@ -114,7 +119,14 @@ public class UGraphicInterceptorUDrawable2 extends UGraphicDelegator {
 	}
 
 	public UGraphic apply(UChange change) {
-		return new UGraphicInterceptorUDrawable2(getUg().apply(change), positions);
+		XDimension2D dimension = null;
+		if (change instanceof UTranslate) {
+			dimension = ((UTranslate) change).getDimension();
+		}
+		if (dimension == null) {
+			dimension = getDimension();
+		}
+		return new UGraphicInterceptorUDrawable2(getUg().apply(change), positions, dimension);
 	}
 
 }

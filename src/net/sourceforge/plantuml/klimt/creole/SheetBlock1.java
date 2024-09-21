@@ -45,6 +45,7 @@ import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.creole.atom.Atom;
+import net.sourceforge.plantuml.klimt.creole.legacy.AtomText;
 import net.sourceforge.plantuml.klimt.creole.legacy.StripeSimple;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -220,6 +221,32 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 	@Override
 	public List<Neutron> getNeutrons() {
 		throw new UnsupportedOperationException();
+	}
+
+	public void setParentDimension(XDimension2D parentDimension) {
+		if (parentDimension == null || stripes == null || positions == null) {
+			return;
+		}
+		int count = 0;
+		for (Stripe stripe : stripes) {
+			for (Atom atom : stripe.getAtoms()) {
+				if (atom instanceof AtomText) {
+					count++;
+					if (count > 1) {
+						// if there are multiple text, stop center it
+						return;
+					}
+				}
+			}
+		}
+		for (Stripe stripe : stripes) {
+			for (Atom atom : stripe.getAtoms()) {
+				if (atom instanceof AtomText) {
+					((AtomText) atom).setParentDimension(parentDimension);
+					((AtomText) atom).setPosition(positions.get(atom));
+				}
+			}
+		}
 	}
 
 }

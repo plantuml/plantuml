@@ -45,12 +45,15 @@ import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.url.Url;
 
 public abstract class UGraphicDelegator implements UGraphic {
     // ::remove file when __HAXE__
 
 	final private UGraphic ug;
+
+	final private XDimension2D dimension;
 
 	@Override
 	public String toString() {
@@ -63,6 +66,13 @@ public abstract class UGraphicDelegator implements UGraphic {
 
 	public UGraphicDelegator(UGraphic ug) {
 		this.ug = ug;
+		this.dimension = ug instanceof UGraphicDelegator ? ((UGraphicDelegator) ug).getDimension()
+						: (ug instanceof UGraphicNo ? ((UGraphicNo) ug).getTranslate().getDimension() : null);
+	}
+
+	public UGraphicDelegator(UGraphic ug, XDimension2D dimension) {
+		this.ug = ug;
+		this.dimension = dimension;
 	}
 
 	public StringBounder getStringBounder() {
@@ -115,5 +125,9 @@ public abstract class UGraphicDelegator implements UGraphic {
 	@Override
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
 		ug.writeToStream(os, metadata, dpi);
+	}
+
+	public XDimension2D getDimension() {
+		return dimension;
 	}
 }

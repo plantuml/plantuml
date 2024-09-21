@@ -90,18 +90,18 @@ public class FtileDiamondSquare extends FtileDiamondWIP {
 		ug.draw(Hexagon.asPolygonSquare(shadowing, dimTotal.getWidth(), dimTotal.getHeight()));
 
 		// Fix why north and south are the same
-		north.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));
-		south.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight())));
+		north.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight(), dimTotal)));
+		south.drawU(ug.apply(new UTranslate(4 + dimTotal.getWidth() / 2, dimTotal.getHeight(), dimTotal)));
 
 		final double lx = (dimTotal.getWidth() - dimLabel.getWidth()) / 2;
 		final double ly = (dimTotal.getHeight() - dimLabel.getHeight()) / 2;
-		label.drawU(ug.apply(new UTranslate(lx, ly)));
+		label.drawU(ug.apply(new UTranslate(lx, ly, dimTotal)));
 
 		final XDimension2D dimWeat = west.calculateDimension(stringBounder);
-		west.drawU(ug.apply(new UTranslate(-dimWeat.getWidth(), -dimWeat.getHeight() + Hexagon.hexagonHalfSize)));
+		west.drawU(ug.apply(new UTranslate(-dimWeat.getWidth(), -dimWeat.getHeight() + Hexagon.hexagonHalfSize, dimTotal)));
 
 		final XDimension2D dimEast = east.calculateDimension(stringBounder);
-		east.drawU(ug.apply(new UTranslate(dimTotal.getWidth(), -dimEast.getHeight() + Hexagon.hexagonHalfSize)));
+		east.drawU(ug.apply(new UTranslate(dimTotal.getWidth(), -dimEast.getHeight() + Hexagon.hexagonHalfSize, dimTotal)));
 
 	}
 

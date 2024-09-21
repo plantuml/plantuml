@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.creole.atom.Atom;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphicDelegator;
 import net.sourceforge.plantuml.klimt.drawing.UGraphicStencil;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
@@ -100,6 +101,10 @@ final public class SheetBlock2 extends AbstractTextBlock implements TextBlock, A
 			final double width = calculateDimension(ug.getStringBounder()).getWidth();
 			final double dx = (block.getMinimumWidth() - width) / 2;
 			ug = ug.apply(UTranslate.dx(dx));
+		}
+		XDimension2D dimension = ug instanceof UGraphicDelegator ? ((UGraphicDelegator) ug).getDimension() : null;
+		if (dimension != null) {
+			this.block.setParentDimension(dimension);
 		}
 		block.drawU(ug);
 	}
