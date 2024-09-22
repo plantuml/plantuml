@@ -101,7 +101,7 @@ final public class ComponentRoseNoteBox extends AbstractTextualComponent {
 		ug.draw(rect);
 		ug = ug.apply(UStroke.simple());
 
-		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1() + diffX / 2, getMarginY())));
+		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1() + diffX / 2, getMarginY(), area.getDimensionToUse())));
 
 	}
 }

@@ -78,10 +78,10 @@ public class ComponentRoseDatabase extends AbstractTextualComponent {
 		final double delta = (getPreferredWidth(stringBounder) - dimStickman.getWidth()) / 2;
 
 		if (head) {
-			textBlock.drawU(ug.apply(new UTranslate(getTextMiddlePostion(stringBounder), dimStickman.getHeight())));
+			textBlock.drawU(ug.apply(new UTranslate(getTextMiddlePostion(stringBounder), dimStickman.getHeight(), area.getDimensionToUse())));
 			ug = ug.apply(UTranslate.dx(delta));
 		} else {
-			textBlock.drawU(ug.apply(UTranslate.dx(getTextMiddlePostion(stringBounder))));
+			textBlock.drawU(ug.apply(UTranslate.dx(getTextMiddlePostion(stringBounder), area.getDimensionToUse())));
 			ug = ug.apply(new UTranslate(delta, getTextHeight(stringBounder)));
 		}
 		stickman.drawU(ug);

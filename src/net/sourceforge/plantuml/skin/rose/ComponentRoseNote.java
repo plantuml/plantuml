@@ -121,12 +121,12 @@ final public class ComponentRoseNote extends AbstractTextualComponent implements
 		UGraphic ug2 = UGraphicStencil.create(ug, this, UStroke.simple());
 
 		if (position == HorizontalAlignment.LEFT) {
-			ug2 = ug2.apply(new UTranslate(getMarginX1(), getMarginY()));
+			ug2 = ug2.apply(new UTranslate(getMarginX1(), getMarginY(), area.getDimensionToUse()));
 		} else if (position == HorizontalAlignment.RIGHT) {
 			ug2 = ug2.apply(
-					new UTranslate(area.getDimensionToUse().getWidth() - getTextWidth(stringBounder), getMarginY()));
+					new UTranslate(area.getDimensionToUse().getWidth() - getTextWidth(stringBounder), getMarginY(), area.getDimensionToUse()));
 		} else {
-			ug2 = ug2.apply(new UTranslate(getMarginX1() + diffX / 2, getMarginY()));
+			ug2 = ug2.apply(new UTranslate(getMarginX1() + diffX / 2, getMarginY(), area.getDimensionToUse()));
 		}
 
 		getTextBlock().drawU(ug2);

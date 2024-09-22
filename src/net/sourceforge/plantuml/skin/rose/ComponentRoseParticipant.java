@@ -100,7 +100,7 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 		ug.draw(rect);
 		ug = ug.apply(UStroke.simple());
 		final TextBlock textBlock = getTextBlock();
-		textBlock.drawU(ug.apply(new UTranslate(getMarginX1() + suppWidth(stringBounder) / 2, getMarginY())));
+		textBlock.drawU(ug.apply(new UTranslate(getMarginX1() + suppWidth(stringBounder) / 2, getMarginY(), area.getDimensionToUse())));
 	}
 
 	private double getDeltaCollection() {

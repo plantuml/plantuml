@@ -85,7 +85,7 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 		else
 			drawRightSide(ug, ug2, area, arrowHeight, textHeight);
 
-		getTextBlock().drawU(ug.apply(UTranslate.dx(getMarginX1())));
+		getTextBlock().drawU(ug.apply(UTranslate.dx(getMarginX1(), area.getDimensionToUse())));
 	}
 
 	private void drawRightSide(UGraphic ug, UGraphic ug2, Area area, double arrowHeight, double textHeight) {

@@ -73,7 +73,7 @@ public class ComponentRoseQueue extends AbstractTextualComponent {
 		final XDimension2D dimStickman = stickman.calculateDimension(stringBounder);
 		final double delta = (getPreferredWidth(stringBounder) - dimStickman.getWidth()) / 2;
 
-		ug = ug.apply(UTranslate.dx(delta));
+		ug = ug.apply(UTranslate.dx(delta, area.getDimensionToUse()));
 		stickman.drawU(ug);
 	}
 

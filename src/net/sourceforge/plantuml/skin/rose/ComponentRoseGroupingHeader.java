@@ -146,13 +146,13 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 
 		ug = ug.apply(UStroke.simple());
 
-		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY())));
+		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1(), getMarginY(), area.getDimensionToUse())));
 
 		if (commentTextBlock != null) {
 			final double x1 = getMarginX1() + textWidth;
 			final double y2 = getMarginY() + 1;
 
-			commentTextBlock.drawU(ug.apply(new UTranslate(x1 + commentMargin, y2)));
+			commentTextBlock.drawU(ug.apply(new UTranslate(x1 + commentMargin, y2, area.getDimensionToUse())));
 		}
 	}
 

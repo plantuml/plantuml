@@ -64,7 +64,7 @@ public class ComponentRoseDelayText extends AbstractTextualComponent {
 		final double xpos = (dimensionToUse.getWidth() - textWidth) / 2;
 		final double ypos = (dimensionToUse.getHeight() - textHeight) / 2;
 
-		textBlock.drawU(ug.apply(new UTranslate(xpos, (ypos + getMarginY()))));
+		textBlock.drawU(ug.apply(new UTranslate(xpos, (ypos + getMarginY()), area.getDimensionToUse())));
 	}
 
 	@Override

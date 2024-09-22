@@ -136,7 +136,7 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 		} else {
 			textPos = getMarginX1() + xMargin;
 		}
-		getTextBlock().drawU(ug.apply(new UTranslate(textPos, (getMarginY() + textHeaderHeight))));
+		getTextBlock().drawU(ug.apply(new UTranslate(textPos, (getMarginY() + textHeaderHeight), area.getDimensionToUse())));
 	}
 
 	private double getHeaderHeight(StringBounder stringBounder) {

@@ -108,7 +108,7 @@ final public class ComponentRoseNoteHexagonal extends AbstractTextualComponent {
 		ug.draw(polygon);
 		ug = ug.apply(UStroke.simple());
 
-		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1() + diffX / 2, getMarginY())));
+		getTextBlock().drawU(ug.apply(new UTranslate(getMarginX1() + diffX / 2, getMarginY(), area.getDimensionToUse())));
 
 	}
 

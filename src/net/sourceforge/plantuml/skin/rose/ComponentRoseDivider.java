@@ -99,7 +99,7 @@ public class ComponentRoseDivider extends AbstractTextualComponent {
 			rect.setDeltaShadow(shadow);
 
 			ug.apply(new UTranslate(xpos, ypos)).draw(rect);
-			textBlock.drawU(ug.apply(new UTranslate(xpos + deltaX, ypos + getMarginY())));
+			textBlock.drawU(ug.apply(new UTranslate(xpos + deltaX, ypos + getMarginY(), area.getDimensionToUse())));
 		}
 	}
 
