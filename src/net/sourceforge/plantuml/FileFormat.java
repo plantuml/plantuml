@@ -224,24 +224,46 @@ public enum FileFormat {
 
 	private StringBounder getTikzStringBounder(final TikzFontDistortion tikzFontDistortion) {
 		return new StringBounderRaw(FileFormat.gg.getFontRenderContext()) {
+
+			private final LatexManager latexManager = new LatexManager(tikzFontDistortion.getTexSystem(), tikzFontDistortion.getTexPreamble());
+
 			public String toString() {
 				return "FileFormat::getTikzStringBounder";
 			}
 
 			protected XDimension2D calculateDimensionInternal(UFont font, String text) {
-				text = text.replace("\t", "    ");
-				final XDimension2D w1 = getJavaDimension(font.goTikz(-1), text);
-				final XDimension2D w2 = getJavaDimension(font.goTikz(0), text);
-				final XDimension2D w3 = getJavaDimension(font.goTikz(1), text);
-				final double factor = (w3.getWidth() - w1.getWidth()) / w2.getWidth();
-				final double distortion = tikzFontDistortion.getDistortion();
-				final double magnify = tikzFontDistortion.getMagnify();
-				final double delta = (w2.getWidth() - w1.getWidth()) * factor * distortion;
-				return w2.withWidth(Math.max(w1.getWidth(), magnify * w2.getWidth() - delta));
+				double[] widthHeightDepth = latexManager.getWidthHeightDepth(styleText(font, text));
+				return new XDimension2D(widthHeightDepth[0], widthHeightDepth[1] + widthHeightDepth[2]);
 			}
 
 			public boolean matchesProperty(String propertyName) {
 				return false;
+			}
+
+			public double getDescent(UFont font, String text) {
+				double[] widthHeightDepth = latexManager.getWidthHeightDepth(styleText(font, text));
+				return widthHeightDepth[2];
+			}
+
+			protected String styleText(UFont font, String text) {
+				StringBuilder sb = new StringBuilder();
+				final boolean italic = font.isItalic();
+				final boolean bold = font.isBold();
+
+				if (italic)
+					sb.append("\\textit{");
+
+				if (bold)
+					sb.append("\\textbf{");
+
+				sb.append(text);
+				if (bold)
+					sb.append("}");
+
+				if (italic)
+					sb.append("}");
+
+				return sb.toString();
 			}
 		};
 	}

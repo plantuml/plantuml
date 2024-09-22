@@ -128,6 +128,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 			throws IOException {
 
 		fileFormatOption = fileFormatOption.withTikzFontDistortion(getSkinParam().getTikzFontDistortion());
+		fileFormatOption.getTikzFontDistortion().updateFromPragma(getPragma());
 
 		// ::comment when __CORE__
 		if (fileFormatOption.getFileFormat() == FileFormat.PDF)

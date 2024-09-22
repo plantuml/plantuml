@@ -321,7 +321,7 @@ public class TikzGraphics {
 			sb.append(",color=");
 			sb.append(getColorName(color));
 		}
-		sb.append("]{");
+		sb.append(",inner sep=0]{");
 		if (pendingUrl == null || urlIgnoreText) {
 			if (underline)
 				sb.append("\\underline{");
