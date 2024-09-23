@@ -46,7 +46,9 @@ public class LatexManager implements AutoCloseable {
 						((preamble != null && !preamble.isEmpty()) ? preamble + "\n" : "") +
 						"\\begin{document}\n" +
 						"\\typeout{latex_query_start}");
-		expect("*latex_query_start");
+		if (expect("*latex_query_start") == null) {
+			throw new IllegalArgumentException("please install " + command + ", and package `tikz`, `aeguill` (and `ae`)");
+		}
 	}
 
 	private String expect(String s) {
@@ -71,6 +73,7 @@ public class LatexManager implements AutoCloseable {
 				return sb.toString();
 			}
 		}
+		System.err.println(sb);
 		return null;
 	}
 
@@ -78,7 +81,7 @@ public class LatexManager implements AutoCloseable {
 		this.writer.println(TEMPLATE_PREFIX + s + TEMPLATE_SUFFIX);
 		String output = this.expect("*");
 		if (output == null) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("cannot get width, height, depth, text: " + s);
 		}
 		String[] pts = output.trim().replace("*", "").split(",", 3);
 		double width = Double.parseDouble(pts[0].replace("pt", ""));
