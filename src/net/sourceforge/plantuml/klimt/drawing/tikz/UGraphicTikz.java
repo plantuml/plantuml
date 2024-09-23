@@ -54,15 +54,16 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.tikz.TikzGraphics;
 import net.sourceforge.plantuml.url.Url;
 
 public class UGraphicTikz extends AbstractUGraphic<TikzGraphics> implements ClipContainer {
 
 	public UGraphicTikz(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, double scale,
-			boolean withPreamble) {
+			boolean withPreamble, Pragma pragma) {
 		super(stringBounder);
-		copy(defaultBackground, colorMapper, new TikzGraphics(scale, withPreamble, colorMapper));
+		copy(defaultBackground, colorMapper, new TikzGraphics(scale, withPreamble, colorMapper, pragma));
 		register();
 	}
 
