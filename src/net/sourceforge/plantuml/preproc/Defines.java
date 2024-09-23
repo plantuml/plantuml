@@ -98,6 +98,11 @@ public class Defines implements Truth {
 		}
 	}
 
+	public void overrideDirPath(String fileDir) {
+		if (fileDir != null)
+			environment.put("dirpath", fileDir);
+	}
+
 	public void importFrom(Defines other) {
 		this.environment.putAll(other.environment);
 		this.values.putAll(other.values);

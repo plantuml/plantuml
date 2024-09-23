@@ -640,6 +640,7 @@ public class Option {
 	public Defines getDefaultDefines() {
 		final Defines result = Defines.createEmpty();
 		result.overrideFilename(filename);
+		result.overrideDirPath(fileDir);
 		for (Map.Entry<String, String> ent : defines.entrySet())
 			result.define(ent.getKey(), Arrays.asList(ent.getValue()), false, null);
 
