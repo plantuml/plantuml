@@ -333,9 +333,9 @@ public class ImageBuilder {
 		case VDX:
 			return new UGraphicVdx(backcolor, colorMapper, stringBounder);
 		case LATEX:
-			return new UGraphicTikz(backcolor, colorMapper, stringBounder, scaleFactor, true);
+			return new UGraphicTikz(backcolor, colorMapper, stringBounder, scaleFactor, true, pragma);
 		case LATEX_NO_PREAMBLE:
-			return new UGraphicTikz(backcolor, colorMapper, stringBounder, scaleFactor, false);
+			return new UGraphicTikz(backcolor, colorMapper, stringBounder, scaleFactor, false, pragma);
 		case BRAILLE_PNG:
 			return new UGraphicBraille(backcolor, colorMapper, stringBounder);
 		case UTXT:

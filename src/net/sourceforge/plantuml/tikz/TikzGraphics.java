@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.eps.EpsGraphics;
 import net.sourceforge.plantuml.klimt.geom.USegment;
 import net.sourceforge.plantuml.klimt.geom.USegmentType;
+import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
@@ -78,13 +79,15 @@ public class TikzGraphics {
 	private final double scale;
 	private String dash = null;
 	private final ColorMapper mapper;
+	private final String preamble;
 
 	private final Map<Color, String> colornames = new LinkedHashMap<Color, String>();
 
-	public TikzGraphics(double scale, boolean withPreamble, ColorMapper mapper) {
+	public TikzGraphics(double scale, boolean withPreamble, ColorMapper mapper, Pragma pragma) {
 		this.withPreamble = withPreamble;
 		this.scale = scale;
 		this.mapper = mapper;
+		this.preamble = pragma != null ? pragma.getValue("texpreamble") : null;
 	}
 
 	private final Map<String, Integer> styles = new LinkedHashMap<String, Integer>();
@@ -157,6 +160,9 @@ public class TikzGraphics {
 			if (hasUrl) {
 				out(os, "\\usetikzlibrary{calc}");
 				out(os, "\\usepackage{hyperref}");
+			}
+			if (preamble != null && !preamble.isEmpty()) {
+				out(os, preamble);
 			}
 			out(os, "\\begin{document}");
 		}
@@ -321,7 +327,7 @@ public class TikzGraphics {
 			sb.append(",color=");
 			sb.append(getColorName(color));
 		}
-		sb.append("]{");
+		sb.append(",inner sep=0]{");
 		if (pendingUrl == null || urlIgnoreText) {
 			if (underline)
 				sb.append("\\underline{");
