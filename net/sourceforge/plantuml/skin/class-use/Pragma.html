@@ -63,11 +63,19 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.activitydiagram3.ftile.vcompact">net.sourceforge.plantuml.activitydiagram3.ftile.vcompact</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.svek">net.sourceforge.plantuml.svek</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.klimt.drawing.tikz">net.sourceforge.plantuml.klimt.drawing.tikz</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.svek">net.sourceforge.plantuml.svek</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/svek" target="_top">
  PlantUML Svek Architecture</a>.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.tikz">net.sourceforge.plantuml.tikz</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Provides classes used to manage 
+ <a href="https://plantuml.com/latex" target="_top">
+ LaTeX (with TikZ) output format</a>.</div>
 </div>
 </div>
 <section class="class-uses">
@@ -82,6 +90,15 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">TitledDiagram.</span><code><a href="../../TitledDiagram.html#getPragma()" class="member-name-link">getPragma</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../package-summary.html">net.sourceforge.plantuml</a> with parameters of type <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TikzFontDistortion.</span><code><a href="../../TikzFontDistortion.html#updateFromPragma(net.sourceforge.plantuml.skin.Pragma)" class="member-name-link">updateFromPragma</a><wbr>(<a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -117,6 +134,25 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="net.sourceforge.plantuml.klimt.drawing.tikz">
+<h2>Uses of <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a> in <a href="../../klimt/drawing/tikz/package-summary.html">net.sourceforge.plantuml.klimt.drawing.tikz</a></h2>
+<div class="caption"><span>Constructors in <a href="../../klimt/drawing/tikz/package-summary.html">net.sourceforge.plantuml.klimt.drawing.tikz</a> with parameters of type <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../klimt/drawing/tikz/UGraphicTikz.html#%3Cinit%3E(net.sourceforge.plantuml.klimt.color.HColor,net.sourceforge.plantuml.klimt.color.ColorMapper,net.sourceforge.plantuml.klimt.font.StringBounder,double,boolean,net.sourceforge.plantuml.skin.Pragma)" class="member-name-link">UGraphicTikz</a><wbr>(<a href="../../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;defaultBackground,
+ <a href="../../klimt/color/ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a>&nbsp;colorMapper,
+ <a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder,
+ double&nbsp;scale,
+ boolean&nbsp;withPreamble,
+ <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="net.sourceforge.plantuml.svek">
 <h2>Uses of <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a> in <a href="../../svek/package-summary.html">net.sourceforge.plantuml.svek</a></h2>
 <div class="caption"><span>Constructors in <a href="../../svek/package-summary.html">net.sourceforge.plantuml.svek</a> with parameters of type <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></span></div>
@@ -142,6 +178,23 @@ loadScripts(document, 'script');</script>
  <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma,
  <a href="../../dot/GraphvizVersion.html" title="interface in net.sourceforge.plantuml.dot">GraphvizVersion</a>&nbsp;graphvizVersion)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.tikz">
+<h2>Uses of <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a> in <a href="../../tikz/package-summary.html">net.sourceforge.plantuml.tikz</a></h2>
+<div class="caption"><span>Constructors in <a href="../../tikz/package-summary.html">net.sourceforge.plantuml.tikz</a> with parameters of type <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../tikz/TikzGraphics.html#%3Cinit%3E(double,boolean,net.sourceforge.plantuml.klimt.color.ColorMapper,net.sourceforge.plantuml.skin.Pragma)" class="member-name-link">TikzGraphics</a><wbr>(double&nbsp;scale,
+ boolean&nbsp;withPreamble,
+ <a href="../../klimt/color/ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a>&nbsp;mapper,
+ <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
