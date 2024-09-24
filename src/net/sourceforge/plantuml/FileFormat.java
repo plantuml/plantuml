@@ -237,7 +237,7 @@ public enum FileFormat {
 			}
 
 			public boolean matchesProperty(String propertyName) {
-				return false;
+				return "TIKZ".equalsIgnoreCase(propertyName);
 			}
 
 			public double getDescent(UFont font, String text) {
