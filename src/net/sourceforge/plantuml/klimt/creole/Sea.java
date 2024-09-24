@@ -36,18 +36,21 @@
 package net.sourceforge.plantuml.klimt.creole;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.klimt.creole.atom.Atom;
+import net.sourceforge.plantuml.klimt.creole.legacy.AtomText;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class Sea {
 
 	private double currentX;
-	private final Map<Atom, Position> positions = new HashMap<Atom, Position>();
+	private final Map<Atom, Position> positions = new LinkedHashMap<Atom, Position>();
 	private final StringBounder stringBounder;
 
 	public Sea(StringBounder stringBounder) {
@@ -82,6 +85,32 @@ public class Sea {
 			final Position pos = ent.getValue();
 			final Atom atom = ent.getKey();
 			positions.put(atom, pos.translateY(delta));
+		}
+	}
+
+	public void doAlignTikzBaseline() {
+		// make the text on the same baseline
+		double firstTextHeight = Double.NaN;
+		for (Map.Entry<Atom, Position> entry : new LinkedHashMap<>(positions).entrySet()) {
+			final Atom atom = entry.getKey();
+			if (!(atom instanceof AtomText)) {
+				continue;
+			}
+			AtomText atomText = (AtomText) atom;
+			UFont font = atomText.getFontConfiguration().getFont();
+			String text = atomText.getText();
+			double height = stringBounder.calculateDimension(font, text).getHeight() - stringBounder.getDescent(font, text);
+			if (height == 0.0) {
+				continue;
+			}
+			if (Double.isNaN(firstTextHeight)) {
+				firstTextHeight = height;
+				continue;
+			}
+			double delta = firstTextHeight - height;
+			if (delta != 0.0) {
+				positions.put(atom, entry.getValue().translateY(delta));
+			}
 		}
 	}
 
