@@ -256,7 +256,7 @@ public enum FileFormat {
 				if (bold)
 					sb.append("\\textbf{");
 
-				sb.append(text);
+				sb.append(LatexManager.protectText(text));
 				if (bold)
 					sb.append("}");
 

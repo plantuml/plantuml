@@ -14,15 +14,8 @@ public class LatexManager implements AutoCloseable {
 	private final PrintWriter writer;
 	private final BufferedReader reader;
 
-	private static final String TEMPLATE_PREFIX = "{" +
-					"\\catcode`\\^=\\active" +
-					"\\catcode`\\%=\\active" +
-					"\\sbox0{{" +
-					"\\catcode`\\^=\\active\\def^{\\ifmmode\\sp\\else\\^{}\\fi}" +
-					"\\catcode`\\%=\\active\\def%{\\%}";
-	private static final String TEMPLATE_SUFFIX = "}}" +
-					"\\typeout{\\the\\wd0,\\the\\ht0,\\the\\dp0}" +
-					"}";
+	private static final String TEMPLATE_PREFIX = "{\\sbox0{";
+	private static final String TEMPLATE_SUFFIX = "}\\typeout{\\the\\wd0,\\the\\ht0,\\the\\dp0}}";
 
 	public LatexManager(String system, String preamble) {
 		String command = (system != null && !system.isEmpty()) ? system : "xelatex";
@@ -83,11 +76,30 @@ public class LatexManager implements AutoCloseable {
 		if (output == null) {
 			throw new IllegalArgumentException("cannot get width, height, depth, text: " + s);
 		}
-		String[] pts = output.trim().replace("*", "").split(",", 3);
+		output = output.trim();
+		if (!output.startsWith("*") || !output.endsWith("pt")) {
+			System.err.println(output);
+			throw new IllegalArgumentException("cannot get width, height, depth, text: " + s);
+		}
+		String[] pts = output.replace("*", "").split(",", 3);
 		double width = Double.parseDouble(pts[0].replace("pt", ""));
 		double height = Double.parseDouble(pts[1].replace("pt", ""));
 		double depth = Double.parseDouble(pts[2].replace("pt", ""));
 		return new double[] {width, height, depth};
+	}
+
+	public static String protectText(String text) {
+		return text.replace("\\", "\u0000")
+				.replace("#", "\\#")
+				.replace("$", "\\$")
+				.replace("%", "\\%")
+				.replace("&", "\\&")
+				.replace("_", "\\_")
+				.replace("{", "\\{")
+				.replace("}", "\\}")
+				.replace("^", "\\^{}")
+				.replace("~", "\\~{}")
+				.replace("\u0000", "\\textbackslash{}");
 	}
 
 	@Override
