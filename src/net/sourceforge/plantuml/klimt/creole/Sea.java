@@ -172,13 +172,30 @@ public class Sea {
 		if (positions.size() == 0) {
 			throw new IllegalStateException();
 		}
+		Atom atom = null;
 		double result = -Double.MAX_VALUE;
-		for (Position pos : positions.values()) {
+		for (Map.Entry<Atom, Position> entry : positions.entrySet()) {
+			Position pos = entry.getValue();
 			if (result < pos.getMaxY()) {
+				atom = entry.getKey();
 				result = pos.getMaxY();
 			}
 		}
-		return result;
+		if (!stringBounder.matchesProperty("TIKZ")) {
+			return result;
+		}
+		// For TKIZ, make sure the strip has at least 1pt
+		if (atom instanceof AtomText) {
+			// the delta in AtomText should be larger than 1 already
+			AtomText atomText = (AtomText) atom;
+			UFont font = atomText.getFontConfiguration().getFont();
+			String text = atomText.getText();
+			double height = stringBounder.calculateDimension(font, text).getHeight();
+			double delta = result - height;
+			return result + Math.max(1 - delta, 0);
+		} else {
+			return result + 1;
+		}
 	}
 
 	public double getHeight() {
