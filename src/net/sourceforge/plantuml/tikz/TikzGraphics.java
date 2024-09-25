@@ -49,6 +49,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import net.sourceforge.plantuml.LatexManager;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -338,7 +339,7 @@ public class TikzGraphics {
 			if (bold)
 				sb.append("\\textbf{");
 
-			sb.append(protectText(text));
+			sb.append(LatexManager.protectText(text));
 			if (bold)
 				sb.append("}");
 
@@ -351,7 +352,7 @@ public class TikzGraphics {
 		} else {
 			appendPendingUrl(sb);
 			sb.append("{");
-			sb.append(protectText(text));
+			sb.append(LatexManager.protectText(text));
 			sb.append("}");
 		}
 		sb.append("};");
@@ -387,25 +388,6 @@ public class TikzGraphics {
 			throw new IllegalArgumentException();
 		}
 		return pendingUrl.substring("latex://".length());
-	}
-
-	private String protectText(String text) {
-		text = text.replaceAll("\\\\", "\\\\\\\\");
-		text = text.replaceAll("_", "\\\\_");
-		text = text.replaceAll("\u00AB", "\\\\guillemotleft ");
-		text = text.replaceAll("\u00BB", "\\\\guillemotright ");
-		text = text.replaceAll("<", "\\\\textless ");
-		text = text.replaceAll(">", "\\\\textgreater ");
-		text = text.replaceAll("&", "\\\\&");
-		text = text.replaceAll("%", "\\\\%");
-		text = text.replace("$", "\\$");
-		text = text.replace("{", "\\{");
-		text = text.replace("}", "\\}");
-		// text = text.replaceAll("~", "\\\\~{}");
-		text = text.replace("~", "{\\raise.35ex\\hbox{$\\scriptstyle\\mathtt{\\sim}$}}");
-		// {\raise.35ex\hbox{$\scriptstyle\mathtt{\sim}$}}
-		// {\\raise.35ex\\hbox{$\\scriptstyle\\mathtt{\\sim}$}}
-		return text;
 	}
 
 	public void line(double x1, double y1, double x2, double y2) {
