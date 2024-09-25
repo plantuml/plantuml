@@ -136,7 +136,7 @@ public abstract class AbstractPSystem implements Diagram {
 		return getSource().seed();
 	}
 
-	public int getNbImages() {
+	public int getNbImages(FileFormatOption formatOption) {
 		return 1;
 	}
 

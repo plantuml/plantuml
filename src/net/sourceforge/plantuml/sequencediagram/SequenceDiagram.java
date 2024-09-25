@@ -465,11 +465,10 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	@Override
-	public int getNbImages() {
+	public int getNbImages(FileFormatOption fileFormatOption) {
 		// ::comment when __CORE__
 		try {
-			// The DEBUG StringBounder is ok just to compute the number of pages here.
-			return getSequenceDiagramPngMaker(1, new FileFormatOption(FileFormat.DEBUG)).getNbPages();
+			return getSequenceDiagramPngMaker(1, fileFormatOption).getNbPages();
 		} catch (Throwable t) {
 			Logme.error(t);
 			// ::done

@@ -4,6 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
 
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
+
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -47,7 +50,7 @@ class ApiV2CsvTest {
 		assertThat(diagram.getSource().getDiagramType()).isEqualTo(DiagramType.valueOf(diagramType));
 		assertThat(diagram.getClass().getSimpleName()).isEqualTo(className);
 		assertThat(diagram.getDescription().getDescription()).isEqualTo(description);
-		assertThat(diagram.getNbImages()).isEqualTo(nbImages);
+		assertThat(diagram.getNbImages(new FileFormatOption(FileFormat.DEBUG))).isEqualTo(nbImages);
 		assertThat(diagram.getSource().getTotalLineCount()).isEqualTo(totalLineCount);
 
 		assertThat(diagram.getTitleDisplay().asList().size()).isEqualTo(nbTitle);
