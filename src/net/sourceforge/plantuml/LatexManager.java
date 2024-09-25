@@ -103,7 +103,8 @@ public class LatexManager implements AutoCloseable {
 				.replace("~", "{\\raise.35ex\\hbox{$\\scriptstyle\\mathtt{\\sim}$}}")
 				.replace("\u00AB", "\\guillemotleft{}")
 				.replace("\u00BB", "\\guillemotright{}")
-				.replace("\u0000", "\\textbackslash{}");
+				.replace("\u0000", "\\textbackslash{}")
+				.replaceAll("(?:^\\s+|\\s+$)", "~");
 	}
 
 	@Override
