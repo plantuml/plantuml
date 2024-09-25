@@ -156,6 +156,7 @@ public class TikzGraphics {
 	public void createData(OutputStream os) throws IOException {
 		if (withPreamble) {
 			out(os, "\\documentclass{standalone}");
+			out(os, "\\usepackage{amsmath}");
 			out(os, "\\usepackage{tikz}");
 			out(os, "\\usepackage{aeguill}");
 			if (hasUrl) {
@@ -363,10 +364,10 @@ public class TikzGraphics {
 		Objects.requireNonNull(formula);
 		final StringBuilder sb = new StringBuilder("\\node at " + couple(x, y));
 		sb.append("[below right");
-		sb.append("]{");
-		sb.append("{");
+		sb.append(",inner sep=0]{");
+		sb.append("$");
 		sb.append(formula);
-		sb.append("}");
+		sb.append("$");
 		sb.append("};");
 		addCommand(sb);
 	}

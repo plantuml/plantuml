@@ -246,6 +246,9 @@ public enum FileFormat {
 			}
 
 			protected String styleText(UFont font, String text) {
+				if (font == null) {
+					return "$" + text + "$";
+				}
 				StringBuilder sb = new StringBuilder();
 				final boolean italic = font.isItalic();
 				final boolean bold = font.isBold();

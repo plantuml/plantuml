@@ -62,6 +62,9 @@ public class AtomMath extends AbstractAtom implements Atom {
 	}
 
 	private XDimension2D calculateDimensionSlow(StringBounder stringBounder) {
+		if (stringBounder.matchesProperty("TIKZ")) {
+			return stringBounder.calculateDimension(null, math.getSource());
+		}
 		final BufferedImage image = math.getImage(Color.BLACK, Color.WHITE).withScale(1).getImage();
 		return new XDimension2D(image.getWidth(), image.getHeight());
 	}
@@ -94,7 +97,7 @@ public class AtomMath extends AbstractAtom implements Atom {
 			final UImageSvg svg = math.getSvg(1, fore, back);
 			ug.draw(svg);
 		} else {
-			final UImage image = new UImage(math.getImage(fore, back)).withFormula(math.getFormula());
+			final UImage image = new UImage(math.getImage(fore, back)).withFormula(math.getSource());
 			ug.draw(image);
 		}
 	}

@@ -163,4 +163,8 @@ public class ScientificEquationSafe {
 		return formula;
 	}
 
+	public final String getSource() {
+		return equation.getSource();
+	}
+
 }

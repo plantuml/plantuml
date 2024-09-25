@@ -52,6 +52,9 @@ public abstract class StringBounderRaw implements StringBounder {
 	}
 
 	public final XDimension2D calculateDimension(UFont font, String text) {
+		if (font == null) {
+			return calculateDimensionInternal(null, text);
+		}
 		if (RichText.isRich(text)) {
 			double width = 0;
 			double height = 0;
