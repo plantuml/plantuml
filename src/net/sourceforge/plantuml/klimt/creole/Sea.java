@@ -88,6 +88,43 @@ public class Sea {
 		}
 	}
 
+	public void doAlignTikz() {
+		// make the non atom vertical center
+		double firstTextHeight = Double.NaN;
+		Atom firstTextAtom = null;
+		for (Map.Entry<Atom, Position> entry : new LinkedHashMap<>(positions).entrySet()) {
+			final Atom atom = entry.getKey();
+			if (atom instanceof AtomText) {
+				AtomText atomText = (AtomText) atom;
+				UFont font = atomText.getFontConfiguration().getFont();
+				String text = atomText.getText();
+				double height = stringBounder.calculateDimension(font, text).getHeight() - stringBounder.getDescent(font, text);
+				if (height == 0.0) {
+					continue;
+				}
+				firstTextHeight = height;
+				firstTextAtom = atom;
+				break;
+			}
+		}
+		if (firstTextAtom == null) {
+			return;
+		}
+		Position firstTextPosition = positions.get(firstTextAtom);
+		for (Map.Entry<Atom, Position> entry : new LinkedHashMap<>(positions).entrySet()) {
+			final Atom atom = entry.getKey();
+			if (atom instanceof AtomText) {
+				continue;
+			}
+			Position position = entry.getValue();
+			double targetY = firstTextPosition.getMinY() - (position.getHeight() - firstTextHeight) / 2;
+			double delta = targetY - position.getMinY();
+			if (delta != 0.0) {
+				positions.put(atom, position.translateY(delta));
+			}
+		}
+	}
+
 	public void doAlignTikzBaseline() {
 		// make the text on the same baseline
 		double firstTextHeight = Double.NaN;
