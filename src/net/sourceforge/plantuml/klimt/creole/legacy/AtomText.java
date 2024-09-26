@@ -108,6 +108,12 @@ public final class AtomText extends AbstractAtom implements Atom {
 		return new XDimension2D(width + left + right, h);
 	}
 
+	public double getFontHeight(StringBounder stringBounder) {
+		final XDimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);
+		final double descent = stringBounder.getDescent(fontConfiguration.getFont(), text);
+		return rect.getHeight() - descent;
+	}
+
 	public void drawU(UGraphic ug) {
 		if (url != null)
 			ug.startUrl(url);
