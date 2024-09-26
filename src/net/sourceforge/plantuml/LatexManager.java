@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.file.Files;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 public class LatexManager implements AutoCloseable {
 
@@ -16,6 +19,8 @@ public class LatexManager implements AutoCloseable {
 
 	private static final String TEMPLATE_PREFIX = "{\\sbox0{";
 	private static final String TEMPLATE_SUFFIX = "}\\typeout{\\the\\wd0,\\the\\ht0,\\the\\dp0}}";
+	private static final Pattern PATTERN = Pattern.compile("\\*?[\\d.]+pt,[\\d.]+pt,[\\d.]+pt");
+	private final LruCache lruCache = new LruCache(128);
 
 	public LatexManager(String system, String preamble) {
 		String command = (system != null && !system.isEmpty()) ? system : "xelatex";
@@ -40,12 +45,12 @@ public class LatexManager implements AutoCloseable {
 						((preamble != null && !preamble.isEmpty()) ? preamble + "\n" : "") +
 						"\\begin{document}\n" +
 						"\\typeout{latex_query_start}");
-		if (expect("*latex_query_start") == null) {
+		if (expect("*latex_query_start", null) == null) {
 			throw new IllegalArgumentException("please install " + command + ", and package `amsmath`, `tikz`, `aeguill` (and `ae`)");
 		}
 	}
 
-	private String expect(String s) {
+	private String expect(String s, String end) {
 		StringBuilder sb = new StringBuilder();
 		while (true) {
 			String line;
@@ -57,32 +62,40 @@ public class LatexManager implements AutoCloseable {
 			if (line == null) {
 				break;
 			}
-			if (line.startsWith("*Missing character")) {
-				System.err.println(line);
-				break;
-			}
 			sb.append(line);
 			sb.append(System.lineSeparator());
-			if (line.startsWith(s)) {
-				return sb.toString();
+			if ((end == null && line.startsWith(s)) || (end != null && line.endsWith(end))) {
+				break;
 			}
 		}
-		System.err.println(sb);
-		return null;
+		return sb.toString();
 	}
 
 	public double[] getWidthHeightDepth(String s) {
+		double[] value = this.lruCache.get(s);
+		if (value == null) {
+			value = doGetWidthHeightDepth(s);
+			this.lruCache.put(s, value);
+		}
+		return value;
+	}
+
+	protected double[] doGetWidthHeightDepth(String s) {
 		this.writer.println(TEMPLATE_PREFIX + s + TEMPLATE_SUFFIX);
-		String output = this.expect("*");
-		if (output == null) {
-			throw new IllegalArgumentException("cannot get width, height, depth, text: " + s);
+		String output = this.expect("*", "pt");
+		String line = output.trim();
+		int index = line.lastIndexOf(System.lineSeparator());
+		if (index > 0) {
+			line = line.substring(index + 1);
 		}
-		output = output.trim();
-		if (!output.startsWith("*") || !output.endsWith("pt")) {
-			System.err.println(output);
-			throw new IllegalArgumentException("cannot get width, height, depth, text: " + s);
+		if (!PATTERN.matcher(line).matches()) {
+			System.err.println("[error] cannot get width, height, depth, text: " + s + ", message: " + output.trim());
+			throw new IllegalArgumentException("cannot get width, height, depth, text: " + s + ", message: " + output.trim());
 		}
-		String[] pts = output.replace("*", "").split(",", 3);
+		if (!line.startsWith("*")) {
+			System.err.println("[warning] cannot get width, height, depth, text: " + s + ", message: " + output.trim());
+		}
+		String[] pts = line.replace("*", "").split(",", 3);
 		double width = Double.parseDouble(pts[0].replace("pt", ""));
 		double height = Double.parseDouble(pts[1].replace("pt", ""));
 		double depth = Double.parseDouble(pts[2].replace("pt", ""));
@@ -103,12 +116,29 @@ public class LatexManager implements AutoCloseable {
 				.replace("~", "{\\raise.35ex\\hbox{$\\scriptstyle\\mathtt{\\sim}$}}")
 				.replace("\u00AB", "\\guillemotleft{}")
 				.replace("\u00BB", "\\guillemotright{}")
-				.replace("\u0000", "\\textbackslash{}");
+				.replace("\u0000", "\\textbackslash{}")
+				.replace("\t", "~~~~~~~~");
 	}
 
 	@Override
 	public void close() {
 		this.process.destroy();
+	}
+
+	private static class LruCache extends LinkedHashMap<String, double[]> {
+
+		private final int maxSize;
+
+		public LruCache(int maxSize) {
+			super(maxSize + 1, 1.0F, true);
+			this.maxSize = maxSize;
+		}
+
+		@Override
+		protected boolean removeEldestEntry(Map.Entry<String, double[]> eldest) {
+			return this.size() >= this.maxSize;
+		}
+
 	}
 
 }

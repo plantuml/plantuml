@@ -233,7 +233,12 @@ public enum FileFormat {
 
 			protected XDimension2D calculateDimensionInternal(UFont font, String text) {
 				double[] widthHeightDepth = latexManager.getWidthHeightDepth(styleText(font, text));
-				return new XDimension2D(widthHeightDepth[0], widthHeightDepth[1] + widthHeightDepth[2]);
+				double height = widthHeightDepth[1] + widthHeightDepth[2];
+				if (height == 0.0 && text.trim().isEmpty()) {
+					// avoid return 0 height for space, otherwise cause exception, case in #1259
+					height = latexManager.getWidthHeightDepth(styleText(font, " "))[0];
+				}
+				return new XDimension2D(widthHeightDepth[0], height);
 			}
 
 			public boolean matchesProperty(String propertyName) {

@@ -102,10 +102,16 @@ public final class AtomText extends AbstractAtom implements Atom {
 		if (h < 10)
 			h = 10;
 
-		double width = text.indexOf("\t") == -1 ? rect.getWidth() : getWidth(stringBounder, text);
+		double width = text.indexOf("\t") == -1 || stringBounder.matchesProperty("TIKZ") ? rect.getWidth() : getWidth(stringBounder, text);
 		final double left = marginLeft.getDouble(stringBounder);
 		final double right = marginRight.getDouble(stringBounder);
 		return new XDimension2D(width + left + right, h);
+	}
+
+	public double getFontHeight(StringBounder stringBounder) {
+		final XDimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);
+		final double descent = stringBounder.getDescent(fontConfiguration.getFont(), text);
+		return rect.getHeight() - descent;
 	}
 
 	public void drawU(UGraphic ug) {

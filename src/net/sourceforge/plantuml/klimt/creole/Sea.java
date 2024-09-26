@@ -88,26 +88,55 @@ public class Sea {
 		}
 	}
 
+	private AtomText findFirstAtomText() {
+		for (Atom atom : positions.keySet()) {
+			if (atom instanceof AtomText) {
+				AtomText atomText = (AtomText) atom;
+				String text = atomText.getText();
+				if (text.trim().isEmpty()) {
+					continue;
+				}
+				return (AtomText) atom;
+			}
+		}
+		return null;
+	}
+
+	public void doAlignTikz() {
+		// #1628, make non-text vertical center with text
+		AtomText firstTextAtom = findFirstAtomText();
+		if (firstTextAtom == null) {
+			return;
+		}
+		Position firstTextPosition = positions.get(firstTextAtom);
+		double firstTextHeight = firstTextAtom.getFontHeight(stringBounder);
+		for (Map.Entry<Atom, Position> entry : new LinkedHashMap<>(positions).entrySet()) {
+			final Atom atom = entry.getKey();
+			if (atom instanceof AtomText) {
+				continue;
+			}
+			Position position = entry.getValue();
+			double targetY = firstTextPosition.getMinY() - (position.getHeight() - firstTextHeight) / 2;
+			double delta = targetY - position.getMinY();
+			if (delta != 0.0) {
+				positions.put(atom, position.translateY(delta));
+			}
+		}
+	}
+
 	public void doAlignTikzBaseline() {
-		// make the text on the same baseline
-		double firstTextHeight = Double.NaN;
+		// #1606, make text the same baseline
+		AtomText firstTextAtom = findFirstAtomText();
+		if (firstTextAtom == null) {
+			return;
+		}
+		double firstTextHeight = firstTextAtom.getFontHeight(stringBounder);
 		for (Map.Entry<Atom, Position> entry : new LinkedHashMap<>(positions).entrySet()) {
 			final Atom atom = entry.getKey();
 			if (!(atom instanceof AtomText)) {
 				continue;
 			}
-			AtomText atomText = (AtomText) atom;
-			UFont font = atomText.getFontConfiguration().getFont();
-			String text = atomText.getText();
-			double height = stringBounder.calculateDimension(font, text).getHeight() - stringBounder.getDescent(font, text);
-			if (height == 0.0) {
-				continue;
-			}
-			if (Double.isNaN(firstTextHeight)) {
-				firstTextHeight = height;
-				continue;
-			}
-			double delta = firstTextHeight - height;
+			double delta = firstTextHeight - ((AtomText) atom).getFontHeight(stringBounder);
 			if (delta != 0.0) {
 				positions.put(atom, entry.getValue().translateY(delta));
 			}
@@ -135,13 +164,30 @@ public class Sea {
 		if (positions.size() == 0) {
 			throw new IllegalStateException();
 		}
+		Atom atom = null;
 		double result = -Double.MAX_VALUE;
-		for (Position pos : positions.values()) {
+		for (Map.Entry<Atom, Position> entry : positions.entrySet()) {
+			Position pos = entry.getValue();
 			if (result < pos.getMaxY()) {
+				atom = entry.getKey();
 				result = pos.getMaxY();
 			}
 		}
-		return result;
+		if (!stringBounder.matchesProperty("TIKZ")) {
+			return result;
+		}
+		// For TKIZ, make sure the strip has at least 1pt
+		if (atom instanceof AtomText) {
+			// the delta in AtomText should be larger than 1 already
+			AtomText atomText = (AtomText) atom;
+			UFont font = atomText.getFontConfiguration().getFont();
+			String text = atomText.getText();
+			double height = stringBounder.calculateDimension(font, text).getHeight();
+			double delta = result - height;
+			return result + Math.max(1 - delta, 0);
+		} else {
+			return result + 1;
+		}
 	}
 
 	public double getHeight() {

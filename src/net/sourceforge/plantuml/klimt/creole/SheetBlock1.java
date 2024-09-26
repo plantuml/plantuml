@@ -139,6 +139,9 @@ public class SheetBlock1 extends AbstractTextBlock implements TextBlock, Atom, S
 				sea.add(atom);
 
 			sea.doAlign();
+			if (stringBounder.matchesProperty("TIKZ")) {
+				sea.doAlignTikz();
+			}
 			sea.translateMinYto(y);
 			final double width = sea.getWidth();
 			widths.put(stripe, width);
