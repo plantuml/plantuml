@@ -3,8 +3,6 @@ package test.test;
 import static test.utils.PlantUmlTestUtils.exportDiagram;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.core.Diagram;
 import test.utils.PlantUmlTestUtils.ExportDiagram;
 
@@ -31,7 +29,7 @@ class PlantUmlTestUtilsTest {
         System.out.println("class = " + d.getClass().getName());
         System.out.println("desc. = " + d.getDescription());
         System.out.println("title = " + d.getTitleDisplay());
-        System.out.println("NbImg = " + d.getNbImages(new FileFormatOption(FileFormat.DEBUG)));
+        System.out.println("NbImg = " + d.getNbImages());
         System.out.println("Type  = " + d.getSource().getDiagramType());
         System.out.println("Title = " + d.getSource().getTitle());
         System.out.println("NbLine = "+ d.getSource().getTotalLineCount());

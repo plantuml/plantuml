@@ -110,10 +110,10 @@ public class NewpagedDiagram extends AbstractPSystem {
 		return diagrams.get(num).exportDiagram(os, 0, fileFormat);
 	}
 
-	public int getNbImages(FileFormatOption fileFormatOption) {
+	public int getNbImages() {
 		int nb = 0;
 		for (Diagram d : diagrams) {
-			nb += d.getNbImages(fileFormatOption);
+			nb += d.getNbImages();
 		}
 		return nb;
 	}

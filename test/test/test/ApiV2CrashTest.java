@@ -9,9 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.FileFormatOption;
-
 import org.junit.jupiter.api.Test;
 
 import net.sourceforge.plantuml.api.v2.DiagramReturn;
@@ -36,7 +33,7 @@ class ApiV2CrashTest {
 		assertEquals(DiagramType.UML, diagram.getSource().getDiagramType());
 		assertEquals("StateDiagram", diagram.getClass().getSimpleName());
 		assertEquals("(4 entities)", diagram.getDescription().getDescription());
-		assertEquals(1, diagram.getNbImages(new FileFormatOption(FileFormat.DEBUG)));
+		assertEquals(1, diagram.getNbImages());
 		assertTrue(Display.isNull(diagram.getTitleDisplay()));
 		assertEquals(0, diagram.getTitleDisplay().asList().size());
 		assertEquals(9, diagram.getSource().getTotalLineCount());

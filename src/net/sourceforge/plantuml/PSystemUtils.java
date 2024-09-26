@@ -72,7 +72,7 @@ public class PSystemUtils {
 		// ::comment when __CORE__
 		final SFile existingFile = suggestedFile.getFile(0);
 		if (checkMetadata && fileFormatOption.getFileFormat().doesSupportMetadata() && existingFile.exists()) {
-			// && system.getNbImages(PSystemUtils.java) == 1) {
+			// && system.getNbImages() == 1) {
 			final boolean sameMetadata = fileFormatOption.getFileFormat().equalsMetadata(system.getMetadata(),
 					existingFile);
 			if (sameMetadata) {
@@ -99,7 +99,7 @@ public class PSystemUtils {
 	private static List<FileImageData> exportDiagramsNewpaged(NewpagedDiagram system, SuggestedFile suggestedFile,
 			FileFormatOption fileFormat) throws IOException {
 		final List<FileImageData> result = new ArrayList<>();
-		final int nbImages = system.getNbImages(fileFormat);
+		final int nbImages = system.getNbImages();
 		for (int i = 0; i < nbImages; i++) {
 
 			final SFile f = suggestedFile.getFile(i);
@@ -140,7 +140,7 @@ public class PSystemUtils {
 	private static List<FileImageData> exportDiagramsSequence(SequenceDiagram system, SuggestedFile suggestedFile,
 			FileFormatOption fileFormat) throws IOException {
 		final List<FileImageData> result = new ArrayList<>();
-		final int nbImages = system.getNbImages(fileFormat);
+		final int nbImages = system.getNbImages();
 		for (int i = 0; i < nbImages; i++) {
 
 			final SFile f = suggestedFile.getFile(i);

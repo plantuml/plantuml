@@ -75,7 +75,7 @@ public interface Diagram {
 	 * 
 	 * @return usually 1
 	 */
-	int getNbImages(FileFormatOption fileFormatOption);
+	int getNbImages();
 
 	int getSplitPagesHorizontal();
 
