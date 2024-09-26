@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.debug.StringBounderDebug;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UImage;
@@ -72,6 +73,9 @@ public class AtomMath extends AbstractAtom implements Atom {
 	private XDimension2D dim;
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		if (stringBounder instanceof StringBounderDebug) {
+			return calculateDimensionSlow(stringBounder);
+		}
 		if (dim == null) {
 			dim = calculateDimensionSlow(stringBounder);
 		}
