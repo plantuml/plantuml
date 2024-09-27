@@ -100,7 +100,7 @@ public class Defines implements Truth {
 
 	public void overrideDirPath(String fileDir) {
 		if (fileDir != null)
-			environment.put("dirpath", fileDir);
+			environment.put("dirpath", fileDir.replace('\\', '/'));
 	}
 
 	public void importFrom(Defines other) {
