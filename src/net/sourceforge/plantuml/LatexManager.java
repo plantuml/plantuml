@@ -43,9 +43,10 @@ public class LatexManager implements AutoCloseable {
 						"\\usepackage{aeguill}\n" +
 						((preamble != null && !preamble.isEmpty()) ? preamble + "\n" : "") +
 						"\\begin{document}\n" +
+						"\\sbox0{\\texttt{\\_\\^{}\\~{}}}" +
 						"\\typeout{latex_query_start}");
-		String output = expect("*latex_query_start", null);
-		if (!output.trim().endsWith("*latex_query_start")) {
+		String output = expect("*", "latex_query_start");
+		if (!output.trim().endsWith("latex_query_start")) {
 			throw new IllegalArgumentException(command + " fail, message: " + output + System.lineSeparator()
 							+ "please install " + command + ", and package `amsmath`, `tikz`, `aeguill` (and `ae`)");
 		}
@@ -110,12 +111,11 @@ public class LatexManager implements AutoCloseable {
 				.replace("$", "\\$")
 				.replace("%", "\\%")
 				.replace("&", "\\&")
-				.replace("_", "\\_")
 				.replace("{", "\\{")
 				.replace("}", "\\}")
-				.replace("^", "\\^{}")
-				// .replace("~", "\\~{}")
-				.replace("~", "{\\raise.35ex\\hbox{$\\scriptstyle\\mathtt{\\sim}$}}")
+				.replace("_", "\\texttt{\\_}")
+				.replace("^", "\\texttt{\\^{}}")
+				.replace("~", "\\texttt{\\~{}}")
 				.replace("\u00AB", "\\guillemotleft{}")
 				.replace("\u00BB", "\\guillemotright{}")
 				.replace("\t", "~~~~~~~~") // #1016
