@@ -155,9 +155,8 @@ public class TikzGraphics {
 
 	public void createData(OutputStream os) throws IOException {
 		if (withPreamble) {
-			out(os, "\\documentclass{standalone}");
+			out(os, "\\documentclass[tikz]{standalone}");
 			out(os, "\\usepackage{amsmath}");
-			out(os, "\\usepackage{tikz}");
 			out(os, "\\usepackage{aeguill}");
 			if (hasUrl) {
 				out(os, "\\usetikzlibrary{calc}");
