@@ -38,15 +38,15 @@ public class LatexManager implements AutoCloseable {
 		}
 		this.writer = new PrintWriter(new OutputStreamWriter(this.process.getOutputStream()), true);
 		this.reader = new BufferedReader(new InputStreamReader(this.process.getInputStream()));
-		this.writer.println("\\documentclass{standalone}\n" +
+		this.writer.println("\\documentclass[tikz]{standalone}\n" +
 						"\\usepackage{amsmath}\n" +
-						"\\usepackage{tikz}\n" +
-						"\\usepackage{aeguill}\n" +
 						((preamble != null && !preamble.isEmpty()) ? preamble + "\n" : "") +
 						"\\begin{document}\n" +
 						"\\typeout{latex_query_start}");
-		if (expect("*latex_query_start", null) == null) {
-			throw new IllegalArgumentException("please install " + command + ", and package `amsmath`, `tikz`, `aeguill` (and `ae`)");
+		String output = expect("*latex_query_start", null);
+		if (!output.trim().endsWith("*latex_query_start")) {
+			throw new IllegalArgumentException(command + " fail, message: " + output + System.lineSeparator()
+							+ "please install " + command + ", and package `amsmath`, `tikz`");
 		}
 	}
 
@@ -103,7 +103,8 @@ public class LatexManager implements AutoCloseable {
 	}
 
 	public static String protectText(String text) {
-		return text.replace("\\", "\u0000")
+		final String tempBackslash = "\uFFFF";
+		return text.replace("\\", tempBackslash)
 				.replace("#", "\\#")
 				.replace("$", "\\$")
 				.replace("%", "\\%")
@@ -112,12 +113,12 @@ public class LatexManager implements AutoCloseable {
 				.replace("{", "\\{")
 				.replace("}", "\\}")
 				.replace("^", "\\^{}")
-				// .replace("~", "\\~{}")
-				.replace("~", "{\\raise.35ex\\hbox{$\\scriptstyle\\mathtt{\\sim}$}}")
+				.replace("~", "\\~{}")
 				.replace("\u00AB", "\\guillemotleft{}")
 				.replace("\u00BB", "\\guillemotright{}")
-				.replace("\u0000", "\\textbackslash{}")
-				.replace("\t", "~~~~~~~~");
+				.replace("\t", "~~~~~~~~") // #1016
+				.replaceAll("^\\s+|\\s+$", "~")
+				.replace(tempBackslash, "\\textbackslash{}");
 	}
 
 	@Override
