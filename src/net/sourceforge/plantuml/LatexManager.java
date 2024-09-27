@@ -40,14 +40,13 @@ public class LatexManager implements AutoCloseable {
 		this.reader = new BufferedReader(new InputStreamReader(this.process.getInputStream()));
 		this.writer.println("\\documentclass[tikz]{standalone}\n" +
 						"\\usepackage{amsmath}\n" +
-						"\\usepackage{aeguill}\n" +
 						((preamble != null && !preamble.isEmpty()) ? preamble + "\n" : "") +
 						"\\begin{document}\n" +
 						"\\typeout{latex_query_start}");
 		String output = expect("*latex_query_start", null);
 		if (!output.trim().endsWith("*latex_query_start")) {
 			throw new IllegalArgumentException(command + " fail, message: " + output + System.lineSeparator()
-							+ "please install " + command + ", and package `amsmath`, `tikz`, `aeguill` (and `ae`)");
+							+ "please install " + command + ", and package `amsmath`, `tikz`");
 		}
 	}
 
@@ -114,8 +113,7 @@ public class LatexManager implements AutoCloseable {
 				.replace("{", "\\{")
 				.replace("}", "\\}")
 				.replace("^", "\\^{}")
-				// .replace("~", "\\~{}")
-				.replace("~", "{\\raise.35ex\\hbox{$\\scriptstyle\\mathtt{\\sim}$}}")
+				.replace("~", "\\~{}")
 				.replace("\u00AB", "\\guillemotleft{}")
 				.replace("\u00BB", "\\guillemotright{}")
 				.replace("\t", "~~~~~~~~") // #1016
