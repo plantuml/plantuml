@@ -103,7 +103,8 @@ public class LatexManager implements AutoCloseable {
 	}
 
 	public static String protectText(String text) {
-		return text.replace("\\", "\u0000")
+		final String tempBackslash = "\uFFFF";
+		return text.replace("\\", tempBackslash)
 				.replace("#", "\\#")
 				.replace("$", "\\$")
 				.replace("%", "\\%")
@@ -116,8 +117,9 @@ public class LatexManager implements AutoCloseable {
 				.replace("~", "{\\raise.35ex\\hbox{$\\scriptstyle\\mathtt{\\sim}$}}")
 				.replace("\u00AB", "\\guillemotleft{}")
 				.replace("\u00BB", "\\guillemotright{}")
-				.replace("\u0000", "\\textbackslash{}")
-				.replace("\t", "~~~~~~~~");
+				.replace("\t", "~~~~~~~~") // #1016
+				.replaceAll("^\\s+|\\s+$", "~")
+				.replace(tempBackslash, "\\textbackslash{}");
 	}
 
 	@Override
