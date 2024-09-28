@@ -95,6 +95,7 @@ import net.sourceforge.plantuml.tim.stdlib.Dec2hex;
 import net.sourceforge.plantuml.tim.stdlib.Dirpath;
 import net.sourceforge.plantuml.tim.stdlib.Eval;
 import net.sourceforge.plantuml.tim.stdlib.Feature;
+import net.sourceforge.plantuml.tim.stdlib.Filedate;
 import net.sourceforge.plantuml.tim.stdlib.FileExists;
 import net.sourceforge.plantuml.tim.stdlib.Filename;
 import net.sourceforge.plantuml.tim.stdlib.FunctionExists;
@@ -179,6 +180,7 @@ public class TContext {
 		functionsSet.addFunction(new Dirpath(defines));
 		functionsSet.addFunction(new Eval());
 		functionsSet.addFunction(new Feature());
+		functionsSet.addFunction(new Filedate(defines));
 		functionsSet.addFunction(new FileExists());
 		functionsSet.addFunction(new Filename(defines));
 		functionsSet.addFunction(new FunctionExists());
