@@ -98,6 +98,7 @@ import net.sourceforge.plantuml.tim.stdlib.Feature;
 import net.sourceforge.plantuml.tim.stdlib.Filedate;
 import net.sourceforge.plantuml.tim.stdlib.FileExists;
 import net.sourceforge.plantuml.tim.stdlib.Filename;
+import net.sourceforge.plantuml.tim.stdlib.FilenameNoExtension;
 import net.sourceforge.plantuml.tim.stdlib.FunctionExists;
 import net.sourceforge.plantuml.tim.stdlib.GetAllStdlib;
 import net.sourceforge.plantuml.tim.stdlib.GetAllTheme;
@@ -183,6 +184,7 @@ public class TContext {
 		functionsSet.addFunction(new Filedate(defines));
 		functionsSet.addFunction(new FileExists());
 		functionsSet.addFunction(new Filename(defines));
+		functionsSet.addFunction(new FilenameNoExtension(defines));
 		functionsSet.addFunction(new FunctionExists());
 		functionsSet.addFunction(new GetAllStdlib());
 		functionsSet.addFunction(new GetAllTheme());
