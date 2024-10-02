@@ -83,7 +83,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../VisibilityModifier.html" title="enum class in net.sourceforge.plantuml.skin">VisibilityModifier</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#getHides()" class="member-name-link">getHides</a>()</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#getHidesVisibilityModifier()" class="member-name-link">getHidesVisibilityModifier</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Method parameters in <a href="../../../../atmp/package-summary.html">net.atmp</a> with type arguments of type <a href="../VisibilityModifier.html" title="enum class in net.sourceforge.plantuml.skin">VisibilityModifier</a></span></div>
@@ -91,21 +91,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#createGroup(net.sourceforge.plantuml.plasma.Quark,net.sourceforge.plantuml.abel.GroupType,java.util.Set)" class="member-name-link">createGroup</a><wbr>(<a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;quark,
- <a href="../../abel/GroupType.html" title="enum class in net.sourceforge.plantuml.abel">GroupType</a>&nbsp;groupType,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../VisibilityModifier.html" title="enum class in net.sourceforge.plantuml.skin">VisibilityModifier</a>&gt;&nbsp;hides)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>final <a href="../../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#createLeaf(net.sourceforge.plantuml.plasma.Quark,net.atmp.CucaDiagram,net.sourceforge.plantuml.abel.LeafType,java.util.Set)" class="member-name-link">createLeaf</a><wbr>(<a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;quark,
+<div class="col-first even-row-color"><code>final <a href="../../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#createLeaf(net.sourceforge.plantuml.plasma.Quark,net.atmp.CucaDiagram,net.sourceforge.plantuml.abel.LeafType,java.util.Set)" class="member-name-link">createLeaf</a><wbr>(<a href="../../plasma/Quark.html" title="class in net.sourceforge.plantuml.plasma">Quark</a>&lt;<a href="../../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&gt;&nbsp;quark,
  <a href="../../../../atmp/CucaDiagram.html" title="class in net.atmp">CucaDiagram</a>&nbsp;diagram,
  <a href="../../abel/LeafType.html" title="enum class in net.sourceforge.plantuml.abel">LeafType</a>&nbsp;entityType,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../VisibilityModifier.html" title="enum class in net.sourceforge.plantuml.skin">VisibilityModifier</a>&gt;&nbsp;hides)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#hideOrShow(java.util.Set,boolean)" class="member-name-link">hideOrShow</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../VisibilityModifier.html" title="enum class in net.sourceforge.plantuml.skin">VisibilityModifier</a>&gt;&nbsp;visibilities,
- boolean&nbsp;show)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../VisibilityModifier.html" title="enum class in net.sourceforge.plantuml.skin">VisibilityModifier</a>&gt;&nbsp;hideVisibilityModifier)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CucaDiagram.</span><code><a href="../../../../atmp/CucaDiagram.html#hideOrShowVisibilityModifier(java.util.Set,boolean)" class="member-name-link">hideOrShowVisibilityModifier</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../VisibilityModifier.html" title="enum class in net.sourceforge.plantuml.skin">VisibilityModifier</a>&gt;&nbsp;visibilities,
+ boolean&nbsp;show)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -159,12 +154,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static <a href="../../cucadiagram/Bodier.html" title="interface in net.sourceforge.plantuml.cucadiagram">Bodier</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">BodyFactory.</span><code><a href="../../cucadiagram/BodyFactory.html#createGroup(java.util.Set)" class="member-name-link">createGroup</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../VisibilityModifier.html" title="enum class in net.sourceforge.plantuml.skin">VisibilityModifier</a>&gt;&nbsp;hides)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">BodyFactory.</span><code><a href="../../cucadiagram/BodyFactory.html#createLeaf(net.sourceforge.plantuml.abel.LeafType,java.util.Set)" class="member-name-link">createLeaf</a><wbr>(<a href="../../abel/LeafType.html" title="enum class in net.sourceforge.plantuml.abel">LeafType</a>&nbsp;type,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../VisibilityModifier.html" title="enum class in net.sourceforge.plantuml.skin">VisibilityModifier</a>&gt;&nbsp;hideVisibilityModifier)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../../cucadiagram/Bodier.html" title="interface in net.sourceforge.plantuml.cucadiagram">Bodier</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">BodyFactory.</span><code><a href="../../cucadiagram/BodyFactory.html#createLeaf(net.sourceforge.plantuml.abel.LeafType,java.util.Set)" class="member-name-link">createLeaf</a><wbr>(<a href="../../abel/LeafType.html" title="enum class in net.sourceforge.plantuml.abel">LeafType</a>&nbsp;type,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../VisibilityModifier.html" title="enum class in net.sourceforge.plantuml.skin">VisibilityModifier</a>&gt;&nbsp;hides)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
