@@ -448,7 +448,11 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		if (isRoot())
 			return false;
 
-		if (getParentContainer() != null && getParentContainer().isRemoved())
+		final Entity parentContainer = getParentContainer();
+		if (parentContainer == this)
+			return false;
+		
+		if (parentContainer != null && parentContainer.isRemoved())
 			return true;
 
 		return isRemovedInternal();
