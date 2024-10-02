@@ -89,7 +89,7 @@ public class CommandHideShowByVisibility extends SingleLineCommand2<UmlDiagram> 
 			addVisibilities(st.nextToken(), portion, visibilities);
 		}
 
-		classDiagram.hideOrShow(visibilities, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+		classDiagram.hideOrShowVisibilityModifier(visibilities, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
 
 		return CommandExecutionResult.ok();
 	}

@@ -55,14 +55,14 @@ public class BodyFactory {
 
 	public final static boolean BODY3 = false;
 
-	public static Bodier createLeaf(LeafType type, Set<VisibilityModifier> hides) {
+	public static Bodier createLeaf(LeafType type, Set<VisibilityModifier> hideVisibilityModifier) {
 		if (type.isLikeClass() || type == LeafType.OBJECT)
-			return new BodierLikeClassOrObject(type, hides);
+			return new BodierLikeClassOrObject(type, hideVisibilityModifier);
 
 		return new BodierSimple();
 	}
 
-	public static Bodier createGroup(Set<VisibilityModifier> hides) {
+	public static Bodier createGroup() {
 		return new BodierSimple();
 	}
 

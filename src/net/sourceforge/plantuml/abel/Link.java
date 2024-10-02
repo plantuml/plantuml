@@ -479,7 +479,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 	public boolean isRemoved() {
 		final Stereotype stereotype = getStereotype();
-		if (stereotype != null && cucaDiagram.isRemoved(stereotype))
+		if (stereotype != null && cucaDiagram.isStereotypeRemoved(stereotype))
 			return true;
 
 		return cl1.isRemoved() || cl2.isRemoved();

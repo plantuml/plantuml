@@ -112,7 +112,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	}
 
 	private final List<EntityHideOrShow> hideOrShows = new ArrayList<>();
-	private final Set<VisibilityModifier> hides = new HashSet<>();
+	private final Set<VisibilityModifier> hideVisibilityModifier = new HashSet<>();
 
 	private final List<HideOrShow> hides2 = new ArrayList<>();
 	private final List<HideOrShow> removed = new ArrayList<>();
@@ -206,7 +206,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		if (Display.isNull(display))
 			throw new IllegalArgumentException();
 
-		final Entity result = this.createLeaf(ident, this, type, getHides());
+		final Entity result = this.createLeaf(ident, this, type, getHidesVisibilityModifier());
 		result.setUSymbol(symbol);
 		this.lastEntity = result;
 
@@ -289,7 +289,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			if (countChildren > 0) {
 				// final Display display = Display.getWithNewlines(quark.getQualifiedName());
 				final Display display = Display.getWithNewlines(quark.getName());
-				final Entity result = this.createGroup(quark, GroupType.PACKAGE, getHides());
+				final Entity result = this.createGroup(quark, GroupType.PACKAGE);
 				result.setDisplay(display);
 			}
 		}
@@ -307,7 +307,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	final public CommandExecutionResult gotoGroup(Quark<Entity> quark, Display display, GroupType type,
 			USymbol usymbol) {
 		if (quark.getData() == null) {
-			final Entity result = this.createGroup(quark, type, getHides());
+			final Entity result = this.createGroup(quark, type);
 			result.setTogether(currentTogether());
 			result.setDisplay(display);
 		}
@@ -541,6 +541,13 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return result;
 	}
 
+	public void hideOrShowVisibilityModifier(Set<VisibilityModifier> visibilities, boolean show) {
+		if (show)
+			hideVisibilityModifier.removeAll(visibilities);
+		else
+			hideVisibilityModifier.addAll(visibilities);
+	}
+
 	@Override
 	public List<String> getVisibleStereotypeLabels(Entity entity) {
 		final Stereotype stereotype = entity.getStereotype();
@@ -583,13 +590,6 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	}
 
-	public void hideOrShow(Set<VisibilityModifier> visibilities, boolean show) {
-		if (show)
-			hides.removeAll(visibilities);
-		else
-			hides.addAll(visibilities);
-	}
-
 	public void hideOrShow2(String what, boolean show) {
 		what = fixWhat(what);
 		this.hides2.add(new HideOrShow(what, show));
@@ -610,8 +610,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return what;
 	}
 
-	public final Set<VisibilityModifier> getHides() {
-		return Collections.unmodifiableSet(hides);
+	public final Set<VisibilityModifier> getHidesVisibilityModifier() {
+		return Collections.unmodifiableSet(hideVisibilityModifier);
 	}
 
 	final public boolean isStandalone(Entity ent) {
@@ -717,12 +717,22 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return prefix + getUniqueSequence();
 	}
 
+		
 	// Coming from EntityFactory
+
+	public boolean isStereotypeRemoved(Stereotype stereotype) {
+		boolean result = false;
+		for (HideOrShow hide : this.removed)
+			result = hide.apply(result, stereotype);
+
+		return result;
+	}
+
 
 	public boolean isHidden(Entity leaf) {
 		if (leaf.isRoot())
 			return false;
-		
+
 		final Entity other = isNoteWithSingleLinkAttachedTo(leaf);
 		if (other != null && other != leaf)
 			return isHidden(other);
@@ -734,18 +744,10 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return hidden;
 	}
 
-	public boolean isRemoved(Stereotype stereotype) {
-		boolean result = false;
-		for (HideOrShow hide : this.removed)
-			result = hide.apply(result, stereotype);
-
-		return result;
-	}
-
 	public boolean isRemoved(Entity leaf) {
 		if (leaf.isRoot())
 			return false;
-		
+
 		final Entity other = isNoteWithSingleLinkAttachedTo(leaf);
 		if (other != null)
 			return isRemoved(other);
@@ -788,26 +790,26 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	}
 
 	final public Entity createLeaf(Quark<Entity> quark, CucaDiagram diagram, LeafType entityType,
-			Set<VisibilityModifier> hides) {
+			Set<VisibilityModifier> hideVisibilityModifier) {
 		final Bodier bodier;
 		if (Objects.requireNonNull(entityType) == LeafType.MAP)
 			bodier = new BodierMap();
 		else if (Objects.requireNonNull(entityType) == LeafType.JSON)
 			bodier = new BodierJSon();
 		else
-			bodier = BodyFactory.createLeaf(entityType, hides);
+			bodier = BodyFactory.createLeaf(entityType, hideVisibilityModifier);
 
 		final Entity result = new Entity(quark, this, bodier, entityType, diagram.rawLayout);
 		bodier.setLeaf(result);
 		return result;
 	}
 
-	public Entity createGroup(Quark<Entity> quark, GroupType groupType, Set<VisibilityModifier> hides) {
+	public Entity createGroup(Quark<Entity> quark, GroupType groupType) {
 		Objects.requireNonNull(groupType);
 		if (quark.getData() != null)
 			return quark.getData();
 
-		final Bodier bodier = BodyFactory.createGroup(hides);
+		final Bodier bodier = BodyFactory.createGroup();
 		final Entity result = new Entity(quark, this, bodier, groupType, this.rawLayout);
 
 		return result;

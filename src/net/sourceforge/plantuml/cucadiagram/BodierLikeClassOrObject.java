@@ -50,19 +50,17 @@ import net.sourceforge.plantuml.klimt.creole.legacy.CreoleParser;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.TextBlockLineBefore;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.url.UrlBuilder;
 
 public class BodierLikeClassOrObject implements Bodier {
 
 	private final List<CharSequence> rawBody = new ArrayList<>();
-	private final Set<VisibilityModifier> hides;
+	private final Set<VisibilityModifier> hideVisibilityModifier;
 	private LeafType type;
 	private List<Member> methodsToDisplay;
 	private List<Member> fieldsToDisplay;
@@ -75,13 +73,13 @@ public class BodierLikeClassOrObject implements Bodier {
 		type = LeafType.OBJECT;
 	}
 
-	BodierLikeClassOrObject(LeafType type, Set<VisibilityModifier> hides) {
+	BodierLikeClassOrObject(LeafType type, Set<VisibilityModifier> hideVisibilityModifier) {
 		if (type == LeafType.MAP)
 			throw new IllegalArgumentException();
 
 		this.type = Objects.requireNonNull(type);
 		assert type.isLikeClass() || type == LeafType.OBJECT;
-		this.hides = hides;
+		this.hideVisibilityModifier = hideVisibilityModifier;
 	}
 
 	@Override
@@ -132,7 +130,7 @@ public class BodierLikeClassOrObject implements Bodier {
 					continue;
 
 				final Member m = Member.method(s);
-				if (hides == null || hides.contains(m.getVisibilityModifier()) == false)
+				if (hideVisibilityModifier == null || hideVisibilityModifier.contains(m.getVisibilityModifier()) == false)
 					methodsToDisplay.add(m);
 
 			}
@@ -161,7 +159,7 @@ public class BodierLikeClassOrObject implements Bodier {
 					continue;
 
 				final Member m = Member.field(s);
-				if (hides == null || hides.contains(m.getVisibilityModifier()) == false)
+				if (hideVisibilityModifier == null || hideVisibilityModifier.contains(m.getVisibilityModifier()) == false)
 					fieldsToDisplay.add(m);
 
 			}
@@ -205,7 +203,7 @@ public class BodierLikeClassOrObject implements Bodier {
 			else
 				m = Member.field(s);
 
-			if (hides.contains(m.getVisibilityModifier()) == false)
+			if (hideVisibilityModifier.contains(m.getVisibilityModifier()) == false)
 				result.add(m);
 
 		}
