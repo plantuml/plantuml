@@ -189,6 +189,10 @@ public enum FileFormat {
 	}
 
 	static private XDimension2D getJavaDimension(UFont font, String text) {
+		// System.err.println("text=" + text.length() + " " + text);
+		if (text.length() == 0)
+			return new XDimension2D(0, 0);
+
 		final Font javaFont = font.getUnderlayingFont(UFontContext.G2D);
 		final FontMetrics fm = gg.getFontMetrics(javaFont);
 		final Rectangle2D rect = fm.getStringBounds(text, gg);
