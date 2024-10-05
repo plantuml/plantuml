@@ -145,6 +145,13 @@ public final class CucaDiagramTxtMaker {
 	}
 
 	private void printClass(final Entity ent, UGraphicTxt ug) {
+		if (fileFormat == FileFormat.UTXT)
+			drawClassUnicode(ent, ug);
+		else
+			drawClassSimple(ent, ug);
+	}
+
+	private void drawClassSimple(final Entity ent, UGraphicTxt ug) {
 		final int w = getWidth(ent);
 		final int h = getHeight(ent);
 		ug.getCharArea().drawBoxSimple(0, 0, w, h);
@@ -170,6 +177,25 @@ public final class CucaDiagramTxtMaker {
 //				ug.getCharArea().drawStringsLR(disp, 1, y);
 //				y += StringUtils.getHeight(disp);
 //			}
+		}
+	}
+
+	private void drawClassUnicode(final Entity ent, UGraphicTxt ug) {
+		final int w = getWidth(ent);
+		final int h = getHeight(ent);
+		ug.getCharArea().drawBoxSimpleUnicode(0, 0, w, h);
+		ug.getCharArea().drawStringsLRUnicode(ent.getDisplay().asList(), 1, 1);
+		if (showMember(ent)) {
+			int y = 2;
+			ug.getCharArea().drawHLine('\u2500', y, 1, w - 1);
+			ug.getCharArea().drawChar('\u251C', 0, y);
+			ug.getCharArea().drawChar('\u2524', w - 1, y);
+			y++;
+			for (CharSequence att : ent.getBodier().getRawBody()) {
+				final List<String> disp = BackSlash.getWithNewlines(att.toString());
+				ug.getCharArea().drawStringsLRUnicode(disp, 1, y);
+				y += StringUtils.getHeight(disp);
+			}
 		}
 	}
 
