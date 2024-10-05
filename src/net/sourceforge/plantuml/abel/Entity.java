@@ -413,34 +413,10 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		final Entity parentContainer = getParentContainer();
 		if (parentContainer == this)
 			return false;
-		
+
 		if (parentContainer != null && parentContainer.isHidden())
 			return true;
 
-		return isHiddenInternal();
-	}
-
-	private boolean isHiddenInternal() {
-		if (isRoot())
-			return false;
-
-//		if (isGroup()) {
-//			if (this.diagram.isHidden(this))
-//				return true;
-//
-//			if (leafs().size() == 0)
-//				return false;
-//
-//			for (Entity leaf : leafs())
-//				if (leaf.isHiddenInternal() == false)
-//					return false;
-//
-//			for (Entity g : groups())
-//				if (g.isHiddenInternal() == false)
-//					return false;
-//
-//			return true;
-//		}
 		return this.diagram.isHidden(this);
 	}
 
@@ -451,31 +427,10 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		final Entity parentContainer = getParentContainer();
 		if (parentContainer == this)
 			return false;
-		
+
 		if (parentContainer != null && parentContainer.isRemoved())
 			return true;
 
-		return isRemovedInternal();
-	}
-
-	private boolean isRemovedInternal() {
-//		if (isGroup()) {
-//			if (this.diagram.isRemoved(this))
-//				return true;
-//
-//			if (leafs().size() == 0 && groups().size() == 0)
-//				return false;
-//
-//			for (Entity leaf : leafs())
-//				if (leaf.isRemovedInternal() == false)
-//					return false;
-//
-//			for (Entity g : groups())
-//				if (g.isRemovedInternal() == false)
-//					return false;
-//
-//			return true;
-//		}
 		return this.diagram.isRemoved(this);
 	}
 

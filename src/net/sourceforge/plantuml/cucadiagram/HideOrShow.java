@@ -106,10 +106,9 @@ public class HideOrShow {
 
 	private boolean match(String name, String pattern) {
 
-		final int idx = name.indexOf(Plasma.MAGIC_SEPARATOR);
-		if (idx != -1) {
+		final int idx = name.lastIndexOf(Plasma.MAGIC_SEPARATOR);
+		if (idx != -1)
 			name = name.substring(idx + 1);
-		}
 
 		if (pattern.contains("*")) {
 			// System.err.println("f1=" + pattern);
