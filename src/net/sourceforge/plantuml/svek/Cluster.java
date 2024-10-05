@@ -697,7 +697,7 @@ public class Cluster implements Moveable {
 
 	public MagneticBorder getMagneticBorder() {
 
-		if (group.getUSymbol() == null)
+		if (group.getUSymbol() == null && group.getGroupType() != GroupType.PACKAGE)
 			return new MagneticBorderNone();
 
 		final USymbol uSymbol = group.getUSymbol();
