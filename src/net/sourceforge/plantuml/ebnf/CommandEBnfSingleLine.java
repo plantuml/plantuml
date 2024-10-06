@@ -66,7 +66,7 @@ public class CommandEBnfSingleLine extends SingleLineCommand2<PSystemEbnf> {
 								new RegexLeaf("\\*\\)"), //
 								RegexLeaf.spaceZeroOrMore())), //
 
-				new RegexLeaf("ID", "(\\w[-\\w]*)"), //
+				new RegexLeaf("ID", "([%pLN_][-%pLN_]*)"), //
 
 				new RegexOptional( //
 						new RegexConcat( //

@@ -53,7 +53,7 @@ public class CommandEbnfMultilines extends CommandMultilines2<PSystemEbnf> {
 
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandEbnfMultilines.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("LINE", "(\\w[-\\w]*[%s]*=.*)"), //
+				new RegexLeaf("LINE", "([%pLN_][-%pLN_]*[%s]*=.*)"), //
 				RegexLeaf.end());
 	}
 
