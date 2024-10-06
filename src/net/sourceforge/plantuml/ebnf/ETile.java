@@ -74,9 +74,9 @@ public abstract class ETile extends AbstractTextBlock {
 		ug.apply(new UTranslate(x1, y)).draw(ULine.hline(x2 - x1));
 	}
 
-	protected final void drawHlineDirected(UGraphic ug, double y, double x1, double x2, double coef) {
+	protected final void drawHlineDirected(UGraphic ug, double y, double x1, double x2, double coef, double minimunSizeForArrow) {
 		ug.apply(new UTranslate(x1, y)).draw(ULine.hline(x2 - x1));
-		if (x2 > x1 + 25)
+		if (x2 > x1 + minimunSizeForArrow)
 			ug.apply(new CopyForegroundColorToBackgroundColor())
 					.apply(new UTranslate(x1 * (1 - coef) + x2 * coef - 2, y)).draw(getArrowToRight());
 

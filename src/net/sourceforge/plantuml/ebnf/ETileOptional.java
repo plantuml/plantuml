@@ -107,7 +107,7 @@ public class ETileOptional extends ETile {
 		drawVline(ug, posA, corner + posYoptionalLine, linePos - corner);
 		CornerCurved.createNW(corner).drawU(ug.apply(new UTranslate(posA, posYoptionalLine)));
 
-		drawHlineDirected(ug, posYoptionalLine, posA + corner, posB - corner, 0.4);
+		drawHlineDirected(ug, posYoptionalLine, posA + corner, posB - corner, 0.4, 0);
 
 		CornerCurved.createSW(corner).drawU(ug.apply(new UTranslate(posB, linePos)));
 		drawVline(ug, posB, corner + posYoptionalLine, linePos - corner);

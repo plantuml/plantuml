@@ -86,8 +86,8 @@ public class ETileWithCircles extends ETile {
 				.apply(new UTranslate(fullDim.getWidth() - SIZE / 2, linePos - SIZE / 2)).draw(circle);
 
 		ug = ug.apply(UStroke.withThickness(1.5));
-		drawHlineDirected(ug, linePos, SIZE, deltax, 0.5);
-		drawHlineDirected(ug, linePos, fullDim.getWidth() - deltax, fullDim.getWidth() - SIZE / 2, 0.5);
+		drawHlineDirected(ug, linePos, SIZE, deltax, 0.5, 25);
+		drawHlineDirected(ug, linePos, fullDim.getWidth() - deltax, fullDim.getWidth() - SIZE / 2, 0.5, 25);
 	}
 
 	@Override

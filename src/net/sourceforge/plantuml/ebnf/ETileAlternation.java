@@ -109,7 +109,7 @@ public class ETileAlternation extends ETile {
 				tile.drawU(ug.apply(new UTranslate(c, y)));
 
 				CornerCurved.createSW(marginx).drawU(ug.apply(new UTranslate(b, lastLinePos)));
-				drawHlineDirected(ug, lastLinePos, c + dim.getWidth(), p, 0.3);
+				drawHlineDirected(ug, lastLinePos, c + dim.getWidth(), p, 0.3, 25);
 				CornerCurved.createSE(marginx).drawU(ug.apply(new UTranslate(q, lastLinePos)));
 
 				y += dim.getHeight() + 10;
@@ -130,10 +130,10 @@ public class ETileAlternation extends ETile {
 					drawHline(ug, lastLinePos, c + dim.getWidth(), r);
 				} else if (i > 0 && i < tiles.size() - 1) {
 					CornerCurved.createSW(marginx).drawU(ug.apply(new UTranslate(b, lastLinePos)));
-					drawHlineDirected(ug, lastLinePos, c + dim.getWidth(), p, 0.5);
+					drawHlineDirected(ug, lastLinePos, c + dim.getWidth(), p, 0.5, 25);
 					CornerCurved.createSE(marginx).drawU(ug.apply(new UTranslate(q, lastLinePos)));
 				} else if (i == tiles.size() - 1) {
-					drawHlineDirected(ug, lastLinePos, c + dim.getWidth(), p, 0.5);
+					drawHlineDirected(ug, lastLinePos, c + dim.getWidth(), p, 0.5, 25);
 
 				}
 				y += dim.getHeight() + 10;

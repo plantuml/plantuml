@@ -185,8 +185,8 @@ public class ETileBox extends ETile {
 		}
 
 		if (posxBox > 0) {
-			drawHlineDirected(ug, getH1(stringBounder), 0, posxBox, .5);
-			drawHlineDirected(ug, getH1(stringBounder), posxBox + dimBox.getWidth(), dim.getWidth(), .5);
+			drawHlineDirected(ug, getH1(stringBounder), 0, posxBox, .5, 25);
+			drawHlineDirected(ug, getH1(stringBounder), posxBox + dimBox.getWidth(), dim.getWidth(), .5, 25);
 		}
 
 	}

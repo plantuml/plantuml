@@ -70,7 +70,7 @@ public class ETileConcatenation extends ETile {
 			tile.drawU(ug.apply(new UTranslate(x, fullLinePos - linePos)));
 			x += tile.calculateDimension(stringBounder).getWidth();
 			if (i != tiles.size() - 1) {
-				drawHlineDirected(ug, fullLinePos, x, x + marginx, 0.5);
+				drawHlineDirected(ug, fullLinePos, x, x + marginx, 0.5, 25);
 				x += marginx;
 			}
 		}
