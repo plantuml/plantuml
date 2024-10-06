@@ -122,7 +122,7 @@ public class EbnfEngine {
 			arg1.push(arg2);
 			stack.addFirst(arg1);
 		} else if (arg2 instanceof ETileConcatenation) {
-			arg2.push(arg1);
+			((ETileConcatenation) arg2).pushLast(arg1);
 			stack.addFirst(arg2);
 		} else {
 			final ETile concat = new ETileConcatenation();

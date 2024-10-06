@@ -53,6 +53,10 @@ public class ETileConcatenation extends ETile {
 		tiles.add(0, tile);
 	}
 
+	public void pushLast(ETile tile) {
+		tiles.add(tile);
+	}
+
 	public void overideFirst(ETile tile) {
 		tiles.set(0, tile);
 	}
