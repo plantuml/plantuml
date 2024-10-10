@@ -75,14 +75,14 @@ public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSy
 		boolean first = true;
 		while (it.hasNext()) {
 			final StringLocated s = it.next();
-			if (first && s != null && isEmptyLine(s)) {
+			if (first && s != null && isEmptyLine(s))
 				continue;
-			}
+
 			first = false;
 			if (StartUtils.isArobaseEndDiagram(s.getString())) {
-				if (source.getTotalLineCount() == 2 && source.isStartDef() == false) {
+				if (source.getTotalLineCount() == 2 && source.isStartDef() == false)
 					return buildEmptyError(source, s.getLocation(), it.getTrace());
-				}
+
 				return system;
 			}
 			system = executeLine(source, system, s.getString());
