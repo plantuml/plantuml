@@ -6,7 +6,7 @@
 [versions]
 ant                 = "1.10.15"
 assertj             = "3.26.3"
-batik               = "1.17"
+batik               = "1.18"
 elk                 = "0.9.1"
 fop                 = "2.9"
 glytching-junit-ext = "2.6.0"
