@@ -251,7 +251,8 @@ public class Cluster implements Moveable {
 	}
 
 	public final int getTitleAndAttributeWidth() {
-		return clusterHeader.getTitleAndAttributeWidth();
+		final double minimumWidth = getStyle().value(PName.MinimumWidth).asDouble();
+		return Math.max(clusterHeader.getTitleAndAttributeWidth(), (int) Math.ceil(minimumWidth));
 	}
 
 	public final int getTitleAndAttributeHeight() {
@@ -286,7 +287,7 @@ public class Cluster implements Moveable {
 		return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.group);
 	}
 
-	public void drawU(UGraphic ug, UmlDiagramType umlDiagramType) {
+	public void drawU(UGraphic ug) {
 		if (group.isHidden())
 			return;
 
@@ -301,9 +302,8 @@ public class Cluster implements Moveable {
 		if (fullName.startsWith("##") == false)
 			ug.draw(new UComment("cluster " + fullName));
 
-		final USymbol uSymbol = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();
-		final Style style = getDefaultStyleDefinition(umlDiagramType.getStyleName(), uSymbol, group.getGroupType())
-				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final UmlDiagramType umlDiagramType = diagram.getUmlDiagramType();
+		final Style style = getStyle();
 		final double shadowing = style.value(PName.Shadowing).asDouble();
 		HColor borderColor;
 		if (group.getColors().getColor(ColorType.LINE) != null)
@@ -361,6 +361,14 @@ public class Cluster implements Moveable {
 				ug.closeUrl();
 			ug.closeGroup();
 		}
+	}
+
+	private Style getStyle() {
+		final UmlDiagramType umlDiagramType = diagram.getUmlDiagramType();
+		final USymbol uSymbol = group.getUSymbol() == null ? USymbols.PACKAGE : group.getUSymbol();
+		final Style style = getDefaultStyleDefinition(umlDiagramType.getStyleName(), uSymbol, group.getGroupType())
+				.withTOBECHANGED(group.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return style;
 	}
 
 	EntityImageNoteLink getCucaNote(Position position) {
@@ -628,7 +636,7 @@ public class Cluster implements Moveable {
 	}
 
 	public boolean isLabel() {
-		return getTitleAndAttributeHeight() > 0 && getTitleAndAttributeWidth() > 0;
+		return getTitleAndAttributeHeight() > 0 || getTitleAndAttributeWidth() > 0;
 	}
 
 	int getColor() {

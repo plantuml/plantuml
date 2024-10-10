@@ -71,7 +71,7 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 
 		for (Cluster cluster : clusterManager.getBibliotekon().allCluster())
 			if (cluster.getGroup().isPacked() == false)
-				cluster.drawU(ug, dotData.getUmlDiagramType());
+				cluster.drawU(ug);
 
 		final Style style2 = getDefaultStyleDefinition(null)
 				.getMergedStyle(dotData.getSkinParam().getCurrentStyleBuilder());
