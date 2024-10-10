@@ -62,6 +62,9 @@ public class ShuntingYard {
 			} else if (token.getSymbol() == Symbol.COMMENT_TOKEN) {
 				operatorStack.addFirst(token);
 
+			} else if (token.getSymbol() == Symbol.NOT) {
+				operatorStack.addFirst(new Token(Symbol.CONCATENATION, null));
+				operatorStack.addFirst(token);
 			} else if (token.getSymbol().isOperator()) {
 				while (thereIsAnOperatorAtTheTopOfTheOperatorStackWithGreaterPrecedence(token)
 						|| thereIsAnCommentOnTopOfTheOperatorStack())

@@ -70,6 +70,8 @@ public class EbnfExpression implements TextBlockable {
 		while (true) {
 			final char ch = it.peek(0);
 			if (Character.isWhitespace(ch)) {
+			} else if (ch == '-') {
+				tokens.add(new Token(Symbol.NOT, null));
 			} else if (isLetterOrDigit(ch)) {
 				final String litteral = readLitteral(it);
 				tokens.add(new Token(Symbol.LITTERAL, litteral));
@@ -198,6 +200,8 @@ public class EbnfExpression implements TextBlockable {
 				engine.concatenation();
 			else if (element.getSymbol() == Symbol.OPTIONAL)
 				engine.optional();
+			else if (element.getSymbol() == Symbol.NOT)
+				engine.not();
 			else if (element.getSymbol() == Symbol.REPETITION_ZERO_OR_MORE)
 				engine.repetitionZeroOrMore(isCompact);
 			else if (element.getSymbol() == Symbol.REPETITION_ONE_OR_MORE)

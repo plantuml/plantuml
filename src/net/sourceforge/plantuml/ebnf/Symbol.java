@@ -61,7 +61,7 @@ public enum Symbol {
 	COMMENT_BELOW, // (* *)
 	COMMENT_ABOVE, // (* *)
 	SPECIAL_SEQUENCE, // ? ?
-	EXCEPTION; // -
+	NOT; // EXCEPTION -
 
 	public int getPriority() {
 		switch (this) {

@@ -77,6 +77,11 @@ public class EbnfEngine {
 		stack.addFirst(new ETileOptional(arg1, skinParam));
 	}
 
+	public void not() {
+		final ETile arg1 = stack.removeFirst();
+		stack.addFirst(new ETileNot(arg1, fontConfiguration, style, colorSet, skinParam));
+	}
+
 	public void repetitionZeroOrMore(boolean isCompact) {
 		final ETile arg1 = stack.removeFirst();
 		if (isCompact)
