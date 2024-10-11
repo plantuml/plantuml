@@ -1,3 +1,19 @@
+## V1.2024.8 (beta)
+
+- [Allow MinimumWidth on all nested elements](https://github.com/plantuml/plantuml/issues/1893)
+- https://github.com/plantuml/plantuml/commit/37e5eb66fa946671c23506fc24811f1bae8a7a04
+- https://github.com/plantuml/plantuml/commit/0ef877f9ffe0f83763aaff617fc5e907485583a3
+- https://github.com/plantuml/plantuml/commit/3a56c55ef1d502a8a5548c694de5a5406c113a9b
+- https://github.com/plantuml/plantuml/commit/bbe905eeb16ddbb20fc7ab242607fb043a1564dd
+- https://github.com/plantuml/plantuml/commit/f186e7a6864933629014681345017e6f42ddce8e
+- https://github.com/plantuml/plantuml/commit/bc0becdb83acda69904066e745821032a7690740
+- https://github.com/plantuml/plantuml/commit/593d821f3fd596b01967baf42d1901542ad90009
+- https://github.com/plantuml/plantuml/commit/4318369c7236e556ee4418971a1963bb697d3b55
+- https://github.com/plantuml/plantuml/commit/39b4fba68d2714001357263bc5d8a3253d417262
+- https://github.com/plantuml/plantuml/commit/176da3c73e39f2d5506906e48a95e3189a3d1b9f
+- https://github.com/plantuml/plantuml/commit/1617a4065b849a9032b9177054a847d55b2609af
+- https://github.com/plantuml/plantuml/commit/15d63c28e601fdfa9e985d6d2057db31b95a7079
+
 ## V1.2024.7 (Sep 9, 2024)
 
 - [[Class][Deployment] Some issues about arrow between nested elements](https://github.com/plantuml/plantuml/issues/1815)
