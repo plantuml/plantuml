@@ -152,11 +152,18 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
 		final Shadowable rect = URectangle.build(widthTotal, heightTotal).rounded(roundCorner);
+		HColor headerBackcolor = getEntity().getColors().getColor(ColorType.HEADER);
 
 		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
 
 		final Style style = getStyle();
 		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
+		
+		if (headerBackcolor == null)
+			headerBackcolor = backcolor == null
+					? getStyleHeader().value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet())
+					: backcolor;
+
 		if (backcolor == null)
 			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 
@@ -169,6 +176,11 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 			ug.startUrl(url);
 
 		ug.apply(stroke).draw(rect);
+		if (roundCorner == 0 && headerBackcolor != null && backcolor.equals(headerBackcolor) == false) {
+			final Shadowable rect2 = URectangle.build(widthTotal, dimTitle.getHeight());
+			final UGraphic ugHeader = ug.apply(headerBackcolor.bg());
+			ugHeader.apply(stroke).draw(rect2);
+		}
 
 		final ULayoutGroup header = new ULayoutGroup(new PlacementStrategyY1Y2(ug.getStringBounder()));
 		if (stereo != null)
