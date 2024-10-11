@@ -49,20 +49,20 @@ public class Failable<O> {
 	}
 
 	private Failable(O data, String error) {
-		if (data == null && error == null) {
+		if (data == null && error == null)
 			throw new IllegalArgumentException();
-		}
-		if (data != null && error != null) {
+
+		if (data != null && error != null)
 			throw new IllegalArgumentException();
-		}
+
 		this.data = data;
 		this.error = error;
 	}
 
 	public O get() {
-		if (data == null) {
+		if (data == null)
 			throw new IllegalStateException();
-		}
+
 		return data;
 	}
 
@@ -71,9 +71,9 @@ public class Failable<O> {
 	}
 
 	public String getError() {
-		if (error == null) {
+		if (error == null)
 			throw new IllegalStateException();
-		}
+
 		return error;
 	}
 

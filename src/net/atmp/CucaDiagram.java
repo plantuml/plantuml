@@ -83,6 +83,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.plasma.Plasma;
 import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
@@ -225,34 +226,42 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	}
 
 	final public Quark<Entity> quarkInContext(boolean reuseExistingChild, String full) {
+		return quarkInContextSafe(reuseExistingChild, full).get();
+	}
+
+	final public Failable<Quark<Entity>> quarkInContextSafe(boolean reuseExistingChild, String full) {
 		final String sep = getNamespaceSeparator();
 		if (sep == null) {
 			final Quark<Entity> result = this.firstWithName(full);
 			if (result != null)
-				return result;
-			return getCurrentGroup().getQuark().child(full);
+				return Failable.ok(result);
+			return Failable.ok(getCurrentGroup().getQuark().child(full));
 		}
 
 		final Quark<Entity> currentQuark = getCurrentGroup().getQuark();
 		if (full.startsWith(sep))
-			return this.root.child(full.substring(sep.length()));
+			return Failable.ok(this.root.child(full.substring(sep.length())));
 		final int x = full.indexOf(sep);
 		if (x == -1) {
 			if (reuseExistingChild && this.countByName(full) == 1) {
 				final Quark<Entity> byName = this.firstWithName(full);
 				assert byName != null;
 				if (byName != currentQuark)
-					return byName;
+					return Failable.ok(byName);
 			}
-			return currentQuark.child(full);
+			return Failable.ok(currentQuark.child(full));
 		}
 
-		final String first = full.substring(0, x);
-		final boolean firstPackageDoesExist = this.root.childIfExists(first) != null;
+		final Quark<Entity> first = this.root.childIfExists(full.substring(0, x));
+
+		final boolean firstPackageDoesExist = first != null;
+
+		if (firstPackageDoesExist && first.getData().isGroup() == false)
+			return Failable.error("Not a package: " + full.substring(0, x));
 
 		if (firstPackageDoesExist)
-			return this.root.child(full);
-		return currentQuark.child(full);
+			return Failable.ok(this.root.child(full));
+		return Failable.ok(currentQuark.child(full));
 
 	}
 
@@ -717,7 +726,6 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return prefix + getUniqueSequence();
 	}
 
-		
 	// Coming from EntityFactory
 
 	public boolean isStereotypeRemoved(Stereotype stereotype) {
@@ -727,7 +735,6 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 		return result;
 	}
-
 
 	public boolean isHidden(Entity leaf) {
 		if (leaf.isRoot())

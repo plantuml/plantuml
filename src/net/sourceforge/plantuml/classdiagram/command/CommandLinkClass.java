@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -197,15 +198,19 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 			ent2String = diagram.removePortId(ent2String);
 		}
 
-		final Quark<Entity> quark1 = diagram.quarkInContext(true, ent1String);
-		final Quark<Entity> quark2 = diagram.quarkInContext(true, ent2String);
+		final Failable<Quark<Entity>> quark1 = diagram.quarkInContextSafe(true, ent1String);
+		if (quark1.isFail())
+			return CommandExecutionResult.error(quark1.getError());
+		final Failable<Quark<Entity>> quark2 = diagram.quarkInContextSafe(true, ent2String);
+		if (quark2.isFail())
+			return CommandExecutionResult.error(quark2.getError());
 
-		Entity cl1 = quark1.getData();
+		Entity cl1 = quark1.get().getData();
 		if (cl1 == null)
-			cl1 = diagram.reallyCreateLeaf(quark1, Display.getWithNewlines(quark1.getName()), LeafType.CLASS, null);
-		Entity cl2 = quark2.getData();
+			cl1 = diagram.reallyCreateLeaf(quark1.get(), Display.getWithNewlines(quark1.get().getName()), LeafType.CLASS, null);
+		Entity cl2 = quark2.get().getData();
 		if (cl2 == null)
-			cl2 = diagram.reallyCreateLeaf(quark2, Display.getWithNewlines(quark2.getName()), LeafType.CLASS, null);
+			cl2 = diagram.reallyCreateLeaf(quark2.get(), Display.getWithNewlines(quark2.get().getName()), LeafType.CLASS, null);
 
 		final Direction dir = getDirection(arg);
 		final int queue;
