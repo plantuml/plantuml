@@ -312,7 +312,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		else if (printScale == PrintScale.WEEKLY)
 			return new TimeHeaderWeekly(stringBounder, thParam(), weekNumberStrategy, weeklyHeaderStrategy, printStart);
 		else if (printScale == PrintScale.MONTHLY)
-			return new TimeHeaderMonthly(stringBounder, thParam(), printStart);
+			return new TimeHeaderMonthly(stringBounder, thParam(), nameDays, printStart);
 		else if (printScale == PrintScale.QUARTERLY)
 			return new TimeHeaderQuarterly(stringBounder, thParam(), printStart);
 		else if (printScale == PrintScale.YEARLY)

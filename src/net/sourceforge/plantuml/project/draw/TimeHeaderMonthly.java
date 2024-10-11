@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.util.Map;
+
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -48,11 +50,19 @@ import net.sourceforge.plantuml.style.SName;
 
 public class TimeHeaderMonthly extends TimeHeaderCalendar {
 
+	private double getH1(StringBounder stringBounder) {
+		final double h = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble() + 2;
+		return h;
+	}
+
+	private double getH2(StringBounder stringBounder) {
+		final double h = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble() + 2;
+		return getH1(stringBounder) + h;
+	}
+
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
-		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
-		return h1 + h2 + 5;
+		return getH2(stringBounder) + 1;
 	}
 
 	@Override
@@ -64,25 +74,32 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 
 	@Override
 	public double getFullHeaderHeight(StringBounder stringBounder) {
-		return getTimeHeaderHeight(stringBounder);
+		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();
 	}
 
-	public TimeHeaderMonthly(StringBounder stringBounder, TimeHeaderParameters thParam, Day printStart) {
+	private final Map<Day, String> nameDays;
+
+	public TimeHeaderMonthly(StringBounder stringBounder, TimeHeaderParameters thParam, Map<Day, String> nameDays,
+			Day printStart) {
 		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),
 				thParam.getScale(), printStart));
+		this.nameDays = nameDays;
 	}
 
 	@Override
 	public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
 		drawTextsBackground(ug, totalHeightWithoutFooter);
 		drawYears(ug);
-		final double h1 = thParam.getStyle(SName.timeline, SName.year).value(PName.FontSize).asDouble();
-		final double h2 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
-		drawMonths(ug.apply(UTranslate.dy(h1 + 2)));
+		final double h1 = getH1(ug.getStringBounder());
+		final double h2 = getH2(ug.getStringBounder());
+		drawMonths(ug.apply(UTranslate.dy(h1)));
 		printVerticalSeparators(ug, totalHeightWithoutFooter);
+
+		printNamedDays(ug);
+
 		drawHline(ug, 0);
-		drawHline(ug, h1 + 2);
-		drawHline(ug, h1 + 2 + h2 + 2);
+		drawHline(ug, h1);
+		drawHline(ug, h2);
 //		drawHline(ug, getFullHeaderHeight(ug.getStringBounder()));
 	}
 
@@ -156,6 +173,37 @@ public class TimeHeaderMonthly extends TimeHeaderCalendar {
 
 	private void printLeft(UGraphic ug, TextBlock text, double start) {
 		text.drawU(ug.apply(UTranslate.dx(start)));
+	}
+
+	private double getHeaderNameDayHeight() {
+		if (nameDays.size() > 0) {
+			final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 6;
+			return h;
+		}
+
+		return 0;
+	}
+
+	private void printNamedDays(final UGraphic ug) {
+		if (nameDays.size() > 0) {
+			String last = null;
+			for (Day wink = getMin(); wink.compareTo(getMax().increment()) <= 0; wink = wink.increment()) {
+				final String name = nameDays.get(wink);
+				if (name != null && name.equals(last) == false) {
+					final double x1 = getTimeScale().getStartingPosition(wink);
+					final double x2 = getTimeScale().getEndingPosition(wink);
+					final TextBlock label = getTextBlock(SName.month, name, false, openFontColor());
+					final double h = label.calculateDimension(ug.getStringBounder()).getHeight();
+					double y1 = getTimeHeaderHeight(ug.getStringBounder());
+					double y2 = getFullHeaderHeight(ug.getStringBounder());
+
+					final double position = getH2(ug.getStringBounder());
+					label.drawU(ug.apply(new UTranslate(x1, position)));
+				}
+				last = name;
+			}
+
+		}
 	}
 
 }
