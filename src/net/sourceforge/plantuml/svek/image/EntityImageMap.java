@@ -107,7 +107,7 @@ public class EntityImageMap extends AbstractEntityImage implements Stencil, With
 					FontConfiguration.create(getSkinParam(), FontParam.OBJECT_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, skinParam);
 
-		final FontConfiguration fontConfiguration = getStyleHeader()
+		final FontConfiguration fontConfiguration = getStyle()
 				.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		this.entries = entity.getBodier().getBody(skinParam, false, false, entity.getStereotype(), getStyle(),
 				fontConfiguration);
