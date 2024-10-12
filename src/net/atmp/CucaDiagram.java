@@ -256,7 +256,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 		final boolean firstPackageDoesExist = first != null;
 
-		if (firstPackageDoesExist && first.getData().isGroup() == false)
+		if (firstPackageDoesExist && first.getData() != null && first.getData().isGroup() == false)
 			return Failable.error("Not a package: " + full.substring(0, x));
 
 		if (firstPackageDoesExist)
