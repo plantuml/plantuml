@@ -20,14 +20,15 @@ import net.sourceforge.plantuml.preproc.Defines;
 
 @startuml
 <style>
-Package {
-  FontColor red
-  FontSize 20
-  Fontstyle plain
+Package,Frame {
+  FontColor yellow
+  FontSize 10
+  Fontstyle italic
+  BackgroundColor blue
   title {
     FontColor red
     FontSize 20
-    Fontstyle plain
+    Fontstyle bold
     BackgroundColor orange
   }
 }
