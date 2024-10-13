@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.ebnf.ETileLookAheadOrBehind;
 import net.sourceforge.plantuml.ebnf.ETileNamedGroup;
 import net.sourceforge.plantuml.ebnf.ETileOneOrMore;
 import net.sourceforge.plantuml.ebnf.ETileOptional;
+import net.sourceforge.plantuml.ebnf.ETileRegexGroup;
 import net.sourceforge.plantuml.ebnf.ETileZeroOrMore;
 import net.sourceforge.plantuml.ebnf.Symbol;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -158,11 +159,11 @@ public class PSystemRegex extends TitledDiagram {
 			// System.err.println("result=" + result);
 			for (ReToken token : result)
 				if (token.getType() == ReTokenType.SIMPLE_CHAR)
-					push(token, Symbol.TERMINAL_STRING1);
+					pushEtileBox(token, Symbol.TERMINAL_STRING1);
 				else if (token.getType() == ReTokenType.ESCAPED_CHAR)
-					push(token, Symbol.TERMINAL_STRING1);
+					pushEtileBox(token, Symbol.TERMINAL_STRING1);
 				else if (token.getType() == ReTokenType.GROUP)
-					push(token, Symbol.SPECIAL_SEQUENCE);
+					pushRegexGroup(token);
 				else if (token.getType() == ReTokenType.LOOK_AHEAD)
 					lookAheadOrBehind(token.getData());
 				else if (token.getType() == ReTokenType.LOOK_BEHIND)
@@ -170,9 +171,9 @@ public class PSystemRegex extends TitledDiagram {
 				else if (token.getType() == ReTokenType.NAMED_GROUP)
 					namedGroup(token.getData());
 				else if (token.getType() == ReTokenType.CLASS)
-					push(token, Symbol.LITTERAL);
+					pushEtileBox(token, Symbol.LITTERAL);
 				else if (token.getType() == ReTokenType.ANCHOR)
-					push(token, Symbol.LITTERAL);
+					pushEtileBox(token, Symbol.LITTERAL);
 				else if (token.getType() == ReTokenType.CONCATENATION_IMPLICIT)
 					concatenation();
 				else if (token.getType() == ReTokenType.ALTERNATIVE)
@@ -205,9 +206,13 @@ public class PSystemRegex extends TitledDiagram {
 		return result;
 	}
 
-	private void push(ReToken element, Symbol type) {
-		// final Symbol type = Symbol.LITTERAL;
+	private void pushEtileBox(ReToken element, Symbol type) {
 		stack.addFirst(new ETileBox(element.getData(), type, fontConfiguration, style, colorSet, getSkinParam()));
+	}
+
+	private void pushRegexGroup(ReToken element) {
+		final List<String> elements = new GroupSplitter().split(element.getData());
+		stack.addFirst(new ETileRegexGroup(elements, fontConfiguration, style, colorSet, getSkinParam()));
 	}
 
 	private void lookAheadOrBehind(String name) {

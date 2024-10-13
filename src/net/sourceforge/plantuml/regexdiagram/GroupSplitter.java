@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2020, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -30,60 +30,29 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.ebnf;
+package net.sourceforge.plantuml.regexdiagram;
 
-public enum Symbol {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-	LITTERAL, //
+public class GroupSplitter {
 
-	// https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form
-	DEFINITION, // =
-	CONCATENATION, // ,
-	TERMINATION, // ;
-	ALTERNATION, // |
-	OPTIONAL_OPEN, // [
-	OPTIONAL_CLOSE, // ]
-	OPTIONAL, //
-	REPETITION_SYMBOL, // *
-	REPETITION_OPEN, // {
-	REPETITION_CLOSE, // }
-	REPETITION_MINUS_CLOSE, // }
-	REPETITION_ZERO_OR_MORE, //
-	REPETITION_ONE_OR_MORE, //
-	GROUPING_OPEN, // (
-	GROUPING_CLOSE, // )
-	TERMINAL_STRING1, // " "
-	TERMINAL_STRING2, // ' '
-	COMMENT_TOKEN, // (* *)
-	COMMENT_BELOW, // (* *)
-	COMMENT_ABOVE, // (* *)
-	SPECIAL_SEQUENCE, // ? ?
-	NOT, // EXCEPTION -
-	
-	// Special for regex
-	REGEX_GROUP;
-
-	public int getPriority() {
-		switch (this) {
-		case REPETITION_SYMBOL:
-			return 3;
-		case CONCATENATION:
-			return 2;
-		case ALTERNATION:
-			return 1;
+	public List<String> split(String group) {
+		final List<String> result = new ArrayList<>();
+		for (int i = 0; i < group.length(); i++) {
+			if (i + 2 < group.length() && group.charAt(i + 1) == '-') {
+				result.add("" + group.substring(i, i + 3));
+				i += 2;
+			} else if (i + 1 < group.length() && group.charAt(i) == '\\') {
+				// Just skip it
+			} else
+				result.add("" + group.charAt(i));
 		}
-		throw new UnsupportedOperationException();
-	}
-
-	boolean isOperator() {
-		return this == CONCATENATION || this == ALTERNATION || this == REPETITION_SYMBOL;
-	}
-
-	boolean isFunction() {
-		return this == OPTIONAL || this == REPETITION_ZERO_OR_MORE;
+		return Collections.unmodifiableList(result);
 	}
 
 }
