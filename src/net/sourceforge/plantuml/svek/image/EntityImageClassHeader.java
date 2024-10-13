@@ -165,7 +165,8 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 
 		if (stereotype != null && stereotype.getCharacter() != 0)
 			return new CircledCharacter(stereotype.getCharacter(), getSkinParam().getCircledCharacterRadius(), font,
-					stereotype.getHtmlColor(), spotBorder, fontColor);
+					stereotype.getHtmlColor() == null ? spotBackColor : stereotype.getHtmlColor(), spotBorder,
+					fontColor);
 
 		char circledChar = 0;
 		if (stereotype != null)

@@ -158,9 +158,10 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 
 		diagram.setLastEntity(entity);
 		if (stereo != null) {
-			entity.setStereotype(Stereotype.build(stereo, diagram.getSkinParam().getCircledCharacterRadius(),
+			final Stereotype stereotype = Stereotype.build(stereo, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
-					diagram.getSkinParam().getIHtmlColorSet()));
+					diagram.getSkinParam().getIHtmlColorSet());
+			entity.setStereotype(stereotype);
 			entity.setStereostyle(stereo);
 		}
 		if (generic != null)

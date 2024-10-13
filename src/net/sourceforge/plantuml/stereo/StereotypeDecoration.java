@@ -60,14 +60,17 @@ public class StereotypeDecoration {
 	private final static RegexComposed circleChar = new RegexConcat( //
 			new RegexLeaf("\\<\\<"), //
 			RegexLeaf.spaceZeroOrMore(), //
-			new RegexLeaf("\\(?"), //
+			new RegexLeaf("\\("), //
 			new RegexLeaf("CHAR", "(\\S)"), //
-			RegexLeaf.spaceZeroOrMore(), //
-			new RegexLeaf(","), //
-			RegexLeaf.spaceZeroOrMore(), //
-			new RegexLeaf("COLOR", "(#[0-9a-fA-F]{6}|\\w+)"), //
-			RegexLeaf.spaceZeroOrMore(), //
-			new RegexOptional(new RegexLeaf("LABEL", "[),](.*?)")), //
+			new RegexOptional( //
+					new RegexConcat( //
+							RegexLeaf.spaceZeroOrMore(), //
+							new RegexLeaf(","), //
+							RegexLeaf.spaceZeroOrMore(), //
+							new RegexLeaf("COLOR", "(#[0-9a-fA-F]{6}|\\w+)"), //
+							RegexLeaf.spaceZeroOrMore())), //
+			new RegexLeaf("\\)"), //
+			new RegexOptional(new RegexLeaf("LABEL", "[,]?(.*?)")), //
 			new RegexLeaf("\\>\\>") //
 	);
 
