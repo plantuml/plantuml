@@ -74,7 +74,7 @@ public enum LinkDecor {
 	CIRCLE(0, false, 0.5), CIRCLE_FILL(0, false, 0.5), CIRCLE_CONNECT(0, false, 0.5),
 	PARENTHESIS(0, false, OptionFlags.USE_INTERFACE_EYE2 ? 0.5 : 1.0), SQUARE(0, false, 0.5),
 
-	CIRCLE_CROSS(0, false, 0.5), PLUS(0, false, 1.5), HALF_ARROW(0, false, 1.5), SQUARE_toberemoved(30, false, 0);
+	CIRCLE_CROSS(0, false, 0.5), PLUS(0, false, 1.5), HALF_ARROW_UP(0, false, 1.5), HALF_ARROW_DOWN(0, false, 1.5), SQUARE_toberemoved(30, false, 0);
 
 	private final double arrowSize;
 	private final int margin;
@@ -117,8 +117,10 @@ public enum LinkDecor {
 			return new ExtremityFactoryExtendsLike(backgroundColor, false);
 		case DEFINEDBY:
 			return new ExtremityFactoryExtendsLike(backgroundColor, true);
-		case HALF_ARROW:
-			return new ExtremityFactoryHalfArrow();
+		case HALF_ARROW_UP:
+			return new ExtremityFactoryHalfArrow(1);
+		case HALF_ARROW_DOWN:
+			return new ExtremityFactoryHalfArrow(-1);
 		case ARROW_TRIANGLE:
 			return new ExtremityFactoryTriangle(null, 8, 3, 8);
 		case CROWFOOT:

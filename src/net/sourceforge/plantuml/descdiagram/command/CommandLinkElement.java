@@ -93,7 +93,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 				new RegexOptional(new RegexLeaf("INSIDE", "(0|\\(0\\)|\\(0|0\\))(?=[-=.~])")), //
 				new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + LINE_STYLE + ")\\])?"), //
 				new RegexLeaf("BODY2", "([-=.~]*)"), //
-				new RegexLeaf("HEAD1", "(\\(0|>>|_>|[>^*+#0@(]|[\\:\\|]?\\|>|\\\\\\\\|o[%s]+)?"), //
+				new RegexLeaf("HEAD1", "(\\(0|>>|_>|[>^*+#0@(]|[\\:\\|]?\\|>|\\\\\\\\|//|o[%s]+)?"), //
 
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexOptional(new RegexLeaf("SECOND_LABEL", "[%g]([^%g]+)[%g]")), //
@@ -145,7 +145,9 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 		else if (head1.equals("+"))
 			d1 = LinkDecor.PLUS;
 		else if (head1.equals("\\\\"))
-			d1 = LinkDecor.HALF_ARROW;
+			d1 = LinkDecor.HALF_ARROW_UP;
+		else if (head1.equals("//"))
+			d1 = LinkDecor.HALF_ARROW_DOWN;
 		else if (head1.equals(">>"))
 			d1 = LinkDecor.ARROW_TRIANGLE;
 		else if (head1.equals("^"))

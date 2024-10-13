@@ -42,16 +42,22 @@ import net.sourceforge.plantuml.svek.AbstractExtremityFactory;
 
 public class ExtremityFactoryHalfArrow extends AbstractExtremityFactory implements ExtremityFactory {
 
+	private final int direction;
+
+	public ExtremityFactoryHalfArrow(int direction) {
+		this.direction = direction;
+	}
+
 	@Override
 	public UDrawable createUDrawable(XPoint2D p0, double angle, Side side) {
-		return new ExtremityHalfArrow(p0, angle);
+		return new ExtremityHalfArrow(p0, angle, direction);
 	}
 
 	@Override
 	public UDrawable createTBRDrawableLegacy(XPoint2D p0, XPoint2D p1, XPoint2D p2, Side side) {
 		final double ortho = atan2(p0, p2);
 		final XPoint2D center = new XPoint2D((p0.getX() + p2.getX()) / 2, (p0.getY() + p2.getY()) / 2);
-		return new ExtremityHalfArrow(p1, ortho, center);
+		return new ExtremityHalfArrow(p1, ortho, center, direction);
 	}
 
 }
