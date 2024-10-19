@@ -42,7 +42,6 @@ import java.util.Map;
 
 import com.plantuml.api.cheerpj.WasmLog;
 
-import net.sourceforge.plantuml.acearth.PSystemXearthFactory;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagramFactory;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagramFactory3;
 import net.sourceforge.plantuml.api.PSystemFactory;
@@ -249,9 +248,6 @@ public class PSystemBuilder {
 		// ::done
 
 		factories.add(new PSystemCharlieFactory());
-		// ::comment when __CORE__ or __MIT__ or __EPL__ or __BSD__ or __ASL__ or __LGPL__
-		factories.add(new PSystemXearthFactory());
-		// ::done
 
 		factories.add(new GanttDiagramFactory());
 		factories.add(new ChronologyDiagramFactory());
