@@ -21,7 +21,6 @@ jcckit.util
 net.atmp
 net.sourceforge.plantuml
 net.sourceforge.plantuml.abel
-net.sourceforge.plantuml.acearth
 net.sourceforge.plantuml.activitydiagram
 net.sourceforge.plantuml.activitydiagram.command
 net.sourceforge.plantuml.activitydiagram3
@@ -211,18 +210,6 @@ org.stathissideris.ascii2image.graphics
 org.stathissideris.ascii2image.text
 smetana.core
 smetana.core.debug
-zext.plantuml.com.ctreber.acearth
-zext.plantuml.com.ctreber.acearth.gui
-zext.plantuml.com.ctreber.acearth.plugins
-zext.plantuml.com.ctreber.acearth.plugins.markers
-zext.plantuml.com.ctreber.acearth.projection
-zext.plantuml.com.ctreber.acearth.renderer
-zext.plantuml.com.ctreber.acearth.scanbit
-zext.plantuml.com.ctreber.acearth.scandot
-zext.plantuml.com.ctreber.acearth.shader
-zext.plantuml.com.ctreber.acearth.util
-zext.plantuml.com.ctreber.aclib.gui
-zext.plantuml.com.ctreber.aclib.sort
 zext.plantuml.com.google.zxing
 zext.plantuml.com.google.zxing.client.j2se
 zext.plantuml.com.google.zxing.common
