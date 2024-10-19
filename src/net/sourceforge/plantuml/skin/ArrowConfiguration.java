@@ -40,6 +40,7 @@ import java.util.Objects;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.style.Style;
 
 public class ArrowConfiguration {
 
@@ -212,6 +213,7 @@ public class ArrowConfiguration {
 	public boolean isAsync1() {
 		return dressing1.getHead() == ArrowHead.ASYNC;
 	}
+
 	public boolean isAsync2() {
 		return dressing2.getHead() == ArrowHead.ASYNC;
 	}
@@ -239,6 +241,17 @@ public class ArrowConfiguration {
 		return ug.apply(new UStroke(dashVisible, dashSpace, thickness));
 	}
 
+	public UGraphic applyStroke(UGraphic ug, Style style) {
+		final UStroke stroke = style.getStroke();
+
+		// Exception for return arrows
+		if (isDotted() && stroke.getDashVisible() == 0 && stroke.getDashSpace() == 0)
+			return ug.apply(new UStroke(2, 2, stroke.getThickness()));
+
+		return ug.apply(stroke);
+	}
+
+	@Deprecated
 	public UGraphic applyStroke(UGraphic ug) {
 		if (isDotted())
 			return ug.apply(new UStroke(2, 2, thickness));

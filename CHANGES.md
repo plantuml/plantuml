@@ -14,6 +14,10 @@
 - https://github.com/plantuml/plantuml/commit/1617a4065b849a9032b9177054a847d55b2609af
 - https://github.com/plantuml/plantuml/commit/15d63c28e601fdfa9e985d6d2057db31b95a7079
 - https://github.com/plantuml/plantuml/issues/1896
+- https://github.com/plantuml/plantuml/issues/1902
+- https://github.com/plantuml/plantuml/issues/1949
+- https://forum.plantuml.net/15614/style-sequence-allow-stereotype-for-arrow-sequence-diagram
+- https://forum.plantuml.net/15612/style-sequence-allow-linestyle-for-arrow-sequence-diagram
 
 ## V1.2024.7 (Sep 9, 2024)
 
