@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.decoration.LinkDecor;
@@ -75,10 +76,12 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 
 	private final IRegex partialPattern;
 	private final String key;
+	private final ParserPass selectedPass;
 
-	public CommandFactoryNoteOnEntity(String key, IRegex partialPattern) {
+	public CommandFactoryNoteOnEntity(String key, IRegex partialPattern, ParserPass selectedPass) {
 		this.partialPattern = partialPattern;
 		this.key = key;
+		this.selectedPass = selectedPass;
 	}
 
 	private IRegex getRegexConcatSingleLine(IRegex partialPattern) {
@@ -165,9 +168,14 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 
 			@Override
 			protected CommandExecutionResult executeArg(final AbstractEntityDiagram system, LineLocation location,
-					RegexResult arg) throws NoSuchColorException {
+					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
 				final String s = arg.get("NOTE", 0);
 				return executeInternal(arg, system, null, BlocLines.getWithNewlines(s));
+			}
+
+			@Override
+			public boolean isEligibleFor(ParserPass pass) {
+				return selectedPass == pass;
 			}
 		};
 	}
@@ -200,6 +208,12 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 
 				return executeInternal(line0, system, url, lines);
 			}
+
+			@Override
+			public boolean isEligibleFor(ParserPass pass) {
+				return selectedPass == pass;
+			}
+
 		};
 	}
 
@@ -254,19 +268,19 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 
 		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();
 		if (position == Position.RIGHT) {
-			link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, note,
-					type, LinkArg.noDisplay(1));
+			link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, note, type,
+					LinkArg.noDisplay(1));
 			link.setHorizontalSolitary(true);
 		} else if (position == Position.LEFT) {
-			link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, cl1,
-					type, LinkArg.noDisplay(1));
+			link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, cl1, type,
+					LinkArg.noDisplay(1));
 			link.setHorizontalSolitary(true);
 		} else if (position == Position.BOTTOM) {
-			link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, note,
-					type, LinkArg.noDisplay(2));
+			link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, note, type,
+					LinkArg.noDisplay(2));
 		} else if (position == Position.TOP) {
-			link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, cl1,
-					type, LinkArg.noDisplay(2));
+			link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, cl1, type,
+					LinkArg.noDisplay(2));
 		} else {
 			throw new IllegalArgumentException();
 		}

@@ -51,13 +51,13 @@ public class ProtectedCommand<S extends Diagram> implements Command<S> {
 		this.cmd = Objects.requireNonNull(cmd);
 	}
 
-	public CommandExecutionResult execute(S system, BlocLines lines) {
+	public CommandExecutionResult execute(S system, BlocLines lines, ParserPass currentPass) {
 		try {
 			// WasmLog.log("...running " + cmd.getClass().getName() + " ...");
-			final CommandExecutionResult result = cmd.execute(system, lines);
+			final CommandExecutionResult result = cmd.execute(system, lines, currentPass);
 			// if (result.isOk()) {
 			// // TRACECOMMAND
-			// System.err.println("CMD = " + cmd.getClass());
+			System.err.println("CMD = " + cmd.getClass() + " " + currentPass);
 			// }
 			return result;
 		} catch (Throwable t) {
@@ -77,6 +77,11 @@ public class ProtectedCommand<S extends Diagram> implements Command<S> {
 
 	public String[] getDescription() {
 		return cmd.getDescription();
+	}
+
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+		return cmd.isEligibleFor(pass);
 	}
 
 }

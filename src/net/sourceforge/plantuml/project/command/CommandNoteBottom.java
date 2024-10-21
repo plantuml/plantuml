@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.project.command;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.project.GanttDiagram;
@@ -53,7 +54,7 @@ public class CommandNoteBottom extends CommandMultilines<GanttDiagram> {
 		return "^end[%s]*note$";
 	}
 
-	public CommandExecutionResult execute(GanttDiagram diagram, BlocLines lines) throws NoSuchColorException {
+	public CommandExecutionResult execute(GanttDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
 		lines = lines.subExtract(1, 1);
 		lines = lines.removeEmptyColumns();
 		final Display strings = lines.toDisplay();

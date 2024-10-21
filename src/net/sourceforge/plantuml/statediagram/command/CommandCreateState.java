@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
@@ -66,6 +67,11 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 
 	public CommandCreateState() {
 		super(getRegexConcat());
+	}
+
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+		return pass == ParserPass.ONE || pass == ParserPass.TWO || pass == ParserPass.THREE;
 	}
 
 	private static IRegex getRegexConcat() {
@@ -108,8 +114,8 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final String idShort = arg.getLazzy("CODE", 0);
 
 		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(idShort));
@@ -129,45 +135,41 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 		Entity ent = quark.getData();
 		if (ent == null)
 			ent = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(display), type, null);
+		else
+			diagram.setLastEntity(ent);
 
-		ent.setDisplay(Display.getWithNewlines(display));
+		if (currentPass == ParserPass.ONE) {
 
-		if (stereotype != null)
-			ent.setStereotype(Stereotype.build(stereotype));
+			ent.setDisplay(Display.getWithNewlines(display));
 
-		final String urlString = arg.get("URL", 0);
-		if (urlString != null) {
-			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
-			final Url url = urlBuilder.getUrl(urlString);
-			ent.addUrl(url);
+			if (stereotype != null)
+				ent.setStereotype(Stereotype.build(stereotype));
+
+			final String urlString = arg.get("URL", 0);
+			if (urlString != null) {
+				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
+				final Url url = urlBuilder.getUrl(urlString);
+				ent.addUrl(url);
+			}
+
+			Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+			final String s = arg.get("LINECOLOR", 1);
+
+			final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
+			if (lineColor != null)
+				colors = colors.add(ColorType.LINE, lineColor);
+
+			if (arg.get("LINECOLOR", 0) != null)
+				colors = colors.addLegacyStroke(arg.get("LINECOLOR", 0));
+
+			ent.setColors(colors);
+
+			final String addFields = arg.get("ADDFIELD", 0);
+			if (addFields != null)
+				ent.getBodier().addFieldOrMethod(addFields);
+
+			CommandCreateClassMultilines.addTags(ent, arg.getLazzy("TAGS", 0));
 		}
-
-		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
-		final String s = arg.get("LINECOLOR", 1);
-
-		final HColor lineColor = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
-		if (lineColor != null)
-			colors = colors.add(ColorType.LINE, lineColor);
-
-		if (arg.get("LINECOLOR", 0) != null)
-			colors = colors.addLegacyStroke(arg.get("LINECOLOR", 0));
-
-		ent.setColors(colors);
-
-		// ent.setSpecificColorTOBEREMOVED(ColorType.BACK,
-		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("COLOR",
-		// 0)));
-		// ent.setSpecificColorTOBEREMOVED(ColorType.LINE,
-		// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(arg.get("LINECOLOR",
-		// 1)));
-		// ent.applyStroke(arg.get("LINECOLOR", 0));
-
-		final String addFields = arg.get("ADDFIELD", 0);
-		if (addFields != null)
-			ent.getBodier().addFieldOrMethod(addFields);
-
-		CommandCreateClassMultilines.addTags(ent, arg.getLazzy("TAGS", 0));
-
 		return CommandExecutionResult.ok();
 	}
 

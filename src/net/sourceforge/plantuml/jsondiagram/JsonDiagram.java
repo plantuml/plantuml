@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.jsondiagram;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import net.sourceforge.plantuml.AbstractPSystem;
@@ -50,6 +49,7 @@ import net.sourceforge.plantuml.command.CommandScaleMaxWidth;
 import net.sourceforge.plantuml.command.CommandScaleMaxWidthAndHeight;
 import net.sourceforge.plantuml.command.CommandScaleWidthAndHeight;
 import net.sourceforge.plantuml.command.CommandScaleWidthOrHeight;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -104,7 +104,7 @@ public class JsonDiagram extends TitledDiagram {
 			final BlocLines lines = BlocLines.singleString(scale);
 			for (SingleLineCommand2<AbstractPSystem> cmd : cmds)
 				if (cmd.isValid(lines) == CommandControl.OK)
-					cmd.execute(this, lines);
+					cmd.execute(this, lines, ParserPass.ONE);
 		}
 	}
 

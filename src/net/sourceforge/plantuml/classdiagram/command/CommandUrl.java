@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.classdiagram.command;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -72,7 +73,7 @@ public class CommandUrl extends SingleLineCommand2<AbstractEntityDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final String idShort = arg.get("CODE", 0);
 
 		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(idShort));

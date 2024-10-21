@@ -11,6 +11,7 @@ import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -85,10 +86,10 @@ public class CommandCreateAttributeTest {
 
 	@Test
 	void test_execute() throws NoSuchColorException {
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E {"));
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E {"), ParserPass.ONE);
 
 		BlocLines lines = BlocLines.singleString("\"Attribute\" as attr<<stereo>>");
-		CommandExecutionResult result = command.execute(diagram, lines);
+		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
 		assertThat(result).matches(CommandExecutionResult::isOk);
 
@@ -109,10 +110,10 @@ public class CommandCreateAttributeTest {
 
 	@Test
 	void test_executeNested() throws NoSuchColorException {
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E {"));
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E {"), ParserPass.ONE);
 
-		CommandExecutionResult result1 = command.execute(diagram, BlocLines.singleString("attr1{"));
-		CommandExecutionResult result2 = command.execute(diagram, BlocLines.singleString("attr2"));
+		CommandExecutionResult result1 = command.execute(diagram, BlocLines.singleString("attr1{"), ParserPass.ONE);
+		CommandExecutionResult result2 = command.execute(diagram, BlocLines.singleString("attr2"), ParserPass.ONE);
 
 		assertThat(result1).matches(CommandExecutionResult::isOk);
 		assertThat(result2).matches(CommandExecutionResult::isOk);
@@ -141,10 +142,10 @@ public class CommandCreateAttributeTest {
 
 	@Test
 	void test_executeNonNested() throws NoSuchColorException {
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E {"));
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E {"), ParserPass.ONE);
 
-		CommandExecutionResult result1 = command.execute(diagram, BlocLines.singleString("attr1"));
-		CommandExecutionResult result2 = command.execute(diagram, BlocLines.singleString("attr2"));
+		CommandExecutionResult result1 = command.execute(diagram, BlocLines.singleString("attr1"), ParserPass.ONE);
+		CommandExecutionResult result2 = command.execute(diagram, BlocLines.singleString("attr2"), ParserPass.ONE);
 
 		assertThat(result1).matches(CommandExecutionResult::isOk);
 		assertThat(result2).matches(CommandExecutionResult::isOk);

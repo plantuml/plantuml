@@ -41,6 +41,7 @@ import java.util.List;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -83,7 +84,7 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 		return "^end[%s]?(ref)?$";
 	}
 
-	public CommandExecutionResult execute(final SequenceDiagram diagram, BlocLines lines) throws NoSuchColorException {
+	public CommandExecutionResult execute(final SequenceDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
 		final String firstLine = lines.getFirst().getTrimmed().getString();
 		final RegexResult arg = getConcat().matcher(firstLine);
 		if (arg == null)

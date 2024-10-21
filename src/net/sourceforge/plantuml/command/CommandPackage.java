@@ -100,7 +100,7 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg)
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 		String idShort;
 		String display;
@@ -108,7 +108,7 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 
 		if (arg.get("AS", 0) == null) {
 			if (name.length() == 0) {
-				idShort = "##" + diagram.getUniqueSequence();
+				idShort = "##" + diagram.getUniqueSequence("");
 				display = null;
 				return CommandExecutionResult.error("Error in name");
 				// throw new IllegalStateException("AS");

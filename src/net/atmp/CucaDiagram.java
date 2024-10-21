@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.Together;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
@@ -118,7 +119,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	private final List<HideOrShow> hides2 = new ArrayList<>();
 	private final List<HideOrShow> removed = new ArrayList<>();
 
-	private final AtomicInteger cpt = new AtomicInteger(1);
+	private final AtomicInteger cpt1 = new AtomicInteger(1);
+	private final AtomicInteger cpt2 = new AtomicInteger(1);
 
 	private List<Bag> stacks = new ArrayList<>();
 
@@ -146,6 +148,15 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		new Entity(this.root, this, null, GroupType.ROOT, 0);
 
 		this.stacks.add(this.root.getData());
+	}
+
+	@Override
+	public void startingPass(ParserPass pass) {
+		this.setLastEntity(null);
+		this.cpt1.set(1);
+		this.cpt2.set(1);
+		if (stacks.size() > 1)
+			stacks.subList(1, stacks.size()).clear();
 	}
 
 	public String getPortFor(String entString, Quark<Entity> ident) {
@@ -718,12 +729,16 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return ClockwiseTopRightBottomLeft.topRightBottomLeft(0, 5, 5, 0);
 	}
 
-	public int getUniqueSequence() {
-		return cpt.addAndGet(1);
+	public int getUniqueSequenceValue() {
+		return cpt1.addAndGet(1);
 	}
 
 	public String getUniqueSequence(String prefix) {
-		return prefix + getUniqueSequence();
+		return prefix + cpt1.addAndGet(1);
+	}
+
+	public String getUniqueSequence2(String prefix) {
+		return prefix + cpt2.addAndGet(1);
 	}
 
 	// Coming from EntityFactory

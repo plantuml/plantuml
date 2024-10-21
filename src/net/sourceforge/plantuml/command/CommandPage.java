@@ -62,7 +62,7 @@ public class CommandPage extends SingleLineCommand2<AbstractPSystem> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractPSystem system, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(AbstractPSystem system, LineLocation location, RegexResult arg, ParserPass currentPass) {
 
 		final int horizontal = Integer.parseInt(arg.get("NB1", 0));
 		final int vertical = Integer.parseInt(arg.get("NB2", 0));

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.statediagram.command;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -55,6 +56,12 @@ public class CommandAddField extends SingleLineCommand2<StateDiagram> {
 	public CommandAddField() {
 		super(getRegexConcat());
 	}
+	
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+		return pass == ParserPass.THREE;
+	}
+
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandAddField.class.getName(), RegexLeaf.start(), //
@@ -68,7 +75,7 @@ public class CommandAddField extends SingleLineCommand2<StateDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg)
+	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 		final String codeString = arg.getLazzy("CODE", 0);
 

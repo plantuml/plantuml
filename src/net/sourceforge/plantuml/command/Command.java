@@ -41,10 +41,12 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public interface Command<D extends Diagram> {
 
-	CommandExecutionResult execute(D diagram, BlocLines lines) throws NoSuchColorException;
+	CommandExecutionResult execute(D diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException;
 
 	CommandControl isValid(BlocLines lines);
 
 	String[] getDescription();
+	
+	boolean isEligibleFor(ParserPass pass);	
 
 }

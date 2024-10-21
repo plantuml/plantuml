@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.statediagram.command;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -51,6 +52,11 @@ public class CommandEndState extends SingleLineCommand2<StateDiagram> {
 		super(getRegexConcat());
 	}
 
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+		return pass == ParserPass.ONE || pass == ParserPass.TWO || pass == ParserPass.THREE;
+	}
+
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandEndState.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("(end[%s]?state|\\})"), //
@@ -58,7 +64,8 @@ public class CommandEndState extends SingleLineCommand2<StateDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final Entity currentPackage = diagram.getCurrentGroup();
 		if (currentPackage == null || currentPackage.isRoot())
 			return CommandExecutionResult.error("No inner state defined");

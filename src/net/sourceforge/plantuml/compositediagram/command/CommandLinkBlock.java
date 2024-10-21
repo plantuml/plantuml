@@ -38,6 +38,7 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArg;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.compositediagram.CompositeDiagram;
 import net.sourceforge.plantuml.decoration.LinkDecor;
@@ -76,7 +77,7 @@ public class CommandLinkBlock extends SingleLineCommand2<CompositeDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final String ent1 = arg.get("ENT1", 0);
 		final String ent2 = arg.get("ENT2", 0);
 		final Quark<Entity> quark1 = diagram.quarkInContext(true, diagram.cleanId(ent1));

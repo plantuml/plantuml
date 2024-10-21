@@ -35,13 +35,16 @@
  */
 package net.sourceforge.plantuml.statediagram;
 
+import java.util.EnumSet;
 import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
@@ -55,6 +58,11 @@ public class StateDiagram extends AbstractEntityDiagram {
 	public StateDiagram(UmlSource source, Map<String, String> skinParam) {
 		super(source, UmlDiagramType.STATE, skinParam);
 		setNamespaceSeparator(".");
+	}
+
+	@Override
+	public Set<ParserPass> getRequiredPass() {
+		return EnumSet.of(ParserPass.ONE, ParserPass.TWO, ParserPass.THREE);
 	}
 
 	public boolean checkConcurrentStateOk(Quark<Entity> code) {
@@ -172,28 +180,18 @@ public class StateDiagram extends AbstractEntityDiagram {
 		return result;
 	}
 
-	public boolean concurrentState(char direction) {
+	public boolean concurrentState(char direction, ParserPass currentPass) {
 		final Entity cur = getCurrentGroup();
 		getCurrentGroup().setConcurrentSeparator(direction);
 
 		if (cur.getGroupType() == GroupType.CONCURRENT_STATE)
 			super.endGroup();
 
-		final String tmp1 = this.getUniqueSequence(CONCURRENT_PREFIX);
+		final String tmp1 = this.getUniqueSequence2(CONCURRENT_PREFIX);
 		final Quark<Entity> ident1 = quarkInContext(true, cleanId(tmp1));
 
 		gotoGroup(ident1, Display.create(""), GroupType.CONCURRENT_STATE);
 		getCurrentGroup().setConcurrentSeparator(direction);
-//		// final Entity conc1 = getCurrentGroup();
-//		if (cur.getGroupType() == GroupType.STATE) {
-//
-////			moveAllChildOfToAnewFather(cur.getQuark(), conc1.getQuark());
-////			super.endGroup();
-//
-//			final String tmp2 = this.getUniqueSequence(CONCURRENT_PREFIX);
-//			final Quark<Entity> ident2 = quarkInContext(tmp2, false);
-//			gotoGroup(ident2, Display.create(""), GroupType.CONCURRENT_STATE);
-//		}
 
 		return true;
 	}

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.statediagram.command;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
@@ -66,6 +67,12 @@ public class CommandCreatePackage2 extends SingleLineCommand2<StateDiagram> {
 	public CommandCreatePackage2() {
 		super(getRegexConcat());
 	}
+	
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+		return pass == ParserPass.ONE || pass == ParserPass.TWO || pass == ParserPass.THREE;
+	}
+
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreatePackage2.class.getName(), RegexLeaf.start(), //
@@ -105,7 +112,7 @@ public class CommandCreatePackage2 extends SingleLineCommand2<StateDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg)
+	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 
 		final String idShort = getNotNull(arg, "CODE1", "CODE2");

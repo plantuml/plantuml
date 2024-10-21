@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.help;
 import java.awt.GraphicsEnvironment;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -59,7 +60,7 @@ public class CommandHelpFont extends SingleLineCommand2<Help> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(Help diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(Help diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		diagram.add("<b>Help on font");
 		diagram.add(" ");
 		diagram.add(" The possible font on your system are :");

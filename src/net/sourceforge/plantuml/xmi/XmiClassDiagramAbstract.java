@@ -194,7 +194,7 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 			final Member m = (Member) cs;
 
 			final Element attribute = document.createElement("UML:Attribute");
-			attribute.setAttribute("xmi.id", "att" + classDiagram.getUniqueSequence());
+			attribute.setAttribute("xmi.id", "att" + classDiagram.getUniqueSequence(""));
 			attribute.setAttribute("name", m.getDisplay(false));
 			final VisibilityModifier visibility = m.getVisibilityModifier();
 			if (visibility != null)
@@ -208,7 +208,7 @@ abstract class XmiClassDiagramAbstract implements XmlDiagramTransformer {
 		for (CharSequence cs : entity.getBodier().getMethodsToDisplay()) {
 			final Member m = (Member) cs;
 			final Element operation = document.createElement("UML:Operation");
-			operation.setAttribute("xmi.id", "att" + classDiagram.getUniqueSequence());
+			operation.setAttribute("xmi.id", "att" + classDiagram.getUniqueSequence(""));
 			operation.setAttribute("name", m.getDisplay(false));
 			final VisibilityModifier visibility = m.getVisibilityModifier();
 			if (visibility != null)

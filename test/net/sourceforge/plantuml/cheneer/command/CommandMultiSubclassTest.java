@@ -10,6 +10,7 @@ import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.decoration.LinkMiddleDecor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
@@ -73,13 +74,13 @@ public class CommandMultiSubclassTest {
 
 	@Test
 	void test_executeOverlappingSubclasses() throws NoSuchColorException {
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E1 {"));
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E2 {"));
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E3 {"));
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E4 {"));
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E1 {"), ParserPass.ONE);
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E2 {"), ParserPass.ONE);
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E3 {"), ParserPass.ONE);
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E4 {"), ParserPass.ONE);
 
 		BlocLines lines = BlocLines.singleString("E1 ->- o { E2, E3, E4 }");
-		CommandExecutionResult result = command.execute(diagram, lines);
+		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
 		assertThat(result).matches(CommandExecutionResult::isOk);
 
@@ -108,13 +109,13 @@ public class CommandMultiSubclassTest {
 
 	@Test
 	void test_executeOverlappingSubclassesWithCompulsaryParticipation() throws NoSuchColorException {
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E1 {"));
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E2 {"));
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E3 {"));
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E4 {"));
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E1 {"), ParserPass.ONE);
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E2 {"), ParserPass.ONE);
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E3 {"), ParserPass.ONE);
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E4 {"), ParserPass.ONE);
 
 		BlocLines lines = BlocLines.singleString("E1 =>= o { E2, E3, E4 }");
-		CommandExecutionResult result = command.execute(diagram, lines);
+		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
 		assertThat(result).matches(CommandExecutionResult::isOk);
 
@@ -143,13 +144,13 @@ public class CommandMultiSubclassTest {
 
 	@Test
 	void test_executeCategories() throws NoSuchColorException {
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E1 {"));
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E2 {"));
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E3 {"));
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E4 {"));
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E1 {"), ParserPass.ONE);
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E2 {"), ParserPass.ONE);
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E3 {"), ParserPass.ONE);
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E4 {"), ParserPass.ONE);
 
 		BlocLines lines = BlocLines.singleString("E1 ->- U { E2, E3, E4 }");
-		CommandExecutionResult result = command.execute(diagram, lines);
+		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
 		assertThat(result).matches(CommandExecutionResult::isOk);
 
@@ -178,13 +179,13 @@ public class CommandMultiSubclassTest {
 
 	@Test
 	void test_executeCategoriesWithCompulsaryParticipation() throws NoSuchColorException {
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E1 {"));
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E2 {"));
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E3 {"));
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E4 {"));
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E1 {"), ParserPass.ONE);
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E2 {"), ParserPass.ONE);
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E3 {"), ParserPass.ONE);
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E4 {"), ParserPass.ONE);
 
 		BlocLines lines = BlocLines.singleString("E1 =>= U { E2, E3, E4 }");
-		CommandExecutionResult result = command.execute(diagram, lines);
+		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
 		assertThat(result).matches(CommandExecutionResult::isOk);
 

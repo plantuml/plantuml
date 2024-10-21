@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.compositediagram.command;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.compositediagram.CompositeDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -57,7 +58,7 @@ public class CommandEndPackageBlock extends SingleLineCommand2<CompositeDiagram>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final boolean result = diagram.endGroup();
 		if (result == false)
 			return CommandExecutionResult.error("No inner block defined");

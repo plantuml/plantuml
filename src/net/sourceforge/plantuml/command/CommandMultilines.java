@@ -87,5 +87,11 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 	protected final Pattern2 getStartingPattern() {
 		return starting;
 	}
+	
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+		return pass == ParserPass.ONE;
+	}
+
 
 }

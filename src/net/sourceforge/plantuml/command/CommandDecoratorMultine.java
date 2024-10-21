@@ -54,12 +54,12 @@ public class CommandDecoratorMultine<D extends Diagram> implements Command<D> {
 		this.nbMaxLines = nbMaxLines;
 	}
 
-	public CommandExecutionResult execute(D diagram, BlocLines lines) {
+	public CommandExecutionResult execute(D diagram, BlocLines lines, ParserPass currentPass) {
 		if (removeEmptyColumn)
 			lines = lines.removeEmptyColumns();
 
 		lines = lines.toSingleLineWithHiddenNewLine();
-		return cmd.execute(diagram, lines);
+		return cmd.execute(diagram, lines, currentPass);
 	}
 
 	public CommandControl isValid(BlocLines lines) {
@@ -86,6 +86,11 @@ public class CommandDecoratorMultine<D extends Diagram> implements Command<D> {
 
 	public int getNbMaxLines() {
 		return nbMaxLines;
+	}
+	
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+		return cmd.isEligibleFor(pass);
 	}
 
 }

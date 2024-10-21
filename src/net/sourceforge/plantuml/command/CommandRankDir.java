@@ -59,7 +59,7 @@ public class CommandRankDir extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final String s = StringUtils.goUpperCase(arg.get("DIRECTION", 0)).replace(' ', '_');
 		((SkinParam) diagram.getSkinParam()).setRankdir(Rankdir.valueOf(s));
 		// diagram.setRankdir(Rankdir.valueOf(s));

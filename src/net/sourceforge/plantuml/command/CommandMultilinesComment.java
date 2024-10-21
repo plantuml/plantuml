@@ -54,7 +54,7 @@ public class CommandMultilinesComment extends CommandMultilines<Diagram> {
 		return COMMENT_MULTILINE_END;
 	}
 
-	public CommandExecutionResult execute(final Diagram diagram, BlocLines lines) {
+	public CommandExecutionResult execute(final Diagram diagram, BlocLines lines, ParserPass currentPass) {
 		return CommandExecutionResult.ok();
 	}
 

@@ -11,6 +11,7 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -82,7 +83,7 @@ public class CommandCreateEntityTest {
 	@Test
 	void test_executeWithEntity() throws NoSuchColorException {
 		BlocLines lines = BlocLines.singleString("entity \"display\" as code <<stereo>> {");
-		CommandExecutionResult result = command.execute(diagram, lines);
+		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
 		assertThat(result).matches(CommandExecutionResult::isOk);
 
@@ -98,7 +99,7 @@ public class CommandCreateEntityTest {
 	@Test
 	void test_executeWithRelationship() throws NoSuchColorException {
 		BlocLines lines = BlocLines.singleString("relationship \"display\" as code <<stereo>> {");
-		CommandExecutionResult result = command.execute(diagram, lines);
+		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
 		assertThat(result).matches(CommandExecutionResult::isOk);
 
@@ -114,9 +115,9 @@ public class CommandCreateEntityTest {
 	@Test
 	void test_executeWithEntityWhenAlreadyExists() throws NoSuchColorException {
 		BlocLines lines = BlocLines.singleString("entity \"display\" as code <<stereo>> {");
-		command.execute(diagram, lines);
+		command.execute(diagram, lines, ParserPass.ONE);
 
-		CommandExecutionResult result = command.execute(diagram, lines);
+		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
 		assertThat(result).matches(CommandExecutionResult::isOk);
 	}

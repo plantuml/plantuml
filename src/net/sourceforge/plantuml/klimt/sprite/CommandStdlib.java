@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.klimt.sprite;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -59,7 +60,7 @@ public class CommandStdlib extends SingleLineCommand2<StdlibDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(StdlibDiagram system, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(StdlibDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final String name = arg.get("NAME", 0);
 		system.setStdlibName(name);
 		return CommandExecutionResult.ok();

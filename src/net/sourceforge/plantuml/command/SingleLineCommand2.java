@@ -126,7 +126,7 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		return CommandControl.OK;
 	}
 
-	public final CommandExecutionResult execute(S system, BlocLines lines) {
+	public final CommandExecutionResult execute(S system, BlocLines lines, ParserPass currentPass) {
 		if (syntaxWithFinalBracket() && lines.size() == 2) {
 			assert myTrim(lines.getAt(1)).equals("{");
 			lines = BlocLines.singleString(lines.getFirst().getString() + " {");
@@ -147,7 +147,7 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 			return CommandExecutionResult.error("PSystemError cannot be cast");
 
 		try {
-			return executeArg(system, first.getLocation(), arg);
+			return executeArg(system, first.getLocation(), arg, currentPass);
 		} catch (NoSuchColorException e) {
 			return CommandExecutionResult.badColor();
 		}
@@ -157,7 +157,12 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 		return false;
 	}
 
-	protected abstract CommandExecutionResult executeArg(S system, LineLocation location, RegexResult arg)
+	protected abstract CommandExecutionResult executeArg(S system, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException;
+
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+		return pass == ParserPass.ONE;
+	}
 
 }

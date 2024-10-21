@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.compositediagram.command;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.compositediagram.CompositeDiagram;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -71,7 +72,7 @@ public class CommandCreatePackageBlock extends SingleLineCommand2<CompositeDiagr
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(CompositeDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 
 		String display = arg.get("DISPLAY", 0);
 		final String idShort = arg.get("CODE", 0);

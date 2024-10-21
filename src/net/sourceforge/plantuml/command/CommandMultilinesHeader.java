@@ -57,7 +57,7 @@ public class CommandMultilinesHeader extends CommandMultilines<TitledDiagram> {
 		return "^end[%s]?header$";
 	}
 
-	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines) throws NoSuchColorException {
+	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
 		lines = lines.trim();
 		final Matcher2 m = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		if (m.find() == false) {

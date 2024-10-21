@@ -61,7 +61,7 @@ public class CommandSkinParam extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		try {
 			diagram.setParam(arg.get("NAME", 0), arg.get("VALUE", 0));
 			return CommandExecutionResult.ok();

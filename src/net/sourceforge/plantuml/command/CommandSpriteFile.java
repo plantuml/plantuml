@@ -75,7 +75,7 @@ public class CommandSpriteFile extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		// ::comment when __CORE__
 		final String src = arg.get("FILE", 0);
 		final Sprite sprite;

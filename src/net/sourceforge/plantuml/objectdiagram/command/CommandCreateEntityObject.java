@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.objectdiagram.command;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
@@ -77,7 +78,7 @@ public class CommandCreateEntityObject extends SingleLineCommand2<AbstractClassO
 
 	@Override
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
-			RegexResult arg) throws NoSuchColorException {
+			RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
 		final String idShort = arg.get("NAME", 1);
 
 		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(idShort));

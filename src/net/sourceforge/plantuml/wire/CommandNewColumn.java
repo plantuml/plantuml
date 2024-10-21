@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.wire;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -58,7 +59,7 @@ public class CommandNewColumn extends SingleLineCommand2<WireDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(WireDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final String indent = arg.get("INDENT", 0);
 		return diagram.newColumn(indent);
 	}

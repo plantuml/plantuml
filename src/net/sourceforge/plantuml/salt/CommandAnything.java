@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.salt;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -57,7 +58,7 @@ public class CommandAnything extends SingleLineCommand2<PSystemSalt> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(PSystemSalt diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(PSystemSalt diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final String s = arg.get("ALL", 0);
 		if (diagram.isIamSalt() == false) {
 			if (StringUtils.isEmpty(s)) {

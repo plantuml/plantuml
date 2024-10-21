@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.flowdiagram;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.golem.TileGeometry;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -64,7 +65,7 @@ public class CommandLineSimple extends SingleLineCommand2<FlowDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(FlowDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(FlowDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final String idDest = arg.get("ID_DEST", 0);
 		final String label = arg.get("LABEL", 0);
 		final String orientationString = arg.get("ORIENTATION", 0);

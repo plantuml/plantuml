@@ -96,7 +96,7 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 		return finalVerification();
 	}
 
-	public final CommandExecutionResult execute(S system, BlocLines lines) throws NoSuchColorException {
+	public final CommandExecutionResult execute(S system, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
 		lines = lines.cleanList(strategy);
 		return executeNow(system, lines);
 	}
@@ -114,5 +114,11 @@ public abstract class CommandMultilines3<S extends Diagram> implements Command<S
 	protected final IRegex getStartingPattern() {
 		return starting;
 	}
+	
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+		return pass == ParserPass.ONE;
+	}
+
 
 }

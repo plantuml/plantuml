@@ -39,13 +39,16 @@ import static net.atmp.ImageBuilder.imageBuilder;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.EnumSet;
 import java.util.Objects;
+import java.util.Set;
 
 import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.abel.DisplayPositionned;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.ProtectedCommand;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
@@ -180,10 +183,10 @@ public abstract class AbstractPSystem implements Diagram {
 		return true;
 	}
 
-	public CommandExecutionResult executeCommand(Command cmd, BlocLines lines) {
+	public CommandExecutionResult executeCommand(Command cmd, BlocLines lines, ParserPass currentPass) {
 		cmd = new ProtectedCommand(cmd);
 		try {
-			return cmd.execute(this, lines);
+			return cmd.execute(this, lines, currentPass);
 		} catch (NoSuchColorException e) {
 			return CommandExecutionResult.badColor();
 		}
@@ -253,5 +256,13 @@ public abstract class AbstractPSystem implements Diagram {
 		final UText text = UText.build("Not implemented yet for " + getClass().getName(), fc);
 		ug.apply(new UTranslate(10, 10)).draw(text);
 	}
+
+	public Set<ParserPass> getRequiredPass() {
+		return EnumSet.of(ParserPass.ONE);
+	}
+
+	public void startingPass(ParserPass pass) {
+	}
+
 
 }

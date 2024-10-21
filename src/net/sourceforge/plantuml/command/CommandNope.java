@@ -57,7 +57,7 @@ public class CommandNope extends SingleLineCommand2<Diagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(Diagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(Diagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		return CommandExecutionResult.ok();
 	}
 
