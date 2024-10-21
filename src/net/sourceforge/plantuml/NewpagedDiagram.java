@@ -76,6 +76,7 @@ public class NewpagedDiagram extends AbstractPSystem {
 		return diagrams.get(diagrams.size() - 1);
 	}
 
+	@Override
 	public CommandExecutionResult executeCommand(Command cmd, BlocLines lines) {
 		final int nb = diagrams.size();
 		try {

@@ -87,5 +87,11 @@ public class CommandDecoratorMultine<D extends Diagram> implements Command<D> {
 	public int getNbMaxLines() {
 		return nbMaxLines;
 	}
+	
+	@Override
+	public int getExecutionPass() {
+		return cmd.getExecutionPass();
+	}
+
 
 }

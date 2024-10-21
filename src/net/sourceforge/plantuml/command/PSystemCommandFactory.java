@@ -86,11 +86,12 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 		AbstractPSystem sys = createEmptyDiagram(source, skinParam);
 		final int requiredPassCount = sys.getRequiredPassCount();
 
+		int currentPass = 0;
 		while (it.hasNext()) {
 			if (StartUtils.isArobaseEndDiagram(it.peek().getString())) {
 				return finalizeDiagram(sys, source, it);
 			}
-			sys = executeFewLines(sys, source, it);
+			sys = executeFewLines(sys, source, it, currentPass);
 			if (sys instanceof PSystemError)
 				return sys;
 
@@ -119,7 +120,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 		return sys;
 	}
 
-	private AbstractPSystem executeFewLines(AbstractPSystem sys, UmlSource source, final IteratorCounter2 it) {
+	private AbstractPSystem executeFewLines(AbstractPSystem sys, UmlSource source, final IteratorCounter2 it, int currentPass) {
 		final Step step = getCandidate(it);
 		if (step == null) {
 			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, it.peek().getLocation());

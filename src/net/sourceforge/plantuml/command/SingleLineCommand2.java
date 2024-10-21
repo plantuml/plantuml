@@ -159,5 +159,10 @@ public abstract class SingleLineCommand2<S extends Diagram> implements Command<S
 
 	protected abstract CommandExecutionResult executeArg(S system, LineLocation location, RegexResult arg)
 			throws NoSuchColorException;
+	
+	@Override
+	public int getExecutionPass() {
+		return 0;
+	}
 
 }

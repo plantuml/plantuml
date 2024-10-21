@@ -78,5 +78,11 @@ public class ProtectedCommand<S extends Diagram> implements Command<S> {
 	public String[] getDescription() {
 		return cmd.getDescription();
 	}
+	
+	@Override
+	public int getExecutionPass() {
+		return cmd.getExecutionPass();
+	}
+
 
 }

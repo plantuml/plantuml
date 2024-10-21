@@ -46,5 +46,7 @@ public interface Command<D extends Diagram> {
 	CommandControl isValid(BlocLines lines);
 
 	String[] getDescription();
+	
+	int getExecutionPass();
 
 }

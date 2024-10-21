@@ -76,4 +76,10 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<TitledD
 
 	}
 
+	@Override
+	public int getExecutionPass() {
+		return 0;
+	}
+
+
 }

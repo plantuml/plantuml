@@ -128,5 +128,11 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 	protected final IRegex getStartingPattern() {
 		return starting;
 	}
+	
+	@Override
+	public int getExecutionPass() {
+		return 0;
+	}
+
 
 }
