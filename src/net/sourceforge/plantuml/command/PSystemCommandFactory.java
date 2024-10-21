@@ -120,13 +120,17 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 		return sys;
 	}
 
-	private AbstractPSystem executeFewLines(AbstractPSystem sys, UmlSource source, final IteratorCounter2 it, int currentPass) {
+	private AbstractPSystem executeFewLines(AbstractPSystem sys, UmlSource source, final IteratorCounter2 it,
+			int currentPass) {
 		final Step step = getCandidate(it);
 		if (step == null) {
 			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, it.peek().getLocation());
 			it.next();
 			return PSystemErrorUtils.buildV2(source, err, null, it.getTrace());
 		}
+
+		if (currentPass != step.command.getExecutionPass())
+			return sys;
 
 		final CommandExecutionResult result = sys.executeCommand(step.command, step.blocLines);
 		if (result.isOk() == false) {

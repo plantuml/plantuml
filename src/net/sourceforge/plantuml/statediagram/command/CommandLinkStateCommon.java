@@ -63,6 +63,11 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 	CommandLinkStateCommon(IRegex pattern) {
 		super(pattern);
 	}
+	
+	@Override
+	public int getExecutionPass() {
+		return 1;
+	}
 
 	protected static RegexLeaf getStatePattern(String name) {
 		return new RegexLeaf(name,
