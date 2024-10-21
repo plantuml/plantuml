@@ -72,7 +72,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 	@Override
 	final public Diagram createSystem(UmlSource source, Map<String, String> skinParam) {
-		final IteratorCounter2 it = source.iterator2();
+		IteratorCounter2 it = source.iterator2();
 		final StringLocated startLine = it.next();
 		if (StartUtils.isArobaseStartDiagram(startLine.getString()) == false)
 			throw new UnsupportedOperationException();
@@ -86,16 +86,21 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 		AbstractPSystem sys = createEmptyDiagram(source, skinParam);
 		final int requiredPassCount = sys.getRequiredPassCount();
 
-		int currentPass = 0;
-		while (it.hasNext()) {
-			if (StartUtils.isArobaseEndDiagram(it.peek().getString())) {
-				return finalizeDiagram(sys, source, it);
-			}
-			sys = executeFewLines(sys, source, it, currentPass);
-			if (sys instanceof PSystemError)
-				return sys;
+		for (int currentPass = 0; currentPass < requiredPassCount; currentPass++)
+			while (it.hasNext()) {
+				if (StartUtils.isArobaseEndDiagram(it.peek().getString())) {
+					if (currentPass == requiredPassCount - 1)
+						return finalizeDiagram(sys, source, it);
+					it = source.iterator2();
+					it.next();
+					// For next pass
+					break;
+				}
+				sys = executeFewLines(sys, source, it, currentPass);
+				if (sys instanceof PSystemError)
+					return sys;
 
-		}
+			}
 		return sys;
 
 	}

@@ -56,6 +56,11 @@ public class StateDiagram extends AbstractEntityDiagram {
 		super(source, UmlDiagramType.STATE, skinParam);
 		setNamespaceSeparator(".");
 	}
+	
+	@Override
+	public int getRequiredPassCount() {
+		return 2;
+	}
 
 	public boolean checkConcurrentStateOk(Quark<Entity> code) {
 		final boolean result = checkConcurrentStateOkInternal(code);
