@@ -84,26 +84,11 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 			return buildEmptyError(source, startLine.getLocation(), it.getTrace());
 		}
 		AbstractPSystem sys = createEmptyDiagram(source, skinParam);
+		final int requiredPassCount = sys.getRequiredPassCount();
 
 		while (it.hasNext()) {
 			if (StartUtils.isArobaseEndDiagram(it.peek().getString())) {
-				if (sys == null)
-					return null;
-
-				final String err = sys.checkFinalError();
-				if (err != null) {
-					final LineLocation location = it.next().getLocation();
-					return buildExecutionError(source, err, location, it.getTrace());
-				}
-				if (source.getTotalLineCount() == 2) {
-					final LineLocation location = it.next().getLocation();
-					return buildEmptyError(source, location, it.getTrace());
-				}
-				sys.makeDiagramReady();
-				if (sys.isOk() == false)
-					return null;
-
-				return sys;
+				return finalizeDiagram(sys, source, it);
 			}
 			sys = executeFewLines(sys, source, it);
 			if (sys instanceof PSystemError)
@@ -112,6 +97,26 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 		}
 		return sys;
 
+	}
+
+	private Diagram finalizeDiagram(AbstractPSystem sys, UmlSource source, IteratorCounter2 it) {
+		if (sys == null)
+			return null;
+
+		final String err = sys.checkFinalError();
+		if (err != null) {
+			final LineLocation location = it.next().getLocation();
+			return buildExecutionError(source, err, location, it.getTrace());
+		}
+		if (source.getTotalLineCount() == 2) {
+			final LineLocation location = it.next().getLocation();
+			return buildEmptyError(source, location, it.getTrace());
+		}
+		sys.makeDiagramReady();
+		if (sys.isOk() == false)
+			return null;
+
+		return sys;
 	}
 
 	private AbstractPSystem executeFewLines(AbstractPSystem sys, UmlSource source, final IteratorCounter2 it) {

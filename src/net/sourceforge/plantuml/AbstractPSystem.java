@@ -254,4 +254,8 @@ public abstract class AbstractPSystem implements Diagram {
 		ug.apply(new UTranslate(10, 10)).draw(text);
 	}
 
+	public int getRequiredPassCount() {
+		return 1;
+	}
+
 }
