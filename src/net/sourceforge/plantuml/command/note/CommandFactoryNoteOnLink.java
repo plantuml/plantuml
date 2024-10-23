@@ -142,6 +142,11 @@ public final class CommandFactoryNoteOnLink implements SingleMultiFactoryCommand
 				final BlocLines note = BlocLines.getWithNewlines(arg.get("NOTE", 0));
 				return executeInternal(system, note, arg);
 			}
+			
+			@Override
+			public boolean isEligibleFor(ParserPass pass) {
+				return pass == selectedpass;
+			}
 		};
 	}
 
