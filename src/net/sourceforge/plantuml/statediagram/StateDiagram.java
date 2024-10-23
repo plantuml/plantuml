@@ -180,7 +180,7 @@ public class StateDiagram extends AbstractEntityDiagram {
 		return result;
 	}
 
-	public boolean concurrentState(char direction) {
+	public boolean concurrentState(char direction, ParserPass currentPass) {
 		final Entity cur = getCurrentGroup();
 		getCurrentGroup().setConcurrentSeparator(direction);
 
@@ -192,16 +192,6 @@ public class StateDiagram extends AbstractEntityDiagram {
 
 		gotoGroup(ident1, Display.create(""), GroupType.CONCURRENT_STATE);
 		getCurrentGroup().setConcurrentSeparator(direction);
-//		// final Entity conc1 = getCurrentGroup();
-//		if (cur.getGroupType() == GroupType.STATE) {
-//
-////			moveAllChildOfToAnewFather(cur.getQuark(), conc1.getQuark());
-////			super.endGroup();
-//
-//			final String tmp2 = this.getUniqueSequence(CONCURRENT_PREFIX);
-//			final Quark<Entity> ident2 = quarkInContext(tmp2, false);
-//			gotoGroup(ident2, Display.create(""), GroupType.CONCURRENT_STATE);
-//		}
 
 		return true;
 	}

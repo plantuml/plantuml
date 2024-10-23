@@ -81,7 +81,7 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 			throws NoSuchColorException {
 		final String ent1 = arg.get("ENT1", 0);
 		final String ent2 = arg.get("ENT2", 0);
-		System.err.println("currentPass="+currentPass);
+		System.err.println("CommandLinkStateCommon: currentPass="+currentPass);
 
 		final Entity cl1 = getEntityStart(diagram, ent1);
 		if (cl1 == null)

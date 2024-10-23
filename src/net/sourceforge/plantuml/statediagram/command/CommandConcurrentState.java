@@ -51,6 +51,11 @@ public class CommandConcurrentState extends SingleLineCommand2<StateDiagram> {
 		super(getRegexConcat());
 	}
 
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+		return pass == ParserPass.ONE || pass == ParserPass.TWO;
+	}
+
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandConcurrentState.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", "(--+|\\|\\|+)"), //
@@ -59,7 +64,7 @@ public class CommandConcurrentState extends SingleLineCommand2<StateDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		if (diagram.concurrentState(arg.get("TYPE", 0).charAt(0)))
+		if (diagram.concurrentState(arg.get("TYPE", 0).charAt(0), currentPass))
 			return CommandExecutionResult.ok();
 
 		return CommandExecutionResult.error("Error 42");

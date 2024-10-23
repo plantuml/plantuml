@@ -62,6 +62,12 @@ import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.Position;
 
 public final class CommandFactoryNoteOnLink implements SingleMultiFactoryCommand<CucaDiagram> {
+	
+	private final ParserPass selectedpass;
+
+	public CommandFactoryNoteOnLink(ParserPass selectedpass) {
+		this.selectedpass = selectedpass;
+	}
 
 	private IRegex getRegexConcatSingleLine() {
 		return RegexConcat.build(CommandFactoryNoteOnLink.class.getName() + "single", RegexLeaf.start(), //
@@ -117,6 +123,12 @@ public final class CommandFactoryNoteOnLink implements SingleMultiFactoryCommand
 				}
 				return CommandExecutionResult.error("No note defined");
 			}
+			
+			@Override
+			public boolean isEligibleFor(ParserPass pass) {
+				return pass == selectedpass;
+			}
+
 
 		};
 	}

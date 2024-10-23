@@ -52,6 +52,11 @@ public class CommandEndState extends SingleLineCommand2<StateDiagram> {
 		super(getRegexConcat());
 	}
 
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+		return pass == ParserPass.ONE || pass == ParserPass.TWO;
+	}
+
 	static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandEndState.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("(end[%s]?state|\\})"), //
@@ -59,7 +64,10 @@ public class CommandEndState extends SingleLineCommand2<StateDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+		System.err.println("CommandEndState: currentPass=" + currentPass);
+
 		final Entity currentPackage = diagram.getCurrentGroup();
 		if (currentPackage == null || currentPackage.isRoot())
 			return CommandExecutionResult.error("No inner state defined");

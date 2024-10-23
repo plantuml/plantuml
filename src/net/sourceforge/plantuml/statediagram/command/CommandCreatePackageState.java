@@ -68,6 +68,13 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 	public CommandCreatePackageState() {
 		super(getRegexConcat());
 	}
+	
+
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+		return pass == ParserPass.ONE || pass == ParserPass.TWO;
+	}
+
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreatePackageState.class.getName(), RegexLeaf.start(), //
@@ -113,6 +120,7 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 	@Override
 	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
+		System.err.println("CommandCreatePackageState: currentPass=" + currentPass);
 
 		final String idShort = getNotNull(arg, "CODE1", "CODE2");
 		final Quark<Entity> quark = diagram.quarkInContext(true, idShort);
