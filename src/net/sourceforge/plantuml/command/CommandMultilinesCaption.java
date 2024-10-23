@@ -56,7 +56,7 @@ public class CommandMultilinesCaption extends CommandMultilines<TitledDiagram> {
 		return "^end[%s]?caption$";
 	}
 
-	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines) throws NoSuchColorException {
+	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
 		lines = lines.subExtract(1, 1);
 		lines = lines.removeEmptyColumns();
 		final Display strings = lines.toDisplay();

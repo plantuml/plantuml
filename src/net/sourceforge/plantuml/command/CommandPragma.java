@@ -68,7 +68,7 @@ public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final String name = StringUtils.goLowerCase(arg.get("NAME", 0));
 		final String value = arg.get("VALUE", 0);
 		if (name.equalsIgnoreCase("svgsize")) {

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.project.command;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
@@ -64,7 +65,7 @@ public class CommandColorTask extends SingleLineCommand2<GanttDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg)
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 
 		final String code = arg.get("CODE", 0);

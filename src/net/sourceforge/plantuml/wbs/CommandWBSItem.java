@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.wbs;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
@@ -81,7 +82,7 @@ public class CommandWBSItem extends SingleLineCommand2<WBSDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(WBSDiagram diagram, LineLocation location, RegexResult arg)
+	protected CommandExecutionResult executeArg(WBSDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 		final String type = arg.get("TYPE", 0);
 		final String label = arg.get("LABEL", 0);

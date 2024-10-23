@@ -61,7 +61,7 @@ public class CommandAssumeTransparent extends SingleLineCommand2<TitledDiagram> 
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		// final String type = arg.get("TYPE", 0).toUpperCase();
 		// system.getSkinParam().assumeTransparent(ThemeStyle.valueOf(type));
 		// This is ignored and will be suppressed in some future

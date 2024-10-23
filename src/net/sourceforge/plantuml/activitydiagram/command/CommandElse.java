@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.activitydiagram.command;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -59,7 +60,7 @@ public class CommandElse extends SingleLineCommand2<ActivityDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram system, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(ActivityDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		if (system.getLastEntityConsulted() == null) {
 			return CommandExecutionResult.error("No if for this else");
 		}

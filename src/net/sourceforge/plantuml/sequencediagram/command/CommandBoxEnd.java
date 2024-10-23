@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.sequencediagram.command;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -58,7 +59,7 @@ public class CommandBoxEnd extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		if (diagram.isBoxPending() == false)
 			return CommandExecutionResult.error("Missing starting box");
 

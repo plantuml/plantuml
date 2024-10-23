@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
@@ -101,7 +102,7 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg)
+	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 		final String codeRaw = arg.getLazzy("CODE", 0);
 

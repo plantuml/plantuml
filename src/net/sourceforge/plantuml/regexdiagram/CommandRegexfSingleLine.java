@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.regexdiagram;
 import java.util.Collections;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -62,7 +63,7 @@ public class CommandRegexfSingleLine extends SingleLineCommand2<PSystemRegex> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(PSystemRegex diagram, LineLocation location, RegexResult arg)
+	protected CommandExecutionResult executeArg(PSystemRegex diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 		final String line = arg.get("LINE", 0);
 

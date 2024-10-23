@@ -10,6 +10,7 @@ import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -72,11 +73,11 @@ public class CommandAssociateTest {
 
 	@Test
 	void test_execute() throws NoSuchColorException {
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E1 {"));
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E2 {"));
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E1 {"), ParserPass.ONE);
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E2 {"), ParserPass.ONE);
 
 		BlocLines lines = BlocLines.singleString("E1 -- E2");
-		CommandExecutionResult result = command.execute(diagram, lines);
+		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
 		assertThat(result).matches(CommandExecutionResult::isOk);
 
@@ -90,11 +91,11 @@ public class CommandAssociateTest {
 
 	@Test
 	void test_executeWithCompulsoryParticipation() throws NoSuchColorException {
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E1 {"));
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E2 {"));
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E1 {"), ParserPass.ONE);
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E2 {"), ParserPass.ONE);
 
 		BlocLines lines = BlocLines.singleString("E1 == E2");
-		CommandExecutionResult result = command.execute(diagram, lines);
+		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
 		assertThat(result).matches(CommandExecutionResult::isOk);
 
@@ -108,11 +109,11 @@ public class CommandAssociateTest {
 
 	@Test
 	void test_executeWithCardinality() throws NoSuchColorException {
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E1 {"));
-		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E2 {"));
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E1 {"), ParserPass.ONE);
+		new CommandCreateEntity().execute(diagram, BlocLines.singleString("entity E2 {"), ParserPass.ONE);
 
 		BlocLines lines = BlocLines.singleString("E1 -N- E2");
-		CommandExecutionResult result = command.execute(diagram, lines);
+		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
 		assertThat(result).matches(CommandExecutionResult::isOk);
 

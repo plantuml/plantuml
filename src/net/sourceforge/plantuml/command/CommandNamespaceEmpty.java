@@ -77,7 +77,7 @@ public class CommandNamespaceEmpty extends SingleLineCommand2<ClassDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg)
+	protected CommandExecutionResult executeArg(ClassDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 		final String idShort = arg.get("NAME", 0);
 

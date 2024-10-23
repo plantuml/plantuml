@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
@@ -80,7 +81,7 @@ public class CommandPartition extends SingleLineCommand2<ActivityDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg)
+	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(arg.get("NAME", 0)));
 

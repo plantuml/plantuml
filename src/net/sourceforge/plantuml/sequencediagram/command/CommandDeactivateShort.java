@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.sequencediagram.command;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -61,7 +62,7 @@ public class CommandDeactivateShort extends SingleLineCommand2<SequenceDiagram> 
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, LineLocation location,
-			RegexResult arg2) {
+			RegexResult arg2, ParserPass currentPass) {
 		final AbstractMessage message = sequenceDiagram.getActivatingMessage();
 		if (message == null)
 			return CommandExecutionResult.error("Nothing to deactivate.");

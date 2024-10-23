@@ -67,7 +67,7 @@ public class CommandScale extends SingleLineCommand2<AbstractPSystem> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractPSystem diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(AbstractPSystem diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		double scale = Double.parseDouble(arg.get("SCALE", 0));
 		if (scale == 0)
 			return CommandExecutionResult.error("Scale cannot be zero");

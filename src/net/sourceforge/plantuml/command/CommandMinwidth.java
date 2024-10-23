@@ -58,7 +58,7 @@ public class CommandMinwidth extends SingleLineCommand2<UmlDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final int minwidth = Integer.parseInt(arg.get("VALUE", 0));
 		diagram.setMinwidth(minwidth);
 		return CommandExecutionResult.ok();

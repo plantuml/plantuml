@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.descdiagram.command;
 
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -60,7 +61,7 @@ public class CommandTogether extends SingleLineCommand2<AbstractEntityDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg)
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 		final CommandExecutionResult status = diagram.gotoTogether();
 		return status;

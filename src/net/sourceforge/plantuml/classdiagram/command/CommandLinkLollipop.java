@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArg;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
@@ -113,7 +114,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 
 	@Override
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
-			RegexResult arg) {
+			RegexResult arg, ParserPass currentPass) {
 
 		final String ent1 = arg.get("ENT1", 1);
 		final String ent2 = arg.get("ENT2", 1);

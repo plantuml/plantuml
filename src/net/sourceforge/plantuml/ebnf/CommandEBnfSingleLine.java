@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.ebnf;
 import java.util.Collections;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -84,7 +85,7 @@ public class CommandEBnfSingleLine extends SingleLineCommand2<PSystemEbnf> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(PSystemEbnf diagram, LineLocation location, RegexResult arg)
+	protected CommandExecutionResult executeArg(PSystemEbnf diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 		final String id = arg.get("ID", 0);
 		final String equals = arg.get("EQUALS", 0);

@@ -63,7 +63,7 @@ public class CommandScaleWidthAndHeight extends SingleLineCommand2<AbstractPSyst
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractPSystem diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(AbstractPSystem diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final double width = Double.parseDouble(arg.get("WIDTH", 0));
 		final double height = Double.parseDouble(arg.get("HEIGHT", 0));
 		diagram.setScale(new ScaleWidthAndHeight(width, height));

@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArg;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
@@ -65,9 +66,10 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 	}
 	
 	@Override
-	public int getExecutionPass() {
-		return 1;
+	public boolean isEligibleFor(ParserPass pass) {
+		return pass == ParserPass.TWO;
 	}
+
 
 	protected static RegexLeaf getStatePattern(String name) {
 		return new RegexLeaf(name,
@@ -75,10 +77,11 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg)
+	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 		final String ent1 = arg.get("ENT1", 0);
 		final String ent2 = arg.get("ENT2", 0);
+		System.err.println("currentPass="+currentPass);
 
 		final Entity cl1 = getEntityStart(diagram, ent1);
 		if (cl1 == null)

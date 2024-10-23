@@ -40,6 +40,7 @@ import java.util.List;
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
@@ -77,7 +78,7 @@ public final class CommandConstraintOnLinks extends SingleLineCommand2<CucaDiagr
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg)
+	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 		final List<Link> links = diagram.getTwoLastLinks();
 		if (links == null) {

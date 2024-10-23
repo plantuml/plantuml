@@ -63,7 +63,7 @@ public class CommandScaleMaxWidth extends SingleLineCommand2<AbstractPSystem> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractPSystem diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(AbstractPSystem diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final double width = Double.parseDouble(arg.get("WIDTH", 0));
 		diagram.setScale(new ScaleMaxWidth(width));
 		return CommandExecutionResult.ok();

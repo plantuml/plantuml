@@ -40,6 +40,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
@@ -72,7 +73,7 @@ public class CommandGrouping extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg)
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 		String type = StringUtils.goLowerCase(arg.get("TYPE", 0));
 		final String s = arg.get("COLORS", 0);

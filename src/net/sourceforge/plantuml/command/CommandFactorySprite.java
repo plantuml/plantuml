@@ -83,7 +83,7 @@ public final class CommandFactorySprite implements SingleMultiFactoryCommand<Wit
 
 			@Override
 			protected CommandExecutionResult executeArg(final WithSprite system, LineLocation location,
-					RegexResult arg) {
+					RegexResult arg, ParserPass currentPass) {
 				return executeInternal(system, arg, Arrays.asList((String) arg.get("DATA", 0)));
 			}
 

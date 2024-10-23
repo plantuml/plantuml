@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.command;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.EmbeddedDiagram;
@@ -84,24 +85,23 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 			return buildEmptyError(source, startLine.getLocation(), it.getTrace());
 		}
 		AbstractPSystem sys = createEmptyDiagram(source, skinParam);
-		final int requiredPassCount = sys.getRequiredPassCount();
 
-		for (int currentPass = 0; currentPass < requiredPassCount; currentPass++)
+		final Set<ParserPass> requiredPass = sys.getRequiredPass();
+
+		for (ParserPass pass : requiredPass)
 			while (it.hasNext()) {
 				if (StartUtils.isArobaseEndDiagram(it.peek().getString())) {
-					if (currentPass == requiredPassCount - 1)
-						return finalizeDiagram(sys, source, it);
 					it = source.iterator2();
 					it.next();
 					// For next pass
 					break;
 				}
-				sys = executeFewLines(sys, source, it, currentPass);
+				sys = executeFewLines(sys, source, it, pass);
 				if (sys instanceof PSystemError)
 					return sys;
 
 			}
-		return sys;
+		return finalizeDiagram(sys, source, it);
 
 	}
 
@@ -126,7 +126,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 	}
 
 	private AbstractPSystem executeFewLines(AbstractPSystem sys, UmlSource source, final IteratorCounter2 it,
-			int currentPass) {
+			ParserPass currentPass) {
 		final Step step = getCandidate(it);
 		if (step == null) {
 			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, it.peek().getLocation());
@@ -134,10 +134,10 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 			return PSystemErrorUtils.buildV2(source, err, null, it.getTrace());
 		}
 
-		if (currentPass != step.command.getExecutionPass())
+		if (step.command.isEligibleFor(currentPass) == false)
 			return sys;
 
-		final CommandExecutionResult result = sys.executeCommand(step.command, step.blocLines);
+		final CommandExecutionResult result = sys.executeCommand(step.command, step.blocLines, currentPass);
 		if (result.isOk() == false) {
 			final LineLocation location = ((StringLocated) step.blocLines.getFirst()).getLocation();
 			final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(), result.getScore(),

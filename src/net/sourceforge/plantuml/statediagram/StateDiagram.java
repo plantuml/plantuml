@@ -35,13 +35,16 @@
  */
 package net.sourceforge.plantuml.statediagram;
 
+import java.util.EnumSet;
 import java.util.Map;
+import java.util.Set;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
@@ -56,10 +59,10 @@ public class StateDiagram extends AbstractEntityDiagram {
 		super(source, UmlDiagramType.STATE, skinParam);
 		setNamespaceSeparator(".");
 	}
-	
+
 	@Override
-	public int getRequiredPassCount() {
-		return 2;
+	public Set<ParserPass> getRequiredPass() {
+		return EnumSet.of(ParserPass.ONE, ParserPass.TWO);
 	}
 
 	public boolean checkConcurrentStateOk(Quark<Entity> code) {

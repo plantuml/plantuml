@@ -39,6 +39,7 @@ import java.io.IOException;
 
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -62,7 +63,7 @@ public class CommandSkin extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		try {
 			return diagram.loadSkin(arg.get("SKIN", 0));
 		} catch (IOException e) {

@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.objectdiagram.command;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.cucadiagram.BodierJSon;
 import net.sourceforge.plantuml.json.Json.DefaultHandler;
@@ -82,7 +83,7 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractClas
 
 	@Override
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
-			RegexResult arg) throws NoSuchColorException {
+			RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
 		final String name = arg.get("NAME", 1);
 		final String data = arg.get("DATA", 0);
 		final Entity entity1 = executeArg0(diagram, arg);

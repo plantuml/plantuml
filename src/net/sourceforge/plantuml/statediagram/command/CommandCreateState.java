@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
@@ -108,7 +109,7 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg)
+	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 		final String idShort = arg.getLazzy("CODE", 0);
 

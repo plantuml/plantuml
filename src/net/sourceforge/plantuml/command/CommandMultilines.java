@@ -89,8 +89,8 @@ public abstract class CommandMultilines<S extends Diagram> implements Command<S>
 	}
 	
 	@Override
-	public int getExecutionPass() {
-		return 0;
+	public boolean isEligibleFor(ParserPass pass) {
+		return pass == ParserPass.ONE;
 	}
 
 

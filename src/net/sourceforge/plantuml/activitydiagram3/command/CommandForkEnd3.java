@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.activitydiagram3.ForkStyle;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -79,7 +80,7 @@ public class CommandForkEnd3 extends SingleLineCommand2<ActivityDiagram3> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final String style = arg.get("STYLE", 0);
 		final ForkStyle forkStyle = style.contains("merge") ? ForkStyle.MERGE : ForkStyle.FORK;
 		final String label = arg.get("LABEL", 0);

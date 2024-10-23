@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.activitydiagram3.command;
 
 import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -69,7 +70,7 @@ public class CommandIfLegacy1 extends SingleLineCommand2<ActivityDiagram3> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 
 		diagram.startIf(Display.getWithNewlines(arg.get("TEST", 0)), Display.getWithNewlines(arg.get("WHEN", 0)), null,
 				null, null);

@@ -43,6 +43,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -77,10 +78,10 @@ public class NewpagedDiagram extends AbstractPSystem {
 	}
 
 	@Override
-	public CommandExecutionResult executeCommand(Command cmd, BlocLines lines) {
+	public CommandExecutionResult executeCommand(Command cmd, BlocLines lines, ParserPass currentPass) {
 		final int nb = diagrams.size();
 		try {
-			final CommandExecutionResult tmp = cmd.execute(diagrams.get(nb - 1), lines);
+			final CommandExecutionResult tmp = cmd.execute(diagrams.get(nb - 1), lines, currentPass);
 			if (tmp.getNewDiagram() instanceof NewpagedDiagram) {
 				final NewpagedDiagram new1 = (NewpagedDiagram) tmp.getNewDiagram();
 				// System.err.println("this=" + this);

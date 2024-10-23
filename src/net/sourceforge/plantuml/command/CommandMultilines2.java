@@ -103,7 +103,7 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 		return finalVerification(lines);
 	}
 
-	public final CommandExecutionResult execute(S system, BlocLines lines) {
+	public final CommandExecutionResult execute(S system, BlocLines lines, ParserPass currentPass) {
 		lines = lines.cleanList(strategy);
 		if (syntaxWithFinalBracket())
 			lines = lines.eventuallyMoveBracket();
@@ -130,8 +130,8 @@ public abstract class CommandMultilines2<S extends Diagram> implements Command<S
 	}
 	
 	@Override
-	public int getExecutionPass() {
-		return 0;
+	public boolean isEligibleFor(ParserPass pass) {
+		return pass == ParserPass.ONE;
 	}
 
 

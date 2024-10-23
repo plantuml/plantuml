@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.timingdiagram.command;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -65,7 +66,7 @@ public class CommandScalePixel extends SingleLineCommand2<TimingDiagram> {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg) {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final long tick = Long.parseLong(arg.get("TICK", 0));
 		final long pixel = Long.parseLong(arg.get("PIXEL", 0));
 		if (tick <= 0 || pixel <= 0)

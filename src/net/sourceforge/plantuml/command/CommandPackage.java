@@ -100,7 +100,7 @@ public class CommandPackage extends SingleLineCommand2<AbstractEntityDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg)
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 		String idShort;
 		String display;

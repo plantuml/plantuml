@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.sequencediagram.command;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -60,7 +61,7 @@ public class CommandFootboxOld extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final boolean footbox = arg.get("TYPE", 0).equalsIgnoreCase("on");
 		diagram.setShowFootbox(footbox);
 		return CommandExecutionResult.ok();

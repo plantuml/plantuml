@@ -42,6 +42,7 @@ import java.net.MalformedURLException;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -79,7 +80,7 @@ public class CommandStyleImport extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final String path = arg.get("PATH", 0);
 		try {
 			BlocLines lines = null;

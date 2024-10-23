@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandCreateClassMultilines;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
@@ -136,7 +137,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg)
+	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 		String codeRaw = arg.getLazzy("CODE", 0);
 		String displayRaw = arg.getLazzy("DISPLAY", 0);

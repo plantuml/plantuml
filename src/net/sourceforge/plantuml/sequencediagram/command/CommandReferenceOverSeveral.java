@@ -40,6 +40,7 @@ import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
@@ -80,7 +81,7 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg)
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 		final String s1 = arg.get("REF", 0);
 		final HColor backColorElement = s1 == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s1);

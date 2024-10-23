@@ -56,7 +56,7 @@ public class CommandFootboxIgnored extends SingleLineCommand2<UmlDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		return CommandExecutionResult.ok();
 	}
 }

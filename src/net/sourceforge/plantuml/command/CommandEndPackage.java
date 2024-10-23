@@ -55,7 +55,7 @@ public class CommandEndPackage extends SingleLineCommand2<AbstractEntityDiagram>
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final boolean result = diagram.endGroup();
 		if (result == false) {
 			return CommandExecutionResult.error("No package or namespace defined");

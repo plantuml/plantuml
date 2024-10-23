@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.help;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -58,7 +59,7 @@ public class CommandHelpKeyword extends SingleLineCommand2<Help> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(Help diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(Help diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		diagram.add("<b>Help on keywords");
 		diagram.add(" ");
 		diagram.add(" The possible keywords are :");

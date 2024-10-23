@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import net.sourceforge.plantuml.cheneer.ChenEerDiagram;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.regex.IRegex;
@@ -40,7 +41,7 @@ public class CommandEndGroupTest {
 		diagram.pushOwner(null);
 
 		BlocLines lines = BlocLines.singleString("}");
-		CommandExecutionResult result = command.execute(diagram, lines);
+		CommandExecutionResult result = command.execute(diagram, lines, ParserPass.ONE);
 
 		assertThat(result).matches(CommandExecutionResult::isOk);
 

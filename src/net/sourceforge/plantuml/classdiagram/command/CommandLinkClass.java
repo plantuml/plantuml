@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArg;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
@@ -169,7 +170,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 	@Override
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
-			RegexResult arg) throws NoSuchColorException {
+			RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
 		String ent1String = diagram.cleanId(arg.get("ENT1", 0));
 		String ent2String = diagram.cleanId(arg.get("ENT2", 0));
 		if (ent1String == null && ent2String == null)

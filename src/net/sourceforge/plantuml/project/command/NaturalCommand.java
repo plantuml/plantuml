@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.project.command;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.project.lang.Sentence;
@@ -52,7 +53,7 @@ public class NaturalCommand<D extends Diagram> extends SingleLineCommand2<D> {
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(D system, LineLocation location, RegexResult arg) {
+	final protected CommandExecutionResult executeArg(D system, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		return sentence.execute(system, arg);
 	}
 

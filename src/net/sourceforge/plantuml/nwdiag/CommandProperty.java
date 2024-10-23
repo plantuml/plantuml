@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.nwdiag;
 
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -66,7 +67,7 @@ public class CommandProperty extends SingleLineCommand2<NwDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg) {
+	protected CommandExecutionResult executeArg(NwDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		return diagram.setProperty(arg.get("NAME", 0), arg.get("VALUE", 0));
 	}
 
