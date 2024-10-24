@@ -1,0 +1,101 @@
+@startuml
+skinparam rectangle {
+    BackgroundColor LightGray
+    BorderColor Black
+}
+
+rectangle "Comprehensive Automated Document Verification System" {
+    rectangle "1. Technological Feasibility" {
+        rectangle "OCR" as OCR {
+            : Mature Technology;
+            : Can handle various formats;
+            : High accuracy with AI;
+        }
+        rectangle "AI & Machine Learning" as AI {
+            : Pattern Recognition;
+            : Fraud Detection;
+            : Adapts over time;
+        }
+        rectangle "Blockchain Technology" as Blockchain {
+            : Secure document verification;
+            : Tamper-proof storage;
+            : High complexity and cost;
+        }
+    }
+
+    rectangle "2. Operational Feasibility" {
+        rectangle "Ease of Integration" as Integration {
+            : API-based integration;
+            : Seamless adoption by organizations;
+        }
+        rectangle "Scalability" as Scalability {
+            : Microservices architecture;
+            : Cloud infrastructure;
+            : Handles large volumes;
+        }
+        rectangle "User-Friendliness" as UI {
+            : Simple UI;
+            : Easy document upload;
+            : Mobile app support;
+        }
+    }
+
+    rectangle "3. Security and Compliance" {
+        rectangle "Data Security" as Security {
+            : End-to-end encryption;
+            : Secure access control;
+            : Blockchain tamper-proof;
+        }
+        rectangle "Fraud Detection" as FraudDetection {
+            : AI-driven detection;
+            : Identifies forged documents;
+            : Ensures document integrity;
+        }
+    }
+
+    rectangle "4. Market Demand" {
+        rectangle "Government and Regulatory Use" as Government {
+            : Combat identity fraud;
+            : Streamline public services;
+            : Enhance security;
+        }
+        rectangle "Financial Institutions" as Finance {
+            : Accurate identity verification;
+            : Prevent fraud and money laundering;
+        }
+        rectangle "Education & Employment" as Education {
+            : Verify certificates and credentials;
+            : Ensure authenticity;
+        }
+    }
+
+    rectangle "5. Cost and Resource Requirements" {
+        rectangle "Initial Costs" as InitialCost {
+            : Infrastructure setup;
+            : AI model training;
+            : Blockchain integration;
+        }
+        rectangle "Operational Costs" as OperationalCost {
+            : Cloud hosting;
+            : AI model maintenance;
+            : Document database updates;
+        }
+    }
+
+    rectangle "6. Challenges" {
+        rectangle "Accuracy Issues" as Accuracy {
+            : Low-quality documents;
+            : Complex languages;
+            : Needs ongoing improvement;
+        }
+        rectangle "Blockchain Limitations" as BlockchainLimitations {
+            : High cost for large metadata storage;
+            : Resource-intensive;
+        }
+        rectangle "Data Privacy Concerns" as Privacy {
+            : Concerns over sensitive data storage;
+            : Varies by jurisdiction;
+        }
+    }
+}
+@enduml
