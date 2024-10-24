@@ -72,7 +72,7 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 
 	@Override
 	public boolean isEligibleFor(ParserPass pass) {
-		return pass == ParserPass.ONE || pass == ParserPass.TWO;
+		return pass == ParserPass.ONE || pass == ParserPass.TWO || pass == ParserPass.THREE;
 	}
 
 

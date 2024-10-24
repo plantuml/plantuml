@@ -56,6 +56,12 @@ public class CommandAddField extends SingleLineCommand2<StateDiagram> {
 	public CommandAddField() {
 		super(getRegexConcat());
 	}
+	
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+		return pass == ParserPass.THREE;
+	}
+
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandAddField.class.getName(), RegexLeaf.start(), //

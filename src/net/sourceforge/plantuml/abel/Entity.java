@@ -160,7 +160,7 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		if (quark.isRoot())
 			this.uid = "clroot";
 		else
-			this.uid = StringUtils.getUid("cl", diagram.getUniqueSequence());
+			this.uid = StringUtils.getUid("cl", diagram.getUniqueSequenceValue());
 		this.bodier = bodier;
 		this.rawLayout = rawLayout;
 		this.quark.setData(this);

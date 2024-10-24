@@ -104,7 +104,7 @@ public class DescriptionDiagramFactory extends PSystemCommandFactory {
 						new RegexLeaf("\\((?!\\*\\))[^\\)]+\\)"), //
 						new RegexLeaf(":[^:]+:"), //
 						new RegexLeaf("[%g][^%g]+[%g]") //
-				));
+				), ParserPass.ONE);
 		cmds.add(factoryNoteOnEntityCommand.createSingleLine());
 
 		cmds.add(factoryNoteCommand.createSingleLine());

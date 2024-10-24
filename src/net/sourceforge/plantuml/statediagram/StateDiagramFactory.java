@@ -90,7 +90,7 @@ public class StateDiagramFactory extends PSystemCommandFactory {
 		final CommandFactoryNoteOnEntity factoryNoteOnEntityCommand = new CommandFactoryNoteOnEntity("state",
 				new RegexOr("ENTITY", new RegexLeaf("[%pLN_.]+"), //
 						new RegexLeaf("[%g][^%g]+[%g]") //
-				));
+				), ParserPass.THREE);
 		cmds.add(factoryNoteOnEntityCommand.createMultiLine(true));
 		cmds.add(factoryNoteOnEntityCommand.createMultiLine(false));
 

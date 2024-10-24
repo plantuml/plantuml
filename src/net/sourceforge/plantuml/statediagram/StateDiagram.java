@@ -62,7 +62,7 @@ public class StateDiagram extends AbstractEntityDiagram {
 
 	@Override
 	public Set<ParserPass> getRequiredPass() {
-		return EnumSet.of(ParserPass.ONE, ParserPass.TWO);
+		return EnumSet.of(ParserPass.ONE, ParserPass.TWO, ParserPass.THREE);
 	}
 
 	public boolean checkConcurrentStateOk(Quark<Entity> code) {
@@ -187,7 +187,8 @@ public class StateDiagram extends AbstractEntityDiagram {
 		if (cur.getGroupType() == GroupType.CONCURRENT_STATE)
 			super.endGroup();
 
-		final String tmp1 = this.getUniqueSequence(CONCURRENT_PREFIX);
+		final String tmp1 = this.getUniqueSequence2(CONCURRENT_PREFIX);
+		System.err.println("*****concurrentState " + tmp1 + " " + currentPass);
 		final Quark<Entity> ident1 = quarkInContext(true, cleanId(tmp1));
 
 		gotoGroup(ident1, Display.create(""), GroupType.CONCURRENT_STATE);

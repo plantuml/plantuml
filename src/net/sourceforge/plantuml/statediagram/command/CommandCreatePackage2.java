@@ -67,6 +67,12 @@ public class CommandCreatePackage2 extends SingleLineCommand2<StateDiagram> {
 	public CommandCreatePackage2() {
 		super(getRegexConcat());
 	}
+	
+	@Override
+	public boolean isEligibleFor(ParserPass pass) {
+		return pass == ParserPass.ONE || pass == ParserPass.TWO || pass == ParserPass.THREE;
+	}
+
 
 	private static IRegex getRegexConcat() {
 		return RegexConcat.build(CommandCreatePackage2.class.getName(), RegexLeaf.start(), //

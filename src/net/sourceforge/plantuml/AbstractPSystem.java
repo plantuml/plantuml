@@ -261,5 +261,8 @@ public abstract class AbstractPSystem implements Diagram {
 		return EnumSet.of(ParserPass.ONE);
 	}
 
+	public void startingPass(ParserPass pass) {
+	}
+
 
 }

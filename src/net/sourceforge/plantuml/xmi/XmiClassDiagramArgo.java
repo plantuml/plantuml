@@ -95,7 +95,7 @@ public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements XmlD
 		if (link.isHidden() || link.isInvis())
 			return;
 
-		final String assId = "ass" + classDiagram.getUniqueSequence();
+		final String assId = "ass" + classDiagram.getUniqueSequence("");
 		if (link.getType().getDecor1() == LinkDecor.EXTENDS || link.getType().getDecor2() == LinkDecor.EXTENDS) {
 			addExtension(link, assId);
 			return;
@@ -108,7 +108,7 @@ public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements XmlD
 
 		final Element connection = document.createElement("UML:Association.connection");
 		final Element end1 = document.createElement("UML:AssociationEnd");
-		end1.setAttribute("xmi.id", "end" + classDiagram.getUniqueSequence());
+		end1.setAttribute("xmi.id", "end" + classDiagram.getUniqueSequence(""));
 		end1.setAttribute("association", assId);
 		end1.setAttribute("type", link.getEntity1().getUid());
 		if (link.getQuantifier1() != null)
@@ -126,7 +126,7 @@ public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements XmlD
 		connection.appendChild(end1);
 
 		final Element end2 = document.createElement("UML:AssociationEnd");
-		end2.setAttribute("xmi.id", "end" + classDiagram.getUniqueSequence());
+		end2.setAttribute("xmi.id", "end" + classDiagram.getUniqueSequence(""));
 		end2.setAttribute("association", assId);
 		end2.setAttribute("type", link.getEntity2().getUid());
 		if (link.getQuantifier2() != null)
@@ -189,7 +189,7 @@ public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements XmlD
 		if (link.isHidden() || link.isInvis())
 			return;
 
-		final String assId = "ass" + classDiagram.getUniqueSequence();
+		final String assId = "ass" + classDiagram.getUniqueSequence("");
 
 		final Element association = document.createElement("UML:Association");
 		association.setAttribute("xmi.id", assId);
@@ -200,7 +200,7 @@ public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements XmlD
 
 		final Element connection = document.createElement("UML:Association.connection");
 		final Element end1 = document.createElement("UML:AssociationEnd");
-		end1.setAttribute("xmi.id", "end" + classDiagram.getUniqueSequence());
+		end1.setAttribute("xmi.id", "end" + classDiagram.getUniqueSequence(""));
 		end1.setAttribute("association", assId);
 		end1.setAttribute("type", link.getEntity1().getUid());
 		if (link.getQuantifier1() != null)
@@ -223,7 +223,7 @@ public class XmiClassDiagramArgo extends XmiClassDiagramAbstract implements XmlD
 		connection.appendChild(end1);
 
 		final Element end2 = document.createElement("UML:AssociationEnd");
-		end2.setAttribute("xmi.id", "end" + classDiagram.getUniqueSequence());
+		end2.setAttribute("xmi.id", "end" + classDiagram.getUniqueSequence(""));
 		end2.setAttribute("association", assId);
 		end2.setAttribute("type", link.getEntity2().getUid());
 		if (link.getQuantifier2() != null)

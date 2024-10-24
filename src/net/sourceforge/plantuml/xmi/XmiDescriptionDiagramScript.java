@@ -62,7 +62,7 @@ public class XmiDescriptionDiagramScript extends XmiDescriptionDiagramAbstract {
 			return;
 		}
 
-		final String assId = "ass" + diagram.getUniqueSequence();
+		final String assId = "ass" + diagram.getUniqueSequence("");
 
 		UMLAggregationKind aggregation = UMLAggregationKind.None;
 		if (link.getType().getDecor1() == LinkDecor.COMPOSITION) {
@@ -102,7 +102,7 @@ public class XmiDescriptionDiagramScript extends XmiDescriptionDiagramAbstract {
 	private Element createAssociationEnd(final String assId, final LinkDecor decor, final String quantifier,
 			Entity entity, UMLAggregationKind aggregation) {
 		final Element end = document.createElement("UML:AssociationEnd");
-		end.setAttribute("xmi.id", "end" + diagram.getUniqueSequence());
+		end.setAttribute("xmi.id", "end" + diagram.getUniqueSequence(""));
 		end.setAttribute("association", assId);
 
 //		end1.setAttribute("type", link.getEntity1().getUid());

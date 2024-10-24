@@ -123,7 +123,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 		final Entity cl2;
 		final Entity normalEntity;
 
-		final String suffix = "lol" + diagram.getUniqueSequence();
+		final String suffix = "lol" + diagram.getUniqueSequence("");
 		if (arg.get("LOL_THEN_ENT", 1) == null) {
 
 			final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(ent1));

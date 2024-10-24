@@ -88,7 +88,8 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 		final Set<ParserPass> requiredPass = sys.getRequiredPass();
 
-		for (ParserPass pass : requiredPass)
+		for (ParserPass pass : requiredPass) {
+			sys.startingPass(pass);
 			while (it.hasNext()) {
 				if (StartUtils.isArobaseEndDiagram(it.peek().getString())) {
 					it = source.iterator2();
@@ -99,8 +100,8 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 				sys = executeFewLines(sys, source, it, pass);
 				if (sys instanceof PSystemError)
 					return sys;
-
 			}
+		}
 		return finalizeDiagram(sys, source, it);
 
 	}

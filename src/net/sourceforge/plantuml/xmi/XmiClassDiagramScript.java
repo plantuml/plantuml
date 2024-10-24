@@ -138,7 +138,7 @@ public class XmiClassDiagramScript extends XmiClassDiagramAbstract implements Xm
 			return;
 		}
 
-		final String assId = "ass" + classDiagram.getUniqueSequence();
+		final String assId = "ass" + classDiagram.getUniqueSequence("");
 		if (link.getType().getDecor1() == LinkDecor.EXTENDS || link.getType().getDecor2() == LinkDecor.EXTENDS) {
 			addExtension(link, assId);
 			return;
@@ -182,7 +182,7 @@ public class XmiClassDiagramScript extends XmiClassDiagramAbstract implements Xm
 	private Element createAssociationEnd(final String assId, final LinkDecor decor, final String quantifier,
 			Entity entity, UMLAggregationKind aggregation) {
 		final Element end = document.createElement("UML:AssociationEnd");
-		end.setAttribute("xmi.id", "end" + classDiagram.getUniqueSequence());
+		end.setAttribute("xmi.id", "end" + classDiagram.getUniqueSequence(""));
 		end.setAttribute("association", assId);
 
 //		end1.setAttribute("type", link.getEntity1().getUid());

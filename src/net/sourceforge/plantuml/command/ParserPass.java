@@ -36,6 +36,6 @@
 package net.sourceforge.plantuml.command;
 
 public enum ParserPass {
-	ONE, TWO
+	ONE, TWO, THREE
 
 }
