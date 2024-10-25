@@ -43,6 +43,8 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -84,6 +86,9 @@ public class CommandClock extends SingleLineCommand2<TimingDiagram> {
 						RegexLeaf.spaceOneOrMore(), //
 						new RegexLeaf("OFFSET", "([0-9]+)") //
 				)), //
+				RegexLeaf.spaceZeroOrMore(), //
+				StereotypePattern.optional("STEREO"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				RegexLeaf.end());
 	}
 
@@ -97,7 +102,11 @@ public class CommandClock extends SingleLineCommand2<TimingDiagram> {
 		String full = arg.get("FULL", 0);
 		if (full == null)
 			full = "";
-		return diagram.createClock(code, full, period, pulse, offset, compact != null);
+		final String stereotypeString = arg.get("STEREO", 0);
+		Stereotype stereotype = null;
+		if (stereotypeString != null)
+			stereotype = Stereotype.build(stereotypeString);
+		return diagram.createClock(code, full, period, pulse, offset, compact != null, stereotype);
 	}
 
 	private int getInt(String value) {
