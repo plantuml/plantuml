@@ -113,8 +113,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#executeNow(net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram,net.sourceforge.plantuml.utils.BlocLines)" class="member-name-link">executeNow</a><wbr>(<a href="../AbstractClassOrObjectDiagram.html" title="class in net.sourceforge.plantuml.objectdiagram">AbstractClassOrObjectDiagram</a>&nbsp;diagram,
- <a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#executeNow(net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram,net.sourceforge.plantuml.utils.BlocLines,net.sourceforge.plantuml.command.ParserPass)" class="member-name-link">executeNow</a><wbr>(<a href="../AbstractClassOrObjectDiagram.html" title="class in net.sourceforge.plantuml.objectdiagram">AbstractClassOrObjectDiagram</a>&nbsp;diagram,
+ <a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines,
+ <a href="../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPatternEnd()" class="member-name-link">getPatternEnd</a>()</code></div>
@@ -164,14 +165,15 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="executeNow(net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram,net.sourceforge.plantuml.utils.BlocLines)">
+<section class="detail" id="executeNow(net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram,net.sourceforge.plantuml.utils.BlocLines,net.sourceforge.plantuml.command.ParserPass)">
 <h3>executeNow</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></span>&nbsp;<span class="element-name">executeNow</span><wbr><span class="parameters">(<a href="../AbstractClassOrObjectDiagram.html" title="class in net.sourceforge.plantuml.objectdiagram">AbstractClassOrObjectDiagram</a>&nbsp;diagram,
- <a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines)</span>
+ <a href="../../utils/BlocLines.html" title="class in net.sourceforge.plantuml.utils">BlocLines</a>&nbsp;lines,
+ <a href="../../command/ParserPass.html" title="enum class in net.sourceforge.plantuml.command">ParserPass</a>&nbsp;currentPass)</span>
                                      throws <span class="exceptions"><a href="../../klimt/color/NoSuchColorException.html" title="class in net.sourceforge.plantuml.klimt.color">NoSuchColorException</a></span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../command/CommandMultilines2.html#executeNow(S,net.sourceforge.plantuml.utils.BlocLines)">executeNow</a></code>&nbsp;in class&nbsp;<code><a href="../../command/CommandMultilines2.html" title="class in net.sourceforge.plantuml.command">CommandMultilines2</a>&lt;<a href="../AbstractClassOrObjectDiagram.html" title="class in net.sourceforge.plantuml.objectdiagram">AbstractClassOrObjectDiagram</a>&gt;</code></dd>
+<dd><code><a href="../../command/CommandMultilines2.html#executeNow(S,net.sourceforge.plantuml.utils.BlocLines,net.sourceforge.plantuml.command.ParserPass)">executeNow</a></code>&nbsp;in class&nbsp;<code><a href="../../command/CommandMultilines2.html" title="class in net.sourceforge.plantuml.command">CommandMultilines2</a>&lt;<a href="../AbstractClassOrObjectDiagram.html" title="class in net.sourceforge.plantuml.objectdiagram">AbstractClassOrObjectDiagram</a>&gt;</code></dd>
 <dt>Throws:</dt>
 <dd><code><a href="../../klimt/color/NoSuchColorException.html" title="class in net.sourceforge.plantuml.klimt.color">NoSuchColorException</a></code></dd>
 </dl>
