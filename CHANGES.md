@@ -18,6 +18,11 @@
 - https://github.com/plantuml/plantuml/issues/1949
 - https://forum.plantuml.net/15614/style-sequence-allow-stereotype-for-arrow-sequence-diagram
 - https://forum.plantuml.net/15612/style-sequence-allow-linestyle-for-arrow-sequence-diagram
+- https://github.com/plantuml/plantuml/pull/1960
+- https://forum.plantuml.net/15873/style-timing-allow-stereotype-on-timing-diagram?show=18866#c18866
+- https://forum.plantuml.net/18864/can-we-have-2-or-more-colors-for-clocks-in-timing-diagrams
+- https://github.com/plantuml/plantuml/issues/1950
+- https://github.com/plantuml/plantuml/issues/1951
 
 ## V1.2024.7 (Sep 9, 2024)
 
