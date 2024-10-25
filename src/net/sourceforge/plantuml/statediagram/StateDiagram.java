@@ -143,7 +143,7 @@ public class StateDiagram extends AbstractEntityDiagram {
 		final Quark<Entity> ident = quarkInContext(true, tmp);
 		final Entity result;
 		if (ident.getData() == null)
-			result = reallyCreateLeaf(ident, Display.getWithNewlines(ident), LeafType.PSEUDO_STATE, null);
+			result = reallyCreateLeaf(ident, Display.getWithNewlines(""), LeafType.PSEUDO_STATE, null);
 		else
 			result = ident.getData();
 		endGroup();
@@ -175,7 +175,11 @@ public class StateDiagram extends AbstractEntityDiagram {
 		final Entity g = getCurrentGroup();
 		final String tmp = "*deephistory*" + g.getName();
 		final Quark<Entity> ident = quarkInContext(true, cleanId(tmp));
-		final Entity result = reallyCreateLeaf(ident, Display.getWithNewlines(""), LeafType.DEEP_HISTORY, null);
+		final Entity result;
+		if (ident.getData() == null)
+			result = reallyCreateLeaf(ident, Display.getWithNewlines(""), LeafType.DEEP_HISTORY, null);
+		else
+			result = ident.getData();
 		endGroup();
 		return result;
 	}
