@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
@@ -93,7 +94,7 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines)
+	protected CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
 		lines = lines.trim();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());

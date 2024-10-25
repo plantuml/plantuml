@@ -70,7 +70,7 @@ public class CommandSpriteSvgMultiline extends CommandMultilines2<TitledDiagram>
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(TitledDiagram system, BlocLines lines) throws NoSuchColorException {
+	protected CommandExecutionResult executeNow(TitledDiagram system, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
 
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final String svgStart = line0.get("SVGSTART", 0);

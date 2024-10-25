@@ -120,7 +120,8 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 				return "^[%s]*end[%s]?note$";
 			}
 
-			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines)
+			@Override
+			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines, ParserPass currentPass)
 					throws NoSuchColorException {
 				// StringUtils.trim(lines, false);
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());

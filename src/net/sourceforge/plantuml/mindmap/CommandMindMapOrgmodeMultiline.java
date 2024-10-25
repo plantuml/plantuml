@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
@@ -75,7 +76,7 @@ public class CommandMindMapOrgmodeMultiline extends CommandMultilines2<MindMapDi
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(MindMapDiagram diagram, BlocLines lines) throws NoSuchColorException {
+	protected CommandExecutionResult executeNow(MindMapDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 
 		final List<String> lineLast = StringUtils.getSplit(MyPattern.cmpile(getPatternEnd()),

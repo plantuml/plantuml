@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
@@ -87,7 +88,7 @@ public class CommandParticipantMultilines extends CommandMultilines2<SequenceDia
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(SequenceDiagram diagram, BlocLines lines) throws NoSuchColorException {
+	protected CommandExecutionResult executeNow(SequenceDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
 
 		final RegexResult arg = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 

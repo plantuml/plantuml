@@ -120,7 +120,8 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 				return "^end[%s]?(note|hnote|rnote)$";
 			}
 
-			protected CommandExecutionResult executeNow(final SequenceDiagram system, BlocLines lines)
+			@Override
+			protected CommandExecutionResult executeNow(final SequenceDiagram system, BlocLines lines, ParserPass currentPass)
 					throws NoSuchColorException {
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);

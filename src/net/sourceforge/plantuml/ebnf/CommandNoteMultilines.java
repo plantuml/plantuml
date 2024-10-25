@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.ebnf;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
@@ -74,7 +75,7 @@ public class CommandNoteMultilines extends CommandMultilines2<PSystemEbnf> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(PSystemEbnf diagram, BlocLines lines) throws NoSuchColorException {
+	protected CommandExecutionResult executeNow(PSystemEbnf diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		lines = lines.subExtract(1, 1);
 		lines = lines.removeEmptyColumns();

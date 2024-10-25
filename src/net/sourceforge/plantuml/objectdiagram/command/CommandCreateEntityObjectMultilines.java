@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
@@ -86,7 +87,7 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(AbstractClassOrObjectDiagram diagram, BlocLines lines)
+	protected CommandExecutionResult executeNow(AbstractClassOrObjectDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
 		lines = lines.trim().removeEmptyLines();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());

@@ -112,7 +112,8 @@ public final class CommandFactoryNoteOnLink implements SingleMultiFactoryCommand
 				return "^end[%s]?note$";
 			}
 
-			protected CommandExecutionResult executeNow(final CucaDiagram system, BlocLines lines)
+			@Override
+			protected CommandExecutionResult executeNow(final CucaDiagram system, BlocLines lines, ParserPass currentPass)
 					throws NoSuchColorException {
 				final String line0 = lines.getFirst().getTrimmed().getString();
 				lines = lines.subExtract(1, 1);

@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
@@ -114,7 +115,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines)
+	protected CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
 		lines = lines.trim();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());

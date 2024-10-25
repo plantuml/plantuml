@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -69,7 +70,8 @@ public class CommandStyleMultilinesCSS extends CommandMultilines2<TitledDiagram>
 		);
 	}
 
-	protected CommandExecutionResult executeNow(TitledDiagram diagram, BlocLines lines) {
+	@Override
+	protected CommandExecutionResult executeNow(TitledDiagram diagram, BlocLines lines, ParserPass currentPass) {
 		try {
 			final StyleBuilder styleBuilder = diagram.getSkinParam().getCurrentStyleBuilder();
 			for (Style modifiedStyle : StyleParser.parse(lines.subExtract(1, 1), styleBuilder))

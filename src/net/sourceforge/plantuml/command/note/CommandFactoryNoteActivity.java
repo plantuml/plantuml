@@ -100,7 +100,8 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 				return "^[%s]*end[%s]?note$";
 			}
 
-			public final CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines)
+			@Override
+			public final CommandExecutionResult executeNow(final ActivityDiagram diagram, BlocLines lines, ParserPass currentPass)
 					throws NoSuchColorException {
 				// StringUtils.trim(lines, true);
 				final RegexResult arg = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());

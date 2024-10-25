@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.activitydiagram3.ActivityDiagram3;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
@@ -74,7 +75,7 @@ public class CommandArrowLong3 extends CommandMultilines2<ActivityDiagram3> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines) throws NoSuchColorException {
+	protected CommandExecutionResult executeNow(ActivityDiagram3 diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
 		lines = lines.removeEmptyColumns();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		// final HtmlColor color =

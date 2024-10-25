@@ -120,7 +120,8 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 				return "^[%s]*end[%s]?note$";
 			}
 
-			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines)
+			@Override
+			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines, ParserPass currentPass)
 					throws NoSuchColorException {
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);

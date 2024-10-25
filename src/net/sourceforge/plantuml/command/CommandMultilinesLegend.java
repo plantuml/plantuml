@@ -77,7 +77,7 @@ public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(TitledDiagram diagram, BlocLines lines) throws NoSuchColorException {
+	protected CommandExecutionResult executeNow(TitledDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
 		lines = lines.trimSmart(1);
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final String align = line0.get("ALIGN", 0);
