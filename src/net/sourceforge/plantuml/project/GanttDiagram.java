@@ -109,6 +109,7 @@ import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.real.RealOrigin;
 import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -456,7 +457,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 					draw = new TaskDrawRegular(timeScale, y, disp, getStart(tmp), getEnd(tmp), oddStart, oddEnd,
 							getSkinParam(), task, this, getConstraints(task), task.getStyleBuilder());
 				}
-				draw.setColorsAndCompletion(tmp.getColors(), tmp.getCompletion(), tmp.getUrl(), tmp.getNote());
+				draw.setColorsAndCompletion(tmp.getColors(), tmp.getCompletion(), tmp.getUrl(), tmp.getNote(), tmp.getNoteStereotype());
 			}
 			if (task.getRow() == null)
 				y = y.addAtLeast(draw.getFullHeightTask(stringBounder));
@@ -813,14 +814,14 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		return draws.get(task);
 	}
 
-	public CommandExecutionResult addNote(Display note) {
+	public CommandExecutionResult addNote(Display note, Stereotype stereotype) {
 		Task last = null;
 		for (Task current : tasks.values())
 			last = current;
 		if (last == null)
 			return CommandExecutionResult.error("No task defined");
 
-		last.setNote(note);
+		last.setNote(note, stereotype);
 		return CommandExecutionResult.ok();
 	}
 

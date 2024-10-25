@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -203,7 +204,7 @@ public class TaskDrawSeparator implements TaskDraw {
 	}
 
 	@Override
-	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note) {
+	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note, Stereotype noteStereotype) {
 	}
 
 	@Override

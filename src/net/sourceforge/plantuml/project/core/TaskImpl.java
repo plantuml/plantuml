@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.project.solver.Solver;
 import net.sourceforge.plantuml.project.solver.SolverImpl;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.time.DayOfWeek;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.url.Url;
 
@@ -68,6 +69,7 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 
 	private int completion;
 	private Display note;
+	private Stereotype noteStereotype;
 
 	private Url url;
 	private CenterBorderColor[] colors;
@@ -310,12 +312,17 @@ public class TaskImpl extends AbstractTask implements Task, LoadPlanable {
 	}
 
 	@Override
-	public void setNote(Display note) {
+	public void setNote(Display note, Stereotype stereotype) {
 		this.note = note;
+		this.noteStereotype = stereotype;
 	}
 
 	public Display getNote() {
 		return note;
+	}
+
+	public Stereotype getNoteStereotype() {
+		return noteStereotype;
 	}
 
 	public LoadPlanable getDefaultPlan() {

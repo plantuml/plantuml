@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Direction;
 
@@ -51,7 +52,7 @@ public interface TaskDraw extends UDrawable {
 
 	public TaskDraw getTrueRow();
 
-	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note);
+	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note, Stereotype noteStereotype);
 
 	public Real getY(StringBounder stringBounder);
 

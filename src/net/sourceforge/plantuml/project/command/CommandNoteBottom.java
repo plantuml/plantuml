@@ -49,7 +49,9 @@ import net.sourceforge.plantuml.project.GanttDiagram;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotag;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.BlocLines;
 
@@ -78,13 +80,20 @@ public class CommandNoteBottom extends CommandMultilines2<GanttDiagram> {
 	@Override
 	protected CommandExecutionResult executeNow(GanttDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
+		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		lines = lines.subExtract(1, 1);
 		lines = lines.removeEmptyColumns();
 		final Display strings = lines.toDisplay();
-		if (strings.size() > 0)
-			return diagram.addNote(strings);
+		if (strings.size() == 0)
+			return CommandExecutionResult.error("No note defined");
 
-		return CommandExecutionResult.error("No note defined");
+		final String stereotypeString = line0.get("STEREO", 0);
+		Stereotype stereotype = null;
+		if (stereotypeString != null)
+			stereotype = Stereotype.build(stereotypeString);
+
+		return diagram.addNote(strings, stereotype);
+
 	}
 
 }

@@ -199,6 +199,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 
 	private Opale getOpaleNote() {
 		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.note)
+				.withTOBECHANGED(noteStereotype)
 				.getMergedStyle(getStyleBuilder());
 
 		final FontConfiguration fc = style.getFontConfiguration(getColorSet());

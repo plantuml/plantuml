@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -65,6 +66,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	private int completion = 100;
 	protected Url url;
 	protected Display note;
+	protected Stereotype noteStereotype;
 	protected final TimeScale timeScale;
 	private Real y;
 	protected final String prettyDisplay;
@@ -73,16 +75,18 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	private final Task task;
 	private final ToTaskDraw toTaskDraw;
 
+
 	@Override
 	final public String toString() {
 		return super.toString() + " " + task;
 	}
 
-	final public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note) {
+	final public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note, Stereotype noteStereotype) {
 		this.colors = colors;
 		this.completion = completion;
 		this.url = url;
 		this.note = note;
+		this.noteStereotype = noteStereotype;
 	}
 
 	public AbstractTaskDraw(TimeScale timeScale, Real y, String prettyDisplay, Day start, Task task,

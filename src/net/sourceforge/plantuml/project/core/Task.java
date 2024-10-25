@@ -76,7 +76,7 @@ public interface Task extends Moment {
 
 	public void addPause(DayOfWeek pause);
 
-	public void setNote(Display note);
+	public void setNote(Display note, Stereotype stereotype);
 
 	public StyleBuilder getStyleBuilder();
 

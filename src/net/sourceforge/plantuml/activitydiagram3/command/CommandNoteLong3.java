@@ -75,8 +75,6 @@ public class CommandNoteLong3 extends CommandMultilines2<ActivityDiagram3> {
 	@Override
 	protected CommandExecutionResult executeNow(final ActivityDiagram3 diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
-		// final List<? extends CharSequence> in =
-		// StringUtils.removeEmptyColumns2(lines.subList(1, lines.size() - 1));
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		lines = lines.subExtract(1, 1);
 		lines = lines.removeEmptyColumns();
