@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.timingdiagram.graphic.IntricatedPoint;
 import net.sourceforge.plantuml.timingdiagram.graphic.PlayerFrame;
@@ -65,8 +66,8 @@ public class PlayerClock extends Player {
 	private final boolean displayTitle;
 
 	public PlayerClock(String title, ISkinParam skinParam, TimingRuler ruler, int period, int pulse, int offset,
-			boolean compact) {
-		super(title, skinParam, ruler, compact, null, null);
+			boolean compact, Stereotype stereotype) {
+		super(title, skinParam, ruler, compact, stereotype, null);
 		this.displayTitle = title.length() > 0;
 		this.period = period;
 		this.pulse = pulse;
@@ -90,8 +91,9 @@ public class PlayerClock extends Player {
 	}
 
 	@Override
-	protected StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.clock);
+	protected StyleSignature getStyleSignature() {
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram, SName.clock)
+				.withTOBECHANGED(stereotype);
 	}
 
 	@Override
