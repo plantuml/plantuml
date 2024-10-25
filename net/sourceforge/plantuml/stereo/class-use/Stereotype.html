@@ -1214,26 +1214,56 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../../timingdiagram/PlayerAnalog.html" title="class in net.sourceforge.plantuml.timingdiagram">PlayerAnalog</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimingDiagram.</span><code><a href="../../timingdiagram/TimingDiagram.html#createAnalog(java.lang.String,java.lang.String,boolean,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">createAnalog</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;full,
- boolean&nbsp;compact,
+<div class="col-first even-row-color"><code>abstract void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Player.</span><code><a href="../../timingdiagram/Player.html#addNote(net.sourceforge.plantuml.timingdiagram.TimeTick,net.sourceforge.plantuml.klimt.creole.Display,net.sourceforge.plantuml.utils.Position,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">addNote</a><wbr>(<a href="../../timingdiagram/TimeTick.html" title="class in net.sourceforge.plantuml.timingdiagram">TimeTick</a>&nbsp;now,
+ <a href="../../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;note,
+ <a href="../../utils/Position.html" title="enum class in net.sourceforge.plantuml.utils">Position</a>&nbsp;position,
  <a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TimingDiagram.</span><code><a href="../../timingdiagram/TimingDiagram.html#createBinary(java.lang.String,java.lang.String,boolean,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">createBinary</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">PlayerAnalog.</span><code><a href="../../timingdiagram/PlayerAnalog.html#addNote(net.sourceforge.plantuml.timingdiagram.TimeTick,net.sourceforge.plantuml.klimt.creole.Display,net.sourceforge.plantuml.utils.Position,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">addNote</a><wbr>(<a href="../../timingdiagram/TimeTick.html" title="class in net.sourceforge.plantuml.timingdiagram">TimeTick</a>&nbsp;now,
+ <a href="../../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;note,
+ <a href="../../utils/Position.html" title="enum class in net.sourceforge.plantuml.utils">Position</a>&nbsp;position,
+ <a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">PlayerBinary.</span><code><a href="../../timingdiagram/PlayerBinary.html#addNote(net.sourceforge.plantuml.timingdiagram.TimeTick,net.sourceforge.plantuml.klimt.creole.Display,net.sourceforge.plantuml.utils.Position,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">addNote</a><wbr>(<a href="../../timingdiagram/TimeTick.html" title="class in net.sourceforge.plantuml.timingdiagram">TimeTick</a>&nbsp;now,
+ <a href="../../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;note,
+ <a href="../../utils/Position.html" title="enum class in net.sourceforge.plantuml.utils">Position</a>&nbsp;position,
+ <a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">PlayerClock.</span><code><a href="../../timingdiagram/PlayerClock.html#addNote(net.sourceforge.plantuml.timingdiagram.TimeTick,net.sourceforge.plantuml.klimt.creole.Display,net.sourceforge.plantuml.utils.Position,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">addNote</a><wbr>(<a href="../../timingdiagram/TimeTick.html" title="class in net.sourceforge.plantuml.timingdiagram">TimeTick</a>&nbsp;now,
+ <a href="../../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;note,
+ <a href="../../utils/Position.html" title="enum class in net.sourceforge.plantuml.utils">Position</a>&nbsp;position,
+ <a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>final void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">PlayerRobustConcise.</span><code><a href="../../timingdiagram/PlayerRobustConcise.html#addNote(net.sourceforge.plantuml.timingdiagram.TimeTick,net.sourceforge.plantuml.klimt.creole.Display,net.sourceforge.plantuml.utils.Position,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">addNote</a><wbr>(<a href="../../timingdiagram/TimeTick.html" title="class in net.sourceforge.plantuml.timingdiagram">TimeTick</a>&nbsp;now,
+ <a href="../../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;note,
+ <a href="../../utils/Position.html" title="enum class in net.sourceforge.plantuml.utils">Position</a>&nbsp;position,
+ <a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../../timingdiagram/PlayerAnalog.html" title="class in net.sourceforge.plantuml.timingdiagram">PlayerAnalog</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TimingDiagram.</span><code><a href="../../timingdiagram/TimingDiagram.html#createAnalog(java.lang.String,java.lang.String,boolean,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">createAnalog</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;full,
  boolean&nbsp;compact,
  <a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TimingDiagram.</span><code><a href="../../timingdiagram/TimingDiagram.html#createRobustConcise(java.lang.String,java.lang.String,net.sourceforge.plantuml.timingdiagram.TimingStyle,boolean,net.sourceforge.plantuml.stereo.Stereotype,net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">createRobustConcise</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
+<div class="col-second even-row-color"><span class="type-name-label">TimingDiagram.</span><code><a href="../../timingdiagram/TimingDiagram.html#createBinary(java.lang.String,java.lang.String,boolean,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">createBinary</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;full,
+ boolean&nbsp;compact,
+ <a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TimingDiagram.</span><code><a href="../../timingdiagram/TimingDiagram.html#createRobustConcise(java.lang.String,java.lang.String,net.sourceforge.plantuml.timingdiagram.TimingStyle,boolean,net.sourceforge.plantuml.stereo.Stereotype,net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">createRobustConcise</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;full,
  <a href="../../timingdiagram/TimingStyle.html" title="enum class in net.sourceforge.plantuml.timingdiagram">TimingStyle</a>&nbsp;type,
  boolean&nbsp;compact,
  <a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype,
  <a href="../../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;backColor)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Constructors in <a href="../../timingdiagram/package-summary.html">net.sourceforge.plantuml.timingdiagram</a> with parameters of type <a href="../Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a></span></div>
 <div class="summary-table three-column-summary">
