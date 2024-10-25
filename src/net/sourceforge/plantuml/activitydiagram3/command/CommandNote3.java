@@ -75,7 +75,6 @@ public class CommandNote3 extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
 				StereotypePattern.optional("STEREO"), //
-				ColorParser.exp1(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("NOTE", "(.*)"), //
