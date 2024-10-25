@@ -105,13 +105,14 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.timingdiagram.TimingRuler,int,int,int,boolean)" class="member-name-link">PlayerClock</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;title,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.timingdiagram.TimingRuler,int,int,int,boolean,net.sourceforge.plantuml.stereo.Stereotype)" class="member-name-link">PlayerClock</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;title,
  <a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
  <a href="TimingRuler.html" title="class in net.sourceforge.plantuml.timingdiagram">TimingRuler</a>&nbsp;ruler,
  int&nbsp;period,
  int&nbsp;pulse,
  int&nbsp;offset,
- boolean&nbsp;compact)</code></div>
+ boolean&nbsp;compact,
+ <a href="../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -156,7 +157,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPeriod()" class="member-name-link">getPeriod</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../style/StyleSignatureBasic.html" title="class in net.sourceforge.plantuml.style">StyleSignatureBasic</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../style/StyleSignature.html" title="interface in net.sourceforge.plantuml.style">StyleSignature</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStyleSignature()" class="member-name-link">getStyleSignature</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="graphic/IntricatedPoint.html" title="class in net.sourceforge.plantuml.timingdiagram.graphic">IntricatedPoint</a></code></div>
@@ -190,7 +191,7 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String,net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.timingdiagram.TimingRuler,int,int,int,boolean)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.timingdiagram.TimingRuler,int,int,int,boolean,net.sourceforge.plantuml.stereo.Stereotype)">
 <h3>PlayerClock</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">PlayerClock</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;title,
  <a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
@@ -198,7 +199,8 @@ loadScripts(document, 'script');</script>
  int&nbsp;period,
  int&nbsp;pulse,
  int&nbsp;offset,
- boolean&nbsp;compact)</span></div>
+ boolean&nbsp;compact,
+ <a href="../stereo/Stereotype.html" title="class in net.sourceforge.plantuml.stereo">Stereotype</a>&nbsp;stereotype)</span></div>
 </section>
 </li>
 </ul>
@@ -222,7 +224,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getStyleSignature()">
 <h3>getStyleSignature</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="../style/StyleSignatureBasic.html" title="class in net.sourceforge.plantuml.style">StyleSignatureBasic</a></span>&nbsp;<span class="element-name">getStyleSignature</span>()</div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="../style/StyleSignature.html" title="interface in net.sourceforge.plantuml.style">StyleSignature</a></span>&nbsp;<span class="element-name">getStyleSignature</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Player.html#getStyleSignature()">getStyleSignature</a></code>&nbsp;in class&nbsp;<code><a href="Player.html" title="class in net.sourceforge.plantuml.timingdiagram">Player</a></code></dd>
