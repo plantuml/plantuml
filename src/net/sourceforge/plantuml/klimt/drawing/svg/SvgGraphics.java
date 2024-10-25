@@ -1071,8 +1071,9 @@ public class SvgGraphics {
 		if (SecurityUtils.ignoreThisLink(url))
 			return;
 
-//		if (pendingAction.size() > 0)
-//			closeLink();
+		// https://github.com/plantuml/plantuml/issues/1951
+		if (pendingAction.size() > 0)
+			closeLink();
 
 		pendingAction.add(0, (Element) document.createElement("a"));
 		pendingAction.get(0).setAttribute("target", target);
