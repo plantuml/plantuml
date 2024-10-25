@@ -122,8 +122,8 @@ public class Branch {
 		return list.kill();
 	}
 
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
-		return list.addNote(note, position, type, colors, swimlaneNote);
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
+		return list.addNote(note, position, type, colors, swimlaneNote, stereotype);
 	}
 
 	public final void setInlinkRendering(LinkRendering inlinkRendering) {

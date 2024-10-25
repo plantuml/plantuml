@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
 import net.sourceforge.plantuml.skin.AlignmentParam;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -131,8 +132,10 @@ public class FtileWithNoteOpale extends AbstractFtile implements Stencil, Stylea
 		if (note.getType() == NoteType.FLOATING_NOTE)
 			withLink = false;
 
-		final Style style = getStyleSignature().getMergedStyle(skinParam().getCurrentStyleBuilder())
-				.eventuallyOverride(note.getColors());
+		final Stereotype stereotype = note.getStereotype();
+
+		final Style style = getStyleSignature().withTOBECHANGED(stereotype)
+				.getMergedStyle(skinParam().getCurrentStyleBuilder()).eventuallyOverride(note.getColors());
 		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());

@@ -57,13 +57,13 @@ public class ColorParser {
 	}
 
 	public Colors getColor(RegexResult arg, HColorSet set) throws NoSuchColorException {
-		if (mainType == null) {
+		if (mainType == null)
 			throw new IllegalStateException();
-		}
+
 		final String data = arg.getLazzy(name, 0);
-		if (data == null) {
+		if (data == null)
 			return Colors.empty();
-		}
+
 		return new Colors(data, set, mainType);
 	}
 

@@ -486,8 +486,9 @@ public class ActivityDiagram3 extends UmlDiagram {
 		setNextLink(link);
 	}
 
-	public CommandExecutionResult addNote(Display note, NotePosition position, NoteType type, Colors colors) {
-		final boolean ok = current().addNote(note, position, type, colors, swinlanes.getCurrentSwimlane());
+	public CommandExecutionResult addNote(Display note, NotePosition position, NoteType type, Colors colors,
+			Stereotype stereotype) {
+		final boolean ok = current().addNote(note, position, type, colors, swinlanes.getCurrentSwimlane(), stereotype);
 		if (ok == false)
 			return CommandExecutionResult.error("Cannot add note here");
 

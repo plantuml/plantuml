@@ -214,11 +214,11 @@ public class InstructionRepeat extends AbstractInstruction implements Instructio
 	}
 
 	@Override
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
 		if (Display.isNull(backward))
-			return repeatList.addNote(note, position, type, colors, swimlaneNote);
+			return repeatList.addNote(note, position, type, colors, swimlaneNote, stereotype);
 
-		this.backwardNotes.add(new PositionedNote(note, position, type, swimlaneNote, colors));
+		this.backwardNotes.add(new PositionedNote(note, position, type, swimlaneNote, colors, stereotype));
 		return true;
 
 	}

@@ -160,11 +160,11 @@ public class InstructionWhile extends WithNote implements Instruction, Instructi
 	}
 
 	@Override
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
 		if (repeatList.isEmpty())
-			return super.addNote(note, position, type, colors, swimlaneNote);
+			return super.addNote(note, position, type, colors, swimlaneNote, stereotype);
 		else
-			return repeatList.addNote(note, position, type, colors, swimlaneNote);
+			return repeatList.addNote(note, position, type, colors, swimlaneNote, stereotype);
 	}
 
 	@Override

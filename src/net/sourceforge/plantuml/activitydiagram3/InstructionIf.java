@@ -223,11 +223,11 @@ public class InstructionIf extends WithNote implements Instruction, InstructionC
 	}
 
 	@Override
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
 		if (endifCalled || current.isEmpty())
-			return super.addNote(note, position, type, colors, swimlaneNote);
+			return super.addNote(note, position, type, colors, swimlaneNote, stereotype);
 		else
-			return current.addNote(note, position, type, colors, swimlaneNote);
+			return current.addNote(note, position, type, colors, swimlaneNote, stereotype);
 
 	}
 

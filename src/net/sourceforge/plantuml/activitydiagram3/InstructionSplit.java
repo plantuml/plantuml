@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 
 public class InstructionSplit extends AbstractInstruction implements Instruction {
@@ -150,8 +151,8 @@ public class InstructionSplit extends AbstractInstruction implements Instruction
 	}
 
 	@Override
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
-		return getLast().addNote(note, position, type, colors, swimlaneNote);
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
+		return getLast().addNote(note, position, type, colors, swimlaneNote, stereotype);
 	}
 
 	@Override

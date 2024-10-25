@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.stereo.Stereotype;
 
 public class PositionedNote {
 
@@ -48,17 +49,20 @@ public class PositionedNote {
 	private final NoteType type;
 	private final Colors colors;
 	private final Swimlane swimlaneNote;
+	private final Stereotype stereotype;
 
-	public PositionedNote(Display display, NotePosition position, NoteType type, Swimlane swimlaneNote, Colors colors) {
+	public PositionedNote(Display display, NotePosition position, NoteType type, Swimlane swimlaneNote, Colors colors,
+			Stereotype stereotype) {
 		this.display = display;
 		this.notePosition = position;
 		this.type = type;
 		this.colors = colors;
 		this.swimlaneNote = swimlaneNote;
+		this.stereotype = stereotype;
 	}
 
 	public PositionedNote(Display note, NotePosition position, NoteType type, Swimlane swimlaneNote) {
-		this(note, position, type, swimlaneNote, null);
+		this(note, position, type, swimlaneNote, null, null);
 	}
 
 	@Override
@@ -85,5 +89,11 @@ public class PositionedNote {
 	public final Swimlane getSwimlaneNote() {
 		return swimlaneNote;
 	}
+	
+	public final Stereotype getStereotype() {
+		return stereotype;
+	}
+
+
 
 }

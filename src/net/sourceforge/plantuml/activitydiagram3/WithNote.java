@@ -47,13 +47,14 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.stereo.Stereotype;
 
 abstract class WithNote extends AbstractInstruction {
 
 	private final Collection<PositionedNote> notes = new ArrayList<>();
 
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
-		this.notes.add(new PositionedNote(note, position, type, swimlaneNote, colors));
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
+		this.notes.add(new PositionedNote(note, position, type, swimlaneNote, colors, stereotype));
 		return true;
 	}
 

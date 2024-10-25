@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.stereo.Stereotype;
 
 public class InstructionPartition extends AbstractInstruction implements Instruction {
 
@@ -87,7 +88,7 @@ public class InstructionPartition extends AbstractInstruction implements Instruc
 		return list.getInLinkRendering();
 	}
 
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
 		throw new UnsupportedOperationException();
 	}
 

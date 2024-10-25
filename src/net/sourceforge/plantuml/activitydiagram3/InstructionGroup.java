@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
@@ -122,12 +123,12 @@ public class InstructionGroup extends AbstractInstruction implements Instruction
 	}
 
 	@Override
-	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote) {
+	public boolean addNote(Display note, NotePosition position, NoteType type, Colors colors, Swimlane swimlaneNote, Stereotype stereotype) {
 		if (list.isEmpty()) {
-			this.note = new PositionedNote(note, position, type, swimlaneNote, colors);
+			this.note = new PositionedNote(note, position, type, swimlaneNote, colors, stereotype);
 			return true;
 		}
-		return list.addNote(note, position, type, colors, swimlaneNote);
+		return list.addNote(note, position, type, colors, swimlaneNote, stereotype);
 	}
 
 	@Override

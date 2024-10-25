@@ -50,6 +50,9 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
+import net.sourceforge.plantuml.stereo.Stereotag;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandNote3 extends SingleLineCommand2<ActivityDiagram3> {
@@ -70,6 +73,9 @@ public class CommandNote3 extends SingleLineCommand2<ActivityDiagram3> {
 				RegexLeaf.spaceZeroOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				StereotypePattern.optional("STEREO"), //
+				ColorParser.exp1(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("NOTE", "(.*)"), //
@@ -77,13 +83,19 @@ public class CommandNote3 extends SingleLineCommand2<ActivityDiagram3> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		final Display note = Display.getWithNewlines(arg.get("NOTE", 0));
 		final NotePosition position = NotePosition.defaultLeft(arg.get("POSITION", 0));
 		final NoteType type = NoteType.defaultType(arg.get("TYPE", 0));
-		return diagram.addNote(note, position, type, colors);
+
+		final String stereotypeString = arg.get("STEREO", 0);
+		Stereotype stereotype = null;
+		if (stereotypeString != null)
+			stereotype = Stereotype.build(stereotypeString);
+
+		return diagram.addNote(note, position, type, colors, stereotype);
 	}
 
 }
