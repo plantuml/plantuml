@@ -111,7 +111,7 @@ public abstract class Player implements TimeProjected {
 		return title.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 	}
 
-	public abstract void addNote(TimeTick now, Display note, Position position);
+	public abstract void addNote(TimeTick now, Display note, Position position, Stereotype stereotype);
 
 	public abstract void defineState(String stateCode, String label);
 

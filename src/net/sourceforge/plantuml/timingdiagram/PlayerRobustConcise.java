@@ -219,11 +219,11 @@ public final class PlayerRobustConcise extends Player {
 	}
 
 	@Override
-	public final void addNote(TimeTick now, Display note, Position position) {
+	public final void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
 
-		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,
+		final StyleSignature signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,
 				SName.note);
-		final Style style = signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = signature.withTOBECHANGED(stereotype).getMergedStyle(skinParam.getCurrentStyleBuilder());
 
 		this.notes.add(new TimingNote(now, this, note, position, skinParam, style));
 	}

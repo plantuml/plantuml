@@ -38,11 +38,15 @@ package net.sourceforge.plantuml.timingdiagram.command;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.stereo.Stereotag;
+import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.timingdiagram.Player;
 import net.sourceforge.plantuml.timingdiagram.TimeTick;
 import net.sourceforge.plantuml.timingdiagram.TimingDiagram;
@@ -66,24 +70,35 @@ public class CommandNote extends SingleLineCommand2<TimingDiagram> {
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("CODE", CommandTimeMessage.PLAYER_CODE), //
 				RegexLeaf.spaceZeroOrMore(), //
+				new RegexLeaf("TAGS", Stereotag.pattern() + "?"), //
+				StereotypePattern.optional("STEREO"), //
+				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf(":"), //
 				RegexLeaf.spaceZeroOrMore(), //
 				new RegexLeaf("NOTE", "(.+)"), //
-				RegexLeaf.spaceZeroOrMore(), RegexLeaf.end());
+				RegexLeaf.spaceZeroOrMore(), // 
+				RegexLeaf.end());
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	final protected CommandExecutionResult executeArg(TimingDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final String code = arg.get("CODE", 0);
 		final Player player = diagram.getPlayer(code);
-		if (player == null) {
+		if (player == null)
 			return CommandExecutionResult.error("Unkown \"" + code + "\"");
-		}
+
 		final Display note = Display.getWithNewlines(arg.get("NOTE", 0));
 		final TimeTick now = diagram.getNow();
+
+		final String stereotypeString = arg.get("STEREO", 0);
+		Stereotype stereotype = null;
+		if (stereotypeString != null)
+			stereotype = Stereotype.build(stereotypeString);
+
 		// final Colors colors = color().getColor(arg,
 		// diagram.getSkinParam().getIHtmlColorSet());
-		player.addNote(now, note, Position.fromString(arg.get("POSITION", 0)));
+		player.addNote(now, note, Position.fromString(arg.get("POSITION", 0)), stereotype);
 		return CommandExecutionResult.ok();
 	}
 

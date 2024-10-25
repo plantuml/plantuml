@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
@@ -99,7 +100,7 @@ public class PlayerClock extends Player {
 	}
 
 	@Override
-	public void addNote(TimeTick now, Display note, Position position) {
+	public void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
 		throw new UnsupportedOperationException();
 	}
 

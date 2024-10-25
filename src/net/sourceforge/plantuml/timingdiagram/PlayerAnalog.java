@@ -142,7 +142,7 @@ public class PlayerAnalog extends Player {
 	}
 
 	@Override
-	public void addNote(TimeTick now, Display note, Position position) {
+	public void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
 		throw new UnsupportedOperationException();
 	}
 

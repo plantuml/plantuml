@@ -104,10 +104,10 @@ public class PlayerBinary extends Player {
 	}
 
 	@Override
-	public void addNote(TimeTick now, Display note, Position position) {
-		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,
+	public void addNote(TimeTick now, Display note, Position position, Stereotype stereotype) {
+		final StyleSignature signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,
 				SName.note);
-		final Style style = signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = signature.withTOBECHANGED(stereotype).getMergedStyle(skinParam.getCurrentStyleBuilder());
 
 		this.notes.add(new TimingNote(now, this, note, position, skinParam, style));
 	}
