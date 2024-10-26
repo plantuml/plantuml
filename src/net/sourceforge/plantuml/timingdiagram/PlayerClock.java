@@ -131,7 +131,11 @@ public class PlayerClock extends Player {
 			return new AbstractTextBlock() {
 
 				public void drawU(UGraphic ug) {
-					new PlayerFrame(getTitle(), skinParam).drawFrameTitle(ug);
+					if (isCompact()) {
+						new PlayerFrame(getTitle(), skinParam).drawTitle(ug);
+					} else {
+						new PlayerFrame(getTitle(), skinParam).drawFrameTitle(ug);
+					}
 				}
 
 				public XDimension2D calculateDimension(StringBounder stringBounder) {
