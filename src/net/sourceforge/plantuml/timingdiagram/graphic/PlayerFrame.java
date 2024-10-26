@@ -72,6 +72,10 @@ public class PlayerFrame {
 		return style.getStroke();
 	}
 
+	public void drawTitle(UGraphic ug) {
+		title.drawU(ug);
+	}
+
 	public void drawFrameTitle(UGraphic ug) {
 		title.drawU(ug);
 		final XDimension2D dimTitle = title.calculateDimension(ug.getStringBounder());
