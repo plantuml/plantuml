@@ -23,6 +23,7 @@
 - https://forum.plantuml.net/18864/can-we-have-2-or-more-colors-for-clocks-in-timing-diagrams
 - https://github.com/plantuml/plantuml/issues/1950
 - https://github.com/plantuml/plantuml/issues/1951
+- https://github.com/plantuml/plantuml-stdlib/pull/110
 
 ## V1.2024.7 (Sep 9, 2024)
 
