@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.cucadiagram.BodierJSon;
+import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.Json.DefaultHandler;
 import net.sourceforge.plantuml.json.JsonParser;
 import net.sourceforge.plantuml.json.JsonValue;
@@ -77,7 +78,7 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractClas
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("DATA", "(\\{.*\\})"), //
+				new RegexLeaf("DATA", "(.*)"), //
 				RegexLeaf.end());
 	}
 
@@ -90,10 +91,12 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractClas
 		if (entity1 == null)
 			return CommandExecutionResult.error("No such entity");
 
-		final JsonValue json = getJsonValue(data);
+		JsonValue json = getJsonValue(data);
 
 		if (json == null)
 			return CommandExecutionResult.error("Bad data");
+		if (!json.isObject())
+			json = Json.object().add("", json);
 		((BodierJSon) entity1.getBodier()).setJson(json);
 
 		return CommandExecutionResult.ok();
