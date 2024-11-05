@@ -147,7 +147,7 @@ public class FEntry implements Iterable<FEntry> {
 
 	private Opale createOpale(ISkinParam skinParam) {
 
-		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, SName.timingDiagram,
+		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, SName.filesDiagram,
 				SName.note);
 		final Style style = signature.getMergedStyle(skinParam.getCurrentStyleBuilder());
 

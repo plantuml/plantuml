@@ -87,6 +87,7 @@ public enum SName {
 	start, //
 	stop, //
 	file, //
+	filesDiagram, //
 	folder, //
 	footer, //
 	frame, //
