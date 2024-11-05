@@ -84,7 +84,7 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractEnti
 						new RegexLeaf("DATA_NULL", "(null)"), //
 						new RegexLeaf("DATA_STRING", "(\".*\")"), //
 						new RegexLeaf("DATA_ARRAY", "(\\[.*\\])"), //
-						new RegexLeaf("DATA_OBJECT", "(\\{[%s]*[%g][^%g]+[%g][%s]*:.*\\})") //
+						new RegexLeaf("DATA_OBJECT", "(\\{[%s]*[%g](\\\\[%g]|[^%g])+[%g][%s]*:.*\\})") //
 				), //
 				RegexLeaf.end());
 	}
