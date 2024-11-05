@@ -221,7 +221,8 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 	}
 
 	public SvekEdge(Link link, ISkinParam skinParam, StringBounder stringBounder, FontConfiguration font,
-			Bibliotekon bibliotekon, Pragma pragma, GraphvizVersion graphvizVersion) {
+			FontConfiguration cardinalityFont, Bibliotekon bibliotekon, Pragma pragma,
+			GraphvizVersion graphvizVersion) {
 		super(link, skinParam, bibliotekon);
 		// ::comment when __CORE__
 		if (graphvizVersion.useShieldForQuantifier() && link.getLinkArg().getQuantifier1() != null)
@@ -232,12 +233,10 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		// ::done
 
 		if (link.getLinkArg().getKal1() != null)
-			this.kal1 = new Kal(this, link.getLinkArg().getKal1(), skinParam, (Entity) link.getEntity1(), link,
-					stringBounder);
+			this.kal1 = new Kal(this, link.getLinkArg().getKal1(), skinParam, link.getEntity1(), link, stringBounder);
 
 		if (link.getLinkArg().getKal2() != null)
-			this.kal2 = new Kal(this, link.getLinkArg().getKal2(), skinParam, (Entity) link.getEntity2(), link,
-					stringBounder);
+			this.kal2 = new Kal(this, link.getLinkArg().getKal2(), skinParam, link.getEntity2(), link, stringBounder);
 
 		this.useRankSame = skinParam.useRankSame();
 		this.startUid = link.getEntityPort1(bibliotekon);
@@ -317,14 +316,14 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		if (link.getQuantifier1() == null)
 			startTailText = null;
 		else
-			startTailText = Display.getWithNewlines(link.getQuantifier1()).create(font, HorizontalAlignment.CENTER,
-					skinParam);
+			startTailText = Display.getWithNewlines(link.getQuantifier1()).create(cardinalityFont,
+					HorizontalAlignment.CENTER, skinParam);
 
 		if (link.getQuantifier2() == null)
 			endHeadText = null;
 		else
-			endHeadText = Display.getWithNewlines(link.getQuantifier2()).create(font, HorizontalAlignment.CENTER,
-					skinParam);
+			endHeadText = Display.getWithNewlines(link.getQuantifier2()).create(cardinalityFont,
+					HorizontalAlignment.CENTER, skinParam);
 
 		if (link.getType().getMiddleDecor() == LinkMiddleDecor.NONE)
 			this.labelShield = 0;

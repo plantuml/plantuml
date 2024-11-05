@@ -119,6 +119,15 @@ public final class GraphvizImageBuilder {
 		return result;
 	}
 
+	final public StyleSignature getStyleArrowCardinality(Stereotype stereotype) {
+		StyleSignature result = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.arrow,
+				SName.cardinality);
+		if (stereotype != null)
+			result = result.withTOBECHANGED(stereotype);
+
+		return result;
+	}
+
 	private boolean isOpalisable(Entity entity) {
 		if (dotData.getSkinParam().strictUmlStyle())
 			return false;
@@ -220,9 +229,12 @@ public final class GraphvizImageBuilder {
 
 			try {
 				final ISkinParam skinParam = dotData.getSkinParam();
-				final FontConfiguration labelFont = getFontForLink(link, skinParam);
+				final FontConfiguration labelFont = getDefaultStyleDefinitionArrow(link.getStereotype())
+						.getMergedStyle(link.getStyleBuilder()).getFontConfiguration(skinParam.getIHtmlColorSet());
+				final FontConfiguration cardinalityFont = getStyleArrowCardinality(link.getStereotype())
+						.getMergedStyle(link.getStyleBuilder()).getFontConfiguration(skinParam.getIHtmlColorSet());
 
-				final SvekEdge line = new SvekEdge(link, skinParam, stringBounder, labelFont,
+				final SvekEdge line = new SvekEdge(link, skinParam, stringBounder, labelFont, cardinalityFont,
 						dotStringFactory.getBibliotekon(), pragma, dotStringFactory.getGraphvizVersion());
 
 				dotStringFactory.getBibliotekon().addLine(line);
@@ -283,11 +295,6 @@ public final class GraphvizImageBuilder {
 		// return null;
 		// ::done
 
-	}
-
-	private FontConfiguration getFontForLink(Link link, final ISkinParam skinParam) {
-		final Style style = getDefaultStyleDefinitionArrow(link.getStereotype()).getMergedStyle(link.getStyleBuilder());
-		return style.getFontConfiguration(skinParam.getIHtmlColorSet());
 	}
 
 	private boolean isSvekTrace() {

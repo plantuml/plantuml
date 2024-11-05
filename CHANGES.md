@@ -24,6 +24,7 @@
 - https://github.com/plantuml/plantuml/issues/1950
 - https://github.com/plantuml/plantuml/issues/1951
 - https://github.com/plantuml/plantuml-stdlib/pull/110
+- https://github.com/plantuml/plantuml/issues/1945
 
 ## V1.2024.7 (Sep 9, 2024)
 

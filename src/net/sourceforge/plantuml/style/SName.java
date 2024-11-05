@@ -53,6 +53,7 @@ public enum SName {
 	business, //
 	caption, //
 	card, //
+	cardinality, //
 	circle, //
 	classDiagram, //
 	class_, //
@@ -97,7 +98,8 @@ public enum SName {
 	hexagon, //
 	highlight, //
 	interface_, //
-	json, jsonDiagram, //
+	json, // 
+	jsonDiagram, //
 	gitDiagram, //
 	label, //
 	leafNode, //
