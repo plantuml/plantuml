@@ -118,25 +118,35 @@ public class CommandCreateJson extends CommandMultilines2<AbstractEntityDiagram>
 	}
 
 	private JsonValue getJsonValue(BlocLines lines) {
+		final DefaultHandler handler = new DefaultHandler();
+		final JsonParser jsonParser = new JsonParser(handler);
 		try {
 			final String sb = getJsonString(lines);
-			final DefaultHandler handler = new DefaultHandler();
-			new JsonParser(handler).parse(sb);
-			final JsonValue json = handler.getValue();
-			return json;
-		} catch (Exception e) {
-			return null;
+			jsonParser.parse(sb);
+			return handler.getValue();
+		} catch (Exception e1) {
+			// Sorry, this is VERY ugly
+			// Let's see if wa could ignore external brackets...
+			try {
+				lines = lines.subExtract(1, 1);
+				final StringBuilder sb = new StringBuilder();
+				for (StringLocated sl : lines)
+					sb.append(sl.getString());
+
+				jsonParser.parse(sb.toString());
+				return handler.getValue();
+			} catch (Exception e2) {
+				return null;
+			}
 		}
 	}
 
 	private String getJsonString(BlocLines lines) {
 		lines = lines.subExtract(1, 1);
 		final StringBuilder sb = new StringBuilder("{");
-		for (StringLocated sl : lines) {
-			final String line = sl.getString();
-			assert line.length() > 0;
-			sb.append(line);
-		}
+		for (StringLocated sl : lines)
+			sb.append(sl.getString());
+
 		sb.append("}");
 		return sb.toString();
 	}
