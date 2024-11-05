@@ -232,11 +232,11 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		// ::done
 
 		if (link.getLinkArg().getKal1() != null)
-			this.kal1 = new Kal(this, link.getLinkArg().getKal1(), font, skinParam, (Entity) link.getEntity1(), link,
+			this.kal1 = new Kal(this, link.getLinkArg().getKal1(), skinParam, (Entity) link.getEntity1(), link,
 					stringBounder);
 
 		if (link.getLinkArg().getKal2() != null)
-			this.kal2 = new Kal(this, link.getLinkArg().getKal2(), font, skinParam, (Entity) link.getEntity2(), link,
+			this.kal2 = new Kal(this, link.getLinkArg().getKal2(), skinParam, (Entity) link.getEntity2(), link,
 					stringBounder);
 
 		this.useRankSame = skinParam.useRankSame();

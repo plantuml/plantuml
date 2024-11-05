@@ -90,6 +90,7 @@ public enum SName {
 	footer, //
 	frame, //
 	ganttDiagram, //
+	generic, //
 	group, //
 	groupHeader, //
 	header, //
@@ -119,6 +120,7 @@ public enum SName {
 	person, //
 	port, //
 	process, //
+	qualified, //
 	queue, //
 	rectangle, //
 	reference, //

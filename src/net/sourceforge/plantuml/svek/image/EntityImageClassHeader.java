@@ -84,13 +84,13 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		final boolean displayGenericWithOldFashion = skinParam.displayGenericWithOldFashion();
 		final String generic = displayGenericWithOldFashion ? null : entity.getGeneric();
 
-		final Style style = StyleSignatureBasic
+		final Style styleHeader = StyleSignatureBasic
 				.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.header) //
 				.withTOBECHANGED(stereotype) //
 				.with(entity.getStereostyles()) //
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
-		FontConfiguration fontConfigurationName = FontConfiguration.create(skinParam, style, entity.getColors());
-
+		
+		FontConfiguration fontConfigurationName = FontConfiguration.create(skinParam, styleHeader, entity.getColors());
 		if (italic)
 			fontConfigurationName = fontConfigurationName.italic();
 
@@ -99,7 +99,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 			display = display.addGeneric(entity.getGeneric());
 
 		TextBlock name = display.create8(fontConfigurationName, HorizontalAlignment.CENTER, skinParam,
-				CreoleMode.FULL_BUT_UNDERSCORE, style.wrapWidth());
+				CreoleMode.FULL_BUT_UNDERSCORE, styleHeader.wrapWidth());
 		final VisibilityModifier modifier = entity.getVisibilityModifier();
 		if (modifier == null) {
 			name = TextBlockUtils.withMargin(name, 3, 3, 0, 0);
@@ -126,14 +126,20 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		TextBlock genericBlock;
 		if (generic == null) {
 			genericBlock = null;
-		} else {
+		} else {			
+			final Style styleGeneric = StyleSignatureBasic
+					.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.generic) //
+					.withTOBECHANGED(stereotype) //
+					.with(entity.getStereostyles()) //
+					.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
 			genericBlock = Display.getWithNewlines(generic).create(
 					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, skinParam);
 			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);
 
-			final HColor classBackground = skinParam.getBackgroundColor();
-			final HColor classBorder = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+			final HColor classBackground = styleGeneric.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+			final HColor classBorder = styleGeneric.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 
 			genericBlock = new TextBlockGeneric(genericBlock, classBackground, classBorder);
 			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);

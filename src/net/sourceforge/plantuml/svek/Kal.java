@@ -39,7 +39,7 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
-import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -51,6 +51,10 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.utils.Direction;
 
 public class Kal implements UDrawable {
@@ -62,6 +66,8 @@ public class Kal implements UDrawable {
 	private final SvekEdge SvekEdge;
 	private final Entity entity;
 	private final Link link;
+	private final ISkinParam skinParam;
+	private final Style style;
 
 	public UTranslate getTranslateForDecoration() {
 		switch (position) {
@@ -78,13 +84,23 @@ public class Kal implements UDrawable {
 		}
 	}
 
-	public Kal(SvekEdge SvekEdge, String text, FontConfiguration font, ISkinParam skinParam, Entity entity, Link link,
+	public Kal(SvekEdge SvekEdge, String text, ISkinParam skinParam, Entity entity, Link link,
 			StringBounder stringBounder) {
 		this.SvekEdge = SvekEdge;
 		this.entity = entity;
 		this.link = link;
+		this.skinParam = skinParam;
+		this.style = StyleSignatureBasic
+				.of(SName.root, SName.element, SName.classDiagram, SName.class_, SName.qualified) //
+				.withTOBECHANGED(entity.getStereotype()) //
+				.with(entity.getStereostyles()) //
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		final FontConfiguration font = style.getFontConfiguration(skinParam.getIHtmlColorSet());
+
 		this.textBlock = Display.getWithNewlines(text).create7(font, HorizontalAlignment.LEFT, skinParam,
 				CreoleMode.SIMPLE_LINE);
+
 		this.dim = this.textBlock.calculateDimension(stringBounder).delta(4, 2);
 
 		if (link.getLength() == 1 && link.getEntity1() == entity) {
@@ -118,8 +134,12 @@ public class Kal implements UDrawable {
 	@Override
 	public void drawU(UGraphic ug) {
 		final URectangle rect = URectangle.build(dim);
+
+		final HColor classBackground = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+		final HColor classBorder = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+
 		ug = ug.apply(getTranslate());
-		ug.apply(HColors.WHITE.bg()).apply(HColors.BLACK).apply(UStroke.withThickness(0.5)).draw(rect);
+		ug.apply(classBackground.bg()).apply(classBorder).apply(UStroke.withThickness(0.5)).draw(rect);
 		textBlock.drawU(ug.apply(new UTranslate(2, 1)));
 	}
 
