@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.objectdiagram.command;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
@@ -50,18 +51,18 @@ import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
-import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractClassOrObjectDiagram> {
+public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractEntityDiagram> {
 
 	public CommandCreateJsonSingleLine() {
 		super(getRegexConcat());
@@ -77,20 +78,25 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractClas
 				RegexLeaf.spaceZeroOrMore(), //
 				ColorParser.exp1(), //
 				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("DATA", "(\\{.*\\})"), //
+				new RegexOr( //
+						new RegexLeaf("DATA_BOOLEAN", "(true|false)"), //
+						new RegexLeaf("DATA_NUMBER", "(-?\\d+)"), //
+						new RegexLeaf("DATA_NULL", "(null)"), //
+						new RegexLeaf("DATA_STRING", "(\".*\")"), //
+						new RegexLeaf("DATA_ARRAY", "(\\[.*\\])"), //
+						new RegexLeaf("DATA_OBJECT", "(\\{[%s]*[%g][^%g]+[%g][%s]*:.*\\})") //
+				), //
 				RegexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
-			RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-		final String name = arg.get("NAME", 1);
-		final String data = arg.get("DATA", 0);
+	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final Entity entity1 = executeArg0(diagram, arg);
 		if (entity1 == null)
 			return CommandExecutionResult.error("No such entity");
 
-		final JsonValue json = getJsonValue(data);
+		final JsonValue json = getJsonValue(arg);
 
 		if (json == null)
 			return CommandExecutionResult.error("Bad data");
@@ -99,8 +105,9 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractClas
 		return CommandExecutionResult.ok();
 	}
 
-	private JsonValue getJsonValue(String data) {
+	private JsonValue getJsonValue(RegexResult arg) {
 		try {
+			final String data = arg.getLazzy("DATA_", 0);
 			final DefaultHandler handler = new DefaultHandler();
 			new JsonParser(handler).parse(data);
 			final JsonValue json = handler.getValue();
@@ -110,7 +117,7 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractClas
 		}
 	}
 
-	private Entity executeArg0(AbstractClassOrObjectDiagram diagram, RegexResult line0) throws NoSuchColorException {
+	private Entity executeArg0(AbstractEntityDiagram diagram, RegexResult line0) throws NoSuchColorException {
 		final String name = line0.get("NAME", 1);
 
 		final Quark<Entity> quark = diagram.quarkInContext(false, diagram.cleanId(name));

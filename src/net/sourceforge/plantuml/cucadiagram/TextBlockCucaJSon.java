@@ -60,7 +60,7 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 	private final ISkinParam skinParam;
 	private final FontConfiguration fontConfiguration;
 	private final JsonValue json;
-	private TextBlockJson jsonTextBlock;
+	private TextBlock jsonTextBlock;
 	private double mainTotalWidth;
 	private final LineBreakStrategy wordWrap;
 
@@ -72,12 +72,30 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 		this.wordWrap = wordWrap;
 	}
 
-	private TextBlockJson getJsonTextBlock() {
+	private TextBlock getJsonTextBlock() {
 		if (jsonTextBlock == null)
-			this.jsonTextBlock = new TextBlockJson(json, 0);
+			this.jsonTextBlock = getTextBlockValue(json, 0);
 
-		jsonTextBlock.jsonTotalWidth = mainTotalWidth;
+		if (jsonTextBlock instanceof TextBlockJson)
+			((TextBlockJson) jsonTextBlock).jsonTotalWidth = mainTotalWidth;
+		if (jsonTextBlock instanceof TextBlockArray)
+			((TextBlockArray) jsonTextBlock).arrayTotalWidth = mainTotalWidth;
+		
 		return jsonTextBlock;
+	}
+
+	private TextBlock getTextBlockValue(JsonValue value, double width2) {
+		if (value.isString() || value.isNull() || value.isTrue() || value.isFalse() || value.isNumber()) {
+			final String tmp = value.isString() ? value.asString() : value.toString();
+			return getTextBlock(tmp);
+		}
+		if (value.isArray())
+			return new TextBlockArray(value.asArray(), width2);
+		if (value.isObject())
+			return new TextBlockJson(value.asObject(), width2);
+
+		final String tmp = value.getClass().getSimpleName();
+		return getTextBlock(tmp);
 	}
 
 	@Override
@@ -98,8 +116,8 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 		private final JsonObject obj;
 		private double jsonTotalWidth;
 
-		public TextBlockJson(JsonValue json, double totalWidth) {
-			this.obj = json.asObject();
+		public TextBlockJson(JsonObject json, double totalWidth) {
+			this.obj = json;
 			this.jsonTotalWidth = totalWidth;
 		}
 
@@ -160,20 +178,6 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 
 	}
 
-	private TextBlock getTextBlockValue(JsonValue value, double width2) {
-		if (value.isString() || value.isNull() || value.isTrue() || value.isFalse() || value.isNumber()) {
-			final String tmp = value.isString() ? value.asString() : value.toString();
-			return getTextBlock(tmp);
-		}
-		if (value.isArray())
-			return new TextBlockArray(value.asArray(), width2);
-		if (value.isObject())
-			return new TextBlockJson(value, width2);
-
-		final String tmp = value.getClass().getSimpleName();
-		return getTextBlock(tmp);
-	}
-
 	private TextBlock getTextBlock(String key) {
 		final Display display = Display.getWithNewlines(key);
 		TextBlock result = display.create0(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam, wordWrap,
@@ -185,7 +189,7 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 	class TextBlockArray extends AbstractTextBlock {
 
 		private final JsonArray array;
-		private final double arrayTotalWidth;
+		private double arrayTotalWidth;
 
 		public TextBlockArray(JsonArray array, double totalWidth) {
 			this.array = array;
