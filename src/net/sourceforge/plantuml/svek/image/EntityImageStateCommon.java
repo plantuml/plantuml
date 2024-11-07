@@ -70,7 +70,8 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 		final FontConfiguration titleFontConfiguration = getStyleStateTitle(entity, skinParam)
 				.getFontConfiguration(getSkinParam().getIHtmlColorSet(), entity.getColors());
 
-		this.title = entity.getDisplay().create8(titleFontConfiguration, HorizontalAlignment.CENTER, skinParam,
+		final HorizontalAlignment horizontalAlignment = getStyleState(entity, skinParam).getHorizontalAlignment();
+		this.title = entity.getDisplay().create8(titleFontConfiguration, horizontalAlignment, skinParam,
 				CreoleMode.FULL, getStyleState().wrapWidth());
 		this.url = entity.getUrl99();
 

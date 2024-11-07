@@ -129,8 +129,10 @@ public final class GroupMakerState {
 		final double rounded = style.value(PName.RoundCorner).asDouble();
 		final double shadowing = style.value(PName.Shadowing).asDouble();
 		final FontConfiguration titleFontConfiguration = styleTitle.getFontConfiguration(skinParam.getIHtmlColorSet());
-		final TextBlock title = display.create(titleFontConfiguration, HorizontalAlignment.CENTER,
-				diagram.getSkinParam());
+
+		final HorizontalAlignment horizontalAlignment = styleTitle.getHorizontalAlignment();
+
+		final TextBlock title = display.create(titleFontConfiguration, horizontalAlignment, diagram.getSkinParam());
 
 		if (group.countChildren() == 0 && group.groups().size() == 0)
 			return new EntityImageState(group, diagram.getSkinParam());
