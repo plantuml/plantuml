@@ -171,8 +171,9 @@ public final class GroupMakerState {
 
 		final HColor bodyColor = styleBody.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 		final boolean withSymbol = group.getStereotype() != null && group.getStereotype().isWithOOSymbol();
-		return new InnerStateAutonom(image, title, group.getStateHeader(skinParam), borderColor, backColor,
-				group.getUrl99(), withSymbol, stroke, rounded, shadowing, bodyColor);
+		final TextBlock stateHeader = group.getStateHeader(skinParam);
+		return new InnerStateAutonom(image, title, stateHeader, borderColor, backColor, group.getUrl99(), withSymbol,
+				stroke, rounded, shadowing, bodyColor);
 
 	}
 

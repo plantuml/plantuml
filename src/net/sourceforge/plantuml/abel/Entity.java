@@ -606,7 +606,8 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 			else
 				display = display.addAll(Display.getWithNewlines(s.toString()));
 
-		return display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
+		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();
+		return display.create(fontConfiguration, horizontalAlignment, skinParam);
 
 	}
 
