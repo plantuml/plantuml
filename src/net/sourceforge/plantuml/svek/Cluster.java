@@ -429,7 +429,6 @@ public class Cluster implements Moveable {
 	// GroupPngMakerState
 
 	private void drawUState(UGraphic ug, UmlDiagramType umlDiagramType, double rounded, double shadowing) {
-		final XDimension2D total = rectangleArea.getDimension();
 		final double suppY = clusterHeader.getTitle().calculateDimension(ug.getStringBounder()).getHeight()
 				+ IEntityImage.MARGIN;
 
@@ -448,7 +447,7 @@ public class Cluster implements Moveable {
 
 		final TextBlock attribute = ((Entity) group).getStateHeader(skinParam);
 		final double attributeHeight = attribute.calculateDimension(ug.getStringBounder()).getHeight();
-		if (total.getWidth() == 0) {
+		if (rectangleArea.getDimension().getWidth() == 0) {
 			System.err.println("Cluster::drawUState issue");
 			return;
 		}
@@ -457,12 +456,14 @@ public class Cluster implements Moveable {
 		if (stroke == null)
 			stroke = EntityImageStateCommon.getStyleState(group, skinParam).getStroke();
 
-		final RoundedContainer r = new RoundedContainer(total, suppY,
+		final RoundedContainer r = new RoundedContainer(rectangleArea.getDimension(), suppY,
 				attributeHeight + (attributeHeight > 0 ? IEntityImage.MARGIN : 0), borderColor, backColor, imgBackcolor,
 				stroke, rounded, shadowing);
 		r.drawU(ug.apply(rectangleArea.getPosition()));
 
-		clusterHeader.getTitle().drawU(ug.apply(UTranslate.point(xyTitle)));
+		clusterHeader.getTitleHorizontalAlignment().draw(
+				ug.apply(new UTranslate(rectangleArea.getMinX(), xyTitle.getY())), clusterHeader.getTitle(),
+				IEntityImage.MARGIN, 0, rectangleArea.getWidth());
 
 		if (attributeHeight > 0)
 			attribute.drawU(ug.apply(new UTranslate(rectangleArea.getMinX() + IEntityImage.MARGIN,

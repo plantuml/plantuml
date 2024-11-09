@@ -90,12 +90,13 @@ public class ConditionalBuilder {
 	private final ISkinParam skinParam;
 	private final StringBounder stringBounder;
 	private final FontConfiguration fontArrow;
-	private final FontConfiguration fontTest;
+	private final FontConfiguration styleDiamonFont;
 
 	private final Ftile tile1;
 	private final Ftile tile2;
 	private final Url url;
 	private final Collection<PositionedNote> notes;
+	private final Style styleDiamond;
 
 	private StyleSignatureBasic getStyleSignatureDiamond() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.diamond);
@@ -113,7 +114,8 @@ public class ConditionalBuilder {
 		if (backColor == null)
 			throw new IllegalArgumentException();
 
-		this.fontTest = styleDiamond.getFontConfiguration(skinParam.getIHtmlColorSet());
+		this.styleDiamond = styleDiamond;
+		this.styleDiamonFont = styleDiamond.getFontConfiguration(skinParam.getIHtmlColorSet());
 		this.fontArrow = styleArrow.getFontConfiguration(skinParam.getIHtmlColorSet());
 		this.diamondLineBreak = styleDiamond.wrapWidth();
 		this.labelLineBreak = styleArrow.wrapWidth();
@@ -236,8 +238,8 @@ public class ConditionalBuilder {
 	private Ftile getShape1(boolean eastWest, TextBlock tb1, TextBlock tb2) {
 		final Display labelTest = branch1.getLabelTest();
 
-		final Sheet sheet = skinParam
-				.sheet(fontTest, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), CreoleMode.FULL)
+		final HorizontalAlignment horizontalAlignment = styleDiamond.getHorizontalAlignment();
+		final Sheet sheet = skinParam.sheet(styleDiamonFont, horizontalAlignment, CreoleMode.FULL)
 				.createSheet(labelTest);
 		final SheetBlock1 sheetBlock1 = new SheetBlock1(sheet, diamondLineBreak, skinParam.getPadding());
 

@@ -69,7 +69,7 @@ public final class ClusterHeader {
 
 		this.title = getTitleBlock(g, skinParam);
 		this.stereo = getStereoBlock(g, skinParam, portionShower);
-		final TextBlock stereoAndTitle = TextBlockUtils.mergeTB(stereo, title, HorizontalAlignment.CENTER);
+		final TextBlock stereoAndTitle = TextBlockUtils.mergeTB(stereo, title, getTitleHorizontalAlignment());
 		final XDimension2D dimLabel = stereoAndTitle.calculateDimension(stringBounder);
 		if (dimLabel.getWidth() > 0) {
 			final XDimension2D dimAttribute = ((Entity) g).getStateHeader(skinParam).calculateDimension(stringBounder);
@@ -130,8 +130,12 @@ public final class ClusterHeader {
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet(),
 				g.getColors());
 
-		final HorizontalAlignment alignment = HorizontalAlignment.CENTER;
+		final HorizontalAlignment alignment = getTitleHorizontalAlignment();
 		return label.create(fontConfiguration, alignment, skinParam);
+	}
+
+	public HorizontalAlignment getTitleHorizontalAlignment() {
+		return HorizontalAlignment.CENTER;
 	}
 
 	private TextBlock getStereoBlock(Entity g, ISkinParam skinParam, PortionShower portionShower) {
@@ -164,11 +168,12 @@ public final class ClusterHeader {
 			return TextBlockUtils.empty(0, 0);
 
 		final Style style = Cluster
-				.getDefaultStyleDefinition(skinParam.getUmlDiagramType().getStyleName(), g.getUSymbol(), g.getGroupType())
+				.getDefaultStyleDefinition(skinParam.getUmlDiagramType().getStyleName(), g.getUSymbol(),
+						g.getGroupType())
 				.forStereotypeItself(g.getStereotype()).getMergedStyle(skinParam.getCurrentStyleBuilder());
 
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());
-		return Display.create(visibleStereotypes).create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);
+		return Display.create(visibleStereotypes).create(fontConfiguration, getTitleHorizontalAlignment(), skinParam);
 
 	}
 

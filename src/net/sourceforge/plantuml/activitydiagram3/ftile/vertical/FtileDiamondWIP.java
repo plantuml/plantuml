@@ -89,7 +89,7 @@ abstract class FtileDiamondWIP extends AbstractFtile implements Styleable {
 	protected FtileDiamondWIP(TextBlock label, ISkinParam skinParam, HColor backColor, HColor borderColor,
 			Swimlane swimlane, TextBlock north, TextBlock south, TextBlock east, TextBlock west) {
 		super(skinParam);
-		Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		this.borderColor = borderColor;
 		this.backColor = backColor;
 		this.shadowing = style.value(PName.Shadowing).asDouble();
