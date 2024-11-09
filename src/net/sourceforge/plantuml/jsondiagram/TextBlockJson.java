@@ -305,11 +305,11 @@ public class TextBlockJson extends AbstractTextBlock {
 				ugline.draw(ULine.hline(trueWidth));
 
 			final HorizontalAlignment horizontalAlignment = styleNode.getHorizontalAlignment();
-			horizontalAlignment.draw(ugline, line.b1, 0, widthColA);
+			horizontalAlignment.draw(ugline, line.b1, 0, 0, widthColA);
 
 			if (line.b2 != null) {
 				final UGraphic uglineColB = ugline.apply(UTranslate.dx(widthColA));
-				horizontalAlignment.draw(uglineColB, line.b2, 0, widthColB);
+				horizontalAlignment.draw(uglineColB, line.b2, 0, 0, widthColB);
 				uglineColB.draw(ULine.vline(heightOfRow));
 			}
 
@@ -326,7 +326,7 @@ public class TextBlockJson extends AbstractTextBlock {
 
 		if (height == 0)
 			return MIN_HEIGHT;
-		
+
 		return height;
 	}
 

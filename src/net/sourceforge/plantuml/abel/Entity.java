@@ -718,5 +718,9 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 	public final boolean isPacked() {
 		return packed;
 	}
+	
+	public final ISkinParam getSkinParam() {
+		return diagram.getSkinParam();
+	}
 
 }
