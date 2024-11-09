@@ -68,6 +68,7 @@ import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.MagneticBorder;
 import net.sourceforge.plantuml.klimt.geom.MagneticBorderNone;
 import net.sourceforge.plantuml.klimt.geom.Moveable;
@@ -348,10 +349,12 @@ public class Cluster implements Moveable {
 					group.getUSymbol(), skinParam.getCurrentStyleBuilder(), skinParam.getIHtmlColorSet(),
 					group.getGroupType());
 
+			final HorizontalAlignment horizontalAlignment = skinParam
+					.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null);
 			final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),
 					clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);
-			decoration.drawU(ug, backColor, borderColor, shadowing, rounded,
-					skinParam.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null),
+
+			decoration.drawU(ug, backColor, borderColor, shadowing, rounded, horizontalAlignment,
 					skinParam.getStereotypeAlignment(), diagonalCorner);
 
 		} catch (Exception e) {

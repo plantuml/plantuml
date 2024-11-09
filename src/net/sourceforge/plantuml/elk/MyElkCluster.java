@@ -105,8 +105,7 @@ public class MyElkCluster {
 //					: group.getUSymbol().getSkinParameter().getRoundCorner(skinParam, group.getStereotype());
 
 		final RectangleArea rectangleArea = new RectangleArea(0, 0, elkNode.getWidth(), elkNode.getHeight());
-		final ClusterHeader clusterHeader = new ClusterHeader(group, diagram.getSkinParam(), diagram,
-				ug.getStringBounder());
+		final ClusterHeader clusterHeader = new ClusterHeader(group, diagram, ug.getStringBounder());
 
 		final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),
 				clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);
@@ -149,7 +148,7 @@ public class MyElkCluster {
 		final UStroke stroke = Cluster.getStrokeInternal(group, style);
 
 		final RectangleArea rectangleArea = new RectangleArea(0, 0, elkNode.getWidth(), elkNode.getHeight());
-		final ClusterHeader clusterHeader = new ClusterHeader(group, diagram.getSkinParam(), diagram, stringBounder);
+		final ClusterHeader clusterHeader = new ClusterHeader(group, diagram, stringBounder);
 
 		final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),
 				clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);

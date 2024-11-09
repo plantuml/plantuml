@@ -65,9 +65,11 @@ public final class ClusterHeader {
 	final private TextBlock title;
 	final private TextBlock stereo;
 
-	public ClusterHeader(Entity g, ISkinParam skinParam, PortionShower portionShower, StringBounder stringBounder) {
+	public ClusterHeader(Entity g, PortionShower portionShower, StringBounder stringBounder) {
 
-		this.title = getTitleBlock(g, skinParam);
+		final ISkinParam skinParam = g.getSkinParam();
+
+		this.title = getTitleBlock(g);
 		this.stereo = getStereoBlock(g, skinParam, portionShower);
 		final TextBlock stereoAndTitle = TextBlockUtils.mergeTB(stereo, title, getTitleHorizontalAlignment());
 		final XDimension2D dimLabel = stereoAndTitle.calculateDimension(stringBounder);
@@ -103,11 +105,29 @@ public final class ClusterHeader {
 		return stereo;
 	}
 
-	private TextBlock getTitleBlock(Entity g, ISkinParam skinParam) {
+	private TextBlock getTitleBlock(Entity g) {
+		final ISkinParam skinParam = g.getSkinParam();
 		final Display label = g.getDisplay();
 		if (label == null)
 			return TextBlockUtils.empty(0, 0);
 
+		final StyleSignatureBasic signature = getSignature(g, skinParam);
+
+		final Style style = signature //
+				.withTOBECHANGED(g.getStereotype()) //
+				.with(g.getStereostyles()) //
+				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+
+		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet(),
+				g.getColors());
+
+		// final HorizontalAlignment alignment = style.getHorizontalAlignment();
+		// final HorizontalAlignment alignment = getTitleHorizontalAlignment();
+		final HorizontalAlignment alignment = HorizontalAlignment.CENTER;
+		return label.create(fontConfiguration, alignment, skinParam);
+	}
+
+	public StyleSignatureBasic getSignature(Entity g, ISkinParam skinParam) {
 		final SName sname = skinParam.getUmlDiagramType().getStyleName();
 		final StyleSignatureBasic signature;
 		final USymbol uSymbol = g.getUSymbol();
@@ -121,17 +141,7 @@ public final class ClusterHeader {
 			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.package_, SName.title);
 		else
 			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.composite, SName.title);
-
-		final Style style = signature //
-				.withTOBECHANGED(g.getStereotype()) //
-				.with(g.getStereostyles()) //
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
-
-		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet(),
-				g.getColors());
-
-		final HorizontalAlignment alignment = getTitleHorizontalAlignment();
-		return label.create(fontConfiguration, alignment, skinParam);
+		return signature;
 	}
 
 	public HorizontalAlignment getTitleHorizontalAlignment() {

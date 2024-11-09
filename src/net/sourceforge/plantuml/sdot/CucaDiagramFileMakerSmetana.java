@@ -297,7 +297,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			return;
 
 		if (g.isPacked() == false) {
-			final ClusterHeader clusterHeader = new ClusterHeader(g, diagram.getSkinParam(), diagram, stringBounder);
+			final ClusterHeader clusterHeader = new ClusterHeader(g, diagram, stringBounder);
 			clusterManager.openCluster(g, clusterHeader);
 		}
 

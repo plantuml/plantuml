@@ -427,8 +427,7 @@ public final class GraphvizImageBuilder {
 		if (g.getGroupType() == GroupType.CONCURRENT_STATE)
 			return;
 
-		final ClusterHeader clusterHeader = new ClusterHeader(g, dotData.getSkinParam(), dotData.getPortionShower(),
-				stringBounder);
+		final ClusterHeader clusterHeader = new ClusterHeader(g, dotData.getPortionShower(), stringBounder);
 		clusterManager.openCluster(g, clusterHeader);
 		this.printEntities(stringBounder, g.leafs());
 

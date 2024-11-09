@@ -352,8 +352,7 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 				final ElkNode elkCluster = ElkGraphUtil.createNode(cluster);
 				elkCluster.setProperty(CoreOptions.DIRECTION, Direction.DOWN);
 
-				final ClusterHeader clusterHeader = new ClusterHeader(g, diagram.getSkinParam(), diagram,
-						stringBounder);
+				final ClusterHeader clusterHeader = new ClusterHeader(g, diagram, stringBounder);
 
 				final int titleAndAttributeHeight = clusterHeader.getTitleAndAttributeHeight();
 
