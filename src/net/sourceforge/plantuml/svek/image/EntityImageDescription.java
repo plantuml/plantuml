@@ -131,24 +131,26 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		final Colors colors = entity.getColors();
 
-		final StyleSignatureBasic tmp;
+		final StyleSignatureBasic signatureTitle;
 		if (symbol instanceof USymbolActorBusiness)
-			tmp = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.actor, SName.business,
+			signatureTitle = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.actor, SName.business,
 					SName.title);
 		else
-			tmp = StyleSignatureBasic.of(SName.root, SName.element, styleName, symbol.getSName(), SName.title);
+			signatureTitle = StyleSignatureBasic.of(SName.root, SName.element, styleName, symbol.getSName(),
+					SName.title);
 
 		final Stereotype stereotype = entity.getStereotype();
-		final Style styleTitle = tmp.withTOBECHANGED(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder())
-				.eventuallyOverride(colors);
+		final Style styleTitle = signatureTitle.withTOBECHANGED(stereotype)
+				.getMergedStyle(getSkinParam().getCurrentStyleBuilder()).eventuallyOverride(colors);
 
-		final Style styleStereo = tmp.forStereotypeItself(stereotype)
-				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		final Style styleStereo = StyleSignatureBasic
+				.of(SName.root, SName.element, styleName, symbol.getSName(), SName.stereotype)
+				.forStereotypeItself(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 
-		final StyleSignatureBasic tmp2 = StyleSignatureBasic.of(SName.root, SName.element, styleName,
+		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, styleName,
 				symbol.getSName());
-		final Style style = tmp2.withTOBECHANGED(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder())
-				.eventuallyOverride(colors);
+		final Style style = signature.withTOBECHANGED(stereotype)
+				.getMergedStyle(getSkinParam().getCurrentStyleBuilder()).eventuallyOverride(colors);
 
 		final HColor forecolor = styleTitle.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 

@@ -87,9 +87,10 @@ mainframe {
 element {
   Shadowing 0.0
   LineThickness 0.5
-  composite {
+  composite,package {
     title {
       FontStyle bold
+      HorizontalAlignment center
     }
   }
 }
