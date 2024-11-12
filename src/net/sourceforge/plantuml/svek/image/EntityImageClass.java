@@ -41,7 +41,6 @@ import java.util.Map;
 import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPortion;
-import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.LineConfigurable;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.klimt.Shadowable;
@@ -60,7 +59,6 @@ import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UComment;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -81,13 +79,11 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 	final private EntityImageClassHeader header;
 	final private Url url;
 	final private double roundCorner;
-	final private LeafType leafType;
 
 	final private LineConfigurable lineConfig;
 
 	public EntityImageClass(Entity entity, PortionShower portionShower) {
 		super(entity);
-		this.leafType = entity.getLeafType();
 		this.lineConfig = entity;
 
 		this.roundCorner = getStyle().value(PName.RoundCorner).asDouble();

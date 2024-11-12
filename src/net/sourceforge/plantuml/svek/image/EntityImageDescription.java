@@ -106,7 +106,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 	private final Bibliotekon bibliotekon;
 	private final Fashion ctx;
 
-	public EntityImageDescription(Entity entity, PortionShower portionShower, Collection<Link> links, SName styleName,
+	public EntityImageDescription(Entity entity, PortionShower portionShower, Collection<Link> links,
 			Bibliotekon bibliotekon) {
 		super(entity);
 		this.useRankSame = getSkinParam().useRankSame();
@@ -133,10 +133,10 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		final StyleSignatureBasic signatureTitle;
 		if (symbol instanceof USymbolActorBusiness)
-			signatureTitle = StyleSignatureBasic.of(SName.root, SName.element, styleName, SName.actor, SName.business,
+			signatureTitle = StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.actor, SName.business,
 					SName.title);
 		else
-			signatureTitle = StyleSignatureBasic.of(SName.root, SName.element, styleName, symbol.getSName(),
+			signatureTitle = StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), symbol.getSName(),
 					SName.title);
 
 		final Stereotype stereotype = entity.getStereotype();
@@ -144,10 +144,10 @@ public class EntityImageDescription extends AbstractEntityImage {
 				.getMergedStyle(getSkinParam().getCurrentStyleBuilder()).eventuallyOverride(colors);
 
 		final Style styleStereo = StyleSignatureBasic
-				.of(SName.root, SName.element, styleName, symbol.getSName(), SName.stereotype)
+				.of(SName.root, SName.element, getStyleName(), symbol.getSName(), SName.stereotype)
 				.forStereotypeItself(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 
-		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, styleName,
+		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, getStyleName(),
 				symbol.getSName());
 		final Style style = signature.withTOBECHANGED(stereotype)
 				.getMergedStyle(getSkinParam().getCurrentStyleBuilder()).eventuallyOverride(colors);

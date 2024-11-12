@@ -53,8 +53,6 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.geom.XRectangle2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -77,11 +75,11 @@ public class EntityImageTips extends AbstractEntityImage {
 
 	private final double ySpacing = 10;
 
-	public EntityImageTips(Entity entity, Bibliotekon bibliotekon, UmlDiagramType type) {
+	public EntityImageTips(Entity entity, Bibliotekon bibliotekon) {
 		super(entity);
 		this.bibliotekon = bibliotekon;
 
-		style = getDefaultStyleDefinition(type.getStyleName()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		style = getDefaultStyleDefinition(getStyleName()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 		if (entity.getColors().getColor(ColorType.BACK) == null)
 			this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 		else

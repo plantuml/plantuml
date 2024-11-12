@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -61,10 +60,9 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 
 	private static final int SIZE = 22;
 	private final TextBlock desc;
-	private final SName sname;
 
-	public EntityImagePseudoState(Entity entity, SName sname) {
-		this(entity, "H", sname);
+	public EntityImagePseudoState(Entity entity) {
+		this(entity, "H");
 	}
 
 	private Style getStyle() {
@@ -72,12 +70,11 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 	}
 
 	private StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.diamond);
+		return StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.diamond);
 	}
 
-	public EntityImagePseudoState(Entity entity, String historyText, SName sname) {
+	public EntityImagePseudoState(Entity entity, String historyText) {
 		super(entity);
-		this.sname = sname;
 		final Stereotype stereotype = entity.getStereotype();
 
 		final FontConfiguration fontConfiguration = FontConfiguration.create(getSkinParam(), FontParam.STATE,

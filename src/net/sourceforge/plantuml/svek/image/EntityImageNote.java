@@ -66,7 +66,6 @@ import net.sourceforge.plantuml.sdot.SmetanaEdge;
 import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.CornerParam;
 import net.sourceforge.plantuml.skin.SkinParamBackcolored;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -95,13 +94,12 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 
 	private final TextBlock textBlock;
 
-	public EntityImageNote(Entity entity, UmlDiagramType umlDiagramType) {
+	public EntityImageNote(Entity entity) {
 		super(entity);
 
 		final Display strings = entity.getDisplay();
 
-		this.style = getDefaultStyleDefinition(umlDiagramType.getStyleName())
-				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
+		this.style = getDefaultStyleDefinition(getStyleName()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 		if (entity.getColors().getColor(ColorType.BACK) == null)
 			this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 		else

@@ -36,12 +36,11 @@
 package net.sourceforge.plantuml.svek.image;
 
 import net.sourceforge.plantuml.abel.Entity;
-import net.sourceforge.plantuml.style.SName;
 
 public class EntityImageDeepHistory extends EntityImagePseudoState {
 
-	public EntityImageDeepHistory(Entity entity, SName sname) {
-		super(entity, "H*", sname);
+	public EntityImageDeepHistory(Entity entity) {
+		super(entity, "H*");
 
 	}
 }

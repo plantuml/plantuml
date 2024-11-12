@@ -54,7 +54,6 @@ import net.sourceforge.plantuml.dot.GraphvizVersion;
 import net.sourceforge.plantuml.dot.Neighborhood;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.skin.LineParam;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.svek.image.EntityImageActivity;
@@ -95,20 +94,18 @@ public final class GeneralImageBuilder {
 
 	public static IEntityImage createEntityImageBlock(Entity leaf, boolean isHideEmptyDescriptionForState,
 			PortionShower portionShower, Bibliotekon bibliotekon, GraphvizVersion graphvizVersion,
-			UmlDiagramType umlDiagramType, Collection<Link> links) {
+			Collection<Link> links) {
 		final IEntityImage result = createEntityImageBlockInternal(leaf, isHideEmptyDescriptionForState, portionShower,
-				bibliotekon, graphvizVersion, umlDiagramType, links);
+				bibliotekon, graphvizVersion, links);
 		// System.err.println("leaf " + leaf + " " + result.getClass());
 		return result;
 	}
 
 	private static IEntityImage createEntityImageBlockInternal(Entity leaf, boolean isHideEmptyDescriptionForState,
 			PortionShower portionShower, Bibliotekon bibliotekon, GraphvizVersion graphvizVersion,
-			UmlDiagramType umlDiagramType, Collection<Link> links) {
+			Collection<Link> links) {
 		if (leaf.isRemoved())
 			throw new IllegalStateException();
-
-		final ISkinParam skinParam = leaf.getSkinParam();
 
 		if (leaf.getLeafType().isLikeClass()) {
 			final EntityImageClass entityImageClass = new EntityImageClass(leaf, portionShower);
@@ -119,7 +116,7 @@ public final class GeneralImageBuilder {
 			return entityImageClass;
 		}
 		if (leaf.getLeafType() == LeafType.NOTE)
-			return new EntityImageNote(leaf, umlDiagramType);
+			return new EntityImageNote(leaf);
 
 		if (leaf.getLeafType() == LeafType.ACTIVITY)
 			return new EntityImageActivity(leaf, bibliotekon);
@@ -127,21 +124,20 @@ public final class GeneralImageBuilder {
 		if (/* (leaf.getLeafType() == LeafType.PORT) || */leaf.getLeafType() == LeafType.PORTIN
 				|| leaf.getLeafType() == LeafType.PORTOUT) {
 			final Cluster parent = bibliotekon.getCluster(leaf.getParentContainer());
-			return new EntityImagePort(leaf, parent, bibliotekon, umlDiagramType.getStyleName());
+			return new EntityImagePort(leaf, parent, bibliotekon);
 		}
 
 		if (leaf.getLeafType() == LeafType.STATE) {
 			if (leaf.getEntityPosition() != EntityPosition.NORMAL) {
 				final Cluster stateParent = bibliotekon.getCluster(leaf.getParentContainer());
-				return new EntityImageStateBorder(leaf, stateParent, bibliotekon,
-						umlDiagramType.getStyleName());
+				return new EntityImageStateBorder(leaf, stateParent, bibliotekon);
 			}
 			if (isHideEmptyDescriptionForState && leaf.getBodier().getRawBody().size() == 0)
 				return new EntityImageStateEmptyDescription(leaf);
 
 			if (leaf.getStereotype() != null
 					&& "<<sdlreceive>>".equals(leaf.getStereotype().getLabel(Guillemet.DOUBLE_COMPARATOR)))
-				return new EntityImageState2(leaf, umlDiagramType.getStyleName());
+				return new EntityImageState2(leaf);
 
 			return new EntityImageState(leaf);
 
@@ -156,10 +152,10 @@ public final class GeneralImageBuilder {
 			return new EntityImageBranch(leaf);
 
 		if (leaf.getLeafType() == LeafType.LOLLIPOP_FULL || leaf.getLeafType() == LeafType.LOLLIPOP_HALF)
-			return new EntityImageLollipopInterface(leaf, umlDiagramType.getStyleName());
+			return new EntityImageLollipopInterface(leaf);
 
 		if (leaf.getLeafType() == LeafType.CIRCLE)
-			return new EntityImageDescription(leaf, portionShower, links, umlDiagramType.getStyleName(), bibliotekon);
+			return new EntityImageDescription(leaf, portionShower, links, bibliotekon);
 
 		if (leaf.getLeafType() == LeafType.DESCRIPTION) {
 			if (OptionFlags.USE_INTERFACE_EYE1 && leaf.getUSymbol() instanceof USymbolInterface) {
@@ -167,8 +163,7 @@ public final class GeneralImageBuilder {
 			} else if (OptionFlags.USE_INTERFACE_EYE2 && leaf.getUSymbol() instanceof USymbolInterface) {
 				return new EntityImageLollipopInterfaceEye2(leaf, portionShower);
 			} else {
-				return new EntityImageDescription(leaf, portionShower, links, umlDiagramType.getStyleName(),
-						bibliotekon);
+				return new EntityImageDescription(leaf, portionShower, links, bibliotekon);
 			}
 		}
 		if (leaf.getLeafType() == LeafType.USECASE)
@@ -190,7 +185,7 @@ public final class GeneralImageBuilder {
 			return new EntityImageJson(leaf, portionShower);
 
 		if (leaf.getLeafType() == LeafType.SYNCHRO_BAR || leaf.getLeafType() == LeafType.STATE_FORK_JOIN)
-			return new EntityImageSynchroBar(leaf, umlDiagramType.getStyleName());
+			return new EntityImageSynchroBar(leaf);
 
 		if (leaf.getLeafType() == LeafType.ARC_CIRCLE)
 			return new EntityImageArcCircle(leaf);
@@ -203,22 +198,21 @@ public final class GeneralImageBuilder {
 
 		if (leaf.getLeafType() == LeafType.EMPTY_PACKAGE) {
 			if (leaf.getUSymbol() != null)
-				return new EntityImageDescription(leaf, portionShower, links, umlDiagramType.getStyleName(),
-						bibliotekon);
+				return new EntityImageDescription(leaf, portionShower, links, bibliotekon);
 
-			return new EntityImageEmptyPackage(leaf, portionShower, umlDiagramType.getStyleName());
+			return new EntityImageEmptyPackage(leaf, portionShower);
 		}
 		if (leaf.getLeafType() == LeafType.ASSOCIATION)
-			return new EntityImageAssociation(leaf, umlDiagramType.getStyleName());
+			return new EntityImageAssociation(leaf);
 
 		if (leaf.getLeafType() == LeafType.PSEUDO_STATE)
-			return new EntityImagePseudoState(leaf, umlDiagramType.getStyleName());
+			return new EntityImagePseudoState(leaf);
 
 		if (leaf.getLeafType() == LeafType.DEEP_HISTORY)
-			return new EntityImageDeepHistory(leaf, umlDiagramType.getStyleName());
+			return new EntityImageDeepHistory(leaf);
 
 		if (leaf.getLeafType() == LeafType.TIPS)
-			return new EntityImageTips(leaf, bibliotekon, umlDiagramType);
+			return new EntityImageTips(leaf, bibliotekon);
 
 		if (leaf.getLeafType() == LeafType.CHEN_ENTITY)
 			return new EntityImageChenEntity(leaf);

@@ -47,7 +47,6 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
@@ -58,13 +57,11 @@ import net.sourceforge.plantuml.url.Url;
 public class EntityImageState2 extends AbstractEntityImage {
 
 	final private Url url;
-	private final SName sname;
 
 	private final TextBlock asSmall;
 
-	public EntityImageState2(Entity entity, SName sname) {
+	public EntityImageState2(Entity entity) {
 		super(entity);
-		this.sname = sname;
 		final Stereotype stereotype = entity.getStereotype();
 
 		final USymbol symbol = USymbols.FRAME;
@@ -85,7 +82,7 @@ public class EntityImageState2 extends AbstractEntityImage {
 	}
 
 	private StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.state);
+		return StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.state);
 	}
 
 	public ShapeType getShapeType() {

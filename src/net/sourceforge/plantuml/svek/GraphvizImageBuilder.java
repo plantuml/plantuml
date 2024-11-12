@@ -214,7 +214,7 @@ public final class GraphvizImageBuilder {
 			if (group.isRoot() && single.getUSymbol() instanceof USymbolHexagon == false) {
 				final IEntityImage tmp = GeneralImageBuilder.createEntityImageBlock(single,
 						dotData.isHideEmptyDescriptionForState(), dotData.getPortionShower(), null, null,
-						dotData.getUmlDiagramType(), dotData.getLinks());
+						dotData.getLinks());
 				return new EntityImageDegenerated(tmp, getBackcolor());
 			}
 		}
@@ -377,7 +377,7 @@ public final class GraphvizImageBuilder {
 
 			return GeneralImageBuilder.createEntityImageBlock(ent, dotData.isHideEmptyDescriptionForState(),
 					dotData.getPortionShower(), dotStringFactory.getBibliotekon(),
-					dotStringFactory.getGraphvizVersion(), dotData.getUmlDiagramType(), dotData.getLinks());
+					dotStringFactory.getGraphvizVersion(), dotData.getLinks());
 		}
 		return ent.getSvekImage();
 	}

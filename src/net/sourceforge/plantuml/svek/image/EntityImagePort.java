@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -62,16 +61,13 @@ import net.sourceforge.plantuml.svek.SvekNode;
 
 public class EntityImagePort extends AbstractEntityImageBorder {
 
-	private final SName sname;
-
-	public EntityImagePort(Entity leaf, Cluster parent, Bibliotekon bibliotekon, SName sname) {
+	public EntityImagePort(Entity leaf, Cluster parent, Bibliotekon bibliotekon) {
 		super(leaf, parent, bibliotekon, FontParam.BOUNDARY);
-		this.sname = sname;
 	}
 
 	@Override
 	protected StyleSignatureBasic getSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.port);
+		return StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.port);
 	}
 
 	private boolean upPosition() {

@@ -49,14 +49,13 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.klimt.geom.RectangleArea;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.RectangleArea;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -75,7 +74,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 	private final Stereotype stereotype;
 	private final TextBlock stereoBlock;
 	private final Url url;
-	private final SName sname;
+
 	private final double shadowing;
 	private final HColor borderColor;
 	private final UStroke stroke;
@@ -84,13 +83,12 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 	private final HColor back;
 
 	private Style getStyle() {
-		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.package_, SName.title)
+		return StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.package_, SName.title)
 				.withTOBECHANGED(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
-	public EntityImageEmptyPackage(Entity entity, PortionShower portionShower, SName sname) {
+	public EntityImageEmptyPackage(Entity entity, PortionShower portionShower) {
 		super(entity);
-		this.sname = sname;
 
 		final Colors colors = entity.getColors();
 		final HColor specificBackColor = colors.getColor(ColorType.BACK);

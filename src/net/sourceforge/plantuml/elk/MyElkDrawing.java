@@ -167,7 +167,7 @@ class MyElkDrawing extends AbstractTextBlock {
 				System.err.println("NOT YET IMPLEMENED");
 
 			return GeneralImageBuilder.createEntityImageBlock(ent, diagram.isHideEmptyDescriptionForState(), diagram,
-					getBibliotekon(), null, diagram.getUmlDiagramType(), diagram.getLinks());
+					getBibliotekon(), null, diagram.getLinks());
 		}
 		return ent.getSvekImage();
 	}

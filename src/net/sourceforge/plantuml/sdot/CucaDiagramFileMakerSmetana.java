@@ -738,8 +738,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			}
 
 			final IEntityImage result = GeneralImageBuilder.createEntityImageBlock(ent,
-					diagram.isHideEmptyDescriptionForState(), diagram, getBibliotekon(), null,
-					diagram.getUmlDiagramType(), diagram.getLinks());
+					diagram.isHideEmptyDescriptionForState(), diagram, getBibliotekon(), null, diagram.getLinks());
 			ent.setSvekImage(result);
 			return result;
 		}

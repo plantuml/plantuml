@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockEmpty;
 import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.stereo.Stereostyles;
 import net.sourceforge.plantuml.stereo.Stereotag;
@@ -721,6 +722,10 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 	
 	public final ISkinParam getSkinParam() {
 		return diagram.getSkinParam();
+	}
+	
+	public final UmlDiagramType getUmlDiagramType() {
+		return diagram.getUmlDiagramType();
 	}
 
 }

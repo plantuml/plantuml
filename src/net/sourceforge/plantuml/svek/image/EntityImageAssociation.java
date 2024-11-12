@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -53,11 +52,9 @@ import net.sourceforge.plantuml.svek.ShapeType;
 public class EntityImageAssociation extends AbstractEntityImage {
 
 	final private static int SIZE = 12;
-	private final SName sname;
 
-	public EntityImageAssociation(Entity entity, SName sname) {
+	public EntityImageAssociation(Entity entity) {
 		super(entity);
-		this.sname = sname;
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
@@ -69,7 +66,7 @@ public class EntityImageAssociation extends AbstractEntityImage {
 	}
 
 	private StyleSignatureBasic getStyleSignature() {
-		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.diamond);
+		return StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.diamond);
 	}
 
 	final public void drawU(UGraphic ug) {
