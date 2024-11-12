@@ -247,6 +247,7 @@ public class FromSkinparamToStyle {
 		addConvert("lifelineStrategy", PName.LineStyle, SName.lifeLine);
 		addConvert("wrapWidth", PName.MaximumWidth, SName.element);
 		addConvert("HyperlinkUnderline", PName.HyperlinkUnderlineThickness, SName.element);
+		addConvert("StereotypeAlignment", PName.HorizontalAlignment, SName.stereotype);
 
 	}
 

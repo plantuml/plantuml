@@ -72,7 +72,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UComment;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -133,8 +132,8 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		final StyleSignatureBasic signatureTitle;
 		if (symbol instanceof USymbolActorBusiness)
-			signatureTitle = StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.actor, SName.business,
-					SName.title);
+			signatureTitle = StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.actor,
+					SName.business, SName.title);
 		else
 			signatureTitle = StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), symbol.getSName(),
 					SName.title);
@@ -194,11 +193,15 @@ public class EntityImageDescription extends AbstractEntityImage {
 		name = BodyFactory.create2(getSkinParam().getDefaultTextAlignment(HorizontalAlignment.CENTER), codeDisplay,
 				getSkinParam(), stereotype, entity, styleTitle);
 
+		// final HorizontalAlignment stereotypeAlignment =
+		// getSkinParam().getStereotypeAlignment();
+		final HorizontalAlignment stereotypeAlignment = styleStereo.getHorizontalAlignment();
+
 		if (hideText)
 			asSmall = symbol.asSmall(TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0), TextBlockUtils.empty(0, 0),
-					ctx, getSkinParam().getStereotypeAlignment());
+					ctx, stereotypeAlignment);
 		else
-			asSmall = symbol.asSmall(name, desc, stereo, ctx, getSkinParam().getStereotypeAlignment());
+			asSmall = symbol.asSmall(name, desc, stereo, ctx, stereotypeAlignment);
 
 	}
 
