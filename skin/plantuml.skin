@@ -505,6 +505,7 @@ nwdiagDiagram {
 	group {
 		FontSize 12
 		BackGroundColor #e7e7e7
+		LineColor #e7e7e7
 	}
 	arrow {
 		FontSize 11

@@ -154,11 +154,11 @@ public class MinMax {
 
 	// ::comment when __HAXE__
 	public void drawGray(UGraphic ug) {
-		draw(ug, HColors.GRAY);
+		draw(ug, HColors.GRAY, HColors.GRAY);
 	}
 
-	public void draw(UGraphic ug, HColor color) {
-		ug = ug.apply(color).apply(color.bg());
+	public void draw(UGraphic ug, HColor borderColor, HColor backgroundColor) {
+		ug = ug.apply(borderColor).apply(backgroundColor.bg());
 		ug = ug.apply(new UTranslate(minX, minY));
 		ug.draw(URectangle.build(getWidth(), getHeight()));
 	}
