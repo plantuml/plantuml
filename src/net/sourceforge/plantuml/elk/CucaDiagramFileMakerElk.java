@@ -505,8 +505,8 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 			if (skinParam.sameClassWidth())
 				System.err.println("NOT YET IMPLEMENED");
 
-			return GeneralImageBuilder.createEntityImageBlock(ent, skinParam, diagram.isHideEmptyDescriptionForState(),
-					diagram, getBibliotekon(), null, diagram.getUmlDiagramType(), diagram.getLinks());
+			return GeneralImageBuilder.createEntityImageBlock(ent, diagram.isHideEmptyDescriptionForState(), diagram,
+					getBibliotekon(), null, diagram.getUmlDiagramType(), diagram.getLinks());
 		}
 		return ent.getSvekImage();
 	}

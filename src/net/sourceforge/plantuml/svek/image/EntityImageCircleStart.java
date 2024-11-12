@@ -55,10 +55,10 @@ public class EntityImageCircleStart extends AbstractEntityImage {
 				SName.circle, SName.start);
 	}
 
-	public EntityImageCircleStart(Entity entity, ISkinParam skinParam) {
-		super(entity, skinParam);
+	public EntityImageCircleStart(Entity entity) {
+		super(entity);
 		final Style style = getDefaultStyleDefinitionCircle().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-		this.circle = new CircleStart(skinParam, style, entity.getColors());
+		this.circle = new CircleStart(getSkinParam(), style, entity.getColors());
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {

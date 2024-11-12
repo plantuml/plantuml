@@ -64,8 +64,8 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 
 	private final SName sname;
 
-	public EntityImagePort(Entity leaf, ISkinParam skinParam, Cluster parent, Bibliotekon bibliotekon, SName sname) {
-		super(leaf, skinParam, parent, bibliotekon, FontParam.BOUNDARY);
+	public EntityImagePort(Entity leaf, Cluster parent, Bibliotekon bibliotekon, SName sname) {
+		super(leaf, parent, bibliotekon, FontParam.BOUNDARY);
 		this.sname = sname;
 	}
 

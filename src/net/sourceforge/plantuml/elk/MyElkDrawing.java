@@ -146,7 +146,8 @@ class MyElkDrawing extends AbstractTextBlock {
 
 	}
 
-	private void drawAllEdges(UGraphic ug, Map<Entity, MyElkCluster> elkClusters, Map<Entity, IEntityImage> nodeImages) {
+	private void drawAllEdges(UGraphic ug, Map<Entity, MyElkCluster> elkClusters,
+			Map<Entity, IEntityImage> nodeImages) {
 		for (Entry<Link, ElkEdge> ent : edges.entrySet()) {
 			final Link link = ent.getKey();
 			if (link.isInvis())
@@ -165,8 +166,8 @@ class MyElkDrawing extends AbstractTextBlock {
 			if (skinParam.sameClassWidth())
 				System.err.println("NOT YET IMPLEMENED");
 
-			return GeneralImageBuilder.createEntityImageBlock(ent, skinParam, diagram.isHideEmptyDescriptionForState(),
-					diagram, getBibliotekon(), null, diagram.getUmlDiagramType(), diagram.getLinks());
+			return GeneralImageBuilder.createEntityImageBlock(ent, diagram.isHideEmptyDescriptionForState(), diagram,
+					getBibliotekon(), null, diagram.getUmlDiagramType(), diagram.getLinks());
 		}
 		return ent.getSvekImage();
 	}
@@ -191,8 +192,8 @@ class MyElkDrawing extends AbstractTextBlock {
 		final TextBlock label = getLabel(ug.getStringBounder(), link);
 		final TextBlock quantifier1 = getQuantifier(ug.getStringBounder(), link, 1);
 		final TextBlock quantifier2 = getQuantifier(ug.getStringBounder(), link, 2);
-		final MyElkEdge elkPath = new MyElkEdge(diagram, SName.classDiagram, link, edge, label, quantifier1, quantifier2,
-				magicY2, elkClusters, UTranslate.point(translate), nodeImages);
+		final MyElkEdge elkPath = new MyElkEdge(diagram, SName.classDiagram, link, edge, label, quantifier1,
+				quantifier2, magicY2, elkClusters, UTranslate.point(translate), nodeImages);
 		elkPath.drawU(ug);
 	}
 

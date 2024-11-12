@@ -55,8 +55,8 @@ public class EntityImageAssociation extends AbstractEntityImage {
 	final private static int SIZE = 12;
 	private final SName sname;
 
-	public EntityImageAssociation(Entity entity, ISkinParam skinParam, SName sname) {
-		super(entity, skinParam);
+	public EntityImageAssociation(Entity entity, SName sname) {
+		super(entity);
 		this.sname = sname;
 	}
 

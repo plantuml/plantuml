@@ -58,8 +58,8 @@ public class EntityImageBranch extends AbstractEntityImage {
 
 	final private static int SIZE = 12;
 
-	public EntityImageBranch(Entity entity, ISkinParam skinParam) {
-		super(entity, skinParam);
+	public EntityImageBranch(Entity entity) {
+		super(entity);
 	}
 
 	public StyleSignatureBasic getDefaultStyleDefinition() {

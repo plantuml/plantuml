@@ -69,8 +69,8 @@ public class EntityImageState extends EntityImageStateCommon {
 	final static private double smallMarginX = 7;
 	final static private double smallMarginY = 4;
 
-	public EntityImageState(Entity entity, ISkinParam skinParam) {
-		super(entity, skinParam);
+	public EntityImageState(Entity entity) {
+		super(entity);
 
 		final Stereotype stereotype = entity.getStereotype();
 
@@ -81,7 +81,7 @@ public class EntityImageState extends EntityImageStateCommon {
 				.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 
 		this.horizontalAlignmentFields = getStyleStateHeader().getHorizontalAlignment();
-		this.fields = list.create8(fieldsFontConfiguration, horizontalAlignmentFields, skinParam, CreoleMode.FULL,
+		this.fields = list.create8(fieldsFontConfiguration, horizontalAlignmentFields, getSkinParam(), CreoleMode.FULL,
 				getStyleState().wrapWidth());
 
 	}

@@ -105,7 +105,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 	}
 
 	private TextBlock getEntityImageClass(Entity entity) {
-		return new EntityImageClass(entity, getSkinParam(), this);
+		return new EntityImageClass(entity, this);
 	}
 
 	@Override

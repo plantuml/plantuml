@@ -70,8 +70,8 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 	private final Fashion ctx;
 	final private Url url;
 
-	public EntityImageLollipopInterfaceEye2(Entity entity, ISkinParam skinParam, PortionShower portionShower) {
-		super(entity, skinParam);
+	public EntityImageLollipopInterfaceEye2(Entity entity, PortionShower portionShower) {
+		super(entity);
 		final Stereotype stereotype = entity.getStereotype();
 
 //		final USymbol symbol = Objects.requireNonNull(
@@ -80,8 +80,8 @@ public class EntityImageLollipopInterfaceEye2 extends AbstractEntityImage {
 		// final FontParam fontParam = symbol.getFontParam();
 		final FontParam fontParam = FontParam.COMPONENT;
 
-		this.desc = BodyFactory.create2(skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER),
-				entity.getDisplay(), skinParam, stereotype, entity, getStyle(fontParam));
+		this.desc = BodyFactory.create2(getSkinParam().getDefaultTextAlignment(HorizontalAlignment.CENTER),
+				entity.getDisplay(), getSkinParam(), stereotype, entity, getStyle(fontParam));
 
 		this.url = entity.getUrl99();
 

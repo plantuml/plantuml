@@ -69,18 +69,18 @@ public class EntityImageDomain extends AbstractEntityImage {
 	final private TextBlock stereo;
 	final private Url url;
 
-	public EntityImageDomain(Entity entity, ISkinParam skinParam, char typeLetter) {
-		super(entity, skinParam);
+	public EntityImageDomain(Entity entity, char typeLetter) {
+		super(entity);
 		final Stereotype stereotype = entity.getStereotype();
 		FontConfiguration fc = FontConfiguration.create(getSkinParam(), FontParam.DESIGNED_DOMAIN, stereotype);
-		this.name = TextBlockUtils.withMargin(entity.getDisplay().create(fc, HorizontalAlignment.CENTER, skinParam), 2,
+		this.name = TextBlockUtils.withMargin(entity.getDisplay().create(fc, HorizontalAlignment.CENTER, getSkinParam()), 2,
 				2);
 		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null) {
 			this.stereo = null;
 		} else {
-			this.stereo = Display.create(stereotype.getLabels(skinParam.guillemet())).create(
+			this.stereo = Display.create(stereotype.getLabels(getSkinParam().guillemet())).create(
 					FontConfiguration.create(getSkinParam(), FontParam.DESIGNED_DOMAIN_STEREOTYPE, stereotype),
-					HorizontalAlignment.CENTER, skinParam);
+					HorizontalAlignment.CENTER, getSkinParam());
 		}
 		this.tag = new BoxedCharacter(typeLetter, 8, UFont.byDefault(8), stereotype.getHtmlColor(), null,
 				fc.getColor());

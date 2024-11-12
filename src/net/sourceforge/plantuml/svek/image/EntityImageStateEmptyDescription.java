@@ -48,8 +48,8 @@ public class EntityImageStateEmptyDescription extends EntityImageStateCommon {
 	final private static int MIN_WIDTH = 50;
 	final private static int MIN_HEIGHT = 40;
 
-	public EntityImageStateEmptyDescription(Entity entity, ISkinParam skinParam) {
-		super(entity, skinParam);
+	public EntityImageStateEmptyDescription(Entity entity) {
+		super(entity);
 
 	}
 

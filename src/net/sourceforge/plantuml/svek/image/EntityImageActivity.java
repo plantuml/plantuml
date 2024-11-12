@@ -70,16 +70,16 @@ public class EntityImageActivity extends AbstractEntityImage {
 	final private Url url;
 	private final Bibliotekon bibliotekon;
 
-	public EntityImageActivity(Entity entity, ISkinParam skinParam, Bibliotekon bibliotekon) {
-		super(entity, skinParam);
+	public EntityImageActivity(Entity entity, Bibliotekon bibliotekon) {
+		super(entity);
 		this.bibliotekon = bibliotekon;
 
 		final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
-		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());
+		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();
 		this.shadowing = style.value(PName.Shadowing).asDouble();
 
-		this.desc = entity.getDisplay().create(fontConfiguration, horizontalAlignment, skinParam);
+		this.desc = entity.getDisplay().create(fontConfiguration, horizontalAlignment, getSkinParam());
 		this.url = entity.getUrl99();
 	}
 

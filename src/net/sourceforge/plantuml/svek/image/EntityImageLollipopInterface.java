@@ -78,14 +78,14 @@ public class EntityImageLollipopInterface extends AbstractEntityImage {
 		return UStroke.withThickness(1.5);
 	}
 
-	public EntityImageLollipopInterface(Entity entity, ISkinParam skinParam, SName sname) {
-		super(entity, skinParam);
+	public EntityImageLollipopInterface(Entity entity, SName sname) {
+		super(entity);
 		this.sname = sname;
 
 		final FontConfiguration fc = FontConfiguration.create(getSkinParam(),
-				getSignature().getMergedStyle(skinParam.getCurrentStyleBuilder()));
+				getSignature().getMergedStyle(getSkinParam().getCurrentStyleBuilder()));
 
-		this.desc = entity.getDisplay().create(fc, HorizontalAlignment.CENTER, skinParam);
+		this.desc = entity.getDisplay().create(fc, HorizontalAlignment.CENTER, getSkinParam());
 		this.url = entity.getUrl99();
 
 	}

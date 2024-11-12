@@ -62,21 +62,21 @@ public class EntityImageState2 extends AbstractEntityImage {
 
 	private final TextBlock asSmall;
 
-	public EntityImageState2(Entity entity, ISkinParam skinParam, SName sname) {
-		super(entity, skinParam);
+	public EntityImageState2(Entity entity, SName sname) {
+		super(entity);
 		this.sname = sname;
 		final Stereotype stereotype = entity.getStereotype();
 
 		final USymbol symbol = USymbols.FRAME;
-		final Fashion ctx = getStyle().getSymbolContext(skinParam.getIHtmlColorSet());
+		final Fashion ctx = getStyle().getSymbolContext(getSkinParam().getIHtmlColorSet());
 
 		this.url = entity.getUrl99();
 		TextBlock stereo = TextBlockUtils.empty(0, 0);
 
-		final TextBlock desc = BodyFactory.create2(skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER),
-				entity.getDisplay(), skinParam, stereotype, entity, getStyle());
+		final TextBlock desc = BodyFactory.create2(getSkinParam().getDefaultTextAlignment(HorizontalAlignment.CENTER),
+				entity.getDisplay(), getSkinParam(), stereotype, entity, getStyle());
 
-		asSmall = symbol.asSmall(null, desc, stereo, ctx, skinParam.getStereotypeAlignment());
+		asSmall = symbol.asSmall(null, desc, stereo, ctx, getSkinParam().getStereotypeAlignment());
 
 	}
 

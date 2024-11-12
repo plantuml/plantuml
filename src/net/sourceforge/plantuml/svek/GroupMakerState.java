@@ -121,7 +121,7 @@ public final class GroupMakerState {
 		final ISkinParam skinParam = diagram.getSkinParam();
 
 		if (group.countChildren() == 0 && group.groups().size() == 0)
-			return new EntityImageState(group, diagram.getSkinParam());
+			return new EntityImageState(group);
 
 		if (group.getGroupType() == GroupType.CONCURRENT_STATE)
 			return createGeneralImageBuilder(group.leafs()).buildImage(stringBounder, null, new String[0], false);

@@ -91,24 +91,24 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 
 	final private LineConfigurable lineConfig;
 
-	public EntityImageObject(Entity entity, ISkinParam skinParam, PortionShower portionShower) {
-		super(entity, skinParam);
+	public EntityImageObject(Entity entity, PortionShower portionShower) {
+		super(entity);
 		this.lineConfig = entity;
 		final Stereotype stereotype = entity.getStereotype();
-		this.roundCorner = skinParam.getRoundCorner(CornerParam.DEFAULT, null);
+		this.roundCorner = getSkinParam().getRoundCorner(CornerParam.DEFAULT, null);
 
 		final FontConfiguration fcHeader = getStyleHeader().getFontConfiguration(getSkinParam().getIHtmlColorSet());
 
-		final TextBlock tmp = getUnderlinedName(entity).create(fcHeader, HorizontalAlignment.CENTER, skinParam);
+		final TextBlock tmp = getUnderlinedName(entity).create(fcHeader, HorizontalAlignment.CENTER, getSkinParam());
 		this.name = TextBlockUtils.withMargin(tmp, 2, 2);
 
 		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null
 				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false)
 			this.stereo = null;
 		else
-			this.stereo = Display.create(stereotype.getLabels(skinParam.guillemet())).create(
+			this.stereo = Display.create(stereotype.getLabels(getSkinParam().guillemet())).create(
 					FontConfiguration.create(getSkinParam(), FontParam.OBJECT_STEREOTYPE, stereotype),
-					HorizontalAlignment.CENTER, skinParam);
+					HorizontalAlignment.CENTER, getSkinParam());
 
 		showFields = portionShower.showPortion(EntityPortion.FIELD, entity);
 
@@ -116,7 +116,7 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 			this.fields = new TextBlockLineBefore(getStyle().value(PName.LineThickness).asDouble(),
 					new TextBlockEmpty(10, 16));
 		else
-			this.fields = entity.getBodier().getBody(skinParam, false, showFields, entity.getStereotype(), getStyle(),
+			this.fields = entity.getBodier().getBody(getSkinParam(), false, showFields, entity.getStereotype(), getStyle(),
 					null);
 
 		this.url = entity.getUrl99();

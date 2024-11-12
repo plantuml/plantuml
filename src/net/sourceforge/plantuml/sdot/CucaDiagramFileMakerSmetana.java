@@ -737,7 +737,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 				// skinParam = new SkinParamSameClassWidth(dotData.getSkinParam(), width);
 			}
 
-			final IEntityImage result = GeneralImageBuilder.createEntityImageBlock(ent, skinParam,
+			final IEntityImage result = GeneralImageBuilder.createEntityImageBlock(ent,
 					diagram.isHideEmptyDescriptionForState(), diagram, getBibliotekon(), null,
 					diagram.getUmlDiagramType(), diagram.getLinks());
 			ent.setSvekImage(result);

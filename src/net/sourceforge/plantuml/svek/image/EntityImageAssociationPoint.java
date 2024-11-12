@@ -55,8 +55,8 @@ public class EntityImageAssociationPoint extends AbstractEntityImage {
 
 	private static final int SIZE = 4;
 
-	public EntityImageAssociationPoint(Entity entity, ISkinParam skinParam) {
-		super(entity, skinParam);
+	public EntityImageAssociationPoint(Entity entity) {
+		super(entity);
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {

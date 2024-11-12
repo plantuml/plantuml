@@ -91,28 +91,26 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 	private final int marginX2 = 15;
 	private final int marginY = 5;
 
-	private final ISkinParam skinParam;
 	private final Style style;
 
 	private final TextBlock textBlock;
 
-	public EntityImageNote(Entity entity, ISkinParam skinParam, UmlDiagramType umlDiagramType) {
-		super(entity, getSkin(getISkinParam(skinParam, entity), entity));
-		this.skinParam = getISkinParam(skinParam, entity);
+	public EntityImageNote(Entity entity, UmlDiagramType umlDiagramType) {
+		super(entity);
 
 		final Display strings = entity.getDisplay();
 
 		this.style = getDefaultStyleDefinition(umlDiagramType.getStyleName())
-				.getMergedStyle(skinParam.getCurrentStyleBuilder());
+				.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 		if (entity.getColors().getColor(ColorType.BACK) == null)
-			this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+			this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 		else
 			this.noteBackgroundColor = entity.getColors().getColor(ColorType.BACK);
 
-		this.borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		this.borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 		this.shadowing = style.value(PName.Shadowing).asDouble();
 
-		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());
+		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();
 
 		if (strings.size() == 1 && strings.get(0).length() == 0)
@@ -267,7 +265,7 @@ public class EntityImageNote extends AbstractEntityImage implements Stencil {
 	}
 
 	private double getRoundCorner() {
-		return skinParam.getRoundCorner(CornerParam.DEFAULT, null);
+		return getSkinParam().getRoundCorner(CornerParam.DEFAULT, null);
 	}
 
 	private void drawNormal(UGraphic ug) {

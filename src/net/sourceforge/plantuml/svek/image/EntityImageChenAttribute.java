@@ -74,20 +74,20 @@ public class EntityImageChenAttribute extends AbstractEntityImage {
 	final private TextBlock title;
 	final private Url url;
 
-	public EntityImageChenAttribute(Entity entity, ISkinParam skinParam) {
-		super(entity, skinParam);
+	public EntityImageChenAttribute(Entity entity) {
+		super(entity);
 
 		isKey = hasStereotype("<<key>>");
 		isMulti = hasStereotype("<<multi>>");
 		isDerived = hasStereotype("<<derived>>");
 
-		FontConfiguration titleFontConfiguration = getStyleTitle(entity, skinParam)
+		FontConfiguration titleFontConfiguration = getStyleTitle(entity, getSkinParam())
 				.getFontConfiguration(getSkinParam().getIHtmlColorSet(), entity.getColors());
 		if (isKey) {
 			titleFontConfiguration = titleFontConfiguration.underline();
 		}
 
-		title = entity.getDisplay().create8(titleFontConfiguration, HorizontalAlignment.CENTER, skinParam, CreoleMode.FULL,
+		title = entity.getDisplay().create8(titleFontConfiguration, HorizontalAlignment.CENTER, getSkinParam(), CreoleMode.FULL,
 				getStyle().wrapWidth());
 
 		url = entity.getUrl99();

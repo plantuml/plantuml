@@ -67,14 +67,14 @@ public abstract class AbstractEntityImageBorder extends AbstractEntityImage {
 		return getSignature().withTOBECHANGED(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
-	AbstractEntityImageBorder(Entity leaf, ISkinParam skinParam, Cluster parent, Bibliotekon bibliotekon,
+	AbstractEntityImageBorder(Entity leaf, Cluster parent, Bibliotekon bibliotekon,
 			FontParam fontParam) {
-		super(leaf, skinParam);
+		super(leaf);
 
 		this.parent = parent;
 		this.bibliotekon = bibliotekon;
 		this.entityPosition = leaf.getEntityPosition();
-		this.rankdir = skinParam.getRankdir();
+		this.rankdir = getSkinParam().getRankdir();
 
 		if (entityPosition == EntityPosition.NORMAL)
 			throw new IllegalArgumentException();

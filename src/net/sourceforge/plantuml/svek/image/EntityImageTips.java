@@ -69,8 +69,6 @@ import net.sourceforge.plantuml.utils.Position;
 
 public class EntityImageTips extends AbstractEntityImage {
 
-	private final ISkinParam skinParam;
-
 	private final HColor noteBackgroundColor;
 	private final HColor borderColor;
 
@@ -79,18 +77,17 @@ public class EntityImageTips extends AbstractEntityImage {
 
 	private final double ySpacing = 10;
 
-	public EntityImageTips(Entity entity, ISkinParam skinParam, Bibliotekon bibliotekon, UmlDiagramType type) {
-		super(entity, EntityImageNote.getSkin(skinParam, entity));
-		this.skinParam = skinParam;
+	public EntityImageTips(Entity entity, Bibliotekon bibliotekon, UmlDiagramType type) {
+		super(entity);
 		this.bibliotekon = bibliotekon;
 
-		style = getDefaultStyleDefinition(type.getStyleName()).getMergedStyle(skinParam.getCurrentStyleBuilder());
+		style = getDefaultStyleDefinition(type.getStyleName()).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 		if (entity.getColors().getColor(ColorType.BACK) == null)
-			this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
+			this.noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 		else
 			this.noteBackgroundColor = entity.getColors().getColor(ColorType.BACK);
 
-		this.borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
+		this.borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 
 	}
 
@@ -177,10 +174,10 @@ public class EntityImageTips extends AbstractEntityImage {
 	private Opale getOpale(final Display display) {
 
 		final double shadowing = style.value(PName.Shadowing).asDouble();
-		final FontConfiguration fc = style.getFontConfiguration(skinParam.getIHtmlColorSet());
+		final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		final UStroke stroke = style.getStroke();
 
-		final TextBlock textBlock = BodyFactory.create3(display, skinParam, HorizontalAlignment.LEFT, fc,
+		final TextBlock textBlock = BodyFactory.create3(display, getSkinParam(), HorizontalAlignment.LEFT, fc,
 				style.wrapWidth(), style);
 		return new Opale(shadowing, borderColor, noteBackgroundColor, textBlock, true, stroke);
 	}

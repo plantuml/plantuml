@@ -85,8 +85,8 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 	final private LineConfigurable lineConfig;
 
-	public EntityImageClass(Entity entity, ISkinParam skinParam, PortionShower portionShower) {
-		super(entity, entity.getColors().mute(skinParam));
+	public EntityImageClass(Entity entity, PortionShower portionShower) {
+		super(entity);
 		this.leafType = entity.getLeafType();
 		this.lineConfig = entity;
 
@@ -97,7 +97,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		this.body = entity.getBodier().getBody(getSkinParam(), showMethods, showFields, entity.getStereotype(),
 				getStyle(), null);
 
-		this.header = new EntityImageClassHeader(entity, getSkinParam(), portionShower);
+		this.header = new EntityImageClassHeader(entity, portionShower);
 		this.url = entity.getUrl99();
 	}
 

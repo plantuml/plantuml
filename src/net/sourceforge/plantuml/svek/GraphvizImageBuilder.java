@@ -212,7 +212,7 @@ public final class GraphvizImageBuilder {
 			final Entity single = dotData.getLeafs().iterator().next();
 			final Entity group = single.getParentContainer();
 			if (group.isRoot() && single.getUSymbol() instanceof USymbolHexagon == false) {
-				final IEntityImage tmp = GeneralImageBuilder.createEntityImageBlock(single, dotData.getSkinParam(),
+				final IEntityImage tmp = GeneralImageBuilder.createEntityImageBlock(single,
 						dotData.isHideEmptyDescriptionForState(), dotData.getPortionShower(), null, null,
 						dotData.getUmlDiagramType(), dotData.getLinks());
 				return new EntityImageDegenerated(tmp, getBackcolor());
@@ -375,7 +375,7 @@ public final class GraphvizImageBuilder {
 				((SkinParam) skinParam).setParamSameClassWidth(width);
 			}
 
-			return GeneralImageBuilder.createEntityImageBlock(ent, skinParam, dotData.isHideEmptyDescriptionForState(),
+			return GeneralImageBuilder.createEntityImageBlock(ent, dotData.isHideEmptyDescriptionForState(),
 					dotData.getPortionShower(), dotStringFactory.getBibliotekon(),
 					dotStringFactory.getGraphvizVersion(), dotData.getUmlDiagramType(), dotData.getLinks());
 		}
@@ -388,7 +388,7 @@ public final class GraphvizImageBuilder {
 			if (ent.getLeafType().isLikeClass() == false)
 				continue;
 
-			final IEntityImage im = new EntityImageClass(ent, dotData.getSkinParam(), dotData.getPortionShower());
+			final IEntityImage im = new EntityImageClass(ent, dotData.getPortionShower());
 			final double w = im.calculateDimension(stringBounder).getWidth();
 			if (w > result)
 				result = w;

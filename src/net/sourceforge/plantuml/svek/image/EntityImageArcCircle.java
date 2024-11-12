@@ -58,21 +58,21 @@ public class EntityImageArcCircle extends AbstractEntityImage {
 	private final TextBlock name;
 	private final TextBlock stereo;
 
-	public EntityImageArcCircle(Entity entity, ISkinParam skinParam) {
-		super(entity, skinParam);
+	public EntityImageArcCircle(Entity entity) {
+		super(entity);
 
 		final Stereotype stereotype = entity.getStereotype();
 
 		this.name = entity.getDisplay().create(
 				FontConfiguration.create(getSkinParam(), FontParam.COMPONENT, stereotype), HorizontalAlignment.CENTER,
-				skinParam);
+				getSkinParam());
 
 		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null) {
 			this.stereo = null;
 		} else {
 			this.stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet())).create(
 					FontConfiguration.create(getSkinParam(), FontParam.COMPONENT_STEREOTYPE, stereotype),
-					HorizontalAlignment.CENTER, skinParam);
+					HorizontalAlignment.CENTER, getSkinParam());
 		}
 
 	}

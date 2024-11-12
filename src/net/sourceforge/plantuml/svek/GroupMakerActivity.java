@@ -112,7 +112,7 @@ public final class GroupMakerActivity {
 
 	public IEntityImage getImage() throws IOException, InterruptedException {
 		if (group.countChildren() == 0)
-			return new EntityImageState(group, diagram.getSkinParam());
+			return new EntityImageState(group);
 
 		final List<Link> links = getPureInnerLinks();
 		final ISkinParam skinParam = diagram.getSkinParam();

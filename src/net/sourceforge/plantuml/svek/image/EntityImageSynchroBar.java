@@ -56,8 +56,8 @@ public class EntityImageSynchroBar extends AbstractEntityImage {
 
 	// private final SName styleName;
 
-	public EntityImageSynchroBar(Entity entity, ISkinParam skinParam, SName styleName) {
-		super(entity, skinParam);
+	public EntityImageSynchroBar(Entity entity, SName styleName) {
+		super(entity);
 		// this.styleName = styleName;
 	}
 

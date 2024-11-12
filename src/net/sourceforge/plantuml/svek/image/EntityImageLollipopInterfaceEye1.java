@@ -67,12 +67,12 @@ public class EntityImageLollipopInterfaceEye1 extends AbstractEntityImage {
 	private final Bibliotekon bibliotekon;
 	final private Url url;
 
-	public EntityImageLollipopInterfaceEye1(Entity entity, ISkinParam skinParam, Bibliotekon bibliotekon) {
-		super(entity, skinParam);
+	public EntityImageLollipopInterfaceEye1(Entity entity, Bibliotekon bibliotekon) {
+		super(entity);
 		this.bibliotekon = bibliotekon;
 		final Stereotype stereotype = entity.getStereotype();
 		this.desc = entity.getDisplay().create(FontConfiguration.create(getSkinParam(), FontParam.CLASS, stereotype),
-				HorizontalAlignment.CENTER, skinParam);
+				HorizontalAlignment.CENTER, getSkinParam());
 		this.url = entity.getUrl99();
 
 	}

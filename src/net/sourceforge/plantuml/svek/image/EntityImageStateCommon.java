@@ -62,16 +62,16 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 
 	final protected LineConfigurable lineConfig;
 
-	public EntityImageStateCommon(Entity entity, ISkinParam skinParam) {
-		super(entity, skinParam);
+	public EntityImageStateCommon(Entity entity) {
+		super(entity);
 
 		this.lineConfig = entity;
 
-		final FontConfiguration titleFontConfiguration = getStyleStateTitle(entity, skinParam)
+		final FontConfiguration titleFontConfiguration = getStyleStateTitle(entity, getSkinParam())
 				.getFontConfiguration(getSkinParam().getIHtmlColorSet(), entity.getColors());
 
-		final HorizontalAlignment horizontalAlignment = getStyleState(entity, skinParam).getHorizontalAlignment();
-		this.title = entity.getDisplay().create8(titleFontConfiguration, horizontalAlignment, skinParam,
+		final HorizontalAlignment horizontalAlignment = getStyleState(entity, getSkinParam()).getHorizontalAlignment();
+		this.title = entity.getDisplay().create8(titleFontConfiguration, horizontalAlignment, getSkinParam(),
 				CreoleMode.FULL, getStyleState().wrapWidth());
 		this.url = entity.getUrl99();
 

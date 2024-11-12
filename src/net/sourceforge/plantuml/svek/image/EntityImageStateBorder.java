@@ -59,9 +59,9 @@ import net.sourceforge.plantuml.svek.SvekNode;
 
 public class EntityImageStateBorder extends AbstractEntityImageBorder {
 
-	public EntityImageStateBorder(Entity leaf, ISkinParam skinParam, Cluster stateParent, final Bibliotekon bibliotekon,
+	public EntityImageStateBorder(Entity leaf, Cluster stateParent, final Bibliotekon bibliotekon,
 			SName sname) {
-		super(leaf, skinParam, stateParent, bibliotekon, FontParam.STATE);
+		super(leaf, stateParent, bibliotekon, FontParam.STATE);
 	}
 
 	@Override

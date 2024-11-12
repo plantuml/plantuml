@@ -48,8 +48,8 @@ public class EntityImageGroup extends AbstractEntityImage {
 	// final private TextBlock desc;
 	// final private static int MARGIN = 10;
 
-	public EntityImageGroup(Entity entity, ISkinParam skinParam) {
-		super(entity, skinParam);
+	public EntityImageGroup(Entity entity) {
+		super(entity);
 		// this.desc = Display.create(StringUtils.getWithNewlines(entity.getDisplay()),
 		// FontConfiguration.create(
 		// getFont(FontParam.ACTIVITY), HtmlColorUtils.BLACK),

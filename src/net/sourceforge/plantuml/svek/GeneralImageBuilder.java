@@ -93,23 +93,25 @@ import net.sourceforge.plantuml.text.Guillemet;
 
 public final class GeneralImageBuilder {
 
-	public static IEntityImage createEntityImageBlock(Entity leaf, ISkinParam skinParam,
-			boolean isHideEmptyDescriptionForState, PortionShower portionShower, Bibliotekon bibliotekon,
-			GraphvizVersion graphvizVersion, UmlDiagramType umlDiagramType, Collection<Link> links) {
-		final IEntityImage result = createEntityImageBlockInternal(leaf, skinParam, isHideEmptyDescriptionForState,
-				portionShower, bibliotekon, graphvizVersion, umlDiagramType, links);
+	public static IEntityImage createEntityImageBlock(Entity leaf, boolean isHideEmptyDescriptionForState,
+			PortionShower portionShower, Bibliotekon bibliotekon, GraphvizVersion graphvizVersion,
+			UmlDiagramType umlDiagramType, Collection<Link> links) {
+		final IEntityImage result = createEntityImageBlockInternal(leaf, isHideEmptyDescriptionForState, portionShower,
+				bibliotekon, graphvizVersion, umlDiagramType, links);
 		// System.err.println("leaf " + leaf + " " + result.getClass());
 		return result;
 	}
 
-	private static IEntityImage createEntityImageBlockInternal(Entity leaf, ISkinParam skinParam,
-			boolean isHideEmptyDescriptionForState, PortionShower portionShower, Bibliotekon bibliotekon,
-			GraphvizVersion graphvizVersion, UmlDiagramType umlDiagramType, Collection<Link> links) {
+	private static IEntityImage createEntityImageBlockInternal(Entity leaf, boolean isHideEmptyDescriptionForState,
+			PortionShower portionShower, Bibliotekon bibliotekon, GraphvizVersion graphvizVersion,
+			UmlDiagramType umlDiagramType, Collection<Link> links) {
 		if (leaf.isRemoved())
 			throw new IllegalStateException();
 
+		final ISkinParam skinParam = leaf.getSkinParam();
+
 		if (leaf.getLeafType().isLikeClass()) {
-			final EntityImageClass entityImageClass = new EntityImageClass((Entity) leaf, skinParam, portionShower);
+			final EntityImageClass entityImageClass = new EntityImageClass(leaf, portionShower);
 			final Neighborhood neighborhood = leaf.getNeighborhood();
 			if (neighborhood != null)
 				return new EntityImageProtected(entityImageClass, 20, neighborhood, bibliotekon);
@@ -117,140 +119,139 @@ public final class GeneralImageBuilder {
 			return entityImageClass;
 		}
 		if (leaf.getLeafType() == LeafType.NOTE)
-			return new EntityImageNote(leaf, skinParam, umlDiagramType);
+			return new EntityImageNote(leaf, umlDiagramType);
 
 		if (leaf.getLeafType() == LeafType.ACTIVITY)
-			return new EntityImageActivity(leaf, skinParam, bibliotekon);
+			return new EntityImageActivity(leaf, bibliotekon);
 
 		if (/* (leaf.getLeafType() == LeafType.PORT) || */leaf.getLeafType() == LeafType.PORTIN
 				|| leaf.getLeafType() == LeafType.PORTOUT) {
 			final Cluster parent = bibliotekon.getCluster(leaf.getParentContainer());
-			return new EntityImagePort(leaf, skinParam, parent, bibliotekon, umlDiagramType.getStyleName());
+			return new EntityImagePort(leaf, parent, bibliotekon, umlDiagramType.getStyleName());
 		}
 
 		if (leaf.getLeafType() == LeafType.STATE) {
 			if (leaf.getEntityPosition() != EntityPosition.NORMAL) {
 				final Cluster stateParent = bibliotekon.getCluster(leaf.getParentContainer());
-				return new EntityImageStateBorder(leaf, skinParam, stateParent, bibliotekon,
+				return new EntityImageStateBorder(leaf, stateParent, bibliotekon,
 						umlDiagramType.getStyleName());
 			}
 			if (isHideEmptyDescriptionForState && leaf.getBodier().getRawBody().size() == 0)
-				return new EntityImageStateEmptyDescription(leaf, skinParam);
+				return new EntityImageStateEmptyDescription(leaf);
 
 			if (leaf.getStereotype() != null
 					&& "<<sdlreceive>>".equals(leaf.getStereotype().getLabel(Guillemet.DOUBLE_COMPARATOR)))
-				return new EntityImageState2(leaf, skinParam, umlDiagramType.getStyleName());
+				return new EntityImageState2(leaf, umlDiagramType.getStyleName());
 
-			return new EntityImageState(leaf, skinParam);
+			return new EntityImageState(leaf);
 
 		}
 		if (leaf.getLeafType() == LeafType.CIRCLE_START)
-			return new EntityImageCircleStart(leaf, skinParam);
+			return new EntityImageCircleStart(leaf);
 
 		if (leaf.getLeafType() == LeafType.CIRCLE_END)
-			return new EntityImageCircleEnd(leaf, skinParam);
+			return new EntityImageCircleEnd(leaf);
 
 		if (leaf.getLeafType() == LeafType.BRANCH || leaf.getLeafType() == LeafType.STATE_CHOICE)
-			return new EntityImageBranch(leaf, skinParam);
+			return new EntityImageBranch(leaf);
 
 		if (leaf.getLeafType() == LeafType.LOLLIPOP_FULL || leaf.getLeafType() == LeafType.LOLLIPOP_HALF)
-			return new EntityImageLollipopInterface(leaf, skinParam, umlDiagramType.getStyleName());
+			return new EntityImageLollipopInterface(leaf, umlDiagramType.getStyleName());
 
 		if (leaf.getLeafType() == LeafType.CIRCLE)
-			return new EntityImageDescription(leaf, skinParam, portionShower, links, umlDiagramType.getStyleName(),
-					bibliotekon);
+			return new EntityImageDescription(leaf, portionShower, links, umlDiagramType.getStyleName(), bibliotekon);
 
 		if (leaf.getLeafType() == LeafType.DESCRIPTION) {
 			if (OptionFlags.USE_INTERFACE_EYE1 && leaf.getUSymbol() instanceof USymbolInterface) {
-				return new EntityImageLollipopInterfaceEye1(leaf, skinParam, bibliotekon);
+				return new EntityImageLollipopInterfaceEye1(leaf, bibliotekon);
 			} else if (OptionFlags.USE_INTERFACE_EYE2 && leaf.getUSymbol() instanceof USymbolInterface) {
-				return new EntityImageLollipopInterfaceEye2(leaf, skinParam, portionShower);
+				return new EntityImageLollipopInterfaceEye2(leaf, portionShower);
 			} else {
-				return new EntityImageDescription(leaf, skinParam, portionShower, links, umlDiagramType.getStyleName(),
+				return new EntityImageDescription(leaf, portionShower, links, umlDiagramType.getStyleName(),
 						bibliotekon);
 			}
 		}
 		if (leaf.getLeafType() == LeafType.USECASE)
-			return new EntityImageUseCase(leaf, skinParam, portionShower);
+			return new EntityImageUseCase(leaf, portionShower);
 
 		if (leaf.getLeafType() == LeafType.USECASE_BUSINESS)
-			return new EntityImageUseCase(leaf, skinParam, portionShower);
+			return new EntityImageUseCase(leaf, portionShower);
 
 		// if (leaf.getEntityType() == LeafType.CIRCLE_INTERFACE) {
 		// return new EntityImageCircleInterface(leaf, skinParam);
 		// }
 		if (leaf.getLeafType() == LeafType.OBJECT)
-			return new EntityImageObject(leaf, skinParam, portionShower);
+			return new EntityImageObject(leaf, portionShower);
 
 		if (leaf.getLeafType() == LeafType.MAP)
-			return new EntityImageMap(leaf, skinParam, portionShower);
+			return new EntityImageMap(leaf, portionShower);
 
 		if (leaf.getLeafType() == LeafType.JSON)
-			return new EntityImageJson(leaf, skinParam, portionShower);
+			return new EntityImageJson(leaf, portionShower);
 
 		if (leaf.getLeafType() == LeafType.SYNCHRO_BAR || leaf.getLeafType() == LeafType.STATE_FORK_JOIN)
-			return new EntityImageSynchroBar(leaf, skinParam, umlDiagramType.getStyleName());
+			return new EntityImageSynchroBar(leaf, umlDiagramType.getStyleName());
 
 		if (leaf.getLeafType() == LeafType.ARC_CIRCLE)
-			return new EntityImageArcCircle(leaf, skinParam);
+			return new EntityImageArcCircle(leaf);
 
 		if (leaf.getLeafType() == LeafType.POINT_FOR_ASSOCIATION)
-			return new EntityImageAssociationPoint(leaf, skinParam);
+			return new EntityImageAssociationPoint(leaf);
 
 		if (leaf.isGroup())
-			return new EntityImageGroup(leaf, skinParam);
+			return new EntityImageGroup(leaf);
 
 		if (leaf.getLeafType() == LeafType.EMPTY_PACKAGE) {
 			if (leaf.getUSymbol() != null)
-				return new EntityImageDescription(leaf, skinParam, portionShower, links, umlDiagramType.getStyleName(),
+				return new EntityImageDescription(leaf, portionShower, links, umlDiagramType.getStyleName(),
 						bibliotekon);
 
-			return new EntityImageEmptyPackage(leaf, skinParam, portionShower, umlDiagramType.getStyleName());
+			return new EntityImageEmptyPackage(leaf, portionShower, umlDiagramType.getStyleName());
 		}
 		if (leaf.getLeafType() == LeafType.ASSOCIATION)
-			return new EntityImageAssociation(leaf, skinParam, umlDiagramType.getStyleName());
+			return new EntityImageAssociation(leaf, umlDiagramType.getStyleName());
 
 		if (leaf.getLeafType() == LeafType.PSEUDO_STATE)
-			return new EntityImagePseudoState(leaf, skinParam, umlDiagramType.getStyleName());
+			return new EntityImagePseudoState(leaf, umlDiagramType.getStyleName());
 
 		if (leaf.getLeafType() == LeafType.DEEP_HISTORY)
-			return new EntityImageDeepHistory(leaf, skinParam, umlDiagramType.getStyleName());
+			return new EntityImageDeepHistory(leaf, umlDiagramType.getStyleName());
 
 		if (leaf.getLeafType() == LeafType.TIPS)
-			return new EntityImageTips(leaf, skinParam, bibliotekon, umlDiagramType);
+			return new EntityImageTips(leaf, bibliotekon, umlDiagramType);
 
 		if (leaf.getLeafType() == LeafType.CHEN_ENTITY)
-			return new EntityImageChenEntity(leaf, skinParam);
+			return new EntityImageChenEntity(leaf);
 
 		if (leaf.getLeafType() == LeafType.CHEN_RELATIONSHIP)
-			return new EntityImageChenRelationship(leaf, skinParam);
+			return new EntityImageChenRelationship(leaf);
 
 		if (leaf.getLeafType() == LeafType.CHEN_ATTRIBUTE)
-			return new EntityImageChenAttribute(leaf, skinParam);
+			return new EntityImageChenAttribute(leaf);
 
 		if (leaf.getLeafType() == LeafType.CHEN_CIRCLE)
-			return new EntityImageChenCircle(leaf, skinParam);
+			return new EntityImageChenCircle(leaf);
 
 		// TODO Clean
 		if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
 				&& leaf.getStereotype().isMachineOrSpecification())
-			return new EntityImageMachine(leaf, skinParam);
+			return new EntityImageMachine(leaf);
 		else if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
 				&& leaf.getStereotype().isDesignedOrSolved())
-			return new EntityImageDesignedDomain(leaf, skinParam);
+			return new EntityImageDesignedDomain(leaf);
 		else if (leaf.getLeafType() == LeafType.REQUIREMENT)
-			return new EntityImageRequirement(leaf, skinParam);
+			return new EntityImageRequirement(leaf);
 		else if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
 				&& leaf.getStereotype().isLexicalOrGiven())
-			return new EntityImageDomain(leaf, skinParam, 'X');
+			return new EntityImageDomain(leaf, 'X');
 		else if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
 				&& leaf.getStereotype().isCausal())
-			return new EntityImageDomain(leaf, skinParam, 'C');
+			return new EntityImageDomain(leaf, 'C');
 		else if (leaf.getLeafType() == LeafType.DOMAIN && leaf.getStereotype() != null
 				&& leaf.getStereotype().isBiddableOrUncertain())
-			return new EntityImageDomain(leaf, skinParam, 'B');
+			return new EntityImageDomain(leaf, 'B');
 		else if (leaf.getLeafType() == LeafType.DOMAIN)
-			return new EntityImageDomain(leaf, skinParam, 'P');
+			return new EntityImageDomain(leaf, 'P');
 		else
 			throw new UnsupportedOperationException(leaf.getLeafType().toString());
 	}

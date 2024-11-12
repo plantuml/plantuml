@@ -63,8 +63,8 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 	private final TextBlock desc;
 	private final SName sname;
 
-	public EntityImagePseudoState(Entity entity, ISkinParam skinParam, SName sname) {
-		this(entity, skinParam, "H", sname);
+	public EntityImagePseudoState(Entity entity, SName sname) {
+		this(entity, "H", sname);
 	}
 
 	private Style getStyle() {
@@ -75,15 +75,15 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 		return StyleSignatureBasic.of(SName.root, SName.element, sname, SName.diamond);
 	}
 
-	public EntityImagePseudoState(Entity entity, ISkinParam skinParam, String historyText, SName sname) {
-		super(entity, skinParam);
+	public EntityImagePseudoState(Entity entity, String historyText, SName sname) {
+		super(entity);
 		this.sname = sname;
 		final Stereotype stereotype = entity.getStereotype();
 
 		final FontConfiguration fontConfiguration = FontConfiguration.create(getSkinParam(), FontParam.STATE,
 				stereotype);
 
-		this.desc = Display.create(historyText).create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);
+		this.desc = Display.create(historyText).create(fontConfiguration, HorizontalAlignment.CENTER, getSkinParam());
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {

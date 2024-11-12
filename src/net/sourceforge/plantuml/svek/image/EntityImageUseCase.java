@@ -83,8 +83,8 @@ public class EntityImageUseCase extends AbstractEntityImage {
 
 	final private Url url;
 
-	public EntityImageUseCase(Entity entity, ISkinParam skinParam2, PortionShower portionShower) {
-		super(entity, entity.getColors().mute(skinParam2));
+	public EntityImageUseCase(Entity entity, PortionShower portionShower) {
+		super(entity);
 		final Stereotype stereotype = entity.getStereotype();
 
 		final Style style = getStyle();

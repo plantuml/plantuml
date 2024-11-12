@@ -67,19 +67,19 @@ public class EntityImageMachine extends AbstractEntityImage {
 	final private TextBlock stereo;
 	final private Url url;
 
-	public EntityImageMachine(Entity entity, ISkinParam skinParam) {
-		super(entity, skinParam);
+	public EntityImageMachine(Entity entity) {
+		super(entity);
 		final Stereotype stereotype = entity.getStereotype();
 		this.name = TextBlockUtils.withMargin(
 				entity.getDisplay().create(FontConfiguration.create(getSkinParam(), FontParam.MACHINE, stereotype),
-						HorizontalAlignment.CENTER, skinParam),
+						HorizontalAlignment.CENTER, getSkinParam()),
 				2, 2);
 		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null) {
 			this.stereo = null;
 		} else {
-			this.stereo = Display.create(stereotype.getLabels(skinParam.guillemet())).create(
+			this.stereo = Display.create(stereotype.getLabels(getSkinParam().guillemet())).create(
 					FontConfiguration.create(getSkinParam(), FontParam.MACHINE_STEREOTYPE, stereotype),
-					HorizontalAlignment.CENTER, skinParam);
+					HorizontalAlignment.CENTER, getSkinParam());
 		}
 		this.url = entity.getUrl99();
 	}

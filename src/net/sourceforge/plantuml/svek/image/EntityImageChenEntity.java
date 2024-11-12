@@ -68,15 +68,15 @@ public class EntityImageChenEntity extends AbstractEntityImage {
 	final private TextBlock title;
 	final private Url url;
 
-	public EntityImageChenEntity(Entity entity, ISkinParam skinParam) {
-		super(entity, skinParam);
+	public EntityImageChenEntity(Entity entity) {
+		super(entity);
 
 		isWeak = hasStereotype("<<weak>>");
 
-		final FontConfiguration titleFontConfiguration = getStyleStateTitle(entity, skinParam)
+		final FontConfiguration titleFontConfiguration = getStyleStateTitle(entity, getSkinParam())
 				.getFontConfiguration(getSkinParam().getIHtmlColorSet(), entity.getColors());
 
-		title = entity.getDisplay().create8(titleFontConfiguration, HorizontalAlignment.CENTER, skinParam, CreoleMode.FULL,
+		title = entity.getDisplay().create8(titleFontConfiguration, HorizontalAlignment.CENTER, getSkinParam(), CreoleMode.FULL,
 				getStyleState().wrapWidth());
 
 		url = entity.getUrl99();

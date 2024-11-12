@@ -49,9 +49,9 @@ public abstract class AbstractEntityImage extends AbstractTextBlock implements I
 	private final Entity entity;
 	private final ISkinParam skinParam;
 
-	public AbstractEntityImage(Entity entity, ISkinParam skinParam) {
+	public AbstractEntityImage(Entity entity) {
 		this.entity = Objects.requireNonNull(entity);
-		this.skinParam = Objects.requireNonNull(skinParam);
+		this.skinParam = entity.getSkinParam();
 	}
 
 	@Override

@@ -88,8 +88,8 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 				.withTOBECHANGED(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 	}
 
-	public EntityImageEmptyPackage(Entity entity, ISkinParam skinParam, PortionShower portionShower, SName sname) {
-		super(entity, skinParam);
+	public EntityImageEmptyPackage(Entity entity, PortionShower portionShower, SName sname) {
+		super(entity);
 		this.sname = sname;
 
 		final Colors colors = entity.getColors();
@@ -112,20 +112,20 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		final FontConfiguration titleFontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		final HorizontalAlignment titleHorizontalAlignment = style.getHorizontalAlignment();
 
-		this.desc = entity.getDisplay().create(titleFontConfiguration, titleHorizontalAlignment, skinParam);
+		this.desc = entity.getDisplay().create(titleFontConfiguration, titleHorizontalAlignment, getSkinParam());
 
 		final DisplayPositioned legend = ((Entity) entity).getLegend();
 		if (legend != null) {
-			final TextBlock legendBlock = EntityImageLegend.create(legend.getDisplay(), skinParam);
+			final TextBlock legendBlock = EntityImageLegend.create(legend.getDisplay(), getSkinParam());
 			stereoBlock = legendBlock;
 		} else {
 			if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null
 					|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false)
 				stereoBlock = TextBlockUtils.empty(0, 0);
 			else
-				stereoBlock = TextBlockUtils.withMargin(Display.create(stereotype.getLabels(skinParam.guillemet()))
+				stereoBlock = TextBlockUtils.withMargin(Display.create(stereotype.getLabels(getSkinParam().guillemet()))
 						.create(FontConfiguration.create(getSkinParam(), FontParam.PACKAGE_STEREOTYPE, stereotype),
-								titleHorizontalAlignment, skinParam),
+								titleHorizontalAlignment, getSkinParam()),
 						1, 0);
 		}
 

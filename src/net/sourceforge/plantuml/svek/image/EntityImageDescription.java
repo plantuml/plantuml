@@ -106,9 +106,9 @@ public class EntityImageDescription extends AbstractEntityImage {
 	private final Bibliotekon bibliotekon;
 	private final Fashion ctx;
 
-	public EntityImageDescription(Entity entity, ISkinParam skinParam2, PortionShower portionShower,
-			Collection<Link> links, SName styleName, Bibliotekon bibliotekon) {
-		super(entity, entity.getColors().mute(skinParam2));
+	public EntityImageDescription(Entity entity, PortionShower portionShower, Collection<Link> links, SName styleName,
+			Bibliotekon bibliotekon) {
+		super(entity);
 		this.useRankSame = getSkinParam().useRankSame();
 		this.bibliotekon = bibliotekon;
 		this.fixCircleLabelOverlapping = getSkinParam().fixCircleLabelOverlapping();
