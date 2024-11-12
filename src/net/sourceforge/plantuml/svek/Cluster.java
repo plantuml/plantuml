@@ -349,10 +349,11 @@ public class Cluster implements Moveable {
 					group.getUSymbol(), skinParam.getCurrentStyleBuilder(), skinParam.getIHtmlColorSet(),
 					group.getGroupType());
 
-			final HorizontalAlignment horizontalAlignment = skinParam
-					.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null);
 			final ClusterDecoration decoration = new ClusterDecoration(packageStyle, group.getUSymbol(),
 					clusterHeader.getTitle(), clusterHeader.getStereo(), rectangleArea, stroke);
+//			final HorizontalAlignment horizontalAlignment = skinParam
+//			.getHorizontalAlignment(AlignmentParam.packageTitleAlignment, null, false, null);
+			final HorizontalAlignment horizontalAlignment = clusterHeader.getTitleHorizontalAlignment();
 
 			decoration.drawU(ug, backColor, borderColor, shadowing, rounded, horizontalAlignment,
 					skinParam.getStereotypeAlignment(), diagonalCorner);
