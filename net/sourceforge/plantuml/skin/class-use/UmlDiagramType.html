@@ -111,10 +111,8 @@ loadScripts(document, 'script');</script>
  <a href="https://plantuml.com/svek" target="_top">
  PlantUML Svek Architecture</a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.svek.image">net.sourceforge.plantuml.svek.image</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.syntax">net.sourceforge.plantuml.syntax</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.syntax">net.sourceforge.plantuml.syntax</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage Syntax and Language (use to print language, and 'cypher').</div>
 </div>
 </div>
@@ -174,9 +172,12 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">EntityFactory.</span><code><a href="../../abel/EntityFactory.html#getUmlDiagramType()" class="member-name-link">getUmlDiagramType</a>()</code></div>
+<div class="col-first even-row-color"><code>final <a href="../UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Entity.</span><code><a href="../../abel/Entity.html#getUmlDiagramType()" class="member-name-link">getUmlDiagramType</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">EntityFactory.</span><code><a href="../../abel/EntityFactory.html#getUmlDiagramType()" class="member-name-link">getUmlDiagramType</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -352,31 +353,22 @@ the order they are declared.</div>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static <a href="../../svek/IEntityImage.html" title="interface in net.sourceforge.plantuml.svek">IEntityImage</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">GeneralImageBuilder.</span><code><a href="../../svek/GeneralImageBuilder.html#createEntityImageBlock(net.sourceforge.plantuml.abel.Entity,boolean,net.sourceforge.plantuml.cucadiagram.PortionShower,net.sourceforge.plantuml.svek.Bibliotekon,net.sourceforge.plantuml.dot.GraphvizVersion,net.sourceforge.plantuml.skin.UmlDiagramType,java.util.Collection)" class="member-name-link">createEntityImageBlock</a><wbr>(<a href="../../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;leaf,
- boolean&nbsp;isHideEmptyDescriptionForState,
- <a href="../../cucadiagram/PortionShower.html" title="interface in net.sourceforge.plantuml.cucadiagram">PortionShower</a>&nbsp;portionShower,
- <a href="../../svek/Bibliotekon.html" title="class in net.sourceforge.plantuml.svek">Bibliotekon</a>&nbsp;bibliotekon,
+<div class="col-first even-row-color"><code><a href="../../svek/SvekNode.html" title="class in net.sourceforge.plantuml.svek">SvekNode</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Cluster.</span><code><a href="../../svek/Cluster.html#printCluster2(java.lang.StringBuilder,java.util.Collection,net.sourceforge.plantuml.klimt.font.StringBounder,net.sourceforge.plantuml.svek.DotMode,net.sourceforge.plantuml.dot.GraphvizVersion,net.sourceforge.plantuml.skin.UmlDiagramType)" class="member-name-link">printCluster2</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html" title="class or interface in java.lang" class="external-link">StringBuilder</a>&nbsp;sb,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../svek/SvekEdge.html" title="class in net.sourceforge.plantuml.svek">SvekEdge</a>&gt;&nbsp;lines,
+ <a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder,
+ <a href="../../svek/DotMode.html" title="enum class in net.sourceforge.plantuml.svek">DotMode</a>&nbsp;dotMode,
  <a href="../../dot/GraphvizVersion.html" title="interface in net.sourceforge.plantuml.dot">GraphvizVersion</a>&nbsp;graphvizVersion,
- <a href="../UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a>&nbsp;umlDiagramType,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../abel/Link.html" title="class in net.sourceforge.plantuml.abel">Link</a>&gt;&nbsp;links)</code></div>
+ <a href="../UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a>&nbsp;type)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../../svek/SvekNode.html" title="class in net.sourceforge.plantuml.svek">SvekNode</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Cluster.</span><code><a href="../../svek/Cluster.html#printCluster2(java.lang.StringBuilder,java.util.Collection,net.sourceforge.plantuml.klimt.font.StringBounder,net.sourceforge.plantuml.svek.DotMode,net.sourceforge.plantuml.dot.GraphvizVersion,net.sourceforge.plantuml.skin.UmlDiagramType)" class="member-name-link">printCluster2</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html" title="class or interface in java.lang" class="external-link">StringBuilder</a>&nbsp;sb,
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Cluster.</span><code><a href="../../svek/Cluster.html#printCluster3_forKermor(java.lang.StringBuilder,java.util.Collection,net.sourceforge.plantuml.klimt.font.StringBounder,net.sourceforge.plantuml.svek.DotMode,net.sourceforge.plantuml.dot.GraphvizVersion,net.sourceforge.plantuml.skin.UmlDiagramType)" class="member-name-link">printCluster3_forKermor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html" title="class or interface in java.lang" class="external-link">StringBuilder</a>&nbsp;sb,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../svek/SvekEdge.html" title="class in net.sourceforge.plantuml.svek">SvekEdge</a>&gt;&nbsp;lines,
  <a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder,
  <a href="../../svek/DotMode.html" title="enum class in net.sourceforge.plantuml.svek">DotMode</a>&nbsp;dotMode,
  <a href="../../dot/GraphvizVersion.html" title="interface in net.sourceforge.plantuml.dot">GraphvizVersion</a>&nbsp;graphvizVersion,
  <a href="../UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a>&nbsp;type)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Cluster.</span><code><a href="../../svek/Cluster.html#printCluster3_forKermor(java.lang.StringBuilder,java.util.Collection,net.sourceforge.plantuml.klimt.font.StringBounder,net.sourceforge.plantuml.svek.DotMode,net.sourceforge.plantuml.dot.GraphvizVersion,net.sourceforge.plantuml.skin.UmlDiagramType)" class="member-name-link">printCluster3_forKermor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html" title="class or interface in java.lang" class="external-link">StringBuilder</a>&nbsp;sb,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../svek/SvekEdge.html" title="class in net.sourceforge.plantuml.svek">SvekEdge</a>&gt;&nbsp;lines,
- <a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder,
- <a href="../../svek/DotMode.html" title="enum class in net.sourceforge.plantuml.svek">DotMode</a>&nbsp;dotMode,
- <a href="../../dot/GraphvizVersion.html" title="interface in net.sourceforge.plantuml.dot">GraphvizVersion</a>&nbsp;graphvizVersion,
- <a href="../UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a>&nbsp;type)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Constructors in <a href="../../svek/package-summary.html">net.sourceforge.plantuml.svek</a> with parameters of type <a href="../UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a></span></div>
 <div class="summary-table three-column-summary">
@@ -389,26 +381,6 @@ the order they are declared.</div>
  <a href="../UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a>&nbsp;umlDiagramType,
  <a href="../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="net.sourceforge.plantuml.svek.image">
-<h2>Uses of <a href="../UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a> in <a href="../../svek/image/package-summary.html">net.sourceforge.plantuml.svek.image</a></h2>
-<div class="caption"><span>Constructors in <a href="../../svek/image/package-summary.html">net.sourceforge.plantuml.svek.image</a> with parameters of type <a href="../UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier</div>
-<div class="table-header col-second">Constructor</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../svek/image/EntityImageNote.html#%3Cinit%3E(net.sourceforge.plantuml.abel.Entity,net.sourceforge.plantuml.skin.UmlDiagramType)" class="member-name-link">EntityImageNote</a><wbr>(<a href="../../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;entity,
- <a href="../UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a>&nbsp;umlDiagramType)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../../svek/image/EntityImageTips.html#%3Cinit%3E(net.sourceforge.plantuml.abel.Entity,net.sourceforge.plantuml.svek.Bibliotekon,net.sourceforge.plantuml.skin.UmlDiagramType)" class="member-name-link">EntityImageTips</a><wbr>(<a href="../../abel/Entity.html" title="class in net.sourceforge.plantuml.abel">Entity</a>&nbsp;entity,
- <a href="../../svek/Bibliotekon.html" title="class in net.sourceforge.plantuml.svek">Bibliotekon</a>&nbsp;bibliotekon,
- <a href="../UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a>&nbsp;type)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
