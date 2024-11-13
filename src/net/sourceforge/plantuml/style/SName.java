@@ -99,7 +99,7 @@ public enum SName {
 	hexagon, //
 	highlight, //
 	interface_, //
-	json, // 
+	json, //
 	jsonDiagram, //
 	gitDiagram, //
 	label, //
@@ -153,7 +153,7 @@ public enum SName {
 	usecase, //
 	verticalSeparator, //
 	year, //
-	
+
 	visibilityIcon, //
 	private_, //
 	protected_, //
@@ -173,7 +173,8 @@ public enum SName {
 	spotStereotype, //
 
 	wbsDiagram, //
-	yamlDiagram; //
+	yamlDiagram, //
+	nassiDiagram; //
 
 	public static String depth(int level) {
 		return "depth(" + level + ")";
