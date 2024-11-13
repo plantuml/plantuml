@@ -92,6 +92,27 @@ public class Run {
 			System.setProperty("java.awt.headless", "true");
 		saveCommandLine(argsArray);
 
+		final String display = System.getenv("DISPLAY");
+		final String waylandDisplay = System.getenv("WAYLAND_DISPLAY");
+
+		if (display == null && waylandDisplay != null)
+			Log.info("Wayland detected; X11 compatibility may be required via XWayland.");
+		else if (display != null)
+			Log.info("X11 display available: " + display);
+		else
+			Log.info("No display detected; you may need the -headless flag.");
+
+		if (GraphicsEnvironment.isHeadless()) {
+			Log.info("Forcing -Djava.awt.headless=true");
+			System.setProperty("java.awt.headless", "true");
+		}
+
+		final String javaAwtHeadless = System.getProperty("java.awt.headless");
+		if (javaAwtHeadless == null)
+			Log.info("java.awt.headless not set");
+		else
+			Log.info("java.awt.headless set as '" + javaAwtHeadless + "'");
+
 		final Option option = new Option(argsArray);
 		ProgressBar.setEnable(option.isTextProgressBar());
 		if (OptionFlags.getInstance().isClipboardLoop()) {
@@ -131,12 +152,7 @@ public class Run {
 			Log.info("PlantUML Version " + Version.versionString());
 			Log.info("GraphicsEnvironment.isHeadless() " + GraphicsEnvironment.isHeadless());
 		}
-		if (GraphicsEnvironment.isHeadless()) {
-			Log.info("Forcing -Djava.awt.headless=true");
-			System.setProperty("java.awt.headless", "true");
-			Log.info("java.awt.headless set as true");
 
-		}
 		if (OptionFlags.getInstance().isPrintFonts()) {
 			printFonts();
 			return;
