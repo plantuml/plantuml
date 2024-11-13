@@ -137,6 +137,8 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 			ent = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(display), type, null);
 		else
 			diagram.setLastEntity(ent);
+		
+		diagram.ensureParentState(quark);
 
 		if (currentPass == ParserPass.ONE) {
 

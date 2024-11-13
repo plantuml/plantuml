@@ -257,4 +257,18 @@ public class StateDiagram extends AbstractEntityDiagram {
 
 	}
 
+	public void ensureParentState(Quark<Entity> current) {
+		while (current != null) {
+			final Quark<Entity> parent = current.getParent();
+
+			if (parent == null || parent.getData() != null)
+				return;
+
+			final Entity parentGroup = this.createGroup(parent, GroupType.STATE);
+			parentGroup.setDisplay(Display.getWithNewlines(parent));
+
+			current = parent;
+		}
+	}
+
 }
