@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.objectdiagram.command;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.NameAndCodeParser;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
@@ -69,7 +70,7 @@ public class CommandCreateEntityObject extends SingleLineCommand2<AbstractClassO
 		return RegexConcat.build(CommandCreateEntityObject.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", "object"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "(?:[%g]([^%g]+)[%g][%s]+as[%s]+)?([%pLN_.]+)"), //
+				NameAndCodeParser.nameAndCode(), //
 				StereotypePattern.optional("STEREO"), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -79,10 +80,10 @@ public class CommandCreateEntityObject extends SingleLineCommand2<AbstractClassO
 	@Override
 	protected CommandExecutionResult executeArg(AbstractClassOrObjectDiagram diagram, LineLocation location,
 			RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-		final String idShort = arg.get("NAME", 1);
+		final String idShort = diagram.cleanId(arg.getLazzy("CODE", 0));
 
 		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(idShort));
-		final String displayString = arg.get("NAME", 0);
+		final String displayString = arg.getLazzy("DISPLAY", 0);
 		final String stereotype = arg.get("STEREO", 0);
 
 		if (quark.getData() != null)
@@ -90,7 +91,7 @@ public class CommandCreateEntityObject extends SingleLineCommand2<AbstractClassO
 
 		Display display = Display.getWithNewlines(displayString);
 		if (Display.isNull(display))
-			display = Display.getWithNewlines(idShort).withCreoleMode(CreoleMode.SIMPLE_LINE);
+			display = Display.getWithNewlines(quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
 
 		final Entity entity = diagram.reallyCreateLeaf(quark, display, LeafType.OBJECT, null);
 		if (stereotype != null)

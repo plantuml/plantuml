@@ -96,7 +96,7 @@ public class DescriptionDiagramFactory extends PSystemCommandFactory {
 		cmds.add(factoryNoteOnLinkCommand.createMultiLine(false));
 
 		final CommandFactoryNoteOnEntity factoryNoteOnEntityCommand = new CommandFactoryNoteOnEntity("desc",
-				new RegexOr("ENTITY", //
+				new RegexOr("CODE", //
 						new RegexLeaf("[%pLN_.]+"), //
 						new RegexLeaf("\\(\\)[%s]*[%pLN_.]+"), //
 						new RegexLeaf("\\(\\)[%s]*[%g][^%g]+[%g]"), //

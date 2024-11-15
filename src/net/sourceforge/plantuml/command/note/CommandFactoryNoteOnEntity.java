@@ -221,7 +221,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 	private CommandExecutionResult executeInternal(RegexResult line0, AbstractEntityDiagram diagram, Url url,
 			BlocLines strings) throws NoSuchColorException {
 		final String pos = line0.get("POSITION", 0);
-		final String idShort = diagram.cleanId(line0.get("ENTITY", 0));
+		final String idShort = diagram.cleanId(line0.get("CODE", 0));
 		final Entity cl1;
 		if (idShort == null) {
 			cl1 = diagram.getLastEntity();

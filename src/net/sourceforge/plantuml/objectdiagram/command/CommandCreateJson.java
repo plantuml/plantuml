@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.command.CommandControl;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.CommandMultilines2;
 import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.command.NameAndCodeParser;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.Trim;
 import net.sourceforge.plantuml.cucadiagram.BodierJSon;
@@ -75,7 +76,7 @@ public class CommandCreateJson extends CommandMultilines2<AbstractEntityDiagram>
 		return RegexConcat.build(CommandCreateJson.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", "json"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "(?:[%g]([^%g]+)[%g][%s]+as[%s]+)?([%pLN_.]+)"), //
+				NameAndCodeParser.nameAndCode(), //
 				StereotypePattern.optional("STEREO"), //
 				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
@@ -152,17 +153,17 @@ public class CommandCreateJson extends CommandMultilines2<AbstractEntityDiagram>
 	}
 
 	private Entity executeArg0(AbstractEntityDiagram diagram, RegexResult line0) throws NoSuchColorException {
-		final String name = line0.get("NAME", 1);
+		final String idShort = diagram.cleanId(line0.getLazzy("CODE", 0));
 
-		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(name));
+		final Quark<Entity> quark = diagram.quarkInContext(true, idShort);
 		if (quark.getData() != null)
 			return null;
-		final String displayString = line0.get("NAME", 0);
+		final String displayString = line0.getLazzy("DISPLAY", 0);
 		final String stereotype = line0.get("STEREO", 0);
 
 		Display display = Display.getWithNewlines(displayString);
 		if (Display.isNull(display))
-			display = Display.getWithNewlines(name).withCreoleMode(CreoleMode.SIMPLE_LINE);
+			display = Display.getWithNewlines(quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
 
 		final Entity entity = diagram.reallyCreateLeaf(quark, display, LeafType.JSON, null);
 		if (stereotype != null)

@@ -44,12 +44,12 @@ public class GenericRegexProducer {
 	static final private String part2 = "\\>)*";
 
 	static String getGenericRegex(int level) {
-		if (level < 0) {
+		if (level < 0)
 			throw new IllegalArgumentException();
-		}
-		if (level == 0) {
+
+		if (level == 0)
 			return part1 + part2;
-		}
+
 		return part1 + getGenericRegex(level - 1) + part2;
 	}
 
