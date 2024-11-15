@@ -151,7 +151,7 @@ public class SvgGraphics {
 			// for a pair of linear gradient definitions.
 			defs = simpleElement("defs");
 			gRoot = simpleElement("g");
-			strokeWidth = "" + option.getScale();
+			strokeWidth = format(1);
 			this.filterUid = "b" + getSeed(seed);
 			this.shadowId = "f" + getSeed(seed);
 			this.gradientId = "g" + getSeed(seed);
@@ -417,7 +417,7 @@ public class SvgGraphics {
 	}
 
 	public final void setStrokeWidth(double strokeWidth, String strokeDasharray) {
-		this.strokeWidth = "" + (option.getScale() * strokeWidth);
+		this.strokeWidth = format(strokeWidth);
 		this.strokeDasharray = strokeDasharray;
 	}
 
@@ -984,11 +984,10 @@ public class SvgGraphics {
 				filter.setAttribute("y", "-1");
 				filter.setAttribute("width", "300%");
 				filter.setAttribute("height", "300%");
-				addFilter(filter, "feGaussianBlur", "result", "blurOut", "stdDeviation", "" + (2 * option.getScale()));
+				addFilter(filter, "feGaussianBlur", "result", "blurOut", "stdDeviation", format(2));
 				addFilter(filter, "feColorMatrix", "type", "matrix", "in", "blurOut", "result", "blurOut2", "values",
 						"0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0");
-				addFilter(filter, "feOffset", "result", "blurOut3", "in", "blurOut2", "dx",
-						"" + (4 * option.getScale()), "dy", "" + (4 * option.getScale()));
+				addFilter(filter, "feOffset", "result", "blurOut3", "in", "blurOut2", "dx", format(4), "dy", format(4));
 				addFilter(filter, "feBlend", "in", "SourceGraphic", "in2", "blurOut3", "mode", "normal");
 				defs.appendChild(filter);
 
