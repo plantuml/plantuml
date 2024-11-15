@@ -1,4 +1,4 @@
-## V1.2024.8 (beta)
+## V1.2024.8 (Nov 15, 2024)
 
 - [Allow MinimumWidth on all nested elements](https://github.com/plantuml/plantuml/issues/1893)
 - https://github.com/plantuml/plantuml/commit/37e5eb66fa946671c23506fc24811f1bae8a7a04
