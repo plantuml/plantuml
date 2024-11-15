@@ -45,11 +45,11 @@ import net.sourceforge.plantuml.file.AFile;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
-import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.theme.Theme;
 import net.sourceforge.plantuml.theme.ThemeUtils;
 
 public class EaterTheme extends Eater {
@@ -85,18 +85,18 @@ public class EaterTheme extends Eater {
 
 	}
 
-	public final ReadLine getTheme() throws EaterException {
+	public final Theme getTheme() throws EaterException {
 		if (from == null) {
 			try {
-				final ReadLine reader = ThemeUtils.getReaderTheme(realName);
-				if (reader != null)
-					return reader;
+				final Theme theme = ThemeUtils.getReaderTheme(realName);
+				if (theme != null)
+					return theme;
 
 				final AFile localFile = importedFiles.getAFile(ThemeUtils.getFilename(realName));
 				if (localFile != null && localFile.isOk()) {
 					final BufferedReader br = localFile.getUnderlyingFile().openBufferedReader();
 					if (br != null)
-						return ReadLineReader.create(br, "theme " + realName);
+						return new Theme(ReadLineReader.create(br, "theme " + realName));
 				}
 			} catch (IOException e) {
 				Logme.error(e);
@@ -105,17 +105,17 @@ public class EaterTheme extends Eater {
 		}
 
 		if (from.startsWith("<") && from.endsWith(">")) {
-			final ReadLine reader = ThemeUtils.getReaderTheme(realName, from);
-			if (reader == null)
+			final Theme theme = ThemeUtils.getReaderTheme(realName, from);
+			if (theme == null)
 				throw new EaterException("No such theme " + realName + " in " + from, getStringLocated());
-			return reader;
+			return theme;
 		} else if (from.startsWith("http://") || from.startsWith("https://")) {
 			final SURL url = SURL.create(ThemeUtils.getFullPath(from, realName));
 			if (url == null)
 				throw new EaterException("Cannot open URL", getStringLocated());
 
 			try {
-				return PreprocessorUtils.getReaderInclude(url, getStringLocated(), UTF_8);
+				return new Theme(PreprocessorUtils.getReaderInclude(url, getStringLocated(), UTF_8));
 			} catch (UnsupportedEncodingException e) {
 				Logme.error(e);
 				throw new EaterException("Cannot decode charset", getStringLocated());
@@ -128,7 +128,7 @@ public class EaterTheme extends Eater {
 			if (tmp == null)
 				throw new EaterException("No such theme " + realName, getStringLocated());
 
-			return ReadLineReader.create(tmp, "theme " + realName);
+			return new Theme(ReadLineReader.create(tmp, "theme " + realName));
 		} catch (IOException e) {
 			Logme.error(e);
 			throw new EaterException("Cannot load " + realName, getStringLocated());

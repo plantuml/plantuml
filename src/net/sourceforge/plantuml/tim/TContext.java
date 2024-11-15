@@ -69,6 +69,7 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
+import net.sourceforge.plantuml.theme.Theme;
 import net.sourceforge.plantuml.theme.ThemeUtils;
 import net.sourceforge.plantuml.tim.expression.Knowledge;
 import net.sourceforge.plantuml.tim.expression.TValue;
@@ -631,7 +632,7 @@ public class TContext {
 	private void executeTheme(TMemory memory, StringLocated s) throws EaterException {
 		final EaterTheme eater = new EaterTheme(s.getTrimmed(), importedFiles);
 		eater.analyze(this, memory);
-		final ReadLine reader = eater.getTheme();
+		final Theme reader = eater.getTheme();
 		if (reader == null)
 			throw new EaterException("No such theme " + eater.getName(), s);
 
