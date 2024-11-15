@@ -1,30 +1,34 @@
 ## V1.2024.8 (Nov 15, 2024)
 
 - [Allow MinimumWidth on all nested elements](https://github.com/plantuml/plantuml/issues/1893)
-- https://github.com/plantuml/plantuml/commit/37e5eb66fa946671c23506fc24811f1bae8a7a04
-- https://github.com/plantuml/plantuml/commit/0ef877f9ffe0f83763aaff617fc5e907485583a3
-- https://github.com/plantuml/plantuml/commit/3a56c55ef1d502a8a5548c694de5a5406c113a9b
-- https://github.com/plantuml/plantuml/commit/bbe905eeb16ddbb20fc7ab242607fb043a1564dd
-- https://github.com/plantuml/plantuml/commit/f186e7a6864933629014681345017e6f42ddce8e
-- https://github.com/plantuml/plantuml/commit/bc0becdb83acda69904066e745821032a7690740
-- https://github.com/plantuml/plantuml/commit/593d821f3fd596b01967baf42d1901542ad90009
-- https://github.com/plantuml/plantuml/commit/4318369c7236e556ee4418971a1963bb697d3b55
-- https://github.com/plantuml/plantuml/commit/39b4fba68d2714001357263bc5d8a3253d417262
-- https://github.com/plantuml/plantuml/commit/176da3c73e39f2d5506906e48a95e3189a3d1b9f
-- https://github.com/plantuml/plantuml/commit/1617a4065b849a9032b9177054a847d55b2609af
-- https://github.com/plantuml/plantuml/commit/15d63c28e601fdfa9e985d6d2057db31b95a7079
-- https://github.com/plantuml/plantuml/issues/1896
-- https://github.com/plantuml/plantuml/issues/1902
-- https://github.com/plantuml/plantuml/issues/1949
-- https://forum.plantuml.net/15614/style-sequence-allow-stereotype-for-arrow-sequence-diagram
-- https://forum.plantuml.net/15612/style-sequence-allow-linestyle-for-arrow-sequence-diagram
-- https://github.com/plantuml/plantuml/pull/1960
-- https://forum.plantuml.net/15873/style-timing-allow-stereotype-on-timing-diagram?show=18866#c18866
-- https://forum.plantuml.net/18864/can-we-have-2-or-more-colors-for-clocks-in-timing-diagrams
-- https://github.com/plantuml/plantuml/issues/1950
-- https://github.com/plantuml/plantuml/issues/1951
-- https://github.com/plantuml/plantuml-stdlib/pull/110
-- https://github.com/plantuml/plantuml/issues/1945
+- [fix: improve edge cases for JSON diagram (manage null and empty Array/Object)](https://github.com/plantuml/plantuml/commit/37e5eb66fa946671c23506fc24811f1bae8a7a04)
+- [use latex to get string bounder](https://github.com/plantuml/plantuml/commit/0ef877f9ffe0f83763aaff617fc5e907485583a3)
+- [tikz: make all fonts with the same baseline](https://github.com/plantuml/plantuml/commit/3a56c55ef1d502a8a5548c694de5a5406c113a9b)
+- [tikz: avoid latex manager crash for special characters](https://github.com/plantuml/plantuml/commit/bbe905eeb16ddbb20fc7ab242607fb043a1564dd)
+- [tikz: use the same protectText when calc dimension and render](https://github.com/plantuml/plantuml/commit/f186e7a6864933629014681345017e6f42ddce8e)
+- [tikz: optimize latex render](https://github.com/plantuml/plantuml/commit/bc0becdb83acda69904066e745821032a7690740)
+- [optimize tikz render](https://github.com/plantuml/plantuml/commit/593d821f3fd596b01967baf42d1901542ad90009)
+- [upd: uniformisation of dirpath](https://github.com/plantuml/plantuml/commit/4318369c7236e556ee4418971a1963bb697d3b55)
+- [feat: reintroduction of filedate and filename_no_extension builtin function](https://github.com/plantuml/plantuml/commit/176da3c73e39f2d5506906e48a95e3189a3d1b9f)
+- [feat: Allow Unicode ASCII Art for class, component](https://github.com/plantuml/plantuml/commit/1617a4065b849a9032b9177054a847d55b2609af)
+- [fix: error in namespace management](https://github.com/plantuml/plantuml/commit/15d63c28e601fdfa9e985d6d2057db31b95a7079)
+- [Style: Improve map and json style in order to manage header style](https://github.com/plantuml/plantuml/issues/1896)
+- [Gantt with monthly scale doesn't show named regions](https://github.com/plantuml/plantuml/issues/1902)
+- [fixing proprietary licenses in PlantUML software package of Replicant project](https://github.com/plantuml/plantuml/issues/1949)
+- [Allow stereotype for arrow, on sequence diagram](https://forum.plantuml.net/15614/style-sequence-allow-stereotype-for-arrow-sequence-diagram)
+- [Allow LineStyle for arrow, on sequence diagram](https://forum.plantuml.net/15612/style-sequence-allow-linestyle-for-arrow-sequence-diagram)
+- [feat: Allow stereotype for Clock on Timing diagram](https://github.com/plantuml/plantuml/pull/1960)
+- [Allow stereotype on Timing diagram](https://forum.plantuml.net/15873/style-timing-allow-stereotype-on-timing-diagram?show=18866#c18866)
+- [Style: Allow stereotype on note for **all** diagram type](https://github.com/plantuml/plantuml/issues/1950)
+- [State machine invalid generation for SVG](https://github.com/plantuml/plantuml/issues/1951)
+- [Update C4-PlantUML to v2.11.0](https://github.com/plantuml/plantuml-stdlib/pull/110)
+- [Style: Allow all style for Cardinality, Generic, Qualified associations on Class diagram](https://github.com/plantuml/plantuml/issues/1945)
+- [nwdiag: Allow line border for group](https://github.com/plantuml/plantuml/issues/1226)
+- [Style: Allow all style for regex diagram](https://github.com/plantuml/plantuml/issues/1445)
+- [Style: Allow theme and style for files list diagram](https://github.com/plantuml/plantuml/issues/1946)
+- [feat: allow all JSON Values on JSON ](https://github.com/plantuml/plantuml/pull/1970)
+- [Compact clocks in timing diagrams not rendered correctly](https://github.com/plantuml/plantuml/issues/1578)
+
 
 ## V1.2024.7 (Sep 9, 2024)
 
