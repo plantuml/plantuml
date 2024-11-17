@@ -130,7 +130,7 @@ public class Stdlib {
 		for (String s : infoString.split("\n"))
 			if (s.contains("=")) {
 				final String data[] = s.split("=");
-				if (data[0].equals("LINK"))
+				if (data[0].equalsIgnoreCase("link"))
 					return data[1];
 			}
 		return null;
@@ -452,11 +452,22 @@ public class Stdlib {
 	}
 
 	public String getVersion() {
-		return info.get("VERSION");
+		String result = info.get("VERSION");
+		if (result == null)
+			result = info.get("version");
+		return result;
 	}
 
 	public String getSource() {
-		return info.get("SOURCE");
+		String result = info.get("SOURCE");
+		if (result == null)
+			result = info.get("source");
+		return result;
+	}
+
+	public Map<String, String> getMetadata() {
+		return Collections.unmodifiableMap(info);
+
 	}
 
 	public static void printStdLib() {
