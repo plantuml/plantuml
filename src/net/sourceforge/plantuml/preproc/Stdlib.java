@@ -79,7 +79,8 @@ public class Stdlib {
 		for (String s : infoString.split("\n"))
 			if (s.contains("=")) {
 				final String data[] = s.split("=");
-				this.info.put(data[0], data[1]);
+				if (data.length == 2)
+					this.info.put(data[0], data[1]);
 			}
 	}
 
