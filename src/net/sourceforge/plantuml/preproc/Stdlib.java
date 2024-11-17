@@ -329,13 +329,13 @@ public class Stdlib {
 	}
 
 	public static void extractStdLib() throws IOException {
-		for (String name : getAll()) {
+		for (String name : getAllFolderNames()) {
 			final Stdlib folder = Stdlib.retrieve(name);
 			folder.extractMeFull();
 		}
 	}
 
-	public static Collection<String> getAll() throws IOException {
+	public static Collection<String> getAllFolderNames() throws IOException {
 		final Set<String> result = new TreeSet<>();
 		final InputStream home = getInternalInputStream("home", ".repx");
 		if (home == null)
@@ -434,7 +434,7 @@ public class Stdlib {
 
 	public static void addInfoVersion(List<String> strings, boolean details) {
 		try {
-			for (String name : getAll()) {
+			for (String name : getAllFolderNames()) {
 				final Stdlib folder = Stdlib.retrieve(name);
 				if (details) {
 					strings.add("<b>" + name);

@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.tim.stdlib;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import net.sourceforge.plantuml.json.Json;
-import net.sourceforge.plantuml.json.JsonArray;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.Stdlib;
@@ -51,58 +51,57 @@ import net.sourceforge.plantuml.tim.TFunctionSignature;
 import net.sourceforge.plantuml.tim.TMemory;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
-@Deprecated
-public class GetAllStdlib extends SimpleReturnFunction {
-	// Maybe the function %get_all_stdlib() will be removed and replaced by
-	// %get_stdlib()
+public class GetStdlib extends SimpleReturnFunction {
 
 	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%get_all_stdlib", 1);
+		return new TFunctionSignature("%get_stdlib", 1);
 	}
 
 	@Override
 	public boolean canCover(int nbArg, Set<String> namedArgument) {
-		return nbArg == 0 || nbArg == 1;
+		return nbArg == 0 || nbArg == 1 || nbArg == 2;
 	}
 
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException {
 
-		switch (values.size()) {
-		case 0:
-			final JsonArray result = new JsonArray();
-			try {
-				for (String name : Stdlib.getAllFolderNames()) {
-					result.add(name);
-				}
-				return TValue.fromJson(result);
-			} catch (IOException e) {
-				Logme.error(e);
-				return TValue.fromJson(result);
-			}
+		final JsonObject result = Json.object();
+		try {
+			if (values.size() == 0) {
+				for (String folderName : Stdlib.getAllFolderNames()) {
+					// This can be optimized: no need to load the full folder
+					final Stdlib folder = Stdlib.retrieve(folderName);
+					final JsonObject metadata = Json.object();
+					// Key in README.md will be in lowercase anyway
+					for (Entry<String, String> ent : folder.getMetadata().entrySet())
+						metadata.add(ent.getKey().toLowerCase(), ent.getValue());
 
-		case 1:
-			final JsonObject res = new JsonObject();
-			try {
-				// Inspired by Stdlib.addInfoVersion
-				for (String name : Stdlib.getAllFolderNames()) {
-					final Stdlib folder = Stdlib.retrieve(name);
-					final JsonObject object = Json.object() //
-							.add("name", name) //
-							.add("version", folder.getVersion()) //
-							.add("source", folder.getSource());
-					res.add(name, object);
+					result.add(folderName, metadata);
 				}
-				return TValue.fromJson(res);
-			} catch (IOException e) {
-				Logme.error(e);
-				return TValue.fromJson(res);
+			} else if (values.size() == 1) {
+				final String folderName = values.get(0).toString();
+				// This can be optimized: no need to load the full folder
+				final Stdlib folder = Stdlib.retrieve(folderName);
+				// Key in README.md will be in lowercase anyway
+				for (Entry<String, String> ent : folder.getMetadata().entrySet())
+					result.add(ent.getKey().toLowerCase(), ent.getValue());
+			} else if (values.size() == 2) {
+				final String folderName = values.get(0).toString();
+				final String key = values.get(1).toString().toLowerCase();
+				final Stdlib folder = Stdlib.retrieve(folderName);
+				String value = folder.getMetadata().get(key);
+				// Temporary, we check the upercase key if needed
+				if (value == null)
+					value = folder.getMetadata().get(key.toUpperCase());
+				if (value == null)
+					value = "";
+				return TValue.fromString(value);
 			}
-
-		default:
-			assert false; // Should not append because of canCover()
-			throw new EaterException("Error on get_all_stdlib: Too many arguments", location);
+		} catch (IOException e) {
+			Logme.error(e);
 		}
+		return TValue.fromJson(result);
+
 	}
 }
