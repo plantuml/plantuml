@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,37 +30,43 @@
  *
  *
  * Original Author:  Arnaud Roques
+ * 
  *
  */
-package net.sourceforge.plantuml.tim.stdlib;
+package net.sourceforge.plantuml.command;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.jaws.Jaws;
-import net.sourceforge.plantuml.text.StringLocated;
-import net.sourceforge.plantuml.tim.TContext;
-import net.sourceforge.plantuml.tim.TFunctionSignature;
-import net.sourceforge.plantuml.tim.TMemory;
-import net.sourceforge.plantuml.tim.expression.TValue;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.utils.LineLocation;
 
-public class Newline extends SimpleReturnFunction {
+public class CommandSkinParamJaws extends SingleLineCommand2<TitledDiagram> {
 
-	public TFunctionSignature getSignature() {
-		return new TFunctionSignature("%newline", 0);
+	public static final CommandSkinParamJaws ME = new CommandSkinParamJaws();
+
+	private CommandSkinParamJaws() {
+		super(getRegexConcat());
+	}
+
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandSkinParamJaws.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("TYPE", "(skinparam|skinparamlocked)"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("NAME", "([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("VALUE", "(.*" + Jaws.BLOCK_E1_NEWLINE + ".*)"), //
+				RegexLeaf.end()); //
 	}
 
 	@Override
-	public boolean canCover(int nbArg, Set<String> namedArgument) {
-		return nbArg == 0;
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+		System.err.println("CommandSkinParamJaws::Not Implemented Yet");
+		return CommandExecutionResult.ok();
+
 	}
 
-	@Override
-	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
-			Map<String, TValue> named) {
-		if (Jaws.USE_BLOCK_E1_IN_NEWLINE_FUNCTION)
-			return TValue.fromString("" + Jaws.BLOCK_E1_NEWLINE);
-		return TValue.fromString("\n");
-	}
 }

@@ -51,6 +51,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.log.Logme;
@@ -450,6 +451,9 @@ public class TContext {
 		if (result == null)
 			return null;
 
+		if (Jaws.USE_BLOCK_E1_IN_NEWLINE_FUNCTION && result.contains("\n"))
+			throw new IllegalStateException(result);
+
 		final String[] splited = result.split("\n");
 		final StringLocated[] tab = new StringLocated[splited.length];
 		for (int i = 0; i < splited.length; i++)
@@ -769,9 +773,11 @@ public class TContext {
 	}
 
 	private String getFunctionNameAt(String s, int pos) {
-		if (pos > 0 && TLineType.isLetterOrUnderscoreOrDigit(s.charAt(pos - 1))
-				&& VariableManager.justAfterBackslashN(s, pos) == false)
-			return null;
+		if (Jaws.USE_BLOCK_E1_IN_NEWLINE_FUNCTION == false) {
+			if (pos > 0 && TLineType.isLetterOrUnderscoreOrDigit(s.charAt(pos - 1))
+					&& VariableManager.justAfterBackslashN(s, pos) == false)
+				return null;
+		}
 
 		final String fname = functionsSet.getLonguestMatchStartingIn(s, pos);
 		if (fname.length() == 0)
@@ -812,7 +818,7 @@ public class TContext {
 	public TFunction getFunctionSmart(TFunctionSignature signature) {
 		return functionsSet.getFunctionSmart(signature);
 	}
-	
+
 	/**
 	 * Retrieve data given after @startuml.
 	 */
@@ -827,6 +833,5 @@ public class TContext {
 
 		return Optional.of(first.substring(idx + 1).trim());
 	}
-
 
 }

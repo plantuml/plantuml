@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.jaws;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,14 +43,23 @@ import net.sourceforge.plantuml.text.StringLocated;
 
 public class Jaws {
 
-	private final List<StringLocated> input;
+	public static final char BLOCK_E1_NEWLINE = '\uE100';
+	public static final char BLOCK_E1_START_TEXTBLOCK = '\uE101';
+	public static final char BLOCK_E1_END_TEXTBLOCK = '\uE102';
+
+	public static final boolean USE_BLOCK_E1_IN_NEWLINE_FUNCTION = true;
+	public static final boolean OLD_DISPLAY_HACK = false;
+
+	private final List<StringLocated> output = new ArrayList<StringLocated>();
 
 	public Jaws(List<StringLocated> input) {
-		this.input = input;
+		for (StringLocated sl : input) {
+			this.output.add(sl.jaws1());
+		}
 	}
 
 	public List<StringLocated> getResultList() {
-		return Collections.unmodifiableList(input);
+		return Collections.unmodifiableList(output);
 	}
 
 }
