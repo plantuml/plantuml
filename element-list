@@ -97,6 +97,7 @@ net.sourceforge.plantuml.graphml
 net.sourceforge.plantuml.hcl
 net.sourceforge.plantuml.help
 net.sourceforge.plantuml.html
+net.sourceforge.plantuml.jaws
 net.sourceforge.plantuml.jcckit
 net.sourceforge.plantuml.json
 net.sourceforge.plantuml.jsondiagram
