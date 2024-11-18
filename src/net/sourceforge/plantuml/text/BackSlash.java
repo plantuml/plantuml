@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.text;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -54,16 +53,6 @@ public class BackSlash {
 
 	public static char hiddenNewLine() {
 		return StringUtils.PRIVATE_BLOCK + BackSlash.CHAR_NEWLINE;
-	}
-
-	public static String convertHiddenNewLine(String s) {
-		s = s.replaceAll("(?<!\\\\)\\\\n", "" + hiddenNewLine());
-		s = s.replaceAll("\\\\\\\\n", "\\\\n");
-		return s;
-	}
-
-	public static List<String> splitHiddenNewLine(String s) {
-		return Arrays.asList(s.split("" + hiddenNewLine()));
 	}
 
 	public static String manageNewLine(String string) {

@@ -224,7 +224,11 @@ public class Display implements Iterable<CharSequence> {
 			else if (sub.startsWith("</math>") || sub.startsWith("</latex>") || sub.startsWith("]]"))
 				rawMode = false;
 
-			if (rawMode == false && c == '\\' && i < s.length() - 1) {
+			if (sub.startsWith("%newline()")) {
+				result.add(current.toString());
+				current.setLength(0);
+				i += 9;
+			} else if (rawMode == false && c == '\\' && i < s.length() - 1) {
 				final char c2 = s.charAt(i + 1);
 				i++;
 				if (c2 == 'n' || c2 == 'r' || c2 == 'l') {

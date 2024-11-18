@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.code.Transcoder;
 import net.sourceforge.plantuml.code.TranscoderUtil;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemErrorPreprocessor;
+import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
@@ -145,7 +146,8 @@ public class BlockUml {
 			final TimLoader timLoader = new TimLoader(mode.getImportedFiles(), defines, charset,
 					(DefinitionsContainer) mode, strings.get(0));
 			this.included.addAll(timLoader.load(strings));
-			this.data = timLoader.getResultList();
+			final Jaws jaws = new Jaws(timLoader.getResultList());
+			this.data = jaws.getResultList();
 			this.debug = timLoader.getDebug();
 			this.preprocessorError = timLoader.isPreprocessorError();
 		}
