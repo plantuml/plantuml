@@ -38,10 +38,12 @@ package net.sourceforge.plantuml.text;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 final public class StringLocated {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	private final String s;
 	private final LineLocation location;
@@ -50,6 +52,17 @@ final public class StringLocated {
 	private StringLocated trimmed;
 	private long fox = -1;
 	private TLineType type;
+
+	public StringLocated jaws1() {
+		return new StringLocated(s, location, preprocessorError);
+	}
+
+	public BlocLines expandsJaws() {
+		BlocLines result = BlocLines.create();
+		for (String part : s.split("" + Jaws.BLOCK_E1_NEWLINE))
+			result = result.add(new StringLocated(part, location, preprocessorError));
+		return result;
+	}
 
 	public StringLocated(String s, LineLocation location) {
 		this(s, location, null);

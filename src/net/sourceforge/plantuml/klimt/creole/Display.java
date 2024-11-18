@@ -46,6 +46,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.jaws.JawsFlags;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -213,48 +215,54 @@ public class Display implements Iterable<CharSequence> {
 			return NULL;
 
 		final List<String> result = new ArrayList<>();
-		final StringBuilder current = new StringBuilder();
 		HorizontalAlignment naturalHorizontalAlignment = null;
-		boolean rawMode = false;
-		for (int i = 0; i < s.length(); i++) {
-			final char c = s.charAt(i);
-			final String sub = s.substring(i);
-			if (sub.startsWith("<math>") || sub.startsWith("<latex>") || sub.startsWith("[["))
-				rawMode = true;
-			else if (sub.startsWith("</math>") || sub.startsWith("</latex>") || sub.startsWith("]]"))
-				rawMode = false;
 
-			if (sub.startsWith("%newline()")) {
-				result.add(current.toString());
-				current.setLength(0);
-				i += 9;
-			} else if (rawMode == false && c == '\\' && i < s.length() - 1) {
-				final char c2 = s.charAt(i + 1);
-				i++;
-				if (c2 == 'n' || c2 == 'r' || c2 == 'l') {
-					if (c2 == 'r')
-						naturalHorizontalAlignment = HorizontalAlignment.RIGHT;
-					else if (c2 == 'l')
-						naturalHorizontalAlignment = HorizontalAlignment.LEFT;
+		if (JawsFlags.OLD_DISPLAY_HACK) {
+			final StringBuilder current = new StringBuilder();
+			boolean rawMode = false;
+			for (int i = 0; i < s.length(); i++) {
+				final char c = s.charAt(i);
+				final String sub = s.substring(i);
+				if (sub.startsWith("<math>") || sub.startsWith("<latex>") || sub.startsWith("[["))
+					rawMode = true;
+				else if (sub.startsWith("</math>") || sub.startsWith("</latex>") || sub.startsWith("]]"))
+					rawMode = false;
 
+				if (sub.startsWith("%newline()")) {
 					result.add(current.toString());
 					current.setLength(0);
-				} else if (c2 == 't') {
-					current.append('\t');
-				} else if (c2 == '\\') {
-					current.append(c2);
+					i += 9;
+				} else if (rawMode == false && c == '\\' && i < s.length() - 1) {
+					final char c2 = s.charAt(i + 1);
+					i++;
+					if (c2 == 'n' || c2 == 'r' || c2 == 'l') {
+						if (c2 == 'r')
+							naturalHorizontalAlignment = HorizontalAlignment.RIGHT;
+						else if (c2 == 'l')
+							naturalHorizontalAlignment = HorizontalAlignment.LEFT;
+
+						result.add(current.toString());
+						current.setLength(0);
+					} else if (c2 == 't') {
+						current.append('\t');
+					} else if (c2 == '\\') {
+						current.append(c2);
+					} else {
+						current.append(c);
+						current.append(c2);
+					}
+				} else if (c == BackSlash.hiddenNewLine()) {
+					result.add(current.toString());
+					current.setLength(0);
 				} else {
 					current.append(c);
-					current.append(c2);
 				}
-			} else if (c == BackSlash.hiddenNewLine()) {
-				result.add(current.toString());
-				current.setLength(0);
-			} else {
-				current.append(c);
 			}
+			result.add(current.toString());
+		} else {
+			for (String part : s.split("" + Jaws.BLOCK_E1_NEWLINE))
+				result.add(part);
 		}
-		result.add(current.toString());
 		return new Display(true, result, naturalHorizontalAlignment, false, CreoleMode.FULL);
 	}
 

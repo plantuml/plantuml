@@ -126,6 +126,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 	protected CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
 		lines = lines.trimSmart(1);
+		lines = lines.expandsJaws();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final String symbol = StringUtils.goUpperCase(line0.get("TYPE", 0));
 		final LeafType type;

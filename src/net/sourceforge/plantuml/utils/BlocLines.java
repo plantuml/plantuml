@@ -54,17 +54,30 @@ import net.sourceforge.plantuml.text.StringLocated;
 public class BlocLines implements Iterable<StringLocated> {
 	// ::remove file when __HAXE__
 
-	private List<StringLocated> lines;
+	private final List<StringLocated> lines;
 
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder();
 		for (StringLocated line : lines) {
-			sb.append("<<<");
+			sb.append("[");
 			sb.append(line);
-			sb.append(">>>");
+			sb.append("]");
 		}
 		return sb.toString();
+	}
+
+	public BlocLines expandsJaws() {
+		BlocLines result = BlocLines.create();
+		for (StringLocated sl : lines)
+			result = result.addAll(sl.expandsJaws());
+		return result;
+	}
+
+	private BlocLines addAll(BlocLines added) {
+		final List<StringLocated> copy = new ArrayList<>(lines);
+		copy.addAll(added.lines);
+		return new BlocLines(copy);
 	}
 
 	public static BlocLines load(SFile f, LineLocation location) throws IOException {
