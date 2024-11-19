@@ -80,30 +80,31 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 	}
 
 	private final EntityGender emptyByGender(EntityPortion portion) {
-		if (portion == EntityPortion.METHOD) {
+		if (portion == EntityPortion.METHOD)
 			return EntityGenderUtils.emptyMethods();
-		}
-		if (portion == EntityPortion.FIELD) {
+
+		if (portion == EntityPortion.FIELD)
 			return EntityGenderUtils.emptyFields();
-		}
-		if (portion == EntityPortion.MEMBER) {
+
+		if (portion == EntityPortion.MEMBER)
 			throw new IllegalArgumentException();
-			// return EntityGenderUtils.emptyMembers();
-		}
+		// return EntityGenderUtils.emptyMembers();
+
 		return EntityGenderUtils.all();
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		if (diagram instanceof AbstractClassOrObjectDiagram) {
+	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
+		if (diagram instanceof AbstractClassOrObjectDiagram)
 			return executeClassDiagram((AbstractClassOrObjectDiagram) diagram, arg);
-		}
-		if (diagram instanceof DescriptionDiagram) {
+
+		if (diagram instanceof DescriptionDiagram)
 			return executeDescriptionDiagram((DescriptionDiagram) diagram, arg);
-		}
-		if (diagram instanceof SequenceDiagram) {
+
+		if (diagram instanceof SequenceDiagram)
 			return executeSequenceDiagram((SequenceDiagram) diagram, arg);
-		}
+
 		// Just ignored
 		return CommandExecutionResult.ok();
 	}
@@ -118,33 +119,33 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 		final EntityPortion portion = getEntityPortion(arg.get("PORTION", 0));
 		final EntityGender gender;
 		final String arg1 = arg.get("GENDER", 0);
-		if (arg1 == null) {
+		if (arg1 == null)
 			gender = EntityGenderUtils.all();
-		} else if (arg1.equalsIgnoreCase("class")) {
+		else if (arg1.equalsIgnoreCase("class"))
 			gender = EntityGenderUtils.byEntityType(LeafType.CLASS);
-		} else if (arg1.equalsIgnoreCase("object")) {
+		else if (arg1.equalsIgnoreCase("object"))
 			gender = EntityGenderUtils.byEntityType(LeafType.OBJECT);
-		} else if (arg1.equalsIgnoreCase("interface")) {
+		else if (arg1.equalsIgnoreCase("interface"))
 			gender = EntityGenderUtils.byEntityType(LeafType.INTERFACE);
-		} else if (arg1.equalsIgnoreCase("enum")) {
+		else if (arg1.equalsIgnoreCase("enum"))
 			gender = EntityGenderUtils.byEntityType(LeafType.ENUM);
-		} else if (arg1.equalsIgnoreCase("abstract")) {
+		else if (arg1.equalsIgnoreCase("abstract"))
 			gender = EntityGenderUtils.byEntityType(LeafType.ABSTRACT_CLASS);
-		} else if (arg1.equalsIgnoreCase("annotation")) {
+		else if (arg1.equalsIgnoreCase("annotation"))
 			gender = EntityGenderUtils.byEntityType(LeafType.ANNOTATION);
-		} else if (arg1.equalsIgnoreCase("protocol")) {
+		else if (arg1.equalsIgnoreCase("protocol"))
 			gender = EntityGenderUtils.byEntityType(LeafType.PROTOCOL);
-		} else if (arg1.equalsIgnoreCase("struct")) {
+		else if (arg1.equalsIgnoreCase("struct"))
 			gender = EntityGenderUtils.byEntityType(LeafType.STRUCT);
-		} else if (arg1.equalsIgnoreCase("exception")) {
+		else if (arg1.equalsIgnoreCase("exception"))
 			gender = EntityGenderUtils.byEntityType(LeafType.EXCEPTION);
-		} else if (arg1.equalsIgnoreCase("metaclass")) {
+		else if (arg1.equalsIgnoreCase("metaclass"))
 			gender = EntityGenderUtils.byEntityType(LeafType.METACLASS);
-		} else if (arg1.equalsIgnoreCase("stereotype")) {
+		else if (arg1.equalsIgnoreCase("stereotype"))
 			gender = EntityGenderUtils.byEntityType(LeafType.STEREOTYPE);
-		} else if (arg1.startsWith("<<")) {
+		else if (arg1.startsWith("<<"))
 			gender = EntityGenderUtils.byStereotype(arg1);
-		} else {
+		else {
 			final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(arg1));
 			if (quark.getData() == null)
 				return CommandExecutionResult.error("No such element " + quark.getName());
@@ -162,65 +163,65 @@ public class CommandHideShowByGender extends SingleLineCommand2<UmlDiagram> {
 
 		EntityGender gender = null;
 		String arg1 = arg.get("GENDER", 0);
-		if (arg1 == null) {
+		if (arg1 == null)
 			gender = EntityGenderUtils.all();
-		} else if (arg1.equalsIgnoreCase("class")) {
+		else if (arg1.equalsIgnoreCase("class"))
 			gender = EntityGenderUtils.byEntityType(LeafType.CLASS);
-		} else if (arg1.equalsIgnoreCase("object")) {
+		else if (arg1.equalsIgnoreCase("object"))
 			gender = EntityGenderUtils.byEntityType(LeafType.OBJECT);
-		} else if (arg1.equalsIgnoreCase("interface")) {
+		else if (arg1.equalsIgnoreCase("interface"))
 			gender = EntityGenderUtils.byEntityType(LeafType.INTERFACE);
-		} else if (arg1.equalsIgnoreCase("enum")) {
+		else if (arg1.equalsIgnoreCase("enum"))
 			gender = EntityGenderUtils.byEntityType(LeafType.ENUM);
-		} else if (arg1.equalsIgnoreCase("abstract")) {
+		else if (arg1.equalsIgnoreCase("abstract"))
 			gender = EntityGenderUtils.byEntityType(LeafType.ABSTRACT_CLASS);
-		} else if (arg1.equalsIgnoreCase("annotation")) {
+		else if (arg1.equalsIgnoreCase("annotation"))
 			gender = EntityGenderUtils.byEntityType(LeafType.ANNOTATION);
-		} else if (arg1.equalsIgnoreCase("protocol")) {
+		else if (arg1.equalsIgnoreCase("protocol"))
 			gender = EntityGenderUtils.byEntityType(LeafType.PROTOCOL);
-		} else if (arg1.equalsIgnoreCase("struct")) {
+		else if (arg1.equalsIgnoreCase("struct"))
 			gender = EntityGenderUtils.byEntityType(LeafType.STRUCT);
-		} else if (arg1.equalsIgnoreCase("exception")) {
+		else if (arg1.equalsIgnoreCase("exception"))
 			gender = EntityGenderUtils.byEntityType(LeafType.EXCEPTION);
-		} else if (arg1.equalsIgnoreCase("metaclass")) {
+		else if (arg1.equalsIgnoreCase("metaclass"))
 			gender = EntityGenderUtils.byEntityType(LeafType.METACLASS);
-		} else if (arg1.equalsIgnoreCase("stereotype")) {
+		else if (arg1.equalsIgnoreCase("stereotype"))
 			gender = EntityGenderUtils.byEntityType(LeafType.STEREOTYPE);
-		} else if (arg1.startsWith("<<")) {
+		else if (arg1.startsWith("<<"))
 			gender = EntityGenderUtils.byStereotype(arg1);
-		} else {
+		else {
 			arg1 = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg1);
 			final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(arg1));
-			if (quark == null) {
+			if (quark == null)
 				// Not sure it could really happens... to be checked
 				return CommandExecutionResult.error("No such quark " + arg1);
-			}
-			if (portion == EntityPortion.METHOD) {
-					gender = EntityGenderUtils.byClassName(arg1);
-			} else {
+
+			if (portion == EntityPortion.METHOD)
+				gender = EntityGenderUtils.byClassName(arg1);
+			else {
 				Entity entity = quark.getData();
 				if (entity == null)
 					return CommandExecutionResult.error("No such element " + quark.getName());
 				gender = EntityGenderUtils.byEntityAlone(entity);
 			}
 		}
-			final boolean empty = arg.get("EMPTY", 0) != null;
-			final boolean emptyMembers = empty && portion == EntityPortion.MEMBER;
-			if (empty && !emptyMembers)
-					gender = EntityGenderUtils.and(gender, emptyByGender(portion));
+		final boolean empty = arg.get("EMPTY", 0) != null;
+		final boolean emptyMembers = empty && portion == EntityPortion.MEMBER;
+		if (empty && !emptyMembers)
+			gender = EntityGenderUtils.and(gender, emptyByGender(portion));
 
-			if (!diagram.getCurrentGroup().isRoot())
-					gender = EntityGenderUtils.and(gender, EntityGenderUtils.byPackage(diagram.getCurrentGroup()));
+		if (!diagram.getCurrentGroup().isRoot())
+			gender = EntityGenderUtils.and(gender, EntityGenderUtils.byPackage(diagram.getCurrentGroup()));
 
-			if (emptyMembers) {
-					diagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(EntityPortion.FIELD)),
-									EntityPortion.FIELD, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
-					diagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(EntityPortion.METHOD)),
-									EntityPortion.METHOD, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
-			} else {
-					diagram.hideOrShow(gender, portion, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
-			}
-			return CommandExecutionResult.ok();
+		if (emptyMembers) {
+			diagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(EntityPortion.FIELD)), EntityPortion.FIELD,
+					arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+			diagram.hideOrShow(EntityGenderUtils.and(gender, emptyByGender(EntityPortion.METHOD)), EntityPortion.METHOD,
+					arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+		} else
+			diagram.hideOrShow(gender, portion, arg.get("COMMAND", 0).equalsIgnoreCase("show"));
+
+		return CommandExecutionResult.ok();
 	}
 
 	private EntityPortion getEntityPortion(String s) {

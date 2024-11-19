@@ -114,7 +114,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 		}
 
 		final TextBlock stereo;
-		List<String> stereotypeLabels = portionShower.getVisibleStereotypeLabels(entity);
+		final List<String> stereotypeLabels = portionShower.getVisibleStereotypeLabels(entity);
 		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null
 				|| stereotypeLabels.isEmpty())
 			stereo = null;

@@ -39,12 +39,12 @@ package net.sourceforge.plantuml.svek.image;
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.abel.Entity;
-import net.sourceforge.plantuml.abel.EntityPortion;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
@@ -181,20 +181,20 @@ public class EntityImageDescription extends AbstractEntityImage {
 		else
 			desc = BodyFactory.create3(entity.getDisplay(), getSkinParam(), defaultAlign, fc, style.wrapWidth(), style);
 
-		stereo = TextBlockUtils.empty(0, 0);
-
+		final List<String> stereotypeLabels = portionShower.getVisibleStereotypeLabels(entity);
 		if (stereotype != null && stereotype.getSprite(getSkinParam()) != null)
 			stereo = stereotype.getSprite(getSkinParam());
-		else if (stereotype != null && stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) != null
-				&& portionShower.showPortion(EntityPortion.STEREOTYPE, entity))
-			stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet())).create(fcStereo,
-					HorizontalAlignment.CENTER, getSkinParam());
+		else if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null
+				|| stereotypeLabels.isEmpty())
+			stereo = TextBlockUtils.empty(0, 0);
+		else
+			stereo = TextBlockUtils.withMargin(
+					Display.create(stereotypeLabels).create(fcStereo, HorizontalAlignment.CENTER, getSkinParam()), 1,
+					0);
 
 		name = BodyFactory.create2(getSkinParam().getDefaultTextAlignment(HorizontalAlignment.CENTER), codeDisplay,
 				getSkinParam(), stereotype, entity, styleTitle);
 
-		// final HorizontalAlignment stereotypeAlignment =
-		// getSkinParam().getStereotypeAlignment();
 		final HorizontalAlignment stereotypeAlignment = styleStereo.getHorizontalAlignment();
 
 		if (hideText)

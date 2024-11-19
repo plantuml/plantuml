@@ -36,10 +36,10 @@
 package net.sourceforge.plantuml.svek.image;
 
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.abel.Entity;
-import net.sourceforge.plantuml.abel.EntityPortion;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
@@ -66,7 +66,6 @@ import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.UHorizontalLine;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -93,20 +92,21 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		final TextBlock tmp = BodyFactory.create2(getSkinParam().getDefaultTextAlignment(align), entity.getDisplay(),
 				getSkinParam(), stereotype, entity, getStyle());
 
-		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null
-				|| portionShower.showPortion(EntityPortion.STEREOTYPE, entity) == false) {
-			this.desc = tmp;
-		} else {
-			final TextBlock stereo;
-			if (stereotype.getSprite(getSkinParam()) != null) {
-				stereo = stereotype.getSprite(getSkinParam());
-			} else {
-				stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet())).create(
-						FontConfiguration.create(getSkinParam(), FontParam.USECASE_STEREOTYPE, stereotype),
-						HorizontalAlignment.CENTER, getSkinParam());
-			}
-			this.desc = TextBlockUtils.mergeTB(stereo, tmp, HorizontalAlignment.CENTER);
+		final TextBlock stereo;
+		final List<String> stereotypeLabels = portionShower.getVisibleStereotypeLabels(entity);
+		if (stereotype != null && stereotype.getSprite(getSkinParam()) != null)
+			stereo = stereotype.getSprite(getSkinParam());
+		else if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null
+				|| stereotypeLabels.isEmpty())
+			stereo = TextBlockUtils.EMPTY_TEXT_BLOCK;
+		else {
+			final FontConfiguration fcStereo = FontConfiguration.create(getSkinParam(), FontParam.USECASE_STEREOTYPE,
+					stereotype);
+			final Display display = Display.create(stereotypeLabels);
+			stereo = display.create(fcStereo, HorizontalAlignment.CENTER, getSkinParam());
 		}
+		this.desc = TextBlockUtils.mergeTB(stereo, tmp, HorizontalAlignment.CENTER);
+
 		this.url = entity.getUrl99();
 
 	}
