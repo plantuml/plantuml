@@ -228,6 +228,10 @@ public class Display implements Iterable<CharSequence> {
 				result.add(current.toString());
 				current.setLength(0);
 				i += 9;
+			} else if (sub.startsWith("%n()")) {
+				result.add(current.toString());
+				current.setLength(0);
+				i += 3;
 			} else if (rawMode == false && c == '\\' && i < s.length() - 1) {
 				final char c2 = s.charAt(i + 1);
 				i++;

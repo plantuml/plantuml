@@ -133,6 +133,7 @@ import net.sourceforge.plantuml.tim.stdlib.LogicalXor;
 import net.sourceforge.plantuml.tim.stdlib.Lower;
 import net.sourceforge.plantuml.tim.stdlib.Modulo;
 import net.sourceforge.plantuml.tim.stdlib.Newline;
+import net.sourceforge.plantuml.tim.stdlib.NewlineShort;
 import net.sourceforge.plantuml.tim.stdlib.Now;
 import net.sourceforge.plantuml.tim.stdlib.Ord;
 import net.sourceforge.plantuml.tim.stdlib.RandomFunction;
@@ -222,6 +223,7 @@ public class TContext {
 		functionsSet.addFunction(new Lower());
 		functionsSet.addFunction(new Modulo());
 		functionsSet.addFunction(new Newline());
+		functionsSet.addFunction(new NewlineShort());
 		functionsSet.addFunction(new Now());
 		functionsSet.addFunction(new Ord());
 		functionsSet.addFunction(new RandomFunction());
@@ -812,7 +814,7 @@ public class TContext {
 	public TFunction getFunctionSmart(TFunctionSignature signature) {
 		return functionsSet.getFunctionSmart(signature);
 	}
-	
+
 	/**
 	 * Retrieve data given after @startuml.
 	 */
@@ -827,6 +829,5 @@ public class TContext {
 
 		return Optional.of(first.substring(idx + 1).trim());
 	}
-
 
 }
