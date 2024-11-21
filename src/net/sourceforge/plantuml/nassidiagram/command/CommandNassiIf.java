@@ -8,7 +8,6 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.nassidiagram.NassiDiagram;
 import net.sourceforge.plantuml.nassidiagram.element.NassiIf;
-import net.sourceforge.plantuml.nassidiagram.element.NassiBlock;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.command.ParserPass;
 
@@ -32,14 +31,7 @@ public class CommandNassiIf extends SingleLineCommand2<NassiDiagram> {
     @Override
     protected CommandExecutionResult executeArg(NassiDiagram diagram, LineLocation location, RegexResult arg, ParserPass pass) {
         String condition = arg.get("CONDITION", 0);
-        NassiBlock thenBlock = new NassiBlock("");
-        NassiBlock elseBlock = new NassiBlock("");
-        NassiIf ifElement = new NassiIf(condition, thenBlock, elseBlock);
-        
-        // Set parent relationships
-        thenBlock.setParent(ifElement);
-        elseBlock.setParent(ifElement);
-        
+        NassiIf ifElement = new NassiIf(condition);
         diagram.addElement(ifElement);
         return CommandExecutionResult.ok();
     }

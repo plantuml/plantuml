@@ -27,18 +27,24 @@ public class CommandNassiElse extends SingleLineCommand2<NassiDiagram> {
 
     @Override
     protected CommandExecutionResult executeArg(NassiDiagram diagram, LineLocation location, RegexResult arg, ParserPass pass) {
-        // Find the last if element
-        NassiElement lastElement = diagram.getLastElement();
-        while (lastElement != null && !(lastElement instanceof NassiIf)) {
-            lastElement = lastElement.getParent();
+        // Find the last if element by traversing up the parent chain
+        NassiElement current = diagram.getLastElement();
+        NassiIf ifElement = null;
+        
+        while (current != null) {
+            if (current instanceof NassiIf) {
+                ifElement = (NassiIf) current;
+                break;
+            }
+            current = current.getParent();
         }
         
-        if (lastElement == null) {
+        if (ifElement == null) {
             return CommandExecutionResult.error("No matching if block found");
         }
         
         // Switch to else branch
-        NassiIf ifElement = (NassiIf) lastElement;
+        ifElement.switchToElseBranch();
         return CommandExecutionResult.ok();
     }
 } 

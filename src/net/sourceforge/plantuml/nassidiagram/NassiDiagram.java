@@ -23,9 +23,12 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.nassidiagram.element.NassiIf;
+import net.sourceforge.plantuml.nassidiagram.element.NassiWhile;
 
 public class NassiDiagram extends UmlDiagram {
     private final List<NassiElement> elements = new ArrayList<>();
+    private NassiElement currentControlStructure = null;  // Track current control structure
     private static final int PADDING = 20;
 
     public NassiDiagram(UmlSource source, Map<String, String> skinParam) {
@@ -85,7 +88,42 @@ public class NassiDiagram extends UmlDiagram {
     }
 
     public void addElement(NassiElement element) {
-        elements.add(element);
+        if (element instanceof NassiIf || element instanceof NassiWhile) {
+            // If we're adding a new control structure
+            if (currentControlStructure != null) {
+                // Nest it under current control structure if one exists
+                if (currentControlStructure instanceof NassiIf) {
+                    ((NassiIf) currentControlStructure).addToCurrentBranch(element);
+                } else if (currentControlStructure instanceof NassiWhile) {
+                    ((NassiWhile) currentControlStructure).addBodyElement(element);
+                }
+            } else {
+                // Add to main list if no current control structure
+                elements.add(element);
+            }
+            currentControlStructure = element;
+        } else {
+            // For non-control structure elements
+            if (currentControlStructure != null) {
+                if (currentControlStructure instanceof NassiIf) {
+                    ((NassiIf) currentControlStructure).addToCurrentBranch(element);
+                } else if (currentControlStructure instanceof NassiWhile) {
+                    ((NassiWhile) currentControlStructure).addBodyElement(element);
+                }
+            } else {
+                elements.add(element);
+            }
+        }
+    }
+
+    public void endControlStructure() {
+        if (currentControlStructure != null) {
+            currentControlStructure = currentControlStructure.getParent();
+        }
+    }
+
+    public NassiElement getCurrentControlStructure() {
+        return currentControlStructure;
     }
 
     public NassiElement getLastElement() {

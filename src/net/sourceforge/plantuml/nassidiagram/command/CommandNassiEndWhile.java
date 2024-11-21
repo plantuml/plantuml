@@ -27,16 +27,19 @@ public class CommandNassiEndWhile extends SingleLineCommand2<NassiDiagram> {
 
     @Override
     protected CommandExecutionResult executeArg(NassiDiagram diagram, LineLocation location, RegexResult arg, ParserPass pass) {
-        // Find the last while element and close it
-        NassiElement lastElement = diagram.getLastElement();
-        while (lastElement != null && !(lastElement instanceof NassiWhile)) {
-            lastElement = lastElement.getParent();
+        NassiElement current = diagram.getCurrentControlStructure();
+        
+        // Find the most recent while block
+        while (current != null && !(current instanceof NassiWhile)) {
+            current = current.getParent();
         }
         
-        if (lastElement == null) {
+        if (current == null) {
             return CommandExecutionResult.error("No matching while block found");
         }
         
+        // End the while block
+        diagram.endControlStructure();
         return CommandExecutionResult.ok();
     }
 } 
