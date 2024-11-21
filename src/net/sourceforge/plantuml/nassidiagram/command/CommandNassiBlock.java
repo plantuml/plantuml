@@ -29,7 +29,15 @@ public class CommandNassiBlock extends SingleLineCommand2<NassiDiagram> {
     @Override
     protected CommandExecutionResult executeArg(NassiDiagram diagram, LineLocation location, RegexResult arg, ParserPass pass) {
         String content = arg.get("CONTENT", 0);
-        diagram.addElement(new NassiBlock(content));
+        NassiBlock blockElement = new NassiBlock(content);
+        
+        // Set parent if inside a control structure
+        NassiElement lastElement = diagram.getLastElement();
+        if (lastElement != null) {
+            blockElement.setParent(lastElement);
+        }
+        
+        diagram.addElement(blockElement);
         return CommandExecutionResult.ok();
     }
 }

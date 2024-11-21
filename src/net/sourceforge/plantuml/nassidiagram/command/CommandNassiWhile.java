@@ -31,7 +31,8 @@ public class CommandNassiWhile extends SingleLineCommand2<NassiDiagram> {
     @Override
     protected CommandExecutionResult executeArg(NassiDiagram diagram, LineLocation location, RegexResult arg, ParserPass pass) {
         String condition = arg.get("CONDITION", 0);
-        diagram.addElement(new NassiWhile(condition));
+        NassiWhile whileElement = new NassiWhile(condition);
+        diagram.addElement(whileElement);
         return CommandExecutionResult.ok();
     }
 } 

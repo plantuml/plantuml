@@ -13,6 +13,5 @@ else
   break "Exit process"
 endif
 call "LogResult(sum)"
-connector "A"
 block "End"
 @endnassi 

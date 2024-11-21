@@ -29,7 +29,15 @@ public class CommandNassiBreak extends SingleLineCommand2<NassiDiagram> {
     @Override
     protected CommandExecutionResult executeArg(NassiDiagram diagram, LineLocation location, RegexResult arg, ParserPass pass) {
         String content = arg.get("CONTENT", 0);
-        diagram.addElement(new NassiBreak(content));
+        NassiBreak breakElement = new NassiBreak(content);
+        
+        // Find parent loop or if block if any
+        NassiElement lastElement = diagram.getLastElement();
+        if (lastElement != null) {
+            breakElement.setParent(lastElement);
+        }
+        
+        diagram.addElement(breakElement);
         return CommandExecutionResult.ok();
     }
 } 

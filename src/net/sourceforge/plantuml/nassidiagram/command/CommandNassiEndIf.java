@@ -7,6 +7,7 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.nassidiagram.NassiDiagram;
+import net.sourceforge.plantuml.nassidiagram.element.NassiIf;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.command.ParserPass;
 
@@ -25,7 +26,16 @@ public class CommandNassiEndIf extends SingleLineCommand2<NassiDiagram> {
 
     @Override
     protected CommandExecutionResult executeArg(NassiDiagram diagram, LineLocation location, RegexResult arg, ParserPass pass) {
-        // Close the if structure
+        // Find the last if element
+        NassiElement lastElement = diagram.getLastElement();
+        while (lastElement != null && !(lastElement instanceof NassiIf)) {
+            lastElement = lastElement.getParent();
+        }
+        
+        if (lastElement == null) {
+            return CommandExecutionResult.error("No matching if block found");
+        }
+        
         return CommandExecutionResult.ok();
     }
 } 

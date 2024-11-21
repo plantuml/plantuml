@@ -29,7 +29,15 @@ public class CommandNassiConnector extends SingleLineCommand2<NassiDiagram> {
     @Override
     protected CommandExecutionResult executeArg(NassiDiagram diagram, LineLocation location, RegexResult arg, ParserPass pass) {
         String content = arg.get("CONTENT", 0);
-        diagram.addElement(new NassiConnector(content));
+        NassiConnector connector = new NassiConnector(content);
+        
+        // Set parent if inside a control structure
+        NassiElement lastElement = diagram.getLastElement();
+        if (lastElement != null) {
+            connector.setParent(lastElement);
+        }
+        
+        diagram.addElement(connector);
         return CommandExecutionResult.ok();
     }
 } 

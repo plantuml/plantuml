@@ -18,17 +18,23 @@ public class NassiDiagramFactory extends PSystemCommandFactory {
     @Override
     protected void initCommandsList(List<Command> cmds) {
         CommonCommands.addCommonCommands1(cmds);
+        
+        // Basic elements
         cmds.add(new CommandNassiBlock());
+        cmds.add(new CommandNassiFunctionCall());
+        cmds.add(new CommandNassiConnector());
+        
+        // Control structures
         cmds.add(new CommandNassiIf());
         cmds.add(new CommandNassiElse());
         cmds.add(new CommandNassiEndIf());
-        cmds.add(new CommandNassiInput());
-        cmds.add(new CommandNassiOutput());
         cmds.add(new CommandNassiWhile());
         cmds.add(new CommandNassiEndWhile());
         cmds.add(new CommandNassiBreak());
-        cmds.add(new CommandNassiFunctionCall());
-        cmds.add(new CommandNassiConnector());
+        
+        // Input/Output
+        cmds.add(new CommandNassiInput());
+        cmds.add(new CommandNassiOutput());
     }
 
     @Override

@@ -32,9 +32,15 @@ public class CommandNassiIf extends SingleLineCommand2<NassiDiagram> {
     @Override
     protected CommandExecutionResult executeArg(NassiDiagram diagram, LineLocation location, RegexResult arg, ParserPass pass) {
         String condition = arg.get("CONDITION", 0);
-        NassiBlock thenBlock = new NassiBlock("Then branch");
-        NassiBlock elseBlock = new NassiBlock("Else branch");
-        diagram.addElement(new NassiIf(condition, thenBlock, elseBlock));
+        NassiBlock thenBlock = new NassiBlock("");
+        NassiBlock elseBlock = new NassiBlock("");
+        NassiIf ifElement = new NassiIf(condition, thenBlock, elseBlock);
+        
+        // Set parent relationships
+        thenBlock.setParent(ifElement);
+        elseBlock.setParent(ifElement);
+        
+        diagram.addElement(ifElement);
         return CommandExecutionResult.ok();
     }
 } 
