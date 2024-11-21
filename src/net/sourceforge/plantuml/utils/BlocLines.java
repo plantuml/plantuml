@@ -126,7 +126,7 @@ public class BlocLines implements Iterable<StringLocated> {
 
 	public static BlocLines getWithNewlines(String s) {
 		final List<StringLocated> result = new ArrayList<>();
-		for (String cs : BackSlash.getWithNewlines(s))
+		for (String cs : Display.getWithNewlines3(s))
 			result.add(new StringLocated(cs, null));
 
 		return new BlocLines(result);

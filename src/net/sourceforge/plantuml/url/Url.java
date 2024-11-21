@@ -55,7 +55,7 @@ public class Url implements EnsureVisible {
 		if (tooltip == null)
 			this.tooltip = url;
 		else
-			this.tooltip = BackSlash.manageNewLine(tooltip);
+			this.tooltip = tooltip;
 		// this.tooltip = url;
 		// ::done
 

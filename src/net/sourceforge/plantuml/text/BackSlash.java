@@ -60,46 +60,10 @@ public class BackSlash {
 		return Jaws.BLOCK_E1_NEWLINE;
 	}
 
-	@JawsStrange
-	public static String manageNewLine(String string) {
-		return string;
-	}
-
-	public static List<String> getWithNewlines(CharSequence s) {
-		if (s == null)
-			return null;
-
-		final List<String> result = new ArrayList<>();
-		final StringBuilder current = new StringBuilder();
-		for (int i = 0; i < s.length(); i++) {
-			final char c = s.charAt(i);
-			if (c == '\\' && i < s.length() - 1) {
-				final char c2 = s.charAt(i + 1);
-				i++;
-				if (c2 == 'n') {
-					result.add(current.toString());
-					current.setLength(0);
-				} else if (c2 == 't') {
-					current.append('\t');
-				} else if (c2 == '\\') {
-					current.append(c2);
-				}
-			} else {
-				current.append(c);
-			}
-		}
-		result.add(current.toString());
-		return Collections.unmodifiableList(result);
-	}
-
 	public static String translateBackSlashes(CharSequence s) {
 		if (s == null)
 			return null;
 
-		// final String tmps = s.toString();
-		// if (tmps.indexOf('\\') == -1) {
-		// return tmps;
-		// }
 		final StringBuilder result = new StringBuilder();
 		for (int i = 0; i < s.length(); i++) {
 			final char c = s.charAt(i);

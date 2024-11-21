@@ -210,6 +210,36 @@ public class Display implements Iterable<CharSequence> {
 		return result;
 	}
 
+	public static List<String> getWithNewlines3(CharSequence s) {
+		if (s == null)
+			return null;
+
+		final List<String> result = new ArrayList<>();
+		final StringBuilder current = new StringBuilder();
+		for (int i = 0; i < s.length(); i++) {
+			final char c = s.charAt(i);
+			if (c == '\\' && i < s.length() - 1) {
+				final char c2 = s.charAt(i + 1);
+				i++;
+				if (c2 == 'n') {
+					result.add(current.toString());
+					current.setLength(0);
+				} else if (c2 == 't') {
+					current.append('\t');
+				} else if (c2 == '\\') {
+					current.append(c2);
+				}
+			} else {
+				current.append(c);
+			}
+		}
+		result.add(current.toString());
+		return Collections.unmodifiableList(result);
+	}
+
+
+	
+	
 	public static Display getWithNewlines(String s) {
 		if (s == null)
 			return NULL;

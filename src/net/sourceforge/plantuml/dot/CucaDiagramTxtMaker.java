@@ -66,7 +66,6 @@ import net.sourceforge.plantuml.posimo.GraphvizSolverB;
 import net.sourceforge.plantuml.posimo.Path;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
-import net.sourceforge.plantuml.text.BackSlash;
 
 public final class CucaDiagramTxtMaker {
 	// ::remove file when __CORE__
@@ -161,7 +160,7 @@ public final class CucaDiagramTxtMaker {
 			ug.getCharArea().drawHLine('-', y, 1, w - 1);
 			y++;
 			for (CharSequence att : ent.getBodier().getRawBody()) {
-				final List<String> disp = BackSlash.getWithNewlines(att.toString());
+				final List<String> disp = Display.getWithNewlines3(att.toString());
 				ug.getCharArea().drawStringsLRSimple(disp, 1, y);
 				y += StringUtils.getHeight(disp);
 			}
@@ -192,7 +191,7 @@ public final class CucaDiagramTxtMaker {
 			ug.getCharArea().drawChar('\u2524', w - 1, y);
 			y++;
 			for (CharSequence att : ent.getBodier().getRawBody()) {
-				final List<String> disp = BackSlash.getWithNewlines(att.toString());
+				final List<String> disp = Display.getWithNewlines3(att.toString());
 				ug.getCharArea().drawStringsLRUnicode(disp, 1, y);
 				y += StringUtils.getHeight(disp);
 			}
