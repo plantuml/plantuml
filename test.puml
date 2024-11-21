@@ -1,0 +1,5 @@
+@startnassi
+block "Initialize x = 0"
+block "Process data"
+block "Finish"
+@endnassi

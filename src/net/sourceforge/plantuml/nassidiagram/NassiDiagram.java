@@ -11,6 +11,7 @@ import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class NassiDiagram extends UmlDiagram {
@@ -22,10 +23,10 @@ public class NassiDiagram extends UmlDiagram {
 
     @Override
     protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
-        throws IOException {
+            throws IOException {
         return createImageBuilder(fileFormatOption)
-            .drawable(new NassiDrawer(elements, getSkinParam()))
-            .write(os);
+                .drawable(getTextMainBlock(fileFormatOption))
+                .write(os);
     }
 
     @Override
@@ -34,6 +35,13 @@ public class NassiDiagram extends UmlDiagram {
     }
 
     public void addElement(NassiElement element) {
-        elements.add(element);
+        if (element != null) {
+            elements.add(element);
+        }
+    }
+
+    @Override
+    protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
+        return new NassiDrawer(elements, getSkinParam());
     }
 }

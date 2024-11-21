@@ -1,0 +1,18 @@
+@startnassi
+block "Start"
+input "Get user input x"
+if "x < 10" then
+  block "Initialize sum = 0"
+  while "i < x" do
+    block "sum = sum + i"
+    block "i = i + 1"
+  endwhile
+  output "Print sum"
+else
+  block "x is too large"
+  break "Exit process"
+endif
+call "LogResult(sum)"
+connector "A"
+block "End"
+@endnassi 

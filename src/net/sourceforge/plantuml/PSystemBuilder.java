@@ -109,6 +109,7 @@ import net.sourceforge.plantuml.version.PSystemVersionFactory;
 import net.sourceforge.plantuml.wbs.WBSDiagramFactory;
 import net.sourceforge.plantuml.wire.WireDiagramFactory;
 import net.sourceforge.plantuml.yaml.YamlDiagramFactory;
+import net.sourceforge.plantuml.nassidiagram.NassiDiagramFactory;
 
 /**
  * Builds a diagram from pre-processed PlantUML source.
@@ -192,6 +193,7 @@ public class PSystemBuilder {
 		factories.add(new DescriptionDiagramFactory());
 		factories.add(new StateDiagramFactory());
 		factories.add(new ActivityDiagramFactory3());
+		factories.add(new NassiDiagramFactory());
 
 		// ::comment when __CORE__
 		factories.add(new BpmDiagramFactory(DiagramType.BPM));

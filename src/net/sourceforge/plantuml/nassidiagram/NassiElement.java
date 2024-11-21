@@ -1,9 +1,8 @@
 package net.sourceforge.plantuml.nassidiagram;
 
 import java.awt.Graphics2D;
-import java.awt.geom.Dimension2D;
 import java.awt.geom.Rectangle2D;
-import net.sourceforge.plantuml.ugraphic.UGraphic;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 
 public abstract class NassiElement {
     protected String text;

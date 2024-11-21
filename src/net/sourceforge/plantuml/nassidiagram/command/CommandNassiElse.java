@@ -7,29 +7,25 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.nassidiagram.NassiDiagram;
-import net.sourceforge.plantuml.nassidiagram.element.NassiBlock;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.command.ParserPass;
 
-public class CommandNassiBlock extends SingleLineCommand2<NassiDiagram> {
+public class CommandNassiElse extends SingleLineCommand2<NassiDiagram> {
 
-    public CommandNassiBlock() {
+    public CommandNassiElse() {
         super(getRegexConcat());
     }
 
     static IRegex getRegexConcat() {
-        return RegexConcat.build(CommandNassiBlock.class.getName(),
+        return RegexConcat.build(CommandNassiElse.class.getName(),
                 RegexLeaf.start(),
-                new RegexLeaf("block"),
-                RegexLeaf.spaceOneOrMore(),
-                new RegexLeaf("CONTENT", "\"([^\"]+)\""),
+                new RegexLeaf("else"),
                 RegexLeaf.end());
     }
 
     @Override
     protected CommandExecutionResult executeArg(NassiDiagram diagram, LineLocation location, RegexResult arg, ParserPass pass) {
-        String content = arg.get("CONTENT", 0);
-        diagram.addElement(new NassiBlock(content));
+        // Handle else branch
         return CommandExecutionResult.ok();
     }
-}
+} 

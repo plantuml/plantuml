@@ -8,26 +8,18 @@ import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.UFont;
-import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.nassidiagram.NassiElement;
 
-public class NassiBlock extends NassiElement {
+public class NassiFunctionCall extends NassiElement {
     private static final int MARGIN = 10;
+    private static final int INNER_MARGIN = 5;
     
-    public NassiBlock(String text) {
+    public NassiFunctionCall(String text) {
         super(text);
-        // Initialize with default dimension
-        dimension = new Rectangle2D.Double(0, 0, 100, 40);
     }
 
     @Override
     public void computeDimension(Graphics2D g2d) {
-        if (g2d == null) {
-            // Provide default dimensions if Graphics2D is not available
-            dimension = new Rectangle2D.Double(0, 0, 100, 40);
-            return;
-        }
-        
         java.awt.FontMetrics fm = g2d.getFontMetrics();
         double width = fm.stringWidth(text) + 2 * MARGIN;
         double height = fm.getHeight() + 2 * MARGIN;
@@ -36,25 +28,22 @@ public class NassiBlock extends NassiElement {
 
     @Override
     public void draw(UGraphic ug) {
-        // Ensure dimension is initialized
-        if (dimension == null) {
-            dimension = new Rectangle2D.Double(0, 0, 100, 40);
-        }
+        // Draw outer rectangle
+        URectangle outer = URectangle.build(dimension.getWidth(), dimension.getHeight());
+        ug.draw(outer);
         
-        // Create rectangle
-        URectangle rect = URectangle.build(dimension.getWidth(), dimension.getHeight());
-        ug.draw(rect);
-        
-        // Create and configure text
+        // Draw inner rectangle
+        URectangle inner = URectangle.build(
+            dimension.getWidth() - 2*INNER_MARGIN, 
+            dimension.getHeight() - 2*INNER_MARGIN
+        );
+        ug.apply(new UTranslate(INNER_MARGIN, INNER_MARGIN)).draw(inner);
+
+        // Draw text
         FontConfiguration fontConfig = FontConfiguration.blackBlueTrue(UFont.monospaced(14));
         UText txt = UText.build(text, fontConfig);
-        
-        // Calculate text position
-        XDimension2D dimText = txt.calculateDimension(ug.getStringBounder());
-        double textX = (dimension.getWidth() - dimText.getWidth()) / 2;
-        double textY = (dimension.getHeight() + dimText.getHeight()) / 2 - MARGIN;
-        
-        // Draw text
+        double textX = (dimension.getWidth() - txt.calculateDimension(ug.getStringBounder()).getWidth()) / 2;
+        double textY = dimension.getHeight()/2 + 5;
         ug.apply(new UTranslate(textX, textY)).draw(txt);
     }
-}
+} 
