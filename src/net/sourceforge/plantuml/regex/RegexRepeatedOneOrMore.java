@@ -30,30 +30,53 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.jaws;
+package net.sourceforge.plantuml.regex;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 import net.sourceforge.plantuml.text.StringLocated;
 
-public class Jaws {
+public class RegexRepeatedOneOrMore extends RegexComposed implements IRegex {
+	
+	private final String name;
 
-	public static final char BLOCK_E1_NEWLINE = '\uE100';
-	public static final char BLOCK_E1_START_TEXTBLOCK = '\uE101';
-	public static final char BLOCK_E1_END_TEXTBLOCK = '\uE102';
-
-	private final List<StringLocated> input;
-
-	public Jaws(List<StringLocated> input) {
-		this.input = input;
+	public RegexRepeatedOneOrMore(String name, IRegex partial) {
+		super(partial);
+		this.name = name;
 	}
 
-	public List<StringLocated> getResultList() {
-		return Collections.unmodifiableList(input);
+	@Override
+	protected String getFullSlow() {
+		final StringBuilder sb = new StringBuilder("(");
+		sb.append(partials().get(0).getPattern());
+		sb.append(")+");
+		return sb.toString();
+	}
+
+	protected int getStartCount() {
+		return 1;
+	}
+
+	final public Map<String, RegexPartialMatch> createPartialMatch(Iterator<String> it) {
+		final Map<String, RegexPartialMatch> result = new HashMap<String, RegexPartialMatch>();
+		final String fullGroup = name == null ? null : it.next();
+		result.putAll(super.createPartialMatch(it));
+		if (name != null) {
+			final RegexPartialMatch m = new RegexPartialMatch(name);
+			m.add(fullGroup);
+			result.put(name, m);
+		}
+		return result;
+	}
+
+
+	public boolean match(StringLocated full) {
+		throw new UnsupportedOperationException();
 	}
 
 }
