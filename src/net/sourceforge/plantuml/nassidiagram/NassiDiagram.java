@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.UmlDiagram;
@@ -19,27 +20,65 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.nassidiagram.util.NassiDrawingUtil;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.nassidiagram.element.NassiIf;
 import net.sourceforge.plantuml.nassidiagram.element.NassiWhile;
+import net.sourceforge.plantuml.klimt.font.StringBounder;
 
 public class NassiDiagram extends UmlDiagram {
     private final List<NassiElement> elements = new ArrayList<>();
-    private NassiElement currentControlStructure = null;  // Track current control structure
+    private NassiElement currentControlStructure = null;
     private static final int PADDING = 20;
+    private boolean dimensionsComputed = false;
 
     public NassiDiagram(UmlSource source, Map<String, String> skinParam) {
         super(source, UmlDiagramType.NASSI, skinParam);
+    }
+
+    private void computeAllDimensions(Graphics2D g2d) {
+        if (!dimensionsComputed) {
+            for (NassiElement element : elements) {
+                element.computeDimension(g2d);
+            }
+            dimensionsComputed = true;
+        }
     }
 
     @Override
     protected ImageData exportDiagramInternal(OutputStream os, int index, FileFormatOption fileFormatOption)
         throws IOException {
         return createImageBuilder(fileFormatOption)
-            .drawable(this::drawDiagram)
+            .drawable(new AbstractTextBlock() {
+                @Override
+                public void drawU(UGraphic ug) {
+                    drawDiagram(ug);
+                }
+
+                @Override
+                public XDimension2D calculateDimension(StringBounder stringBounder) {
+                    double totalWidth = PADDING * 2;
+                    double totalHeight = PADDING * 2;
+                    double maxWidth = 0;
+
+                    Graphics2D g2d = createGraphics();
+                    computeAllDimensions(g2d);
+
+                    for (NassiElement element : elements) {
+                        Rectangle2D dim = element.getDimension();
+                        if (dim != null) {
+                            maxWidth = Math.max(maxWidth, dim.getWidth());
+                            totalHeight += dim.getHeight();
+                        }
+                    }
+                    totalWidth += maxWidth;
+
+                    return new XDimension2D(totalWidth, totalHeight);
+                }
+            })
             .write(os);
     }
 
@@ -47,27 +86,31 @@ public class NassiDiagram extends UmlDiagram {
         // Set background color
         ug = ug.apply(HColors.WHITE.bg());
 
-        // Calculate total dimensions
-        double totalWidth = PADDING * 2;
-        double totalHeight = PADDING * 2;
+        // Ensure dimensions are computed
+        Graphics2D g2d = createGraphics();
+        computeAllDimensions(g2d);
+
+        // Draw elements
+        double currentY = PADDING;
         double maxWidth = 0;
 
-        // First pass: compute dimensions
-        Graphics2D g2d = createGraphics();
+        // First pass: compute max width
         for (NassiElement element : elements) {
-            element.computeDimension(g2d);
-            maxWidth = Math.max(maxWidth, element.getDimension().getWidth());
-            totalHeight += element.getDimension().getHeight();
+            Rectangle2D dim = element.getDimension();
+            if (dim != null) {
+                maxWidth = Math.max(maxWidth, dim.getWidth());
+            }
         }
-        totalWidth += maxWidth;
 
         // Second pass: draw elements
-        double currentY = PADDING;
         for (NassiElement element : elements) {
-            double elementWidth = element.getDimension().getWidth();
-            double xOffset = PADDING + (maxWidth - elementWidth) / 2;
-            element.draw(ug.apply(new UTranslate(xOffset, currentY)));
-            currentY += element.getDimension().getHeight();
+            Rectangle2D dim = element.getDimension();
+            if (dim != null) {
+                double elementWidth = dim.getWidth();
+                double xOffset = PADDING + (maxWidth - elementWidth) / 2;
+                element.draw(ug.apply(new UTranslate(xOffset, currentY)));
+                currentY += dim.getHeight();
+            }
         }
     }
 
