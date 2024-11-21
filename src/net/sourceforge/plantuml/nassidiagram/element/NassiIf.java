@@ -31,12 +31,11 @@ public class NassiIf extends NassiElement {
         thenBranch.computeDimension(g2d);
         elseBranch.computeDimension(g2d);
 
-        // Calculate total width and height
         double branchWidth = Math.max(MIN_WIDTH/2, 
             Math.max(thenBranch.getDimension().getWidth(), 
                     elseBranch.getDimension().getWidth()));
         
-        double totalWidth = branchWidth * 2;  // Equal width for both branches
+        double totalWidth = branchWidth * 2;
         double branchHeight = Math.max(thenBranch.getDimension().getHeight(),
                                      elseBranch.getDimension().getHeight());
         
@@ -45,42 +44,41 @@ public class NassiIf extends NassiElement {
 
     @Override
     public void draw(UGraphic ug) {
-        FontConfiguration fontConfig = FontConfiguration.blackBlueTrue(UFont.monospaced(14));
-        
+        // Draw main container
+        URectangle mainRect = URectangle.build(dimension.getWidth(), dimension.getHeight());
+        ug.apply(HColors.WHITE.bg()).apply(HColors.BLACK).draw(mainRect);
+
         // Draw condition header
-        URectangle header = URectangle.build(dimension.getWidth(), HEADER_HEIGHT);
-        ug.draw(header);
+        UPolygon header = new UPolygon();
+        header.addPoint(0, 0);
+        header.addPoint(dimension.getWidth(), 0);
+        header.addPoint(dimension.getWidth(), HEADER_HEIGHT);
+        header.addPoint(0, HEADER_HEIGHT);
+        ug.apply(HColors.WHITE.bg()).draw(header);
 
         // Draw condition text
+        FontConfiguration fontConfig = FontConfiguration.blackBlueTrue(UFont.sansSerif(12));
         UText conditionText = UText.build(text, fontConfig);
         XDimension2D textDim = conditionText.calculateDimension(ug.getStringBounder());
         double textX = (dimension.getWidth() - textDim.getWidth()) / 2;
         double textY = HEADER_HEIGHT/2 + textDim.getHeight()/3;
         ug.apply(new UTranslate(textX, textY)).draw(conditionText);
 
-        // Draw diagonal divider line
-        UPolygon divider = new UPolygon();
-        divider.addPoint(dimension.getWidth()/2, HEADER_HEIGHT);
-        divider.addPoint(0, dimension.getHeight());
-        divider.addPoint(dimension.getWidth(), dimension.getHeight());
-        divider.addPoint(dimension.getWidth()/2, HEADER_HEIGHT);
-        ug.apply(HColors.none().bg()).draw(divider);
-
         // Draw vertical divider
-        ULine verticalLine = ULine.vline(dimension.getHeight() - HEADER_HEIGHT);
-        ug.apply(new UTranslate(dimension.getWidth()/2, HEADER_HEIGHT)).draw(verticalLine);
-
-        // Draw branches
-        double branchY = HEADER_HEIGHT;
         double branchWidth = dimension.getWidth()/2;
-        
-        // Then branch (left)
-        UGraphic thenUg = ug.apply(UTranslate.dy(branchY));
-        thenBranch.draw(thenUg);
-        
-        // Else branch (right)
-        UGraphic elseUg = ug.apply(UTranslate.dy(branchY))
-                           .apply(UTranslate.dx(branchWidth));
-        elseBranch.draw(elseUg);
+        ug.apply(new UTranslate(branchWidth, HEADER_HEIGHT))
+          .apply(HColors.BLACK)
+          .draw(new ULine(0, dimension.getHeight() - HEADER_HEIGHT));
+
+        // Draw True/False labels
+        UText trueLabel = UText.build("True", fontConfig);
+        UText falseLabel = UText.build("False", fontConfig);
+        ug.apply(new UTranslate(branchWidth/4, HEADER_HEIGHT + 15)).draw(trueLabel);
+        ug.apply(new UTranslate(branchWidth*1.25, HEADER_HEIGHT + 15)).draw(falseLabel);
+
+        // Draw branches directly below header
+        double y = HEADER_HEIGHT;
+        thenBranch.draw(ug.apply(new UTranslate(0, y)));
+        elseBranch.draw(ug.apply(new UTranslate(branchWidth, y)));
     }
 }
