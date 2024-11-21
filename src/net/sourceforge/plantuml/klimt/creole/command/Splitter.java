@@ -36,13 +36,13 @@
 package net.sourceforge.plantuml.klimt.creole.command;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.emoji.Emoji;
+import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.klimt.font.FontStyle;
 import net.sourceforge.plantuml.klimt.sprite.SpriteUtils;
 import net.sourceforge.plantuml.regex.Matcher2;
@@ -147,34 +147,36 @@ public class Splitter {
 		return s.replaceAll(htmlTag, "");
 	}
 
+	@JawsStrange
 	public List<HtmlCommand> getHtmlCommands(boolean newLineAlone) {
 		final HtmlCommandFactory factory = new HtmlCommandFactory();
 		final List<HtmlCommand> result = new ArrayList<>();
 		for (String s : getSplittedInternal()) {
 			final HtmlCommand cmd = factory.getHtmlCommand(s);
-			if (newLineAlone && cmd instanceof PlainText) {
-				result.addAll(splitText((PlainText) cmd));
-			} else {
-				result.add(cmd);
-			}
+//			if (newLineAlone && cmd instanceof PlainText) {
+//				result.addAll(splitText((PlainText) cmd));
+//			} else {
+			result.add(cmd);
+//			}
 		}
 		return Collections.unmodifiableList(result);
 	}
 
-	private Collection<PlainText> splitText(PlainText cmd) {
-		String s = cmd.getText();
-		final Collection<PlainText> result = new ArrayList<>();
-		while (true) {
-			final int x = s.indexOf(PlainText.TEXT_BS_BS_N.getText());
-			if (x == -1) {
-				result.add(new PlainText(s));
-				return result;
-			}
-			if (x > 0) {
-				result.add(new PlainText(s.substring(0, x)));
-			}
-			result.add(PlainText.TEXT_BS_BS_N);
-			s = s.substring(x + 2);
-		}
-	}
+//	@JawsStrange
+//	private Collection<PlainText> splitText(PlainText cmd) {
+//		String s = cmd.getText();
+//		final Collection<PlainText> result = new ArrayList<>();
+//		while (true) {
+//			final int x = s.indexOf(PlainText.TEXT_BS_BS_N.getText());
+//			if (x == -1) {
+//				result.add(new PlainText(s));
+//				return result;
+//			}
+//			if (x > 0) {
+//				result.add(new PlainText(s.substring(0, x)));
+//			}
+//			result.add(PlainText.TEXT_BS_BS_N);
+//			s = s.substring(x + 2);
+//		}
+//	}
 }

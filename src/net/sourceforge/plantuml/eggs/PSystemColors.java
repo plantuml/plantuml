@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -161,6 +162,7 @@ public class PSystemColors extends PlainDiagram implements UDrawable {
 		tt.drawU(ug.apply(new UTranslate(-dimText.getWidth() / 2, -dimText.getHeight() / 2)));
 	}
 
+	@JawsStrange
 	private String findShortest(StringBounder stringBounder, UFont font, String colorName) {
 		String result = null;
 		double min = Double.MAX_VALUE;

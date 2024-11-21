@@ -46,6 +46,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -251,6 +253,9 @@ public class Display implements Iterable<CharSequence> {
 					current.append(c);
 					current.append(c2);
 				}
+			} else if (c == Jaws.BLOCK_E1_NEWLINE) {
+				result.add(current.toString());
+				current.setLength(0);
 			} else if (c == BackSlash.hiddenNewLine()) {
 				result.add(current.toString());
 				current.setLength(0);
@@ -619,6 +624,7 @@ public class Display implements Iterable<CharSequence> {
 		return hasSeveralGuideLines(displayData);
 	}
 
+	@JawsStrange
 	public static boolean hasSeveralGuideLines(String s) {
 		final List<String> splitted = Arrays.asList(s.split("\\\\n"));
 		return hasSeveralGuideLines(splitted);
