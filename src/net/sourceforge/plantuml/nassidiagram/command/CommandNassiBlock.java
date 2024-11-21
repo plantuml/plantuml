@@ -10,6 +10,7 @@ import net.sourceforge.plantuml.nassidiagram.NassiDiagram;
 import net.sourceforge.plantuml.nassidiagram.element.NassiBlock;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.nassidiagram.NassiElement;
 
 public class CommandNassiBlock extends SingleLineCommand2<NassiDiagram> {
 

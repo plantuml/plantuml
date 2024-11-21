@@ -11,6 +11,7 @@ import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.nassidiagram.NassiElement;
 import net.sourceforge.plantuml.nassidiagram.util.NassiDrawingUtil;
+import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class NassiConnector extends NassiElement {
     private static final int DIAMETER = 40;

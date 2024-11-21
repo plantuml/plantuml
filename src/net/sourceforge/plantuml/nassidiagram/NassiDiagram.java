@@ -20,6 +20,9 @@ import net.sourceforge.plantuml.nassidiagram.util.NassiDrawingUtil;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
+import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 
 public class NassiDiagram extends UmlDiagram {
     private final List<NassiElement> elements = new ArrayList<>();
@@ -77,7 +80,8 @@ public class NassiDiagram extends UmlDiagram {
 
     @Override
     protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
-        return Display.create("").create(getFontConfiguration(), HColors.BLACK, getSkinParam());
+        FontConfiguration fontConfig = FontConfiguration.blackBlueTrue(UFont.sansSerif(12));
+        return Display.create("").create(fontConfig, HorizontalAlignment.LEFT, getSkinParam());
     }
 
     public void addElement(NassiElement element) {
