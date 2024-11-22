@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.builtin.BoolVal;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
 class BoolValTest {

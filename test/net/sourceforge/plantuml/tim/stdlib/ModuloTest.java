@@ -11,6 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.builtin.Modulo;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class ModuloTest {

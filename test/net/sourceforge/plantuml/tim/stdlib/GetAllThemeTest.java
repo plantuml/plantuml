@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TFunction;
+import net.sourceforge.plantuml.tim.builtin.GetAllTheme;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
 /**

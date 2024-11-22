@@ -9,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.builtin.Getenv;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
 /**

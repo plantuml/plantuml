@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TFunction;
+import net.sourceforge.plantuml.tim.builtin.Ord;
 
 /**
  * Tests the builtin function %ord.

@@ -14,6 +14,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TFunction;
+import net.sourceforge.plantuml.tim.builtin.JsonRemove;
 import test.utils.JunitUtils.StringJsonConverter;
 
 /**

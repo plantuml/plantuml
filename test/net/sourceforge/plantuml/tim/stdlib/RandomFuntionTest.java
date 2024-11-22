@@ -13,6 +13,7 @@ import org.junit.jupiter.api.RepeatedTest;
 
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TFunction;
+import net.sourceforge.plantuml.tim.builtin.RandomFunction;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
 /**
