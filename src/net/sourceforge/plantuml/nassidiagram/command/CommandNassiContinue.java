@@ -23,14 +23,18 @@ public class CommandNassiContinue extends SingleLineCommand2<NassiDiagram> {
         return RegexConcat.build(CommandNassiContinue.class.getName(),
                 RegexLeaf.start(),
                 new RegexLeaf("continue"),
-                RegexLeaf.spaceOneOrMore(),
-                new RegexLeaf("CONTENT", "\"([^\"]+)\""),
+                RegexLeaf.spaceZeroOrMore(),
+                new RegexLeaf("CONTENT", "(\"([^\"]+)\")?"),
                 RegexLeaf.end());
     }
 
     @Override
     protected CommandExecutionResult executeArg(NassiDiagram diagram, LineLocation location, RegexResult arg, ParserPass pass) {
-        String content = arg.get("CONTENT", 0);
+        String content = arg.get("CONTENT", 1);
+        if (content == null) {
+            content = "Next iteration";
+        }
+        
         NassiContinue continueElement = new NassiContinue(content);
         
         // Get current control structure
