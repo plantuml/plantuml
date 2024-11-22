@@ -8,7 +8,6 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.nassidiagram.NassiDiagram;
 import net.sourceforge.plantuml.nassidiagram.element.NassiIf;
-import net.sourceforge.plantuml.nassidiagram.element.NassiWhile;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.nassidiagram.NassiElement;
@@ -37,15 +36,6 @@ public class CommandNassiElse extends SingleLineCommand2<NassiDiagram> {
         
         if (current == null) {
             return CommandExecutionResult.error("No matching if block found");
-        }
-        
-        // Validate that we're not inside a while block
-        NassiElement parent = current.getParent();
-        while (parent != null) {
-            if (parent instanceof NassiWhile) {
-                return CommandExecutionResult.error("Cannot have else inside a while block");
-            }
-            parent = parent.getParent();
         }
         
         NassiIf ifElement = (NassiIf) current;
