@@ -1,4 +1,4 @@
-# Directory Documentation for `stdlib`
+# Directory Documentation for `builtin`
 
 ## Builtin functions [%]
 
