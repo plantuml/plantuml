@@ -38,18 +38,24 @@ public class CommandNassiWhile extends SingleLineCommand2<NassiDiagram> {
         // Get current control structure
         NassiElement current = diagram.getCurrentControlStructure();
         
-        // Check if we're inside an if-else block
-        if (current instanceof NassiIf) {
-            NassiIf ifElement = (NassiIf) current;
-            ifElement.addToCurrentBranch(whileElement);
-            whileElement.setParent(ifElement);
-        } else if (current instanceof NassiWhile) {
-            // Nested while loops are allowed
-            NassiWhile parentWhile = (NassiWhile) current;
-            parentWhile.addBodyElement(whileElement);
-            whileElement.setParent(parentWhile);
+        // Handle nesting
+        if (current != null) {
+            if (current instanceof NassiIf) {
+                // Nested inside an if statement
+                NassiIf parentIf = (NassiIf) current;
+                parentIf.addToCurrentBranch(whileElement);
+                whileElement.setParent(parentIf);
+            } else if (current instanceof NassiWhile) {
+                // Nested inside another while loop
+                NassiWhile parentWhile = (NassiWhile) current;
+                parentWhile.addBodyElement(whileElement);
+                whileElement.setParent(parentWhile);
+            } else {
+                // Unknown parent type
+                return CommandExecutionResult.error("Invalid nesting structure");
+            }
         } else {
-            // Add to main diagram
+            // Root level while loop
             diagram.addElement(whileElement);
         }
         

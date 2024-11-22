@@ -38,16 +38,7 @@ public class CommandNassiEndWhile extends SingleLineCommand2<NassiDiagram> {
             return CommandExecutionResult.error("No matching while block found");
         }
         
-        // Validate that we're not ending a while block from inside an if block
-        NassiElement parent = current.getParent();
-        while (parent != null) {
-            if (parent instanceof NassiWhile) {
-                return CommandExecutionResult.error("Cannot end while block from within another control structure");
-            }
-            parent = parent.getParent();
-        }
-        
-        // End the while block and update current control structure
+        // Simply end the while block - no need to validate parent chain
         diagram.endControlStructure();
         return CommandExecutionResult.ok();
     }
