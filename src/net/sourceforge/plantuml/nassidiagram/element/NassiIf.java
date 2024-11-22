@@ -36,26 +36,55 @@ public class NassiIf extends NassiElement {
         inElseBranch = true;
     }
 
+    public boolean isInElseBranch() {
+        return inElseBranch;
+    }
+
     @Override
     public void computeDimension(Graphics2D g2d) {
-        double width = NassiDrawingUtil.MIN_WIDTH;
+        java.awt.FontMetrics fm = g2d.getFontMetrics();
+        // Calculate minimum width based on condition text
+        double contentWidth = fm.stringWidth(text) + 4 * NassiDrawingUtil.PADDING;
+        double width = Math.max(NassiDrawingUtil.MIN_WIDTH, contentWidth);
+        
+        // Use forced width if set
+        if (forcedWidth > 0) {
+            width = forcedWidth;
+        }
+
         double thenHeight = 0;
         double elseHeight = 0;
 
-        // Compute then branch dimensions
+        // Compute branch dimensions
         for (NassiElement element : thenBranch) {
+            element.setWidth(width / 2);  // Each branch gets half the width
             element.computeDimension(g2d);
             thenHeight += element.getDimension().getHeight();
         }
 
-        // Compute else branch dimensions
         for (NassiElement element : elseBranch) {
+            element.setWidth(width / 2);  // Each branch gets half the width
             element.computeDimension(g2d);
             elseHeight += element.getDimension().getHeight();
         }
 
         double branchHeight = Math.max(thenHeight, elseHeight);
         dimension = new Rectangle2D.Double(0, 0, width, HEADER_HEIGHT + branchHeight);
+    }
+
+    @Override
+    public double getNestedWidth() {
+        double maxWidth = getEffectiveWidth();
+        
+        // Check width requirements of nested elements
+        for (NassiElement element : thenBranch) {
+            maxWidth = Math.max(maxWidth, element.getNestedWidth() * 2); // Multiply by 2 because of split
+        }
+        for (NassiElement element : elseBranch) {
+            maxWidth = Math.max(maxWidth, element.getNestedWidth() * 2);
+        }
+        
+        return maxWidth;
     }
 
     @Override

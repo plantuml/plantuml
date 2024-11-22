@@ -27,16 +27,19 @@ public class CommandNassiEndIf extends SingleLineCommand2<NassiDiagram> {
 
     @Override
     protected CommandExecutionResult executeArg(NassiDiagram diagram, LineLocation location, RegexResult arg, ParserPass pass) {
-        // Find the last if element
-        NassiElement lastElement = diagram.getLastElement();
-        while (lastElement != null && !(lastElement instanceof NassiIf)) {
-            lastElement = lastElement.getParent();
+        NassiElement current = diagram.getCurrentControlStructure();
+        
+        // Find the most recent if block
+        while (current != null && !(current instanceof NassiIf)) {
+            current = current.getParent();
         }
         
-        if (lastElement == null) {
+        if (current == null) {
             return CommandExecutionResult.error("No matching if block found");
         }
         
+        // End the if block
+        diagram.endControlStructure();
         return CommandExecutionResult.ok();
     }
 } 

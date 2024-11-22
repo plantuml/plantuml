@@ -8,6 +8,7 @@ public abstract class NassiElement {
     protected String text;
     protected Rectangle2D dimension;
     protected NassiElement parent;
+    protected double forcedWidth = -1;  // For enforcing consistent widths
 
     public NassiElement(String text) {
         this.text = text;
@@ -36,6 +37,16 @@ public abstract class NassiElement {
         this.text = text;
     }
 
+    // For width consistency across elements
+    public void setWidth(double width) {
+        this.forcedWidth = width;
+    }
+
+    // For nested elements to report their width requirements
+    public double getNestedWidth() {
+        return dimension != null ? dimension.getWidth() : 0;
+    }
+
     // Helper method to find the root element (diagram)
     protected NassiElement getRoot() {
         NassiElement current = this;
@@ -43,5 +54,11 @@ public abstract class NassiElement {
             current = current.getParent();
         }
         return current;
+    }
+
+    // Helper method to get the effective width (forced or computed)
+    protected double getEffectiveWidth() {
+        return forcedWidth > 0 ? forcedWidth : 
+               (dimension != null ? dimension.getWidth() : 0);
     }
 }

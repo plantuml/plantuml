@@ -29,7 +29,7 @@ public class CommandNassiEndWhile extends SingleLineCommand2<NassiDiagram> {
     protected CommandExecutionResult executeArg(NassiDiagram diagram, LineLocation location, RegexResult arg, ParserPass pass) {
         NassiElement current = diagram.getCurrentControlStructure();
         
-        // Find the most recent while block
+        // Find the most recent while block by traversing up the parent chain
         while (current != null && !(current instanceof NassiWhile)) {
             current = current.getParent();
         }
@@ -38,7 +38,16 @@ public class CommandNassiEndWhile extends SingleLineCommand2<NassiDiagram> {
             return CommandExecutionResult.error("No matching while block found");
         }
         
-        // End the while block
+        // Validate that we're not ending a while block from inside an if block
+        NassiElement parent = current.getParent();
+        while (parent != null) {
+            if (parent instanceof NassiWhile) {
+                return CommandExecutionResult.error("Cannot end while block from within another control structure");
+            }
+            parent = parent.getParent();
+        }
+        
+        // End the while block and update current control structure
         diagram.endControlStructure();
         return CommandExecutionResult.ok();
     }

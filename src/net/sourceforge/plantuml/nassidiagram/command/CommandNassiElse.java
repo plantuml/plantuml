@@ -8,6 +8,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.nassidiagram.NassiDiagram;
 import net.sourceforge.plantuml.nassidiagram.element.NassiIf;
+import net.sourceforge.plantuml.nassidiagram.element.NassiWhile;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.nassidiagram.NassiElement;
@@ -27,20 +28,31 @@ public class CommandNassiElse extends SingleLineCommand2<NassiDiagram> {
 
     @Override
     protected CommandExecutionResult executeArg(NassiDiagram diagram, LineLocation location, RegexResult arg, ParserPass pass) {
-        // Find the last if element by traversing up the parent chain
-        NassiElement current = diagram.getLastElement();
-        NassiIf ifElement = null;
+        NassiElement current = diagram.getCurrentControlStructure();
         
-        while (current != null) {
-            if (current instanceof NassiIf) {
-                ifElement = (NassiIf) current;
-                break;
-            }
+        // Find the most recent if block by traversing up the parent chain
+        while (current != null && !(current instanceof NassiIf)) {
             current = current.getParent();
         }
         
-        if (ifElement == null) {
+        if (current == null) {
             return CommandExecutionResult.error("No matching if block found");
+        }
+        
+        // Validate that we're not inside a while block
+        NassiElement parent = current.getParent();
+        while (parent != null) {
+            if (parent instanceof NassiWhile) {
+                return CommandExecutionResult.error("Cannot have else inside a while block");
+            }
+            parent = parent.getParent();
+        }
+        
+        NassiIf ifElement = (NassiIf) current;
+        
+        // Check if we already have an else branch
+        if (ifElement.isInElseBranch()) {
+            return CommandExecutionResult.error("Multiple else branches are not allowed");
         }
         
         // Switch to else branch
