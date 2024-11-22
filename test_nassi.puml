@@ -1,17 +1,21 @@
 @startnassi
-block "Start"
-input "Get user input x"
-if "x < 10" then
-  block "Initialize sum = 0"
-  while "i < x" do
-    block "sum = sum + i"
-    block "i = i + 1"
-  endwhile
-  output "Print sum"
+title "Auto Insurance Application Process"
+block "Auto Insurance Application Received"
+if "# of at fault Accidents > 4" then
+  block "Approved = false"
 else
-  block "x is too large"
-  break "Exit process"
+  if "# of at fault Accidents <= 1" then
+    block "Approved = true"
+  else
+    block "Approved = true"
+    block "Review each Accident"
+    if "# DUI or Fatality" then
+      block "Approved = false"
+      break "Exit process"
+    else
+      block "Review Next"
+    endif
+  endif
 endif
-call "LogResult(sum)"
 block "End"
 @endnassi 

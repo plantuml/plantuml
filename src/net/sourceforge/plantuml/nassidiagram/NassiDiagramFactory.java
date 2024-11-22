@@ -19,6 +19,9 @@ public class NassiDiagramFactory extends PSystemCommandFactory {
     protected void initCommandsList(List<Command> cmds) {
         CommonCommands.addCommonCommands1(cmds);
         
+        // Diagram settings
+        cmds.add(new CommandNassiTitle());
+        
         // Basic elements
         cmds.add(new CommandNassiBlock());
         cmds.add(new CommandNassiFunctionCall());

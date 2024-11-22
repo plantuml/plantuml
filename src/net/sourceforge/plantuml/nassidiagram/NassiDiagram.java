@@ -33,7 +33,9 @@ public class NassiDiagram extends UmlDiagram {
     private final List<NassiElement> elements = new ArrayList<>();
     private NassiElement currentControlStructure = null;
     private static final int PADDING = 20;
+    private static final int TITLE_HEIGHT = 40;
     private boolean dimensionsComputed = false;
+    private String title = "Algorithm";
 
     public NassiDiagram(UmlSource source, Map<String, String> skinParam) {
         super(source, UmlDiagramType.NASSI, skinParam);
@@ -60,9 +62,8 @@ public class NassiDiagram extends UmlDiagram {
 
                 @Override
                 public XDimension2D calculateDimension(StringBounder stringBounder) {
-                    double totalWidth = PADDING * 2;
-                    double totalHeight = PADDING * 2;
-                    double maxWidth = 0;
+                    double maxWidth = NassiDrawingUtil.MIN_WIDTH;
+                    double totalHeight = PADDING * 2 + TITLE_HEIGHT;
 
                     Graphics2D g2d = createGraphics();
                     computeAllDimensions(g2d);
@@ -74,41 +75,40 @@ public class NassiDiagram extends UmlDiagram {
                             totalHeight += dim.getHeight();
                         }
                     }
-                    totalWidth += maxWidth;
 
-                    return new XDimension2D(totalWidth, totalHeight);
+                    return new XDimension2D(maxWidth + PADDING * 2, totalHeight);
                 }
             })
             .write(os);
     }
 
     private void drawDiagram(UGraphic ug) {
-        // Set background color
-        ug = ug.apply(HColors.WHITE.bg());
-
         // Ensure dimensions are computed
         Graphics2D g2d = createGraphics();
         computeAllDimensions(g2d);
 
-        // Draw elements
-        double currentY = PADDING;
-        double maxWidth = 0;
+        // Calculate total dimensions
+        double maxWidth = NassiDrawingUtil.MIN_WIDTH;
+        double totalHeight = PADDING * 2 + TITLE_HEIGHT;
 
-        // First pass: compute max width
         for (NassiElement element : elements) {
             Rectangle2D dim = element.getDimension();
             if (dim != null) {
                 maxWidth = Math.max(maxWidth, dim.getWidth());
+                totalHeight += dim.getHeight();
             }
         }
 
-        // Second pass: draw elements
+        // Draw outer container box with title
+        NassiDrawingUtil.drawOuterBox(ug, 0, 0, maxWidth + PADDING * 2, totalHeight, title);
+
+        // Draw elements
+        double currentY = PADDING + TITLE_HEIGHT;
         for (NassiElement element : elements) {
             Rectangle2D dim = element.getDimension();
             if (dim != null) {
-                double elementWidth = dim.getWidth();
-                double xOffset = PADDING + (maxWidth - elementWidth) / 2;
-                element.draw(ug.apply(new UTranslate(xOffset, currentY)));
+                // Draw each element at full width
+                element.draw(ug.apply(new UTranslate(PADDING, currentY)));
                 currentY += dim.getHeight();
             }
         }
@@ -177,5 +177,9 @@ public class NassiDiagram extends UmlDiagram {
         if (!elements.isEmpty()) {
             elements.remove(elements.size() - 1);
         }
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
