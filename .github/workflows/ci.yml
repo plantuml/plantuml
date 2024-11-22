@@ -5,13 +5,13 @@ on:
   pull_request:
     types: [ opened, synchronize, reopened ]
     paths-ignore:
-      - '*.md'
+      - '**.md'
       - 'docs/**'
   push:
     branches:
       - master
     paths-ignore:
-      - '*.md'
+      - '**.md'
       - 'docs/**'
   workflow_dispatch:
 
