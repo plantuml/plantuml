@@ -1,0 +1,33 @@
+@startnassi
+title "Complex Algorithm Example"
+input "Get array size n"
+block "Initialize array"
+while "i < n" do
+    input "Get element"
+    if "element < 0" then
+        block "Skip negative"
+        break "Continue to next"
+    else
+        if "element > max" then
+            block "Update max"
+        else
+            if "element < min" then
+                block "Update min"
+            endif
+        endif
+        block "Add to sum"
+    endif
+    block "i = i + 1"
+endwhile
+if "sum > 1000" then
+    while "sum > 1000" do
+        block "Reduce sum"
+    endwhile
+    output "Sum reduced"
+else
+    output "Sum is fine"
+endif
+call "ProcessResults(sum, min, max)"
+connector "A"
+block "End processing"
+@endnassi

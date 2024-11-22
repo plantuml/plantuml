@@ -1,0 +1,9 @@
+@startnassi
+title "While Loop Example"
+block "counter = 0"
+while "counter < 5" do
+    block "Print counter"
+    block "Increment counter"
+endwhile
+block "Loop finished"
+@endnassi

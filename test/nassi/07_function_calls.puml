@@ -1,0 +1,20 @@
+@startnassi
+title "Function Call Example"
+block "Initialize System"
+call "LoadConfiguration()"
+if "ConfigValid()" then
+    call "InitializeModules()"
+    while "HasPendingTasks()" do
+        call "ProcessNextTask()"
+        if "TaskFailed()" then
+            call "LogError()"
+            call "NotifyAdmin()"
+            break "Stop processing"
+        endif
+    endwhile
+    call "Cleanup()"
+else
+    call "ReportConfigError()"
+endif
+block "End"
+@endnassi

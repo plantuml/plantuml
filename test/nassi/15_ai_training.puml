@@ -1,0 +1,81 @@
+@startnassi
+title "AI Model Training Pipeline"
+input "Load Configuration"
+call "InitializeEnvironment()"
+if "Environment Ready" then
+    input "Load Training Data"
+    if "Validate Dataset" then
+        while "Data Preprocessing" do
+            if "Clean Data" then
+                call "RemoveOutliers()"
+                if "Feature Engineering" then
+                    while "Feature Selection" do
+                        if "Analyze Feature" then
+                            if "Feature Important" then
+                                call "TransformFeature()"
+                                if "Transform Success" then
+                                    block "Add to Feature Set"
+                                else
+                                    output "Transform Failed"
+                                    if "Can Skip" then
+                                        continue
+                                    else
+                                        break "Critical Feature Failed"
+                                    endif
+                                endif
+                            else
+                                block "Skip Feature"
+                            endif
+                        else
+                            output "Analysis Failed"
+                            break "Cannot Analyze"
+                        endif
+                    endwhile
+                    if "Feature Set Complete" then
+                        while "Model Training" do
+                            if "Initialize Model" then
+                                while "Training Epochs" do
+                                    call "TrainBatch()"
+                                    if "Evaluate Performance" then
+                                        if "Performance Improved" then
+                                            call "SaveCheckpoint()"
+                                            if "Convergence Check" then
+                                                break "Training Complete"
+                                            endif
+                                        else
+                                            if "Early Stopping" then
+                                                break "No Improvement"
+                                            else
+                                                if "Adjust Parameters" then
+                                                    call "UpdateHyperparameters()"
+                                                    continue
+                                                else
+                                                    break "Cannot Optimize"
+                                                endif
+                                            endif
+                                        endif
+                                    else
+                                        output "Evaluation Failed"
+                                        break "Cannot Evaluate"
+                                    endif
+                                endwhile
+                            else
+                                output "Model Initialization Failed"
+                            endif
+                        endwhile
+                    endif
+                else
+                    output "Feature Engineering Failed"
+                endif
+            else
+                output "Data Cleaning Failed"
+            endif
+        endwhile
+    else
+        output "Invalid Dataset"
+    endif
+else
+    output "Environment Setup Failed"
+endif
+connector "END"
+@endnassi

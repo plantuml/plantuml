@@ -1,0 +1,10 @@
+@startnassi
+title "Basic If Statement"
+block "Get user input"
+if "input > 10" then
+    block "Value is large"
+else
+    block "Value is small"
+endif
+block "Done"
+@endnassi

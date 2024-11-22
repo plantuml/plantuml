@@ -1,0 +1,23 @@
+@startnassi
+title "Deeply Nested Control Structures"
+while "Main loop" do
+    if "Condition 1" then
+        while "Sub loop 1" do
+            if "Condition 2" then
+                while "Sub loop 2" do
+                    block "Deep action 1"
+                    if "Condition 3" then
+                        block "Deep action 2"
+                    else
+                        break "Exit deep loop"
+                    endif
+                endwhile
+            else
+                block "Alternative action"
+            endif
+        endwhile
+    else
+        block "Main alternative"
+    endif
+endwhile
+@endnassi

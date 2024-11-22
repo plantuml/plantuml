@@ -1,0 +1,54 @@
+@startnassi
+title "Payment Processing System"
+input "Receive Payment Request"
+call "ValidateRequest()"
+if "Request Valid" then
+    while "Processing Payment" do
+        if "Payment Method" then
+            if "Credit Card" then
+                call "ValidateCard()"
+                if "Card Valid" then
+                    call "ProcessCCPayment()"
+                else
+                    output "Invalid Card"
+                    break "Payment Failed"
+                endif
+            else
+                if "Bank Transfer" then
+                    call "ValidateAccount()"
+                    if "Account Valid" then
+                        call "ProcessBankTransfer()"
+                    else
+                        output "Invalid Account"
+                        break "Payment Failed"
+                    endif
+                else
+                    if "Digital Wallet" then
+                        call "ValidateWallet()"
+                        while "Processing Wallet" do
+                            if "Sufficient Funds" then
+                                call "ProcessWalletPayment()"
+                                break "Payment Complete"
+                            else
+                                output "Insufficient Funds"
+                                if "Can Retry" then
+                                    block "Wait 30 seconds"
+                                    continue
+                                else
+                                    break "Payment Failed"
+                                endif
+                            endif
+                        endwhile
+                    else
+                        output "Unsupported Payment Method"
+                        break "Payment Failed"
+                    endif
+                endif
+            endif
+        endif
+    endwhile
+else
+    output "Invalid Request"
+endif
+connector "END"
+@endnassi

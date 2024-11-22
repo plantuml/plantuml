@@ -1,0 +1,59 @@
+@startnassi
+title "E-Commerce Order Fulfillment"
+input "Receive Order"
+call "ValidateOrder()"
+if "Order Valid" then
+    block "Begin Transaction"
+    while "Processing Items" do
+        if "Check Stock" then
+            if "In Stock" then
+                if "Reserve Item" then
+                    call "UpdateInventory()"
+                    if "Update Failed" then
+                        call "RollbackReservation()"
+                        output "Inventory Error"
+                        break "Processing Failed"
+                    endif
+                else
+                    output "Reservation Failed"
+                    break "Cannot Reserve"
+                endif
+            else
+                if "Check Backorder" then
+                    if "Can Backorder" then
+                        call "CreateBackorder()"
+                        output "Backorder Created"
+                    else
+                        if "Check Alternatives" then
+                            while "Finding Alternative" do
+                                call "SearchAlternative()"
+                                if "Alternative Found" then
+                                    if "Customer Accepts" then
+                                        call "UpdateOrder()"
+                                        break "Alternative Accepted"
+                                    endif
+                                else
+                                    break "No Alternative"
+                                endif
+                            endwhile
+                        else
+                            output "Item Unavailable"
+                            break "Cannot Fulfill"
+                        endif
+                    endif
+                endif
+            endif
+        endif
+    endwhile
+    if "All Items Processed" then
+        call "FinalizeOrder()"
+        output "Order Confirmed"
+    else
+        call "RollbackTransaction()"
+        output "Order Failed"
+    endif
+else
+    output "Invalid Order"
+endif
+connector "END"
+@endnassi

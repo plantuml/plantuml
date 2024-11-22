@@ -1,0 +1,71 @@
+@startnassi
+title "Big Data Processing Pipeline"
+input "Configure Pipeline"
+call "InitializeCluster()"
+if "Cluster Ready" then
+    while "Processing Batches" do
+        input "Read Data Chunk"
+        if "Validate Schema" then
+            while "Transform Phase" do
+                if "Apply Transformations" then
+                    if "Data Quality Check" then
+                        call "EnrichData()"
+                        if "Enrichment Success" then
+                            while "Parallel Processing" do
+                                if "Process Partition" then
+                                    call "ApplyBusinessRules()"
+                                    if "Rules Passed" then
+                                        call "AggregateResults()"
+                                    else
+                                        output "Rule Violation"
+                                        if "Can Correct" then
+                                            call "AutoCorrect()"
+                                            continue
+                                        else
+                                            break "Invalid Data"
+                                        endif
+                                    endif
+                                else
+                                    output "Processing Error"
+                                    break "Partition Failed"
+                                endif
+                            endwhile
+                        else
+                            output "Enrichment Failed"
+                            break "Cannot Enrich"
+                        endif
+                    else
+                        output "Quality Check Failed"
+                        break "Poor Quality"
+                    endif
+                else
+                    output "Transform Error"
+                    break "Cannot Transform"
+                endif
+            endwhile
+            if "All Transforms Complete" then
+                while "Output Phase" do
+                    if "Prepare Output" then
+                        call "FormatOutput()"
+                        if "Write Output" then
+                            call "CommitResults()"
+                            output "Batch Complete"
+                        else
+                            call "RollbackBatch()"
+                            break "Write Failed"
+                        endif
+                    else
+                        output "Format Error"
+                        break "Cannot Format"
+                    endif
+                endwhile
+            endif
+        else
+            output "Schema Validation Failed"
+        endif
+    endwhile
+else
+    output "Cluster Initialization Failed"
+endif
+connector "END"
+@endnassi

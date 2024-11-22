@@ -1,0 +1,45 @@
+@startnassi
+title "Complex Algorithm Implementation"
+input "Get dataset size N"
+input "Get threshold T"
+block "Initialize data structures"
+while "Processing batches" do
+    if "Batch size > 0" then
+        while "Items in batch" do
+            if "Item needs processing" then
+                if "Priority high" then
+                    call "FastProcess()"
+                    output "Fast track result"
+                else
+                    if "Can be delayed" then
+                        call "QueueForLater()"
+                    else
+                        call "NormalProcess()"
+                        if "Process failed" then
+                            if "Can retry" then
+                                block "Increment retry count"
+                                continue
+                            else
+                                output "Max retries exceeded"
+                                break "Skip to next batch"
+                            endif
+                        endif
+                    endif
+                endif
+            else
+                block "Mark as skipped"
+            endif
+        endwhile
+        if "Batch complete" then
+            call "CommitBatch()"
+            output "Batch statistics"
+        else
+            call "RollbackBatch()"
+        endif
+    else
+        break "No more batches"
+    endif
+endwhile
+connector "A"
+block "Finalize processing"
+@endnassi

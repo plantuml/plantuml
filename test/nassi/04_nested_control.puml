@@ -1,0 +1,18 @@
+@startnassi
+title "Nested Control Structures"
+input "Get number n"
+while "n > 0" do
+    if "n % 2 == 0" then
+        output "Even number found"
+        if "n % 4 == 0" then
+            block "Divisible by 4"
+        else
+            block "Not divisible by 4"
+        endif
+    else
+        output "Odd number found"
+    endif
+    block "Decrement n"
+endwhile
+block "Processing complete"
+@endnassi

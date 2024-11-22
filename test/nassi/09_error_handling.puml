@@ -1,0 +1,33 @@
+@startnassi
+title "Error Handling Flow"
+block "Start Transaction"
+if "Database Connected" then
+    while "Process Records" do
+        if "Record Valid" then
+            if "Has Required Fields" then
+                block "Process Record"
+                if "Processing Error" then
+                    call "LogError()"
+                    call "RollbackTransaction()"
+                    break "Stop Processing"
+                else
+                    call "CommitRecord()"
+                endif
+            else
+                output "Missing Fields"
+                call "SkipRecord()"
+            endif
+        else
+            output "Invalid Record"
+            if "Can Recover" then
+                call "AttemptRecovery()"
+            else
+                call "LogFailure()"
+            endif
+        endif
+    endwhile
+else
+    output "Connection Failed"
+    call "NotifyAdmin()"
+endif
+@endnassi

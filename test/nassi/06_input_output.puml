@@ -1,0 +1,22 @@
+@startnassi
+title "Data Processing Flow"
+input "Enter data source path"
+input "Enter output format"
+if "File exists" then
+    input "Read configuration"
+    while "Has more data" do
+        input "Read record"
+        if "Valid format" then
+            output "Processing record"
+            block "Transform data"
+            output "Record processed"
+        else
+            output "Invalid record found"
+            break "Skip to next"
+        endif
+    endwhile
+    output "Processing complete"
+else
+    output "File not found"
+endif
+@endnassi

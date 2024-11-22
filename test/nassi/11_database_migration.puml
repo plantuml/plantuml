@@ -1,0 +1,46 @@
+@startnassi
+title "Database Migration Process"
+block "Start Migration"
+input "Get Database Credentials"
+if "Connect to Source DB" then
+    if "Connect to Target DB" then
+        while "Processing Tables" do
+            block "Get Table Schema"
+            if "Schema Compatible" then
+                while "Batch Processing" do
+                    block "Read 1000 Records"
+                    if "Transform Required" then
+                        call "TransformData()"
+                        if "Validation Failed" then
+                            output "Log Validation Error"
+                            call "NotifyAdmin()"
+                            break "Skip Batch"
+                        endif
+                    endif
+                    if "Insert Batch" then
+                        call "CommitTransaction()"
+                    else
+                        call "RollbackTransaction()"
+                        output "Batch Failed"
+                        if "Retry Count < 3" then
+                            block "Increment Retry"
+                            continue
+                        else
+                            break "Max Retries Exceeded"
+                        endif
+                    endif
+                endwhile
+            else
+                output "Schema Mismatch"
+                call "LogSchemaError()"
+            endif
+        endwhile
+        call "ValidateMigration()"
+    else
+        output "Target DB Connection Failed"
+    endif
+else
+    output "Source DB Connection Failed"
+endif
+connector "END"
+@endnassi

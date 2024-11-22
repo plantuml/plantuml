@@ -1,0 +1,7 @@
+@startnassi
+title "Simple Sequential Flow"
+block "Initialize x = 0"
+block "Add 5 to x"
+block "Multiply x by 2"
+block "Print result"
+@endnassi
