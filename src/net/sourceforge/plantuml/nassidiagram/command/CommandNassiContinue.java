@@ -7,23 +7,22 @@ import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.nassidiagram.NassiDiagram;
-import net.sourceforge.plantuml.nassidiagram.element.NassiConnector;
-import net.sourceforge.plantuml.nassidiagram.element.NassiIf;
+import net.sourceforge.plantuml.nassidiagram.element.NassiContinue;
 import net.sourceforge.plantuml.nassidiagram.element.NassiWhile;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.nassidiagram.NassiElement;
 
-public class CommandNassiConnector extends SingleLineCommand2<NassiDiagram> {
+public class CommandNassiContinue extends SingleLineCommand2<NassiDiagram> {
 
-    public CommandNassiConnector() {
+    public CommandNassiContinue() {
         super(getRegexConcat());
     }
 
     static IRegex getRegexConcat() {
-        return RegexConcat.build(CommandNassiConnector.class.getName(),
+        return RegexConcat.build(CommandNassiContinue.class.getName(),
                 RegexLeaf.start(),
-                new RegexLeaf("connector"),
+                new RegexLeaf("continue"),
                 RegexLeaf.spaceOneOrMore(),
                 new RegexLeaf("CONTENT", "\"([^\"]+)\""),
                 RegexLeaf.end());
@@ -32,32 +31,33 @@ public class CommandNassiConnector extends SingleLineCommand2<NassiDiagram> {
     @Override
     protected CommandExecutionResult executeArg(NassiDiagram diagram, LineLocation location, RegexResult arg, ParserPass pass) {
         String content = arg.get("CONTENT", 0);
-        NassiConnector connector = new NassiConnector(content);
+        NassiContinue continueElement = new NassiContinue(content);
         
         // Get current control structure
         NassiElement current = diagram.getCurrentControlStructure();
         
-        // Handle nesting
-        if (current != null) {
-            if (current instanceof NassiIf) {
-                // Inside an if statement
-                NassiIf parentIf = (NassiIf) current;
-                parentIf.addToCurrentBranch(connector);
-                connector.setParent(parentIf);
-            } else if (current instanceof NassiWhile) {
-                // Inside a while loop
-                NassiWhile parentWhile = (NassiWhile) current;
-                parentWhile.addBodyElement(connector);
-                connector.setParent(parentWhile);
-            } else {
-                // Unknown parent type - add to diagram
-                diagram.addElement(connector);
-            }
-        } else {
-            // Root level connector
-            diagram.addElement(connector);
+        // Find the nearest loop that contains this continue
+        NassiElement container = findLoopContainer(current);
+        
+        if (container == null) {
+            return CommandExecutionResult.error("Continue statement must be inside a loop");
         }
         
+        // Add continue to the loop
+        NassiWhile whileLoop = (NassiWhile) container;
+        whileLoop.addBodyElement(continueElement);
+        continueElement.setParent(whileLoop);
+        
         return CommandExecutionResult.ok();
+    }
+    
+    private NassiElement findLoopContainer(NassiElement current) {
+        while (current != null) {
+            if (current instanceof NassiWhile) {
+                return current;
+            }
+            current = current.getParent();
+        }
+        return null;
     }
 } 

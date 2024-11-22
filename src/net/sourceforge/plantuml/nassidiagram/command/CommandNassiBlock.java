@@ -8,6 +8,8 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.nassidiagram.NassiDiagram;
 import net.sourceforge.plantuml.nassidiagram.element.NassiBlock;
+import net.sourceforge.plantuml.nassidiagram.element.NassiIf;
+import net.sourceforge.plantuml.nassidiagram.element.NassiWhile;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.nassidiagram.NassiElement;
@@ -32,13 +34,30 @@ public class CommandNassiBlock extends SingleLineCommand2<NassiDiagram> {
         String content = arg.get("CONTENT", 0);
         NassiBlock blockElement = new NassiBlock(content);
         
-        // Set parent if inside a control structure
-        NassiElement lastElement = diagram.getLastElement();
-        if (lastElement != null) {
-            blockElement.setParent(lastElement);
+        // Get current control structure
+        NassiElement current = diagram.getCurrentControlStructure();
+        
+        // Handle nesting
+        if (current != null) {
+            if (current instanceof NassiIf) {
+                // Inside an if statement
+                NassiIf parentIf = (NassiIf) current;
+                parentIf.addToCurrentBranch(blockElement);
+                blockElement.setParent(parentIf);
+            } else if (current instanceof NassiWhile) {
+                // Inside a while loop
+                NassiWhile parentWhile = (NassiWhile) current;
+                parentWhile.addBodyElement(blockElement);
+                blockElement.setParent(parentWhile);
+            } else {
+                // Unknown parent type - add to diagram
+                diagram.addElement(blockElement);
+            }
+        } else {
+            // Root level block
+            diagram.addElement(blockElement);
         }
         
-        diagram.addElement(blockElement);
         return CommandExecutionResult.ok();
     }
 }

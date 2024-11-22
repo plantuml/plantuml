@@ -34,6 +34,7 @@ public class NassiDiagramFactory extends PSystemCommandFactory {
         cmds.add(new CommandNassiWhile());
         cmds.add(new CommandNassiEndWhile());
         cmds.add(new CommandNassiBreak());
+        cmds.add(new CommandNassiContinue());
         
         // Input/Output
         cmds.add(new CommandNassiInput());
