@@ -14,10 +14,10 @@ public class NassiBlock extends NassiElement {
     @Override
     public void computeDimension(Graphics2D g2d) {
         java.awt.FontMetrics fm = g2d.getFontMetrics();
-        double width = Math.max(NassiDrawingUtil.MIN_WIDTH, 
-                              fm.stringWidth(text) + 2 * 20);
+        double contentWidth = fm.stringWidth(text) + 2 * NassiDrawingUtil.PADDING;
+        double width = Math.max(NassiDrawingUtil.MIN_WIDTH, contentWidth);
         double height = Math.max(NassiDrawingUtil.MIN_HEIGHT, 
-                               fm.getHeight() + 2 * 10);
+                               fm.getHeight() + 2 * NassiDrawingUtil.PADDING);
         dimension = new Rectangle2D.Double(0, 0, width, height);
     }
 

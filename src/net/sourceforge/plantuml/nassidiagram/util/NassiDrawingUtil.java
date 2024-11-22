@@ -12,8 +12,9 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class NassiDrawingUtil {
-    public static final int MIN_WIDTH = 400;
+    public static final int MIN_WIDTH = 120;
     public static final int MIN_HEIGHT = 40;
+    public static final int PADDING = 10;
     
     public static void drawOuterBox(UGraphic ug, double x, double y, double width, double height, String title) {
         // Draw outer container box
@@ -120,7 +121,7 @@ public class NassiDrawingUtil {
           .draw(line);
     }
 
-    private static void drawCenteredText(UGraphic ug, double x, double y, double width, double height, String text) {
+    public static void drawCenteredText(UGraphic ug, double x, double y, double width, double height, String text) {
         FontConfiguration fontConfig = FontConfiguration.blackBlueTrue(UFont.sansSerif(12));
         UText txt = UText.build(text, fontConfig);
         XDimension2D textDim = txt.calculateDimension(ug.getStringBounder());
@@ -130,7 +131,7 @@ public class NassiDrawingUtil {
         ug.apply(new UTranslate(textX, textY)).draw(txt);
     }
 
-    private static void drawText(UGraphic ug, double x, double y, String text) {
+    public static void drawText(UGraphic ug, double x, double y, String text) {
         FontConfiguration fontConfig = FontConfiguration.blackBlueTrue(UFont.sansSerif(12));
         UText txt = UText.build(text, fontConfig);
         ug.apply(new UTranslate(x, y)).draw(txt);
