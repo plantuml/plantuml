@@ -2,7 +2,6 @@ package net.sourceforge.plantuml.tim.builtin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,7 +11,6 @@ import org.junit.jupiter.api.Test;
 
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TFunction;
-import net.sourceforge.plantuml.tim.builtin.GetAllTheme;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
 /**
