@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.tim.stdlib;
+package net.sourceforge.plantuml.tim.builtin;
 
 import static net.sourceforge.plantuml.tim.TimTestUtils.assertTimExpectedOutput;
 import static net.sourceforge.plantuml.tim.TimTestUtils.assertTimExpectedOutputFromInput;
@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TFunction;
-import net.sourceforge.plantuml.tim.builtin.Feature;
+import net.sourceforge.plantuml.tim.builtin.GetJsonType;
 import test.utils.JunitUtils.StringJsonConverter;
 
 /**
@@ -22,9 +22,9 @@ import test.utils.JunitUtils.StringJsonConverter;
  */
 @IndicativeSentencesGeneration(separator = ": ", generator = ReplaceUnderscores.class)
 
-class FeatureTest {
-	TFunction cut = new Feature();
-	final String cutName = "Feature";
+class GetJsonTypeTest {
+	TFunction cut = new GetJsonType();
+	final String cutName = "GetJsonType";
 
 	@Disabled
 	@Test
@@ -34,14 +34,9 @@ class FeatureTest {
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "(''{0}'') = {1}")
 	@CsvSource(nullValues = "null", value = {
-			" style, 1",
-			" theme, 1",
-			" Style, 1",
-			" Theme, 1",
-			" 0    , 0",
-			" 1    , 0",
-			" abc  , 0",
-
+			" 0, string",
+			" a, string",
+			" -1, string",
 	})
 	void Test_with_String(String input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
@@ -49,8 +44,8 @@ class FeatureTest {
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "({0}) = {1}")
 	@CsvSource(nullValues = "null", value = {
-			" 0,  0",
-			" 10, 0",
+			" 0, number",
+			" -1, number",
 	})
 	void Test_with_Integer(Integer input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
@@ -58,9 +53,19 @@ class FeatureTest {
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "({0}) = {1}")
 	@CsvSource(value = {
-			" \"style\", 1",
-			" \"theme\", 1",
-			" 0, 0",
+			" 0                 , number",
+			" 123               , number",
+			" \"abc\"           , string",
+			" \"string\"        , string",
+			" '[1, 2]'          , array",
+			" '[\"a\", \"b\"]'  , array",
+			" '{\"a\":[1, 2]}'  , object",
+			" '{\"a\":\"abc\"}' , object",
+			" true              , boolean ",
+			" false             , boolean ",
+			" 1                 , number ",
+			" null              , json ",
+			" '{\"a\":[1, 2], \"b\":\"abc\", \"b\":true}' , object",
 	})
 	void Test_with_Json(@ConvertWith(StringJsonConverter.class) JsonValue input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);

@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.tim.stdlib;
+package net.sourceforge.plantuml.tim.builtin;
 
 import static net.sourceforge.plantuml.tim.TimTestUtils.assertTimExpectedOutput;
 import static net.sourceforge.plantuml.tim.TimTestUtils.assertTimExpectedOutputFromInput;
@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TFunction;
-import net.sourceforge.plantuml.tim.builtin.GetJsonKey;
+import net.sourceforge.plantuml.tim.builtin.Feature;
 import test.utils.JunitUtils.StringJsonConverter;
 
 /**
@@ -22,9 +22,9 @@ import test.utils.JunitUtils.StringJsonConverter;
  */
 @IndicativeSentencesGeneration(separator = ": ", generator = ReplaceUnderscores.class)
 
-class GetJsonKeyTest {
-	TFunction cut = new GetJsonKey();
-	final String cutName = "GetJsonKey";
+class FeatureTest {
+	TFunction cut = new Feature();
+	final String cutName = "Feature";
 
 	@Disabled
 	@Test
@@ -32,22 +32,25 @@ class GetJsonKeyTest {
 		assertTimExpectedOutput(cut, "0");
 	}
 
-	@Disabled // EaterException: Not JSON data
 	@ParameterizedTest(name = "[{index}] " + cutName + "(''{0}'') = {1}")
 	@CsvSource(nullValues = "null", value = {
-			" 0, Not JSON data",
-			" a, Not JSON data",
-			" -1, Not JSON data",
+			" style, 1",
+			" theme, 1",
+			" Style, 1",
+			" Theme, 1",
+			" 0    , 0",
+			" 1    , 0",
+			" abc  , 0",
+
 	})
 	void Test_with_String(String input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
 	}
 
-	@Disabled // EaterException: Not JSON data
 	@ParameterizedTest(name = "[{index}] " + cutName + "({0}) = {1}")
 	@CsvSource(nullValues = "null", value = {
-			" 0,  Not JSON data",
-			" -1, Not JSON data",
+			" 0,  0",
+			" 10, 0",
 	})
 	void Test_with_Integer(Integer input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
@@ -55,17 +58,9 @@ class GetJsonKeyTest {
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "({0}) = {1}")
 	@CsvSource(value = {
-			"  []  , []",
-			" '{\"a\":[1, 2]}'  , [\"a\"]",
-			" '[{\"a\":[1, 2]}]'  , [\"a\"]",
-			" '{\"a\":\"abc\"}' , [\"a\"]",
-			" '[{\"a\":[1, 2]}, {\"b\":[3, 4]}]'  , '[\"a\",\"b\"]'",
-			" '{\"a\":[1, 2], \"b\":\"abc\", \"b\":true}' , '[\"a\",\"b\",\"b\"]'",
-			// DONE: Manage Array with different type inside
-			// Ref.:
-			// - https://datatracker.ietf.org/doc/html/rfc8259#section-5
-			// - https://json-schema.org/understanding-json-schema/reference/array.html
-			" '[3, \"different\", { \"types\" : \"of values\" }]', [\"types\"]",
+			" \"style\", 1",
+			" \"theme\", 1",
+			" 0, 0",
 	})
 	void Test_with_Json(@ConvertWith(StringJsonConverter.class) JsonValue input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);

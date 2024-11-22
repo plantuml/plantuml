@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.tim.stdlib;
+package net.sourceforge.plantuml.tim.builtin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

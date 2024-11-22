@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.tim.stdlib;
+package net.sourceforge.plantuml.tim.builtin;
 
 import static net.sourceforge.plantuml.tim.TimTestUtils.assertTimExpectedOutputFromInput;
 
@@ -11,23 +11,23 @@ import org.junit.jupiter.params.provider.CsvSource;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TFunction;
-import net.sourceforge.plantuml.tim.builtin.SplitStrRegex;
+import net.sourceforge.plantuml.tim.builtin.SplitStr;
 
 /**
  * Tests the builtin function.
  */
 @IndicativeSentencesGeneration(separator = ": ", generator = ReplaceUnderscores.class)
 
-class SplitStrRegexTest {
-	TFunction cut = new SplitStrRegex();
-	final String cutName = "SplitStrRegex";
+class SplitStrTest {
+	TFunction cut = new SplitStr();
+	final String cutName = "SplitStr";
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "(''{0}'', ''{1}'') = {2}")
 	@CsvSource(nullValues = "null", value = {
 		" abc~def~ghi,     ~,         '[\"abc\",\"def\",\"ghi\"]' ",
 		" foozbar,         z,         '[\"foo\",\"bar\"]' ",
-		" FooBar,          (?=[A-Z]), '[\"Foo\",\"Bar\"]' ",
-		" SomeDumbExample, (?=[A-Z]), '[\"Some\",\"Dumb\",\"Example\"]' ",
+		" FooBar,          (?=[A-Z]), '[\"FooBar\"]' ",
+		" SomeDumbExample, (?=[A-Z]), '[\"SomeDumbExample\"]' ",
 	})
 	void Test_with_String(String input, String regex, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, regex, expected);

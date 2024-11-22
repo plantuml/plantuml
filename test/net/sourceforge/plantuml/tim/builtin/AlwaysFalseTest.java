@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.tim.stdlib;
+package net.sourceforge.plantuml.tim.builtin;
 
 import static net.sourceforge.plantuml.tim.TimTestUtils.assertTimExpectedOutput;
 import static net.sourceforge.plantuml.tim.TimTestUtils.assertTimExpectedOutputFromInput;
@@ -11,16 +11,16 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TFunction;
-import net.sourceforge.plantuml.tim.builtin.Hex2dec;
+import net.sourceforge.plantuml.tim.builtin.AlwaysFalse;
 
 /**
  * Tests the builtin function.
  */
 @IndicativeSentencesGeneration(separator = ": ", generator = ReplaceUnderscores.class)
 
-class Hex2decTest {
-	TFunction cut = new Hex2dec();
-	final String cutName = "Hex2dec";
+class AlwaysFalseTest {
+	TFunction cut = new AlwaysFalse();
+	final String cutName = "AlwaysFalse";
 
 	@Test
 	void Test_without_Param() throws EaterException {
@@ -29,19 +29,9 @@ class Hex2decTest {
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "(''{0}'') = {1}")
 	@CsvSource(nullValues = "null", value = {
-			" 0    , 0 ",
-			" 1    , 1 ",
-			" a    , 10 ",
-			" f    , 15 ",
-			" 10   , 16 ",
-			" ff   , 255 ",
-			" ffff , 65535 ",
-			" ' '  , 0 ",
-			" g    , 0 ",
-			" -g    , 0 ",
-			" à    , 0 ",
-			" -1    , -1 ",
-			" -a    , -10 ",
+			" 0     , 0 ",
+			" 1     , 0 ",
+			" 'a'   , 0 ",
 	})
 	void Test_with_String(String input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
@@ -49,10 +39,9 @@ class Hex2decTest {
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "({0}) = {1}")
 	@CsvSource(nullValues = "null", value = {
-			" 0    , 0 ",
-			" 1    , 1 ",
-			" 10   , 16 ",
-			" -1    , -1 ",
+			" 0     , 0 ",
+			" 1     , 0 ",
+			" 123   , 0 ",
 	})
 	void Test_with_Integer(Integer input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);

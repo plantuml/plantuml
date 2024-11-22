@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.tim.stdlib;
+package net.sourceforge.plantuml.tim.builtin;
 
 import static net.sourceforge.plantuml.tim.TimTestUtils.assertTimExpectedOutput;
 import static net.sourceforge.plantuml.tim.TimTestUtils.assertTimExpectedOutputFromInput;
@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TFunction;
-import net.sourceforge.plantuml.tim.builtin.Size;
+import net.sourceforge.plantuml.tim.builtin.Lower;
 import test.utils.JunitUtils.StringJsonConverter;
 
 /**
@@ -22,31 +22,27 @@ import test.utils.JunitUtils.StringJsonConverter;
  */
 @IndicativeSentencesGeneration(separator = ": ", generator = ReplaceUnderscores.class)
 
-class SizeTest {
-	TFunction cut = new Size();
-	final String cutName = "Size";
+class LowerTest {
+	TFunction cut = new Lower();
+	final String cutName = "Lower";
 
-	// TODO: Manage `Size` function without param. (today: we observe `Function not found`)
+	// TODO: Manage Lower function without param. (today: we observe `Function not found %lower`)
 	@Disabled
 	@Test
 	void Test_without_Param() throws EaterException {
-		assertTimExpectedOutput(cut, "0");
+		assertTimExpectedOutput(cut, "");
 	}
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "(''{0}'') = {1}")
 	@CsvSource(nullValues = "null", value = {
-			" 0          , 1 ",
-			" 1          , 1 ",
-			" 10         , 2 ",
-			" a          , 1 ",
-			" A          , 1 ",
-			" ABC        , 3 ",
-			" '[1, 2]'   , 6 ",
-			" '{[1, 2]}' , 8 ",
-			" à          , 1 ",
-// TODO: fix `Size` to allow Unicode chars, the corresponding tests are here:
-//			" 😀         , 1 ",
-//			" \uD83D\uDE00 , 1",
+			" 0   , 0 ",
+			" 1   , 1 ",
+			" A   , a ",
+			" a   , a ",
+			" F   , f ",
+			" G   , g ",
+			" É   , é ",
+			" 😀 , 😀 ",
 	})
 	void Test_with_String(String input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
@@ -55,8 +51,9 @@ class SizeTest {
 	@ParameterizedTest(name = "[{index}] " + cutName + "({0}) = {1}")
 	@CsvSource(nullValues = "null", value = {
 			" 0    , 0 ",
-			" 1    , 0 ",
-			" 10   , 0 ",
+			" 1    , 1 ",
+			" 10   , 10 ",
+			" -1    , -1 ",
 	})
 	void Test_with_Integer(Integer input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
@@ -64,16 +61,14 @@ class SizeTest {
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "({0}) = {1}")
 	@CsvSource(value = {
-			" 0, 0",
-			" \"abc\", 0",
-			" '\"abc\"', 0",
-			" '{\"a\":[1, 2]}' , 1",
-			" '[1, 2]' , 2",
-			" '[\"a\", \"b\"]' , 2",
-			" '{\"a\":[1, 2], \"b\":\"abc\", \"b\":true}' , 3",
-			" true, 0 ",
-			" 1, 0 ",
-			" null, 0 ",
+			" '{\"a\":[1, 2]}' , '{\"a\":[1,2]}'",
+			" '{\"A\":[1, 2]}' , '{\"a\":[1,2]}'",
+			" '[1, 2]'         , '[1,2]'",
+			" '{\"a\":[1, 2], \"b\":\"abc\", \"b\":true}' , '{\"a\":[1,2],\"b\":\"abc\",\"b\":true}'",
+			" '{\"A\":[1, 2], \"B\":\"ABC\", \"B\":true}' , '{\"a\":[1,2],\"b\":\"abc\",\"b\":true}' ",
+			" true, true"
+			// TODO: See JSON management of TRUE/FALSE
+			//" TRUE             , true ",
 	})
 	void Test_with_Json(@ConvertWith(StringJsonConverter.class) JsonValue input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);

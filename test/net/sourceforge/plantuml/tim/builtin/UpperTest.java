@@ -1,4 +1,4 @@
-package net.sourceforge.plantuml.tim.stdlib;
+package net.sourceforge.plantuml.tim.builtin;
 
 import static net.sourceforge.plantuml.tim.TimTestUtils.assertTimExpectedOutput;
 import static net.sourceforge.plantuml.tim.TimTestUtils.assertTimExpectedOutputFromInput;
@@ -14,7 +14,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TFunction;
-import net.sourceforge.plantuml.tim.builtin.Lower;
+import net.sourceforge.plantuml.tim.builtin.Upper;
 import test.utils.JunitUtils.StringJsonConverter;
 
 /**
@@ -22,11 +22,11 @@ import test.utils.JunitUtils.StringJsonConverter;
  */
 @IndicativeSentencesGeneration(separator = ": ", generator = ReplaceUnderscores.class)
 
-class LowerTest {
-	TFunction cut = new Lower();
-	final String cutName = "Lower";
+class UpperTest {
+	TFunction cut = new Upper();
+	final String cutName = "Upper";
 
-	// TODO: Manage Lower function without param. (today: we observe `Function not found %lower`)
+	// TODO: Manage Upper function without param. (today: we observe `Function not found %upper`)
 	@Disabled
 	@Test
 	void Test_without_Param() throws EaterException {
@@ -35,14 +35,14 @@ class LowerTest {
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "(''{0}'') = {1}")
 	@CsvSource(nullValues = "null", value = {
-			" 0   , 0 ",
-			" 1   , 1 ",
-			" A   , a ",
-			" a   , a ",
-			" F   , f ",
-			" G   , g ",
-			" É   , é ",
-			" 😀 , 😀 ",
+			" 0    , 0 ",
+			" 1    , 1 ",
+			" a    , A ",
+			" A    , A ",
+			" f    , F ",
+			" g    , G ",
+			" é    , É ",
+			" 😀  , 😀 ",
 	})
 	void Test_with_String(String input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
@@ -61,14 +61,10 @@ class LowerTest {
 
 	@ParameterizedTest(name = "[{index}] " + cutName + "({0}) = {1}")
 	@CsvSource(value = {
-			" '{\"a\":[1, 2]}' , '{\"a\":[1,2]}'",
-			" '{\"A\":[1, 2]}' , '{\"a\":[1,2]}'",
+			" '{\"a\":[1, 2]}' , '{\"A\":[1,2]}'",
 			" '[1, 2]'         , '[1,2]'",
-			" '{\"a\":[1, 2], \"b\":\"abc\", \"b\":true}' , '{\"a\":[1,2],\"b\":\"abc\",\"b\":true}'",
-			" '{\"A\":[1, 2], \"B\":\"ABC\", \"B\":true}' , '{\"a\":[1,2],\"b\":\"abc\",\"b\":true}' ",
-			" true, true"
-			// TODO: See JSON management of TRUE/FALSE
-			//" TRUE             , true ",
+			" '{\"a\":[1, 2], \"b\":\"abc\", \"b\":true}' , '{\"A\":[1,2],\"B\":\"ABC\",\"B\":TRUE}'",
+			" true             , TRUE ",
 	})
 	void Test_with_Json(@ConvertWith(StringJsonConverter.class) JsonValue input, String expected) throws EaterException {
 		assertTimExpectedOutputFromInput(cut, input, expected);
