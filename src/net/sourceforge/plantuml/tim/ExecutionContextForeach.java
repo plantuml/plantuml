@@ -34,25 +34,28 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonArray;
+import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.tim.iterator.CodePosition;
 
 public class ExecutionContextForeach {
 
 	private final String varname;
-	private final JsonArray jsonArray;
+	private final JsonValue jsonValue;
 	private final CodePosition codePosition;
 	private boolean skipMe;
 	private int currentIndex;
 
-	private ExecutionContextForeach(String varname, JsonArray jsonArray, CodePosition codePosition) {
+	private ExecutionContextForeach(String varname, JsonValue jsonValue, CodePosition codePosition) {
 		this.varname = varname;
-		this.jsonArray = jsonArray;
+		this.jsonValue = jsonValue;
 		this.codePosition = codePosition;
 	}
 
-	public static ExecutionContextForeach fromValue(String varname, JsonArray jsonArray, CodePosition codePosition) {
-		return new ExecutionContextForeach(varname, jsonArray, codePosition);
+	public static ExecutionContextForeach fromValue(String varname, JsonValue jsonValue, CodePosition codePosition) {
+		return new ExecutionContextForeach(varname, jsonValue, codePosition);
 	}
 
 	public void skipMeNow() {
@@ -67,23 +70,29 @@ public class ExecutionContextForeach {
 		return codePosition;
 	}
 
-	public final int currentIndex() {
-		return currentIndex;
+	public JsonValue currentValue() {
+		if (jsonValue instanceof JsonArray)
+			return ((JsonArray) jsonValue).get(currentIndex);
+		if (jsonValue instanceof JsonObject) {
+			final JsonObject tmp = (JsonObject) jsonValue;
+			return Json.value(tmp.names().get(currentIndex));
+		}
+		throw new IllegalStateException();
 	}
 
 	public final void inc() {
 		this.currentIndex++;
-		if (currentIndex >= jsonArray.size()) {
+		if (currentIndex >= EaterForeach.size(jsonValue))
 			this.skipMe = true;
-		}
+
 	}
 
 	public final String getVarname() {
 		return varname;
 	}
 
-	public final JsonArray getJsonArray() {
-		return jsonArray;
+	public final JsonValue getJsonValue() {
+		return jsonValue;
 	}
 
 }

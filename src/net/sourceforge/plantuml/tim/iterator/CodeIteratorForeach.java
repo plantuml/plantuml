@@ -111,7 +111,7 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 		final EaterForeach condition = new EaterForeach(s);
 		condition.analyze(context, memory);
 		final ExecutionContextForeach foreach = ExecutionContextForeach.fromValue(condition.getVarname(),
-				condition.getJsonArray(), source.getCodePosition());
+				condition.getJsonValue(), source.getCodePosition());
 		if (condition.isSkip())
 			foreach.skipMeNow();
 		else
@@ -122,7 +122,7 @@ public class CodeIteratorForeach extends AbstractCodeIterator {
 
 	private void setLoopVariable(TMemory memory, ExecutionContextForeach foreach, StringLocated position)
 			throws EaterException {
-		final JsonValue first = foreach.getJsonArray().get(foreach.currentIndex());
+		final JsonValue first = foreach.currentValue();
 		memory.putVariable(foreach.getVarname(), TValue.fromJson(first), TVariableScope.GLOBAL, position);
 	}
 

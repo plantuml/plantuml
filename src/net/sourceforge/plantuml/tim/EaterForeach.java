@@ -35,13 +35,15 @@
 package net.sourceforge.plantuml.tim;
 
 import net.sourceforge.plantuml.json.JsonArray;
+import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
 public class EaterForeach extends Eater {
 
 	private String varname;
-	private JsonArray jsonArray;
+	private JsonValue jsonValue;
 
 	public EaterForeach(StringLocated s) {
 		super(s);
@@ -57,22 +59,30 @@ public class EaterForeach extends Eater {
 		checkAndEatChar("in");
 		skipSpaces();
 		final TValue value = eatExpression(context, memory);
-		this.jsonArray = (JsonArray) value.toJson();
+		this.jsonValue = (JsonValue) value.toJson();
 	}
 
 	public boolean isSkip() {
-		if (this.jsonArray == null) {
+		if (this.jsonValue == null)
 			return true;
-		}
-		return this.jsonArray.size() == 0;
+
+		return size(jsonValue) == 0;
+	}
+
+	public static int size(JsonValue value) {
+		if (value instanceof JsonArray)
+			return ((JsonArray) value).size();
+		if (value instanceof JsonObject)
+			return ((JsonObject) value).size();
+		throw new IllegalArgumentException();
 	}
 
 	public final String getVarname() {
 		return varname;
 	}
 
-	public final JsonArray getJsonArray() {
-		return jsonArray;
+	public final JsonValue getJsonValue() {
+		return jsonValue;
 	}
 
 }

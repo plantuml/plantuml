@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2021, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  *
@@ -31,35 +31,40 @@
  *
  * Original Author:  Arnaud Roques
  *
- *
  */
-package net.sourceforge.plantuml.theme;
+package net.sourceforge.plantuml.tim.builtin;
 
-import java.io.IOException;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
-import net.sourceforge.plantuml.preproc.ReadLine;
-import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
+import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.tim.EaterException;
+import net.sourceforge.plantuml.tim.TContext;
+import net.sourceforge.plantuml.tim.TFunctionSignature;
+import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.tim.expression.TValue;
 
-public class Theme {
+public class GetCurrentTheme extends SimpleReturnFunction {
 
-	private final ReadLineWithYamlHeader source;
-
-	public Theme(ReadLine source) {
-		this.source = new ReadLineWithYamlHeader(source);
+	public TFunctionSignature getSignature() {
+		return new TFunctionSignature("%get_current_theme", 0);
 	}
 
-	public StringLocated readLine() throws IOException {
-		return source.readLine();
+	@Override
+	public boolean canCover(int nbArg, Set<String> namedArgument) {
+		return nbArg == 0;
 	}
 
-	public void close() throws IOException {
-		source.close();
-	}
+	@Override
+	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
+			Map<String, TValue> named) throws EaterException {
+		final JsonObject result = new JsonObject();
+		for (Entry<String, String> ent : context.getHeaderMetadata().entrySet())
+			result.add(ent.getKey(), ent.getValue());
 
-	public Map<String, String> getMetadata() {
-		return source.getMetadata();
+		return TValue.fromJson(result);
 	}
-
 }

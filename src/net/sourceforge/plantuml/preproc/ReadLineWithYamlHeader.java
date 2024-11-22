@@ -2,15 +2,15 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2021, Arnaud Roques
+ * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,36 +30,69 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.theme;
+package net.sourceforge.plantuml.preproc;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
-import net.sourceforge.plantuml.preproc.ReadLine;
-import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
 import net.sourceforge.plantuml.text.StringLocated;
 
-public class Theme {
+public class ReadLineWithYamlHeader implements ReadLine {
 
-	private final ReadLineWithYamlHeader source;
+	private final ReadLine source;
+	// Right now, the header is not used
+	// It will be used in next releases
+	private List<String> yamlHeader;
+	private final Map<String, String> metadata = new LinkedHashMap<>();
 
-	public Theme(ReadLine source) {
-		this.source = new ReadLineWithYamlHeader(source);
+	public ReadLineWithYamlHeader(ReadLine source) {
+		this.source = source;
 	}
 
-	public StringLocated readLine() throws IOException {
-		return source.readLine();
-	}
-
+	@Override
 	public void close() throws IOException {
 		source.close();
 	}
 
+	@Override
+	public StringLocated readLine() throws IOException {
+		StringLocated line = source.readLine();
+		if (yamlHeader == null) {
+			// At this point, "line" is the very first line of the file
+			yamlHeader = new ArrayList<String>();
+			if (isSeparator(line)) {
+				do {
+					line = source.readLine();
+					if (line == null || isSeparator(line))
+						break;
+					final String tmp = line.getString();
+					yamlHeader.add(tmp);
+					if (tmp.contains(":")) {
+						final String[] split = tmp.split(":");
+						metadata.put(split[0].trim(), split[1].trim());
+					}
+				} while (true);
+				// Skip the second separator
+				line = source.readLine();
+			}
+
+		}
+		return line;
+	}
+
+	private boolean isSeparator(StringLocated line) {
+		return line.getString().equals("---");
+	}
+
 	public Map<String, String> getMetadata() {
-		return source.getMetadata();
+		return Collections.unmodifiableMap(metadata);
 	}
 
 }

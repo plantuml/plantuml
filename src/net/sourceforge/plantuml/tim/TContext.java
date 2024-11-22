@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.preproc.ImportedFiles;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineList;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
+import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
 import net.sourceforge.plantuml.preproc.StartDiagramExtractReader;
 import net.sourceforge.plantuml.preproc.Sub;
 import net.sourceforge.plantuml.preproc.UncommentReadLine;
@@ -89,6 +90,7 @@ import net.sourceforge.plantuml.tim.builtin.FilenameNoExtension;
 import net.sourceforge.plantuml.tim.builtin.FunctionExists;
 import net.sourceforge.plantuml.tim.builtin.GetAllStdlib;
 import net.sourceforge.plantuml.tim.builtin.GetAllTheme;
+import net.sourceforge.plantuml.tim.builtin.GetCurrentTheme;
 import net.sourceforge.plantuml.tim.builtin.GetJsonKey;
 import net.sourceforge.plantuml.tim.builtin.GetJsonType;
 import net.sourceforge.plantuml.tim.builtin.GetStdlib;
@@ -193,6 +195,7 @@ public class TContext {
 		functionsSet.addFunction(new FunctionExists());
 		functionsSet.addFunction(new GetAllStdlib());
 		functionsSet.addFunction(new GetAllTheme());
+		functionsSet.addFunction(new GetCurrentTheme());
 		functionsSet.addFunction(new GetJsonKey());
 		functionsSet.addFunction(new GetJsonType());
 		functionsSet.addFunction(new GetStdlib());
@@ -633,17 +636,23 @@ public class TContext {
 		}
 	}
 
+	private Map<String, String> headerMetadata = Collections.emptyMap();
+
+	public Map<String, String> getHeaderMetadata() {
+		return headerMetadata;
+	}
+
 	private void executeTheme(TMemory memory, StringLocated s) throws EaterException {
 		final EaterTheme eater = new EaterTheme(s.getTrimmed(), importedFiles);
 		eater.analyze(this, memory);
-		final Theme reader = eater.getTheme();
-		if (reader == null)
+		final Theme theme = eater.getTheme();
+		if (theme == null)
 			throw new EaterException("No such theme " + eater.getName(), s);
 
 		try {
 			final List<StringLocated> body = new ArrayList<>();
 			do {
-				final StringLocated sl = reader.readLine();
+				final StringLocated sl = theme.readLine();
 				if (sl == null) {
 					executeLines(memory, body, null, false);
 					return;
@@ -654,8 +663,9 @@ public class TContext {
 			Logme.error(e);
 			throw new EaterException("Error reading theme " + e, s);
 		} finally {
+			this.headerMetadata = theme.getMetadata();
 			try {
-				reader.close();
+				theme.close();
 			} catch (IOException e) {
 				Logme.error(e);
 			}
@@ -713,9 +723,10 @@ public class TContext {
 					filesUsedCurrent.add(f2);
 				}
 			}
-			if (reader != null) {
+			if (reader != null)
 				try {
 					final List<StringLocated> body = new ArrayList<>();
+					reader = new ReadLineWithYamlHeader(reader);
 					do {
 						final StringLocated sl = reader.readLine();
 						if (sl == null) {
@@ -729,18 +740,18 @@ public class TContext {
 						this.importedFiles = saveImportedFiles;
 
 				}
-			}
+
 		} catch (IOException e) {
 			Logme.error(e);
 			throw new EaterException("cannot include " + e, s);
 		} finally {
-			if (reader != null) {
+			if (reader != null)
 				try {
 					reader.close();
 				} catch (IOException e) {
 					Logme.error(e);
 				}
-			}
+
 		}
 
 		throw new EaterException("cannot include " + location, s);
