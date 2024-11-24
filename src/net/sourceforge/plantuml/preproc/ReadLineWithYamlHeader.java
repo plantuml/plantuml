@@ -87,12 +87,26 @@ public class ReadLineWithYamlHeader implements ReadLine {
 		return line;
 	}
 
-	private boolean isSeparator(StringLocated line) {
+	private static boolean isSeparator(StringLocated line) {
 		return line.getString().equals("---");
 	}
 
 	public Map<String, String> getMetadata() {
 		return Collections.unmodifiableMap(metadata);
+	}
+
+	public static List<StringLocated> removeYamlHeader(List<StringLocated> input) {
+		if (input.size() > 1 && isSeparator(input.get(1))) {
+			final List<StringLocated> result = new ArrayList<>();
+			result.add(input.get(0));
+			for (int i = 2; i < input.size(); i++)
+				if (isSeparator(input.get(i))) {
+					result.addAll(input.subList(i + 1, input.size()));
+					return result;
+				}
+		}
+
+		return input;
 	}
 
 }

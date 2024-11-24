@@ -66,8 +66,6 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 
 	private final List<BlockUml> blocks = new ArrayList<>();
 	private Set<FileWithSuffix> usedFiles = new HashSet<>();
-	private final UncommentReadLine reader;
-	private final Defines defines;
 	private final ImportedFiles importedFiles;
 	private final Charset charset;
 
@@ -93,60 +91,55 @@ public final class BlockUmlBuilder implements DefinitionsContainer {
 	public BlockUmlBuilder(List<String> config, Charset charset, Defines defines, Reader readerInit,
 			SFile newCurrentDir, String desc) throws IOException {
 
-		this.defines = defines;
 		this.charset = requireNonNull(charset);
-		this.reader = new UncommentReadLine(ReadLineReader.create(readerInit, desc));
+		final UncommentReadLine reader = new UncommentReadLine(ReadLineReader.create(readerInit, desc));
 		this.importedFiles = ImportedFiles.createImportedFiles(new AParentFolderRegular(newCurrentDir));
 
 		try (ReadLineNumbered includer = new Preprocessor(config, reader)) {
-			init(includer);
+			StringLocated s = null;
+			List<StringLocated> current = null;
+			boolean paused = false;
+
+			while ((s = includer.readLine()) != null) {
+				if (StartUtils.isArobaseStartDiagram(s.getString())) {
+					current = new ArrayList<>();
+					paused = false;
+				}
+				if (StartUtils.isArobasePauseDiagram(s.getString())) {
+					paused = true;
+					reader.setPaused(true);
+				}
+				if (StartUtils.isExit(s.getString())) {
+					paused = true;
+					reader.setPaused(true);
+				}
+				if (current != null && paused == false) {
+					current.add(s);
+				} else if (paused) {
+					final StringLocated append = StartUtils.getPossibleAppend(s);
+					if (append != null)
+						current.add(append);
+
+				}
+
+				if (StartUtils.isArobaseUnpauseDiagram(s.getString())) {
+					paused = false;
+					reader.setPaused(false);
+				}
+				if (StartUtils.isArobaseEndDiagram(s.getString()) && current != null) {
+					if (paused)
+						current.add(s);
+
+					WasmLog.log("...text loaded...");
+					final BlockUml uml = new BlockUml(current, defines.cloneMe(), null, this, charset);
+					usedFiles.addAll(uml.getIncluded());
+					blocks.add(uml);
+					current = null;
+					reader.setPaused(false);
+				}
+			}
 		} finally {
 			readerInit.close();
-		}
-	}
-
-	private void init(ReadLineNumbered includer) throws IOException {
-		StringLocated s = null;
-		List<StringLocated> current = null;
-		boolean paused = false;
-
-		while ((s = includer.readLine()) != null) {
-			if (StartUtils.isArobaseStartDiagram(s.getString())) {
-				current = new ArrayList<>();
-				paused = false;
-			}
-			if (StartUtils.isArobasePauseDiagram(s.getString())) {
-				paused = true;
-				reader.setPaused(true);
-			}
-			if (StartUtils.isExit(s.getString())) {
-				paused = true;
-				reader.setPaused(true);
-			}
-			if (current != null && paused == false) {
-				current.add(s);
-			} else if (paused) {
-				final StringLocated append = StartUtils.getPossibleAppend(s);
-				if (append != null)
-					current.add(append);
-
-			}
-
-			if (StartUtils.isArobaseUnpauseDiagram(s.getString())) {
-				paused = false;
-				reader.setPaused(false);
-			}
-			if (StartUtils.isArobaseEndDiagram(s.getString()) && current != null) {
-				if (paused)
-					current.add(s);
-
-				WasmLog.log("...text loaded...");
-				final BlockUml uml = new BlockUml(current, defines.cloneMe(), null, this, charset);
-				usedFiles.addAll(uml.getIncluded());
-				blocks.add(uml);
-				current = null;
-				reader.setPaused(false);
-			}
 		}
 	}
 

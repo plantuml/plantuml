@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
+import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
 import net.sourceforge.plantuml.preproc2.PreprocessorModeSet;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.style.ISkinSimple;
@@ -133,19 +134,19 @@ public class BlockUml {
 
 	public BlockUml(List<StringLocated> strings, Defines defines, ISkinSimple skinParam, PreprocessorModeSet mode,
 			Charset charset) {
-		this.rawSource = new ArrayList<>(strings);
+		this.rawSource = ReadLineWithYamlHeader.removeYamlHeader(strings);
 		this.localDefines = defines;
 		this.skinParam = skinParam;
-		final String s0 = strings.get(0).getTrimmed().getString();
+		final String s0 = this.rawSource.get(0).getTrimmed().getString();
 		if (StartUtils.startsWithSymbolAnd("start", s0) == false)
 			throw new IllegalArgumentException();
 
 		if (mode == null) {
-			this.data = new ArrayList<>(strings);
+			this.data = new ArrayList<>(this.rawSource);
 		} else {
 			final TimLoader timLoader = new TimLoader(mode.getImportedFiles(), defines, charset,
-					(DefinitionsContainer) mode, strings.get(0));
-			this.included.addAll(timLoader.load(strings));
+					(DefinitionsContainer) mode, this.rawSource.get(0));
+			this.included.addAll(timLoader.load(this.rawSource));
 			final Jaws jaws = new Jaws(timLoader.getResultList());
 			this.data = jaws.getResultList();
 			this.debug = timLoader.getDebug();
