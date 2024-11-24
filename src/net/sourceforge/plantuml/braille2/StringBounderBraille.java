@@ -45,10 +45,10 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 
 public class StringBounderBraille implements StringBounder {
 
-	public static final double CHAR_WIDTH = 12;
-	public static final double CHAR_HEIGHT = 16;
-	public static final int DOT_SIZE = 2;
-	public static final UShape DOT_BRAILLE = URectangle.build(2, 2);
+	public static final double CHAR_WIDTH = 16;
+	public static final double CHAR_HEIGHT = 24;
+	public static final int DOT_SIZE = 3;
+	public static final UShape DOT_BRAILLE = URectangle.build(DOT_SIZE, DOT_SIZE);
 
 	@Override
 	public XDimension2D calculateDimension(UFont font, String text) {
