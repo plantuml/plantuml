@@ -177,6 +177,27 @@ public class BrailleChar2 {
 
 	public void drawUg(UGraphic ug) {
 		ug = ug.apply(HColors.BLACK).apply(HColors.BLACK.bg());
+
+		eventuallyDrawOneSpot(ug, 0, 0, 1);
+		eventuallyDrawOneSpot(ug, 0, 1, 2);
+		eventuallyDrawOneSpot(ug, 0, 2, 4);
+		eventuallyDrawOneSpot(ug, 1, 0, 8);
+		eventuallyDrawOneSpot(ug, 1, 1, 16);
+		eventuallyDrawOneSpot(ug, 1, 2, 32);
+
+	}
+
+	private void eventuallyDrawOneSpot(UGraphic ug, int x, int y, int bitmask) {
+		if ((id & bitmask) != 0) {
+			final double posx = (x + 1) * StringBounderBraille.CHAR_WIDTH / 3.0 - StringBounderBraille.DOT_SIZE / 2;
+			final double posy = (y + 1) * StringBounderBraille.CHAR_HEIGHT / 4.0 - StringBounderBraille.DOT_SIZE / 2
+					- StringBounderBraille.CHAR_HEIGHT;
+			ug.apply(new UTranslate(posx, posy)).draw(StringBounderBraille.DOT_BRAILLE);
+		}
+	}
+
+	public void drawUgOld(UGraphic ug) {
+		ug = ug.apply(HColors.BLACK).apply(HColors.BLACK.bg());
 		ug = ug.apply(UTranslate.dy(-StringBounderBraille.CHAR_HEIGHT + StringBounderBraille.CHAR_HEIGHT / 4.0
 				- StringBounderBraille.DOT_SIZE / 2));
 
