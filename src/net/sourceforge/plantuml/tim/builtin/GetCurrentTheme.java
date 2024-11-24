@@ -36,7 +36,6 @@ package net.sourceforge.plantuml.tim.builtin;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import net.sourceforge.plantuml.json.JsonObject;
@@ -61,9 +60,7 @@ public class GetCurrentTheme extends SimpleReturnFunction {
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
 			Map<String, TValue> named) throws EaterException {
-		final JsonObject result = new JsonObject();
-		for (Entry<String, String> ent : context.getHeaderMetadata().entrySet())
-			result.add(ent.getKey(), ent.getValue());
+		final JsonObject result = context.getThemeMetadata();
 
 		return TValue.fromJson(result);
 	}

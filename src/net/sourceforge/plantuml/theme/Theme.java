@@ -36,8 +36,9 @@
 package net.sourceforge.plantuml.theme;
 
 import java.io.IOException;
-import java.util.Map;
+import java.util.Map.Entry;
 
+import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
 import net.sourceforge.plantuml.text.StringLocated;
@@ -58,8 +59,12 @@ public class Theme {
 		source.close();
 	}
 
-	public Map<String, String> getMetadata() {
-		return source.getMetadata();
+	public JsonObject getMetadata() {
+		final JsonObject result = new JsonObject();
+		for (Entry<String, String> ent : source.getMetadata().entrySet())
+			result.add(ent.getKey(), ent.getValue());
+
+		return result;
 	}
 
 }

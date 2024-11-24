@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.json.Json;
+import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.Defines;
@@ -636,10 +637,10 @@ public class TContext {
 		}
 	}
 
-	private Map<String, String> headerMetadata = Collections.emptyMap();
+	private JsonObject themeMetadata = new JsonObject();
 
-	public Map<String, String> getHeaderMetadata() {
-		return headerMetadata;
+	public JsonObject getThemeMetadata() {
+		return themeMetadata;
 	}
 
 	private void executeTheme(TMemory memory, StringLocated s) throws EaterException {
@@ -663,7 +664,7 @@ public class TContext {
 			Logme.error(e);
 			throw new EaterException("Error reading theme " + e, s);
 		} finally {
-			this.headerMetadata = theme.getMetadata();
+			this.themeMetadata = theme.getMetadata();
 			try {
 				theme.close();
 			} catch (IOException e) {
