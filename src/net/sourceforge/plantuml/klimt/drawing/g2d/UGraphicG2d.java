@@ -49,6 +49,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.braille2.BrailleStringBounder;
 import net.sourceforge.plantuml.klimt.UAntiAliasing;
 import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.UClip;
@@ -119,7 +120,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 
 	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d,
 			double dpiFactor, FileFormat format) {
-		super(stringBounder);
+		super(new BrailleStringBounder());
 		copy(defaultBackground, colorMapper, g2d);
 		this.format = format;
 		this.dpiFactor = dpiFactor;
@@ -132,11 +133,11 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 	private void register(double dpiFactor) {
 		registerDriver(URectangle.class, new DriverRectangleG2d(dpiFactor, this));
 		// ::comment when __CORE__
-		if (dpiFactor != 1.0)
-			registerDriver(UText.class, new DriverTextAsPathG2d(this, getStringBounder()));
-		else
-			// ::done
-			registerDriver(UText.class, new DriverTextG2d(this, getStringBounder()));
+//		if (dpiFactor != 1.0)
+//			registerDriver(UText.class, new DriverTextAsPathG2d(this, getStringBounder()));
+//		else
+//			// ::done
+//			registerDriver(UText.class, new DriverTextG2d(this, getStringBounder()));
 
 		registerDriver(ULine.class, new DriverLineG2d(dpiFactor));
 		registerDriver(UPixel.class, new DriverPixelG2d());

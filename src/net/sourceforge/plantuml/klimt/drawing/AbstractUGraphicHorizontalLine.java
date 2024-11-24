@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.shape.UHorizontalLine;
+import net.sourceforge.plantuml.klimt.shape.UText;
 
 public abstract class AbstractUGraphicHorizontalLine extends UGraphicDelegator {
 	// ::remove file when __HAXE__
@@ -71,11 +72,19 @@ public abstract class AbstractUGraphicHorizontalLine extends UGraphicDelegator {
 	protected abstract void drawHline(UGraphic ug, UHorizontalLine line, UTranslate translate);
 
 	public void draw(UShape shape) {
+		if (shape instanceof UText) {
+			drawBraille(((UText) shape).getText());
+			return;
+		}
 		if (shape instanceof UHorizontalLine)
 			drawHline(getUg(), (UHorizontalLine) shape, UTranslate.dy(translate.getDy()));
 		else
 			getUg().apply(translate).draw(shape);
 
+	}
+
+	private void drawBraille(String text) {
+		System.err.println("Drawing: " + text);
 	}
 
 }
