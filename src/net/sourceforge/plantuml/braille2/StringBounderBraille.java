@@ -34,14 +34,21 @@
  */
 package net.sourceforge.plantuml.braille2;
 
+import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.URectangle;
 
-public class BrailleStringBounder implements StringBounder {
+public class StringBounderBraille implements StringBounder {
 
-	public static final int CHAR_WIDTH = 12;
-	public static final int CHAR_HEIGHT = 16;
+	public static final double CHAR_WIDTH = 12;
+	public static final double CHAR_HEIGHT = 16;
+	public static final int DOT_SIZE = 2;
+	public static final UShape DOT_BRAILLE = URectangle.build(2, 2);
 
 	@Override
 	public XDimension2D calculateDimension(UFont font, String text) {
@@ -57,6 +64,30 @@ public class BrailleStringBounder implements StringBounder {
 	@Override
 	public boolean matchesProperty(String propertyName) {
 		return false;
+	}
+
+	public static void drawString(UGraphic ug, String text) {
+		for (int i = 0; i < text.length(); i++) {
+			final UTranslate dx = UTranslate.dx(i * CHAR_WIDTH);
+			drawChar(ug.apply(dx), text.charAt(i));
+		}
+
+	}
+
+	private static void drawChar(UGraphic ug, char ch) {
+		System.err.println("Drawing: " + ch);
+		drawBraille(ug, '\u283f');
+		// https://en.wikipedia.org/wiki/Braille_Patterns
+
+	}
+
+	private static void drawBraille(UGraphic ug, char ch) {
+		ug = ug.apply(HColors.BLACK).apply(HColors.BLACK.bg());
+		ug = ug.apply(UTranslate.dy(-CHAR_HEIGHT + CHAR_HEIGHT / 4.0 - DOT_SIZE / 2));
+
+		ug.apply(new UTranslate(CHAR_WIDTH / 3.0 - DOT_SIZE / 2, 0)).draw(DOT_BRAILLE);
+		ug.apply(new UTranslate(2.0 * CHAR_WIDTH / 3.0 - DOT_SIZE / 2, 0)).draw(DOT_BRAILLE);
+
 	}
 
 }

@@ -49,7 +49,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.braille2.BrailleStringBounder;
+import net.sourceforge.plantuml.braille2.StringBounderBraille;
 import net.sourceforge.plantuml.klimt.UAntiAliasing;
 import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.UClip;
@@ -120,7 +120,7 @@ public class UGraphicG2d extends AbstractUGraphic<Graphics2D> implements EnsureV
 
 	public UGraphicG2d(HColor defaultBackground, ColorMapper colorMapper, StringBounder stringBounder, Graphics2D g2d,
 			double dpiFactor, FileFormat format) {
-		super(new BrailleStringBounder());
+		super(new StringBounderBraille());
 		copy(defaultBackground, colorMapper, g2d);
 		this.format = format;
 		this.dpiFactor = dpiFactor;

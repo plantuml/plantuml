@@ -39,6 +39,7 @@ import java.awt.geom.AffineTransform;
 import java.io.Serializable;
 import java.util.Objects;
 
+import net.sourceforge.plantuml.braille2.StringBounderBraille;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.text.SvgCharSizeHack;
@@ -95,7 +96,8 @@ public final class FileFormatOption implements Serializable {
 	}
 
 	public StringBounder getDefaultStringBounder(SvgCharSizeHack charSizeHack) {
-		return fileFormat.getDefaultStringBounder(tikzFontDistortion, charSizeHack);
+		return new StringBounderBraille();
+		// return fileFormat.getDefaultStringBounder(tikzFontDistortion, charSizeHack);
 	}
 
 	public String getSvgLinkTarget() {

@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.drawing;
 
+import net.sourceforge.plantuml.braille2.StringBounderBraille;
 import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UShape;
@@ -84,7 +85,7 @@ public abstract class AbstractUGraphicHorizontalLine extends UGraphicDelegator {
 	}
 
 	private void drawBraille(String text) {
-		System.err.println("Drawing: " + text);
+		StringBounderBraille.drawString(this, text);
 	}
 
 }

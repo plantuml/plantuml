@@ -52,21 +52,22 @@ public abstract class StringBounderRaw implements StringBounder {
 	}
 
 	public final XDimension2D calculateDimension(UFont font, String text) {
-		if (font == null) {
-			return calculateDimensionInternal(null, text);
-		}
-		if (RichText.isRich(text)) {
-			double width = 0;
-			double height = 0;
-			for (StyledString s : StyledString.build(text)) {
-				final UFont newFont = s.getStyle().mutateFont(font);
-				final XDimension2D rect = calculateDimensionInternal(newFont, s.getText());
-				width += rect.getWidth();
-				height = Math.max(height, rect.getHeight());
-			}
-			return new XDimension2D(width, height);
-		}
-		return calculateDimensionInternal(font, text);
+		throw new IllegalStateException();
+//		if (font == null) {
+//			return calculateDimensionInternal(null, text);
+//		}
+//		if (RichText.isRich(text)) {
+//			double width = 0;
+//			double height = 0;
+//			for (StyledString s : StyledString.build(text)) {
+//				final UFont newFont = s.getStyle().mutateFont(font);
+//				final XDimension2D rect = calculateDimensionInternal(newFont, s.getText());
+//				width += rect.getWidth();
+//				height = Math.max(height, rect.getHeight());
+//			}
+//			return new XDimension2D(width, height);
+//		}
+//		return calculateDimensionInternal(font, text);
 	}
 
 	protected abstract XDimension2D calculateDimensionInternal(UFont font, String text);
