@@ -75,9 +75,11 @@ public class StringBounderBraille implements StringBounder {
 	}
 
 	private static void drawChar(UGraphic ug, char ch) {
-		System.err.println("Drawing: " + ch);
-		drawBraille(ug, '\u283f');
 		// https://en.wikipedia.org/wiki/Braille_Patterns
+		System.err.println("Drawing: " + ch);
+		BrailleChar2 brailleChar2 = BrailleChar2.fromChar(' ');
+		brailleChar2.drawUg(ug);
+		// drawBraille(ug, '\u283f');
 
 	}
 
@@ -85,8 +87,11 @@ public class StringBounderBraille implements StringBounder {
 		ug = ug.apply(HColors.BLACK).apply(HColors.BLACK.bg());
 		ug = ug.apply(UTranslate.dy(-CHAR_HEIGHT + CHAR_HEIGHT / 4.0 - DOT_SIZE / 2));
 
-		ug.apply(new UTranslate(CHAR_WIDTH / 3.0 - DOT_SIZE / 2, 0)).draw(DOT_BRAILLE);
-		ug.apply(new UTranslate(2.0 * CHAR_WIDTH / 3.0 - DOT_SIZE / 2, 0)).draw(DOT_BRAILLE);
+		for (int i = 0; i < 3; i++) {
+			ug.apply(new UTranslate(CHAR_WIDTH / 3.0 - DOT_SIZE / 2, 0)).draw(DOT_BRAILLE);
+			ug.apply(new UTranslate(2.0 * CHAR_WIDTH / 3.0 - DOT_SIZE / 2, 0)).draw(DOT_BRAILLE);
+			ug = ug.apply(UTranslate.dy(CHAR_HEIGHT / 4.0));
+		}
 
 	}
 
