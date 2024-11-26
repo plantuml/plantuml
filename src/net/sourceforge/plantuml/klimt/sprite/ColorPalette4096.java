@@ -38,23 +38,25 @@ package net.sourceforge.plantuml.klimt.sprite;
 import java.awt.Color;
 import java.util.Objects;
 
-import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
 import net.sourceforge.plantuml.klimt.color.HColors;
 
 public class ColorPalette4096 {
 
-	private static final String colorValue = "!#$%&*+-:;<=>?@^_~GHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	// private static final String colorValue = "!#$%&*+-:;<=>?@^_~GHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	// Maybe ! and # will be used for something else in the future
+	// So we replace them by . and '
+	private static final String colorValue = ".'$%&*+-:;<=>?@^_~GHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
 	public String getStringFor(Color dest) {
-		return getStringFor(HColors.simple(dest));
+		return getStringFor((HColorSimple) HColors.simple(dest));
 	}
 
-	public String getStringFor(HColor dest) {
+	private String getStringFor(HColorSimple dest) {
 		int result = 0;
 		int resultDist = Integer.MAX_VALUE;
 		for (int i = 0; i < 4096; i++) {
-			final int dist = ((HColorSimple) dest).distanceTo((HColorSimple) getHtmlColorSimpleFor(i));
+			final int dist = dest.distanceTo(getHtmlColorSimpleFor(i));
 			if (dist < resultDist) {
 				result = i;
 				resultDist = dist;
@@ -70,12 +72,15 @@ public class ColorPalette4096 {
 		return "" + colorValue.charAt(v1) + colorValue.charAt(v2);
 	}
 
-	private HColor getHtmlColorSimpleFor(int s) {
+	private HColorSimple getHtmlColorSimpleFor(int s) {
 		final Color color = Objects.requireNonNull(getColorFor(s));
-		return HColors.simple(color);
+		return (HColorSimple) HColors.simple(color);
 	}
 
-	public Color getColorFor(String s) {
+	protected Color getColorFor(String s) {
+		// Migration
+		s = s.replace('!', '.');
+		s = s.replace('#', '\'');
 		if (s.length() != 2)
 			throw new IllegalArgumentException();
 

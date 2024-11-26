@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandSkinParamJaws extends SingleLineCommand2<TitledDiagram> {
 
 	public static final CommandSkinParamJaws ME = new CommandSkinParamJaws();
+	private final CommandSkinParamMultilines delegate = CommandSkinParamMultilines.ME;
 
 	private CommandSkinParamJaws() {
 		super(getRegexConcat());
@@ -59,10 +60,7 @@ public class CommandSkinParamJaws extends SingleLineCommand2<TitledDiagram> {
 						new RegexConcat( //
 								new RegexLeaf("TYPE", "(skinparam|skinparamlocked)"), //
 								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("NAME",
-										"([\\w.]*(?:\\<\\<[^{}" + Jaws.BLOCK_E1_NEWLINE + "]*\\>\\>)?[\\w.]*)"), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("VALUE", "\\{([^{}]*" + Jaws.BLOCK_E1_NEWLINE + "[^{}]*)\\}[^{}]*"))), //
+								new RegexLeaf(".*" + Jaws.BLOCK_E1_NEWLINE + ".*"))), //
 				RegexLeaf.end()); //
 	}
 
@@ -70,24 +68,16 @@ public class CommandSkinParamJaws extends SingleLineCommand2<TitledDiagram> {
 	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
 		final String full = arg.get("FULL", 0);
-		System.err.println("full=" + full);
-//		final String type = arg.get("TYPE", 0);
-//		final String name = arg.get("NAME", 0);
-//		final String lines = arg.get("VALUE", 0);
-//		BlocLines current = BlocLines.create();
-//		for (String line : lines.split("" + Jaws.BLOCK_E1_NEWLINE)) {
-//			if (current.size() == 0)
-//				current = current.addString(type + " " + name + " " + line);
-//			else
-//				current = current.addString(line);
-//			if (line.trim().equals("}")) {
-//				System.err.println("name=" + name);
-//				System.err.println("current" + current);
-//
-//				final SkinLoader skinLoader = new SkinLoader(diagram);
-//				return skinLoader.execute(current, name);
-//			}
-//		}
+		BlocLines lines = BlocLines.create();
+		for (String line : full.split("" + Jaws.BLOCK_E1_NEWLINE)) {
+			lines = lines.addString(line);
+			if (line.trim().equals("}")) {
+				final CommandExecutionResult res = delegate.execute(diagram, lines, currentPass);
+				if (res.isOk() == false)
+					return res;
+				lines = BlocLines.create();
+			}
+		}
 		return CommandExecutionResult.ok();
 
 	}

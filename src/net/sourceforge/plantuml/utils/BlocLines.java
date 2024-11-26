@@ -60,9 +60,9 @@ public class BlocLines implements Iterable<StringLocated> {
 	public String toString() {
 		final StringBuilder sb = new StringBuilder();
 		for (StringLocated line : lines) {
-			sb.append("<<<");
+			sb.append("[");
 			sb.append(line);
-			sb.append(">>>");
+			sb.append("]");
 		}
 		return sb.toString();
 	}

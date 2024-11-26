@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.jaws;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -43,17 +44,35 @@ import net.sourceforge.plantuml.text.StringLocated;
 public class Jaws {
 
 	public static final char BLOCK_E1_NEWLINE = '\uE100';
-	public static final char BLOCK_E1_START_TEXTBLOCK = '\uE101';
-	public static final char BLOCK_E1_END_TEXTBLOCK = '\uE102';
+	public static final char BLOCK_E1_REAL_BACKSLASH = '\uE101';
+	public static final char BLOCK_E1_START_TEXTBLOCK = '\uE102';
+	public static final char BLOCK_E1_END_TEXTBLOCK = '\uE103';
 
-	private final List<StringLocated> input;
+	private final List<StringLocated> output = new ArrayList<StringLocated>();
 
 	public Jaws(List<StringLocated> input) {
-		this.input = input;
+		for (int i = 0; i < input.size(); i++) {
+			List<StringLocated> splitted = input.get(i).expandsJaws();
+			StringLocated line = splitted.get(0);
+			if (splitted.size() == 2) {
+				line = line.append(splitted.get(1).getString());
+				while (true) {
+					line = line.append(BLOCK_E1_NEWLINE);
+					i++;
+					splitted = input.get(i).expandsJaws();
+					if (splitted.size() == 2)
+						break;
+					line = line.append(splitted.get(0).getString());
+				}
+				line = line.append(splitted.get(0).getString());
+				line = line.append(splitted.get(1).getString());
+			}
+			output.add(line);
+		}
 	}
 
 	public List<StringLocated> getResultList() {
-		return Collections.unmodifiableList(input);
+		return Collections.unmodifiableList(output);
 	}
 
 }

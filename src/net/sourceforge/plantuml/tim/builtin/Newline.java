@@ -38,6 +38,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.jaws.JawsFlags;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.TContext;
 import net.sourceforge.plantuml.tim.TFunctionSignature;
@@ -58,6 +60,8 @@ public class Newline extends SimpleReturnFunction {
 	@Override
 	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
 			Map<String, TValue> named) {
+		if (JawsFlags.USE_BLOCK_E1_IN_NEWLINE_FUNCTION)
+			return TValue.fromString("" + Jaws.BLOCK_E1_NEWLINE);
 		return TValue.fromString("\n");
 	}
 }

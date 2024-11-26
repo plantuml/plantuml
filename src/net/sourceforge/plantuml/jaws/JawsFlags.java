@@ -37,7 +37,8 @@ package net.sourceforge.plantuml.jaws;
 
 public class JawsFlags {
 
-	public static final boolean USE_BLOCK_E1_IN_NEWLINE_FUNCTION = false;
+	public static final boolean USE_BLOCK_E1_IN_NEWLINE_FUNCTION = true;
+	public static final boolean USE_CommandSkinParamJaws = true;
 	public static final boolean OLD_DISPLAY_HACK = true;
 
 }

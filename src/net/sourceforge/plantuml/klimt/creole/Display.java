@@ -170,7 +170,7 @@ public class Display implements Iterable<CharSequence> {
 	public static Display createFoo(List<StringLocated> data) throws NoSuchColorException {
 		final List<CharSequence> tmp = new ArrayList<>();
 		for (StringLocated s : data)
-			tmp.add(s.getString());
+			tmp.addAll(s.expandsJaws3());
 
 		final Display result = create(tmp);
 		CreoleParser.checkColor(result);
@@ -237,9 +237,6 @@ public class Display implements Iterable<CharSequence> {
 		return Collections.unmodifiableList(result);
 	}
 
-
-	
-	
 	public static Display getWithNewlines(String s) {
 		if (s == null)
 			return NULL;
@@ -260,10 +257,12 @@ public class Display implements Iterable<CharSequence> {
 				result.add(current.toString());
 				current.setLength(0);
 				i += 9;
+				throw new IllegalStateException();
 			} else if (sub.startsWith("%n()")) {
 				result.add(current.toString());
 				current.setLength(0);
 				i += 3;
+				throw new IllegalStateException();
 			} else if (rawMode == false && c == '\\' && i < s.length() - 1) {
 				final char c2 = s.charAt(i + 1);
 				i++;
@@ -283,6 +282,8 @@ public class Display implements Iterable<CharSequence> {
 					current.append(c);
 					current.append(c2);
 				}
+			} else if (c == Jaws.BLOCK_E1_REAL_BACKSLASH) {
+				current.append('\\');
 			} else if (c == Jaws.BLOCK_E1_NEWLINE) {
 				result.add(current.toString());
 				current.setLength(0);

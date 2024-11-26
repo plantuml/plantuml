@@ -40,6 +40,7 @@ import java.util.List;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShowByGender;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShowByVisibility;
 import net.sourceforge.plantuml.classdiagram.command.CommandNamespaceSeparator;
+import net.sourceforge.plantuml.jaws.JawsFlags;
 import net.sourceforge.plantuml.sequencediagram.command.CommandSkin;
 import net.sourceforge.plantuml.statediagram.command.CommandHideEmptyDescription;
 import net.sourceforge.plantuml.style.CommandStyleImport;
@@ -62,6 +63,8 @@ public final class CommonCommands {
 		cmds.add(CommandAssumeTransparent.ME);
 
 		cmds.add(CommandSkinParam.ME);
+		if (JawsFlags.USE_CommandSkinParamJaws)
+			cmds.add(CommandSkinParamJaws.ME);
 		cmds.add(CommandSkinParamMultilines.ME);
 		cmds.add(CommandSkin.ME);
 		cmds.add(CommandMinwidth.ME);

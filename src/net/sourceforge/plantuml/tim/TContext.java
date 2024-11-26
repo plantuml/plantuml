@@ -783,7 +783,7 @@ public class TContext {
 	}
 
 	private String getFunctionNameAt(String s, int pos) {
-		if (pos > 0 && TLineType.isLetterOrUnderscoreOrDigit(s.charAt(pos - 1))
+		if (pos > 0 && TLineType.isLetterOrUnderscoreOrDigit(s.charAt(pos - 1)) && s.charAt(pos) != '%'
 				&& VariableManager.justAfterBackslashN(s, pos) == false)
 			return null;
 
