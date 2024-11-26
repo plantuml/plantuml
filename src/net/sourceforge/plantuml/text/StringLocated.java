@@ -87,6 +87,10 @@ final public class StringLocated {
 		return Arrays.asList(s.split("" + Jaws.BLOCK_E1_NEWLINE));
 	}
 
+	public static List<String> expandsJaws4(String s) {
+		return Arrays.asList(s.split("" + Jaws.BLOCK_E1_NEWLINE));
+	}
+
 	public StringLocated(String s, LineLocation location) {
 		this(s, location, null);
 	}

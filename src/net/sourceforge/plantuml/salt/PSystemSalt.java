@@ -88,6 +88,7 @@ import net.sourceforge.plantuml.salt.factory.ElementFactoryTextField;
 import net.sourceforge.plantuml.salt.factory.ElementFactoryTree;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.Log;
 
@@ -107,7 +108,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 	}
 
 	public void add(String s) {
-		data.add(s);
+		data.addAll(StringLocated.expandsJaws4(s));
 	}
 
 	@Override
