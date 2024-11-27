@@ -111,6 +111,10 @@ public class SkinParam implements ISkinParam {
 		this.type = type;
 		this.pragma = pragma;
 	}
+	
+	public final Pragma getPragma() {
+		return pragma;
+	}
 
 	@Override
 	public StyleBuilder getCurrentStyleBuilder() {

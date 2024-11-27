@@ -87,16 +87,14 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 
 	private final SkinParam skinParam;
 
-	private final Pragma pragma = new Pragma();
-
 	public Pragma getPragma() {
-		return pragma;
+		return skinParam.getPragma();
 	}
 
 	public TitledDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig) {
 		super(source);
 		this.type = type;
-		this.skinParam = SkinParam.create(type, getPragma());
+		this.skinParam = SkinParam.create(type, new Pragma());
 		if (orig != null)
 			this.skinParam.copyAllFrom(orig);
 
