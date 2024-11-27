@@ -86,7 +86,7 @@ public class CommandIf4 extends SingleLineCommand2<ActivityDiagram3> {
 		if (test.length() == 0)
 			test = null;
 
-		diagram.startIf(Display.getWithNewlines(test), Display.getWithNewlines(arg.get("WHEN", 0)), color, null, null);
+		diagram.startIf(Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), test), Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("WHEN", 0)), color, null, null);
 
 		return CommandExecutionResult.ok();
 	}

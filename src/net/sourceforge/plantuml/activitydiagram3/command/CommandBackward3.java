@@ -104,7 +104,7 @@ public class CommandBackward3 extends SingleLineCommand2<ActivityDiagram3> {
 		if (stereo != null)
 			stereotype = Stereotype.build(stereo);
 
-		final Display label = Display.getWithNewlines(arg.get("LABEL", 0));
+		final Display label = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("LABEL", 0));
 
 		final LinkRendering in = getBackRendering(diagram, arg, "INCOMING");
 		final LinkRendering out = getBackRendering(diagram, arg, "OUTCOMING");
@@ -121,7 +121,7 @@ public class CommandBackward3 extends SingleLineCommand2<ActivityDiagram3> {
 		else
 			in = LinkRendering.create(incomingColor);
 		final String label = arg.get(name, 0);
-		return in.withDisplay(Display.getWithNewlines(label));
+		return in.withDisplay(Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), label));
 	}
 
 	static private Rainbow getRainbow(String key, ActivityDiagram3 diagram, RegexResult arg)

@@ -93,13 +93,13 @@ public class StateDiagram extends AbstractEntityDiagram {
 			final String idShort = "*start*";
 			final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 			if (quark.getData() == null)
-				reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.CIRCLE_START, null);
+				reallyCreateLeaf(quark, Display.getWithNewlines(legacyReplaceBackslashNByNewline(), ""), LeafType.CIRCLE_START, null);
 			return quark.getData();
 		}
 		final String idShort = "*start*" + g.getName();
 		final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 		if (quark.getData() == null)
-			reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.CIRCLE_START, null);
+			reallyCreateLeaf(quark, Display.getWithNewlines(legacyReplaceBackslashNByNewline(), ""), LeafType.CIRCLE_START, null);
 		return quark.getData();
 	}
 
@@ -109,13 +109,13 @@ public class StateDiagram extends AbstractEntityDiagram {
 			final String idShort = "*end*";
 			final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 			if (quark.getData() == null)
-				reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.CIRCLE_END, null);
+				reallyCreateLeaf(quark, Display.getWithNewlines(legacyReplaceBackslashNByNewline(), ""), LeafType.CIRCLE_END, null);
 			return quark.getData();
 		}
 		final String idShort = "*end*" + p.getName();
 		final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 		if (quark.getData() == null)
-			reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.CIRCLE_END, null);
+			reallyCreateLeaf(quark, Display.getWithNewlines(legacyReplaceBackslashNByNewline(), ""), LeafType.CIRCLE_END, null);
 		return quark.getData();
 	}
 
@@ -125,13 +125,13 @@ public class StateDiagram extends AbstractEntityDiagram {
 			final String idShort = "*historical*";
 			final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 			if (quark.getData() == null)
-				reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.PSEUDO_STATE, null);
+				reallyCreateLeaf(quark, Display.getWithNewlines(legacyReplaceBackslashNByNewline(), ""), LeafType.PSEUDO_STATE, null);
 			return quark.getData();
 		}
 		final String idShort = "*historical*" + g.getName();
 		final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 		if (quark.getData() == null)
-			reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.PSEUDO_STATE, null);
+			reallyCreateLeaf(quark, Display.getWithNewlines(legacyReplaceBackslashNByNewline(), ""), LeafType.PSEUDO_STATE, null);
 		return quark.getData();
 	}
 
@@ -143,7 +143,7 @@ public class StateDiagram extends AbstractEntityDiagram {
 		final Quark<Entity> ident = quarkInContext(true, tmp);
 		final Entity result;
 		if (ident.getData() == null)
-			result = reallyCreateLeaf(ident, Display.getWithNewlines(""), LeafType.PSEUDO_STATE, null);
+			result = reallyCreateLeaf(ident, Display.getWithNewlines(legacyReplaceBackslashNByNewline(), ""), LeafType.PSEUDO_STATE, null);
 		else
 			result = ident.getData();
 		endGroup();
@@ -156,14 +156,14 @@ public class StateDiagram extends AbstractEntityDiagram {
 			final String idShort = "*deephistory*";
 			final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 			if (quark.getData() == null)
-				reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.DEEP_HISTORY, null);
+				reallyCreateLeaf(quark, Display.getWithNewlines(legacyReplaceBackslashNByNewline(), ""), LeafType.DEEP_HISTORY, null);
 			return quark.getData();
 		}
 
 		final String idShort = "*deephistory*" + g.getName();
 		final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 		if (quark.getData() == null)
-			reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.DEEP_HISTORY, null);
+			reallyCreateLeaf(quark, Display.getWithNewlines(legacyReplaceBackslashNByNewline(), ""), LeafType.DEEP_HISTORY, null);
 		return quark.getData();
 
 	}
@@ -177,7 +177,7 @@ public class StateDiagram extends AbstractEntityDiagram {
 		final Quark<Entity> ident = quarkInContext(true, cleanId(tmp));
 		final Entity result;
 		if (ident.getData() == null)
-			result = reallyCreateLeaf(ident, Display.getWithNewlines(""), LeafType.DEEP_HISTORY, null);
+			result = reallyCreateLeaf(ident, Display.getWithNewlines(legacyReplaceBackslashNByNewline(), ""), LeafType.DEEP_HISTORY, null);
 		else
 			result = ident.getData();
 		endGroup();

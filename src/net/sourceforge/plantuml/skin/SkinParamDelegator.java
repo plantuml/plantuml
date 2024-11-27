@@ -461,4 +461,9 @@ public class SkinParamDelegator implements ISkinParam {
 		return skinParam.arrows();
 	}
 
+	@Override
+	public boolean legacyReplaceBackslashNByNewline() {
+		return skinParam.legacyReplaceBackslashNByNewline();
+	}
+
 }

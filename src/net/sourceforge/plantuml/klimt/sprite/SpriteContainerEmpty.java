@@ -120,5 +120,11 @@ public class SpriteContainerEmpty implements SpriteContainer, ISkinSimple {
 			CreoleMode creoleMode, FontConfiguration stereo) {
 		return new CreoleParser(fontConfiguration, horizontalAlignment, this, creoleMode, stereo);
 	}
+	
+	@Override
+	public boolean legacyReplaceBackslashNByNewline() {
+		return false;
+	}
+
 
 }

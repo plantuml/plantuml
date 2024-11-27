@@ -101,7 +101,7 @@ public class JsonDiagramFactory extends PSystemAbstractFactory {
 			}
 			final String title = styleExtractor.getTitle();
 			if (title != null)
-				result.setTitle(DisplayPositioned.single(Display.getWithNewlines(title), HorizontalAlignment.CENTER,
+				result.setTitle(DisplayPositioned.single(Display.getWithNewlines(result.legacyReplaceBackslashNByNewline(), title), HorizontalAlignment.CENTER,
 						VerticalAlignment.CENTER));
 		}
 		return result;

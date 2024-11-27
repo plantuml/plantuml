@@ -93,7 +93,7 @@ public abstract class BodyEnhancedAbstract extends AbstractTextBlock implements 
 			return null;
 
 		s = StringUtils.trin(s.substring(2, s.length() - 2));
-		return Display.getWithNewlines(s).create(titleConfig, HorizontalAlignment.LEFT, spriteContainer);
+		return Display.getWithNewlines(spriteContainer.legacyReplaceBackslashNByNewline(), s).create(titleConfig, HorizontalAlignment.LEFT, spriteContainer);
 	}
 
 	abstract protected TextBlock getArea(StringBounder stringBounder);

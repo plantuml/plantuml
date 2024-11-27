@@ -264,5 +264,4 @@ public abstract class AbstractPSystem implements Diagram {
 	public void startingPass(ParserPass pass) {
 	}
 
-
 }

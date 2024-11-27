@@ -55,15 +55,15 @@ public class BodyFactory {
 
 	public final static boolean BODY3 = false;
 
-	public static Bodier createLeaf(LeafType type, Set<VisibilityModifier> hideVisibilityModifier) {
+	public static Bodier createLeaf(ISkinParam skinParam, LeafType type, Set<VisibilityModifier> hideVisibilityModifier) {
 		if (type.isLikeClass() || type == LeafType.OBJECT)
 			return new BodierLikeClassOrObject(type, hideVisibilityModifier);
 
-		return new BodierSimple();
+		return new BodierSimple(skinParam);
 	}
 
-	public static Bodier createGroup() {
-		return new BodierSimple();
+	public static Bodier createGroup(ISkinParam skinParam) {
+		return new BodierSimple(skinParam);
 	}
 
 	public static TextBlock create1(HorizontalAlignment align, List<CharSequence> rawBody, ISkinParam skinParam,

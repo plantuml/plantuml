@@ -126,9 +126,9 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 		Entity entity = quark.getData();
 
 		if (entity == null) {
-			Display display = Display.getWithNewlines(displayString);
+			Display display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), displayString);
 			if (Display.isNull(display))
-				display = Display.getWithNewlines(quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
+				display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
 			entity = diagram.reallyCreateLeaf(quark, display, type, null);
 		} else {
 			if (entity.muteToType(type, null) == false)

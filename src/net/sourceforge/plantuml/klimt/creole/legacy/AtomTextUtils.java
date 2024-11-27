@@ -77,7 +77,7 @@ public class AtomTextUtils {
 
 	public static Atom createUrl(Url url, FontConfiguration fontConfiguration, ISkinSimple skinSimple) {
 		fontConfiguration = fontConfiguration.hyperlink();
-		final Display display = Display.getWithNewlines(url.getLabel());
+		final Display display = Display.getWithNewlines(skinSimple.legacyReplaceBackslashNByNewline(), url.getLabel());
 		if (display.size() > 1) {
 			final List<Atom> all = new ArrayList<>();
 			for (CharSequence s : display.asList())

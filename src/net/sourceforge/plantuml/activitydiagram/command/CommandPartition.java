@@ -85,7 +85,7 @@ public class CommandPartition extends SingleLineCommand2<ActivityDiagram> {
 			throws NoSuchColorException {
 		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(arg.get("NAME", 0)));
 
-		diagram.gotoGroup(quark, Display.getWithNewlines(quark.getName()), GroupType.PACKAGE);
+		diagram.gotoGroup(quark, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), quark.getName()), GroupType.PACKAGE);
 		final Entity p = diagram.getCurrentGroup();
 
 		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());

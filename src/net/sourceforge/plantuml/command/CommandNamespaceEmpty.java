@@ -85,7 +85,7 @@ public class CommandNamespaceEmpty extends SingleLineCommand2<ClassDiagram> {
 		if (quark.getData() != null)
 			return CommandExecutionResult.error("Already exists " + quark.getName());
 
-		final Display display = Display.getWithNewlines(quark.getQualifiedName());
+		final Display display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), quark.getQualifiedName());
 		final CommandExecutionResult status = diagram.gotoGroup(quark, display, GroupType.PACKAGE);
 		if (status.isOk() == false)
 			return status;

@@ -104,9 +104,9 @@ public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-		final Display test = Display.getWithNewlines(arg.getLazzy("TEST", 0));
-		final Display yes = Display.getWithNewlines(arg.getLazzy("WHEN", 0));
-		final Display out = Display.getWithNewlines(arg.getLazzy("OUT", 0));
+		final Display test = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.getLazzy("TEST", 0));
+		final Display yes = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.getLazzy("WHEN", 0));
+		final Display out = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.getLazzy("OUT", 0));
 
 		final String colorString = arg.get("COLOR", 0);
 		final Rainbow rainbow;
@@ -117,7 +117,7 @@ public class CommandRepeatWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 					diagram.getSkinParam().colorArrowSeparationSpace());
 		}
 
-		final Display linkLabel = Display.getWithNewlines(arg.get("LABEL", 0));
+		final Display linkLabel = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("LABEL", 0));
 		return diagram.repeatWhile(test, yes, out, linkLabel, rainbow);
 	}
 

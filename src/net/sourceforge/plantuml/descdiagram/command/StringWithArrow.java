@@ -97,8 +97,8 @@ public class StringWithArrow {
 		return linkArrow;
 	}
 
-	public final Display getDisplay() {
-		return Display.getWithNewlines(label);
+	public final Display getDisplay(boolean flag) {
+		return Display.getWithNewlines(flag, label);
 	}
 
 	static public TextBlock addMagicArrow(TextBlock label, GuideLine guide, FontConfiguration font) {
@@ -116,7 +116,7 @@ public class StringWithArrow {
 		TextBlock result = TextBlockUtils.EMPTY_TEXT_BLOCK;
 		for (CharSequence cs : label) {
 			StringWithArrow tmp = new StringWithArrow(cs.toString());
-			TextBlock block = tmp.getDisplay().create9(font, alignment, skinParam, skinParam.maxMessageSize());
+			TextBlock block = tmp.getDisplay(skinParam.legacyReplaceBackslashNByNewline()).create9(font, alignment, skinParam, skinParam.maxMessageSize());
 			if (tmp.getLinkArrow() != LinkArrow.NONE_OR_SEVERAL)
 				block = StringWithArrow.addMagicArrow2(block, tmp.getLinkArrow().mute(guide), font);
 

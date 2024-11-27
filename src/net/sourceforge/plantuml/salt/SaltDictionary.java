@@ -145,4 +145,9 @@ public class SaltDictionary implements SpriteContainer, ISkinSimple {
 		return new CreoleParser(fontConfiguration, horizontalAlignment, this, creoleMode, stereo);
 	}
 
+	@Override
+	public boolean legacyReplaceBackslashNByNewline() {
+		return false;
+	}
+
 }

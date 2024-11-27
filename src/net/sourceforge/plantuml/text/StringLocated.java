@@ -41,6 +41,7 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.jaws.JawsFlags;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 final public class StringLocated {
@@ -66,17 +67,16 @@ final public class StringLocated {
 //}
 
 	public List<StringLocated> expandsJaws() {
+		if (JawsFlags.PARSE_NEW_MULTILINE_TRIPLE_EXCLAMATION_MARKS) {
+			final int x = s.indexOf("!!!");
+			if (x == -1)
+				return Arrays.asList(this);
+			final String s1 = s.substring(0, x);
+			final String s2 = s.substring(x + 3);
+			return Arrays.asList(new StringLocated(s1, location, preprocessorError).jawsHideBackslash(),
+					new StringLocated(s2, location, preprocessorError).jawsHideBackslash());
+		}
 		return Arrays.asList(this);
-	}
-
-	public List<StringLocated> expandsJaws2() {
-		final int x = s.indexOf("!!!");
-		if (x == -1)
-			return Arrays.asList(this);
-		final String s1 = s.substring(0, x);
-		final String s2 = s.substring(x + 3);
-		return Arrays.asList(new StringLocated(s1, location, preprocessorError).jawsHideBackslash(),
-				new StringLocated(s2, location, preprocessorError).jawsHideBackslash());
 	}
 
 	public StringLocated jawsHideBackslash() {

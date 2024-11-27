@@ -72,7 +72,7 @@ public class CommandIfLegacy1 extends SingleLineCommand2<ActivityDiagram3> {
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 
-		diagram.startIf(Display.getWithNewlines(arg.get("TEST", 0)), Display.getWithNewlines(arg.get("WHEN", 0)), null,
+		diagram.startIf(Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("TEST", 0)), Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("WHEN", 0)), null,
 				null, null);
 
 		return CommandExecutionResult.ok();

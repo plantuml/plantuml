@@ -228,9 +228,9 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 
 		Entity entity = quark.getData();
 		if (entity == null)
-			entity = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(display), type, usymbol);
+			entity = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), display), type, usymbol);
 
-		entity.setDisplay(Display.getWithNewlines(display));
+		entity.setDisplay(Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), display));
 
 		if (stereotype != null)
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),

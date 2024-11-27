@@ -127,9 +127,9 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractEnti
 		final String displayString = line0.get("NAME", 0);
 		final String stereotype = line0.get("STEREO", 0);
 
-		Display display = Display.getWithNewlines(displayString);
+		Display display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), displayString);
 		if (Display.isNull(display))
-			display = Display.getWithNewlines(name).withCreoleMode(CreoleMode.SIMPLE_LINE);
+			display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), name).withCreoleMode(CreoleMode.SIMPLE_LINE);
 
 		final Entity entity = diagram.reallyCreateLeaf(quark, display, LeafType.JSON, null);
 		if (stereotype != null)

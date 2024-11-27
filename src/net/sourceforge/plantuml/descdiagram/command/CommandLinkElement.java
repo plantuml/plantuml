@@ -276,7 +276,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 			cl1 = getDummy(diagram, ent1);
 			cl2 = getDummy(diagram, ent2);
 		}
-		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(labels.getLabelLink()), queue.length(),
+		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), labels.getLabelLink()), queue.length(),
 				diagram.getSkinParam().classAttributeIconSize() > 0);
 		Link link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
 				linkType, linkArg.withQuantifier(labels.getFirstLabel(), labels.getSecondLabel())
@@ -307,7 +307,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 			final Quark<Entity> quark = diagram.quarkInContext(true, ident);
 			if (quark.getData() != null)
 				return quark.getData();
-			return diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark.getName()), LeafType.DESCRIPTION,
+			return diagram.reallyCreateLeaf(quark, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), quark.getName()), LeafType.DESCRIPTION,
 					USymbols.INTERFACE);
 		}
 
@@ -320,7 +320,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 			return quark.getData();
 		if (quark.getData() != null)
 			return quark.getData();
-		final Display display = Display.getWithNewlines(quark.getName());
+		final Display display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), quark.getName());
 
 		if (codeChar == '(') {
 			if (endWithSlash)

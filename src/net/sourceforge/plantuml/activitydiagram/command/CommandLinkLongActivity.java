@@ -178,13 +178,13 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		}
 		if (partition != null) {
 			final Quark<Entity> idNewLong = diagram.quarkInContext(true, diagram.cleanId(partition));
-			diagram.gotoGroup(idNewLong, Display.getWithNewlines(partition), GroupType.PACKAGE);
+			diagram.gotoGroup(idNewLong, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), partition), GroupType.PACKAGE);
 		}
 		final Quark<Entity> ident = diagram.quarkInContext(true, diagram.cleanId(idShort));
 
 		Entity entity2 = ident.getData();
 		if (entity2 == null)
-			entity2 = diagram.reallyCreateLeaf(ident, Display.getWithNewlines(displayString), LeafType.ACTIVITY, null);
+			entity2 = diagram.reallyCreateLeaf(ident, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), displayString), LeafType.ACTIVITY, null);
 
 		diagram.setLastEntityConsulted(entity2);
 
@@ -210,7 +210,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 
 		final int lenght = arrow.length() - 1;
 
-		final Display linkLabel = Display.getWithNewlines(line0.get("BRACKET", 0));
+		final Display linkLabel = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), line0.get("BRACKET", 0));
 
 		LinkType type = new LinkType(LinkDecor.ARROW, LinkDecor.NONE);
 		if (arrow.contains("."))

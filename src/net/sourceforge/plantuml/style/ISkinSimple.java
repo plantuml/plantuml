@@ -69,4 +69,6 @@ public interface ISkinSimple extends SpriteContainer {
 	public SheetBuilder sheet(FontConfiguration fontConfiguration, HorizontalAlignment horizontalAlignment,
 			CreoleMode creoleMode, FontConfiguration stereo);
 
+	public boolean legacyReplaceBackslashNByNewline();
+
 }

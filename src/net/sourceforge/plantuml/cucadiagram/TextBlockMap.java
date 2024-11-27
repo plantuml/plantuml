@@ -169,7 +169,7 @@ public class TextBlockMap extends AbstractTextBlock implements WithPorts {
 		if (key.equals("\0"))
 			return new Point(fontConfiguration.getColor());
 
-		final Display display = Display.getWithNewlines(key);
+		final Display display = Display.getWithNewlines(skinParam.legacyReplaceBackslashNByNewline(), key);
 		TextBlock result = display.create0(fontConfiguration, HorizontalAlignment.LEFT, skinParam, wordWrap,
 				CreoleMode.FULL, null, null);
 		result = TextBlockUtils.withMargin(result, 5, 2);

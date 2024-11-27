@@ -130,7 +130,7 @@ public abstract class TimeHeader {
 	protected final TextBlock getTextBlock(SName param, String text, boolean bold, HColor color) {
 		final UFont font = thParam.getStyle(SName.timeline, param).getUFont();
 		final FontConfiguration fontConfiguration = getFontConfiguration(font, bold, color);
-		return Display.getWithNewlines(text).create(fontConfiguration, HorizontalAlignment.LEFT,
+		return Display.getWithNewlines(false, text).create(fontConfiguration, HorizontalAlignment.LEFT,
 				new SpriteContainerEmpty());
 	}
 

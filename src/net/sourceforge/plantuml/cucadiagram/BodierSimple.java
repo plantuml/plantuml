@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.skin.SkinParam;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
@@ -53,6 +54,7 @@ import net.sourceforge.plantuml.style.Style;
 public class BodierSimple implements Bodier {
 
 	private final List<CharSequence> rawBody = new ArrayList<>();
+	private final ISkinParam skinParam;
 	private Entity leaf;
 
 	@Override
@@ -60,7 +62,8 @@ public class BodierSimple implements Bodier {
 		throw new UnsupportedOperationException();
 	}
 
-	BodierSimple() {
+	BodierSimple(ISkinParam skinParam) {
+		this.skinParam = skinParam;
 	}
 
 	@Override
@@ -70,7 +73,8 @@ public class BodierSimple implements Bodier {
 
 	@Override
 	public boolean addFieldOrMethod(String s) throws NoSuchColorException {
-		final Display display = Display.getWithNewlines2(s);
+		final Display display = Display
+				.getWithNewlines2(skinParam.legacyReplaceBackslashNByNewline(), s);
 		rawBody.addAll(display.asList());
 		return true;
 	}

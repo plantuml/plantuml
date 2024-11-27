@@ -47,6 +47,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.jaws.JawsFlags;
 import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -201,11 +202,11 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	public static Display getWithNewlines(Quark<Entity> s) {
-		return getWithNewlines(s.getName());
+		return getWithNewlines(false, s.getName());
 	}
 
-	public static Display getWithNewlines2(String s) throws NoSuchColorException {
-		final Display result = getWithNewlines(s);
+	public static Display getWithNewlines2(boolean legacyReplaceBackslashNByNewline, String s) throws NoSuchColorException {
+		final Display result = getWithNewlines(legacyReplaceBackslashNByNewline, s);
 		CreoleParser.checkColor(result);
 		return result;
 	}
@@ -237,7 +238,7 @@ public class Display implements Iterable<CharSequence> {
 		return Collections.unmodifiableList(result);
 	}
 
-	public static Display getWithNewlines(String s) {
+	public static Display getWithNewlines(boolean legacyReplaceBackslashNByNewline, String s) {
 		if (s == null)
 			return NULL;
 
@@ -263,7 +264,7 @@ public class Display implements Iterable<CharSequence> {
 				current.setLength(0);
 				i += 3;
 				// throw new IllegalStateException();
-			} else if (rawMode == false && c == '\\' && i < s.length() - 1) {
+			} else if (/*legacyReplaceBackslashNByNewline &&*/ rawMode == false && c == '\\' && i < s.length() - 1) {
 				final char c2 = s.charAt(i + 1);
 				i++;
 				if (c2 == 'n' || c2 == 'r' || c2 == 'l') {

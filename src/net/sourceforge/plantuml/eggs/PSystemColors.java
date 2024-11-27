@@ -262,7 +262,7 @@ public class PSystemColors extends PlainDiagram implements UDrawable {
 	private TextBlock getTextName(final UFont font, String name, final HColor color) {
 		final HColor opposite = color.opposite();
 		final FontConfiguration fc = FontConfiguration.create(font, opposite, HColors.BLUE, UStroke.simple());
-		final TextBlock tt = Display.getWithNewlines(name).create(fc, HorizontalAlignment.CENTER,
+		final TextBlock tt = Display.getWithNewlines(false, name).create(fc, HorizontalAlignment.CENTER,
 				new SpriteContainerEmpty());
 		return tt;
 	}

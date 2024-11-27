@@ -114,9 +114,9 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 		final String displayString = line0.getLazzy("DISPLAY", 0);
 		final String stereotype = line0.get("STEREO", 0);
 
-		Display display = Display.getWithNewlines(displayString);
+		Display display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), displayString);
 		if (Display.isNull(display))
-			display = Display.getWithNewlines(quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
+			display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
 		Entity entity = quark.getData();
 		if (entity == null)
 			entity = diagram.reallyCreateLeaf(quark, display, LeafType.OBJECT, null);

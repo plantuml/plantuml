@@ -185,7 +185,7 @@ public class WBlock {
 
 	public CommandExecutionResult print(StringBounder stringBounder, ISkinParam skinParam, int level, String text) {
 		if (level == 0) {
-			final WPrint print = new WPrint(skinParam, getNextPosition(), null, Display.getWithNewlines(text));
+			final WPrint print = new WPrint(skinParam, getNextPosition(), null, Display.getWithNewlines(skinParam.legacyReplaceBackslashNByNewline(), text));
 			this.prints.add(print);
 			this.cursor = this.cursor.compose(UTranslate.dy(print.getHeight(stringBounder)));
 

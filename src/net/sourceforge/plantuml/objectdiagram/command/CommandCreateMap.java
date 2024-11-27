@@ -148,9 +148,9 @@ public class CommandCreateMap extends CommandMultilines2<AbstractEntityDiagram> 
 		if (quark.getData() != null)
 			return null;
 
-		Display display = Display.getWithNewlines(displayString);
+		Display display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), displayString);
 		if (Display.isNull(display))
-			display = Display.getWithNewlines(name).withCreoleMode(CreoleMode.SIMPLE_LINE);
+			display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), name).withCreoleMode(CreoleMode.SIMPLE_LINE);
 
 		final Entity entity = diagram.reallyCreateLeaf(quark, display, LeafType.MAP, null);
 		if (stereotype != null)

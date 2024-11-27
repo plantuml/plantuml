@@ -127,7 +127,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 
 	@Override
 	protected TextBlock getTitle() {
-		return Display.getWithNewlines(prettyDisplay).create(getFontConfiguration(), HorizontalAlignment.LEFT,
+		return Display.getWithNewlines(getStyleBuilder().getSkinParam().legacyReplaceBackslashNByNewline(), prettyDisplay).create(getFontConfiguration(), HorizontalAlignment.LEFT,
 				new SpriteContainerEmpty());
 	}
 
@@ -154,7 +154,7 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 			ug = ug.apply(UTranslate.dx(delta / 2));
 			drawShape(applyColors(ug));
 		} else {
-			final TextBlock draw = Display.getWithNewlines(displayString).create(getFontConfiguration(),
+			final TextBlock draw = Display.getWithNewlines(getStyleBuilder().getSkinParam().legacyReplaceBackslashNByNewline(), displayString).create(getFontConfiguration(),
 					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 			draw.drawU(ug);
 		}

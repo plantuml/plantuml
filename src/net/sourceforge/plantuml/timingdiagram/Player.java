@@ -71,7 +71,7 @@ public abstract class Player implements TimeProjected {
 		this.skinParam = skinParam;
 		this.compact = compact;
 		this.ruler = ruler;
-		this.title = Display.getWithNewlines(title);
+		this.title = Display.getWithNewlines(false, title);
 	}
 
 	public boolean isCompact() {

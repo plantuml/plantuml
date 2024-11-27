@@ -112,7 +112,7 @@ public class CommandCreateEntity extends SingleLineCommand2<ChenEerDiagram> {
 		Entity entity = quark.getData();
 
 		if (entity == null) {
-			Display display = Display.getWithNewlines(displayText);
+			Display display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), displayText);
 			entity = diagram.reallyCreateLeaf(quark, display, type, null);
 		} else {
 			if (entity.muteToType(type, null) == false)

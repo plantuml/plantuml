@@ -80,7 +80,7 @@ public class CommandArrow3 extends SingleLineCommand2<ActivityDiagram3> {
 		}
 		final String label = arg.get("LABEL", 0);
 		if (label != null && label.length() > 0)
-			diagram.setLabelNextArrow(Display.getWithNewlines(label));
+			diagram.setLabelNextArrow(Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), label));
 
 		return CommandExecutionResult.ok();
 	}

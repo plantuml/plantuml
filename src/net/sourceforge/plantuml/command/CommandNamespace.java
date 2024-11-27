@@ -87,7 +87,7 @@ public class CommandNamespace extends SingleLineCommand2<ClassDiagram> {
 		final USymbol usymbol = USymbols.fromString(stereotype, diagram.getSkinParam().actorStyle(),
 				diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());
 		
-		final CommandExecutionResult status = diagram.gotoGroup(quark, Display.getWithNewlines(quark.getName()),
+		final CommandExecutionResult status = diagram.gotoGroup(quark, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), quark.getName()),
 				GroupType.PACKAGE, usymbol);
 		if (status.isOk() == false)
 			return status;

@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.SkinParam;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
@@ -76,7 +77,7 @@ public class PSystemCreole extends PlainDiagram {
 		final Display display = Display.create(lines);
 		final UFont font = UFont.serif(14);
 		final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(font);
-		final SkinParam skinParam = SkinParam.create(UmlDiagramType.SEQUENCE);
+		final SkinParam skinParam = SkinParam.create(UmlDiagramType.SEQUENCE, new Pragma());
 		final Sheet sheet = skinParam.sheet(fontConfiguration, HorizontalAlignment.LEFT, CreoleMode.FULL)
 				.createSheet(display);
 		return new SheetBlock1(sheet, LineBreakStrategy.NONE, 0);

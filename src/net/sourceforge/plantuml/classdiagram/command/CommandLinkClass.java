@@ -208,10 +208,10 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		Entity cl1 = quark1.get().getData();
 		if (cl1 == null)
-			cl1 = diagram.reallyCreateLeaf(quark1.get(), Display.getWithNewlines(quark1.get().getName()), LeafType.CLASS, null);
+			cl1 = diagram.reallyCreateLeaf(quark1.get(), Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), quark1.get().getName()), LeafType.CLASS, null);
 		Entity cl2 = quark2.get().getData();
 		if (cl2 == null)
-			cl2 = diagram.reallyCreateLeaf(quark2.get(), Display.getWithNewlines(quark2.get().getName()), LeafType.CLASS, null);
+			cl2 = diagram.reallyCreateLeaf(quark2.get(), Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), quark2.get().getName()), LeafType.CLASS, null);
 
 		final Direction dir = getDirection(arg);
 		final int queue;
@@ -226,7 +226,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final String kal2 = arg.get("QUALIFIER2", 0);
 
 		final LinkArg linkArg = LinkArg
-				.build(labels.getDisplay(), queue, diagram.getSkinParam().classAttributeIconSize() > 0)
+				.build(labels.getDisplay(diagram.legacyReplaceBackslashNByNewline()), queue, diagram.getSkinParam().classAttributeIconSize() > 0)
 				.withQuantifier(labels.getFirstLabel(), labels.getSecondLabel())
 				.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()).withKal(kal1, kal2);
 
@@ -296,7 +296,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		else
 			queue = getQueueLength(arg);
 
-		final Display labelLink = Display.getWithNewlines(arg.get("LABEL_LINK", 0));
+		final Display labelLink = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("LABEL_LINK", 0));
 		final String firstLabel = arg.get("FIRST_LABEL", 0);
 		final String secondLabel = arg.get("SECOND_LABEL", 0);
 		final LinkArg linkArg = LinkArg.build(labelLink, queue, diagram.getSkinParam().classAttributeIconSize() > 0);
@@ -334,10 +334,10 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		Entity cl2 = ent2.getData();
 		if (cl2 == null)
-			cl2 = diagram.reallyCreateLeaf(ent2, Display.getWithNewlines(ent2.getName()), LeafType.CLASS, null);
+			cl2 = diagram.reallyCreateLeaf(ent2, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), ent2.getName()), LeafType.CLASS, null);
 
 		final LinkType linkType = getLinkType(arg);
-		final Display label = Display.getWithNewlines(arg.get("LABEL_LINK", 0));
+		final Display label = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("LABEL_LINK", 0));
 
 		final boolean result = diagram.associationClass(1, cl1A, cl1B, cl2, linkType, label);
 		if (result == false)
@@ -367,10 +367,10 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		Entity cl1 = (Entity) ent1.getData();
 		if (cl1 == null)
-			cl1 = diagram.reallyCreateLeaf(ent1, Display.getWithNewlines(ent1.getName()), LeafType.CLASS, null);
+			cl1 = diagram.reallyCreateLeaf(ent1, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), ent1.getName()), LeafType.CLASS, null);
 
 		final LinkType linkType = getLinkType(arg);
-		final Display label = Display.getWithNewlines(arg.get("LABEL_LINK", 0));
+		final Display label = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("LABEL_LINK", 0));
 
 		final boolean result = diagram.associationClass(2, cl2A, cl2B, cl1, linkType, label);
 		if (result == false)
@@ -406,7 +406,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final Entity cl2B = (Entity) quark2B.getData();
 
 		final LinkType linkType = getLinkType(arg);
-		final Display label = Display.getWithNewlines(arg.get("LABEL_LINK", 0));
+		final Display label = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("LABEL_LINK", 0));
 
 		return diagram.associationClass(cl1A, cl1B, cl2A, cl2B, linkType, label);
 	}

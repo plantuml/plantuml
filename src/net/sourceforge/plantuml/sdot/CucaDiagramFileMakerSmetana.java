@@ -634,7 +634,7 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 		ISkinParam skinParam = diagram.getSkinParam();
 		final Style style = getStyle();
 		final FontConfiguration labelFont = style.getFontConfiguration(skinParam.getIHtmlColorSet());
-		final TextBlock label = Display.getWithNewlines(tmp).create(labelFont,
+		final TextBlock label = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), tmp).create(labelFont,
 				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
 		if (TextBlockUtils.isEmpty(label, stringBounder))
 			return label;

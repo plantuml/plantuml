@@ -146,7 +146,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		if (arg.get("STEREOTYPE2", 0) != null)
 			entity2.setStereotype(Stereotype.build(arg.get("STEREOTYPE2", 0)));
 
-		final Display linkLabel = Display.getWithNewlines(arg.get("BRACKET", 0));
+		final Display linkLabel = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("BRACKET", 0));
 
 		final String arrowBody1 = CommandLinkClass.notNull(arg.get("ARROW_BODY1", 0));
 		final String arrowBody2 = CommandLinkClass.notNull(arg.get("ARROW_BODY2", 0));
@@ -215,7 +215,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			final LeafType type = getTypeIfExisting(diagram, ident);
 			Entity result = ident.getData();
 			if (result == null)
-				result = diagram.reallyCreateLeaf(ident, Display.getWithNewlines(idShort), type, null);
+				result = diagram.reallyCreateLeaf(ident, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), idShort), type, null);
 
 			if (partition != null)
 				diagram.endGroup();
@@ -227,7 +227,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(bar));
 			Entity result = quark.getData();
 			if (result == null)
-				result = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(bar), LeafType.SYNCHRO_BAR, null);
+				result = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), bar), LeafType.SYNCHRO_BAR, null);
 			return result;
 		}
 		final RegexPartialMatch quoted = arg.get("QUOTED" + suf);
@@ -235,7 +235,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			final String quotedString = quoted.get(1) == null ? quoted.get(0) : quoted.get(1);
 			if (partition != null) {
 				final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(partition));
-				diagram.gotoGroup(quark, Display.getWithNewlines(partition), GroupType.PACKAGE);
+				diagram.gotoGroup(quark, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), partition), GroupType.PACKAGE);
 			}
 
 			final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(quotedString));
@@ -243,7 +243,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			final LeafType type = getTypeIfExisting(diagram, quark);
 			Entity result = quark.getData();
 			if (result == null)
-				result = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quoted.get(0)), type, null);
+				result = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), quoted.get(0)), type, null);
 			if (partition != null)
 				diagram.endGroup();
 
@@ -258,7 +258,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			final Quark<Entity> identInvisible = diagram.quarkInContext(true, diagram.cleanId(quoteInvisibleString));
 			Entity result = identInvisible.getData();
 			if (result == null)
-				result = diagram.reallyCreateLeaf(identInvisible, Display.getWithNewlines(identInvisible.getName()),
+				result = diagram.reallyCreateLeaf(identInvisible, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), identInvisible.getName()),
 						LeafType.ACTIVITY, null);
 			if (partition != null)
 				diagram.endGroup();

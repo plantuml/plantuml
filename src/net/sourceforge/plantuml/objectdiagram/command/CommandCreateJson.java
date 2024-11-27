@@ -161,9 +161,9 @@ public class CommandCreateJson extends CommandMultilines2<AbstractEntityDiagram>
 		final String displayString = line0.getLazzy("DISPLAY", 0);
 		final String stereotype = line0.get("STEREO", 0);
 
-		Display display = Display.getWithNewlines(displayString);
+		Display display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), displayString);
 		if (Display.isNull(display))
-			display = Display.getWithNewlines(quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
+			display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
 
 		final Entity entity = diagram.reallyCreateLeaf(quark, display, LeafType.JSON, null);
 		if (stereotype != null)

@@ -143,7 +143,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 
 	@Override
 	protected TextBlock getTitle() {
-		return Display.getWithNewlines(prettyDisplay).create(getFontConfiguration(), HorizontalAlignment.LEFT,
+		return Display.getWithNewlines(false, prettyDisplay).create(getFontConfiguration(), HorizontalAlignment.LEFT,
 				new SpriteContainerEmpty());
 	}
 

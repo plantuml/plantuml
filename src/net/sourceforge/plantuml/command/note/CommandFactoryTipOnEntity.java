@@ -177,7 +177,7 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 		Entity tips = identTip.getData();
 
 		if (tips == null) {
-			tips = diagram.reallyCreateLeaf(identTip, Display.getWithNewlines(""), LeafType.TIPS, null);
+			tips = diagram.reallyCreateLeaf(identTip, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), ""), LeafType.TIPS, null);
 			final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();
 			final Link link;
 			if (position == Position.RIGHT)

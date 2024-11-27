@@ -78,7 +78,7 @@ public class CommandWhile3 extends SingleLineCommand2<ActivityDiagram3> {
 			throws NoSuchColorException {
 		final String s = arg.get("COLOR", 0);
 		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
-		diagram.doWhile(Display.getWithNewlines(arg.get("TEST", 0)), Display.getWithNewlines(arg.get("YES", 0)), color);
+		diagram.doWhile(Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("TEST", 0)), Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("YES", 0)), color);
 
 		return CommandExecutionResult.ok();
 	}

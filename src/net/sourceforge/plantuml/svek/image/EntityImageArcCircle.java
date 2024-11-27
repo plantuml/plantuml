@@ -70,7 +70,7 @@ public class EntityImageArcCircle extends AbstractEntityImage {
 		if (stereotype == null || stereotype.getLabel(Guillemet.DOUBLE_COMPARATOR) == null) {
 			this.stereo = null;
 		} else {
-			this.stereo = Display.getWithNewlines(stereotype.getLabel(getSkinParam().guillemet())).create(
+			this.stereo = Display.getWithNewlines(getSkinParam().legacyReplaceBackslashNByNewline(), stereotype.getLabel(getSkinParam().guillemet())).create(
 					FontConfiguration.create(getSkinParam(), FontParam.COMPONENT_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, getSkinParam());
 		}

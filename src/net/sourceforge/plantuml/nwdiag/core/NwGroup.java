@@ -168,7 +168,7 @@ public class NwGroup implements NStackable {
 
 		final StyleBuilder styleBuilder = skinParam.getCurrentStyleBuilder();
 		final Style style = getStyleDefinition().getMergedStyle(styleBuilder);
-		return Display.getWithNewlines(getDescription())
+		return Display.getWithNewlines(skinParam.legacyReplaceBackslashNByNewline(), getDescription())
 				.create(style.getFontConfiguration(skinParam.getIHtmlColorSet()), HorizontalAlignment.LEFT, skinParam);
 	}
 

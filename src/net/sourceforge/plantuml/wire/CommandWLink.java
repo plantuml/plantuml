@@ -106,7 +106,7 @@ public class CommandWLink extends SingleLineCommand2<WireDiagram> {
 			label = Display.NULL;
 		} else {
 			final String message = arg.get("MESSAGE", 0);
-			label = Display.getWithNewlines(message);
+			label = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), message);
 		}
 
 		if (orientation == WOrientation.VERTICAL)

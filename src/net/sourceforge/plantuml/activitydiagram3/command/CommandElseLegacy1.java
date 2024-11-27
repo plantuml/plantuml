@@ -70,7 +70,7 @@ public class CommandElseLegacy1 extends SingleLineCommand2<ActivityDiagram3> {
 		// if (getSystem().getLastEntityConsulted() == null) {
 		// return CommandExecutionResult.error("No if for this endif");
 		// }
-		final Display when = Display.getWithNewlines(arg.get("WHEN", 0));
+		final Display when = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("WHEN", 0));
 		return diagram.else2(LinkRendering.none().withDisplay(when));
 	}
 

@@ -300,7 +300,7 @@ class MyElkDrawing extends AbstractTextBlock {
 
 		final ISkinParam skinParam = diagram.getSkinParam();
 		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);
-		final TextBlock label = Display.getWithNewlines(tmp).create(labelFont,
+		final TextBlock label = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), tmp).create(labelFont,
 				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
 		if (TextBlockUtils.isEmpty(label, stringBounder))
 			return null;

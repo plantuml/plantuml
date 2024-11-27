@@ -411,7 +411,7 @@ public class Histogram implements PDrawing {
 	}
 
 	private TextBlock getTextBlock(String value) {
-		final Display display = Display.getWithNewlines(value);
+		final Display display = Display.getWithNewlines(false, value);
 		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 	}
 

@@ -56,7 +56,7 @@ public class Swimlane implements SpecificBackcolorable, Comparable<Swimlane> {
 
 	public Swimlane(String name, int order) {
 		this.name = name;
-		this.display = Display.getWithNewlines(name);
+		this.display = Display.getWithNewlines(false, name);
 		this.order = order;
 
 	}

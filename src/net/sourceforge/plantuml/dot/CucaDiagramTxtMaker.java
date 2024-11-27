@@ -211,7 +211,7 @@ public final class CucaDiagramTxtMaker {
 		int result = StringUtils.getHeight(entity.getDisplay());
 		if (showMember(entity)) {
 			for (CharSequence att : entity.getBodier().getRawBody())
-				result += StringUtils.getHeight(Display.getWithNewlines(att.toString()));
+				result += StringUtils.getHeight(Display.getWithNewlines(false, att.toString()));
 
 //			for (Member att : entity.getBodier().getMethodsToDisplay()) {
 //				result += StringUtils.getHeight(Display.getWithNewlines(att.getDisplay(true)));
@@ -229,7 +229,7 @@ public final class CucaDiagramTxtMaker {
 		int result = StringUtils.getWcWidth(entity.getDisplay());
 		if (showMember(entity)) {
 			for (CharSequence att : entity.getBodier().getRawBody()) {
-				final int w = StringUtils.getWcWidth(Display.getWithNewlines(att.toString()));
+				final int w = StringUtils.getWcWidth(Display.getWithNewlines(false, att.toString()));
 				if (w > result)
 					result = w;
 

@@ -71,7 +71,7 @@ public class ResourceDrawBasic implements ResourceDraw {
 	}
 
 	public void drawU(UGraphic ug) {
-		final TextBlock title = Display.getWithNewlines(res.getName()).create(getFontConfiguration(13),
+		final TextBlock title = Display.getWithNewlines(gantt.legacyReplaceBackslashNByNewline(), res.getName()).create(getFontConfiguration(13),
 				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		title.drawU(ug);
 		final ULine line = ULine.hline(timeScale.getEndingPosition(max) - timeScale.getStartingPosition(min));
@@ -91,7 +91,7 @@ public class ResourceDrawBasic implements ResourceDraw {
 				if (totalLoad > 0) {
 					final FontConfiguration fontConfiguration = getFontConfiguration(9,
 							isRed ? HColors.RED : HColors.BLACK);
-					final TextBlock value = Display.getWithNewlines("" + totalLoad).create(fontConfiguration,
+					final TextBlock value = Display.getWithNewlines(false, "" + totalLoad).create(fontConfiguration,
 							HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 					if (startingPosition == -1)
 						startingPosition = timeScale.getStartingPosition(i);

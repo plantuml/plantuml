@@ -76,7 +76,7 @@ public class CommandWhileEnd3 extends SingleLineCommand2<ActivityDiagram3> {
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		return diagram.endwhile(Display.getWithNewlines(arg.get("OUT", 0)));
+		return diagram.endwhile(Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("OUT", 0)));
 	}
 
 }

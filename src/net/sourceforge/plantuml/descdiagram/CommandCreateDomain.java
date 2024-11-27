@@ -119,7 +119,7 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 		if (quark.getData() != null)
 			return CommandExecutionResult.error("Object already exists : " + codeString);
 
-		Display display = Display.getWithNewlines(displayString);
+		Display display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), displayString);
 		final String urlString = arg.get("URL", 0);
 		final String group = arg.get("GROUP", 0);
 		Entity entity;

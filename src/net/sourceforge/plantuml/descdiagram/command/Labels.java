@@ -107,8 +107,8 @@ public class Labels {
 		return stringWithArrow.getLinkArrow();
 	}
 
-	public Display getDisplay() {
-		return stringWithArrow.getDisplay();
+	public Display getDisplay(boolean flag) {
+		return stringWithArrow.getDisplay(flag);
 	}
 
 }

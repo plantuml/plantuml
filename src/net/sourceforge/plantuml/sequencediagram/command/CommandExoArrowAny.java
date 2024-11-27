@@ -83,7 +83,7 @@ abstract class CommandExoArrowAny extends SingleLineCommand2<SequenceDiagram> {
 		if (arg.get("LABEL", 0) == null)
 			labels = Display.create("");
 		else
-			labels = Display.getWithNewlines(arg.get("LABEL", 0));
+			labels = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("LABEL", 0));
 
 		final boolean bothDirection = arg.get("ARROW_BOTHDRESSING", 0) != null;
 

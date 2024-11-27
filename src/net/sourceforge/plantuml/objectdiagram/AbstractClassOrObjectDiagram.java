@@ -118,10 +118,10 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 			final String tmp2 = this.getUniqueSequence("apoint");
 
 			final Quark<Entity> code1 = getCurrentGroup().getQuark().child(tmp1);
-			final Entity point1 = reallyCreateLeaf(code1, Display.getWithNewlines(""), LeafType.POINT_FOR_ASSOCIATION,
+			final Entity point1 = reallyCreateLeaf(code1, Display.getWithNewlines(legacyReplaceBackslashNByNewline(), ""), LeafType.POINT_FOR_ASSOCIATION,
 					null);
 			final Quark<Entity> code2 = getCurrentGroup().getQuark().child(tmp2);
-			final Entity point2 = reallyCreateLeaf(code2, Display.getWithNewlines(""), LeafType.POINT_FOR_ASSOCIATION,
+			final Entity point2 = reallyCreateLeaf(code2, Display.getWithNewlines(legacyReplaceBackslashNByNewline(), ""), LeafType.POINT_FOR_ASSOCIATION,
 					null);
 
 			insertPointBetween(entity1A, entity1B, point1);
@@ -222,7 +222,7 @@ public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram
 				quark = entity1.getQuark().getParent().child(idShort);
 			else
 				quark = quarkInContext(true, cleanId(idShort));
-			point = reallyCreateLeaf(quark, Display.getWithNewlines(""), LeafType.POINT_FOR_ASSOCIATION, null);
+			point = reallyCreateLeaf(quark, Display.getWithNewlines(legacyReplaceBackslashNByNewline(), ""), LeafType.POINT_FOR_ASSOCIATION, null);
 
 		}
 

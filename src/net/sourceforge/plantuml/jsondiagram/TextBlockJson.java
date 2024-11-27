@@ -339,7 +339,7 @@ public class TextBlockJson extends AbstractTextBlock {
 	}
 
 	private TextBlock getTextBlock(Style style, String key) {
-		final Display display = Display.getWithNewlines(key);
+		final Display display = Display.getWithNewlines(skinParam.legacyReplaceBackslashNByNewline(), key);
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 		final LineBreakStrategy wrap = style.wrapWidth();
 		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();

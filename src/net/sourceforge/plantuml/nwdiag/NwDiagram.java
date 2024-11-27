@@ -359,7 +359,7 @@ public class NwDiagram extends UmlDiagram {
 		final StyleBuilder styleBuilder = getSkinParam().getCurrentStyleBuilder();
 		final Style style = getStyleDefinitionNetwork(SName.network).getMergedStyle(styleBuilder);
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
-		return Display.getWithNewlines(name).create(fontConfiguration, HorizontalAlignment.RIGHT,
+		return Display.getWithNewlines(legacyReplaceBackslashNByNewline(), name).create(fontConfiguration, HorizontalAlignment.RIGHT,
 				new SpriteContainerEmpty());
 	}
 

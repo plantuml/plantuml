@@ -133,7 +133,7 @@ public class EntityImageClassHeader extends AbstractEntityImage {
 					.with(entity.getStereostyles()) //
 					.getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 
-			genericBlock = Display.getWithNewlines(generic).create(
+			genericBlock = Display.getWithNewlines(getSkinParam().legacyReplaceBackslashNByNewline(), generic).create(
 					FontConfiguration.create(getSkinParam(), FontParam.CLASS_STEREOTYPE, stereotype),
 					HorizontalAlignment.CENTER, getSkinParam());
 			genericBlock = TextBlockUtils.withMargin(genericBlock, 1, 1);

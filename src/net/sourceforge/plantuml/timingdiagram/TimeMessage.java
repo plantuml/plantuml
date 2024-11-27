@@ -62,7 +62,7 @@ public class TimeMessage extends WithLinkType {
 		this.styleBuilder = skinParam.getCurrentStyleBuilder();
 		this.tickInPlayer1 = tickInPlayer1;
 		this.tickInPlayer2 = tickInPlayer2;
-		this.label = Display.getWithNewlines(label);
+		this.label = Display.getWithNewlines(false, label);
 		this.setSpecificColor(getColor());
 		this.type = new LinkType(LinkDecor.NONE, LinkDecor.NONE);
 	}

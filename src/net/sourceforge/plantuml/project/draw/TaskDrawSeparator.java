@@ -119,7 +119,7 @@ public class TaskDrawSeparator implements TaskDraw {
 		if (name == null) {
 			return TextBlockUtils.empty(0, 0);
 		}
-		return Display.getWithNewlines(this.name).create(getFontConfiguration(), HorizontalAlignment.LEFT,
+		return Display.getWithNewlines(false, this.name).create(getFontConfiguration(), HorizontalAlignment.LEFT,
 				new SpriteContainerEmpty());
 	}
 

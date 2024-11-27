@@ -151,14 +151,14 @@ public class ETileOptional extends ETile {
 	private TextBlock getNoteAbove(StringBounder stringBounder) {
 		if (commentAbove == null)
 			return TextBlockUtils.EMPTY_TEXT_BLOCK;
-		final FloatingNote note = FloatingNote.create(Display.getWithNewlines(commentAbove), skinParam, SName.ebnf);
+		final FloatingNote note = FloatingNote.create(Display.getWithNewlines(false, commentAbove), skinParam, SName.ebnf);
 		return TextBlockUtils.withMargin(note, 0, 0, 0, 10);
 	}
 
 	private TextBlock getNoteBelow(StringBounder stringBounder) {
 		if (commentBelow == null)
 			return TextBlockUtils.EMPTY_TEXT_BLOCK;
-		final FloatingNote note = FloatingNote.create(Display.getWithNewlines(commentBelow), skinParam, SName.ebnf);
+		final FloatingNote note = FloatingNote.create(Display.getWithNewlines(false, commentBelow), skinParam, SName.ebnf);
 		return TextBlockUtils.withMargin(note, 0, 0, 10, 0);
 	}
 

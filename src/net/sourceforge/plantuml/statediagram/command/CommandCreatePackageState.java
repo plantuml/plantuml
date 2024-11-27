@@ -125,10 +125,10 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 
 		final String display = getNotNull(arg, "DISPLAY1", "DISPLAY2");
 
-		diagram.gotoGroup(quark, Display.getWithNewlines(display == null ? quark.getName() : display), GroupType.STATE);
+		diagram.gotoGroup(quark, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), display == null ? quark.getName() : display), GroupType.STATE);
 		final Entity p = diagram.getCurrentGroup();
 		if (display != null)
-			p.setDisplay(Display.getWithNewlines(display));
+			p.setDisplay(Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), display));
 
 		final String stereotype = arg.get("STEREOTYPE", 0);
 		if (stereotype != null)

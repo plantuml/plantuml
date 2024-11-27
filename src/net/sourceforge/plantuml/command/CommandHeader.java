@@ -80,7 +80,7 @@ public class CommandHeader extends SingleLineCommand2<TitledDiagram> {
 			ha = FontParam.HEADER.getStyleDefinition(null).getMergedStyle(diagram.getCurrentStyleBuilder())
 					.getHorizontalAlignment();
 
-		final Display s = Display.getWithNewlines(arg.getLazzy("LABEL", 0));
+		final Display s = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.getLazzy("LABEL", 0));
 		diagram.getHeader().putDisplay(s, ha);
 		return CommandExecutionResult.ok();
 	}

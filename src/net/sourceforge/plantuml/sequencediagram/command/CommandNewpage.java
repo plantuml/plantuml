@@ -65,11 +65,11 @@ public class CommandNewpage extends SingleLineCommand2<SequenceDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(SequenceDiagram sequenceDiagram, LineLocation location,
+	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location,
 			RegexResult arg, ParserPass currentPass) {
 		final String label = arg.get("LABEL", 0);
-		final Display strings = label == null ? Display.NULL : Display.getWithNewlines(label);
-		sequenceDiagram.newpage(strings);
+		final Display strings = label == null ? Display.NULL : Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), label);
+		diagram.newpage(strings);
 		return CommandExecutionResult.ok();
 	}
 }

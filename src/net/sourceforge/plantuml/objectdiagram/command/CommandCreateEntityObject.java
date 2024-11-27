@@ -89,9 +89,9 @@ public class CommandCreateEntityObject extends SingleLineCommand2<AbstractClassO
 		if (quark.getData() != null)
 			return CommandExecutionResult.error("Object already exists : " + quark.getData());
 
-		Display display = Display.getWithNewlines(displayString);
+		Display display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), displayString);
 		if (Display.isNull(display))
-			display = Display.getWithNewlines(quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
+			display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
 
 		final Entity entity = diagram.reallyCreateLeaf(quark, display, LeafType.OBJECT, null);
 		if (stereotype != null)

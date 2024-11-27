@@ -62,7 +62,7 @@ public class CommandNolink extends SingleLineCommand2<ActivityDiagram3> {
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		// diagram.setColorNextArrow(color);
-		diagram.setLabelNextArrow(Display.getWithNewlines("NOLINK"));
+		diagram.setLabelNextArrow(Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), "NOLINK"));
 		return CommandExecutionResult.ok();
 	}
 

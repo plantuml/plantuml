@@ -246,7 +246,7 @@ public class PlayerAnalog extends Player {
 	}
 
 	private TextBlock getTextBlock(double value) {
-		final Display display = Display.getWithNewlines("" + value);
+		final Display display = Display.getWithNewlines(false, "" + value);
 		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 	}
 

@@ -132,7 +132,7 @@ public class CommandPartition3 extends SingleLineCommand2<ActivityDiagram3> {
 //		final HColor titleColor = HColors.BLUE;// stylePartition.value(PName.FontColor).asColor(diagram.getSkinParam().getIHtmlColorSet());
 //		final double roundCorner = stylePartition.value(PName.RoundCorner).asDouble();
 
-		diagram.startGroup(Display.getWithNewlines(partitionTitle), backColor, symbol, stylePartition);
+		diagram.startGroup(Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), partitionTitle), backColor, symbol, stylePartition);
 
 		return CommandExecutionResult.ok();
 	}
