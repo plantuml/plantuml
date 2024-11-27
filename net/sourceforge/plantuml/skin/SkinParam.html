@@ -145,7 +145,8 @@ implements <a href="../style/ISkinParam.html" title="interface in net.sourceforg
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#copyAllFrom(java.util.Map)" class="member-name-link">copyAllFrom</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;other)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SkinParam.html" title="class in net.sourceforge.plantuml.skin">SkinParam</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(net.sourceforge.plantuml.skin.UmlDiagramType)" class="member-name-link">create</a><wbr>(<a href="UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a>&nbsp;type)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(net.sourceforge.plantuml.skin.UmlDiagramType,net.sourceforge.plantuml.skin.Pragma)" class="member-name-link">create</a><wbr>(<a href="UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a>&nbsp;type,
+ <a href="Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#displayGenericWithOldFashion()" class="member-name-link">displayGenericWithOldFashion</a>()</code></div>
@@ -307,18 +308,18 @@ implements <a href="../style/ISkinParam.html" title="interface in net.sourceforg
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isUseVizJs()" class="member-name-link">isUseVizJs</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#maxAsciiMessageLength()" class="member-name-link">maxAsciiMessageLength</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#legacyReplaceBackslashNByNewline()" class="member-name-link">legacyReplaceBackslashNByNewline</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/LineBreakStrategy.html" title="class in net.sourceforge.plantuml.klimt">LineBreakStrategy</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#maxMessageSize()" class="member-name-link">maxMessageSize</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#maxAsciiMessageLength()" class="member-name-link">maxAsciiMessageLength</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#muteStyle(net.sourceforge.plantuml.style.Style)" class="member-name-link">muteStyle</a><wbr>(<a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&nbsp;modifiedStyle)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../klimt/LineBreakStrategy.html" title="class in net.sourceforge.plantuml.klimt">LineBreakStrategy</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#maxMessageSize()" class="member-name-link">maxMessageSize</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SkinParam.html" title="class in net.sourceforge.plantuml.skin">SkinParam</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#noShadowing(net.sourceforge.plantuml.skin.UmlDiagramType)" class="member-name-link">noShadowing</a><wbr>(<a href="UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a>&nbsp;type)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#muteStyle(net.sourceforge.plantuml.style.Style)" class="member-name-link">muteStyle</a><wbr>(<a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&nbsp;modifiedStyle)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../svek/PackageStyle.html" title="enum class in net.sourceforge.plantuml.svek">PackageStyle</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#packageStyle()" class="member-name-link">packageStyle</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -539,15 +540,10 @@ implements <a href="../style/ISkinParam.html" title="interface in net.sourceforg
 </section>
 </li>
 <li>
-<section class="detail" id="create(net.sourceforge.plantuml.skin.UmlDiagramType)">
+<section class="detail" id="create(net.sourceforge.plantuml.skin.UmlDiagramType,net.sourceforge.plantuml.skin.Pragma)">
 <h3>create</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SkinParam.html" title="class in net.sourceforge.plantuml.skin">SkinParam</a></span>&nbsp;<span class="element-name">create</span><wbr><span class="parameters">(<a href="UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a>&nbsp;type)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="noShadowing(net.sourceforge.plantuml.skin.UmlDiagramType)">
-<h3>noShadowing</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SkinParam.html" title="class in net.sourceforge.plantuml.skin">SkinParam</a></span>&nbsp;<span class="element-name">noShadowing</span><wbr><span class="parameters">(<a href="UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a>&nbsp;type)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SkinParam.html" title="class in net.sourceforge.plantuml.skin">SkinParam</a></span>&nbsp;<span class="element-name">create</span><wbr><span class="parameters">(<a href="UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a>&nbsp;type,
+ <a href="Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma)</span></div>
 </section>
 </li>
 <li>
@@ -1320,6 +1316,16 @@ implements <a href="../style/ISkinParam.html" title="interface in net.sourceforg
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../style/ISkinParam.html#arrows()">arrows</a></code>&nbsp;in interface&nbsp;<code><a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="legacyReplaceBackslashNByNewline()">
+<h3>legacyReplaceBackslashNByNewline</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">legacyReplaceBackslashNByNewline</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../style/ISkinSimple.html#legacyReplaceBackslashNByNewline()">legacyReplaceBackslashNByNewline</a></code>&nbsp;in interface&nbsp;<code><a href="../style/ISkinSimple.html" title="interface in net.sourceforge.plantuml.style">ISkinSimple</a></code></dd>
 </dl>
 </section>
 </li>
