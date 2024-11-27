@@ -66,7 +66,7 @@ public class CompositeDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public CompositeDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
-		return new CompositeDiagram(source, skinParam);
+	public CompositeDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
+		return new CompositeDiagram(source, skinMap);
 	}
 }

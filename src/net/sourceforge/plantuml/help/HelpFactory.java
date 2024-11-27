@@ -47,7 +47,7 @@ public class HelpFactory extends PSystemCommandFactory {
 	// ::comment when __HAXE__
 
 	@Override
-	public Help createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
+	public Help createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
 		return new Help(source);
 	}
 

@@ -146,7 +146,7 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public GanttDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
+	public GanttDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
 		return new GanttDiagram(source);
 	}
 

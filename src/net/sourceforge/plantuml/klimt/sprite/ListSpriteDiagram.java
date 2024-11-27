@@ -62,8 +62,8 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 public class ListSpriteDiagram extends UmlDiagram {
 	// ::remove file when __CORE__
 
-	public ListSpriteDiagram(UmlSource source, Map<String, String> skinParam) {
-		super(source, UmlDiagramType.HELP, skinParam);
+	public ListSpriteDiagram(UmlSource source, Map<String, String> skinMap) {
+		super(source, UmlDiagramType.HELP, skinMap);
 	}
 
 	public DiagramDescription getDescription() {

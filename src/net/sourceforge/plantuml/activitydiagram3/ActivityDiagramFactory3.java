@@ -158,8 +158,8 @@ public class ActivityDiagramFactory3 extends PSystemCommandFactory {
 	}
 
 	@Override
-	public ActivityDiagram3 createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
-		return new ActivityDiagram3(source, skinParam);
+	public ActivityDiagram3 createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
+		return new ActivityDiagram3(source, skinMap);
 	}
 
 }

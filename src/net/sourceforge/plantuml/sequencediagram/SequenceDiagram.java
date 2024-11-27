@@ -95,8 +95,8 @@ public class SequenceDiagram extends UmlDiagram {
 
 	private final Rose skin2 = new Rose();
 
-	public SequenceDiagram(UmlSource source, Map<String, String> skinParam) {
-		super(source, UmlDiagramType.SEQUENCE, skinParam);
+	public SequenceDiagram(UmlSource source, Map<String, String> skinMap) {
+		super(source, UmlDiagramType.SEQUENCE, skinMap);
 	}
 
 	@Deprecated

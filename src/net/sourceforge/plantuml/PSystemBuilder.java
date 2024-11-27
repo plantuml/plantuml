@@ -125,7 +125,7 @@ public class PSystemBuilder {
 	public static final long startTime = System.currentTimeMillis();
 
 	final public Diagram createPSystem(List<StringLocated> source, List<StringLocated> rawSource,
-			Map<String, String> skinParam) {
+			Map<String, String> skinMap) {
 
 		WasmLog.log("..compiling diagram...");
 
@@ -157,7 +157,7 @@ public class PSystemBuilder {
 					continue;
 
 				// WasmLog.log("...trying " + systemFactory.getClass().getName() + " ...");
-				final Diagram sys = systemFactory.createSystem(umlSource, skinParam);
+				final Diagram sys = systemFactory.createSystem(umlSource, skinMap);
 				if (isOk(sys)) {
 					result = sys;
 					return sys;

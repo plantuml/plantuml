@@ -67,7 +67,7 @@ public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSy
 	}
 
 	@Override
-	final public Diagram createSystem(UmlSource source, Map<String, String> skinParam) {
+	final public Diagram createSystem(UmlSource source, Map<String, String> skinMap) {
 		source = source.removeInitialSkinparam();
 		final IteratorCounter2 it = source.iterator2();
 		final StringLocated startLine = it.next();

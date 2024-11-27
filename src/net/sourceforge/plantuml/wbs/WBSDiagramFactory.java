@@ -60,7 +60,7 @@ public class WBSDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public WBSDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
+	public WBSDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
 		return new WBSDiagram(source);
 	}
 

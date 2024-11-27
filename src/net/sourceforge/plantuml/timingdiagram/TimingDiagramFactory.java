@@ -68,7 +68,7 @@ import net.sourceforge.plantuml.timingdiagram.command.CommandUseDateFormat;
 public class TimingDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public TimingDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
+	public TimingDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
 		return new TimingDiagram(source);
 	}
 

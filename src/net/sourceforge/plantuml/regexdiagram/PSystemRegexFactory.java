@@ -57,7 +57,7 @@ public class PSystemRegexFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public PSystemRegex createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
+	public PSystemRegex createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
 		return new PSystemRegex(source);
 	}
 

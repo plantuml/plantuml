@@ -62,7 +62,7 @@ public class PSystemEbnfFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public PSystemEbnf createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
+	public PSystemEbnf createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
 		return new PSystemEbnf(source);
 	}
 

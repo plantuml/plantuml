@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
 public class PSystemWelcomeFactory implements PSystemFactory {
 
 	@Override
-	public Diagram createSystem(UmlSource source, Map<String, String> skinParam) {
+	public Diagram createSystem(UmlSource source, Map<String, String> skinMap) {
 		if (source.getTotalLineCount() == 2)
 			return new PSystemWelcome(source, GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT);
 

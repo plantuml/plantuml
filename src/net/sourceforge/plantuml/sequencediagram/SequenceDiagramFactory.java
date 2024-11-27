@@ -83,8 +83,8 @@ import net.sourceforge.plantuml.sequencediagram.command.CommandUrl;
 public class SequenceDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public SequenceDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
-		return new SequenceDiagram(source, skinParam);
+	public SequenceDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
+		return new SequenceDiagram(source, skinMap);
 	}
 
 	@Override

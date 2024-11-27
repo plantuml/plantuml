@@ -58,7 +58,7 @@ public class HclDiagramFactory extends PSystemAbstractFactory {
 	}
 
 	@Override
-	public Diagram createSystem(UmlSource source, Map<String, String> skinParam) {
+	public Diagram createSystem(UmlSource source, Map<String, String> skinMap) {
 		final List<Highlighted> highlighted = new ArrayList<>();
 		JsonValue data = null;
 		StyleExtractor styleExtractor = null;

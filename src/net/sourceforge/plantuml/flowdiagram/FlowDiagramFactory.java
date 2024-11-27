@@ -50,7 +50,7 @@ public class FlowDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public FlowDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
+	public FlowDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
 		return new FlowDiagram(source);
 	}
 

@@ -52,7 +52,7 @@ public class NwDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public NwDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
+	public NwDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
 		return new NwDiagram(source);
 	}
 

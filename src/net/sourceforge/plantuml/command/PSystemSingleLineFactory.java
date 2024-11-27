@@ -58,7 +58,7 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 	}
 
 	@Override
-	final public Diagram createSystem(UmlSource source, Map<String, String> skinParam) {
+	final public Diagram createSystem(UmlSource source, Map<String, String> skinMap) {
 
 		if (source.getTotalLineCount() != 3)
 			return null;

@@ -57,8 +57,8 @@ public class ActivityDiagram extends CucaDiagram {
 	private Entity lastEntityBrancheConsulted;
 	private ConditionalContext currentContext;
 
-	public ActivityDiagram(UmlSource source, Map<String, String> skinParam) {
-		super(source, UmlDiagramType.ACTIVITY, skinParam);
+	public ActivityDiagram(UmlSource source, Map<String, String> skinMap) {
+		super(source, UmlDiagramType.ACTIVITY, skinMap);
 		setNamespaceSeparator(null);
 	}
 

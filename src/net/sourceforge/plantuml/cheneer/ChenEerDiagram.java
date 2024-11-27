@@ -44,8 +44,8 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ChenEerDiagram extends AbstractEntityDiagram {
 
-	public ChenEerDiagram(UmlSource source, Map<String, String> skinParam) {
-		super(source, UmlDiagramType.CHEN_EER, skinParam);
+	public ChenEerDiagram(UmlSource source, Map<String, String> skinMap) {
+		super(source, UmlDiagramType.CHEN_EER, skinMap);
 	}
 
 	private final Stack<Entity> ownerStack = new Stack<Entity>();

@@ -69,8 +69,8 @@ import net.sourceforge.plantuml.regex.RegexOr;
 public class DescriptionDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public DescriptionDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
-		return new DescriptionDiagram(source, skinParam);
+	public DescriptionDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
+		return new DescriptionDiagram(source, skinMap);
 	}
 
 	@Override

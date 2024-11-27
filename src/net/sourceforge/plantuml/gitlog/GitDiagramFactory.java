@@ -51,7 +51,7 @@ public class GitDiagramFactory extends PSystemAbstractFactory {
 	}
 
 	@Override
-	public Diagram createSystem(UmlSource source, Map<String, String> skinParam) {
+	public Diagram createSystem(UmlSource source, Map<String, String> skinMap) {
 		final GitTextArea textArea = new GitTextArea();
 
 		final Iterator<StringLocated> it = source.iterator2();

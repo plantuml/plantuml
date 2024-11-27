@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 
 public interface PSystemFactory {
 
-	Diagram createSystem(UmlSource source, Map<String, String> skinParam);
+	Diagram createSystem(UmlSource source, Map<String, String> skinMap);
 
 	DiagramType getDiagramType();
 

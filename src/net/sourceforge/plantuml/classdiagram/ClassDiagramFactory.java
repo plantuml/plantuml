@@ -86,8 +86,8 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 public class ClassDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public ClassDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
-		return new ClassDiagram(source, skinParam);
+	public ClassDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
+		return new ClassDiagram(source, skinMap);
 	}
 
 	@Override

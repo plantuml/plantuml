@@ -75,8 +75,8 @@ public class StdlibDiagram extends UmlDiagram {
 	private static final int WIDTH = 1800;
 	private String name;
 
-	public StdlibDiagram(UmlSource source, Map<String, String> skinParam) {
-		super(source, UmlDiagramType.HELP, skinParam);
+	public StdlibDiagram(UmlSource source, Map<String, String> skinMap) {
+		super(source, UmlDiagramType.HELP, skinMap);
 	}
 
 	public DiagramDescription getDescription() {

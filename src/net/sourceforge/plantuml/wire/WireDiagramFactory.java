@@ -63,7 +63,7 @@ public class WireDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public WireDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
+	public WireDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
 		return new WireDiagram(source);
 	}
 

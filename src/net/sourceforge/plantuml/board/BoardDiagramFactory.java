@@ -64,7 +64,7 @@ public class BoardDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public BoardDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
+	public BoardDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
 		return new BoardDiagram(source);
 	}
 

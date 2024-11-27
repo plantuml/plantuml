@@ -48,8 +48,8 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class DescriptionDiagram extends AbstractEntityDiagram {
 
-	public DescriptionDiagram(UmlSource source, Map<String, String> skinParam) {
-		super(source, UmlDiagramType.DESCRIPTION, skinParam);
+	public DescriptionDiagram(UmlSource source, Map<String, String> skinMap) {
+		super(source, UmlDiagramType.DESCRIPTION, skinMap);
 	}
 
 	@Override

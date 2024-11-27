@@ -72,8 +72,8 @@ public class ChenEerDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public AbstractPSystem createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
-		return new ChenEerDiagram(source, skinParam);
+	public AbstractPSystem createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
+		return new ChenEerDiagram(source, skinMap);
 	}
 
 }

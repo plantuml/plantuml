@@ -50,7 +50,7 @@ public class FilesDiagramFactory extends PSystemAbstractFactory {
 	}
 
 	@Override
-	public Diagram createSystem(UmlSource source, Map<String, String> skinParam) {
+	public Diagram createSystem(UmlSource source, Map<String, String> skinMap) {
 		final StyleExtractor styleExtractor = new StyleExtractor(source.iterator2());
 
 		return new FilesDiagram(source, styleExtractor);

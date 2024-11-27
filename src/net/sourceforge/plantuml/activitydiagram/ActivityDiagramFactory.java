@@ -60,8 +60,8 @@ public class ActivityDiagramFactory extends PSystemCommandFactory {
     // ::remove folder when __HAXE__
 
 	@Override
-	public ActivityDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
-		return new ActivityDiagram(source, skinParam);
+	public ActivityDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
+		return new ActivityDiagram(source, skinMap);
 	}
 
 	@Override

@@ -119,7 +119,7 @@ public class ChronologyDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public ChronologyDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
+	public ChronologyDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
 		return new ChronologyDiagram(source);
 	}
 

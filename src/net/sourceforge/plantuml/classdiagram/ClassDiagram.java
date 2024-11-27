@@ -53,8 +53,8 @@ import net.sourceforge.plantuml.svek.image.EntityImageClass;
 
 public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
-	public ClassDiagram(UmlSource source, Map<String, String> skinParam) {
-		super(source, UmlDiagramType.CLASS, skinParam);
+	public ClassDiagram(UmlSource source, Map<String, String> skinMap) {
+		super(source, UmlDiagramType.CLASS, skinMap);
 	}
 
 	private boolean allowMixing;

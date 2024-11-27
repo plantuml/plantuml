@@ -46,6 +46,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.code.AsciiEncoder;
@@ -76,7 +77,7 @@ public class BlockUml {
 	private List<StringLocated> debug;
 	private Diagram system;
 	private final Defines localDefines;
-	private final ISkinSimple skinParam;
+	private final Map<String, String> skinMap;
 	private final Set<FileWithSuffix> included = new HashSet<>();
 
 	public Set<FileWithSuffix> getIncluded() {
@@ -128,15 +129,16 @@ public class BlockUml {
 	 *             are using this?
 	 */
 	@Deprecated
-	public BlockUml(List<StringLocated> strings, Defines defines, ISkinSimple skinParam, PreprocessorModeSet mode) {
-		this(strings, defines, skinParam, mode, charsetOrDefault(mode.getCharset()));
+	public BlockUml(List<StringLocated> strings, Defines defines, Map<String, String> skinMap,
+			PreprocessorModeSet mode) {
+		this(strings, defines, skinMap, mode, charsetOrDefault(mode.getCharset()));
 	}
 
-	public BlockUml(List<StringLocated> strings, Defines defines, ISkinSimple skinParam, PreprocessorModeSet mode,
+	public BlockUml(List<StringLocated> strings, Defines defines, Map<String, String> skinMap, PreprocessorModeSet mode,
 			Charset charset) {
 		this.rawSource = ReadLineWithYamlHeader.removeYamlHeader(strings);
 		this.localDefines = defines;
-		this.skinParam = skinParam;
+		this.skinMap = skinMap;
 		final String s0 = this.rawSource.get(0).getTrimmed().getString();
 		if (StartUtils.startsWithSymbolAnd("start", s0) == false)
 			throw new IllegalArgumentException();
@@ -188,8 +190,7 @@ public class BlockUml {
 			if (preprocessorError)
 				system = new PSystemErrorPreprocessor(data, debug);
 			else
-				system = new PSystemBuilder().createPSystem(data, rawSource,
-						skinParam == null ? Collections.<String, String>emptyMap() : skinParam.values());
+				system = new PSystemBuilder().createPSystem(data, rawSource, skinMap);
 		}
 		return system;
 	}

@@ -54,8 +54,8 @@ public class ListSpriteDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public ListSpriteDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
-		return new ListSpriteDiagram(source, skinParam);
+	public ListSpriteDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
+		return new ListSpriteDiagram(source, skinMap);
 	}
 
 }

@@ -64,7 +64,7 @@ public class MindMapDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public MindMapDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
+	public MindMapDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
 		return new MindMapDiagram(source);
 	}
 

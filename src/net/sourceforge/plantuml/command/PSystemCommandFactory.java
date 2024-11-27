@@ -61,7 +61,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 	protected abstract void initCommandsList(List<Command> cmds);
 
-	public abstract AbstractPSystem createEmptyDiagram(UmlSource source, Map<String, String> skinParam);
+	public abstract AbstractPSystem createEmptyDiagram(UmlSource source, Map<String, String> skinMap);
 
 	protected PSystemCommandFactory() {
 		this(DiagramType.UML);
@@ -72,7 +72,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 	}
 
 	@Override
-	final public Diagram createSystem(UmlSource source, Map<String, String> skinParam) {
+	final public Diagram createSystem(UmlSource source, Map<String, String> skinMap) {
 		IteratorCounter2 it = source.iterator2();
 		final StringLocated startLine = it.next();
 		if (StartUtils.isArobaseStartDiagram(startLine.getString()) == false)
@@ -84,7 +84,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 			return buildEmptyError(source, startLine.getLocation(), it.getTrace());
 		}
-		AbstractPSystem sys = createEmptyDiagram(source, skinParam);
+		AbstractPSystem sys = createEmptyDiagram(source, skinMap);
 
 		final Set<ParserPass> requiredPass = sys.getRequiredPass();
 

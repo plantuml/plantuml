@@ -55,8 +55,8 @@ public class StateDiagram extends AbstractEntityDiagram {
 
 	private static final String CONCURRENT_PREFIX = "CONC";
 
-	public StateDiagram(UmlSource source, Map<String, String> skinParam) {
-		super(source, UmlDiagramType.STATE, skinParam);
+	public StateDiagram(UmlSource source, Map<String, String> skinMap) {
+		super(source, UmlDiagramType.STATE, skinMap);
 		setNamespaceSeparator(".");
 	}
 

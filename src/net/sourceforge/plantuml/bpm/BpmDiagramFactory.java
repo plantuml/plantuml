@@ -62,7 +62,7 @@ public class BpmDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public AbstractPSystem createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
+	public AbstractPSystem createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
 		return new BpmDiagram(source);
 	}
 

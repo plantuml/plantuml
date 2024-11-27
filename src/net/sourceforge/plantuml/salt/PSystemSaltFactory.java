@@ -61,7 +61,7 @@ public class PSystemSaltFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public PSystemSalt createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
+	public PSystemSalt createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
 		final PSystemSalt result = new PSystemSalt(source);
 		if (getDiagramType() == DiagramType.SALT) {
 			result.setIamSalt(true);

@@ -51,8 +51,8 @@ public class StdlibDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public StdlibDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
-		return new StdlibDiagram(source, skinParam);
+	public StdlibDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
+		return new StdlibDiagram(source, skinMap);
 	}
 
 }

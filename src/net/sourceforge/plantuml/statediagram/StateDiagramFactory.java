@@ -69,8 +69,8 @@ import net.sourceforge.plantuml.statediagram.command.CommandLinkStateReverse;
 public class StateDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public StateDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinParam) {
-		return new StateDiagram(source, skinParam);
+	public StateDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
+		return new StateDiagram(source, skinMap);
 	}
 
 	@Override
