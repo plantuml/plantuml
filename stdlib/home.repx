@@ -1,6 +1,8 @@
 archimate
 aws
 awslib
+awslib10
+awslib14
 azure
 c4
 classy
@@ -12,8 +14,8 @@ edgy
 eip
 elastic
 gcp
-kubernetes
 k8s
+kubernetes
 logos
 material
 office
