@@ -73,11 +73,12 @@ Each Gitmoji corresponds to a specific type of change:
 #### Guidelines for Using Gitmoji
 - Place the corresponding emoji at the beginning of the **description** in the commit message header.
 - Ensure the emoji aligns with the type and purpose of the change.
+- Ensure a space is added immediately after the emoji.
 - Examples:
-  - `✨feat: add user authentication module`
-  - `🐛fix: resolve issue with null pointer exception`
-  - `🌱chore: add initial database seed script`
-  - `📝docs: update README with installation instructions`
-  - `🔥chore: remove deprecated API endpoints`
+  - `✨ feat: add user authentication module`
+  - `🐛 fix: resolve issue with null pointer exception`
+  - `🌱 chore: add initial database seed script`
+  - `📝 docs: update README with installation instructions`
+  - `🔥 chore: remove deprecated API endpoints`
   
 Using Gitmoji is optional but can make commit messages more engaging and informative.
