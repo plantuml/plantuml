@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.ebnf.ETileNamedGroup;
 import net.sourceforge.plantuml.ebnf.ETileOneOrMore;
 import net.sourceforge.plantuml.ebnf.ETileOptional;
 import net.sourceforge.plantuml.ebnf.ETileRegexGroup;
+import net.sourceforge.plantuml.ebnf.ETileRegexGroupAllBut;
 import net.sourceforge.plantuml.ebnf.ETileZeroOrMore;
 import net.sourceforge.plantuml.ebnf.Symbol;
 import net.sourceforge.plantuml.jsondiagram.StyleExtractor;
@@ -200,7 +201,10 @@ public class PSystemRegex extends TitledDiagram {
 
 	private void pushRegexGroup(ReToken element) {
 		final List<String> elements = new GroupSplitter().split(element.getData());
-		stack.addFirst(new ETileRegexGroup(elements, fontConfiguration, style, colorSet, getSkinParam()));
+		if (elements.get(0).equals("^"))
+			stack.addFirst(new ETileRegexGroupAllBut(elements, fontConfiguration, style, colorSet, getSkinParam()));
+		else
+			stack.addFirst(new ETileRegexGroup(elements, fontConfiguration, style, colorSet, getSkinParam()));
 	}
 
 	private void lookAheadOrBehind(String name) {

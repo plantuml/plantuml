@@ -39,8 +39,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.jaws.JawsStrange;
+
 public class GroupSplitter {
 
+	@JawsStrange
 	public List<String> split(String group) {
 		final List<String> result = new ArrayList<>();
 		for (int i = 0; i < group.length(); i++) {
@@ -48,7 +51,8 @@ public class GroupSplitter {
 				result.add("" + group.substring(i, i + 3));
 				i += 2;
 			} else if (i + 1 < group.length() && group.charAt(i) == '\\') {
-				// Just skip it
+				result.add("" + group.substring(i, i + 2));
+				i++;
 			} else
 				result.add("" + group.charAt(i));
 		}
