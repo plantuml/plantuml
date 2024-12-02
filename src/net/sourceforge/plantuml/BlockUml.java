@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemErrorPreprocessor;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.CommentEmoji;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
@@ -136,7 +137,7 @@ public class BlockUml {
 
 	public BlockUml(List<StringLocated> strings, Defines defines, Map<String, String> skinMap, PreprocessorModeSet mode,
 			Charset charset) {
-		this.rawSource = ReadLineWithYamlHeader.removeYamlHeader(strings);
+		this.rawSource = ReadLineWithYamlHeader.removeYamlHeader(CommentEmoji.remove(strings));
 		this.localDefines = defines;
 		this.skinMap = skinMap;
 		final String s0 = this.rawSource.get(0).getTrimmed().getString();
