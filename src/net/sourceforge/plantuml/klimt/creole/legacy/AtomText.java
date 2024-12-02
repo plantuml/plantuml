@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Neutron;
@@ -69,6 +70,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 	private final Url url;
 	private final boolean manageSpecialChars;
 
+	@JawsStrange
 	protected AtomText(String text, FontConfiguration style, Url url, DelayedDouble marginLeft,
 			DelayedDouble marginRight, boolean manageSpecialChars) {
 //		if (text.contains("" + BackSlash.hiddenNewLine()))

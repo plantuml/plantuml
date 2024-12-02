@@ -72,6 +72,8 @@ Each Gitmoji corresponds to a specific type of change:
 | 🚧      | Work in progress (WIP)                    | `chore`                   |
 | 📦️      | Add or update compiled files or packages  | `chore`                   |
 | ⚗️      | Perform experiments                       | `chore`                   |
+| 🎉      | Publish an official release               | `chore`                   |
+| 👷      | Add or update CI build system              | `chore`                   |
 
 #### Guidelines for Using Gitmoji
 - Place the corresponding emoji at the beginning of the **description** in the commit message header.
