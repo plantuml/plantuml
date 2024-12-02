@@ -62,8 +62,8 @@ public class CreoleStripeSimpleParser {
 
 	public CreoleStripeSimpleParser(String line, CreoleContext creoleContext, FontConfiguration fontConfiguration,
 			ISkinSimple skinParam, CreoleMode mode) {
-		if (line.contains("" + BackSlash.hiddenNewLine()))
-			throw new IllegalArgumentException(line);
+//		if (line.contains("" + BackSlash.hiddenNewLine()))
+//			throw new IllegalArgumentException(line);
 
 		this.fontConfiguration = fontConfiguration;
 		this.modeSimpleLine = mode;

@@ -213,8 +213,8 @@ public class StripeSimple implements Stripe {
 	}
 
 	public void analyzeAndAdd(String line) {
-		if (Objects.requireNonNull(line).contains("" + BackSlash.hiddenNewLine()))
-			throw new IllegalArgumentException(line);
+//		if (Objects.requireNonNull(line).contains("" + BackSlash.hiddenNewLine()))
+//			throw new IllegalArgumentException(line);
 
 		line = CharHidder.hide(line);
 		if (style.getType() == StripeStyleType.HEADING) {

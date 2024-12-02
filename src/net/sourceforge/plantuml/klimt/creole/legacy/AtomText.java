@@ -71,8 +71,8 @@ public final class AtomText extends AbstractAtom implements Atom {
 
 	protected AtomText(String text, FontConfiguration style, Url url, DelayedDouble marginLeft,
 			DelayedDouble marginRight, boolean manageSpecialChars) {
-		if (text.contains("" + BackSlash.hiddenNewLine()))
-			throw new IllegalArgumentException(text);
+//		if (text.contains("" + BackSlash.hiddenNewLine()))
+//			throw new IllegalArgumentException(text);
 
 		this.marginLeft = marginLeft;
 		this.marginRight = marginRight;
