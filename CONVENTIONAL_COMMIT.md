@@ -70,6 +70,7 @@ Each Gitmoji corresponds to a specific type of change:
 | 🌱      | Adding or updating a seed file       | `chore`                    |
 | 🔥      | Removing code or files               | `chore`                    |
 | 🚧      | Work in progress (WIP)              | `chore`                    |
+| 📦️      | Add or update compiled files or packages| `chore`                    |
 
 #### Guidelines for Using Gitmoji
 - Place the corresponding emoji at the beginning of the **description** in the commit message header.
