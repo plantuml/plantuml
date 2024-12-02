@@ -55,22 +55,23 @@ The subject contains succinct description of the change:
 
 Each Gitmoji corresponds to a specific type of change:
 
-| Emoji   | Description                          | Conventional Commit Type   |
-|---------|--------------------------------------|----------------------------|
-| ✨      | Introducing new features             | `feat`                     |
-| 🐛      | Fixing a bug                         | `fix`                      |
-| 📝      | Writing or updating documentation    | `docs`                     |
-| 🎨      | Improving code structure/style       | `style`                    |
-| ♻️      | Refactoring code                    | `refactor`                 |
-| ⚡️      | Improving performance                | `perf`                     |
-| ✅      | Adding or updating tests             | `test`                     |
-| 🔧      | Changes to configuration files       | `chore`                    |
-| 🚀      | Deployment-related changes           | `chore`                    |
-| 🔒      | Fixing security issues               | `fix`                      |
-| 🌱      | Adding or updating a seed file       | `chore`                    |
-| 🔥      | Removing code or files               | `chore`                    |
-| 🚧      | Work in progress (WIP)              | `chore`                    |
-| 📦️      | Add or update compiled files or packages| `chore`                    |
+| Emoji   | Description                                | Conventional Commit Type   |
+|---------|--------------------------------------------|----------------------------|
+| ✨      | Introducing new features                   | `feat`                    |
+| 🐛      | Fixing a bug                               | `fix`                     |
+| 📝      | Writing or updating documentation          | `docs`                    |
+| 🎨      | Improving code structure/style             | `style`                   |
+| ♻️      | Refactoring code                           | `refactor`                |
+| ⚡️      | Improving performance                      | `perf`                    |
+| ✅      | Adding or updating tests                   | `test`                    |
+| 🔧      | Changes to configuration files             | `chore`                   |
+| 🚀      | Deployment-related changes                 | `chore`                   |
+| 🔒      | Fixing security issues                     | `fix`                     |
+| 🌱      | Adding or updating a seed file             | `chore`                   |
+| 🔥      | Removing code or files                     | `chore`                   |
+| 🚧      | Work in progress (WIP)                    | `chore`                   |
+| 📦️      | Add or update compiled files or packages  | `chore`                   |
+| ⚗️      | Perform experiments                       | `chore`                   |
 
 #### Guidelines for Using Gitmoji
 - Place the corresponding emoji at the beginning of the **description** in the commit message header.
