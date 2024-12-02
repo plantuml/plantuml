@@ -195,7 +195,7 @@ public class ETileBox extends ETile {
 		if (commentAbove == null)
 			return TextBlockUtils.EMPTY_TEXT_BLOCK;
 
-		final FloatingNote note = FloatingNote.createOpale(Display.getWithNewlines(false, commentAbove), skinParam,
+		final FloatingNote note = FloatingNote.createOpale(Display.getWithNewlines(skinParam.getPragma(), commentAbove), skinParam,
 				SName.ebnf);
 		final XDimension2D dim = note.calculateDimension(stringBounder);
 		final double pos = dim.getWidth() * .5;
@@ -209,7 +209,7 @@ public class ETileBox extends ETile {
 		if (commentBelow == null)
 			return TextBlockUtils.EMPTY_TEXT_BLOCK;
 
-		final FloatingNote note = FloatingNote.createOpale(Display.getWithNewlines(false, commentBelow), skinParam,
+		final FloatingNote note = FloatingNote.createOpale(Display.getWithNewlines(skinParam.getPragma(), commentBelow), skinParam,
 				SName.ebnf);
 		final XDimension2D dim = note.calculateDimension(stringBounder);
 		final double pos = dim.getWidth() * .5;

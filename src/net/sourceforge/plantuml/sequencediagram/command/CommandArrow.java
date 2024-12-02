@@ -156,16 +156,16 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		final Display display;
 		if (arg2.get(n + "CODE", 0) != null) {
 			code = arg2.get(n + "CODE", 0);
-			display = Display.getWithNewlines(system.legacyReplaceBackslashNByNewline(), code);
+			display = Display.getWithNewlines(system.getPragma(), code);
 		} else if (arg2.get(n + "LONG", 0) != null) {
 			code = arg2.get(n + "LONG", 0);
-			display = Display.getWithNewlines(system.legacyReplaceBackslashNByNewline(), code);
+			display = Display.getWithNewlines(system.getPragma(), code);
 		} else if (arg2.get(n + "LONGCODE", 0) != null) {
-			display = Display.getWithNewlines(system.legacyReplaceBackslashNByNewline(), arg2.get(n + "LONGCODE", 0));
+			display = Display.getWithNewlines(system.getPragma(), arg2.get(n + "LONGCODE", 0));
 			code = arg2.get(n + "LONGCODE", 1);
 		} else if (arg2.get(n + "CODELONG", 0) != null) {
 			code = arg2.get(n + "CODELONG", 0);
-			display = Display.getWithNewlines(system.legacyReplaceBackslashNByNewline(), arg2.get(n + "CODELONG", 1));
+			display = Display.getWithNewlines(system.getPragma(), arg2.get(n + "CODELONG", 1));
 			return system.getOrCreateParticipant(code, display);
 		} else {
 			throw new IllegalStateException();
@@ -257,7 +257,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		} else {
 			// final String message = UrlBuilder.multilineTooltip(arg.get("MESSAGE", 0));
 			final String message = arg.get("MESSAGE", 0);
-			labels = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), message);
+			labels = Display.getWithNewlines(diagram.getPragma(), message);
 		}
 
 		ArrowConfiguration config = hasDressing1butx && hasDressing2butx ? ArrowConfiguration.withDirectionBoth()

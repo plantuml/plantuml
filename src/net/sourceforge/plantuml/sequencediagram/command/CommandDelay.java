@@ -62,7 +62,7 @@ public class CommandDelay extends SingleLineCommand2<SequenceDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final Display strings = arg.get("LABEL", 0) == null ? Display.empty()
-				: Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("LABEL", 0));
+				: Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));
 		diagram.delay(strings);
 		return CommandExecutionResult.ok();
 	}

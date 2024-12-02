@@ -96,7 +96,7 @@ public class CommandReturn extends SingleLineCommand2<SequenceDiagram> {
 		if (color != null)
 			arrow = arrow.withColor(HColorSet.instance().getColor(color));
 
-		final Display display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("MESSAGE", 0));
+		final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get("MESSAGE", 0));
 		final AbstractMessage message2;
 		if (message1 instanceof MessageExo) {
 			final MessageExo exo1 = (MessageExo) message1;

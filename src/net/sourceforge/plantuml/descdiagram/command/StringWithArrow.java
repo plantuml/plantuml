@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockArrow2;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.svek.GuideLine;
 
@@ -97,8 +98,8 @@ public class StringWithArrow {
 		return linkArrow;
 	}
 
-	public final Display getDisplay(boolean flag) {
-		return Display.getWithNewlines(flag, label);
+	public final Display getDisplay(Pragma pragma) {
+		return Display.getWithNewlines(pragma, label);
 	}
 
 	static public TextBlock addMagicArrow(TextBlock label, GuideLine guide, FontConfiguration font) {
@@ -116,7 +117,7 @@ public class StringWithArrow {
 		TextBlock result = TextBlockUtils.EMPTY_TEXT_BLOCK;
 		for (CharSequence cs : label) {
 			StringWithArrow tmp = new StringWithArrow(cs.toString());
-			TextBlock block = tmp.getDisplay(skinParam.legacyReplaceBackslashNByNewline()).create9(font, alignment, skinParam, skinParam.maxMessageSize());
+			TextBlock block = tmp.getDisplay(skinParam.getPragma()).create9(font, alignment, skinParam, skinParam.maxMessageSize());
 			if (tmp.getLinkArrow() != LinkArrow.NONE_OR_SEVERAL)
 				block = StringWithArrow.addMagicArrow2(block, tmp.getLinkArrow().mute(guide), font);
 

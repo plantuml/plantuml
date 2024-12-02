@@ -100,7 +100,7 @@ public class CommandIf2 extends SingleLineCommand2<ActivityDiagram3> {
 		}
 		final Stereotype stereotype = Stereotype.build(arg.get("STEREO", 0));
 
-		diagram.startIf(Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), test), Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("WHEN", 0)), color, url, stereotype);
+		diagram.startIf(Display.getWithNewlines(diagram.getPragma(), test), Display.getWithNewlines(diagram.getPragma(), arg.get("WHEN", 0)), color, url, stereotype);
 
 		return CommandExecutionResult.ok();
 	}

@@ -143,7 +143,7 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 		if (style == BoxStyle.PLAIN)
 			style = BoxStyle.fromString(arg.get("STYLE", 0));
 
-		final Display display = Display.getWithNewlines2(diagram.legacyReplaceBackslashNByNewline(), arg.get("LABEL", 0));
+		final Display display = Display.getWithNewlines2(diagram.getPragma(), arg.get("LABEL", 0));
 		return diagram.addActivity(display, style, url, colors, stereotype);
 	}
 

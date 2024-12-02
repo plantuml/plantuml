@@ -111,7 +111,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 	private List<Swimlane> swimlanesSpecial() {
 		if (swimlanesSpecial.size() == 0) {
 			swimlanesSpecial.addAll(swimlanesRaw);
-			final Swimlane last = new Swimlane("", Integer.MAX_VALUE);
+			final Swimlane last = new Swimlane("", Integer.MAX_VALUE, pragma);
 			last.setMinMax(MinMax.getEmpty(true));
 			swimlanesSpecial.add(last);
 		}
@@ -165,7 +165,7 @@ public class Swimlanes extends AbstractTextBlock implements TextBlock, Styleable
 			if (s.getName().equals(name))
 				return s;
 
-		final Swimlane result = new Swimlane(name, swimlanesRaw.size());
+		final Swimlane result = new Swimlane(name, swimlanesRaw.size(), pragma);
 		swimlanesRaw.add(result);
 		return result;
 	}

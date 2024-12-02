@@ -316,13 +316,13 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		if (link.getQuantifier1() == null)
 			startTailText = null;
 		else
-			startTailText = Display.getWithNewlines(skinParam.legacyReplaceBackslashNByNewline(), link.getQuantifier1()).create(cardinalityFont,
+			startTailText = Display.getWithNewlines(skinParam.getPragma(), link.getQuantifier1()).create(cardinalityFont,
 					HorizontalAlignment.CENTER, skinParam);
 
 		if (link.getQuantifier2() == null)
 			endHeadText = null;
 		else
-			endHeadText = Display.getWithNewlines(skinParam.legacyReplaceBackslashNByNewline(), link.getQuantifier2()).create(cardinalityFont,
+			endHeadText = Display.getWithNewlines(skinParam.getPragma(), link.getQuantifier2()).create(cardinalityFont,
 					HorizontalAlignment.CENTER, skinParam);
 
 		if (link.getType().getMiddleDecor() == LinkMiddleDecor.NONE)

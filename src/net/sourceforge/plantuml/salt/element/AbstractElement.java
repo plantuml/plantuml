@@ -40,6 +40,7 @@ import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.UFont;
+import net.sourceforge.plantuml.skin.Pragma;
 
 public abstract class AbstractElement implements Element {
 
@@ -79,6 +80,10 @@ public abstract class AbstractElement implements Element {
 
 	final protected FontConfiguration blackBlueTrue(UFont font) {
 		return FontConfiguration.blackBlueTrue(font);
+	}
+	
+	final protected Pragma getPragma() {
+		return Pragma.createEmpty();
 	}
 
 }

@@ -117,7 +117,7 @@ public class Ribbon implements PDrawing {
 	}
 
 	private TextBlock createTextBlock(String value) {
-		final Display display = Display.getWithNewlines(skinParam.legacyReplaceBackslashNByNewline(), value);
+		final Display display = Display.getWithNewlines(skinParam.getPragma(), value);
 		return display.create(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 	}
 

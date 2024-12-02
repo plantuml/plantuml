@@ -114,7 +114,7 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 
 	@Override
 	protected TextBlock getTitle() {
-		return Display.getWithNewlines(false, prettyDisplay).create(getFontConfiguration(), HorizontalAlignment.LEFT,
+		return Display.getWithNewlines(getPragma(), prettyDisplay).create(getFontConfiguration(), HorizontalAlignment.LEFT,
 				new SpriteContainerEmpty());
 	}
 

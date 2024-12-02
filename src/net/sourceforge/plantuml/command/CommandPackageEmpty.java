@@ -95,7 +95,7 @@ public class CommandPackageEmpty extends SingleLineCommand2<AbstractEntityDiagra
 			idShort = arg.get("CODE", 0);
 		}
 		final Quark<Entity> quark = diagram.quarkInContext(false, diagram.cleanId(idShort));
-		final CommandExecutionResult status = diagram.gotoGroup(quark, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), display),
+		final CommandExecutionResult status = diagram.gotoGroup(quark, Display.getWithNewlines(diagram.getPragma(), display),
 				GroupType.PACKAGE);
 		if (status.isOk() == false)
 			return status;

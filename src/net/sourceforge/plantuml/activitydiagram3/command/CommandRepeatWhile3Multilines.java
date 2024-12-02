@@ -93,7 +93,7 @@ public class CommandRepeatWhile3Multilines extends CommandMultilines3<ActivityDi
 		// 0));
 
 		final String test = line0.get("TEST1", 0);
-		Display testDisplay = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), test);
+		Display testDisplay = Display.getWithNewlines(diagram.getPragma(), test);
 		for (StringLocated s : lines.subExtract(1, 1)) {
 			testDisplay = testDisplay.add(s.getString());
 		}

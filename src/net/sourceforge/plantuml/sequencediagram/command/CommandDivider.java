@@ -63,7 +63,7 @@ public class CommandDivider extends SingleLineCommand2<SequenceDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		final Display strings = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("LABEL", 0));
+		final Display strings = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));
 		diagram.divider(strings);
 		return CommandExecutionResult.ok();
 	}

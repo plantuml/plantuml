@@ -154,7 +154,7 @@ public class CommandPackageWithUSymbol extends SingleLineCommand2<AbstractEntity
 		final USymbol usymbol = USymbols.fromString(symbol, diagram.getSkinParam().actorStyle(),
 				diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());
 
-		final CommandExecutionResult status = diagram.gotoGroup(ident, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), display),
+		final CommandExecutionResult status = diagram.gotoGroup(ident, Display.getWithNewlines(diagram.getPragma(), display),
 				GroupType.PACKAGE, usymbol);
 		if (status.isOk() == false)
 			return status;

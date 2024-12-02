@@ -141,7 +141,7 @@ public class WBSDiagram extends UmlDiagram {
 			label = m.group(1);
 			stereotype = m.group(2);
 		}
-		final Display display = Display.getWithNewlines(legacyReplaceBackslashNByNewline(), label);
+		final Display display = Display.getWithNewlines(getPragma(), label);
 		return addIdea(code, backColor, level, display, Stereotype.build(stereotype), direction, shape);
 	}
 

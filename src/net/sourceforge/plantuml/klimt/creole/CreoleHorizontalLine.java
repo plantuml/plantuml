@@ -83,7 +83,7 @@ public class CreoleHorizontalLine extends AbstractAtom implements Atom {
 			return TextBlockUtils.empty(0, 0);
 
 		final SheetBuilder parser = skinParam.sheet(fontConfiguration, HorizontalAlignment.LEFT, CreoleMode.FULL);
-		final Sheet sheet = parser.createSheet(Display.getWithNewlines(skinParam.legacyReplaceBackslashNByNewline(), line));
+		final Sheet sheet = parser.createSheet(Display.getWithNewlines(skinParam.getPragma(), line));
 		final TextBlock tb = new SheetBlock1(sheet, LineBreakStrategy.NONE, skinParam.getPadding());
 		return tb;
 	}

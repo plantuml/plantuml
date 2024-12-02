@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.skin.Pragma;
 
 public class Swimlane implements SpecificBackcolorable, Comparable<Swimlane> {
 
@@ -54,9 +55,9 @@ public class Swimlane implements SpecificBackcolorable, Comparable<Swimlane> {
 	private UTranslate translate = UTranslate.none();
 	private double actualWidth;
 
-	public Swimlane(String name, int order) {
+	public Swimlane(String name, int order, Pragma pragma) {
 		this.name = name;
-		this.display = Display.getWithNewlines(false, name);
+		this.display = Display.getWithNewlines(pragma, name);
 		this.order = order;
 
 	}

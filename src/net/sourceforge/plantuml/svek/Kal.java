@@ -98,7 +98,7 @@ public class Kal implements UDrawable {
 
 		final FontConfiguration font = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 
-		this.textBlock = Display.getWithNewlines(skinParam.legacyReplaceBackslashNByNewline(), text).create7(font, HorizontalAlignment.LEFT, skinParam,
+		this.textBlock = Display.getWithNewlines(skinParam.getPragma(), text).create7(font, HorizontalAlignment.LEFT, skinParam,
 				CreoleMode.SIMPLE_LINE);
 
 		this.dim = this.textBlock.calculateDimension(stringBounder).delta(4, 2);

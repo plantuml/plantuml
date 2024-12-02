@@ -134,7 +134,7 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 
 		Entity ent = quark.getData();
 		if (ent == null)
-			ent = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), display), type, null);
+			ent = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(diagram.getPragma(), display), type, null);
 		else
 			diagram.setLastEntity(ent);
 		
@@ -142,7 +142,7 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 
 		if (currentPass == ParserPass.ONE) {
 
-			ent.setDisplay(Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), display));
+			ent.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));
 
 			if (stereotype != null)
 				ent.setStereotype(Stereotype.build(stereotype));

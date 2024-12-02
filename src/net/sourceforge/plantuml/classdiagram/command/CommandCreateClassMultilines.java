@@ -164,10 +164,10 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 		Entity entity = quark.getData();
 
-		Display display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), displayString);
+		Display display = Display.getWithNewlines(diagram.getPragma(), displayString);
 		if (entity == null) {
 			if (Display.isNull(display))
-				display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
+				display = Display.getWithNewlines(diagram.getPragma(), quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
 			entity = diagram.reallyCreateLeaf(quark, display, type, null);
 		} else {
 			if (entity.muteToType(type, null) == false)
@@ -274,7 +274,7 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 				final Quark<Entity> quark = diagram.quarkInContext(false, diagram.cleanId(idShort));
 				Entity cl2 = quark.getData();
 				if (cl2 == null)
-					cl2 = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), quark.getName()), type2, null);
+					cl2 = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(diagram.getPragma(), quark.getName()), type2, null);
 
 				LinkType typeLink = new LinkType(LinkDecor.NONE, LinkDecor.EXTENDS);
 				if (type2 == LeafType.INTERFACE && entity.getLeafType() != LeafType.INTERFACE)
@@ -308,9 +308,9 @@ public class CommandCreateClassMultilines extends CommandMultilines2<ClassDiagra
 
 		final Quark<Entity> quark = diagram.quarkInContext(false, idShort);
 
-		Display display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), displayString);
+		Display display = Display.getWithNewlines(diagram.getPragma(), displayString);
 		if (Display.isNull(display))
-			display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
+			display = Display.getWithNewlines(diagram.getPragma(), quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
 
 		Entity entity = quark.getData();
 

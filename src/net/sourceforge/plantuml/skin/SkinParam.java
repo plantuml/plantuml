@@ -112,10 +112,6 @@ public class SkinParam implements ISkinParam {
 		this.pragma = pragma;
 	}
 	
-	public final Pragma getPragma() {
-		return pragma;
-	}
-
 	@Override
 	public StyleBuilder getCurrentStyleBuilder() {
 		if (styleBuilder == null)
@@ -1235,8 +1231,8 @@ public class SkinParam implements ISkinParam {
 	}
 
 	@Override
-	public boolean legacyReplaceBackslashNByNewline() {
-		return true;
+	public final Pragma getPragma() {
+		return pragma;
 	}
 
 }

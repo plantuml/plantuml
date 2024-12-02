@@ -70,7 +70,7 @@ public class CommandCase extends SingleLineCommand2<ActivityDiagram3> {
 			test = null;
 		}
 
-		return diagram.switchCase(Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), test));
+		return diagram.switchCase(Display.getWithNewlines(diagram.getPragma(), test));
 
 	}
 

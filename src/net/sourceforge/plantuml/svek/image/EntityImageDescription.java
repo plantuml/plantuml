@@ -171,7 +171,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 		ctx = new Fashion(backcolor, forecolor).withStroke(stroke).withShadow(deltaShadow).withCorner(roundCorner,
 				diagonalCorner);
 
-		final Display codeDisplay = Display.getWithNewlines(getSkinParam().legacyReplaceBackslashNByNewline(), entity.getName());
+		final Display codeDisplay = Display.getWithNewlines(getSkinParam().getPragma(), entity.getName());
 		if ((entity.getDisplay().equalsLike(codeDisplay) && symbol.getSName() == SName.package_)
 				|| entity.getDisplay().isWhite())
 			desc = TextBlockUtils.empty(style.value(PName.MinimumWidth).asDouble(), 0);

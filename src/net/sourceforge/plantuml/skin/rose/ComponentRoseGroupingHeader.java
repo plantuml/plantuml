@@ -84,7 +84,7 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 		if (strings.size() == 1 || strings.get(1) == null) {
 			this.commentTextBlock = null;
 		} else {
-			final Display display = Display.getWithNewlines(spriteContainer.legacyReplaceBackslashNByNewline(), "[" + strings.get(1) + "]");
+			final Display display = Display.getWithNewlines(spriteContainer.getPragma(), "[" + strings.get(1) + "]");
 			this.commentTextBlock = display.create(smallFont2, HorizontalAlignment.LEFT, spriteContainer);
 		}
 		Objects.requireNonNull(this.background);

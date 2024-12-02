@@ -74,7 +74,7 @@ public class BodierSimple implements Bodier {
 	@Override
 	public boolean addFieldOrMethod(String s) throws NoSuchColorException {
 		final Display display = Display
-				.getWithNewlines2(skinParam.legacyReplaceBackslashNByNewline(), s);
+				.getWithNewlines2(skinParam.getPragma(), s);
 		rawBody.addAll(display.asList());
 		return true;
 	}

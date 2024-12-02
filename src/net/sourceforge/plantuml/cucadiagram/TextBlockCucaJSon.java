@@ -179,7 +179,7 @@ public class TextBlockCucaJSon extends AbstractTextBlock implements WithPorts {
 	}
 
 	private TextBlock getTextBlock(String key) {
-		final Display display = Display.getWithNewlines(skinParam.legacyReplaceBackslashNByNewline(), key);
+		final Display display = Display.getWithNewlines(skinParam.getPragma(), key);
 		TextBlock result = display.create0(getFontConfiguration(), HorizontalAlignment.LEFT, skinParam, wordWrap,
 				CreoleMode.FULL, null, null);
 		result = TextBlockUtils.withMargin(result, 5, 2);

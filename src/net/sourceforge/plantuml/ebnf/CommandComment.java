@@ -64,7 +64,7 @@ public class CommandComment extends SingleLineCommand2<PSystemEbnf> {
 
 	@Override
 	protected CommandExecutionResult executeArg(PSystemEbnf diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		final Display note = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("COMMENT", 0));
+		final Display note = Display.getWithNewlines(diagram.getPragma(), arg.get("COMMENT", 0));
 		return diagram.addNote(note, null);
 	}
 

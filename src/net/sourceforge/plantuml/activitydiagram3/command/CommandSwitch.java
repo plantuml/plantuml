@@ -77,7 +77,7 @@ public class CommandSwitch extends SingleLineCommand2<ActivityDiagram3> {
 		if (test.length() == 0)
 			test = null;
 
-		diagram.startSwitch(Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), test), color);
+		diagram.startSwitch(Display.getWithNewlines(diagram.getPragma(), test), color);
 
 		return CommandExecutionResult.ok();
 	}

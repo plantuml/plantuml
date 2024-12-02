@@ -80,7 +80,7 @@ public class CommandCreatePackageBlock extends SingleLineCommand2<CompositeDiagr
 		if (display == null)
 			display = quark.getName();
 
-		return diagram.gotoGroup(quark, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), display), GroupType.PACKAGE);
+		return diagram.gotoGroup(quark, Display.getWithNewlines(diagram.getPragma(), display), GroupType.PACKAGE);
 	}
 
 }

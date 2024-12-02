@@ -236,7 +236,7 @@ public class PlayerBinary extends Player {
 	}
 
 	private TextBlock getTextBlock(String value) {
-		final Display display = Display.getWithNewlines(false, value);
+		final Display display = Display.getWithNewlines(skinParam.getPragma(), value);
 		return display.create(getCommentFontConfiguration(), HorizontalAlignment.LEFT, skinParam);
 	}
 

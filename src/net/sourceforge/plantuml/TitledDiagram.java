@@ -87,14 +87,10 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 
 	private final SkinParam skinParam;
 
-	public Pragma getPragma() {
-		return skinParam.getPragma();
-	}
-
 	public TitledDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig) {
 		super(source);
 		this.type = type;
-		this.skinParam = SkinParam.create(type, new Pragma());
+		this.skinParam = SkinParam.create(type, Pragma.createEmpty());
 		if (orig != null)
 			this.skinParam.copyAllFrom(orig);
 
@@ -261,9 +257,10 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		textBlock.drawU(ug);
 	}
 	
-	final public boolean legacyReplaceBackslashNByNewline() {
-		return skinParam.legacyReplaceBackslashNByNewline();
+	final public Pragma getPragma() {
+		return skinParam.getPragma();
 	}
+
 	
 
 }

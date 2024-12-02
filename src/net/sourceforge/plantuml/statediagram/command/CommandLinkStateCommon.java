@@ -120,7 +120,7 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 		final LinkType linkType = new LinkType(circleEnd ? LinkDecor.ARROW_AND_CIRCLE : LinkDecor.ARROW,
 				crossStart ? LinkDecor.CIRCLE_CROSS : LinkDecor.NONE);
 
-		final Display label = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("LABEL", 0));
+		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));
 		final LinkArg linkArg = LinkArg.build(label, lenght, diagram.getSkinParam().classAttributeIconSize() > 0);
 		Link link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
 				linkType, linkArg);
@@ -189,7 +189,7 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 
 		if (quark.getData() != null)
 			return quark.getData();
-		return diagram.reallyCreateLeaf(quark, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), quark.getName()), LeafType.STATE, null);
+		return diagram.reallyCreateLeaf(quark, Display.getWithNewlines(diagram.getPragma(), quark.getName()), LeafType.STATE, null);
 	}
 
 	private String removeEquals(String code) {

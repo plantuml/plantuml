@@ -80,7 +80,7 @@ public class ActivityDiagram extends CucaDiagram {
 	public Entity getStart() {
 		final Quark<Entity> quark = quarkInContext(true, "start");
 		if (quark.getData() == null)
-			reallyCreateLeaf(quark, Display.getWithNewlines(legacyReplaceBackslashNByNewline(), "start"), LeafType.CIRCLE_START, null);
+			reallyCreateLeaf(quark, Display.getWithNewlines(getPragma(), "start"), LeafType.CIRCLE_START, null);
 
 		return quark.getData();
 	}
@@ -89,7 +89,7 @@ public class ActivityDiagram extends CucaDiagram {
 		final String tmp = suppId == null ? "end" : "end$" + suppId;
 		final Quark<Entity> quark = quarkInContext(true, tmp);
 		if (quark.getData() == null)
-			reallyCreateLeaf(quark, Display.getWithNewlines(legacyReplaceBackslashNByNewline(), "end"), LeafType.CIRCLE_END, null);
+			reallyCreateLeaf(quark, Display.getWithNewlines(getPragma(), "end"), LeafType.CIRCLE_END, null);
 
 		return quark.getData();
 	}
@@ -142,7 +142,7 @@ public class ActivityDiagram extends CucaDiagram {
 		final String idShort = "##" + this.getUniqueSequence("");
 
 		final Quark<Entity> quark = quarkInContext(true, idShort);
-		gotoGroup(quark, Display.getWithNewlines(legacyReplaceBackslashNByNewline(), quark.getName()), GroupType.INNER_ACTIVITY);
+		gotoGroup(quark, Display.getWithNewlines(getPragma(), quark.getName()), GroupType.INNER_ACTIVITY);
 		final Entity g = getCurrentGroup();
 
 		lastEntityConsulted = null;
@@ -161,7 +161,7 @@ public class ActivityDiagram extends CucaDiagram {
 			throw new IllegalStateException("type=" + getCurrentGroup().getGroupType());
 
 		final Quark<Entity> idNewLong = quarkInContext(true, idShort);
-		gotoGroup(idNewLong, Display.getWithNewlines(legacyReplaceBackslashNByNewline(), "code"), GroupType.CONCURRENT_ACTIVITY);
+		gotoGroup(idNewLong, Display.getWithNewlines(getPragma(), "code"), GroupType.CONCURRENT_ACTIVITY);
 		lastEntityConsulted = null;
 		lastEntityBrancheConsulted = null;
 	}

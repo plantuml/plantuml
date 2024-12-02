@@ -110,7 +110,7 @@ public class CommandElseIf2 extends SingleLineCommand2<ActivityDiagram3> {
 		final LinkRendering incoming = CommandBackward3.getBackRendering(diagram, arg, "INCOMING");
 		final LinkRendering when = CommandBackward3.getBackRendering(diagram, arg, "WHEN");
 
-		return diagram.elseIf(incoming, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), test), when, color);
+		return diagram.elseIf(incoming, Display.getWithNewlines(diagram.getPragma(), test), when, color);
 	}
 
 }

@@ -78,7 +78,7 @@ public class CommandFooter extends SingleLineCommand2<TitledDiagram> {
 			ha = FontParam.FOOTER.getStyleDefinition(null).getMergedStyle(diagram.getCurrentStyleBuilder())
 					.getHorizontalAlignment();
 
-		final Display s = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.getLazzy("LABEL", 0));
+		final Display s = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy("LABEL", 0));
 		diagram.getFooter().putDisplay(s, ha);
 
 		return CommandExecutionResult.ok();

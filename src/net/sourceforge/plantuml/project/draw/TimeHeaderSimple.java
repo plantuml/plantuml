@@ -103,7 +103,7 @@ public class TimeHeaderSimple extends TimeHeader {
 				value = i.getAbsoluteDayNum() + 1;
 			final UFont font = thParam.getStyle(SName.timeline, SName.day).getUFont();
 			final FontConfiguration fontConfiguration = getFontConfiguration(font, false, openFontColor());
-			final TextBlock num = Display.getWithNewlines(false, "" + value).create(fontConfiguration,
+			final TextBlock num = Display.getWithNewlines(getPragma(), "" + value).create(fontConfiguration,
 					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 			final double x1 = timeScale.getStartingPosition(i);
 			final double x2;

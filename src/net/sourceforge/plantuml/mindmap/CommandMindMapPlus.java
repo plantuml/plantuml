@@ -74,7 +74,7 @@ public class CommandMindMapPlus extends SingleLineCommand2<MindMapDiagram> {
 			backColor = diagram.getSkinParam().getIHtmlColorSet().getColor(stringColor);
 		}
 		final boolean direction = type.contains("-") ? false : true;
-		return diagram.addIdea(backColor, type.length() - 1, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), label),
+		return diagram.addIdea(backColor, type.length() - 1, Display.getWithNewlines(diagram.getPragma(), label),
 				IdeaShape.fromDesc(arg.get("SHAPE", 0)), direction);
 	}
 

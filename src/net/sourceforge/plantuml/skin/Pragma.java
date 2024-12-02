@@ -41,6 +41,14 @@ import java.util.Map;
 public class Pragma {
 
 	private final Map<String, String> values = new LinkedHashMap<String, String>();
+	private boolean backslashNWarning;
+
+	private Pragma() {
+	}
+
+	public static Pragma createEmpty() {
+		return new Pragma();
+	}
 
 	public void define(String name, String value) {
 		values.put(name, value);
@@ -92,6 +100,18 @@ public class Pragma {
 
 	public boolean useIntermediatePackages() {
 		return !isFalse(getValue("useintermediatepackages"));
+	}
+
+	public boolean legacyReplaceBackslashNByNewline() {
+		return true;
+	}
+
+	public void addBackslashNWarning() {
+		// this.backslashNWarning = true;
+	}
+
+	public boolean isBackslashNWarning() {
+		return backslashNWarning;
 	}
 
 }

@@ -99,7 +99,7 @@ public class TimeHeaderChronology extends TimeHeader {
 		for (Day i = getMin(); i.compareTo(getMax().increment()) < 0; i = i.increment(printScale)) {
 			final UFont font = thParam.getStyle(SName.timeline, SName.day).getUFont();
 			final FontConfiguration fontConfiguration = getFontConfiguration(font, false, openFontColor());
-			final TextBlock num = Display.getWithNewlines(false, i.toStringShort(thParam.getLocale()))
+			final TextBlock num = Display.getWithNewlines(getPragma(), i.toStringShort(thParam.getLocale()))
 					.create(fontConfiguration, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 			final double x1 = timeScale.getStartingPosition(i);
 			final double x2;

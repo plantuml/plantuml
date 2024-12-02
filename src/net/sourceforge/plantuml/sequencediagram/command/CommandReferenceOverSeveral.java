@@ -96,7 +96,7 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 		for (String s : participants)
 			p.add(diagram.getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));
 
-		final Display strings = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), text);
+		final Display strings = Display.getWithNewlines(diagram.getPragma(), text);
 
 		final UrlBuilder b = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 		Url u = null;

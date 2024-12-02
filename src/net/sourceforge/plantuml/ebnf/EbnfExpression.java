@@ -172,14 +172,14 @@ public class EbnfExpression implements TextBlockable {
 	private TextBlock getNoteAbove(ISkinParam skinParam) {
 		if (commentAbove == null)
 			return null;
-		final FloatingNote note = FloatingNote.create(Display.getWithNewlines(false, commentAbove), skinParam, SName.ebnf);
+		final FloatingNote note = FloatingNote.create(Display.getWithNewlines(skinParam.getPragma(), commentAbove), skinParam, SName.ebnf);
 		return note;
 	}
 
 	private TextBlock getNoteBelow(ISkinParam skinParam) {
 		if (commentBelow == null)
 			return null;
-		final FloatingNote note = FloatingNote.create(Display.getWithNewlines(false, commentBelow), skinParam, SName.ebnf);
+		final FloatingNote note = FloatingNote.create(Display.getWithNewlines(skinParam.getPragma(), commentBelow), skinParam, SName.ebnf);
 		return note;
 	}
 

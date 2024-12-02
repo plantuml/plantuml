@@ -88,7 +88,7 @@ public class CommandNote extends SingleLineCommand2<TimingDiagram> {
 		if (player == null)
 			return CommandExecutionResult.error("Unkown \"" + code + "\"");
 
-		final Display note = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("NOTE", 0));
+		final Display note = Display.getWithNewlines(diagram.getPragma(), arg.get("NOTE", 0));
 		final TimeTick now = diagram.getNow();
 
 		final String stereotypeString = arg.get("STEREO", 0);

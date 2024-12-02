@@ -145,7 +145,7 @@ public class NServer {
 			return TextBlockUtils.empty(0, 0);
 
 		s = s.replace(", ", "\\n");
-		return Display.getWithNewlines(skinParam.legacyReplaceBackslashNByNewline(), s).create(getFontConfiguration(sname), HorizontalAlignment.LEFT, skinParam);
+		return Display.getWithNewlines(skinParam.getPragma(), s).create(getFontConfiguration(sname), HorizontalAlignment.LEFT, skinParam);
 	}
 
 	private StyleSignatureBasic getStyleDefinition(SName sname) {

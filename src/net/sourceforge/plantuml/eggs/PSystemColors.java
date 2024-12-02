@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
+import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.text.BackSlash;
 
 // http://www.redblobgames.com/grids/hexagons/
@@ -262,7 +263,7 @@ public class PSystemColors extends PlainDiagram implements UDrawable {
 	private TextBlock getTextName(final UFont font, String name, final HColor color) {
 		final HColor opposite = color.opposite();
 		final FontConfiguration fc = FontConfiguration.create(font, opposite, HColors.BLUE, UStroke.simple());
-		final TextBlock tt = Display.getWithNewlines(false, name).create(fc, HorizontalAlignment.CENTER,
+		final TextBlock tt = Display.getWithNewlines(Pragma.createEmpty(), name).create(fc, HorizontalAlignment.CENTER,
 				new SpriteContainerEmpty());
 		return tt;
 	}

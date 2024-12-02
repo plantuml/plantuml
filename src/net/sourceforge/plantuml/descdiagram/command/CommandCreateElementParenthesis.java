@@ -163,8 +163,8 @@ public class CommandCreateElementParenthesis extends SingleLineCommand2<ClassDia
 		if (CommandCreateElementFull.existsWithBadType3(diagram, quark, type, usymbol))
 			return CommandExecutionResult.error("This element (" + quark.getName() + ") is already defined");
 
-		final Entity entity = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), display), type, usymbol);
-		entity.setDisplay(Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), display));
+		final Entity entity = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(diagram.getPragma(), display), type, usymbol);
+		entity.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));
 
 		if (stereotype != null)
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),

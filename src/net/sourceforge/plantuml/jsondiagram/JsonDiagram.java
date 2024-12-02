@@ -130,7 +130,7 @@ public class JsonDiagram extends TitledDiagram {
 			ug = new UGraphicHandwritten(ug);
 		if (root == null) {
 			final Display display = Display
-					.getWithNewlines(false, "Your data does not sound like " + getUmlDiagramType() + " data");
+					.getWithNewlines(getSkinParam().getPragma(), "Your data does not sound like " + getUmlDiagramType() + " data");
 			final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFont.courier(14));
 			TextBlock result = display.create(fontConfiguration, HorizontalAlignment.LEFT, getSkinParam());
 			result = TextBlockUtils.withMargin(result, 5, 2);

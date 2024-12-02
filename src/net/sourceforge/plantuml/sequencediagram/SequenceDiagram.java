@@ -101,7 +101,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 	@Deprecated
 	public Participant getOrCreateParticipant(String code) {
-		return getOrCreateParticipant(code, Display.getWithNewlines(legacyReplaceBackslashNByNewline(), code));
+		return getOrCreateParticipant(code, Display.getWithNewlines(getPragma(), code));
 	}
 
 	public Participant getOrCreateParticipant(String code, Display display) {
@@ -145,7 +145,7 @@ public class SequenceDiagram extends UmlDiagram {
 
 		if (Display.isNull(display)) {
 			// display = Arrays.asList(code);
-			display = Display.getWithNewlines(legacyReplaceBackslashNByNewline(), code);
+			display = Display.getWithNewlines(getPragma(), code);
 		}
 		final Participant result = new Participant(type, code, display, hiddenPortions, order,
 				getSkinParam().getCurrentStyleBuilder());

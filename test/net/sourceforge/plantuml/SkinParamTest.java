@@ -45,7 +45,7 @@ class SkinParamTest {
 	@EnumSource(UmlDiagramType.class)
 	public void testDefaultValues(UmlDiagramType umlDiagramType) {
 
-		final SkinParam skinParam = SkinParam.create(umlDiagramType, new Pragma());
+		final SkinParam skinParam = SkinParam.create(umlDiagramType, Pragma.createEmpty());
 		final Stereotype fooStereotype = Stereotype.build("<<foo>>");
 
 		assertThat(skinParam.actorStyle()).isEqualTo(ActorStyle.STICKMAN);
@@ -444,7 +444,7 @@ class SkinParamTest {
 	private SkinParam createSkinParam(String... keyValuePairs) {
 		// Using SEQUENCE here is an arbitrary decision that should not affect test
 		// outcome
-		final SkinParam skinParam = SkinParam.create(UmlDiagramType.SEQUENCE, new Pragma());
+		final SkinParam skinParam = SkinParam.create(UmlDiagramType.SEQUENCE, Pragma.createEmpty());
 		for (int i = 0; i < keyValuePairs.length; i += 2) {
 			skinParam.setParam(StringUtils.goLowerCase(keyValuePairs[i]), keyValuePairs[i + 1]);
 		}

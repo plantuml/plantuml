@@ -71,7 +71,7 @@ public class CommandSwimlane extends SingleLineCommand2<ActivityDiagram3> {
 		final String s = arg.get("COLOR", 0);
 		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
 		final String name = arg.get("SWIMLANE", 0);
-		final Display label = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("LABEL", 0));
+		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));
 		return diagram.swimlane(name, color, label);
 	}
 

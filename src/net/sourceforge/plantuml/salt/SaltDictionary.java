@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainer;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.element.WrappedElement;
+import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.text.Guillemet;
@@ -146,8 +147,8 @@ public class SaltDictionary implements SpriteContainer, ISkinSimple {
 	}
 
 	@Override
-	public boolean legacyReplaceBackslashNByNewline() {
-		return false;
+	public Pragma getPragma() {
+		return Pragma.createEmpty();
 	}
 
 }

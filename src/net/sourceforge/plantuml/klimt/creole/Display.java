@@ -47,7 +47,6 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.jaws.Jaws;
-import net.sourceforge.plantuml.jaws.JawsFlags;
 import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -68,6 +67,7 @@ import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.sequencediagram.MessageNumber;
+import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinSimple;
@@ -202,11 +202,11 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 	public static Display getWithNewlines(Quark<Entity> s) {
-		return getWithNewlines(false, s.getName());
+		return getWithNewlines(Pragma.createEmpty(), s.getName());
 	}
 
-	public static Display getWithNewlines2(boolean legacyReplaceBackslashNByNewline, String s) throws NoSuchColorException {
-		final Display result = getWithNewlines(legacyReplaceBackslashNByNewline, s);
+	public static Display getWithNewlines2(Pragma pragma, String s) throws NoSuchColorException {
+		final Display result = getWithNewlines(pragma, s);
 		CreoleParser.checkColor(result);
 		return result;
 	}
@@ -238,7 +238,7 @@ public class Display implements Iterable<CharSequence> {
 		return Collections.unmodifiableList(result);
 	}
 
-	public static Display getWithNewlines(boolean legacyReplaceBackslashNByNewline, String s) {
+	public static Display getWithNewlines(Pragma pragma, String s) {
 		if (s == null)
 			return NULL;
 
@@ -264,7 +264,8 @@ public class Display implements Iterable<CharSequence> {
 				current.setLength(0);
 				i += 3;
 				// throw new IllegalStateException();
-			} else if (/*legacyReplaceBackslashNByNewline &&*/ rawMode == false && c == '\\' && i < s.length() - 1) {
+			} else if (pragma.legacyReplaceBackslashNByNewline() && rawMode == false && c == '\\'
+					&& i < s.length() - 1) {
 				final char c2 = s.charAt(i + 1);
 				i++;
 				if (c2 == 'n' || c2 == 'r' || c2 == 'l') {
@@ -283,6 +284,7 @@ public class Display implements Iterable<CharSequence> {
 					current.append(c);
 					current.append(c2);
 				}
+				pragma.addBackslashNWarning();
 			} else if (c == Jaws.BLOCK_E1_REAL_BACKSLASH) {
 				current.append('\\');
 			} else if (c == Jaws.BLOCK_E1_NEWLINE) {

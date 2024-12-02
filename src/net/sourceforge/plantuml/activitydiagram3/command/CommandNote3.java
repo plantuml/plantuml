@@ -85,7 +85,7 @@ public class CommandNote3 extends SingleLineCommand2<ActivityDiagram3> {
 	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
 		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
-		final Display note = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("NOTE", 0));
+		final Display note = Display.getWithNewlines(diagram.getPragma(), arg.get("NOTE", 0));
 		final NotePosition position = NotePosition.defaultLeft(arg.get("POSITION", 0));
 		final NoteType type = NoteType.defaultType(arg.get("TYPE", 0));
 

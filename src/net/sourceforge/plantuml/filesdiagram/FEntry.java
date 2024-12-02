@@ -139,7 +139,7 @@ public class FEntry implements Iterable<FEntry> {
 		if (type == FilesType.NOTE)
 			return createOpale(skinParam);
 
-		final Display display = Display.getWithNewlines(false, getEmoticon() + getName());
+		final Display display = Display.getWithNewlines(skinParam.getPragma(), getEmoticon() + getName());
 		TextBlock result = display.create7(fontConfiguration, HorizontalAlignment.LEFT, skinParam,
 				CreoleMode.NO_CREOLE);
 		return result;

@@ -308,7 +308,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			int countChildren = quark.countChildren();
 			if (countChildren > 0) {
 				// final Display display = Display.getWithNewlines(quark.getQualifiedName());
-				final Display display = Display.getWithNewlines(legacyReplaceBackslashNByNewline(), quark.getName());
+				final Display display = Display.getWithNewlines(getPragma(), quark.getName());
 				final Entity result = this.createGroup(quark, GroupType.PACKAGE);
 				result.setDisplay(display);
 			}

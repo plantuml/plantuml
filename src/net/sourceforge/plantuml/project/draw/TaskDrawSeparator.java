@@ -93,11 +93,11 @@ public class TaskDrawSeparator implements TaskDraw {
 		final double dx = margin.getLeft() + padding.getLeft();
 		final double dy = margin.getTop() + padding.getTop();
 		final double x;
-		if (labelStrategy.titleInFirstColumn()) {
+		if (labelStrategy.titleInFirstColumn())
 			x = colTitles;
-		} else {
+		else
 			x = 0;
-		}
+
 		getTitle().drawU(ug.apply(new UTranslate(x + dx, dy)));
 	}
 
@@ -116,11 +116,11 @@ public class TaskDrawSeparator implements TaskDraw {
 	}
 
 	private TextBlock getTitle() {
-		if (name == null) {
+		if (name == null)
 			return TextBlockUtils.empty(0, 0);
-		}
-		return Display.getWithNewlines(false, this.name).create(getFontConfiguration(), HorizontalAlignment.LEFT,
-				new SpriteContainerEmpty());
+
+		return Display.getWithNewlines(styleBuilder.getSkinParam().getPragma(), this.name)
+				.create(getFontConfiguration(), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 	}
 
 	private FontConfiguration getFontConfiguration() {
@@ -204,7 +204,8 @@ public class TaskDrawSeparator implements TaskDraw {
 	}
 
 	@Override
-	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note, Stereotype noteStereotype) {
+	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note,
+			Stereotype noteStereotype) {
 	}
 
 	@Override

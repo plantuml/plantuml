@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
+import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.PName;
@@ -193,6 +194,10 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 
 	protected int getCompletion() {
 		return completion;
+	}
+	
+	protected Pragma getPragma() {
+		return styleBuilder.getSkinParam().getPragma();
 	}
 
 }

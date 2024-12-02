@@ -88,7 +88,7 @@ public class ResourceDrawVersion2 implements ResourceDraw {
 
 		}
 
-		final TextBlock title = Display.getWithNewlines(gantt.legacyReplaceBackslashNByNewline(), res.getName()).create(getFontConfiguration(13),
+		final TextBlock title = Display.getWithNewlines(gantt.getPragma(), res.getName()).create(getFontConfiguration(13),
 				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		title.drawU(ug);
 		final ULine line = ULine.hline(timeScale.getEndingPosition(max) - timeScale.getStartingPosition(min));

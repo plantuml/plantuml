@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.skin.Pragma;
 
 public class Labels {
 
@@ -107,8 +108,8 @@ public class Labels {
 		return stringWithArrow.getLinkArrow();
 	}
 
-	public Display getDisplay(boolean flag) {
-		return stringWithArrow.getDisplay(flag);
+	public Display getDisplay(Pragma pragma) {
+		return stringWithArrow.getDisplay(pragma);
 	}
 
 }

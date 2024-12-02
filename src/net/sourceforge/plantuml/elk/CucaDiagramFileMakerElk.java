@@ -260,7 +260,7 @@ public class CucaDiagramFileMakerElk extends CucaDiagramFileMaker {
 
 		final ISkinParam skinParam = diagram.getSkinParam();
 		final FontConfiguration labelFont = FontConfiguration.create(skinParam, FontParam.ARROW, null);
-		final TextBlock label = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), tmp).create(labelFont,
+		final TextBlock label = Display.getWithNewlines(diagram.getPragma(), tmp).create(labelFont,
 				skinParam.getDefaultTextAlignment(HorizontalAlignment.CENTER), skinParam);
 		if (TextBlockUtils.isEmpty(label, stringBounder))
 			return null;

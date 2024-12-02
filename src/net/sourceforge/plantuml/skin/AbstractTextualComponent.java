@@ -69,7 +69,7 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 	public AbstractTextualComponent(Style style, LineBreakStrategy maxMessageSize, int marginX1, int marginX2,
 			int marginY, ISkinSimple spriteContainer, CharSequence label) {
 		this(style, style, maxMessageSize, marginX1, marginX2, marginY, spriteContainer,
-				Display.getWithNewlines(spriteContainer.legacyReplaceBackslashNByNewline(), label == null ? "" : label.toString()), false);
+				Display.getWithNewlines(spriteContainer.getPragma(), label == null ? "" : label.toString()), false);
 	}
 
 	public AbstractTextualComponent(Style style, LineBreakStrategy maxMessageSize, int marginX1, int marginX2,

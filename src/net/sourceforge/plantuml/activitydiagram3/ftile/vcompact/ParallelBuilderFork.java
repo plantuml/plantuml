@@ -114,7 +114,7 @@ public class ParallelBuilderFork extends AbstractParallelFtilesBuilder {
 		((FtileBlackBlock) out).setBlackBlockDimension(result.calculateDimension(getStringBounder()).getWidth(),
 				barHeight);	
 		if (label != null)
-			((FtileBlackBlock) out).setLabel(getTextBlock(Display.getWithNewlines(skinParam().legacyReplaceBackslashNByNewline(), label)));
+			((FtileBlackBlock) out).setLabel(getTextBlock(Display.getWithNewlines(skinParam().getPragma(), label)));
 
 		result = new FtileAssemblySimple(result, out);
 		final List<Connection> conns = new ArrayList<>();

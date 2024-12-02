@@ -76,7 +76,7 @@ public class ElementPyramid extends AbstractElement {
 
 		if (title != null) {
 			final FontConfiguration fontConfiguration = FontConfiguration.blackBlueTrue(UFont.byDefault(10));
-			this.title = Display.getWithNewlines(false, title).create(fontConfiguration, HorizontalAlignment.LEFT,
+			this.title = Display.getWithNewlines(getPragma(), title).create(fontConfiguration, HorizontalAlignment.LEFT,
 					spriteContainer);
 		} else {
 			this.title = TextBlockUtils.empty(0, 0);

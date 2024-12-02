@@ -112,7 +112,7 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
 
 		Entity entity = quark.getData();
 		if (entity == null) {
-			final Display display = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), displayText);
+			final Display display = Display.getWithNewlines(diagram.getPragma(), displayText);
 			entity = diagram.reallyCreateLeaf(quark, display, type, null);
 		} else {
 			return CommandExecutionResult.error("Attribute already exists");

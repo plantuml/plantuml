@@ -38,6 +38,8 @@ package net.sourceforge.plantuml.bpm;
 import java.util.EnumSet;
 import java.util.Set;
 
+import net.sourceforge.plantuml.skin.Pragma;
+
 abstract class AbstractConnectorPuzzle implements ConnectorPuzzle {
     // ::remove folder when __HAXE__
 
@@ -64,6 +66,10 @@ abstract class AbstractConnectorPuzzle implements ConnectorPuzzle {
 
 	protected final Set<Where> connections() {
 		return connections;
+	}
+	
+	protected Pragma getPragma() {
+		return Pragma.createEmpty();
 	}
 
 }

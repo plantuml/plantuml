@@ -74,7 +74,7 @@ public class TimeConstraint {
 		this.marginx = marginx;
 		this.tick1 = Objects.requireNonNull(tick1);
 		this.tick2 = Objects.requireNonNull(tick2);
-		this.label = Display.getWithNewlines(skinParam.legacyReplaceBackslashNByNewline(), label);
+		this.label = Display.getWithNewlines(skinParam.getPragma(), label);
 		this.skinParam = skinParam;
 		this.styleBuilder = skinParam.getCurrentStyleBuilder();
 		this.config = config;

@@ -194,7 +194,7 @@ public class TimingRuler {
 	}
 
 	private TextBlock getTimeTextBlock(String string) {
-		final Display display = Display.getWithNewlines(false, string);
+		final Display display = Display.getWithNewlines(skinParam.getPragma(), string);
 		final FontConfiguration fontConfiguration = FontConfiguration.create(skinParam, getStyleTimeline());
 		return display.create(fontConfiguration, HorizontalAlignment.LEFT, skinParam);
 	}

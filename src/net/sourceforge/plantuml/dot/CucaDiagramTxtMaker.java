@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.posimo.GraphvizSolverB;
 import net.sourceforge.plantuml.posimo.Path;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.skin.Pragma;
 
 public final class CucaDiagramTxtMaker {
 	// ::remove file when __CORE__
@@ -74,6 +75,7 @@ public final class CucaDiagramTxtMaker {
 	private final FileFormat fileFormat;
 	private final UGraphicTxt globalUg = new UGraphicTxt();
 	private final PortionShower portionShower;
+	private final Pragma pragma;
 
 	private static double getXPixelPerChar() {
 		return 5;
@@ -92,6 +94,7 @@ public final class CucaDiagramTxtMaker {
 	public CucaDiagramTxtMaker(CucaDiagram diagram, FileFormat fileFormat) throws IOException {
 		this.fileFormat = fileFormat;
 		this.portionShower = diagram;
+		this.pragma = diagram.getPragma();
 
 		final Cluster root = new Cluster(null, 0, 0);
 		int uid = 0;
@@ -211,7 +214,7 @@ public final class CucaDiagramTxtMaker {
 		int result = StringUtils.getHeight(entity.getDisplay());
 		if (showMember(entity)) {
 			for (CharSequence att : entity.getBodier().getRawBody())
-				result += StringUtils.getHeight(Display.getWithNewlines(false, att.toString()));
+				result += StringUtils.getHeight(Display.getWithNewlines(pragma, att.toString()));
 
 //			for (Member att : entity.getBodier().getMethodsToDisplay()) {
 //				result += StringUtils.getHeight(Display.getWithNewlines(att.getDisplay(true)));
@@ -229,7 +232,7 @@ public final class CucaDiagramTxtMaker {
 		int result = StringUtils.getWcWidth(entity.getDisplay());
 		if (showMember(entity)) {
 			for (CharSequence att : entity.getBodier().getRawBody()) {
-				final int w = StringUtils.getWcWidth(Display.getWithNewlines(false, att.toString()));
+				final int w = StringUtils.getWcWidth(Display.getWithNewlines(pragma, att.toString()));
 				if (w > result)
 					result = w;
 

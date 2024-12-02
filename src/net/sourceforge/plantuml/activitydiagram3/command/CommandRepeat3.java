@@ -83,7 +83,7 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 			throws NoSuchColorException {
 		final String s = arg.get("COLOR", 0);
 		final HColor color = s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s);
-		final Display label = Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("LABEL", 0));
+		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));
 		final BoxStyle boxStyle;
 		final String styleString = arg.get("STYLE", 0);
 

@@ -102,7 +102,7 @@ public class CommandLinkBlock extends SingleLineCommand2<CompositeDiagram> {
 
 		final String queue = arg.get("QUEUE", 0);
 
-		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("DISPLAY", 0)), queue.length(),
+		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), arg.get("DISPLAY", 0)), queue.length(),
 				diagram.getSkinParam().classAttributeIconSize() > 0);
 		final Link link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
 				cl2, linkType, linkArg);

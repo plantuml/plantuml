@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorGradient;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColorSimple;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
@@ -78,11 +79,14 @@ import net.sourceforge.plantuml.klimt.drawing.svg.UGraphicSvg;
 import net.sourceforge.plantuml.klimt.drawing.tikz.UGraphicTikz;
 import net.sourceforge.plantuml.klimt.drawing.txt.UGraphicTxt;
 import net.sourceforge.plantuml.klimt.drawing.visio.UGraphicVdx;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.CornerParam;
 import net.sourceforge.plantuml.skin.LineParam;
@@ -116,6 +120,7 @@ public class ImageBuilder {
 	private TitledDiagram titledDiagram;
 	private boolean randomPixel;
 	private String warningOrError;
+	private boolean warningN;
 
 	public static ImageBuilder imageBuilder(FileFormatOption fileFormatOption) {
 		return new ImageBuilder(fileFormatOption);
@@ -215,6 +220,7 @@ public class ImageBuilder {
 		seed = diagram.seed();
 		titledDiagram = diagram;
 		warningOrError = diagram.getWarningOrError();
+		warningN = diagram.getPragma().isBackslashNWarning();
 		return this;
 	}
 
@@ -240,6 +246,8 @@ public class ImageBuilder {
 
 	private ImageData writeImageInternal(OutputStream os) throws IOException {
 		XDimension2D dim = getFinalDimension();
+		if (warningN)
+			dim = dim.delta(0, 60);
 		final Scale scale = titledDiagram == null ? null : titledDiagram.getScale();
 		final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * getDpi()
 				/ 96.0;
@@ -247,7 +255,12 @@ public class ImageBuilder {
 			throw new IllegalStateException("Bad scaleFactor");
 		WasmLog.log("...image drawing...");
 		UGraphic ug = createUGraphic(dim, scaleFactor,
-				titledDiagram == null ? new Pragma() : titledDiagram.getPragma());
+				titledDiagram == null ? Pragma.createEmpty() : titledDiagram.getPragma());
+		if (warningN) {
+			drawWarning(ug.apply(new UTranslate(margin.getLeft(), 5)), dim.getWidth());
+			ug = ug.apply(UTranslate.dy(60));
+		}
+
 		maybeDrawBorder(ug, dim);
 		if (randomPixel)
 			drawRandomPoint(ug);
@@ -266,6 +279,24 @@ public class ImageBuilder {
 			}
 		}
 		return createImageData(dim);
+	}
+
+	private void drawWarning(UGraphic ug, double width) {
+
+		final HColorSet set = HColorSet.instance();
+
+		final HColor back = set.getColorOrWhite("ffcccc");
+		final HColor border = set.getColorOrWhite("ff9999");
+		ug = ug.apply(back.bg()).apply(border);
+		final URectangle rect = URectangle.build(width - margin.getLeft() - margin.getRight(), 50).rounded(5);
+		ug.apply(UStroke.withThickness(3)).draw(rect);
+
+		ug = ug.apply(HColors.BLACK);
+
+		final FontConfiguration fc = FontConfiguration.blackBlueTrue(UFont.monospaced(10));
+		final String text = "Warning: you are using \\n!";
+		ug.apply(new UTranslate(10, 25)).draw(UText.build(text, fc));
+
 	}
 
 	private void maybeDrawBorder(UGraphic ug, XDimension2D dim) {

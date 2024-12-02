@@ -108,7 +108,7 @@ public class LinkAnchor {
 
 		final Rainbow rainbow = Rainbow.fromColor(color, null);
 
-		final Display display = Display.getWithNewlines(skinParam.legacyReplaceBackslashNByNewline(), message);
+		final Display display = Display.getWithNewlines(skinParam.getPragma(), message);
 		final TextBlock title = display.create(fontConfiguration, HorizontalAlignment.CENTER, skinParam);
 		final Snake snake = Snake.create(skinParam, skinParam.arrows().asToUp(), rainbow, skinParam.arrows().asToDown())
 				.withLabel(title, HorizontalAlignment.CENTER);

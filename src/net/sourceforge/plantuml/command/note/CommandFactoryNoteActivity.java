@@ -139,7 +139,7 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 				final String tmp = diagram.getUniqueSequence("GN");
 				final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(tmp));
 
-				final Entity note = diagram.createNote(quark, tmp, Display.getWithNewlines(diagram.legacyReplaceBackslashNByNewline(), arg.get("NOTE", 0)));
+				final Entity note = diagram.createNote(quark, tmp, Display.getWithNewlines(diagram.getPragma(), arg.get("NOTE", 0)));
 				return executeInternal(diagram, arg, note);
 			}
 		};

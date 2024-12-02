@@ -70,7 +70,7 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 	public BpmElement(String id, BpmElementType type, String label) {
 		this.id = id;
 		this.type = type;
-		this.display = Display.getWithNewlines(false, label);
+		this.display = Display.getWithNewlines(getPragma(), label);
 	}
 
 	public BpmElement(String id, BpmElementType type) {
@@ -162,7 +162,7 @@ public class BpmElement extends AbstractConnectorPuzzle implements ConnectorPuzz
 		final UFont font = UFont.serif(14);
 		final FontConfiguration fc = FontConfiguration.create(font, HColors.RED, HColors.RED, null);
 		if (Display.isNull(display)) {
-			return Display.getWithNewlines(skinParam.legacyReplaceBackslashNByNewline(), type.toString()).create(fc, HorizontalAlignment.LEFT, skinParam);
+			return Display.getWithNewlines(skinParam.getPragma(), type.toString()).create(fc, HorizontalAlignment.LEFT, skinParam);
 		}
 		return display.create(fc, HorizontalAlignment.LEFT, skinParam);
 	}

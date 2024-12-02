@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
+import net.sourceforge.plantuml.skin.Pragma;
 
 public class PSystemDefinition extends PlainDiagram implements UDrawable {
     // ::remove folder when __HAXE__
@@ -76,7 +77,7 @@ public class PSystemDefinition extends PlainDiagram implements UDrawable {
 	public void drawU(UGraphic ug) {
 		final UFont font = UFont.sansSerif(14);
 		final FontConfiguration fc = FontConfiguration.create(font, HColors.BLACK, HColors.BLACK, null);
-		Display.getWithNewlines(false, startLine).create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()).drawU(ug);
+		Display.getWithNewlines(Pragma.createEmpty(), startLine).create(fc, HorizontalAlignment.LEFT, new SpriteContainerEmpty()).drawU(ug);
 	}
 
 	public void doCommandLine(String line) {
