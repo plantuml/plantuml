@@ -63,7 +63,31 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.activitydiagram3.ftile.vcompact">net.sourceforge.plantuml.activitydiagram3.ftile.vcompact</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.descdiagram.command">net.sourceforge.plantuml.descdiagram.command</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.klimt.creole">net.sourceforge.plantuml.klimt.creole</a></div>
+<div class="col-last even-row-color">
+<div class="block">Provides classes used to manage 
+ <a href="https://plantuml.com/creole" target="_top">
+ Creole</a> (markup language).</div>
+</div>
 <div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.klimt.drawing.tikz">net.sourceforge.plantuml.klimt.drawing.tikz</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.klimt.sprite">net.sourceforge.plantuml.klimt.sprite</a></div>
+<div class="col-last even-row-color">
+<div class="block">Provides classes used to manage 
+ <a href="https://plantuml.com/sprite" target="_top">
+ Sprite</a>.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.project.draw">net.sourceforge.plantuml.project.draw</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.salt">net.sourceforge.plantuml.salt</a></div>
+<div class="col-last even-row-color">
+<div class="block">Provides classes used to manage 
+ <a href="https://plantuml.com/salt" target="_top">
+ Salt (or Wireframe) Diagram</a>.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.salt.element">net.sourceforge.plantuml.salt.element</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.skin">net.sourceforge.plantuml.skin</a></div>
 <div class="col-last even-row-color">
@@ -71,14 +95,20 @@ loadScripts(document, 'script');</script>
  <a href="https://plantuml.com/skinparam" target="_top">
  Skinparameter</a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.svek">net.sourceforge.plantuml.svek</a></div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.style">net.sourceforge.plantuml.style</a></div>
 <div class="col-last odd-row-color">
+<div class="block">Provides classes used to manage 
+ <a href="https://plantuml.com/style-evolution" target="_top">
+ Style</a>.</div>
+</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.svek">net.sourceforge.plantuml.svek</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/svek" target="_top">
  PlantUML Svek Architecture</a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.tikz">net.sourceforge.plantuml.tikz</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.tikz">net.sourceforge.plantuml.tikz</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/latex" target="_top">
  LaTeX (with TikZ) output format</a>.</div>
@@ -94,7 +124,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></code></div>
+<div class="col-first even-row-color"><code>final <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">TitledDiagram.</span><code><a href="../../TitledDiagram.html#getPragma()" class="member-name-link">getPragma</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
@@ -118,9 +148,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../activitydiagram3/ftile/Swimlanes.html#%3Cinit%3E(net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.skin.Pragma)" class="member-name-link">Swimlanes</a><wbr>(<a href="../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
+<div class="col-second even-row-color"><code><a href="../../activitydiagram3/ftile/Swimlane.html#%3Cinit%3E(java.lang.String,int,net.sourceforge.plantuml.skin.Pragma)" class="member-name-link">Swimlane</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ int&nbsp;order,
  <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../activitydiagram3/ftile/Swimlanes.html#%3Cinit%3E(net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.skin.Pragma)" class="member-name-link">Swimlanes</a><wbr>(<a href="../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
+ <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -136,6 +171,42 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><code><a href="../../activitydiagram3/ftile/vcompact/FtileFactoryDelegatorIf.html#%3Cinit%3E(net.sourceforge.plantuml.activitydiagram3.ftile.FtileFactory,net.sourceforge.plantuml.skin.Pragma)" class="member-name-link">FtileFactoryDelegatorIf</a><wbr>(<a href="../../activitydiagram3/ftile/FtileFactory.html" title="interface in net.sourceforge.plantuml.activitydiagram3.ftile">FtileFactory</a>&nbsp;factory,
  <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.descdiagram.command">
+<h2>Uses of <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a> in <a href="../../descdiagram/command/package-summary.html">net.sourceforge.plantuml.descdiagram.command</a></h2>
+<div class="caption"><span>Methods in <a href="../../descdiagram/command/package-summary.html">net.sourceforge.plantuml.descdiagram.command</a> with parameters of type <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Labels.</span><code><a href="../../descdiagram/command/Labels.html#getDisplay(net.sourceforge.plantuml.skin.Pragma)" class="member-name-link">getDisplay</a><wbr>(<a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>final <a href="../../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">StringWithArrow.</span><code><a href="../../descdiagram/command/StringWithArrow.html#getDisplay(net.sourceforge.plantuml.skin.Pragma)" class="member-name-link">getDisplay</a><wbr>(<a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.klimt.creole">
+<h2>Uses of <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a> in <a href="../../klimt/creole/package-summary.html">net.sourceforge.plantuml.klimt.creole</a></h2>
+<div class="caption"><span>Methods in <a href="../../klimt/creole/package-summary.html">net.sourceforge.plantuml.klimt.creole</a> with parameters of type <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Display.</span><code><a href="../../klimt/creole/Display.html#getWithNewlines(net.sourceforge.plantuml.skin.Pragma,java.lang.String)" class="member-name-link">getWithNewlines</a><wbr>(<a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Display.</span><code><a href="../../klimt/creole/Display.html#getWithNewlines2(net.sourceforge.plantuml.skin.Pragma,java.lang.String)" class="member-name-link">getWithNewlines2</a><wbr>(<a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -159,6 +230,65 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="net.sourceforge.plantuml.klimt.sprite">
+<h2>Uses of <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a> in <a href="../../klimt/sprite/package-summary.html">net.sourceforge.plantuml.klimt.sprite</a></h2>
+<div class="caption"><span>Methods in <a href="../../klimt/sprite/package-summary.html">net.sourceforge.plantuml.klimt.sprite</a> that return <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SpriteContainerEmpty.</span><code><a href="../../klimt/sprite/SpriteContainerEmpty.html#getPragma()" class="member-name-link">getPragma</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.project.draw">
+<h2>Uses of <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a> in <a href="../../project/draw/package-summary.html">net.sourceforge.plantuml.project.draw</a></h2>
+<div class="caption"><span>Methods in <a href="../../project/draw/package-summary.html">net.sourceforge.plantuml.project.draw</a> that return <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AbstractTaskDraw.</span><code><a href="../../project/draw/AbstractTaskDraw.html#getPragma()" class="member-name-link">getPragma</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TimeHeader.</span><code><a href="../../project/draw/TimeHeader.html#getPragma()" class="member-name-link">getPragma</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.salt">
+<h2>Uses of <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a> in <a href="../../salt/package-summary.html">net.sourceforge.plantuml.salt</a></h2>
+<div class="caption"><span>Methods in <a href="../../salt/package-summary.html">net.sourceforge.plantuml.salt</a> that return <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SaltDictionary.</span><code><a href="../../salt/SaltDictionary.html#getPragma()" class="member-name-link">getPragma</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.salt.element">
+<h2>Uses of <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a> in <a href="../../salt/element/package-summary.html">net.sourceforge.plantuml.salt.element</a></h2>
+<div class="caption"><span>Methods in <a href="../../salt/element/package-summary.html">net.sourceforge.plantuml.salt.element</a> that return <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected final <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AbstractElement.</span><code><a href="../../salt/element/AbstractElement.html#getPragma()" class="member-name-link">getPragma</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="net.sourceforge.plantuml.skin">
 <h2>Uses of <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a> in <a href="../package-summary.html">net.sourceforge.plantuml.skin</a></h2>
 <div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.skin</a> that return <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></span></div>
@@ -166,8 +296,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>final <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SkinParam.</span><code><a href="../SkinParam.html#getPragma()" class="member-name-link">getPragma</a>()</code></div>
+<div class="col-first even-row-color"><code>static <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Pragma.</span><code><a href="../Pragma.html#createEmpty()" class="member-name-link">createEmpty</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>final <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SkinParam.</span><code><a href="../SkinParam.html#getPragma()" class="member-name-link">getPragma</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SkinParamDelegator.</span><code><a href="../SkinParamDelegator.html#getPragma()" class="member-name-link">getPragma</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">net.sourceforge.plantuml.skin</a> with parameters of type <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></span></div>
@@ -178,6 +314,20 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static <a href="../SkinParam.html" title="class in net.sourceforge.plantuml.skin">SkinParam</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">SkinParam.</span><code><a href="../SkinParam.html#create(net.sourceforge.plantuml.skin.UmlDiagramType,net.sourceforge.plantuml.skin.Pragma)" class="member-name-link">create</a><wbr>(<a href="../UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a>&nbsp;type,
  <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.style">
+<h2>Uses of <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a> in <a href="../../style/package-summary.html">net.sourceforge.plantuml.style</a></h2>
+<div class="caption"><span>Methods in <a href="../../style/package-summary.html">net.sourceforge.plantuml.style</a> that return <a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ISkinSimple.</span><code><a href="../../style/ISkinSimple.html#getPragma()" class="member-name-link">getPragma</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
