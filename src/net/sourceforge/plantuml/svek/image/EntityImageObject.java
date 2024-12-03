@@ -66,9 +66,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockEmpty;
 import net.sourceforge.plantuml.klimt.shape.TextBlockLineBefore;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
-import net.sourceforge.plantuml.skin.CornerParam;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -116,8 +114,8 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 			this.fields = new TextBlockLineBefore(getStyle().value(PName.LineThickness).asDouble(),
 					new TextBlockEmpty(10, 16));
 		else
-			this.fields = entity.getBodier().getBody(getSkinParam(), false, showFields, entity.getStereotype(), getStyle(),
-					null);
+			this.fields = entity.getBodier().getBody(getSkinParam(), false, showFields, entity.getStereotype(),
+					getStyle(), null);
 
 		this.url = entity.getUrl99();
 
@@ -191,8 +189,8 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 		ug.startGroup(typeIDent);
 		ug.apply(stroke).draw(rect);
 
-		if (roundCorner == 0 && headerBackcolor != null && backcolor.equals(headerBackcolor) == false) {
-			final Shadowable rect2 = URectangle.build(widthTotal, dimTitle.getHeight());
+		if (headerBackcolor != null && backcolor.equals(headerBackcolor) == false) {
+			final Shadowable rect2 = URectangle.build(widthTotal, dimTitle.getHeight()).halfRounded(roundCorner);
 			final UGraphic ugHeader = ug.apply(headerBackcolor.bg());
 			ugHeader.apply(stroke).draw(rect2);
 		}

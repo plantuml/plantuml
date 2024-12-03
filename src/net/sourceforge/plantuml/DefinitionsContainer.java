@@ -37,11 +37,15 @@ package net.sourceforge.plantuml;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.preproc2.PreprocessorModeSet;
+import net.sourceforge.plantuml.preproc.ImportedFiles;
 
-public interface DefinitionsContainer extends PreprocessorModeSet {
+public interface DefinitionsContainer {
 	// ::remove file when __HAXE__
 
+	public ImportedFiles getImportedFiles();
+
+	public String getCharset();
+	
 	public List<String> getDefinition(String name);
 
 }

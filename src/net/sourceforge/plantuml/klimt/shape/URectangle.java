@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.klimt.compress.CompressionMode;
 import net.sourceforge.plantuml.klimt.compress.UShapeIgnorableForCompression;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
+import net.sourceforge.plantuml.klimt.geom.USegmentType;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class URectangle extends AbstractShadowable implements UShapeSized, UShapeIgnorableForCompression {
@@ -116,6 +117,21 @@ public class URectangle extends AbstractShadowable implements UShapeSized, UShap
 
 	public static URectangle build(XDimension2D dim) {
 		return build(dim.getWidth(), dim.getHeight());
+	}
+
+	public Shadowable halfRounded(double roundCorner) {
+		if (roundCorner == 0)
+			return this;
+
+		final UPath path = UPath.none();
+		path.moveTo(roundCorner / 2, 0);
+		path.lineTo(width - roundCorner / 2, 0);
+		path.arcTo(roundCorner / 2, roundCorner / 2, 0, 0, 1, width, roundCorner / 2);
+		path.lineTo(width, height);
+		path.lineTo(0, height);
+		path.lineTo(0, roundCorner / 2);
+		path.arcTo(roundCorner / 2, roundCorner / 2, 0, 0, 1, roundCorner / 2, 0);
+		return path;
 	}
 
 	private URectangle(double width, double height, double rx, double ry, String comment,

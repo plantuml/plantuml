@@ -56,13 +56,10 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemErrorPreprocessor;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.preproc.CommentEmoji;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
-import net.sourceforge.plantuml.preproc2.PreprocessorModeSet;
 import net.sourceforge.plantuml.regex.Matcher2;
-import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.TimLoader;
@@ -131,24 +128,21 @@ public class BlockUml {
 	 */
 	@Deprecated
 	public BlockUml(List<StringLocated> strings, Defines defines, Map<String, String> skinMap,
-			PreprocessorModeSet mode) {
-		this(strings, defines, skinMap, mode, charsetOrDefault(mode.getCharset()));
+			DefinitionsContainer definitions) {
+		this(strings, defines, skinMap, definitions, charsetOrDefault(definitions.getCharset()));
 	}
 
-	public BlockUml(List<StringLocated> strings, Defines defines, Map<String, String> skinMap, PreprocessorModeSet mode,
-			Charset charset) {
-		this.rawSource = ReadLineWithYamlHeader.removeYamlHeader(CommentEmoji.remove(strings));
+	public BlockUml(List<StringLocated> strings, Defines defines, Map<String, String> skinMap,
+			DefinitionsContainer definitions, Charset charset) {
+		this.rawSource = ReadLineWithYamlHeader.removeYamlHeader(strings);
 		this.localDefines = defines;
 		this.skinMap = skinMap;
-		final String s0 = this.rawSource.get(0).getTrimmed().getString();
-		if (StartUtils.startsWithSymbolAnd("start", s0) == false)
-			throw new IllegalArgumentException();
 
-		if (mode == null) {
+		if (definitions == null) {
 			this.data = new ArrayList<>(this.rawSource);
 		} else {
-			final TimLoader timLoader = new TimLoader(mode.getImportedFiles(), defines, charset,
-					(DefinitionsContainer) mode, this.rawSource.get(0));
+			final TimLoader timLoader = new TimLoader(definitions.getImportedFiles(), defines, charset, definitions,
+					this.rawSource.get(0));
 			this.included.addAll(timLoader.load(this.rawSource));
 			final Jaws jaws = new Jaws(timLoader.getResultList());
 			this.data = jaws.getResultList();
