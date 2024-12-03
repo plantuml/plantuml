@@ -88,7 +88,7 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 		super(entity);
 		this.lineConfig = entity;
 		final Stereotype stereotype = entity.getStereotype();
-		this.roundCorner = getSkinParam().getRoundCorner(CornerParam.DEFAULT, null);
+		this.roundCorner = getStyle().value(PName.RoundCorner).asDouble();
 
 		final FontConfiguration fcHeader = getStyleHeader().getFontConfiguration(getSkinParam().getIHtmlColorSet());
 
