@@ -83,7 +83,7 @@ class GroupingGraphicalElementHeader extends GroupingGraphicalElement {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
+	protected void drawInternalU(UGraphic ug, double maxX, Context2D context, boolean shouldGroupComponents) {
 		if (isParallel) {
 			return;
 		}

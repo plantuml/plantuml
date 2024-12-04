@@ -102,6 +102,10 @@ public class Pragma {
 		return !isFalse(getValue("useintermediatepackages"));
 	}
 
+	public boolean isSvgInteractive() {
+		return isTrue(getValue("svginteractive"));
+	}
+
 	public boolean legacyReplaceBackslashNByNewline() {
 		return true;
 	}

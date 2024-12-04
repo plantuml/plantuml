@@ -88,8 +88,8 @@ class DrawableSetInitializer {
 
 	private ConstraintSet constraintSet;
 
-	public DrawableSetInitializer(Rose skin, ISkinParam skinParam, boolean showTail, double autonewpage) {
-		this.drawableSet = new DrawableSet(skin, skinParam);
+	public DrawableSetInitializer(Rose skin, ISkinParam skinParam, boolean showTail, double autonewpage, boolean shouldGroupComponents) {
+		this.drawableSet = new DrawableSet(skin, skinParam, shouldGroupComponents);
 		this.showTail = showTail;
 		this.autonewpage = autonewpage;
 
@@ -643,7 +643,7 @@ class DrawableSetInitializer {
 		final Component delayLine = drawableSet.getSkin().createComponent(null, ComponentType.DELAY_LINE, null,
 				drawableSet.getSkinParam(), participantDisplay);
 		final ParticipantBox box = new ParticipantBox(head, line, tail, delayLine, this.freeX,
-				skinParam.maxAsciiMessageLength() > 0 ? 1 : 5);
+				skinParam.maxAsciiMessageLength() > 0 ? 1 : 5, p.getCode());
 
 		final Component comp = drawableSet.getSkin().createComponent(
 				new Style[] { ComponentType.ALIVE_BOX_CLOSE_CLOSE.getStyleSignature()

@@ -82,10 +82,10 @@ class ArrowAndNoteBox extends Arrow implements InGroupable {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
-		arrow.drawU(ug, maxX, context);
+	protected void drawInternalU(UGraphic ug, double maxX, Context2D context, boolean shouldGroupComponents) {
+		arrow.drawU(ug, maxX, context, shouldGroupComponents);
 		for (NoteBox noteBox : noteBoxes) {
-			noteBox.drawU(ug, maxX, context);
+			noteBox.drawU(ug, maxX, context, shouldGroupComponents);
 		}
 	}
 
@@ -158,4 +158,13 @@ class ArrowAndNoteBox extends Arrow implements InGroupable {
 		return arrow.getParticipantAt(stringBounder, position);
 	}
 
+	@Override
+	protected String getParticipant1Code() {
+		return arrow.getParticipant1Code();
+	}
+
+	@Override
+	protected String getParticipant2Code() {
+		return arrow.getParticipant2Code();
+	}
 }
