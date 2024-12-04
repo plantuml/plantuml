@@ -221,7 +221,7 @@ public class SvgGraphics {
 
 	private Element getStylesForInteractiveMode() {
 		final Element style = simpleElement("style");
-		final String text = getData("default.css");
+		final String text = getData(getInteractiveModeAddOnsBaseFilename() + ".css");
 		if (text == null)
 			return null;
 
@@ -229,6 +229,13 @@ public class SvgGraphics {
 		style.setAttribute("type", "text/css");
 		style.appendChild(cdata);
 		return style;
+	}
+
+	private String getInteractiveModeAddOnsBaseFilename() {
+		if (UmlDiagramType.SEQUENCE.equals(diagramType)) {
+			return "sequencediagram";
+		}
+		return "default";
 	}
 
 //	private Element getStylesForDarkness() {
@@ -261,7 +268,7 @@ public class SvgGraphics {
 
 	private Element getScriptForInteractiveMode() {
 		final Element script = document.createElement("script");
-		final String text = getData("default.js");
+		final String text = getData(getInteractiveModeAddOnsBaseFilename() + ".js");
 		if (text == null)
 			return null;
 
