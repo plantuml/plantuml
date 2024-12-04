@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.plasma.Quark;
+import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -121,15 +122,17 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 
 		final String stereo = arg.get("STEREO", 0);
 
-		final Quark<Entity> quark = diagram.quarkInContext(false, idShort);
+		final Failable<Quark<Entity>> quark = diagram.quarkInContextSafe(false, idShort);
+		if (quark.isFail())
+			return CommandExecutionResult.error(quark.getError());
 
-		Entity entity = quark.getData();
+		Entity entity = quark.get().getData();
 
 		if (entity == null) {
 			Display display = Display.getWithNewlines(diagram.getPragma(), displayString);
 			if (Display.isNull(display))
-				display = Display.getWithNewlines(diagram.getPragma(), quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
-			entity = diagram.reallyCreateLeaf(quark, display, type, null);
+				display = Display.getWithNewlines(diagram.getPragma(), quark.get().getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
+			entity = diagram.reallyCreateLeaf(quark.get(), display, type, null);
 		} else {
 			if (entity.muteToType(type, null) == false)
 				return CommandExecutionResult.error("Bad name");
