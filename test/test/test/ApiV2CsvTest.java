@@ -34,7 +34,7 @@ class ApiV2CsvTest {
 		final Diagram diagram = result.getDiagram();
 
 		if (StringUtils.isNotEmpty(error)) {
-			assertThat(result.error()).isEqualTo(error);
+			assertThat(result.error()).startsWith(error);
 			assertThat(result.getErrorLine().isPresent()).isTrue();
 			assertThat(result.getErrorLine().get()).isEqualTo(errorLine);
 		}

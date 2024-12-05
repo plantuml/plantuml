@@ -1,5 +1,6 @@
 package test.test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -79,7 +80,7 @@ class ApiV2Test {
 	public void testError2() throws IOException {
 		final DiagramReturn result = DiagramUtils.exportDiagram("@startuml", "start", "#zzblue:toto;", "@enduml");
 		final Diagram diagram = result.getDiagram();
-		assertEquals("No such color", result.error());
+		assertThat(result.error()).startsWith("No such color");
 		assertNotNull(diagram);
 		assertEquals(DiagramType.UML, diagram.getSource().getDiagramType());
 		assertEquals("PSystemErrorV2", diagram.getClass().getSimpleName());

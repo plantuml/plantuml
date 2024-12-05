@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -120,7 +121,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 			return buildEmptyError(source, location, it.getTrace());
 		}
 		sys.makeDiagramReady();
-		if (sys.isOk() == false)
+		if (!sys.isOk())
 			return null;
 
 		return sys;
@@ -129,19 +130,25 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 	private AbstractPSystem executeFewLines(AbstractPSystem sys, UmlSource source, final IteratorCounter2 it,
 			ParserPass currentPass) {
 		final Step step = getCandidate(it);
+
+		String errMsgSuffix = "";
+		if (sys instanceof TitledDiagram) {
+			errMsgSuffix = " (Assumed diagram type: " + ((TitledDiagram) sys).getUmlDiagramType().name() + ")";
+		}
+
 		if (step == null) {
-			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, it.peek().getLocation());
+			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?" + errMsgSuffix, 0, it.peek().getLocation());
 			it.next();
 			return PSystemErrorUtils.buildV2(source, err, null, it.getTrace());
 		}
 
-		if (step.command.isEligibleFor(currentPass) == false)
+		if (!step.command.isEligibleFor(currentPass))
 			return sys;
 
 		final CommandExecutionResult result = sys.executeCommand(step.command, step.blocLines, currentPass);
-		if (result.isOk() == false) {
+		if (!result.isOk()) {
 			final LineLocation location = ((StringLocated) step.blocLines.getFirst()).getLocation();
-			final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(), result.getScore(),
+			final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError() + errMsgSuffix, result.getScore(),
 					location);
 			sys = PSystemErrorUtils.buildV2(source, err, result.getDebugLines(), it.getTrace());
 		}
