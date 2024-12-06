@@ -159,4 +159,10 @@ public class ClassDiagramFactory extends PSystemCommandFactory {
 		CommonCommands.addTitleCommands(cmds);
 		CommonCommands.addCommonCommands2(cmds);
 	}
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return UmlDiagramType.CLASS;
+	}
+
 }

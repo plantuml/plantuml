@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class WireDiagramFactory extends PSystemCommandFactory {
 
@@ -66,5 +67,11 @@ public class WireDiagramFactory extends PSystemCommandFactory {
 	public WireDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
 		return new WireDiagram(source);
 	}
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return UmlDiagramType.WIRE;
+	}
+
 
 }

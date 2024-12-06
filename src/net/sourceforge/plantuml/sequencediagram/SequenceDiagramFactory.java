@@ -79,6 +79,7 @@ import net.sourceforge.plantuml.sequencediagram.command.CommandReferenceMultilin
 import net.sourceforge.plantuml.sequencediagram.command.CommandReferenceOverSeveral;
 import net.sourceforge.plantuml.sequencediagram.command.CommandReturn;
 import net.sourceforge.plantuml.sequencediagram.command.CommandUrl;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class SequenceDiagramFactory extends PSystemCommandFactory {
 
@@ -146,5 +147,11 @@ public class SequenceDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandUrl());
 		cmds.add(new CommandLinkAnchor());
 	}
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return UmlDiagramType.SEQUENCE;
+	}
+
 
 }

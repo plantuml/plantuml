@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJsonSingleLin
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateMap;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.statediagram.command.CommandAddField;
 import net.sourceforge.plantuml.statediagram.command.CommandConcurrentState;
 import net.sourceforge.plantuml.statediagram.command.CommandCreatePackage2;
@@ -111,5 +112,11 @@ public class StateDiagramFactory extends PSystemCommandFactory {
 		CommonCommands.addCommonCommands1(cmds);
 		cmds.add(new CommandHideShow2());
 	}
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return UmlDiagramType.STATE;
+	}
+
 
 }

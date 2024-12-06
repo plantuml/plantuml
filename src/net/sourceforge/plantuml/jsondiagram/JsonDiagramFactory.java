@@ -106,5 +106,11 @@ public class JsonDiagramFactory extends PSystemAbstractFactory {
 		}
 		return result;
 	}
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return UmlDiagramType.JSON;
+	}
+
 
 }

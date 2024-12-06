@@ -41,6 +41,7 @@ import java.util.Map;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class StdlibDiagramFactory extends PSystemCommandFactory {
 	// ::remove file when __CORE__
@@ -54,5 +55,11 @@ public class StdlibDiagramFactory extends PSystemCommandFactory {
 	public StdlibDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
 		return new StdlibDiagram(source, skinMap);
 	}
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return null;
+	}
+
 
 }

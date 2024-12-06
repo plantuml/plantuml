@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.directdot;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemDotFactory extends PSystemBasicFactory<PSystemDot> {
 
@@ -66,4 +67,10 @@ public class PSystemDotFactory extends PSystemBasicFactory<PSystemDot> {
 		data.append("\n");
 		return new PSystemDot(source, data.toString());
 	}
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return null;
+	}
+
 }
