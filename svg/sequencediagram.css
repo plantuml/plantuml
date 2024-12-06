@@ -1,0 +1,7 @@
+svg g.sequence-diagram-header .header-background {
+	opacity: 0.8;
+}
+
+svg:has(g.sequence-diagram-header) g.participant-tail {
+	display: none;
+}

@@ -143,7 +143,10 @@ public class MessageExoArrow extends Arrow {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
+	protected void drawInternalU(UGraphic ug, double maxX, Context2D context, boolean shouldGroupComponents) {
+		if (shouldGroupComponents) {
+			startGroup(ug);
+		}
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double x1 = getStartingX(stringBounder);
 		final double x2 = maxX;
@@ -151,6 +154,9 @@ public class MessageExoArrow extends Arrow {
 		startUrl(ug);
 		getArrowComponent().drawU(ug, new Area(getActualDimension(stringBounder, x2)), context);
 		endUrl(ug);
+		if (shouldGroupComponents) {
+			endGroup(ug);
+		}
 	}
 
 	private XDimension2D getActualDimension(StringBounder stringBounder, double maxX) {
@@ -199,6 +205,16 @@ public class MessageExoArrow extends Arrow {
 	@Override
 	public LivingParticipantBox getParticipantAt(StringBounder stringBounder, NotePosition position) {
 		return p;
+	}
+
+	@Override
+	protected String getParticipant1Code() {
+		return p.getParticipantCode();
+	}
+
+	@Override
+	protected String getParticipant2Code() {
+		return getParticipant1Code();
 	}
 
 	@Override

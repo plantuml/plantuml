@@ -393,14 +393,14 @@ public class ImageBuilder {
 		if (titledDiagram != null)
 			option = option.withTitle(titledDiagram.getTitleDisplay());
 
-		if ("true".equalsIgnoreCase(pragma.getValue("svginteractive")))
+		if (pragma.isSvgInteractive())
 			option = option.withInteractive();
 		if (skinParam != null) {
 			option = option.withLengthAdjust(skinParam.getlengthAdjust());
 			option = option.withSvgDimensionStyle(skinParam.svgDimensionStyle());
 		}
 
-		final UGraphicSvg ug = UGraphicSvg.build(option, false, seed, stringBounder);
+		final UGraphicSvg ug = UGraphicSvg.build(option, false, seed, stringBounder, titledDiagram != null ? titledDiagram.getUmlDiagramType() : null);
 		return ug;
 
 	}

@@ -38,9 +38,12 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -61,17 +64,19 @@ public class ParticipantBox implements Pushable {
 	private final Component line;
 	private final Component tail;
 	private final Component delayLine;
+	private final String participantCode;
 
 	private int cpt = CPT++;
 
 	public ParticipantBox(Component head, Component line, Component tail, Component delayLine, double startingX,
-			int outMargin) {
+			int outMargin, String participantCode) {
 		this.outMargin = outMargin;
 		this.startingX = startingX;
 		this.head = head;
 		this.line = line;
 		this.tail = tail;
 		this.delayLine = delayLine;
+		this.participantCode = participantCode;
 	}
 
 	@Override
@@ -111,7 +116,7 @@ public class ParticipantBox implements Pushable {
 		startingX += deltaX;
 	}
 
-	public void drawHeadTailU(UGraphic ug, double topStartingY, boolean showHead, double positionTail) {
+	public void drawHeadTailU(UGraphic ug, double topStartingY, boolean showHead, double positionTail, boolean shouldGroupComponents) {
 		if (topStartingY == 0) {
 			throw new IllegalStateException("setTopStartingY cannot be zero");
 		}
@@ -121,15 +126,33 @@ public class ParticipantBox implements Pushable {
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		if (showHead) {
+			if (shouldGroupComponents) {
+				Map<UGroupType, String> typeIdents = new HashMap<>();
+				typeIdents.put(UGroupType.CLASS, "participant participant-head");
+				typeIdents.put(UGroupType.PARTICIPANT_NAME, participantCode);
+				ug.startGroup(typeIdents);
+			}
+
 			final double y1 = topStartingY - head.getPreferredHeight(stringBounder)
 					- line.getPreferredHeight(stringBounder) / 2;
 			head.drawU(ug.apply(new UTranslate(getMinX(), y1)), new Area(
 					new XDimension2D(head.getPreferredWidth(stringBounder), head.getPreferredHeight(stringBounder))),
 					new SimpleContext2D(false));
 			// ug.setTranslate(atX, atY);
+
+			if (shouldGroupComponents) {
+				ug.closeGroup();
+			}
 		}
 
 		if (positionTail > 0) {
+			if (shouldGroupComponents) {
+				Map<UGroupType, String> typeIdents = new HashMap<>();
+				typeIdents.put(UGroupType.CLASS, "participant participant-tail");
+				typeIdents.put(UGroupType.PARTICIPANT_NAME, participantCode);
+				ug.startGroup(typeIdents);
+			}
+
 			// final double y2 = positionTail - topStartingY +
 			// line.getPreferredHeight(stringBounder) / 2 - 1;
 			positionTail += line.getPreferredHeight(stringBounder) / 2 - 1;
@@ -141,6 +164,10 @@ public class ParticipantBox implements Pushable {
 					new XDimension2D(tail.getPreferredWidth(stringBounder), tail.getPreferredHeight(stringBounder))),
 					new SimpleContext2D(false));
 			// ug.setTranslate(atX, atY);
+
+			if (shouldGroupComponents) {
+				ug.closeGroup();
+			}
 		}
 	}
 
@@ -199,6 +226,10 @@ public class ParticipantBox implements Pushable {
 
 	public void addDelay(GraphicalDelayText delay) {
 		this.delays.add(delay);
+	}
+
+	public String getParticipantCode() {
+		return participantCode;
 	}
 
 	public Collection<Segment> getDelays(final StringBounder stringBounder) {

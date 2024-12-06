@@ -100,7 +100,7 @@ final class NoteBox extends GraphicalElement implements InGroupable {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
+	protected void drawInternalU(UGraphic ug, double maxX, Context2D context, boolean shouldGroupComponents) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double xStart = getStartingX(stringBounder);
 		ug = ug.apply(new UTranslate(xStart, getStartingY()));

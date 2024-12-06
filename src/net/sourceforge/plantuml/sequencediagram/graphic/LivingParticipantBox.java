@@ -114,4 +114,7 @@ public class LivingParticipantBox implements InGroupable {
 		return toString();
 	}
 
+	public String getParticipantCode() {
+		return participantBox.getParticipantCode();
+	}
 }
