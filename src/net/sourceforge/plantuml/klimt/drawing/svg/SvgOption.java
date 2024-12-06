@@ -54,6 +54,11 @@ public class SvgOption {
 	private String linkTarget;
 	private String font;
 	private String title;
+	private final String interactiveBaseFilename = "default";
+
+	public String getInteractiveBaseFilename() {
+		return interactiveBaseFilename;
+	}
 
 	public static SvgOption basic() {
 		return new SvgOption();

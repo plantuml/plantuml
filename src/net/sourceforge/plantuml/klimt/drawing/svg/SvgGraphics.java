@@ -213,7 +213,7 @@ public class SvgGraphics {
 
 	private Element getStylesForInteractiveMode() {
 		final Element style = simpleElement("style");
-		final String text = getData("default.css");
+		final String text = getData(option.getInteractiveBaseFilename() + ".css");
 		if (text == null)
 			return null;
 
@@ -253,7 +253,7 @@ public class SvgGraphics {
 
 	private Element getScriptForInteractiveMode() {
 		final Element script = document.createElement("script");
-		final String text = getData("default.js");
+		final String text = getData(option.getInteractiveBaseFilename() + ".js");
 		if (text == null)
 			return null;
 
