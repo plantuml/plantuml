@@ -57,12 +57,14 @@ import net.sourceforge.plantuml.klimt.shape.UPixel;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.url.Url;
 
 public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipContainer {
 	// ::remove file when __HAXE__
 
 	private final boolean textAsPath;
+	private final UmlDiagramType diagramType;
 	private /* final */ SvgOption option;
 
 	public double dpiFactor() {
@@ -71,21 +73,22 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 
 	@Override
 	protected AbstractCommonUGraphic copyUGraphic() {
-		final UGraphicSvg result = new UGraphicSvg(getStringBounder(), textAsPath);
+		final UGraphicSvg result = new UGraphicSvg(getStringBounder(), textAsPath, diagramType);
 		result.copy(this);
 		result.option = this.option;
 		return result;
 	}
 
-	private UGraphicSvg(StringBounder stringBounder, boolean textAsPath) {
+	private UGraphicSvg(StringBounder stringBounder, boolean textAsPath, UmlDiagramType diagramType) {
 		super(stringBounder);
 		this.textAsPath = textAsPath;
+		this.diagramType = diagramType;
 		register();
 	}
 
-	public static UGraphicSvg build(SvgOption option, boolean textAsPath, long seed, StringBounder stringBounder) {
-		final UGraphicSvg result = new UGraphicSvg(stringBounder, textAsPath);
-		result.copy(option.getBackcolor(), option.getColorMapper(), new SvgGraphics(seed, option));
+	public static UGraphicSvg build(SvgOption option, boolean textAsPath, long seed, StringBounder stringBounder, UmlDiagramType diagramType) {
+		final UGraphicSvg result = new UGraphicSvg(stringBounder, textAsPath, diagramType);
+		result.copy(option.getBackcolor(), option.getColorMapper(), new SvgGraphics(seed, option, diagramType));
 		result.option = option;
 		return result;
 	}
@@ -138,13 +141,12 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 				// create so we can register
 				// the event handlers on them we will append to the end of the document
 				getGraphicObject().addStyle("onmouseinteractivefooter.css");
-				getGraphicObject().addScriptTag("https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js");
 				getGraphicObject().addScript("onmouseinteractivefooter.js");
 			}
 
 			getGraphicObject().createXml(os);
 		} catch (TransformerException e) {
-			throw new IOException(e.toString());
+			throw new IOException(e);
 		}
 	}
 

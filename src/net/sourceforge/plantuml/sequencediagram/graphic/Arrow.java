@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
+import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
@@ -42,6 +43,9 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.url.Url;
+
+import java.util.HashMap;
+import java.util.Map;
 
 abstract class Arrow extends GraphicalElement implements InGroupable {
 
@@ -78,6 +82,18 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 		return url;
 	}
 
+	protected final void startGroup(UGraphic ug) {
+		Map<UGroupType, String> typeIdents = new HashMap<>();
+		typeIdents.put(UGroupType.CLASS, "message");
+		typeIdents.put(UGroupType.PARTICIPANT_1_NAME, getParticipant1Code());
+		typeIdents.put(UGroupType.PARTICIPANT_2_NAME, getParticipant2Code());
+		ug.startGroup(typeIdents);
+	}
+
+	protected final void endGroup(UGraphic ug) {
+		ug.closeGroup();
+	}
+
 	protected final void startUrl(UGraphic ug) {
 		if (url != null) {
 			ug.startUrl(url);
@@ -109,6 +125,10 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 	public abstract double getArrowYEndLevel(StringBounder stringBounder);
 
 	public abstract LivingParticipantBox getParticipantAt(StringBounder stringBounder, NotePosition position);
+
+	protected abstract String getParticipant1Code();
+
+	protected abstract String getParticipant2Code();
 
 	protected final double getPaddingArrowHead() {
 		return paddingArrowHead;

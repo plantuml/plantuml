@@ -96,6 +96,7 @@ import net.sourceforge.plantuml.skin.LineParam;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.SkinParam;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -424,11 +425,10 @@ public class ImageBuilder {
 			option = option.withRootAttribute("data-diagram-type", diagram.getUmlDiagramType().name());
 		}
 
-		if ("true".equalsIgnoreCase(pragma.getValue(PragmaKey.SVG_INTERACTIVE))) {
+		if ((pragma.isTrue(PragmaKey.SVG_INTERACTIVE))) {
 			String interactiveBaseFilename = "default";
-			// To be uncommented when SequenceDiagramFloatingHeader will be ready
-//			if (titledDiagram != null && titledDiagram.getUmlDiagramType() == UmlDiagramType.SEQUENCE)
-//				interactiveBaseFilename = "sequencediagram";
+			if (diagram != null && diagram.getUmlDiagramType() == UmlDiagramType.SEQUENCE)
+				interactiveBaseFilename = "sequencediagram";
 			option = option.withInteractive(interactiveBaseFilename);
 		}
 
@@ -437,7 +437,7 @@ public class ImageBuilder {
 			option = option.withSvgDimensionStyle(skinParam.svgDimensionStyle());
 		}
 
-		final UGraphicSvg ug = UGraphicSvg.build(option, false, seed, stringBounder);
+		final UGraphicSvg ug = UGraphicSvg.build(option, false, seed, stringBounder, diagram != null ? diagram.getUmlDiagramType() : null);
 		return ug;
 
 	}
