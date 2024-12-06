@@ -53,7 +53,7 @@ class GraphicalNewpage extends GraphicalElement {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
+	protected void drawInternalU(UGraphic ug, double maxX, Context2D context, boolean shouldGroupComponents) {
 		// final double x = ug.getTranslateX();
 		ug = ug.apply(UTranslate.dy(getStartingY()));
 		final StringBounder stringBounder = ug.getStringBounder();

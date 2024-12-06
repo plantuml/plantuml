@@ -36,5 +36,5 @@
 package net.sourceforge.plantuml.klimt;
 
 public enum UGroupType {
-	ID, CLASS
+	ID, CLASS, PARTICIPANT_NAME, PARTICIPANT_1_NAME, PARTICIPANT_2_NAME
 }

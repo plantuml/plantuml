@@ -79,12 +79,14 @@ public class DrawableSet {
 	private final List<Event> eventsList = new ArrayList<>();
 	private final Rose skin;
 	private final ISkinParam skinParam;
+	private final boolean shouldGroupComponents;
 	private XDimension2D dimension;
 	private double topStartingY;
 
-	DrawableSet(Rose skin, ISkinParam skinParam) {
+	DrawableSet(Rose skin, ISkinParam skinParam, boolean shouldGroupComponents) {
 		this.skin = Objects.requireNonNull(skin);
 		this.skinParam = Objects.requireNonNull(skinParam);
+		this.shouldGroupComponents = shouldGroupComponents;
 	}
 
 	public ParticipantBox getVeryfirst() {
@@ -330,7 +332,7 @@ public class DrawableSet {
 			if (url != null)
 				ug.startUrl(url);
 
-			box.getParticipantBox().drawHeadTailU(ug, topStartingY, showHead, positionTail);
+			box.getParticipantBox().drawHeadTailU(ug, topStartingY, showHead, positionTail, shouldGroupComponents);
 			if (url != null)
 				ug.closeUrl();
 
@@ -349,9 +351,10 @@ public class DrawableSet {
 		for (Participant p : getAllParticipants())
 			drawLifeLineU(ug, p);
 
-		for (GraphicalElement element : getAllGraphicalElements())
-			element.drawU(ug, getMaxX(), context);
-
+		for (Event ev : eventsList) {
+			GraphicalElement element = events.get(ev);
+			element.drawU(ug, getMaxX(), context, shouldGroupComponents);
+		}
 	}
 
 	private void drawDolls(UGraphic ug, double height, Context2D context) {

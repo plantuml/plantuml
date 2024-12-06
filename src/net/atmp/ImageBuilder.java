@@ -396,15 +396,15 @@ public class ImageBuilder {
 			option = option.withRootAttribute("data-diagram-type", titledDiagram.getUmlDiagramType().name());
 		}
 
-		if ("true".equalsIgnoreCase(pragma.getValue("svginteractive"))) {
-			String interactiveBaseFilename = "default";
-			// To be uncommented when SequenceDiagramFloatingHeader will be ready
-//			if (titledDiagram != null && titledDiagram.getUmlDiagramType() == UmlDiagramType.SEQUENCE)
-//				interactiveBaseFilename = "sequencediagram";
-			option = option.withInteractive(interactiveBaseFilename);
-		}
-
-		if (skinParam != null) {
+        if (pragma.isSvgInteractive()) {
+            String interactiveBaseFilename = "default";
+            
+            if (titledDiagram != null && titledDiagram.getUmlDiagramType() == UmlDiagramType.SEQUENCE)
+				interactiveBaseFilename = "sequencediagram";
+            option = option.withInteractive(interactiveBaseFilename);
+        }
+            
+        if (skinParam != null) {
 			option = option.withLengthAdjust(skinParam.getlengthAdjust());
 			option = option.withSvgDimensionStyle(skinParam.svgDimensionStyle());
 		}

@@ -1129,8 +1129,22 @@ public class SvgGraphics {
 		for (Map.Entry<UGroupType, String> typeIdent : typeIdents.entrySet()) {
 			if (typeIdent.getKey() == UGroupType.ID)
 				pendingAction.get(0).setAttribute("id", typeIdent.getValue());
-			if (option.isInteractive() && typeIdent.getKey() == UGroupType.CLASS)
-				pendingAction.get(0).setAttribute("class", typeIdent.getValue());
+			if (option.isInteractive()) {
+				switch (typeIdent.getKey()) {
+					case CLASS:
+						pendingAction.get(0).setAttribute("class", typeIdent.getValue());
+						break;
+					case PARTICIPANT_NAME:
+						pendingAction.get(0).setAttribute("data-participant", typeIdent.getValue());
+						break;
+					case PARTICIPANT_1_NAME:
+						pendingAction.get(0).setAttribute("data-participant-1", typeIdent.getValue());
+						break;
+					case PARTICIPANT_2_NAME:
+						pendingAction.get(0).setAttribute("data-participant-2", typeIdent.getValue());
+						break;
+				}
+			}
 		}
 	}
 

@@ -113,9 +113,9 @@ final class NotesBoxes extends GraphicalElement implements InGroupable {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
+	protected void drawInternalU(UGraphic ug, double maxX, Context2D context, boolean shouldGroupComponents) {
 		for (NoteBox n : notes)
-			n.drawInternalU(ug, maxX, context);
+			n.drawInternalU(ug, maxX, context, shouldGroupComponents);
 
 	}
 

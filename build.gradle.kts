@@ -78,6 +78,8 @@ sourceSets {
 		}
 		resources {
 			srcDirs(".")
+			include("svg/**/*.css")
+			include("svg/**/*.js")
 			include("skin/**/*.skin")
 			include("themes/**/*.puml")
 		}
