@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class SvgOption {
 
-	private boolean interactive = false;
 	private LengthAdjust lengthAdjust = LengthAdjust.defaultValue();
 	private String preserveAspectRatio = "none";
 	private String hover;
@@ -58,7 +57,7 @@ public class SvgOption {
 	private String linkTarget;
 	private String font;
 	private String title;
-	private final String interactiveBaseFilename = "default";
+	private String interactiveBaseFilename;
 	private final Map<String, String> rootAttributes = new LinkedHashMap<>();
 
 	public String getInteractiveBaseFilename() {
@@ -78,8 +77,8 @@ public class SvgOption {
 		return this;
 	}
 
-	public SvgOption withInteractive() {
-		this.interactive = true;
+	public SvgOption withInteractive(String interactiveBaseFilename) {
+		this.interactiveBaseFilename = interactiveBaseFilename;
 		return this;
 	}
 
@@ -147,7 +146,7 @@ public class SvgOption {
 	}
 
 	public boolean isInteractive() {
-		return interactive;
+		return interactiveBaseFilename != null;
 	}
 
 	public LengthAdjust getLengthAdjust() {
