@@ -147,6 +147,9 @@ public class SvgGraphics {
 
 			this.root = getRootNode();
 
+			for (Map.Entry<String, String> ent : option.getRootAttributes().entrySet())
+				root.setAttribute(ent.getKey(), ent.getValue());
+
 			// Create a node named defs, which will be the parent
 			// for a pair of linear gradient definitions.
 			defs = simpleElement("defs");

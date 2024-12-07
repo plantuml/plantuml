@@ -35,6 +35,10 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.svg;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -55,6 +59,7 @@ public class SvgOption {
 	private String font;
 	private String title;
 	private final String interactiveBaseFilename = "default";
+	private final Map<String, String> rootAttributes = new LinkedHashMap<>();
 
 	public String getInteractiveBaseFilename() {
 		return interactiveBaseFilename;
@@ -125,6 +130,15 @@ public class SvgOption {
 
 	public SvgOption withFont(String font) {
 		this.font = font;
+		return this;
+	}
+	
+	public Map<String, String> getRootAttributes() {
+		return Collections.unmodifiableMap(rootAttributes);
+	}
+
+	public SvgOption withRootAttribute(String key, String value) {
+		this.rootAttributes.put(key, value);
 		return this;
 	}
 
