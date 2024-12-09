@@ -79,14 +79,12 @@ public class DrawableSet {
 	private final List<Event> eventsList = new ArrayList<>();
 	private final Rose skin;
 	private final ISkinParam skinParam;
-	private final boolean shouldGroupComponents;
 	private XDimension2D dimension;
 	private double topStartingY;
 
-	DrawableSet(Rose skin, ISkinParam skinParam, boolean shouldGroupComponents) {
+	DrawableSet(Rose skin, ISkinParam skinParam) {
 		this.skin = Objects.requireNonNull(skin);
 		this.skinParam = Objects.requireNonNull(skinParam);
-		this.shouldGroupComponents = shouldGroupComponents;
 	}
 
 	public ParticipantBox getVeryfirst() {
@@ -332,7 +330,7 @@ public class DrawableSet {
 			if (url != null)
 				ug.startUrl(url);
 
-			box.getParticipantBox().drawHeadTailU(ug, topStartingY, showHead, positionTail, shouldGroupComponents);
+			box.getParticipantBox().drawHeadTailU(ug, topStartingY, showHead, positionTail);
 			if (url != null)
 				ug.closeUrl();
 
@@ -353,7 +351,7 @@ public class DrawableSet {
 
 		for (Event ev : eventsList) {
 			GraphicalElement element = events.get(ev);
-			element.drawU(ug, getMaxX(), context, shouldGroupComponents);
+			element.drawU(ug, getMaxX(), context);
 		}
 	}
 

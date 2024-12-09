@@ -88,8 +88,8 @@ class DrawableSetInitializer {
 
 	private ConstraintSet constraintSet;
 
-	public DrawableSetInitializer(Rose skin, ISkinParam skinParam, boolean showTail, double autonewpage, boolean shouldGroupComponents) {
-		this.drawableSet = new DrawableSet(skin, skinParam, shouldGroupComponents);
+	public DrawableSetInitializer(Rose skin, ISkinParam skinParam, boolean showTail, double autonewpage) {
+		this.drawableSet = new DrawableSet(skin, skinParam);
 		this.showTail = showTail;
 		this.autonewpage = autonewpage;
 

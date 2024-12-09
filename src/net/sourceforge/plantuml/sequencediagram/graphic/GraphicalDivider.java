@@ -53,7 +53,7 @@ class GraphicalDivider extends GraphicalElement {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, double maxX, Context2D context, boolean shouldGroupComponents) {
+	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
 		ug = ug.apply(UTranslate.dy(getStartingY()));
 		final StringBounder stringBounder = ug.getStringBounder();
 		final XDimension2D dim = new XDimension2D(maxX, comp.getPreferredHeight(stringBounder));
