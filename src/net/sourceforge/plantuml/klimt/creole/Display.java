@@ -284,7 +284,7 @@ public class Display implements Iterable<CharSequence> {
 					current.append(c);
 					current.append(c2);
 				}
-				pragma.addBackslashNWarning();
+				pragma.addBackslashNewlineWarning();
 			} else if (c == Jaws.BLOCK_E1_REAL_BACKSLASH) {
 				current.append('\\');
 			} else if (c == Jaws.BLOCK_E1_NEWLINE) {

@@ -41,7 +41,7 @@ import java.util.Map;
 public class Pragma {
 
 	private final Map<String, String> values = new LinkedHashMap<String, String>();
-	private boolean backslashNWarning;
+	private boolean backslashNewlineWarning;
 
 	private Pragma() {
 	}
@@ -106,12 +106,12 @@ public class Pragma {
 		return true;
 	}
 
-	public void addBackslashNWarning() {
-		// this.backslashNWarning = true;
+	public void addBackslashNewlineWarning() {
+		this.backslashNewlineWarning = true;
 	}
 
-	public boolean isBackslashNWarning() {
-		return backslashNWarning;
+	public boolean printBackslashNewlineWarning() {
+		return backslashNewlineWarning && isTrue(getValue("warning"));
 	}
 
 }

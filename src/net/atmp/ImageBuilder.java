@@ -37,10 +37,13 @@ package net.atmp;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -92,7 +95,6 @@ import net.sourceforge.plantuml.skin.CornerParam;
 import net.sourceforge.plantuml.skin.LineParam;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.SkinParam;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -121,7 +123,7 @@ public class ImageBuilder {
 	private TitledDiagram titledDiagram;
 	private boolean randomPixel;
 	private String warningOrError;
-	private boolean warningN;
+	private boolean warningNewline;
 
 	public static ImageBuilder imageBuilder(FileFormatOption fileFormatOption) {
 		return new ImageBuilder(fileFormatOption);
@@ -221,7 +223,7 @@ public class ImageBuilder {
 		seed = diagram.seed();
 		titledDiagram = diagram;
 		warningOrError = diagram.getWarningOrError();
-		warningN = diagram.getPragma().isBackslashNWarning();
+		warningNewline = diagram.getPragma().printBackslashNewlineWarning();
 		return this;
 	}
 
@@ -247,8 +249,12 @@ public class ImageBuilder {
 
 	private ImageData writeImageInternal(OutputStream os) throws IOException {
 		XDimension2D dim = getFinalDimension();
-		if (warningN)
-			dim = dim.delta(0, 60);
+		XDimension2D dimWarning = null;
+		if (warningNewline) {
+			dimWarning = getWarningDimension(fileFormatOption.getFileFormat().getDefaultStringBounder());
+			dim = dim.atLeast(dimWarning.getWidth(), 0);
+			dim = dim.delta(15, dimWarning.getHeight() + 20);
+		}
 		final Scale scale = titledDiagram == null ? null : titledDiagram.getScale();
 		final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * getDpi()
 				/ 96.0;
@@ -257,9 +263,10 @@ public class ImageBuilder {
 		WasmLog.log("...image drawing...");
 		UGraphic ug = createUGraphic(dim, scaleFactor,
 				titledDiagram == null ? Pragma.createEmpty() : titledDiagram.getPragma());
-		if (warningN) {
-			drawWarning(ug.apply(new UTranslate(margin.getLeft(), 5)), dim.getWidth());
-			ug = ug.apply(UTranslate.dy(60));
+
+		if (warningNewline) {
+			drawWarning(dimWarning, ug.apply(UTranslate.dy(5)), dim.getWidth());
+			ug = ug.apply(UTranslate.dy(dimWarning.getHeight() + 20));
 		}
 
 		maybeDrawBorder(ug, dim);
@@ -282,22 +289,40 @@ public class ImageBuilder {
 		return createImageData(dim);
 	}
 
-	private void drawWarning(UGraphic ug, double width) {
+	private final static FontConfiguration fc = FontConfiguration.blackBlueTrue(UFont.monospaced(10));
+	private final static List<String> WARNINGS = Arrays.asList("Warning",
+			"This diagram is using \\n which is deprecated and will be removed in the future.",
+			"You should use %n() instead in your diagram.", "More info on https://plantuml.com/newline");
+
+	private void drawWarning(XDimension2D dimWarning, UGraphic ug, double fullWidth) {
 
 		final HColorSet set = HColorSet.instance();
 
-		final HColor back = set.getColorOrWhite("ffcccc");
-		final HColor border = set.getColorOrWhite("ff9999");
+	    final HColor back = set.getColorOrWhite("ffffcc");
+	    final HColor border = set.getColorOrWhite("ffdd88");
 		ug = ug.apply(back.bg()).apply(border);
-		final URectangle rect = URectangle.build(width - margin.getLeft() - margin.getRight(), 50).rounded(5);
-		ug.apply(UStroke.withThickness(3)).draw(rect);
+		final URectangle rect = URectangle.build(fullWidth - 10, dimWarning.getHeight() + 10).rounded(5);
+		ug.apply(new UTranslate(5, 0)).apply(UStroke.withThickness(3)).draw(rect);
 
 		ug = ug.apply(HColors.BLACK);
+		ug = ug.apply(new UTranslate(10, 15));
 
-		final FontConfiguration fc = FontConfiguration.blackBlueTrue(UFont.monospaced(10));
-		final String text = "Warning: you are using \\n!";
-		ug.apply(new UTranslate(10, 25)).draw(UText.build(text, fc));
+		for (String s : WARNINGS) {
+			final UText text = UText.build(s, fc);
+			ug.draw(text);
+			final double height = text.calculateDimension(ug.getStringBounder()).getHeight();
+			ug = ug.apply(UTranslate.dy(height));
+		}
+	}
 
+	private XDimension2D getWarningDimension(StringBounder stringBounder) {
+		XDimension2D result = new XDimension2D(0, 0);
+		for (String s : WARNINGS) {
+			final UText text = UText.build(s, fc);
+			final XDimension2D dim = text.calculateDimension(stringBounder);
+			result = result.mergeTB(dim);
+		}
+		return result.delta(10, 5);
 	}
 
 	private void maybeDrawBorder(UGraphic ug, XDimension2D dim) {
