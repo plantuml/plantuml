@@ -75,6 +75,7 @@ import net.sourceforge.plantuml.theme.Theme;
 import net.sourceforge.plantuml.theme.ThemeUtils;
 import net.sourceforge.plantuml.tim.builtin.AlwaysFalse;
 import net.sourceforge.plantuml.tim.builtin.AlwaysTrue;
+import net.sourceforge.plantuml.tim.builtin.Backslash;
 import net.sourceforge.plantuml.tim.builtin.BoolVal;
 import net.sourceforge.plantuml.tim.builtin.CallUserFunction;
 import net.sourceforge.plantuml.tim.builtin.Chr;
@@ -180,6 +181,7 @@ public class TContext {
 	private void addStandardFunctions(Defines defines) {
 		functionsSet.addFunction(new AlwaysFalse());
 		functionsSet.addFunction(new AlwaysTrue());
+		functionsSet.addFunction(new Backslash());
 		functionsSet.addFunction(new BoolVal());
 		functionsSet.addFunction(new CallUserFunction());
 		functionsSet.addFunction(new Chr());
