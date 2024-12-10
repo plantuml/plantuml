@@ -80,7 +80,7 @@ public class ErrorUml {
 
 	public final String getError() {
 		if (diagramType != null)
-			return error + " (Assumed diagram type: " + diagramType.name().toLowerCase() + ")";
+			return error + " (Assumed diagram type: " + diagramType.humanReadableName() + ")";
 		return error;
 	}
 

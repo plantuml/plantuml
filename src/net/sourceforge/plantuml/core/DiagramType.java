@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.core;
 
 import net.sourceforge.plantuml.utils.StartUtils;
 
+// To be merged with UmlDiagramType
 public enum DiagramType {
 	// ::remove folder when __HAXE__
 	UML, BPM, DITAA, DOT, PROJECT, JCCKIT, SALT, FLOW, CREOLE, MATH, LATEX, DEFINITION, GANTT, CHRONOLOGY, NW, MINDMAP,
