@@ -103,9 +103,11 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 		return new SingleLineCommand2<SequenceDiagram>(getRegexConcatSingleLine()) {
 
 			@Override
-			protected CommandExecutionResult executeArg(final SequenceDiagram system, LineLocation location,
+			protected CommandExecutionResult executeArg(final SequenceDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-				return executeInternal(system, arg, BlocLines.getWithNewlines(arg.get("NOTE", 0)));
+				final BlocLines lines = BlocLines.getWithNewlines(arg.get("NOTE", 0));
+				final Display display = diagram.manageVariable(lines.toDisplay());
+				return executeInternal(diagram, arg, display);
 			}
 
 		};
@@ -121,18 +123,19 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 			}
 
 			@Override
-			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines, ParserPass currentPass)
-					throws NoSuchColorException {
+			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines,
+					ParserPass currentPass) throws NoSuchColorException {
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
-				return executeInternal(diagram, line0, lines);
+				final Display display = diagram.manageVariable(lines.toDisplay());
+				return executeInternal(diagram, line0, display);
 			}
 
 		};
 	}
 
-	private CommandExecutionResult executeInternal(SequenceDiagram diagram, final RegexResult line0, BlocLines lines)
+	private CommandExecutionResult executeInternal(SequenceDiagram diagram, final RegexResult line0, Display display)
 			throws NoSuchColorException {
 		final EventWithNote event = diagram.getLastEventWithNote();
 		if (event == null)
@@ -146,7 +149,6 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 		}
 
 		final NoteStyle style = NoteStyle.getNoteStyle(line0.get("STYLE", 0));
-		final Display display = diagram.manageVariable(lines.toDisplay());
 		final String backcolor0 = line0.get("COLOR", 0);
 		Colors colors = Colors.empty().add(ColorType.BACK,
 				backcolor0 == null ? null : HColorSet.instance().getColor(backcolor0));
