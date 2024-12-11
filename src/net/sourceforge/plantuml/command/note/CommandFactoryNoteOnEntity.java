@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -167,10 +168,10 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 		return new SingleLineCommand2<AbstractEntityDiagram>(getRegexConcatSingleLine(partialPattern)) {
 
 			@Override
-			protected CommandExecutionResult executeArg(final AbstractEntityDiagram system, LineLocation location,
+			protected CommandExecutionResult executeArg(final AbstractEntityDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-				final String s = arg.get("NOTE", 0);
-				return executeInternal(arg, system, null, BlocLines.getWithNewlines(s));
+				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get("NOTE", 0));
+				return executeInternal(arg, diagram, null, display);
 			}
 
 			@Override
@@ -193,12 +194,13 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 			}
 
 			@Override
-			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines, ParserPass currentPass)
-					throws NoSuchColorException {
+			protected CommandExecutionResult executeNow(final AbstractEntityDiagram system, BlocLines lines,
+					ParserPass currentPass) throws NoSuchColorException {
 				// StringUtils.trim(lines, false);
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
+				final Display display = lines.toDisplay();
 
 				Url url = null;
 				if (line0.get("URL", 0) != null) {
@@ -207,7 +209,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 					url = urlBuilder.getUrl(line0.get("URL", 0));
 				}
 
-				return executeInternal(line0, system, url, lines);
+				return executeInternal(line0, system, url, display);
 			}
 
 			@Override
@@ -219,7 +221,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 	}
 
 	private CommandExecutionResult executeInternal(RegexResult line0, AbstractEntityDiagram diagram, Url url,
-			BlocLines strings) throws NoSuchColorException {
+			Display display) throws NoSuchColorException {
 		final String pos = line0.get("POSITION", 0);
 		final String idShort = diagram.cleanId(line0.get("CODE", 0));
 		final Entity cl1;
@@ -248,13 +250,13 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 		}
 
 		if (diagram.getPragma().useKermor() && cl1.isGroup()) {
-			cl1.addNote(strings.toDisplay(), position, colors);
+			cl1.addNote(display, position, colors);
 			return CommandExecutionResult.ok();
 		}
 
 		final String tmp = diagram.getUniqueSequence("GMN");
 		final Quark<Entity> quark = diagram.quarkInContext(true, tmp);
-		final Entity note = diagram.reallyCreateLeaf(quark, strings.toDisplay(), LeafType.NOTE, null);
+		final Entity note = diagram.reallyCreateLeaf(quark, display, LeafType.NOTE, null);
 
 		if (stereotypeString != null)
 			note.setStereotype(stereotype);

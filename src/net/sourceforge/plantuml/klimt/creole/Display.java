@@ -134,6 +134,7 @@ public class Display implements Iterable<CharSequence> {
 
 	}
 
+	@JawsStrange
 	public Display replaceBackslashT() {
 		final Display result = new Display(this.showStereotype, this, defaultCreoleMode);
 		for (int i = 0; i < result.displayData.size(); i++) {
@@ -171,7 +172,7 @@ public class Display implements Iterable<CharSequence> {
 	public static Display createFoo(List<StringLocated> data) throws NoSuchColorException {
 		final List<CharSequence> tmp = new ArrayList<>();
 		for (StringLocated s : data)
-			tmp.addAll(s.expandsJaws3());
+			tmp.add(s.getString());
 
 		final Display result = create(tmp);
 		CreoleParser.checkColor(result);
@@ -285,12 +286,15 @@ public class Display implements Iterable<CharSequence> {
 					current.append(c2);
 				}
 				pragma.addBackslashNewlineWarning();
+			} else if (c == Jaws.BLOCK_E1_REAL_TABULATION) {
+				// current.append('\t');
+				current.append(c);
 			} else if (c == Jaws.BLOCK_E1_REAL_BACKSLASH) {
 				current.append('\\');
-			} else if (c == Jaws.BLOCK_E1_NEWLINE) {
+			} else if (rawMode == false && c == Jaws.BLOCK_E1_NEWLINE) {
 				result.add(current.toString());
 				current.setLength(0);
-			} else if (c == BackSlash.hiddenNewLine()) {
+			} else if (rawMode == false && c == BackSlash.hiddenNewLine()) {
 				result.add(current.toString());
 				current.setLength(0);
 			} else {

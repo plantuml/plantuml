@@ -47,6 +47,7 @@ public class Jaws {
 	public static final char BLOCK_E1_REAL_BACKSLASH = '\uE101';
 	public static final char BLOCK_E1_START_TEXTBLOCK = '\uE102';
 	public static final char BLOCK_E1_END_TEXTBLOCK = '\uE103';
+	public static final char BLOCK_E1_REAL_TABULATION = '\uE104';
 
 	private final List<StringLocated> output = new ArrayList<StringLocated>();
 

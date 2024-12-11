@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,42 +30,35 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
  *
  */
-package net.sourceforge.plantuml.command;
+package net.sourceforge.plantuml.tim.builtin;
 
-import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.abel.DisplayPositioned;
-import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
-import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
-import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
-import net.sourceforge.plantuml.utils.BlocLines;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-public class CommandMultilinesTitle extends CommandMultilines<TitledDiagram> {
+import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.tim.TContext;
+import net.sourceforge.plantuml.tim.TFunctionSignature;
+import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.tim.expression.TValue;
 
-	public static final CommandMultilinesTitle ME = new CommandMultilinesTitle();
+public class Tabulation extends SimpleReturnFunction {
 
-	private CommandMultilinesTitle() {
-		super("^title$");
+	public TFunctionSignature getSignature() {
+		return new TFunctionSignature("%tab", 0);
 	}
 
 	@Override
-	public String getPatternEnd() {
-		return "^end[%s]?title$";
+	public boolean canCover(int nbArg, Set<String> namedArgument) {
+		return nbArg == 0;
 	}
 
-	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
-		lines = lines.subExtract(1, 1).expandsJaws5();
-		lines = lines.removeEmptyColumns();
-		final Display strings = lines.toDisplay();
-		if (strings.size() > 0) {
-			diagram.setTitle(DisplayPositioned.single(strings.replaceBackslashT(), HorizontalAlignment.CENTER,
-					VerticalAlignment.TOP));
-			return CommandExecutionResult.ok();
-		}
-		return CommandExecutionResult.error("No title defined");
+	@Override
+	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
+			Map<String, TValue> named) {
+		return TValue.fromString("" + Jaws.BLOCK_E1_REAL_TABULATION);
 	}
-
 }

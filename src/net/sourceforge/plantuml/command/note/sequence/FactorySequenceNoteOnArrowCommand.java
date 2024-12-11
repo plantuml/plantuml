@@ -105,9 +105,8 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 			@Override
 			protected CommandExecutionResult executeArg(final SequenceDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-				final BlocLines lines = BlocLines.getWithNewlines(arg.get("NOTE", 0));
-				final Display display = diagram.manageVariable(lines.toDisplay());
-				return executeInternal(diagram, arg, display);
+				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get("NOTE", 0));
+				return executeInternal(diagram, arg, diagram.manageVariable(display));
 			}
 
 		};
@@ -128,8 +127,8 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns();
-				final Display display = diagram.manageVariable(lines.toDisplay());
-				return executeInternal(diagram, line0, display);
+				final Display display = lines.toDisplay();
+				return executeInternal(diagram, line0, diagram.manageVariable(display));
 			}
 
 		};

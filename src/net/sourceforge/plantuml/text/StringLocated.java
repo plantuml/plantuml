@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.text;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -42,6 +43,7 @@ import java.util.Objects;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jaws.JawsFlags;
+import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 final public class StringLocated {
@@ -77,6 +79,13 @@ final public class StringLocated {
 					new StringLocated(s2, location, preprocessorError).jawsHideBackslash());
 		}
 		return Arrays.asList(this);
+	}
+
+	public List<StringLocated> expandsJaws5() {
+		final List<StringLocated> copy = new ArrayList<>();
+		for (String s : expandsJaws3())
+			copy.add(new StringLocated(s, location, preprocessorError));
+		return copy;
 	}
 
 	public StringLocated jawsHideBackslash() {
@@ -143,6 +152,7 @@ final public class StringLocated {
 		return trimmed;
 	}
 
+	@JawsStrange
 	public StringLocated removeInnerComment() {
 		final String string = s.toString();
 		final String trim = string.replace('\t', ' ').trim();

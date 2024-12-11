@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.klimt.creole.legacy;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.klimt.creole.CreoleContext;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Stripe;
@@ -87,6 +88,8 @@ public class StripeTree implements Stripe {
 
 	}
 
+	
+	@JawsStrange
 	private int computeLevel(String s) {
 		int result = 1;
 		while (s.length() > 0) {

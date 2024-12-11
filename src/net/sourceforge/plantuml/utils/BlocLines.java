@@ -45,6 +45,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.sourceforge.plantuml.command.MultilinesStrategy;
+import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.security.SFile;
@@ -65,6 +66,14 @@ public class BlocLines implements Iterable<StringLocated> {
 			sb.append("]");
 		}
 		return sb.toString();
+	}
+
+	public BlocLines expandsJaws5() {
+		final List<StringLocated> copy = new ArrayList<>();
+		for (StringLocated sl : lines)
+			copy.addAll(sl.expandsJaws5());
+
+		return new BlocLines(copy);
 	}
 
 	public static BlocLines load(SFile f, LineLocation location) throws IOException {
@@ -224,6 +233,7 @@ public class BlocLines implements Iterable<StringLocated> {
 		return new BlocLines(copy);
 	}
 
+	@JawsStrange
 	private static boolean firstColumnRemovable(List<StringLocated> data) {
 		boolean allEmpty = true;
 		for (StringLocated s : data) {

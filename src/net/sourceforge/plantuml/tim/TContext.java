@@ -138,6 +138,7 @@ import net.sourceforge.plantuml.tim.builtin.StringFunction;
 import net.sourceforge.plantuml.tim.builtin.Strlen;
 import net.sourceforge.plantuml.tim.builtin.Strpos;
 import net.sourceforge.plantuml.tim.builtin.Substr;
+import net.sourceforge.plantuml.tim.builtin.Tabulation;
 import net.sourceforge.plantuml.tim.builtin.Upper;
 import net.sourceforge.plantuml.tim.builtin.VariableExists;
 import net.sourceforge.plantuml.tim.builtin.Xargs;
@@ -245,6 +246,7 @@ public class TContext {
 		functionsSet.addFunction(new Strlen());
 		functionsSet.addFunction(new Strpos());
 		functionsSet.addFunction(new Substr());
+		functionsSet.addFunction(new Tabulation());
 		functionsSet.addFunction(new Upper());
 		functionsSet.addFunction(new VariableExists());
 		functionsSet.addFunction(new Xargs());
