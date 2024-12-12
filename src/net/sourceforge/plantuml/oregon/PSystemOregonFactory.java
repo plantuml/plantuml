@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.oregon;
 
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemOregonFactory extends PSystemBasicFactory<PSystemOregon> {
 
@@ -56,5 +57,11 @@ public class PSystemOregonFactory extends PSystemBasicFactory<PSystemOregon> {
 		system.add(line);
 		return system;
 	}
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return null;
+	}
+
 
 }

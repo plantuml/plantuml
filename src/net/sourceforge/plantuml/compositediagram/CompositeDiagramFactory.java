@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.compositediagram.command.CommandCreatePackageBlo
 import net.sourceforge.plantuml.compositediagram.command.CommandEndPackageBlock;
 import net.sourceforge.plantuml.compositediagram.command.CommandLinkBlock;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinSimple;
 
 public class CompositeDiagramFactory extends PSystemCommandFactory {
@@ -69,4 +70,10 @@ public class CompositeDiagramFactory extends PSystemCommandFactory {
 	public CompositeDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
 		return new CompositeDiagram(source, skinMap);
 	}
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return UmlDiagramType.COMPOSITE;
+	}
+
 }

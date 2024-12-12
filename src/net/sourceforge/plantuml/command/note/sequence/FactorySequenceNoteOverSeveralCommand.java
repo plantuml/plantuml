@@ -122,11 +122,10 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 		return new SingleLineCommand2<SequenceDiagram>(getRegexConcatSingleLine()) {
 
 			@Override
-			protected CommandExecutionResult executeArg(final SequenceDiagram system, LineLocation location,
+			protected CommandExecutionResult executeArg(final SequenceDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-				final BlocLines strings = BlocLines.getWithNewlines(arg.get("NOTE", 0));
-
-				return executeInternal(system, arg, strings);
+				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get("NOTE", 0));
+				return executeInternal(diagram, arg, diagram.manageVariable(display));
 			}
 
 		};
@@ -142,28 +141,28 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 			}
 
 			@Override
-			protected CommandExecutionResult executeNow(final SequenceDiagram system, BlocLines lines, ParserPass currentPass)
-					throws NoSuchColorException {
+			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines,
+					ParserPass currentPass) throws NoSuchColorException {
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
-				lines = lines.subExtract(1, 1);
+				lines = lines.subExtract(1, 1).expandsJaws5();
 				lines = lines.removeEmptyColumns();
-				return executeInternal(system, line0, lines);
+				final Display display = lines.toDisplay();
+				return executeInternal(diagram, line0, diagram.manageVariable(display));
 			}
 
 		};
 	}
 
-	private CommandExecutionResult executeInternal(SequenceDiagram diagram, final RegexResult line0, BlocLines lines)
+	private CommandExecutionResult executeInternal(SequenceDiagram diagram, final RegexResult line0, Display display)
 			throws NoSuchColorException {
 		final Participant p1 = diagram
 				.getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get("P1", 0)));
 		final Participant p2 = diagram
 				.getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get("P2", 0)));
 
-		if (lines.size() > 0) {
+		if (display.size() > 0) {
 			final boolean tryMerge = line0.get("VMERGE", 0) != null;
 			final boolean parallel = line0.get("PARALLEL", 0) != null;
-			final Display display = diagram.manageVariable(lines.toDisplay());
 			final Note note = new Note(p1, p2, display, diagram.getSkinParam().getCurrentStyleBuilder());
 			Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
 			final String stereotypeString = line0.getLazzy("STEREO", 0);
@@ -174,18 +173,15 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 				note.setStereotype(stereotype);
 			}
 			note.setColors(colors);
-			// note.setSpecificColorTOBEREMOVED(ColorType.BACK,
-			// diagram.getSkinParam().getIHtmlColorSet().getColorIfValid(line0.get("COLOR",
-			// 0)));
 			note.setNoteStyle(NoteStyle.getNoteStyle(line0.get("STYLE", 0)));
 			if (line0.get("URL", 0) != null) {
 				final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 				final Url urlLink = urlBuilder.getUrl(line0.get("URL", 0));
 				note.setUrl(urlLink);
 			}
-			if (parallel) {
+			if (parallel)
 				note.goParallel();
-			}
+
 			diagram.addNote(note, tryMerge);
 		}
 		return CommandExecutionResult.ok();

@@ -74,6 +74,7 @@ import net.sourceforge.plantuml.project.lang.SubjectResource;
 import net.sourceforge.plantuml.project.lang.SubjectSeparator;
 import net.sourceforge.plantuml.project.lang.SubjectTask;
 import net.sourceforge.plantuml.project.lang.SubjectToday;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.CommandStyleImport;
 import net.sourceforge.plantuml.style.CommandStyleMultilinesCSS;
 
@@ -149,5 +150,11 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 	public GanttDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
 		return new GanttDiagram(source);
 	}
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return UmlDiagramType.GANTT;
+	}
+
 
 }

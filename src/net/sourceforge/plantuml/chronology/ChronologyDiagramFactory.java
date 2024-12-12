@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.project.lang.SentenceAnd;
 import net.sourceforge.plantuml.project.lang.SentenceAndAnd;
 import net.sourceforge.plantuml.project.lang.SentenceSimple;
 import net.sourceforge.plantuml.project.lang.Subject;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ChronologyDiagramFactory extends PSystemCommandFactory {
 
@@ -121,6 +122,11 @@ public class ChronologyDiagramFactory extends PSystemCommandFactory {
 	@Override
 	public ChronologyDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
 		return new ChronologyDiagram(source);
+	}
+
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return UmlDiagramType.CHRONOLOGY;
 	}
 
 }

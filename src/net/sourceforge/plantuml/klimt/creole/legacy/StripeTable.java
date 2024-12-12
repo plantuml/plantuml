@@ -40,6 +40,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.CreoleContext;
@@ -123,6 +124,7 @@ public class StripeTable implements Stripe {
 
 	private static final String hiddenBar = "\uE000";
 
+	@JawsStrange
 	private void analyzeAndAddInternal(String line) {
 		line = line.replace("\\|", hiddenBar);
 		HColor lineBackColor = getBackOrFrontColor(line, 0);
@@ -156,7 +158,8 @@ public class StripeTable implements Stripe {
 			table.addCell(asAtom(cells, skinParam.getPadding()), cellBackColor);
 		}
 	}
-
+	
+	@JawsStrange
 	static List<String> getWithNewlinesInternal(String s) {
 		final List<String> result = new ArrayList<>();
 		final StringBuilder current = new StringBuilder();
