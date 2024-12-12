@@ -56,12 +56,12 @@ abstract class GraphicalElement {
 		return startingY;
 	}
 
-	public final void drawU(UGraphic ug, double maxX, Context2D context, boolean shouldGroupComponents) {
+	public final void drawU(UGraphic ug, double maxX, Context2D context) {
 		// bugnewway
-		drawInternalU(ug, maxX, context, shouldGroupComponents);
+		drawInternalU(ug, maxX, context);
 	}
 
-	protected abstract void drawInternalU(UGraphic ug, double maxX, Context2D context, boolean shouldGroupComponents);
+	protected abstract void drawInternalU(UGraphic ug, double maxX, Context2D context);
 
 	public abstract double getStartingX(StringBounder stringBounder);
 

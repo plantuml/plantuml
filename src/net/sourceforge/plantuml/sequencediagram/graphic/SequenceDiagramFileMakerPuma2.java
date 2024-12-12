@@ -83,7 +83,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 		this.stringBounder = fileFormatOption.getDefaultStringBounder(diagram.getSkinParam());
 		this.fileFormatOption = fileFormatOption;
 		final DrawableSetInitializer initializer = new DrawableSetInitializer(skin, diagram.getSkinParam(),
-				diagram.isShowFootbox(), diagram.getAutonewpage(), diagram.getPragma().isSvgInteractive());
+				diagram.isShowFootbox(), diagram.getAutonewpage());
 
 		for (Participant p : diagram.participants())
 			initializer.addParticipant(p, diagram.getEnglober(p));
