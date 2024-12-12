@@ -37,7 +37,6 @@ package net.atmp;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Dimension2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -252,7 +251,7 @@ public class ImageBuilder {
 	private ImageData writeImageInternal(OutputStream os) throws IOException {
 		XDimension2D dim = getFinalDimension();
 		XDimension2D dimWarning = null;
-		if (warnings.size() > 0) {
+		if (warnings != null && warnings.size() > 0) {
 			dimWarning = getWarningDimension(fileFormatOption.getFileFormat().getDefaultStringBounder());
 			dim = dim.atLeast(dimWarning.getWidth(), 0);
 			dim = dim.delta(15, dimWarning.getHeight() + 20);
@@ -266,7 +265,7 @@ public class ImageBuilder {
 		UGraphic ug = createUGraphic(dim, scaleFactor,
 				titledDiagram == null ? Pragma.createEmpty() : titledDiagram.getPragma());
 
-		if (warnings.size() > 0) {
+		if (warnings != null && warnings.size() > 0) {
 			drawWarning(dimWarning, ug.apply(UTranslate.dy(5)), dim.getWidth());
 			ug = ug.apply(UTranslate.dy(dimWarning.getHeight() + 20));
 		}
