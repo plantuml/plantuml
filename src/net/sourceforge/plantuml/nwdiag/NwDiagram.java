@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -354,7 +355,7 @@ public class NwDiagram extends UmlDiagram {
 
 	private TextBlock toTextBlockForNetworkName(String name, String s) {
 		if (s != null)
-			name += "\\n" + s;
+			name += "" + Jaws.BLOCK_E1_NEWLINE + s;
 
 		final StyleBuilder styleBuilder = getSkinParam().getCurrentStyleBuilder();
 		final Style style = getStyleDefinitionNetwork(SName.network).getMergedStyle(styleBuilder);

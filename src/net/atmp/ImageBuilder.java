@@ -43,6 +43,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -61,6 +62,7 @@ import net.sourceforge.plantuml.api.ImageDataComplex;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.braille.UGraphicBraille;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.jaws.JawsWarning;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -123,7 +125,7 @@ public class ImageBuilder {
 	private TitledDiagram titledDiagram;
 	private boolean randomPixel;
 	private String warningOrError;
-	private boolean warningNewline;
+	private Set<JawsWarning> warnings = EnumSet.noneOf(JawsWarning.class);
 
 	public static ImageBuilder imageBuilder(FileFormatOption fileFormatOption) {
 		return new ImageBuilder(fileFormatOption);
@@ -223,7 +225,7 @@ public class ImageBuilder {
 		seed = diagram.seed();
 		titledDiagram = diagram;
 		warningOrError = diagram.getWarningOrError();
-		warningNewline = diagram.getPragma().printBackslashNewlineWarning();
+		warnings = diagram.getPragma().warnings();
 		return this;
 	}
 
@@ -250,7 +252,7 @@ public class ImageBuilder {
 	private ImageData writeImageInternal(OutputStream os) throws IOException {
 		XDimension2D dim = getFinalDimension();
 		XDimension2D dimWarning = null;
-		if (warningNewline) {
+		if (warnings.size() > 0) {
 			dimWarning = getWarningDimension(fileFormatOption.getFileFormat().getDefaultStringBounder());
 			dim = dim.atLeast(dimWarning.getWidth(), 0);
 			dim = dim.delta(15, dimWarning.getHeight() + 20);
@@ -264,7 +266,7 @@ public class ImageBuilder {
 		UGraphic ug = createUGraphic(dim, scaleFactor,
 				titledDiagram == null ? Pragma.createEmpty() : titledDiagram.getPragma());
 
-		if (warningNewline) {
+		if (warnings.size() > 0) {
 			drawWarning(dimWarning, ug.apply(UTranslate.dy(5)), dim.getWidth());
 			ug = ug.apply(UTranslate.dy(dimWarning.getHeight() + 20));
 		}
@@ -298,8 +300,8 @@ public class ImageBuilder {
 
 		final HColorSet set = HColorSet.instance();
 
-	    final HColor back = set.getColorOrWhite("ffffcc");
-	    final HColor border = set.getColorOrWhite("ffdd88");
+		final HColor back = set.getColorOrWhite("ffffcc");
+		final HColor border = set.getColorOrWhite("ffdd88");
 		ug = ug.apply(back.bg()).apply(border);
 		final URectangle rect = URectangle.build(fullWidth - 10, dimWarning.getHeight() + 10).rounded(5);
 		ug.apply(new UTranslate(5, 0)).apply(UStroke.withThickness(3)).draw(rect);

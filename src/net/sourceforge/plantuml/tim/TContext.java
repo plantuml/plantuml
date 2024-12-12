@@ -51,6 +51,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
@@ -110,6 +111,7 @@ import net.sourceforge.plantuml.tim.builtin.JsonKeyExists;
 import net.sourceforge.plantuml.tim.builtin.JsonMerge;
 import net.sourceforge.plantuml.tim.builtin.JsonRemove;
 import net.sourceforge.plantuml.tim.builtin.JsonSet;
+import net.sourceforge.plantuml.tim.builtin.LeftAlign;
 import net.sourceforge.plantuml.tim.builtin.Lighten;
 import net.sourceforge.plantuml.tim.builtin.LoadJson;
 import net.sourceforge.plantuml.tim.builtin.LogicalAnd;
@@ -129,6 +131,7 @@ import net.sourceforge.plantuml.tim.builtin.RandomFunction;
 import net.sourceforge.plantuml.tim.builtin.RetrieveProcedure;
 import net.sourceforge.plantuml.tim.builtin.ReverseColor;
 import net.sourceforge.plantuml.tim.builtin.ReverseHsluvColor;
+import net.sourceforge.plantuml.tim.builtin.RightAlign;
 import net.sourceforge.plantuml.tim.builtin.SetVariableValue;
 import net.sourceforge.plantuml.tim.builtin.Size;
 import net.sourceforge.plantuml.tim.builtin.SplitStr;
@@ -217,6 +220,7 @@ public class TContext {
 		functionsSet.addFunction(new JsonMerge());
 		functionsSet.addFunction(new JsonRemove());
 		functionsSet.addFunction(new JsonSet());
+		functionsSet.addFunction(new LeftAlign());
 		functionsSet.addFunction(new Lighten());
 		functionsSet.addFunction(new LoadJson());
 		// functionsSet.addFunction(new LoadJsonLegacy());
@@ -237,6 +241,7 @@ public class TContext {
 		functionsSet.addFunction(new RetrieveProcedure());
 		functionsSet.addFunction(new ReverseColor());
 		functionsSet.addFunction(new ReverseHsluvColor());
+		functionsSet.addFunction(new RightAlign());
 		functionsSet.addFunction(new SetVariableValue());
 		functionsSet.addFunction(new Size());
 		functionsSet.addFunction(new SplitStr());
@@ -848,7 +853,7 @@ public class TContext {
 			sb.append(resultList.get(n1).getString());
 			resultList.remove(n1);
 			if (resultList.size() > n1)
-				sb.append("\\n");
+				sb.append(Jaws.BLOCK_E1_NEWLINE);
 
 		}
 		return sb.toString();
