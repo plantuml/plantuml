@@ -338,3 +338,8 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           platforms: linux/amd64,linux/arm64
+
+  create_native_image_release:
+    needs: [ workflow_config, upload ]
+    if: needs.workflow_config.outputs.do_release == 'true'
+    uses: ./.github/workflows/native-image-release.yml
