@@ -106,9 +106,9 @@ public class GraphvizSolverB {
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		final ProcessState state = graphviz.createFile3(baos);
 		baos.close();
-		if (state.differs(ProcessState.TERMINATED_OK())) {
+		if (state.differs(ProcessState.TERMINATED_OK()))
 			throw new IllegalStateException("Timeout2 " + state);
-		}
+
 		final byte[] result = baos.toByteArray();
 		final String s = new String(result, UTF_8);
 		// Log.println("result=" + s);
@@ -119,9 +119,9 @@ public class GraphvizSolverB {
 
 		final Pattern pGraph = Pattern.compile("(?m)\\<svg\\s+width=\"(\\d+)pt\"\\s+height=\"(\\d+)pt\"");
 		final Matcher mGraph = pGraph.matcher(s);
-		if (mGraph.find() == false) {
+		if (mGraph.find() == false)
 			throw new IllegalStateException();
-		}
+
 		final int width = Integer.parseInt(mGraph.group(1));
 		final int height = Integer.parseInt(mGraph.group(2));
 
@@ -129,9 +129,9 @@ public class GraphvizSolverB {
 		for (Block b : root.getRecursiveContents()) {
 			final String start = "b" + b.getUid();
 			final int p1 = s.indexOf("<title>" + start + "</title>");
-			if (p1 == -1) {
+			if (p1 == -1)
 				throw new IllegalStateException();
-			}
+
 			final List<XPoint2D> pointsList = extractPointsList(s, p1, yDelta);
 			b.setX(getMinX(pointsList));
 			b.setY(getMinY(pointsList));
@@ -141,9 +141,9 @@ public class GraphvizSolverB {
 		for (Cluster cl : root.getSubClusters()) {
 			final String start = "cluster" + cl.getUid();
 			final int p1 = s.indexOf("<title>" + start + "</title>");
-			if (p1 == -1) {
+			if (p1 == -1)
 				throw new IllegalStateException();
-			}
+
 			final List<XPoint2D> pointsList = extractPointsList(s, p1, yDelta);
 			cl.setX(getMinX(pointsList));
 			cl.setY(getMinY(pointsList));
@@ -159,9 +159,9 @@ public class GraphvizSolverB {
 			final String end = "b" + p.getEnd().getUid();
 			final String searched = "<title>" + start + "&#45;&gt;" + end + "</title>";
 			final int p1 = s.indexOf(searched);
-			if (p1 == -1) {
+			if (p1 == -1)
 				throw new IllegalStateException(searched);
-			}
+
 			final int p2 = s.indexOf(" d=\"", p1);
 			final int p3 = s.indexOf("\"", p2 + " d=\"".length());
 			final String points = s.substring(p2 + " d=\"".length(), p3);
@@ -187,41 +187,37 @@ public class GraphvizSolverB {
 
 	static private double getMaxX(List<XPoint2D> points) {
 		double result = points.get(0).x;
-		for (int i = 1; i < points.size(); i++) {
-			if (points.get(i).x > result) {
+		for (int i = 1; i < points.size(); i++)
+			if (points.get(i).x > result)
 				result = points.get(i).x;
-			}
-		}
+
 		return result;
 	}
 
 	static private double getMinX(List<XPoint2D> points) {
 		double result = points.get(0).x;
-		for (int i = 1; i < points.size(); i++) {
-			if (points.get(i).x < result) {
+		for (int i = 1; i < points.size(); i++)
+			if (points.get(i).x < result)
 				result = points.get(i).x;
-			}
-		}
+
 		return result;
 	}
 
 	static private double getMaxY(List<XPoint2D> points) {
 		double result = points.get(0).y;
-		for (int i = 1; i < points.size(); i++) {
-			if (points.get(i).y > result) {
+		for (int i = 1; i < points.size(); i++)
+			if (points.get(i).y > result)
 				result = points.get(i).y;
-			}
-		}
+
 		return result;
 	}
 
 	static private double getMinY(List<XPoint2D> points) {
 		double result = points.get(0).y;
-		for (int i = 1; i < points.size(); i++) {
-			if (points.get(i).y < result) {
+		for (int i = 1; i < points.size(); i++)
+			if (points.get(i).y < result)
 				result = points.get(i).y;
-			}
-		}
+
 		return result;
 	}
 
@@ -229,18 +225,17 @@ public class GraphvizSolverB {
 		final Graphviz graphviz = GraphvizUtils.create(null, dotString, "png");
 		try (OutputStream os = f.createBufferedOutputStream()) {
 			final ProcessState state = graphviz.createFile3(os);
-			if (state.differs(ProcessState.TERMINATED_OK())) {
+			if (state.differs(ProcessState.TERMINATED_OK()))
 				throw new IllegalStateException("Timeout3 " + state);
-			}
+
 		}
 	}
 
 	private Path getPath(Collection<Path> paths, int start, int end) {
-		for (Path p : paths) {
-			if (p.getStart().getUid() == start && p.getEnd().getUid() == end) {
+		for (Path p : paths)
+			if (p.getStart().getUid() == start && p.getEnd().getUid() == end)
 				return p;
-			}
-		}
+
 		throw new IllegalArgumentException();
 
 	}

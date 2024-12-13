@@ -111,21 +111,25 @@ public final class CucaDiagramTxtMaker {
 			blocks.put(ent, b);
 		}
 
-		final GraphvizSolverB solver = new GraphvizSolverB();
+		if (blocks.size() > 1) {
+			final GraphvizSolverB solver = new GraphvizSolverB();
 
-		final Collection<Path> paths = new ArrayList<>();
-		for (Link link : diagram.getLinks()) {
-			final Block b1 = blocks.get(link.getEntity1());
-			final Block b2 = blocks.get(link.getEntity2());
-			paths.add(new Path(b1, b2, null, link.getLength(), link.isInvis()));
-		}
-		solver.solve(root, paths);
-		for (Path p : paths) {
-			if (p.isInvis())
-				continue;
+			final Collection<Path> paths = new ArrayList<>();
+			for (Link link : diagram.getLinks()) {
+				final Block b1 = blocks.get(link.getEntity1());
+				final Block b2 = blocks.get(link.getEntity2());
+				paths.add(new Path(b1, b2, null, link.getLength(), link.isInvis()));
+			}
+			solver.solve(root, paths);
+			for (Path p : paths) {
+				if (p.isInvis())
+					continue;
 
-			drawDotPath(p.getDotPath(), globalUg.getCharArea(), getXPixelPerChar(), getYPixelPerChar());
+				drawDotPath(p.getDotPath(), globalUg.getCharArea(), getXPixelPerChar(), getYPixelPerChar());
+			}
+
 		}
+
 		for (Entity ent : diagram.leafs()) {
 			final Block b = blocks.get(ent);
 			final XPoint2D p = b.getPosition();
