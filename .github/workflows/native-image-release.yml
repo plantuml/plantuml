@@ -2,6 +2,7 @@ name: Native Image - Release
 
 on:
   workflow_dispatch:
+  workflow_call:
   release:
     types: [released]
 

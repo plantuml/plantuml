@@ -2,12 +2,12 @@ name: Native Image - Snapshot
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - master
-    paths-ignore:
-      - '**.md'
-      - 'docs/**'
+#  push:
+#    branches:
+#      - master
+#    paths-ignore:
+#      - '**.md'
+#      - 'docs/**'
 
 jobs:
   clean_release:
