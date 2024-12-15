@@ -68,7 +68,7 @@ final public class StringLocated {
 //	return result;
 //}
 
-	public List<StringLocated> expandsJaws() {
+	public List<StringLocated> expandsJawsForPreprocessor() {
 		if (JawsFlags.PARSE_NEW_MULTILINE_TRIPLE_EXCLAMATION_MARKS) {
 			final int x = s.indexOf("!!!");
 			if (x == -1)

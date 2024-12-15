@@ -144,8 +144,7 @@ public class BlockUml {
 			final TimLoader timLoader = new TimLoader(definitions.getImportedFiles(), defines, charset, definitions,
 					this.rawSource.get(0));
 			this.included.addAll(timLoader.load(this.rawSource));
-			final Jaws jaws = new Jaws(timLoader.getResultList());
-			this.data = jaws.getResultList();
+			this.data = Jaws.expandsJawsForPreprocessor(timLoader.getResultList());
 			this.debug = timLoader.getDebug();
 			this.preprocessorError = timLoader.isPreprocessorError();
 		}

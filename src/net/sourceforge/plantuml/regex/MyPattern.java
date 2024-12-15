@@ -39,6 +39,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import net.sourceforge.plantuml.jaws.Jaws;
+
 class MaxSizeHashMap<K, V> extends LinkedHashMap<K, V> {
 	private final int maxSize;
 
@@ -92,7 +94,7 @@ public abstract class MyPattern {
 		p = p.replace("%pLN", "\\p{L}\\p{N}"); // Unicode Letter, digit
 		p = p.replace("%s", "\\s\u00A0"); // space
 		p = p.replace("%q", "'\u2018\u2019"); // quote
-		p = p.replace("%g", "\"\u201c\u201d"); // double quote
+		p = p.replace("%g", "\"\u201c\u201d" + Jaws.BLOCK_E1_INVISIBLE_QUOTE); // double quote
 		return p;
 	}
 

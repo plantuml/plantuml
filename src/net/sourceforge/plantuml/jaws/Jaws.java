@@ -46,39 +46,36 @@ public class Jaws {
 	public static final char BLOCK_E1_NEWLINE = '\uE100';
 	public static final char BLOCK_E1_NEWLINE_LEFT_ALIGN = '\uE101';
 	public static final char BLOCK_E1_NEWLINE_RIGHT_ALIGN = '\uE102';
-	
+
 	public static final char BLOCK_E1_REAL_BACKSLASH = '\uE110';
 	public static final char BLOCK_E1_REAL_TABULATION = '\uE111';
 
 	public static final char BLOCK_E1_INVISIBLE_QUOTE = '\uE121';
 	public static final char BLOCK_E1_START_TEXTBLOCK = '\uE122';
 	public static final char BLOCK_E1_END_TEXTBLOCK = '\uE123';
-	
-	
-	private final List<StringLocated> output = new ArrayList<StringLocated>();
 
-	public Jaws(List<StringLocated> input) {
+	public static List<StringLocated> expandsJawsForPreprocessor(List<StringLocated> input) {
+		final List<StringLocated> output = new ArrayList<StringLocated>();
 		for (int i = 0; i < input.size(); i++) {
-			List<StringLocated> splitted = input.get(i).expandsJaws();
+			List<StringLocated> splitted = input.get(i).expandsJawsForPreprocessor();
 			StringLocated line = splitted.get(0);
 			if (splitted.size() == 2) {
-				line = line.append(splitted.get(1).getString());
+				final int headerLength = line.length() + 3;
+				line = line.append(BLOCK_E1_INVISIBLE_QUOTE);
+				final MultilinesBloc bloc = new MultilinesBloc(headerLength, splitted.get(1).getString());
 				while (true) {
-					line = line.append(BLOCK_E1_NEWLINE);
 					i++;
-					splitted = input.get(i).expandsJaws();
+					splitted = input.get(i).expandsJawsForPreprocessor();
+					bloc.add(splitted.get(0).getString());
 					if (splitted.size() == 2)
 						break;
-					line = line.append(splitted.get(0).getString());
 				}
-				line = line.append(splitted.get(0).getString());
+				line = line.append(bloc.getMerged());
+				line = line.append(BLOCK_E1_INVISIBLE_QUOTE);
 				line = line.append(splitted.get(1).getString());
 			}
 			output.add(line);
 		}
-	}
-
-	public List<StringLocated> getResultList() {
 		return Collections.unmodifiableList(output);
 	}
 
