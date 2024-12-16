@@ -303,6 +303,8 @@ public class Display implements Iterable<CharSequence> {
 				naturalHorizontalAlignment = HorizontalAlignment.LEFT;
 				result.add(current.toString());
 				current.setLength(0);
+			} else if (c == Jaws.BLOCK_E1_INVISIBLE_QUOTE) {
+				// No thing to do, just ignore this character
 			} else if (c == Jaws.BLOCK_E1_NEWLINE_RIGHT_ALIGN) {
 				naturalHorizontalAlignment = HorizontalAlignment.RIGHT;
 				result.add(current.toString());

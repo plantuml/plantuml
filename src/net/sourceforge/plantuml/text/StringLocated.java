@@ -39,6 +39,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.jaws.Jaws;
@@ -69,8 +71,8 @@ final public class StringLocated {
 //}
 
 	public List<StringLocated> expandsJawsForPreprocessor() {
-		if (JawsFlags.PARSE_NEW_MULTILINE_TRIPLE_EXCLAMATION_MARKS) {
-			final int x = s.indexOf("!!!");
+		if (JawsFlags.PARSE_NEW_MULTILINE_TRIPLE_MARKS) {
+			final int x = searchMultilineTripleSeparators();
 			if (x == -1)
 				return Arrays.asList(this);
 			final String s1 = s.substring(0, x);
@@ -79,6 +81,17 @@ final public class StringLocated {
 					new StringLocated(s2, location, preprocessorError).jawsHideBackslash());
 		}
 		return Arrays.asList(this);
+	}
+
+	private static final Pattern TRIPLE_PATTERN = Pattern.compile("!!!|'''|\"\"\"");
+
+	private int searchMultilineTripleSeparators() {
+		final Matcher matcher = TRIPLE_PATTERN.matcher(s);
+
+		if (matcher.find())
+			return matcher.start();
+
+		return -1;
 	}
 
 	public List<StringLocated> expandsJaws5() {
