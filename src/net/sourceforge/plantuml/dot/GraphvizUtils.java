@@ -78,7 +78,7 @@ public class GraphvizUtils {
         Iterator<Graphviz> iterator = ServiceLoader.load(Graphviz.class).iterator();
         if (iterator.hasNext()) {
             Graphviz graphviz = iterator.next();
-            Log.info("Using service " + graphviz.getClass().getName());
+            Log.info("Using service provider " + graphviz.getClass().getName());
             return graphviz;
         }
 		if (useVizJs(skinParam)) {
@@ -100,6 +100,12 @@ public class GraphvizUtils {
 	}
 
 	public static Graphviz create(ISkinParam skinParam, String dotString, String... type) {
+        Iterator<Graphviz> iterator = ServiceLoader.load(Graphviz.class).iterator();
+        if (iterator.hasNext()) {
+            Graphviz graphviz = iterator.next();
+            Log.info("Using service provider " + graphviz.getClass().getName());
+            return graphviz;
+        }
 		if (useVizJs(skinParam)) {
 			Log.info("Using " + VIZJS);
 			return new GraphvizJs(dotString);
