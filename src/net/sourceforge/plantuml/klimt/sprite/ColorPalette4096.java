@@ -46,7 +46,7 @@ public class ColorPalette4096 {
 	// private static final String colorValue = "!#$%&*+-:;<=>?@^_~GHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 	// Maybe ! and # will be used for something else in the future
 	// So we replace them by . and '
-	private static final String colorValue = ".'$%&*+-:;<=>?@^_~GHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	private static final String colorValue = ".,$%&*+-:;<=>?@^_~GHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
 	public String getStringFor(Color dest) {
 		return getStringFor((HColorSimple) HColors.simple(dest));
@@ -80,7 +80,7 @@ public class ColorPalette4096 {
 	protected Color getColorFor(String s) {
 		// Migration
 		s = s.replace('!', '.');
-		s = s.replace('#', '\'');
+		s = s.replace('#', ',');
 		if (s.length() != 2)
 			throw new IllegalArgumentException();
 
