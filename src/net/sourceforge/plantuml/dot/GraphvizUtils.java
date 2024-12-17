@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.dot;
@@ -38,7 +38,9 @@ package net.sourceforge.plantuml.dot;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ServiceLoader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -73,11 +75,14 @@ public class GraphvizUtils {
 	}
 
 	public static Graphviz createForSystemDot(ISkinParam skinParam, String dotString, String... type) {
+        Graphviz result = createWithFactory(skinParam, dotString, type);
+        if (result != null) {
+            return result;
+        }
 		if (useVizJs(skinParam)) {
 			Log.info("Using " + VIZJS);
 			return new GraphvizJs(dotString);
 		}
-		final AbstractGraphviz result;
 		if (isWindows())
 			result = new GraphvizWindowsOld(skinParam, dotString, type);
 		else
@@ -92,11 +97,14 @@ public class GraphvizUtils {
 	}
 
 	public static Graphviz create(ISkinParam skinParam, String dotString, String... type) {
+        Graphviz result = createWithFactory(skinParam, dotString, type);
+        if (result != null) {
+            return result;
+        }
 		if (useVizJs(skinParam)) {
 			Log.info("Using " + VIZJS);
 			return new GraphvizJs(dotString);
 		}
-		final AbstractGraphviz result;
 		if (isWindows())
 			result = new GraphvizWindowsLite(skinParam, dotString, type);
 		else
@@ -109,6 +117,19 @@ public class GraphvizUtils {
 		}
 		return result;
 	}
+
+    private static Graphviz createWithFactory(ISkinParam skinParam, String dotString, String... type) {
+        Iterator<GraphvizFactory> iterator = ServiceLoader.load(GraphvizFactory.class).iterator();
+        while (iterator.hasNext()) {
+            GraphvizFactory factory = iterator.next();
+            Graphviz graphviz = factory.create(skinParam, dotString, type);
+            if (graphviz != null) {
+                Log.info("Using " + graphviz.getClass().getName() + " created by " + factory.getClass().getName());
+                return graphviz;
+            }
+        }
+        return null;
+    }
 
 	private static boolean useVizJs(ISkinParam skinParam) {
 		if (skinParam != null && skinParam.isUseVizJs() && VizJsEngine.isOk())
