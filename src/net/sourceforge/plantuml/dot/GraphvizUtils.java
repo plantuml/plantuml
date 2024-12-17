@@ -75,17 +75,14 @@ public class GraphvizUtils {
 	}
 
 	public static Graphviz createForSystemDot(ISkinParam skinParam, String dotString, String... type) {
-        Iterator<Graphviz> iterator = ServiceLoader.load(Graphviz.class).iterator();
-        if (iterator.hasNext()) {
-            Graphviz graphviz = iterator.next();
-            Log.info("Using service provider " + graphviz.getClass().getName());
-            return graphviz;
+        Graphviz result = createWithFactory(skinParam, dotString, type);
+        if (result != null) {
+            return result;
         }
 		if (useVizJs(skinParam)) {
 			Log.info("Using " + VIZJS);
 			return new GraphvizJs(dotString);
 		}
-		final AbstractGraphviz result;
 		if (isWindows())
 			result = new GraphvizWindowsOld(skinParam, dotString, type);
 		else
@@ -100,17 +97,14 @@ public class GraphvizUtils {
 	}
 
 	public static Graphviz create(ISkinParam skinParam, String dotString, String... type) {
-        Iterator<Graphviz> iterator = ServiceLoader.load(Graphviz.class).iterator();
-        if (iterator.hasNext()) {
-            Graphviz graphviz = iterator.next();
-            Log.info("Using service provider " + graphviz.getClass().getName());
-            return graphviz;
+        Graphviz result = createWithFactory(skinParam, dotString, type);
+        if (result != null) {
+            return result;
         }
 		if (useVizJs(skinParam)) {
 			Log.info("Using " + VIZJS);
 			return new GraphvizJs(dotString);
 		}
-		final AbstractGraphviz result;
 		if (isWindows())
 			result = new GraphvizWindowsLite(skinParam, dotString, type);
 		else
@@ -123,6 +117,19 @@ public class GraphvizUtils {
 		}
 		return result;
 	}
+
+    private static Graphviz createWithFactory(ISkinParam skinParam, String dotString, String... type) {
+        Iterator<GraphvizFactory> iterator = ServiceLoader.load(GraphvizFactory.class).iterator();
+        while (iterator.hasNext()) {
+            GraphvizFactory factory = iterator.next();
+            Graphviz graphviz = factory.create(skinParam, dotString, type);
+            if (graphviz != null) {
+                Log.info("Using " + graphviz.getClass().getName() + " created by " + factory.getClass().getName());
+                return graphviz;
+            }
+        }
+        return null;
+    }
 
 	private static boolean useVizJs(ISkinParam skinParam) {
 		if (skinParam != null && skinParam.isUseVizJs() && VizJsEngine.isOk())
