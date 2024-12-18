@@ -43,12 +43,12 @@ import net.sourceforge.plantuml.style.ISkinParam;
 public interface GraphvizFactory {
 
     /**
-     * Creates a {@link Graphviz} instance if possible with the specified parameters.
+     * Creates a {@link Graphviz} implementation if possible with the specified parameters.
      *
      * @param skinParam
      * @param dotString
      * @param type
-     * @return a {@link Graphviz} instance or {@code null}.
+     * @return a {@link Graphviz} implementation or {@code null}.
      */
     Graphviz create(ISkinParam skinParam, String dotString, String... type);
 }
