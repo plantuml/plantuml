@@ -41,6 +41,7 @@ import java.util.Map.Entry;
 
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
+import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -144,8 +145,9 @@ public class NServer {
 		if (s.length() == 0)
 			return TextBlockUtils.empty(0, 0);
 
-		s = s.replace(", ", "\\n");
-		return Display.getWithNewlines(skinParam.getPragma(), s).create(getFontConfiguration(sname), HorizontalAlignment.LEFT, skinParam);
+		s = s.replace(", ", "" + Jaws.BLOCK_E1_NEWLINE);
+		return Display.getWithNewlines(skinParam.getPragma(), s).create(getFontConfiguration(sname),
+				HorizontalAlignment.LEFT, skinParam);
 	}
 
 	private StyleSignatureBasic getStyleDefinition(SName sname) {

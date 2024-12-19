@@ -87,7 +87,7 @@ public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSy
 			}
 			system = executeLine(source, system, s.getString());
 			if (system == null) {
-				final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, s.getLocation());
+				final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, s.getLocation(), getUmlDiagramType());
 				// return PSystemErrorUtils.buildV1(source, err, null);
 				return PSystemErrorUtils.buildV2(source, err, null, it.getTrace());
 			}

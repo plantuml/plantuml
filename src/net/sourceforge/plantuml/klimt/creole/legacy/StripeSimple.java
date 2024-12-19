@@ -40,7 +40,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import net.sourceforge.plantuml.emoji.Emoji;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -86,7 +85,6 @@ import net.sourceforge.plantuml.math.ScientificEquationSafe;
 import net.sourceforge.plantuml.openiconic.OpenIcon;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.style.ISkinSimple;
-import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.CharHidder;
 

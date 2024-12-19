@@ -53,16 +53,16 @@ public class StartDiagramExtractReader implements ReadLine {
 	private final ReadLine raw;
 	private boolean finished = false;
 
-	public static StartDiagramExtractReader build(FileWithSuffix f2, StringLocated s, Charset charset) {
+	public static ReadLine build(FileWithSuffix f2, StringLocated s, Charset charset) {
 		return new StartDiagramExtractReader(getReadLine(f2, s, charset), f2.getSuffix());
 	}
 
-	public static StartDiagramExtractReader build(SURL url, StringLocated s, String uid, Charset charset) {
+	public static ReadLine build(SURL url, StringLocated s, String uid, Charset charset) {
 		return new StartDiagramExtractReader(getReadLine(url, s, charset), uid);
 	}
 
-	public static StartDiagramExtractReader build(InputStream is, StringLocated s, String desc) {
-		return new StartDiagramExtractReader(getReadLine(is, s, desc), null);
+	public static ReadLine build(InputStream is, String desc) {
+		return new StartDiagramExtractReader(getReadLine(is, desc), null);
 	}
 
 	private StartDiagramExtractReader(ReadLine raw, String suf) {
@@ -115,7 +115,7 @@ public class StartDiagramExtractReader implements ReadLine {
 		}
 	}
 
-	private static ReadLine getReadLine(InputStream is, StringLocated s, String description) {
+	private static ReadLine getReadLine(InputStream is, String description) {
 		return uncommentAndMerge(ReadLineReader.create(new InputStreamReader(is), description));
 	}
 
@@ -141,8 +141,8 @@ public class StartDiagramExtractReader implements ReadLine {
 		return containsStartDiagram(r);
 	}
 
-	static public boolean containsStartDiagram(InputStream is, StringLocated s, String description) throws IOException {
-		final ReadLine r = getReadLine(is, s, description);
+	static public boolean containsStartDiagram(InputStream is, String description) throws IOException {
+		final ReadLine r = getReadLine(is, description);
 		return containsStartDiagram(r);
 	}
 

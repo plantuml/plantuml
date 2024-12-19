@@ -141,8 +141,9 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 					ParserPass currentPass) throws NoSuchColorException {
 				// StringUtils.trim(lines, false);
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
-				lines = lines.subExtract(1, 1);
+				lines = lines.subExtract(1, 1).expandsJaws5();
 				lines = lines.removeEmptyColumns();
+				final Display display = lines.toDisplay();
 
 				Url url = null;
 				if (line0.get("URL", 0) != null) {
@@ -151,13 +152,13 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 					url = urlBuilder.getUrl(line0.get("URL", 0));
 				}
 
-				return executeInternal(line0, system, url, lines);
+				return executeInternal(line0, system, url, display);
 			}
 		};
 	}
 
 	private CommandExecutionResult executeInternal(RegexResult line0, AbstractEntityDiagram diagram, Url url,
-			BlocLines lines) throws NoSuchColorException {
+			Display display) throws NoSuchColorException {
 
 		final String pos = line0.get("POSITION", 0);
 
@@ -177,7 +178,8 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 		Entity tips = identTip.getData();
 
 		if (tips == null) {
-			tips = diagram.reallyCreateLeaf(identTip, Display.getWithNewlines(diagram.getPragma(), ""), LeafType.TIPS, null);
+			tips = diagram.reallyCreateLeaf(identTip, Display.getWithNewlines(diagram.getPragma(), ""), LeafType.TIPS,
+					null);
 			final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();
 			final Link link;
 			if (position == Position.RIGHT)
@@ -189,7 +191,7 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 
 			diagram.addLink(link);
 		}
-		tips.putTip(member, lines.toDisplay());
+		tips.putTip(member, display);
 
 		Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
 

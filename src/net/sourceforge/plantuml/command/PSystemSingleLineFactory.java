@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.StartUtils;
@@ -82,12 +83,18 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 
 		final AbstractPSystem sys = executeLine(source, s.getString());
 		if (sys == null) {
-			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, s.getLocation());
+			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, s.getLocation(), getUmlDiagramType());
 			// return PSystemErrorUtils.buildV1(source, err, null);
 			return PSystemErrorUtils.buildV2(source, err, null, it.getTrace());
 		}
 		return sys;
 
 	}
+	
+	@Override
+	final public UmlDiagramType getUmlDiagramType() {
+		return null;
+	}
+
 
 }

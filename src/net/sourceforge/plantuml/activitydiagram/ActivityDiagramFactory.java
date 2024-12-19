@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteActivity;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ActivityDiagramFactory extends PSystemCommandFactory {
     // ::remove folder when __HAXE__
@@ -90,6 +91,11 @@ public class ActivityDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandHideShow2());
 		// addCommand(new CommandInnerConcurrent(system));
 
+	}
+
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return UmlDiagramType.ACTIVITY;
 	}
 
 }

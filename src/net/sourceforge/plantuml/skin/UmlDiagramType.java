@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.skin;
 
 import net.sourceforge.plantuml.style.SName;
 
+//To be merged with DiagramType
 public enum UmlDiagramType {
 	SEQUENCE, STATE, CLASS, OBJECT, ACTIVITY, DESCRIPTION, COMPOSITE, FLOW, TIMING, BPM, NWDIAG, MINDMAP, WBS, WIRE,
 	HELP, GANTT, SALT, JSON, GIT, BOARD, YAML, HCL, EBNF, REGEX, FILES, CHRONOLOGY, CHEN_EER;
@@ -100,5 +101,11 @@ public enum UmlDiagramType {
 			return SName.ganttDiagram;
 
 		return SName.activityDiagram;
+	}
+
+	public String humanReadableName() {
+		if (this == DESCRIPTION)
+			return "component";
+		return name().toLowerCase();
 	}
 }

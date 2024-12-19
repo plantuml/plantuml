@@ -79,7 +79,7 @@ class ApiV2Test {
 	public void testError2() throws IOException {
 		final DiagramReturn result = DiagramUtils.exportDiagram("@startuml", "start", "#zzblue:toto;", "@enduml");
 		final Diagram diagram = result.getDiagram();
-		assertEquals("No such color", result.error());
+		assertEquals("No such color (Assumed diagram type: activity)", result.error());
 		assertNotNull(diagram);
 		assertEquals(DiagramType.UML, diagram.getSource().getDiagramType());
 		assertEquals("PSystemErrorV2", diagram.getClass().getSimpleName());

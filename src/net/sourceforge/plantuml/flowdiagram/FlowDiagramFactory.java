@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class FlowDiagramFactory extends PSystemCommandFactory {
 
@@ -59,5 +60,11 @@ public class FlowDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandLineSimple());
 		cmds.add(new CommandLink());
 	}
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return UmlDiagramType.FLOW;
+	}
+
 
 }

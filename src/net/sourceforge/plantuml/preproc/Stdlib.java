@@ -145,7 +145,7 @@ public class Stdlib {
 		return (read1byte(is) << 8) + read1byte(is);
 	}
 
-	private String loadResource(String file) throws IOException {
+	/*private*/ public String loadResource(String file) throws IOException {
 		final SoftReference<String> cached = cache.get(file.toLowerCase());
 		if (cached != null) {
 			final String cachedResult = cached.get();
@@ -390,6 +390,32 @@ public class Stdlib {
 		} finally {
 			dataStream.close();
 			spriteStream.close();
+		}
+	}
+
+	public Collection<String> getAllFilenamesWithSprites() throws IOException {
+		final Set<String> result = new TreeSet<>();
+		final DataInputStream dataStream = getDataStream();
+		if (dataStream == null)
+			return result;
+
+		dataStream.readUTF();
+		try {
+			while (true) {
+				final String filename = dataStream.readUTF();
+				if (filename.equals(SEPARATOR))
+					return result;
+
+				while (true) {
+					final String s = dataStream.readUTF();
+					if (s.equals(SEPARATOR))
+						break;
+					if (isSpriteLine(s))
+						result.add(filename);
+				}
+			}
+		} finally {
+			dataStream.close();
 		}
 	}
 

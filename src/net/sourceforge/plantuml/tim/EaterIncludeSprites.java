@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -31,37 +31,31 @@
  *
  * Original Author:  Arnaud Roques
  *
- *
  */
-package net.sourceforge.plantuml.klimt.sprite;
+package net.sourceforge.plantuml.tim;
 
-import java.util.List;
-import java.util.Map;
+import net.sourceforge.plantuml.text.StringLocated;
 
-import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.CommonCommands;
-import net.sourceforge.plantuml.command.PSystemCommandFactory;
-import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
+public class EaterIncludeSprites extends Eater {
 
-public class ListSpriteDiagramFactory extends PSystemCommandFactory {
-	// ::remove file when __CORE__
+	private String what;
 
-	@Override
-	protected void initCommandsList(List<Command> cmds) {
-		CommonCommands.addCommonCommands1(cmds);
-		CommonCommands.addCommonCommands2(cmds);
-		cmds.add(new CommandListSprite());
+	public EaterIncludeSprites(StringLocated s) {
+		super(s);
 	}
 
 	@Override
-	public ListSpriteDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
-		return new ListSpriteDiagram(source, skinMap);
+	public void analyze(TContext context, TMemory memory) throws EaterException {
+		skipSpaces();
+		checkAndEatChar("!include_sprites");
+		skipSpaces();
+		this.what = context.applyFunctionsAndVariables(memory,
+				new StringLocated(this.eatAllToEnd(), getLineLocation()));
+
 	}
 
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return null;
+	public final String getWhat() {
+		return what;
 	}
 
 }

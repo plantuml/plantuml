@@ -54,7 +54,7 @@ public class LifeDestroy extends GraphicalElement {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, double maxX, Context2D context, boolean shouldGroupComponents) {
+	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		ug = ug.apply(new UTranslate(getStartingX(stringBounder), getStartingY()));
 		comp.drawU(ug, null, context);

@@ -142,18 +142,14 @@ class MessageArrow extends Arrow {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, double maxX, Context2D context, boolean shouldGroupComponents) {
-		if (shouldGroupComponents) {
-			startGroup(ug);
-		}
+	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
+		startGroup(ug);
 		final StringBounder stringBounder = ug.getStringBounder();
 		ug = ug.apply(new UTranslate(getStartingX(stringBounder), getStartingY()));
 		startUrl(ug);
 		getArrowComponent().drawU(ug, new Area(getActualDimension(stringBounder)), context);
 		endUrl(ug);
-		if (shouldGroupComponents) {
-			endGroup(ug);
-		}
+		endGroup(ug);
 	}
 
 	private XDimension2D getActualDimension(StringBounder stringBounder) {

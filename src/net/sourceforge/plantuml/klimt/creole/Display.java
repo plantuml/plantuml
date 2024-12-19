@@ -48,6 +48,7 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jaws.JawsStrange;
+import net.sourceforge.plantuml.jaws.JawsWarning;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -134,6 +135,7 @@ public class Display implements Iterable<CharSequence> {
 
 	}
 
+	@JawsStrange
 	public Display replaceBackslashT() {
 		final Display result = new Display(this.showStereotype, this, defaultCreoleMode);
 		for (int i = 0; i < result.displayData.size(); i++) {
@@ -171,7 +173,7 @@ public class Display implements Iterable<CharSequence> {
 	public static Display createFoo(List<StringLocated> data) throws NoSuchColorException {
 		final List<CharSequence> tmp = new ArrayList<>();
 		for (StringLocated s : data)
-			tmp.addAll(s.expandsJaws3());
+			tmp.add(s.getString());
 
 		final Display result = create(tmp);
 		CreoleParser.checkColor(result);
@@ -269,28 +271,46 @@ public class Display implements Iterable<CharSequence> {
 				final char c2 = s.charAt(i + 1);
 				i++;
 				if (c2 == 'n' || c2 == 'r' || c2 == 'l') {
-					if (c2 == 'r')
+					if (c2 == 'r') {
 						naturalHorizontalAlignment = HorizontalAlignment.RIGHT;
-					else if (c2 == 'l')
+						pragma.addWarning(JawsWarning.BACKSLASH_RIGHT);
+					} else if (c2 == 'l') {
 						naturalHorizontalAlignment = HorizontalAlignment.LEFT;
+						pragma.addWarning(JawsWarning.BACKSLASH_LEFT);
+					} else {
+						pragma.addWarning(JawsWarning.BACKSLASH_NEWLINE);
+					}
 
 					result.add(current.toString());
 					current.setLength(0);
 				} else if (c2 == 't') {
 					current.append('\t');
+					pragma.addWarning(JawsWarning.BACKSLASH_TABULATION);
 				} else if (c2 == '\\') {
 					current.append(c2);
+					pragma.addWarning(JawsWarning.BACKSLASH_BACKSLASH);
 				} else {
 					current.append(c);
 					current.append(c2);
 				}
-				pragma.addBackslashNWarning();
+				pragma.addWarning(JawsWarning.OTHER);
+			} else if (c == Jaws.BLOCK_E1_REAL_TABULATION) {
+				// current.append('\t');
+				current.append(c);
 			} else if (c == Jaws.BLOCK_E1_REAL_BACKSLASH) {
 				current.append('\\');
-			} else if (c == Jaws.BLOCK_E1_NEWLINE) {
+			} else if (c == Jaws.BLOCK_E1_NEWLINE_LEFT_ALIGN) {
+				naturalHorizontalAlignment = HorizontalAlignment.LEFT;
 				result.add(current.toString());
 				current.setLength(0);
-			} else if (c == BackSlash.hiddenNewLine()) {
+			} else if (c == Jaws.BLOCK_E1_NEWLINE_RIGHT_ALIGN) {
+				naturalHorizontalAlignment = HorizontalAlignment.RIGHT;
+				result.add(current.toString());
+				current.setLength(0);
+			} else if (rawMode == false && c == Jaws.BLOCK_E1_NEWLINE) {
+				result.add(current.toString());
+				current.setLength(0);
+			} else if (rawMode == false && c == BackSlash.hiddenNewLine()) {
 				result.add(current.toString());
 				current.setLength(0);
 			} else {

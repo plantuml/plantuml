@@ -40,11 +40,14 @@ import java.util.Map;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public interface PSystemFactory {
 
 	Diagram createSystem(UmlSource source, Map<String, String> skinMap);
 
 	DiagramType getDiagramType();
+	
+	UmlDiagramType getUmlDiagramType();
 
 }

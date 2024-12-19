@@ -89,5 +89,11 @@ public class HclDiagramFactory extends PSystemAbstractFactory {
 //		}
 		return result;
 	}
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return UmlDiagramType.HCL;
+	}
+
 
 }

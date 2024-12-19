@@ -36,17 +36,24 @@
  */
 package net.sourceforge.plantuml.preproc2;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.ReadLine;
+import net.sourceforge.plantuml.preproc.ReadLineConcat;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
 import net.sourceforge.plantuml.preproc.ReadLineSimple;
 import net.sourceforge.plantuml.preproc.StartDiagramExtractReader;
@@ -117,9 +124,9 @@ public class PreprocessorUtils {
 
 		final String description = "<" + filename + ">";
 		try {
-			if (StartDiagramExtractReader.containsStartDiagram(is, s, description)) {
+			if (StartDiagramExtractReader.containsStartDiagram(is, description)) {
 				is = getStdlibInputStream(filename);
-				return StartDiagramExtractReader.build(is, s, description);
+				return StartDiagramExtractReader.build(is, description);
 			}
 			is = getStdlibInputStream(filename);
 			if (is == null)
@@ -130,6 +137,19 @@ public class PreprocessorUtils {
 			Logme.error(e);
 			return new ReadLineSimple(s, e.toString());
 		}
+	}
+
+	public static ReadLine getReaderStdlibIncludeSprites(StringLocated s, String root) throws IOException {
+		final Stdlib lib = Stdlib.retrieve(root);
+		final Collection<String> filenames = lib.getAllFilenamesWithSprites();
+		final List<ReadLine> readers = new ArrayList<>();
+
+		for (String name : filenames) {
+			final String data = lib.loadResource(name);
+			final InputStream is = new ByteArrayInputStream(data.getBytes(UTF_8));
+			readers.add(StartDiagramExtractReader.build(is, "<" + root + "/" + name + ">"));
+		}
+		return new ReadLineConcat(readers);
 	}
 
 	public static ReadLine getReaderIncludeUrl(final SURL url, StringLocated s, String suf, Charset charset)

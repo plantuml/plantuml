@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemWelcomeFactory implements PSystemFactory {
 
@@ -56,5 +57,11 @@ public class PSystemWelcomeFactory implements PSystemFactory {
 	public DiagramType getDiagramType() {
 		return DiagramType.UML;
 	}
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return null;
+	}
+
 
 }

@@ -33,35 +33,14 @@
  *
  *
  */
-package net.sourceforge.plantuml.klimt.sprite;
+package net.sourceforge.plantuml.jaws;
 
-import java.util.List;
-import java.util.Map;
-
-import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.CommonCommands;
-import net.sourceforge.plantuml.command.PSystemCommandFactory;
-import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
-
-public class ListSpriteDiagramFactory extends PSystemCommandFactory {
-	// ::remove file when __CORE__
-
-	@Override
-	protected void initCommandsList(List<Command> cmds) {
-		CommonCommands.addCommonCommands1(cmds);
-		CommonCommands.addCommonCommands2(cmds);
-		cmds.add(new CommandListSprite());
-	}
-
-	@Override
-	public ListSpriteDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
-		return new ListSpriteDiagram(source, skinMap);
-	}
-
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return null;
-	}
+public enum JawsWarning {
+	BACKSLASH_NEWLINE,
+	BACKSLASH_LEFT,
+	BACKSLASH_RIGHT,
+	BACKSLASH_TABULATION,
+	BACKSLASH_BACKSLASH,
+	OTHER
 
 }

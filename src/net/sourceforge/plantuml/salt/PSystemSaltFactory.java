@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemSaltFactory extends PSystemCommandFactory {
 
@@ -68,5 +69,11 @@ public class PSystemSaltFactory extends PSystemCommandFactory {
 		}
 		return result;
 	}
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return UmlDiagramType.SALT;
+	}
+
 
 }

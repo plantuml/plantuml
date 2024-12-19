@@ -40,6 +40,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.style.AutomaticCounter;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
@@ -220,6 +221,7 @@ public class StyleParser {
 		}
 	}
 
+	@JawsStrange
 	private static List<StyleToken> parse(CharInspector ins) throws StyleParsingException {
 		final List<StyleToken> result = new ArrayList<>();
 		while (true) {

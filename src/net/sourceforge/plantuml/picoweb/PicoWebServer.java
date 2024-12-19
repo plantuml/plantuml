@@ -269,7 +269,7 @@ public class PicoWebServer implements Runnable {
 
 		if (ssr.getBlocks().size() == 0) {
 			system = PSystemErrorUtils.buildV2(null,
-					new ErrorUml(SYNTAX_ERROR, "No valid @start/@end found, please check the version", 0, new LineLocationImpl("", null)), null,
+					new ErrorUml(SYNTAX_ERROR, "No valid @start/@end found, please check the version", 0, new LineLocationImpl("", null), null), null,
 					Collections.<StringLocated>emptyList());
 			imageData = ssr.noValidStartFound(os, option.getFileFormatOption());
 		} else {

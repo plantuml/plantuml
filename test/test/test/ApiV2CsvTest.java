@@ -20,7 +20,7 @@ class ApiV2CsvTest {
 	@CsvSource({
 		// diagSource,                                                             error, diagramType, className,     description, nbImages, totalLineCount, errorLine, nbTitle, title
 		" '@startuml\nERROR\n@enduml',                                             Syntax Error?, UML, PSystemErrorV2,           (Error), 1, 3, 1, 0, ",
-		" '@startuml\nstart\n#zzblue:toto;\n@enduml',                              No such color, UML, PSystemErrorV2,           (Error), 1, 4, 2, 0, ",
+		" '@startuml\nstart\n#zzblue:toto;\n@enduml', No such color (Assumed diagram type: activity), UML, PSystemErrorV2,           (Error), 1, 4, 2, 0, ",
 		" '@startuml\nalice->bob:hello\n@enduml',                                               , UML, SequenceDiagram, (2 participants), 1, 3,  , 0, ",
 		" '@startuml\ntitle: this is the title\nalice->bob:hello\n@enduml',                     , UML, SequenceDiagram, (2 participants), 1, 4,  , 1, this is the title ",
 		" '@startuml\ntitle this is the title\nalice->bob:hello\ntitle another title\n@enduml', , UML, SequenceDiagram, (2 participants), 1, 5,  , 1, another title ",

@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -52,7 +53,6 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.UText;
-import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.CharHidder;
 import net.sourceforge.plantuml.utils.Log;
@@ -87,7 +87,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 			s = StringUtils.manageEscapedTabs(s);
 		}
 		this.manageSpecialChars = manageSpecialChars;
-		this.text = s;
+		this.text = s.replace(Jaws.BLOCK_E1_NEWLINE, '\u21b5');
 		this.fontConfiguration = style;
 		this.url = url;
 	}
@@ -96,6 +96,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 		return new AtomText(text, fontConfiguration, url, marginLeft, marginRight, manageSpecialChars);
 	}
 
+	@JawsStrange
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
 		final XDimension2D rect = stringBounder.calculateDimension(fontConfiguration.getFont(), text);
 		Log.debug("g2d=" + rect);
@@ -104,7 +105,8 @@ public final class AtomText extends AbstractAtom implements Atom {
 		if (h < 10)
 			h = 10;
 
-		double width = text.indexOf("\t") == -1 || stringBounder.matchesProperty("TIKZ") ? rect.getWidth() : getWidth(stringBounder, text);
+		double width = (text.indexOf("\t") == -1 && text.indexOf(Jaws.BLOCK_E1_REAL_TABULATION) == -1)
+				|| stringBounder.matchesProperty("TIKZ") ? rect.getWidth() : getWidth(stringBounder, text);
 		final double left = marginLeft.getDouble(stringBounder);
 		final double right = marginRight.getDouble(stringBounder);
 		return new XDimension2D(width + left + right, h);
@@ -116,6 +118,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 		return rect.getHeight() - descent;
 	}
 
+	@JawsStrange
 	public void drawU(UGraphic ug) {
 		if (url != null)
 			ug.startUrl(url);
@@ -136,7 +139,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 			if (marginLeft != AtomTextUtils.ZERO)
 				ug = ug.apply(UTranslate.dx(marginLeft.getDouble(ug.getStringBounder())));
 
-			final StringTokenizer tokenizer = new StringTokenizer(text, "\t", true);
+			final StringTokenizer tokenizer = new StringTokenizer(text, "\t" + Jaws.BLOCK_E1_REAL_TABULATION, true);
 
 			// final int ypos = fontConfiguration.getSpace();
 			final XDimension2D rect = ug.getStringBounder().calculateDimension(fontConfiguration.getFont(), text);
@@ -148,7 +151,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 				final double tabSize = getTabSize(ug.getStringBounder());
 				while (tokenizer.hasMoreTokens()) {
 					final String s = tokenizer.nextToken();
-					if (s.equals("\t")) {
+					if (s.equals("\t") || s.equals("" + Jaws.BLOCK_E1_REAL_TABULATION)) {
 						final double remainder = x % tabSize;
 						x += tabSize - remainder;
 					} else {
@@ -166,13 +169,14 @@ public final class AtomText extends AbstractAtom implements Atom {
 
 	}
 
+	@JawsStrange
 	private double getWidth(StringBounder stringBounder, String text) {
-		final StringTokenizer tokenizer = new StringTokenizer(text, "\t", true);
+		final StringTokenizer tokenizer = new StringTokenizer(text, "\t" + Jaws.BLOCK_E1_REAL_TABULATION, true);
 		final double tabSize = getTabSize(stringBounder);
 		double x = 0;
 		while (tokenizer.hasMoreTokens()) {
 			final String s = tokenizer.nextToken();
-			if (s.equals("\t")) {
+			if (s.equals("\t") || s.equals("" + Jaws.BLOCK_E1_REAL_TABULATION)) {
 				final double remainder = x % tabSize;
 				x += tabSize - remainder;
 			} else {

@@ -100,5 +100,11 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 		}
 		return result;
 	}
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return UmlDiagramType.YAML;
+	}
+
 
 }

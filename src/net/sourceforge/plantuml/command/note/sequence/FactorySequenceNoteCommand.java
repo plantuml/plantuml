@@ -121,12 +121,13 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 			}
 
 			@Override
-			protected CommandExecutionResult executeNow(final SequenceDiagram system, BlocLines lines, ParserPass currentPass)
-					throws NoSuchColorException {
+			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines,
+					ParserPass currentPass) throws NoSuchColorException {
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
-				lines = lines.removeEmptyColumns();
-				return executeInternal(system, line0, lines);
+				lines = lines.removeEmptyColumns().expandsJaws5();
+				final Display display = lines.toDisplay();
+				return executeInternal(diagram, line0, diagram.manageVariable(display));
 			}
 		};
 	}
@@ -137,23 +138,24 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 			@Override
 			protected CommandExecutionResult executeArg(final SequenceDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
-				return executeInternal(diagram, arg, BlocLines.getWithNewlines(arg.get("NOTE", 0)));
+				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get("NOTE", 0));
+				return executeInternal(diagram, arg, diagram.manageVariable(display));
 			}
 
 		};
 	}
 
-	private CommandExecutionResult executeInternal(SequenceDiagram diagram, RegexResult arg, BlocLines strings)
+	private CommandExecutionResult executeInternal(SequenceDiagram diagram, RegexResult arg, Display display)
 			throws NoSuchColorException {
 		final Participant p = diagram.getOrCreateParticipant(
 				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("PARTICIPANT", 0)));
 
 		final NotePosition position = NotePosition.valueOf(StringUtils.goUpperCase(arg.get("POSITION", 0)));
 
-		if (strings.size() > 0) {
+		if (display.size() > 0) {
 			final boolean tryMerge = arg.get("VMERGE", 0) != null;
 			final boolean parallel = arg.get("PARALLEL", 0) != null;
-			final Display display = diagram.manageVariable(strings.toDisplay());
+
 			final Note note = new Note(p, position, display, diagram.getSkinParam().getCurrentStyleBuilder());
 			Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 			final String stereotypeString = arg.getLazzy("STEREO", 0);

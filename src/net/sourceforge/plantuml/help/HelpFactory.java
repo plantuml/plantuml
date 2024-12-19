@@ -41,6 +41,7 @@ import java.util.Map;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class HelpFactory extends PSystemCommandFactory {
 	// ::comment when __CORE__
@@ -58,6 +59,11 @@ public class HelpFactory extends PSystemCommandFactory {
 		cmds.add(new CommandHelpKeyword());
 		cmds.add(new CommandHelpType());
 		cmds.add(new CommandHelpTheme());
+	}
+
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return UmlDiagramType.HELP;
 	}
 
 }

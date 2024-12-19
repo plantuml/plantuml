@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.utils.Log;
 
@@ -115,6 +116,11 @@ public class PSystemJcckitFactory extends PSystemBasicFactory<PSystemJcckit> {
 		data.append(StringUtils.trin(line));
 		data.append(BackSlash.NEWLINE);
 		return createSystem(source);
+	}
+
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return null;
 	}
 
 }
