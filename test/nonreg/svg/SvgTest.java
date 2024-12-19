@@ -111,7 +111,7 @@ public class SvgTest {
 					}
 				}
 			} catch (Exception e) {
-				throw new RuntimeException("Failed to execute xpath '%s'".formatted(xPathExpression), e);
+				throw new RuntimeException("Failed to execute xpath: " + xPathExpression, e);
 			}
 		}
 	}
