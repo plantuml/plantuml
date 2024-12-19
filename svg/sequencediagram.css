@@ -1,41 +1,46 @@
 
-svg g.header.floating-header {
+svg[data-diagram-type=SEQUENCE] g.header.floating-header {
     opacity: 0.9;
     display: none;
 }
 
-svg.floating-header-active g.header.floating-header {
+svg[data-diagram-type=SEQUENCE].floating-header-active g.header.floating-header {
     display: inline;
 }
 
-svg g.header g.floating-header-toggle-button  {
+svg[data-diagram-type=SEQUENCE] g.floating-header-toggle-button  {
     cursor: pointer;
     opacity: 0;
-    visibility: visible;
+    visibility: hidden;
 }
 
-svg.floating-header-active g.header g.floating-header-toggle-button .button-icon  {
+svg[data-diagram-type=SEQUENCE].floating-header-active g.floating-header-toggle-button .button-icon  {
     fill: #333333 !important;
 }
 
-svg g.header:hover g.floating-header-toggle-button {
+svg[data-diagram-type=SEQUENCE] g.header:hover g.floating-header-toggle-button {
     opacity: 0.8;
     visibility: visible;
     animation: fadeOut 2s forwards 1s; /* Delay the fade out effect */
 }
 
-svg g.header g.floating-header-toggle-button:hover {
+svg[data-diagram-type=SEQUENCE] g.header g.floating-header-toggle-button:hover {
     opacity: 1;
     visibility: visible;
     animation: none !important;
 }
 
-svg g.header g.floating-header-toggle-button:hover .button-background  {
+svg[data-diagram-type=SEQUENCE] g.floating-header-toggle-button:hover .button-background  {
     stroke-width: 1 !important;
 }
 
-svg:has(g.header g.floating-header-toggle-button:hover) g.header * {
+svg[data-diagram-type=SEQUENCE]:has(g.floating-header-toggle-button:hover) g.header * {
     filter: invert(0.1);
+}
+
+svg[data-diagram-type=SEQUENCE] g.floating-header-toggle-button:hover,
+svg[data-diagram-type=SEQUENCE] g.floating-header-toggle-button:hover * {
+    filter: none !important;
 }
 
 @keyframes fadeOut {
