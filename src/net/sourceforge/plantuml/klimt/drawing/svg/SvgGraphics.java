@@ -60,8 +60,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import net.sourceforge.plantuml.skin.UmlDiagramType;
-
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
@@ -126,7 +124,6 @@ public class SvgGraphics {
 	private final String gradientId;
 
 	private final SvgOption option;
-	private final UmlDiagramType diagramType;
 
 	private Element pendingBackground;
 	private boolean robotoAdded = false;
@@ -140,7 +137,7 @@ public class SvgGraphics {
 
 	}
 
-	public SvgGraphics(long seed, SvgOption option, UmlDiagramType diagramType) {
+	public SvgGraphics(long seed, SvgOption option) {
 		try {
 			this.document = getDocument();
 
@@ -148,12 +145,10 @@ public class SvgGraphics {
 			final XDimension2D minDim = option.getMinDim();
 			ensureVisible(minDim.getWidth(), minDim.getHeight());
 
-			this.diagramType = diagramType;
-
 			this.root = getRootNode();
-			if (option.isInteractive() && diagramType != null) {
-				root.setAttribute("data-diagram-type", diagramType.name());
-			}
+
+			for (Map.Entry<String, String> ent : option.getRootAttributes().entrySet())
+				root.setAttribute(ent.getKey(), ent.getValue());
 
 			for (Map.Entry<String, String> ent : option.getRootAttributes().entrySet())
 				root.setAttribute(ent.getKey(), ent.getValue());

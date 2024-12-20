@@ -437,7 +437,7 @@ public class ImageBuilder {
 			option = option.withSvgDimensionStyle(skinParam.svgDimensionStyle());
 		}
 
-		final UGraphicSvg ug = UGraphicSvg.build(option, false, seed, stringBounder, diagram != null ? diagram.getUmlDiagramType() : null);
+		final UGraphicSvg ug = UGraphicSvg.build(option, false, seed, stringBounder);
 		return ug;
 
 	}

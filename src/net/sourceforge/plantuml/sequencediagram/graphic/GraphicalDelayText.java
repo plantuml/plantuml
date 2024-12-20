@@ -58,7 +58,7 @@ class GraphicalDelayText extends GraphicalElement {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, double maxX, Context2D context, boolean shouldGroupComponents) {
+	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
 		final StringBounder stringBounder = ug.getStringBounder();
 		final double x1 = p1.getCenterX(stringBounder);
 		final double x2 = p2.getCenterX(stringBounder);
