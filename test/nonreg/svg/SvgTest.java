@@ -190,7 +190,7 @@ public class SvgTest {
 		final DiagramDescription diagramDescription = ssr.outputImage(baos, 0, new FileFormatOption(SVG, false));
 		assertEquals(expectedDescription, diagramDescription.getDescription(), "Bad description");
 
-		return baos.toString(UTF_8);
+		return new String(baos.toByteArray(), UTF_8);
 	}
 
 	private String readStringFromSourceFile(Path path, String startMarker, String endMarker) throws IOException {
