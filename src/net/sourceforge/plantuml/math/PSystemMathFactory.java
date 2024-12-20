@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.math;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemMathFactory extends PSystemBasicFactory<PSystemMath> {
 
@@ -57,6 +58,11 @@ public class PSystemMathFactory extends PSystemBasicFactory<PSystemMath> {
 	public PSystemMath executeLine(UmlSource source, PSystemMath system, String line) {
 		system.doCommandLine(line);
 		return system;
+	}
+
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return null;
 	}
 
 }

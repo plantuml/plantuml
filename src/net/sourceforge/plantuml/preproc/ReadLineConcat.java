@@ -30,37 +30,35 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.klimt.sprite;
+package net.sourceforge.plantuml.preproc;
 
+import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
-import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.CommonCommands;
-import net.sourceforge.plantuml.command.PSystemCommandFactory;
-import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.text.StringLocated;
 
-public class ListSpriteDiagramFactory extends PSystemCommandFactory {
-	// ::remove file when __CORE__
+public class ReadLineConcat implements ReadLine {
 
-	@Override
-	protected void initCommandsList(List<Command> cmds) {
-		CommonCommands.addCommonCommands1(cmds);
-		CommonCommands.addCommonCommands2(cmds);
-		cmds.add(new CommandListSprite());
+	private final List<ReadLine> readers;
+	private int current = 0;
+
+	public ReadLineConcat(List<ReadLine> readers) {
+		this.readers = readers;
 	}
 
-	@Override
-	public ListSpriteDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
-		return new ListSpriteDiagram(source, skinMap);
+	public void close() {
 	}
 
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
+	public StringLocated readLine() throws IOException {
+		while (current < readers.size()) {
+			final StringLocated result = readers.get(current).readLine();
+			if (result != null)
+				return result;
+			current++;
+		}
 		return null;
 	}
 

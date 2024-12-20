@@ -35,13 +35,17 @@
  */
 package net.sourceforge.plantuml.skin;
 
+import java.util.EnumSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
+
+import net.sourceforge.plantuml.jaws.JawsWarning;
 
 public class Pragma {
 
 	private final Map<String, String> values = new LinkedHashMap<String, String>();
-	private boolean backslashNWarning;
+	private final Set<JawsWarning> warnings = EnumSet.noneOf(JawsWarning.class);
 
 	private Pragma() {
 	}
@@ -110,12 +114,13 @@ public class Pragma {
 		return true;
 	}
 
-	public void addBackslashNWarning() {
-		// this.backslashNWarning = true;
+	public void addWarning(JawsWarning warning) {
+		this.warnings.add(warning);
 	}
 
-	public boolean isBackslashNWarning() {
-		return backslashNWarning;
+	public Set<JawsWarning> warnings() {
+		if (isTrue(getValue("warning")))
+			return this.warnings;
+		return null;
 	}
-
 }

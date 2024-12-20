@@ -40,7 +40,7 @@ public enum TLineType {
 
 	PLAIN, AFFECTATION_DEFINE, AFFECTATION, ASSERT, IF, IFDEF, UNDEF, IFNDEF, ELSE, ELSEIF, ENDIF, WHILE, ENDWHILE,
 	FOREACH, ENDFOREACH, DECLARE_RETURN_FUNCTION, DECLARE_PROCEDURE, END_FUNCTION, RETURN, LEGACY_DEFINE,
-	LEGACY_DEFINELONG, THEME, INCLUDE, INCLUDE_DEF, IMPORT, STARTSUB, ENDSUB, INCLUDESUB, LOG, DUMP_MEMORY,
+	LEGACY_DEFINELONG, THEME, INCLUDE, INCLUDE_SPRITES, INCLUDE_DEF, IMPORT, STARTSUB, ENDSUB, INCLUDESUB, LOG, DUMP_MEMORY,
 	COMMENT_SIMPLE, COMMENT_LONG_START;
 
 	private static final Pattern PATTERN_LEGACY_DEFINE = Pattern.compile("^\\s*!define\\s+[\\p{L}_][\\p{L}_0-9]*\\(.*");
@@ -99,6 +99,9 @@ public enum TLineType {
 
 	private static final Pattern PATTERN_INCLUDE = Pattern
 			.compile("^\\s*!(include|includeurl|include_many|include_once)\\b.*");
+
+	private static final Pattern PATTERN_INCLUDE_SPRITES = Pattern
+			.compile("^\\s*!(include_sprites)\\b.*");
 
 	private static final Pattern PATTERN_INCLUDE_DEF = Pattern.compile("^\\s*!(includedef)\\b.*");
 
@@ -189,6 +192,9 @@ public enum TLineType {
 
 		if (PATTERN_INCLUDE.matcher(s).matches())
 			return INCLUDE;
+
+		if (PATTERN_INCLUDE_SPRITES.matcher(s).matches())
+			return INCLUDE_SPRITES;
 
 		if (PATTERN_INCLUDE_DEF.matcher(s).matches())
 			return INCLUDE_DEF;

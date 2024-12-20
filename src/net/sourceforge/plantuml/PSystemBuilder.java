@@ -142,7 +142,7 @@ public class PSystemBuilder {
 					assert false;
 					Log.error("Preprocessor Error: " + s.getPreprocessorError());
 					final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, s.getPreprocessorError(), 0,
-							s.getLocation());
+							s.getLocation(), null);
 					return PSystemErrorUtils.buildV2(umlSource, err, Collections.<String>emptyList(), source);
 				}
 			}

@@ -82,10 +82,10 @@ class ArrowAndNoteBox extends Arrow implements InGroupable {
 	}
 
 	@Override
-	protected void drawInternalU(UGraphic ug, double maxX, Context2D context, boolean shouldGroupComponents) {
-		arrow.drawU(ug, maxX, context, shouldGroupComponents);
+	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
+		arrow.drawU(ug, maxX, context);
 		for (NoteBox noteBox : noteBoxes) {
-			noteBox.drawU(ug, maxX, context, shouldGroupComponents);
+			noteBox.drawU(ug, maxX, context);
 		}
 	}
 

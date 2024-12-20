@@ -98,7 +98,7 @@ public class GraphicsSudoku {
 
 	public ImageData writeImageSvg(OutputStream os) throws IOException {
 		final SvgOption option = SvgOption.basic().withBackcolor(HColors.WHITE);
-		final UGraphicSvg ug = UGraphicSvg.build(option, false, 0, FileFormat.SVG.getDefaultStringBounder(), null);
+		final UGraphicSvg ug = UGraphicSvg.build(option, false, 0, FileFormat.SVG.getDefaultStringBounder());
 		drawInternal(ug);
 		ug.writeToStream(os, null, -1); // dpi param is not used
 		return ImageDataSimple.ok();

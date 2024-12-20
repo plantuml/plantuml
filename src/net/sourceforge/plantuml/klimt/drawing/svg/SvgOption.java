@@ -35,6 +35,10 @@
  */
 package net.sourceforge.plantuml.klimt.drawing.svg;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -42,7 +46,6 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class SvgOption {
 
-	private boolean interactive = false;
 	private LengthAdjust lengthAdjust = LengthAdjust.defaultValue();
 	private String preserveAspectRatio = "none";
 	private String hover;
@@ -54,6 +57,12 @@ public class SvgOption {
 	private String linkTarget;
 	private String font;
 	private String title;
+	private String interactiveBaseFilename;
+	private final Map<String, String> rootAttributes = new LinkedHashMap<>();
+
+	public String getInteractiveBaseFilename() {
+		return interactiveBaseFilename;
+	}
 
 	public static SvgOption basic() {
 		return new SvgOption();
@@ -68,8 +77,8 @@ public class SvgOption {
 		return this;
 	}
 
-	public SvgOption withInteractive() {
-		this.interactive = true;
+	public SvgOption withInteractive(String interactiveBaseFilename) {
+		this.interactiveBaseFilename = interactiveBaseFilename;
 		return this;
 	}
 
@@ -122,13 +131,22 @@ public class SvgOption {
 		this.font = font;
 		return this;
 	}
+	
+	public Map<String, String> getRootAttributes() {
+		return Collections.unmodifiableMap(rootAttributes);
+	}
+
+	public SvgOption withRootAttribute(String key, String value) {
+		this.rootAttributes.put(key, value);
+		return this;
+	}
 
 	public String getPreserveAspectRatio() {
 		return preserveAspectRatio;
 	}
 
 	public boolean isInteractive() {
-		return interactive;
+		return interactiveBaseFilename != null;
 	}
 
 	public LengthAdjust getLengthAdjust() {

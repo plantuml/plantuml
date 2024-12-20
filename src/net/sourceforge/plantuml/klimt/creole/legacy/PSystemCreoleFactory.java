@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.klimt.creole.legacy;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemCreoleFactory extends PSystemBasicFactory<PSystemCreole> {
 	// ::remove file when __CORE__
@@ -59,5 +60,11 @@ public class PSystemCreoleFactory extends PSystemBasicFactory<PSystemCreole> {
 		system.doCommandLine(line);
 		return system;
 	}
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return null;
+	}
+
 
 }

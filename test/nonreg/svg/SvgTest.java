@@ -1,22 +1,15 @@
 package nonreg.svg;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.SourceStringReader;
+import net.sourceforge.plantuml.core.DiagramDescription;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.concurrent.atomic.AtomicInteger;
-
+import javax.xml.namespace.NamespaceContext;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -25,16 +18,23 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
-import net.sourceforge.plantuml.FileFormat;
-import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.SourceStringReader;
-import net.sourceforge.plantuml.core.DiagramDescription;
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static net.sourceforge.plantuml.FileFormat.SVG;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SvgTest {
 
@@ -43,13 +43,9 @@ public class SvgTest {
 	private static final Transformer xmlTransformer = createPrettyPrintTransformer();
 
 
-	protected void checkXmlAndDescription(final String expectedDescription, boolean shouldStripStylesAndScripts)
+	protected void checkXmlAndDescription(final String expectedDescription)
 			throws IOException {
-		String actual = runPlantUML(expectedDescription, FileFormat.SVG);
-
-		if (shouldStripStylesAndScripts) {
-			actual = stripStylesAndScripts(actual);
-		}
+		String actual = stripExtraneousAndUnpredictableNodes(runPlantUML(expectedDescription));
 
 		final String expected = readStringFromSourceFile(getDiagramFile(), "{{{", "}}}");
 
@@ -60,12 +56,30 @@ public class SvgTest {
 		}
 	}
 
-	private String stripStylesAndScripts(String svgXML) {
+	private String stripExtraneousAndUnpredictableNodes(String svgXML) {
 			Document document = parseXML(svgXML);
-			removeElementByTagName(document, "script");
-			removeElementByTagName(document, "style");
+			removeElementsByXPath(document,
+					"/svg:svg/@style",
+					"//svg:script/text()",
+					"//svg:style/text()",
+					"//@x",
+					"//@y",
+					"//@x1",
+					"//@x2",
+					"//@y1",
+					"//@y2",
+					"//@cx",
+					"//@cy",
+					"//@rx",
+					"//@ry",
+					"//@width",
+					"//@height",
+					"//@textLength",
+					"//@d",
+					"//@points",
+					"//@viewBox"
+			);
 			return convertDocumentToString(document);
-
 	}
 
 	private Document parseXML(String xml) {
@@ -79,12 +93,50 @@ public class SvgTest {
 		}
 	}
 
-	private void removeElementByTagName(Document document, String tagName) {
-		NodeList elementsToRemove = document.getElementsByTagNameNS("http://www.w3.org/2000/svg", tagName);
-		for (int i = elementsToRemove.getLength()-1; i >= 0; i--) {
-			Node element = elementsToRemove.item(i);
-			element.getParentNode().removeChild(element);
+	private void removeElementsByXPath(Document document, String ...xPathExpressions) {
+		XPath xPath = getSvgAwareXPath();
+
+		for (String xPathExpression : xPathExpressions) {
+			try {
+				NodeList matchingNodes = (NodeList) xPath.evaluate(xPathExpression, document, XPathConstants.NODESET);
+
+				for (int i = 0; i < matchingNodes.getLength(); i++) {
+					Node matchingNode = matchingNodes.item(i);
+
+					if (matchingNode.getNodeType() == Node.ATTRIBUTE_NODE) {
+						Attr attr = (Attr) matchingNode;
+						attr.getOwnerElement().removeAttributeNode(attr);
+					} else {
+						matchingNode.getParentNode().removeChild(matchingNode);
+					}
+				}
+			} catch (Exception e) {
+				throw new RuntimeException("Failed to execute xpath: " + xPathExpression, e);
+			}
 		}
+	}
+
+	private static XPath getSvgAwareXPath() {
+		XPath xPath = XPathFactory.newInstance().newXPath();
+
+		xPath.setNamespaceContext(new NamespaceContext() {
+			public String getNamespaceURI(String prefix) {
+				if ("svg".equals(prefix)) {
+					return "http://www.w3.org/2000/svg";  // SVG namespace URI
+				}
+				return null;
+			}
+
+			public String getPrefix(String uri) {
+				return null;
+			}
+
+			public Iterator<String> getPrefixes(String uri) {
+				return null;
+			}
+		});
+
+		return xPath;
 	}
 
 	private String convertDocumentToString(Document document) {
@@ -130,12 +182,12 @@ public class SvgTest {
 		return Paths.get(getLocalFolder(), getClass().getSimpleName() + ".java");
 	}
 
-	private String runPlantUML(String expectedDescription, FileFormat format)
+	private String runPlantUML(String expectedDescription)
 			throws IOException {
 		final String diagramText = readStringFromSourceFile(getDiagramFile(), TRIPLE_QUOTE, TRIPLE_QUOTE);
 		final SourceStringReader ssr = new SourceStringReader(diagramText, UTF_8);
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		final DiagramDescription diagramDescription = ssr.outputImage(baos, 0, new FileFormatOption(format, false));
+		final DiagramDescription diagramDescription = ssr.outputImage(baos, 0, new FileFormatOption(SVG, false));
 		assertEquals(expectedDescription, diagramDescription.getDescription(), "Bad description");
 
 		return new String(baos.toByteArray(), UTF_8);

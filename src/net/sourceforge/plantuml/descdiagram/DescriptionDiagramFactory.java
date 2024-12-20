@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJsonSingleLin
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateMap;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class DescriptionDiagramFactory extends PSystemCommandFactory {
 
@@ -126,5 +127,11 @@ public class DescriptionDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandArchimateMultilines());
 		cmds.add(new CommandCreateDomain());
 	}
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return UmlDiagramType.DESCRIPTION;
+	}
+
 
 }

@@ -44,10 +44,17 @@ import net.sourceforge.plantuml.text.StringLocated;
 public class Jaws {
 
 	public static final char BLOCK_E1_NEWLINE = '\uE100';
-	public static final char BLOCK_E1_REAL_BACKSLASH = '\uE101';
-	public static final char BLOCK_E1_START_TEXTBLOCK = '\uE102';
-	public static final char BLOCK_E1_END_TEXTBLOCK = '\uE103';
+	public static final char BLOCK_E1_NEWLINE_LEFT_ALIGN = '\uE101';
+	public static final char BLOCK_E1_NEWLINE_RIGHT_ALIGN = '\uE102';
+	
+	public static final char BLOCK_E1_REAL_BACKSLASH = '\uE110';
+	public static final char BLOCK_E1_REAL_TABULATION = '\uE111';
 
+	public static final char BLOCK_E1_INVISIBLE_QUOTE = '\uE121';
+	public static final char BLOCK_E1_START_TEXTBLOCK = '\uE122';
+	public static final char BLOCK_E1_END_TEXTBLOCK = '\uE123';
+	
+	
 	private final List<StringLocated> output = new ArrayList<StringLocated>();
 
 	public Jaws(List<StringLocated> input) {

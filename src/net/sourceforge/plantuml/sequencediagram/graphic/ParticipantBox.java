@@ -116,7 +116,7 @@ public class ParticipantBox implements Pushable {
 		startingX += deltaX;
 	}
 
-	public void drawHeadTailU(UGraphic ug, double topStartingY, boolean showHead, double positionTail, boolean shouldGroupComponents) {
+	public void drawHeadTailU(UGraphic ug, double topStartingY, boolean showHead, double positionTail) {
 		if (topStartingY == 0) {
 			throw new IllegalStateException("setTopStartingY cannot be zero");
 		}
@@ -126,12 +126,10 @@ public class ParticipantBox implements Pushable {
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		if (showHead) {
-			if (shouldGroupComponents) {
-				Map<UGroupType, String> typeIdents = new HashMap<>();
-				typeIdents.put(UGroupType.CLASS, "participant participant-head");
-				typeIdents.put(UGroupType.PARTICIPANT_NAME, participantCode);
-				ug.startGroup(typeIdents);
-			}
+			Map<UGroupType, String> typeIdents = new HashMap<>();
+			typeIdents.put(UGroupType.CLASS, "participant participant-head");
+			typeIdents.put(UGroupType.PARTICIPANT_NAME, participantCode);
+			ug.startGroup(typeIdents);
 
 			final double y1 = topStartingY - head.getPreferredHeight(stringBounder)
 					- line.getPreferredHeight(stringBounder) / 2;
@@ -140,18 +138,14 @@ public class ParticipantBox implements Pushable {
 					new SimpleContext2D(false));
 			// ug.setTranslate(atX, atY);
 
-			if (shouldGroupComponents) {
-				ug.closeGroup();
-			}
+			ug.closeGroup();
 		}
 
 		if (positionTail > 0) {
-			if (shouldGroupComponents) {
-				Map<UGroupType, String> typeIdents = new HashMap<>();
-				typeIdents.put(UGroupType.CLASS, "participant participant-tail");
-				typeIdents.put(UGroupType.PARTICIPANT_NAME, participantCode);
-				ug.startGroup(typeIdents);
-			}
+			Map<UGroupType, String> typeIdents = new HashMap<>();
+			typeIdents.put(UGroupType.CLASS, "participant participant-tail");
+			typeIdents.put(UGroupType.PARTICIPANT_NAME, participantCode);
+			ug.startGroup(typeIdents);
 
 			// final double y2 = positionTail - topStartingY +
 			// line.getPreferredHeight(stringBounder) / 2 - 1;
@@ -165,9 +159,7 @@ public class ParticipantBox implements Pushable {
 					new SimpleContext2D(false));
 			// ug.setTranslate(atX, atY);
 
-			if (shouldGroupComponents) {
-				ug.closeGroup();
-			}
+			ug.closeGroup();
 		}
 	}
 

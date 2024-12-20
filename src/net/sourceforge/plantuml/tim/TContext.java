@@ -51,6 +51,7 @@ import java.util.Set;
 import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
@@ -75,6 +76,7 @@ import net.sourceforge.plantuml.theme.Theme;
 import net.sourceforge.plantuml.theme.ThemeUtils;
 import net.sourceforge.plantuml.tim.builtin.AlwaysFalse;
 import net.sourceforge.plantuml.tim.builtin.AlwaysTrue;
+import net.sourceforge.plantuml.tim.builtin.Backslash;
 import net.sourceforge.plantuml.tim.builtin.BoolVal;
 import net.sourceforge.plantuml.tim.builtin.CallUserFunction;
 import net.sourceforge.plantuml.tim.builtin.Chr;
@@ -109,6 +111,7 @@ import net.sourceforge.plantuml.tim.builtin.JsonKeyExists;
 import net.sourceforge.plantuml.tim.builtin.JsonMerge;
 import net.sourceforge.plantuml.tim.builtin.JsonRemove;
 import net.sourceforge.plantuml.tim.builtin.JsonSet;
+import net.sourceforge.plantuml.tim.builtin.LeftAlign;
 import net.sourceforge.plantuml.tim.builtin.Lighten;
 import net.sourceforge.plantuml.tim.builtin.LoadJson;
 import net.sourceforge.plantuml.tim.builtin.LogicalAnd;
@@ -128,6 +131,7 @@ import net.sourceforge.plantuml.tim.builtin.RandomFunction;
 import net.sourceforge.plantuml.tim.builtin.RetrieveProcedure;
 import net.sourceforge.plantuml.tim.builtin.ReverseColor;
 import net.sourceforge.plantuml.tim.builtin.ReverseHsluvColor;
+import net.sourceforge.plantuml.tim.builtin.RightAlign;
 import net.sourceforge.plantuml.tim.builtin.SetVariableValue;
 import net.sourceforge.plantuml.tim.builtin.Size;
 import net.sourceforge.plantuml.tim.builtin.SplitStr;
@@ -137,6 +141,7 @@ import net.sourceforge.plantuml.tim.builtin.StringFunction;
 import net.sourceforge.plantuml.tim.builtin.Strlen;
 import net.sourceforge.plantuml.tim.builtin.Strpos;
 import net.sourceforge.plantuml.tim.builtin.Substr;
+import net.sourceforge.plantuml.tim.builtin.Tabulation;
 import net.sourceforge.plantuml.tim.builtin.Upper;
 import net.sourceforge.plantuml.tim.builtin.VariableExists;
 import net.sourceforge.plantuml.tim.builtin.Xargs;
@@ -180,6 +185,7 @@ public class TContext {
 	private void addStandardFunctions(Defines defines) {
 		functionsSet.addFunction(new AlwaysFalse());
 		functionsSet.addFunction(new AlwaysTrue());
+		functionsSet.addFunction(new Backslash());
 		functionsSet.addFunction(new BoolVal());
 		functionsSet.addFunction(new CallUserFunction());
 		functionsSet.addFunction(new Chr());
@@ -214,6 +220,7 @@ public class TContext {
 		functionsSet.addFunction(new JsonMerge());
 		functionsSet.addFunction(new JsonRemove());
 		functionsSet.addFunction(new JsonSet());
+		functionsSet.addFunction(new LeftAlign());
 		functionsSet.addFunction(new Lighten());
 		functionsSet.addFunction(new LoadJson());
 		// functionsSet.addFunction(new LoadJsonLegacy());
@@ -234,6 +241,7 @@ public class TContext {
 		functionsSet.addFunction(new RetrieveProcedure());
 		functionsSet.addFunction(new ReverseColor());
 		functionsSet.addFunction(new ReverseHsluvColor());
+		functionsSet.addFunction(new RightAlign());
 		functionsSet.addFunction(new SetVariableValue());
 		functionsSet.addFunction(new Size());
 		functionsSet.addFunction(new SplitStr());
@@ -243,6 +251,7 @@ public class TContext {
 		functionsSet.addFunction(new Strlen());
 		functionsSet.addFunction(new Strpos());
 		functionsSet.addFunction(new Substr());
+		functionsSet.addFunction(new Tabulation());
 		functionsSet.addFunction(new Upper());
 		functionsSet.addFunction(new VariableExists());
 		functionsSet.addFunction(new Xargs());
@@ -363,6 +372,9 @@ public class TContext {
 			return null;
 		} else if (type == TLineType.INCLUDE) {
 			this.executeInclude(memory, s);
+			return null;
+		} else if (type == TLineType.INCLUDE_SPRITES) {
+			this.executeIncludeSprites(memory, s);
 			return null;
 		} else if (type == TLineType.INCLUDE_DEF) {
 			this.executeIncludeDef(memory, s);
@@ -673,35 +685,68 @@ public class TContext {
 		}
 	}
 
+	private void executeIncludeSprites(TMemory memory, StringLocated s) throws EaterException {
+		final EaterIncludeSprites include = new EaterIncludeSprites(s.getTrimmed());
+		include.analyze(this, memory);
+		final String what = include.getWhat();
+		if (what.startsWith("<") && what.endsWith(">")) {
+			ReadLine reader = null;
+			try {
+				reader = PreprocessorUtils.getReaderStdlibIncludeSprites(s, what.substring(1, what.length() - 1));
+				final List<StringLocated> body = new ArrayList<>();
+				do {
+					final StringLocated sl = reader.readLine();
+					if (sl == null) {
+						executeLines(memory, body, null, false);
+						return;
+					}
+					body.add(sl);
+				} while (true);
+			} catch (IOException e) {
+				Logme.error(e);
+				throw new EaterException("cannot include " + e, s);
+			} finally {
+				if (reader != null)
+					try {
+						reader.close();
+					} catch (IOException e) {
+						Logme.error(e);
+					}
+			}
+
+		}
+		throw new EaterException("cannot include sprites from " + what, s);
+	}
+
 	private void executeInclude(TMemory memory, StringLocated s) throws EaterException {
 		final EaterInclude include = new EaterInclude(s.getTrimmed());
 		include.analyze(this, memory);
-		String location = include.getWhat();
+		String what = include.getWhat();
 		final PreprocessorIncludeStrategy strategy = include.getPreprocessorIncludeStrategy();
-		final int idx = location.lastIndexOf('!');
+		final int idx = what.lastIndexOf('!');
 		String suf = null;
 		if (idx != -1) {
-			suf = location.substring(idx + 1);
-			location = location.substring(0, idx);
+			suf = what.substring(idx + 1);
+			what = what.substring(0, idx);
 		}
 
 		ReadLine reader = null;
 		ImportedFiles saveImportedFiles = null;
 		try {
-			if (location.startsWith("http://") || location.startsWith("https://")) {
-				final SURL url = SURL.create(location);
+			if (what.startsWith("http://") || what.startsWith("https://")) {
+				final SURL url = SURL.create(what);
 				if (url == null)
 					throw new EaterException("Cannot open URL", s);
 
 				reader = PreprocessorUtils.getReaderIncludeUrl(url, s, suf, charset);
-			} else if (location.startsWith("<") && location.endsWith(">")) {
-				reader = PreprocessorUtils.getReaderStdlibInclude(s, location.substring(1, location.length() - 1));
+			} else if (what.startsWith("<") && what.endsWith(">")) {
+				reader = PreprocessorUtils.getReaderStdlibInclude(s, what.substring(1, what.length() - 1));
 				// ::comment when __CORE__
-			} else if (location.startsWith("[") && location.endsWith("]")) {
-				reader = PreprocessorUtils.getReaderNonstandardInclude(s, location.substring(1, location.length() - 1));
+			} else if (what.startsWith("[") && what.endsWith("]")) {
+				reader = PreprocessorUtils.getReaderNonstandardInclude(s, what.substring(1, what.length() - 1));
 				// ::done
 			} else {
-				final FileWithSuffix f2 = importedFiles.getFile(location, suf);
+				final FileWithSuffix f2 = importedFiles.getFile(what, suf);
 				if (f2.fileOk()) {
 					if (strategy == PreprocessorIncludeStrategy.DEFAULT && filesUsedCurrent.contains(f2))
 						return;
@@ -716,7 +761,7 @@ public class TContext {
 						if (tmp == null)
 							throw new EaterException("Cannot include file", s);
 
-						reader = ReadLineReader.create(tmp, location, s.getLocation());
+						reader = ReadLineReader.create(tmp, what, s.getLocation());
 					}
 					saveImportedFiles = this.importedFiles;
 					this.importedFiles = this.importedFiles.withCurrentDir(f2.getParentFile());
@@ -755,7 +800,7 @@ public class TContext {
 
 		}
 
-		throw new EaterException("cannot include " + location, s);
+		throw new EaterException("cannot include " + what, s);
 	}
 
 	public boolean isLegacyDefine(String functionName) {
@@ -808,7 +853,7 @@ public class TContext {
 			sb.append(resultList.get(n1).getString());
 			resultList.remove(n1);
 			if (resultList.size() > n1)
-				sb.append("\\n");
+				sb.append(Jaws.BLOCK_E1_NEWLINE);
 
 		}
 		return sb.toString();

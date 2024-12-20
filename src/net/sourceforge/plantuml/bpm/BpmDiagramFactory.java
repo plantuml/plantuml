@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class BpmDiagramFactory extends PSystemCommandFactory {
 
@@ -65,5 +66,11 @@ public class BpmDiagramFactory extends PSystemCommandFactory {
 	public AbstractPSystem createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
 		return new BpmDiagram(source);
 	}
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return UmlDiagramType.BPM;
+	}
+
 
 }

@@ -37,6 +37,8 @@ package net.sourceforge.plantuml.klimt.shape;
 
 import java.util.StringTokenizer;
 
+import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -46,7 +48,7 @@ import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Log;
 
 public class TileText extends AbstractTextBlock implements TextBlock {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
 	private final String text;
 	private final FontConfiguration fontConfiguration;
@@ -67,7 +69,9 @@ public class TileText extends AbstractTextBlock implements TextBlock {
 		if (h < 10) {
 			h = 10;
 		}
-		final double width = text.indexOf('\t') == -1 ? rect.getWidth() : getWidth(stringBounder);
+		final double width = text.indexOf('\t') == -1 && text.indexOf(Jaws.BLOCK_E1_REAL_TABULATION) == -1
+				? rect.getWidth()
+				: getWidth(stringBounder);
 		return new XDimension2D(width, h + spaceBottom);
 	}
 
@@ -79,6 +83,7 @@ public class TileText extends AbstractTextBlock implements TextBlock {
 		return stringBounder.calculateDimension(fontConfiguration.getFont(), "        ").getWidth();
 	}
 
+	@JawsStrange
 	public void drawU(UGraphic ug) {
 		double x = 0;
 		if (url != null) {
@@ -86,13 +91,13 @@ public class TileText extends AbstractTextBlock implements TextBlock {
 		}
 		ug = ug.apply(fontConfiguration.getColor());
 
-		final StringTokenizer tokenizer = new StringTokenizer(text, "\t", true);
+		final StringTokenizer tokenizer = new StringTokenizer(text, "\t" + Jaws.BLOCK_E1_REAL_TABULATION, true);
 
 		if (tokenizer.hasMoreTokens()) {
 			final double tabSize = getTabSize(ug.getStringBounder());
 			while (tokenizer.hasMoreTokens()) {
 				final String s = tokenizer.nextToken();
-				if (s.equals("\t")) {
+				if (s.equals("\t") || s.equals("" + Jaws.BLOCK_E1_REAL_TABULATION)) {
 					final double remainder = x % tabSize;
 					x += tabSize - remainder;
 				} else {
@@ -115,13 +120,14 @@ public class TileText extends AbstractTextBlock implements TextBlock {
 		}
 	}
 
+	@JawsStrange
 	double getWidth(StringBounder stringBounder) {
-		final StringTokenizer tokenizer = new StringTokenizer(text, "\t", true);
+		final StringTokenizer tokenizer = new StringTokenizer(text, "\t" + Jaws.BLOCK_E1_REAL_TABULATION, true);
 		final double tabSize = getTabSize(stringBounder);
 		double x = 0;
 		while (tokenizer.hasMoreTokens()) {
 			final String s = tokenizer.nextToken();
-			if (s.equals("\t")) {
+			if (s.equals("\t") || s.equals("" + Jaws.BLOCK_E1_REAL_TABULATION)) {
 				final double remainder = x % tabSize;
 				x += tabSize - remainder;
 			} else {

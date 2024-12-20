@@ -41,6 +41,7 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
     // ::remove folder when __HAXE__
@@ -170,4 +171,11 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 
 		return new Font(fontName, fontVariant, fontSize);
 	}
+	
+	
+	@Override
+	public UmlDiagramType getUmlDiagramType() {
+		return null;
+	}
+
 }
