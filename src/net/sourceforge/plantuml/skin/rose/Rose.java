@@ -156,10 +156,10 @@ public class Rose {
 					getMinClassWidth(styles[0]), true, padding);
 
 		if (type == ComponentType.PARTICIPANT_LINE)
-			return new ComponentRoseLine(styles[0], false, param.getIHtmlColorSet());
+			return new ComponentRoseLine(styles[0], false, param.getIHtmlColorSet(), stringsToDisplay);
 
 		if (type == ComponentType.CONTINUE_LINE)
-			return new ComponentRoseLine(styles[0], true, param.getIHtmlColorSet());
+			return new ComponentRoseLine(styles[0], true, param.getIHtmlColorSet(), stringsToDisplay);
 
 		if (type == ComponentType.ACTOR_HEAD)
 			return new ComponentRoseActor(param.actorStyle(), styles[0], styles == null ? null : styles[1],

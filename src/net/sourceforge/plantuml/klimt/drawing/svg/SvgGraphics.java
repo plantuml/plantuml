@@ -340,7 +340,7 @@ public class SvgGraphics {
 			elt.setAttribute("rx", format(xRadius));
 			elt.setAttribute("ry", format(yRadius));
 			fillMe(elt);
-			elt.setAttribute("style", getStyle());
+			styleMe(elt);
 			addFilterShadowId(elt, deltaShadow);
 			getG().appendChild(elt);
 		}
@@ -354,7 +354,7 @@ public class SvgGraphics {
 			final Element elt = (Element) document.createElement("path");
 			elt.setAttribute("d", path);
 			fillMe(elt);
-			elt.setAttribute("style", getStyle());
+			styleMe(elt);
 			getG().appendChild(elt);
 		}
 		ensureVisible(x1, y1);
@@ -415,8 +415,9 @@ public class SvgGraphics {
 		this.stroke = fixColor(stroke);
 	}
 
+	// https://forum.plantuml.net/12469/package-background-transparent-package-default-background?show=12479#c12479
 	private String fixColor(String color) {
-		return color == null || "#00000000".equals(color) ? "none" : color;
+		return color == null || "#00000000".equals(color) ? "transparent" : color;
 	}
 
 	public final void setStrokeWidth(double strokeWidth, String strokeDasharray) {
@@ -466,7 +467,7 @@ public class SvgGraphics {
 		elt.setAttribute("width", format(width));
 		elt.setAttribute("height", format(height));
 		fillMe(elt);
-		elt.setAttribute("style", getStyleSpecial());
+		styleMe(elt);
 		return elt;
 	}
 
@@ -478,7 +479,7 @@ public class SvgGraphics {
 			elt.setAttribute("y1", format(y1));
 			elt.setAttribute("x2", format(x2));
 			elt.setAttribute("y2", format(y2));
-			elt.setAttribute("style", getStyle());
+			styleMe(elt);
 			addFilterShadowId(elt, deltaShadow);
 			getG().appendChild(elt);
 		}
@@ -486,33 +487,19 @@ public class SvgGraphics {
 		ensureVisible(x2 + 2 * deltaShadow, y2 + 2 * deltaShadow);
 	}
 
-	private String getStyle() {
+	private void styleMe(Element elt) {
+		if (strokeWidth.equals("0"))
+			return;
+
 		final StringBuilder style = new StringBuilder();
 
 		style.append("stroke:" + stroke + ";");
 		style.append("stroke-width:" + strokeWidth + ";");
-		if (fill.equals("#00000000"))
-			style.append("fill:none;");
 
 		if (strokeDasharray != null)
 			style.append("stroke-dasharray:" + strokeDasharray + ";");
 
-		return style.toString();
-	}
-
-	// https://forum.plantuml.net/12469/package-background-transparent-package-default-background?show=12479#c12479
-	private String getStyleSpecial() {
-		final StringBuilder style = new StringBuilder();
-
-		style.append("stroke:" + stroke + ";");
-		style.append("stroke-width:" + strokeWidth + ";");
-		if (fill.equals("#00000000"))
-			style.append("fill:none;");
-
-		if (strokeDasharray != null)
-			style.append("stroke-dasharray:" + strokeDasharray + ";");
-
-		return style.toString();
+		elt.setAttribute("style", style.toString());
 	}
 
 	public void svgPolygon(double deltaShadow, double... points) {
@@ -529,7 +516,7 @@ public class SvgGraphics {
 			}
 			elt.setAttribute("points", sb.toString());
 			fillMe(elt);
-			elt.setAttribute("style", getStyleSpecial());
+			styleMe(elt);
 			addFilterShadowId(elt, deltaShadow);
 			getG().appendChild(elt);
 		}
@@ -750,7 +737,7 @@ public class SvgGraphics {
 		if (hidden == false) {
 			final Element elt = (Element) document.createElement("path");
 			elt.setAttribute("d", sb.toString());
-			elt.setAttribute("style", getStyle());
+			styleMe(elt);
 			fillMe(elt);
 			final String id = path.getComment();
 			if (id != null)
@@ -843,7 +830,6 @@ public class SvgGraphics {
 			final Element elt = (Element) document.createElement("path");
 			elt.setAttribute("d", currentPath.toString());
 			fillMe(elt);
-			// elt elt.setAttribute("style", getStyle());
 			getG().appendChild(elt);
 		}
 		currentPath = null;
@@ -1131,6 +1117,11 @@ public class SvgGraphics {
 				pendingAction.get(0).setAttribute("id", typeIdent.getValue());
 			if (option.isInteractive() && typeIdent.getKey() == UGroupType.CLASS)
 				pendingAction.get(0).setAttribute("class", typeIdent.getValue());
+			if (typeIdent.getKey() == UGroupType.TITLE) {
+				Element title = document.createElement("title");
+				title.setTextContent(typeIdent.getValue());
+				pendingAction.get(0).appendChild(title);
+			}
 		}
 	}
 
