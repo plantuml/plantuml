@@ -56,12 +56,32 @@ TEXT:
   color: ff000000
   extendedColor: NULL_COLOR
 
+RECTANGLE:
+  pt1: [ 37.8469 ; 80.0000 ]
+  pt2: [ 45.8469 ; 114.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-0.0
+  shadow: 0
+  color: NULL_COLOR
+  backcolor: NULL_COLOR
+
 LINE:
   pt1: [ 41.0000 ; 80.0000 ]
   pt2: [ 41.0000 ; 114.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
+
+RECTANGLE:
+  pt1: [ 109.5463 ; 80.0000 ]
+  pt2: [ 117.5463 ; 114.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-0.0
+  shadow: 0
+  color: NULL_COLOR
+  backcolor: NULL_COLOR
 
 LINE:
   pt1: [ 112.6938 ; 80.0000 ]
