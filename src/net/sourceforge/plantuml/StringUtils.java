@@ -231,6 +231,10 @@ public class StringUtils {
 		return result.toString();
 	}
 
+	public static String toTooltipText(Display display) {
+		return (display == null || display.size() == 0) ? "" : display.get(0).toString();
+	}
+
 	public static String manageArrowForSequence(String s) {
 		s = s.replace('=', '-').toLowerCase();
 		return s;

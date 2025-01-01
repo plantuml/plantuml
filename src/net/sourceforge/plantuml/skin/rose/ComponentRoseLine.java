@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
 import static java.util.Collections.singletonMap;
+import static net.sourceforge.plantuml.StringUtils.toTooltipText;
 
 public class ComponentRoseLine extends AbstractComponent {
 
@@ -77,7 +78,7 @@ public class ComponentRoseLine extends AbstractComponent {
 //		if (continueLine)
 //			ug = ug.apply(UStroke.simple());
 
-		ug.startGroup(singletonMap(UGroupType.TITLE, getSingleDisplayString()));
+		ug.startGroup(singletonMap(UGroupType.TITLE, toTooltipText(stringsToDisplay)));
 		drawTitleHoverTargetRect(ug, dimensionToUse);
 
 		final int x = (int) (dimensionToUse.getWidth() / 2);
@@ -93,10 +94,6 @@ public class ComponentRoseLine extends AbstractComponent {
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
 		return 1;
-	}
-
-	private String getSingleDisplayString() {
-		return String.join(" ", stringsToDisplay.asList());
 	}
 
 	private void drawTitleHoverTargetRect(UGraphic ug, XDimension2D dimensionToUse) {

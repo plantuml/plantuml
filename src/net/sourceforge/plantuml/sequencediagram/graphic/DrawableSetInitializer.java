@@ -648,10 +648,10 @@ class DrawableSetInitializer {
 		final Component comp = drawableSet.getSkin().createComponent(
 				new Style[] { ComponentType.ALIVE_BOX_CLOSE_CLOSE.getStyleSignature()
 						.getMergedStyle(drawableSet.getSkinParam().getCurrentStyleBuilder()) },
-				ComponentType.ALIVE_BOX_CLOSE_CLOSE, null, drawableSet.getSkinParam(), null);
+				ComponentType.ALIVE_BOX_CLOSE_CLOSE, null, drawableSet.getSkinParam(), participantDisplay);
 
 		final LifeLine lifeLine = new LifeLine(box, comp.getPreferredWidth(stringBounder),
-				drawableSet.getSkinParam().shadowing(p.getStereotype()));
+				drawableSet.getSkinParam().shadowing(p.getStereotype()), participantDisplay);
 		drawableSet.setLivingParticipantBox(p, new LivingParticipantBox(box, lifeLine));
 
 		this.freeX = box.getMaxX(stringBounder);

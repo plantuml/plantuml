@@ -44,6 +44,7 @@ import java.util.List;
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.skin.ColorParam;
@@ -82,12 +83,14 @@ public class LifeLine {
 	private final Stairs stairs = new Stairs();
 	private int maxLevel = 0;
 	private final boolean shadowing;
+    private final Display participantDisplay;
 
-	public LifeLine(Pushable participant, double nominalPreferredWidth, boolean shadowing) {
+    public LifeLine(Pushable participant, double nominalPreferredWidth, boolean shadowing, Display participantDisplay) {
 		this.participant = participant;
 		this.nominalPreferredWidth = nominalPreferredWidth;
 		this.shadowing = shadowing;
-	}
+        this.participantDisplay = participantDisplay;
+    }
 
 	public void addSegmentVariation(LifeSegmentVariation type, double y, Fashion colors) {
 		if (events.size() > 0) {
@@ -231,8 +234,7 @@ public class LifeLine {
 					style = style.eventuallyOverride(PName.BackGroundColor, specificBackColor);
 					style = style.eventuallyOverride(PName.LineColor, specificLineColor);
 				}
-				final Component compAliveBox = skin.createComponent(new Style[] { style }, type, null, skinParam2,
-						null);
+				final Component compAliveBox = skin.createComponent(new Style[] { style }, type, null, skinParam2, participantDisplay);
 				type = ComponentType.ALIVE_BOX_OPEN_OPEN;
 				final int currentLevel = Math.min(eventLevel,getLevel(seg.getPos1Initial()));
 				seg.drawU(ug, compAliveBox, currentLevel);

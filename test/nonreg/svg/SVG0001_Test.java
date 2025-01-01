@@ -18,7 +18,9 @@ entity my_entity
 participant my_participant
 queue my_queue
 my_actor -> my_database: Do something
+activate my_actor
 my_database --> my_actor: Acknowledge it
+deactivate my_actor
 @enduml
 """
 
@@ -28,6 +30,10 @@ Expected result MUST be put between triple brackets
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" data-diagram-type="SEQUENCE" preserveAspectRatio="none" version="1.1" zoomAndPan="magnify">
   <defs/>
   <g>
+    <g>
+      <title>my_actor</title>
+      <rect fill="#FFFFFF" style="stroke:#181818;stroke-width:1;"/>
+    </g>
     <g>
       <title>my_actor</title>
       <rect fill="transparent"/>
@@ -114,6 +120,10 @@ Expected result MUST be put between triple brackets
 	<path fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
 	<path fill="transparent" style="stroke:#181818;stroke-width:0.5;"/>
 	<text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">my_queue</text>
+    <g>
+      <title>my_actor</title>
+      <rect fill="#FFFFFF" style="stroke:#181818;stroke-width:1;"/>
+    </g>
 	<polygon fill="#181818" style="stroke:#181818;stroke-width:1;"/>
 	<line style="stroke:#181818;stroke-width:1;"/>
 	<text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing">Do something</text>
@@ -128,7 +138,7 @@ Expected result MUST be put between triple brackets
 public class SVG0001_Test extends SvgTest {
 
 	@Test
-	void testSequenceDiagramHasGroupedParticipantsWithClasses() throws IOException {
+	void testSequenceDiagramHasTitledLifelines() throws IOException {
 		checkXmlAndDescription("(8 participants)");
 	}
 

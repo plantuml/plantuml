@@ -36,8 +36,10 @@
 package net.sourceforge.plantuml.skin.rose;
 
 import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -47,15 +49,20 @@ import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.style.Style;
 
+import static java.util.Collections.singletonMap;
+import static net.sourceforge.plantuml.StringUtils.toTooltipText;
+
 public class ComponentRoseActiveLine extends AbstractComponent {
 
 	private final Fashion symbolContext;
 	private final boolean closeUp;
 	private final boolean closeDown;
+    private final Display stringsToDisplay;
 
-	public ComponentRoseActiveLine(Style style, boolean closeUp, boolean closeDown, HColorSet set) {
+    public ComponentRoseActiveLine(Style style, boolean closeUp, boolean closeDown, HColorSet set, Display stringsToDisplay) {
 		super(style);
-		this.symbolContext = style.getSymbolContext(set);
+        this.stringsToDisplay = stringsToDisplay;
+        this.symbolContext = style.getSymbolContext(set);
 		this.closeUp = closeUp;
 		this.closeDown = closeDown;
 	}
@@ -69,6 +76,8 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 			return;
 		}
 
+		ug.startGroup(singletonMap(UGroupType.TITLE, toTooltipText(stringsToDisplay)));
+
 		final URectangle rect = URectangle.build(getPreferredWidth(stringBounder), dimensionToUse.getHeight());
 		if (symbolContext.isShadowing()) {
 			rect.setDeltaShadow(1);
@@ -76,22 +85,24 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 		ug = ug.apply(symbolContext.getForeColor());
 		if (closeUp && closeDown) {
 			ug.apply(symbolContext.getBackColor().bg()).apply(UTranslate.dx(x)).draw(rect);
-			return;
-		}
-		ug.apply(symbolContext.getBackColor().bg()).apply(symbolContext.getBackColor()).apply(UTranslate.dx(x))
-				.draw(rect);
+		} else {
+			ug.apply(symbolContext.getBackColor().bg()).apply(symbolContext.getBackColor()).apply(UTranslate.dx(x))
+					.draw(rect);
 
-		final ULine vline = ULine.vline(dimensionToUse.getHeight());
-		ug.apply(UTranslate.dx(x)).draw(vline);
-		ug.apply(UTranslate.dx(x + getPreferredWidth(stringBounder))).draw(vline);
+			final ULine vline = ULine.vline(dimensionToUse.getHeight());
+			ug.apply(UTranslate.dx(x)).draw(vline);
+			ug.apply(UTranslate.dx(x + getPreferredWidth(stringBounder))).draw(vline);
 
-		final ULine hline = ULine.hline(getPreferredWidth(stringBounder));
-		if (closeUp) {
-			ug.apply(UTranslate.dx(x)).draw(hline);
+			final ULine hline = ULine.hline(getPreferredWidth(stringBounder));
+			if (closeUp) {
+				ug.apply(UTranslate.dx(x)).draw(hline);
+			}
+			if (closeDown) {
+				ug.apply(new UTranslate(x, dimensionToUse.getHeight())).draw(hline);
+			}
 		}
-		if (closeDown) {
-			ug.apply(new UTranslate(x, dimensionToUse.getHeight())).draw(hline);
-		}
+
+		ug.closeGroup();
 	}
 
 	@Override

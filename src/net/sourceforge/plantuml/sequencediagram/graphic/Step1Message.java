@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.ArrowBody;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
-import net.sourceforge.plantuml.skin.ArrowHead;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.PaddingParam;
@@ -76,7 +75,8 @@ class Step1Message extends Step1Abstract {
 			final Component compAliveBox = drawingSet.getSkin().createComponent(
 					new Style[] { ComponentType.ALIVE_BOX_OPEN_OPEN.getStyleSignature()
 							.getMergedStyle(drawingSet.getSkinParam().getCurrentStyleBuilder()) },
-					ComponentType.ALIVE_BOX_OPEN_OPEN, null, drawingSet.getSkinParam(), null);
+					ComponentType.ALIVE_BOX_OPEN_OPEN, null, drawingSet.getSkinParam(),
+					message.getParticipant1().getDisplay(false));
 
 			this.messageArrow = new MessageArrow(freeY.getFreeY(range), drawingSet.getSkin(), comp,
 					getLivingParticipantBox1(), getLivingParticipantBox2(), message.getUrl(), compAliveBox);
