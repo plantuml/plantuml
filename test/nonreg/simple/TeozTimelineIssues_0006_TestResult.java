@@ -12,12 +12,32 @@ svgLinkTarget: _top
 hoverPathColorRGB: null
 preserveAspectRatio: none
 
+RECTANGLE:
+  pt1: [ 15.1213 ; 34.0000 ]
+  pt2: [ 23.1213 ; 106.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-0.0
+  shadow: 0
+  color: NULL_COLOR
+  backcolor: NULL_COLOR
+
 LINE:
   pt1: [ 18.6213 ; 34.0000 ]
   pt2: [ 18.6213 ; 106.0000 ]
   stroke: 5.0-5.0-0.5
   shadow: 0
   color: ff181818
+
+RECTANGLE:
+  pt1: [ 177.3774 ; 34.0000 ]
+  pt2: [ 185.3774 ; 106.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-0.0
+  shadow: 0
+  color: NULL_COLOR
+  backcolor: NULL_COLOR
 
 LINE:
   pt1: [ 180.8774 ; 34.0000 ]
@@ -36,6 +56,16 @@ RECTANGLE:
   color: ff181818
   backcolor: ffffffff
 
+RECTANGLE:
+  pt1: [ 214.6203 ; 34.0000 ]
+  pt2: [ 222.6203 ; 106.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-0.0
+  shadow: 0
+  color: NULL_COLOR
+  backcolor: NULL_COLOR
+
 LINE:
   pt1: [ 218.1203 ; 34.0000 ]
   pt2: [ 218.1203 ; 106.0000 ]
@@ -52,6 +82,16 @@ RECTANGLE:
   shadow: 0
   color: ff181818
   backcolor: ffffffff
+
+RECTANGLE:
+  pt1: [ 251.8637 ; 34.0000 ]
+  pt2: [ 259.8637 ; 106.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-0.0
+  shadow: 0
+  color: NULL_COLOR
+  backcolor: NULL_COLOR
 
 LINE:
   pt1: [ 255.3637 ; 34.0000 ]

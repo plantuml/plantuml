@@ -32,6 +32,16 @@ RECTANGLE:
   color: ff000000
   backcolor: NULL_COLOR
 
+RECTANGLE:
+  pt1: [ 234.9320 ; 34.0000 ]
+  pt2: [ 242.9320 ; 192.0000 ]
+  xCorner: 0
+  yCorner: 0
+  stroke: 0.0-0.0-0.0
+  shadow: 0
+  color: NULL_COLOR
+  backcolor: NULL_COLOR
+
 LINE:
   pt1: [ 238.2405 ; 34.0000 ]
   pt2: [ 238.2405 ; 192.0000 ]
