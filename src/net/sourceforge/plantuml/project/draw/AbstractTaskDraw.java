@@ -165,7 +165,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	public final double getY(StringBounder stringBounder, Direction direction) {
 		final Style style = getStyle();
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
-		final ClockwiseTopRightBottomLeft padding = style.getPadding();
+		// final ClockwiseTopRightBottomLeft padding = style.getPadding();
 
 		final double y1 = margin.getTop() + getY(stringBounder).getCurrentValue();
 		final double y2 = y1 + getShapeHeight(stringBounder);

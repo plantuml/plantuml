@@ -182,7 +182,7 @@ public class GanttArrow implements UDrawable {
 			return task.getX1(taskAttribute);
 
 		if (direction == Direction.RIGHT)
-			return task.getX2(taskAttribute);
+			return task.getX2(taskAttribute) + 2;
 
 		return (task.getX1(taskAttribute) + (task.getX2(taskAttribute))) / 2;
 	}

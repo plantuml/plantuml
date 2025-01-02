@@ -79,6 +79,10 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 
 	@Override
 	protected double getShapeHeight(StringBounder stringBounder) {
+		final String displayString = getTask().getDisplayString();
+		if (displayString == null)
+			return getDiamondHeight();
+
 		final TextBlock title = getTitle();
 		final XDimension2D titleDim = title.calculateDimension(stringBounder);
 		return Math.max(titleDim.getHeight(), getDiamondHeight());
@@ -127,8 +131,8 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 
 	@Override
 	protected TextBlock getTitle() {
-		return Display.getWithNewlines(getStyleBuilder().getSkinParam().getPragma(), prettyDisplay).create(getFontConfiguration(), HorizontalAlignment.LEFT,
-				new SpriteContainerEmpty());
+		return Display.getWithNewlines(getStyleBuilder().getSkinParam().getPragma(), prettyDisplay)
+				.create(getFontConfiguration(), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 	}
 
 	@Override
@@ -154,8 +158,8 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 			ug = ug.apply(UTranslate.dx(delta / 2));
 			drawShape(applyColors(ug));
 		} else {
-			final TextBlock draw = Display.getWithNewlines(getStyleBuilder().getSkinParam().getPragma(), displayString).create(getFontConfiguration(),
-					HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+			final TextBlock draw = Display.getWithNewlines(getStyleBuilder().getSkinParam().getPragma(), displayString)
+					.create(getFontConfiguration(), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 			draw.drawU(ug);
 		}
 		if (url != null)
