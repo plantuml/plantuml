@@ -127,45 +127,49 @@ public class GanttArrow implements UDrawable {
 			y1 = start.getY(stringBounder, atStart.getInv());
 
 		final double minimalWidth = 8;
+		final GArrows arrows = new GArrows(this.atEnd, style.value(PName.LineColor).asColor(colorSet));
 
 		if (this.atStart == Direction.DOWN && this.atEnd == Direction.RIGHT) {
 			if (x2 > x1) {
 				if (x2 - x1 < minimalWidth)
 					x1 = x2 - minimalWidth;
 
-				drawLine(ug, x1, y1, x1, y2, x2, y2);
+				arrows.addPoint(x1, y1);
+				arrows.addPoint(x1, y2);
+				arrows.addPoint(x2, y2);
+
 			} else {
 				x1 = getX(source.getAttribute(), start, Direction.RIGHT);
 				y1 = start.getY(stringBounder, Direction.RIGHT);
 				final double y1b = end.getY(stringBounder).getCurrentValue();
-				drawLine(ug, x1, y1, x1 + 6, y1, x1 + 6, y1b, x2 - 8, y1b, x2 - 8, y2, x2, y2);
+				arrows.addPoint(x1, y1);
+				arrows.addPoint(x1 + 6, y1);
+				arrows.addPoint(x1 + 6, y1b);
+				arrows.addPoint(x2 - 8, y1b);
+				arrows.addPoint(x2 - 8, y2);
+				arrows.addPoint(x2, y2);
 			}
 		} else if (this.atStart == Direction.RIGHT && this.atEnd == Direction.LEFT) {
 			final double xmax = Math.max(x1, x2) + 8;
-			drawLine(ug, x1, y1, xmax, y1, xmax, y2, x2, y2);
+			arrows.addPoint(x1, y1);
+			arrows.addPoint(xmax, y1);
+			arrows.addPoint(xmax, y2);
+			arrows.addPoint(x2, y2);
 		} else if (this.atStart == Direction.LEFT && this.atEnd == Direction.RIGHT) {
 			final double xmin = Math.min(x1, x2) - 8;
-			drawLine(ug, x1, y1, xmin, y1, xmin, y2, x2, y2);
+			arrows.addPoint(x1, y1);
+			arrows.addPoint(xmin, y1);
+			arrows.addPoint(xmin, y2);
+			arrows.addPoint(x2, y2);
 		} else if (this.atStart == Direction.DOWN && this.atEnd == Direction.LEFT) {
-			drawLine(ug, x1, y1, x1, y2, x2, y2);
+			arrows.addPoint(x1, y1);
+			arrows.addPoint(x1, y2);
+			arrows.addPoint(x2, y2);
 		} else {
 			throw new IllegalArgumentException();
 		}
 
-		ug = ug.apply(UStroke.withThickness(1.5)).apply(style.value(PName.LineColor).asColor(colorSet).bg());
-		final GArrows arrows = new GArrows();
-		ug.apply(new UTranslate(x2, y2)).draw(arrows.asTo(atEnd));
-
-	}
-
-	private void drawLine(UGraphic ug, double... coord) {
-		for (int i = 0; i < coord.length - 2; i += 2) {
-			final double x1 = coord[i];
-			final double y1 = coord[i + 1];
-			final double x2 = coord[i + 2];
-			final double y2 = coord[i + 3];
-			ug.apply(new UTranslate(x1, y1)).draw(new ULine(x2 - x1, y2 - y1));
-		}
+		arrows.drawU(ug);
 
 	}
 
@@ -174,12 +178,12 @@ public class GanttArrow implements UDrawable {
 	}
 
 	private double getX(TaskAttribute taskAttribute, TaskDraw task, Direction direction) {
-		if (direction == Direction.LEFT) {
-			return task.getX1(taskAttribute) - 1;
-		}
-		if (direction == Direction.RIGHT) {
-			return task.getX2(taskAttribute) + 1;
-		}
+		if (direction == Direction.LEFT)
+			return task.getX1(taskAttribute);
+
+		if (direction == Direction.RIGHT)
+			return task.getX2(taskAttribute);
+
 		return (task.getX1(taskAttribute) + (task.getX2(taskAttribute))) / 2;
 	}
 }
