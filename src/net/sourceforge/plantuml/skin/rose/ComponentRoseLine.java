@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
 import static java.util.Collections.singletonMap;
-import static net.sourceforge.plantuml.StringUtils.toTooltipText;
 
 public class ComponentRoseLine extends AbstractComponent {
 
@@ -67,7 +66,9 @@ public class ComponentRoseLine extends AbstractComponent {
 		this.color = style.value(PName.LineColor).asColor(set);
 		this.stroke = style.getStroke();
 		this.continueLine = continueLine;
-		this.stringsToDisplay = stringsToDisplay;
+		// Ideally, stringsToDisplay should never be null. However, as a safeguard, 
+		// we default to Display.NULL when it is null.
+		this.stringsToDisplay = stringsToDisplay == null ? Display.NULL : stringsToDisplay;
 	}
 
 	@Override
@@ -78,7 +79,7 @@ public class ComponentRoseLine extends AbstractComponent {
 //		if (continueLine)
 //			ug = ug.apply(UStroke.simple());
 
-		ug.startGroup(singletonMap(UGroupType.TITLE, toTooltipText(stringsToDisplay)));
+		ug.startGroup(singletonMap(UGroupType.TITLE, stringsToDisplay.toTooltipText()));
 		drawTitleHoverTargetRect(ug, dimensionToUse);
 
 		final int x = (int) (dimensionToUse.getWidth() / 2);

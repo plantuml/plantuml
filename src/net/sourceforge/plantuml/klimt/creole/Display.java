@@ -90,6 +90,10 @@ public class Display implements Iterable<CharSequence> {
 	private final CreoleMode defaultCreoleMode;
 	private final boolean showStereotype;
 
+	// Ideally, we should have implemented the Null Object Pattern from the start, 
+	// but it was not incorporated. We are now gradually removing occurrences of 
+	// <code>null</code> in the <code>Display</code> logic throughout our codebase.
+	// Reference: https://en.wikipedia.org/wiki/Null_object_pattern
 	public final static Display NULL = new Display(true, null, null, true, CreoleMode.FULL);
 
 	@Override
@@ -568,6 +572,13 @@ public class Display implements Iterable<CharSequence> {
 		}
 		return Collections.unmodifiableList(result);
 	}
+	
+	public String toTooltipText() {
+		if (size() == 0)
+			return "";
+		return get(0).toString();
+	}
+
 
 	// ------
 

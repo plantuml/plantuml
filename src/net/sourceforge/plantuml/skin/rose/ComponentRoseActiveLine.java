@@ -50,7 +50,6 @@ import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.style.Style;
 
 import static java.util.Collections.singletonMap;
-import static net.sourceforge.plantuml.StringUtils.toTooltipText;
 
 public class ComponentRoseActiveLine extends AbstractComponent {
 
@@ -61,10 +60,12 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 
     public ComponentRoseActiveLine(Style style, boolean closeUp, boolean closeDown, HColorSet set, Display stringsToDisplay) {
 		super(style);
-        this.stringsToDisplay = stringsToDisplay;
         this.symbolContext = style.getSymbolContext(set);
 		this.closeUp = closeUp;
 		this.closeDown = closeDown;
+		// Ideally, stringsToDisplay should never be null. However, as a safeguard, 
+		// we default to Display.NULL when it is null.
+		this.stringsToDisplay = stringsToDisplay == null ? Display.NULL : stringsToDisplay;
 	}
 
 	protected void drawInternalU(UGraphic ug, Area area) {
@@ -76,7 +77,7 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 			return;
 		}
 
-		ug.startGroup(singletonMap(UGroupType.TITLE, toTooltipText(stringsToDisplay)));
+		ug.startGroup(singletonMap(UGroupType.TITLE, stringsToDisplay.toTooltipText()));
 
 		final URectangle rect = URectangle.build(getPreferredWidth(stringBounder), dimensionToUse.getHeight());
 		if (symbolContext.isShadowing()) {
