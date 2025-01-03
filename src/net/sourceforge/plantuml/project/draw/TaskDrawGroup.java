@@ -47,6 +47,8 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.LabelStrategy;
 import net.sourceforge.plantuml.project.ToTaskDraw;
+import net.sourceforge.plantuml.project.core.GArrowType;
+import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
@@ -114,8 +116,8 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 
 	@Override
 	protected TextBlock getTitle() {
-		return Display.getWithNewlines(getPragma(), prettyDisplay).create(getFontConfiguration(), HorizontalAlignment.LEFT,
-				new SpriteContainerEmpty());
+		return Display.getWithNewlines(getPragma(), prettyDisplay).create(getFontConfiguration(),
+				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 	}
 
 	@Override
@@ -153,20 +155,21 @@ public class TaskDrawGroup extends AbstractTaskDraw {
 		return ug.apply(getLineColor()).apply(getBackgroundColor().bg());
 	}
 
-	public double getX1(TaskAttribute taskAttribute) {
-		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());
-		final ClockwiseTopRightBottomLeft margin = style.getMargin();
-		final double startPos = taskAttribute == TaskAttribute.START ? timeScale.getStartingPosition(start)
-				: timeScale.getStartingPosition(end) + margin.getLeft();
-		return startPos;
-	}
 
-	public double getX2(TaskAttribute taskAttribute) {
-		final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());
-		final ClockwiseTopRightBottomLeft margin = style.getMargin();
-		final double endPos = taskAttribute == TaskAttribute.START ? timeScale.getEndingPosition(start)
-				: timeScale.getEndingPosition(end) - margin.getLeft();
-		return endPos;
+	@Override
+	public double getX(StringBounder stringBounder, GSide side, GArrowType arrowType) {
+		// final Style style = getStyleSignature().getMergedStyle(getStyleBuilder());
+		// final ClockwiseTopRightBottomLeft margin = style.getMargin();
+		final double x;
+
+		if (side == GSide.LEFT)
+			x = timeScale.getStartingPosition(start);
+		else if (side == GSide.RIGHT)
+			x = timeScale.getEndingPosition(end);
+		else
+			x = (timeScale.getStartingPosition(end) + timeScale.getEndingPosition(end)) / 2;
+
+		return x;
 	}
 
 	private void drawShape(UGraphic ug) {

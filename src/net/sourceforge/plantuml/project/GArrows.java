@@ -45,17 +45,18 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
+import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.utils.Direction;
 
 public class GArrows implements UDrawable {
 
 	final static private double delta2 = 4;
 
-	private final Direction atEnd;
+	private final GSide atEnd;
 	private final HColor backColor;
 	private final List<XPoint2D> points = new ArrayList<>();
 
-	public GArrows(Direction atEnd, HColor backColor) {
+	public GArrows(GSide atEnd, HColor backColor) {
 		this.atEnd = atEnd;
 		this.backColor = backColor;
 	}
@@ -78,9 +79,9 @@ public class GArrows implements UDrawable {
 
 	private XPoint2D lastPointPatched() {
 		final XPoint2D last = points.get(points.size() - 1);
-		if (atEnd == Direction.RIGHT)
+		if (atEnd == GSide.LEFT)
 			return new XPoint2D(last.getX() - 3, last.getY());
-		if (atEnd == Direction.LEFT)
+		if (atEnd == GSide.RIGHT)
 			return new XPoint2D(last.getX() + 3, last.getY());
 		return last;
 	}
@@ -93,7 +94,7 @@ public class GArrows implements UDrawable {
 		final XPoint2D last = points.get(points.size() - 1);
 		final double x = last.getX();
 		final double y = last.getY();
-		if (atEnd == Direction.RIGHT) {
+		if (atEnd == GSide.LEFT) {
 			final UPolygon polygon = new UPolygon("asToRight");
 			polygon.addPoint(x - 4, y - delta2);
 			polygon.addPoint(x, y);
@@ -101,7 +102,7 @@ public class GArrows implements UDrawable {
 			polygon.addPoint(x - 4, y - delta2);
 			return polygon;
 		}
-		if (atEnd == Direction.LEFT) {
+		if (atEnd == GSide.RIGHT) {
 			final UPolygon polygon = new UPolygon("asToLeft");
 			polygon.addPoint(x + 4, y - delta2);
 			polygon.addPoint(x, y);

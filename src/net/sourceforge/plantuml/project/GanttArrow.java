@@ -35,13 +35,12 @@
  */
 package net.sourceforge.plantuml.project;
 
-import net.sourceforge.plantuml.klimt.UStroke;
-import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
-import net.sourceforge.plantuml.klimt.shape.ULine;
+import net.sourceforge.plantuml.project.core.GArrowType;
+import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.core.TaskInstant;
@@ -52,14 +51,13 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.utils.Direction;
 
 public class GanttArrow implements UDrawable {
 
 	private final TimeScale timeScale;
-	private final Direction atStart;
+	private final GSide atStart;
 	private final TaskInstant source;
-	private final Direction atEnd;
+	private final GSide atEnd;
 	private final TaskInstant dest;
 
 	private final HColorSet colorSet;
@@ -77,17 +75,17 @@ public class GanttArrow implements UDrawable {
 		this.source = source;
 		this.dest = dest;
 		if (source.getAttribute() == TaskAttribute.END && dest.getAttribute() == TaskAttribute.START) {
-			this.atStart = source.sameRowAs(dest) ? Direction.LEFT : Direction.DOWN;
-			this.atEnd = Direction.RIGHT;
+			this.atStart = source.sameRowAs(dest) ? GSide.RIGHT : GSide.BOTTOM;
+			this.atEnd = GSide.LEFT;
 		} else if (source.getAttribute() == TaskAttribute.END && dest.getAttribute() == TaskAttribute.END) {
-			this.atStart = Direction.RIGHT;
-			this.atEnd = Direction.LEFT;
+			this.atStart = GSide.RIGHT;
+			this.atEnd = GSide.RIGHT;
 		} else if (source.getAttribute() == TaskAttribute.START && dest.getAttribute() == TaskAttribute.START) {
-			this.atStart = Direction.LEFT;
-			this.atEnd = Direction.RIGHT;
+			this.atStart = GSide.LEFT;
+			this.atEnd = GSide.LEFT;
 		} else if (source.getAttribute() == TaskAttribute.START && dest.getAttribute() == TaskAttribute.END) {
-			this.atStart = source.sameRowAs(dest) ? Direction.RIGHT : Direction.DOWN;
-			this.atEnd = Direction.LEFT;
+			this.atStart = source.sameRowAs(dest) ? GSide.LEFT : GSide.BOTTOM;
+			this.atEnd = GSide.RIGHT;
 		} else {
 			throw new IllegalArgumentException();
 		}
@@ -116,20 +114,20 @@ public class GanttArrow implements UDrawable {
 		if (start == null || end == null)
 			return;
 
-		double x1 = getX(source.getAttribute(), start, atStart);
 		final StringBounder stringBounder = ug.getStringBounder();
+		double x1 = start.getX(stringBounder, atStart, GArrowType.OUTGOING);
 		double y1 = start.getY(stringBounder, atStart);
 
-		final double x2 = getX(dest.getAttribute(), end, atEnd.getInv());
+		final double x2 = end.getX(stringBounder, atEnd, GArrowType.INCOMING);
 		final double y2 = end.getY(stringBounder, atEnd);
 
-		if (atStart == Direction.DOWN && y2 < y1)
-			y1 = start.getY(stringBounder, atStart.getInv());
+		if (atStart == GSide.BOTTOM && y2 < y1)
+			y1 = start.getY(stringBounder, GSide.TOP);
 
 		final double minimalWidth = 8;
 		final GArrows arrows = new GArrows(this.atEnd, style.value(PName.LineColor).asColor(colorSet));
 
-		if (this.atStart == Direction.DOWN && this.atEnd == Direction.RIGHT) {
+		if (this.atStart == GSide.BOTTOM && this.atEnd == GSide.LEFT) {
 			if (x2 > x1) {
 				if (x2 - x1 < minimalWidth)
 					x1 = x2 - minimalWidth;
@@ -139,8 +137,8 @@ public class GanttArrow implements UDrawable {
 				arrows.addPoint(x2, y2);
 
 			} else {
-				x1 = getX(source.getAttribute(), start, Direction.RIGHT);
-				y1 = start.getY(stringBounder, Direction.RIGHT);
+				x1 = start.getX(stringBounder, GSide.RIGHT, GArrowType.OUTGOING);
+				y1 = start.getY(stringBounder, GSide.RIGHT);
 				final double y1b = end.getY(stringBounder).getCurrentValue();
 				arrows.addPoint(x1, y1);
 				arrows.addPoint(x1 + 6, y1);
@@ -149,24 +147,24 @@ public class GanttArrow implements UDrawable {
 				arrows.addPoint(x2 - 8, y2);
 				arrows.addPoint(x2, y2);
 			}
-		} else if (this.atStart == Direction.RIGHT && this.atEnd == Direction.LEFT) {
+		} else if (this.atStart == GSide.RIGHT && this.atEnd == GSide.RIGHT) {
 			final double xmax = Math.max(x1, x2) + 8;
 			arrows.addPoint(x1, y1);
 			arrows.addPoint(xmax, y1);
 			arrows.addPoint(xmax, y2);
 			arrows.addPoint(x2, y2);
-		} else if (this.atStart == Direction.LEFT && this.atEnd == Direction.RIGHT) {
+		} else if (this.atStart == GSide.LEFT && this.atEnd == GSide.LEFT) {
 			final double xmin = Math.min(x1, x2) - 8;
 			arrows.addPoint(x1, y1);
 			arrows.addPoint(xmin, y1);
 			arrows.addPoint(xmin, y2);
 			arrows.addPoint(x2, y2);
-		} else if (this.atStart == Direction.DOWN && this.atEnd == Direction.LEFT) {
+		} else /* if (this.atStart == Direction.DOWN && this.atEnd == Direction.LEFT) */ {
 			arrows.addPoint(x1, y1);
 			arrows.addPoint(x1, y2);
 			arrows.addPoint(x2, y2);
-		} else {
-			throw new IllegalArgumentException();
+//		} else {
+//			throw new IllegalArgumentException();
 		}
 
 		arrows.drawU(ug);
@@ -175,15 +173,5 @@ public class GanttArrow implements UDrawable {
 
 	private StyleSignatureBasic getStyleSignatureTask() {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.task);
-	}
-
-	private double getX(TaskAttribute taskAttribute, TaskDraw task, Direction direction) {
-		if (direction == Direction.LEFT)
-			return task.getX1(taskAttribute);
-
-		if (direction == Direction.RIGHT)
-			return task.getX2(taskAttribute) + 2;
-
-		return (task.getX1(taskAttribute) + (task.getX2(taskAttribute))) / 2;
 	}
 }

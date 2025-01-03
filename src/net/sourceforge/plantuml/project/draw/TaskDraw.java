@@ -40,23 +40,24 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.project.LabelStrategy;
+import net.sourceforge.plantuml.project.core.GArrowType;
+import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.url.Url;
-import net.sourceforge.plantuml.utils.Direction;
 
 public interface TaskDraw extends UDrawable {
 
 	public TaskDraw getTrueRow();
 
-	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note, Stereotype noteStereotype);
+	public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note,
+			Stereotype noteStereotype);
 
 	public Real getY(StringBounder stringBounder);
 
-	public double getY(StringBounder stringBounder, Direction direction);
+	public double getY(StringBounder stringBounder, GSide side);
 
 	public void drawTitle(UGraphic ug, LabelStrategy labelStrategy, double colTitles, double colBars);
 
@@ -72,8 +73,6 @@ public interface TaskDraw extends UDrawable {
 
 	public FingerPrint getFingerPrintNote(StringBounder stringBounder);
 
-	public double getX1(TaskAttribute taskAttribute);
-
-	public double getX2(TaskAttribute taskAttribute);
+	public double getX(StringBounder stringBounder, GSide side, GArrowType arrowType);
 
 }
