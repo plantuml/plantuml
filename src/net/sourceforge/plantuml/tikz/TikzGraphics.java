@@ -157,6 +157,7 @@ public class TikzGraphics {
 		if (withPreamble) {
 			out(os, "\\documentclass[tikz]{standalone}");
 			out(os, "\\usepackage{amsmath}");
+			out(os, "\\usepackage[T1]{fontenc}");
 			if (hasUrl) {
 				out(os, "\\usetikzlibrary{calc}");
 				out(os, "\\usepackage{hyperref}");
