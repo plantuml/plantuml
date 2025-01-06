@@ -49,8 +49,9 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.project.LabelStrategy;
+import net.sourceforge.plantuml.project.core.GArrowType;
+import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
-import net.sourceforge.plantuml.project.core.TaskAttribute;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
@@ -63,7 +64,6 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.url.Url;
-import net.sourceforge.plantuml.utils.Direction;
 
 public class TaskDrawSeparator implements TaskDraw {
 
@@ -214,7 +214,7 @@ public class TaskDrawSeparator implements TaskDraw {
 	}
 
 	@Override
-	public double getY(StringBounder stringBounder, Direction direction) {
+	public double getY(StringBounder stringBounder, GSide side) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -224,12 +224,7 @@ public class TaskDrawSeparator implements TaskDraw {
 	}
 
 	@Override
-	public double getX1(TaskAttribute taskAttribute) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public double getX2(TaskAttribute taskAttribute) {
+	public double getX(StringBounder stringBounder, GSide side, GArrowType arrowType) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.project.ToTaskDraw;
+import net.sourceforge.plantuml.project.core.GSide;
 import net.sourceforge.plantuml.project.core.Task;
 import net.sourceforge.plantuml.project.lang.CenterBorderColor;
 import net.sourceforge.plantuml.project.time.Day;
@@ -58,7 +59,6 @@ import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.url.Url;
-import net.sourceforge.plantuml.utils.Direction;
 
 public abstract class AbstractTaskDraw implements TaskDraw {
 
@@ -76,13 +76,13 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	private final Task task;
 	private final ToTaskDraw toTaskDraw;
 
-
 	@Override
 	final public String toString() {
 		return super.toString() + " " + task;
 	}
 
-	final public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note, Stereotype noteStereotype) {
+	final public void setColorsAndCompletion(CenterBorderColor colors, int completion, Url url, Display note,
+			Stereotype noteStereotype) {
 		this.colors = colors;
 		this.completion = completion;
 		this.url = url;
@@ -162,18 +162,17 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	}
 
 	@Override
-	public final double getY(StringBounder stringBounder, Direction direction) {
+	public double getY(StringBounder stringBounder, GSide side) {
 		final Style style = getStyle();
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
-		// final ClockwiseTopRightBottomLeft padding = style.getPadding();
 
 		final double y1 = margin.getTop() + getY(stringBounder).getCurrentValue();
 		final double y2 = y1 + getShapeHeight(stringBounder);
 
-		if (direction == Direction.UP)
+		if (side.isTop())
 			return y1;
 
-		if (direction == Direction.DOWN)
+		if (side.isBottom())
 			return y2;
 
 		return (y1 + y2) / 2;
@@ -195,7 +194,7 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	protected int getCompletion() {
 		return completion;
 	}
-	
+
 	protected Pragma getPragma() {
 		return styleBuilder.getSkinParam().getPragma();
 	}
