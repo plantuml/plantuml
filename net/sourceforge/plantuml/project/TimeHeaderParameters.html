@@ -95,7 +95,7 @@ implements <a href="GanttStyle.html" title="interface in net.sourceforge.plantum
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.util.Map,double,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.klimt.color.HColorSet,java.util.Locale,net.sourceforge.plantuml.project.OpenClose,java.util.Map,java.util.Set,net.sourceforge.plantuml.project.GanttStyle)" class="member-name-link">TimeHeaderParameters</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>,<wbr><a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&gt;&nbsp;colorDays,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.util.Map,double,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.klimt.color.HColorSet,java.util.Locale,net.sourceforge.plantuml.project.OpenClose,java.util.Map,java.util.Set,net.sourceforge.plantuml.project.GanttStyle,boolean)" class="member-name-link">TimeHeaderParameters</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>,<wbr><a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&gt;&nbsp;colorDays,
  double&nbsp;scale,
  <a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;min,
  <a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;max,
@@ -104,7 +104,8 @@ implements <a href="GanttStyle.html" title="interface in net.sourceforge.plantum
  <a href="OpenClose.html" title="class in net.sourceforge.plantuml.project">OpenClose</a>&nbsp;openClose,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="time/DayOfWeek.html" title="enum class in net.sourceforge.plantuml.project.time">DayOfWeek</a>,<wbr><a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&gt;&nbsp;colorDaysOfWeek,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&gt;&nbsp;verticalSeparatorBefore,
- <a href="GanttStyle.html" title="interface in net.sourceforge.plantuml.project">GanttStyle</a>&nbsp;ganttStyle)</code></div>
+ <a href="GanttStyle.html" title="interface in net.sourceforge.plantuml.project">GanttStyle</a>&nbsp;ganttStyle,
+ boolean&nbsp;hideSaturdayAndSunday)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -169,6 +170,9 @@ implements <a href="GanttStyle.html" title="interface in net.sourceforge.plantum
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getVerticalSeparatorBefore()" class="member-name-link">getVerticalSeparatorBefore</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isHideSaturdayAndSunday()" class="member-name-link">isHideSaturdayAndSunday</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -187,7 +191,7 @@ implements <a href="GanttStyle.html" title="interface in net.sourceforge.plantum
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.util.Map,double,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.klimt.color.HColorSet,java.util.Locale,net.sourceforge.plantuml.project.OpenClose,java.util.Map,java.util.Set,net.sourceforge.plantuml.project.GanttStyle)">
+<section class="detail" id="&lt;init&gt;(java.util.Map,double,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.klimt.color.HColorSet,java.util.Locale,net.sourceforge.plantuml.project.OpenClose,java.util.Map,java.util.Set,net.sourceforge.plantuml.project.GanttStyle,boolean)">
 <h3>TimeHeaderParameters</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">TimeHeaderParameters</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>,<wbr><a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&gt;&nbsp;colorDays,
  double&nbsp;scale,
@@ -198,7 +202,8 @@ implements <a href="GanttStyle.html" title="interface in net.sourceforge.plantum
  <a href="OpenClose.html" title="class in net.sourceforge.plantuml.project">OpenClose</a>&nbsp;openClose,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="time/DayOfWeek.html" title="enum class in net.sourceforge.plantuml.project.time">DayOfWeek</a>,<wbr><a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&gt;&nbsp;colorDaysOfWeek,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&gt;&nbsp;verticalSeparatorBefore,
- <a href="GanttStyle.html" title="interface in net.sourceforge.plantuml.project">GanttStyle</a>&nbsp;ganttStyle)</span></div>
+ <a href="GanttStyle.html" title="interface in net.sourceforge.plantuml.project">GanttStyle</a>&nbsp;ganttStyle,
+ boolean&nbsp;hideSaturdayAndSunday)</span></div>
 </section>
 </li>
 </ul>
@@ -312,6 +317,12 @@ implements <a href="GanttStyle.html" title="interface in net.sourceforge.plantum
 <section class="detail" id="getCellWidth(net.sourceforge.plantuml.klimt.font.StringBounder)">
 <h3>getCellWidth</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">getCellWidth</span><wbr><span class="parameters">(<a href="../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="isHideSaturdayAndSunday()">
+<h3>isHideSaturdayAndSunday</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isHideSaturdayAndSunday</span>()</div>
 </section>
 </li>
 </ul>
