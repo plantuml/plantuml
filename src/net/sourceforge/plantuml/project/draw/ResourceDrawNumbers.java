@@ -52,7 +52,7 @@ import net.sourceforge.plantuml.project.core.Resource;
 import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 
-public class ResourceDrawBasic implements ResourceDraw {
+public class ResourceDrawNumbers implements ResourceDraw {
 
 	private final Resource res;
 	private final TimeScale timeScale;
@@ -61,7 +61,7 @@ public class ResourceDrawBasic implements ResourceDraw {
 	private final Day max;
 	private final GanttDiagram gantt;
 
-	public ResourceDrawBasic(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, Day min, Day max) {
+	public ResourceDrawNumbers(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, Day min, Day max) {
 		this.res = res;
 		this.timeScale = timeScale;
 		this.y = y;
@@ -71,8 +71,8 @@ public class ResourceDrawBasic implements ResourceDraw {
 	}
 
 	public void drawU(UGraphic ug) {
-		final TextBlock title = Display.getWithNewlines(gantt.getPragma(), res.getName()).create(getFontConfiguration(13),
-				HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+		final TextBlock title = Display.getWithNewlines(gantt.getPragma(), res.getName())
+				.create(getFontConfiguration(13), HorizontalAlignment.LEFT, new SpriteContainerEmpty());
 		title.drawU(ug);
 		final ULine line = ULine.hline(timeScale.getEndingPosition(max) - timeScale.getStartingPosition(min));
 		ug.apply(HColors.BLACK).apply(UTranslate.dy(title.calculateDimension(ug.getStringBounder()).getHeight()))
@@ -89,10 +89,7 @@ public class ResourceDrawBasic implements ResourceDraw {
 			totalLoad += load;
 			if (isBreaking) {
 				if (totalLoad > 0) {
-					final FontConfiguration fontConfiguration = getFontConfiguration(9,
-							isRed ? HColors.RED : HColors.BLACK);
-					final TextBlock value = Display.getWithNewlines(gantt.getSkinParam().getPragma(), "" + totalLoad).create(fontConfiguration,
-							HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+					final TextBlock value = getTextBlock(totalLoad, isRed);
 					if (startingPosition == -1)
 						startingPosition = timeScale.getStartingPosition(i);
 					final double endingPosition = timeScale.getEndingPosition(i);
@@ -109,6 +106,16 @@ public class ResourceDrawBasic implements ResourceDraw {
 			}
 		}
 
+	}
+
+	private TextBlock getTextBlock(int totalLoad, boolean isRed) {
+		final Display display = Display.getWithNewlines(gantt.getSkinParam().getPragma(), "" + totalLoad);
+		final FontConfiguration fontConfiguration = getFontConfiguration(isRed);
+		return display.create(fontConfiguration, HorizontalAlignment.LEFT, new SpriteContainerEmpty());
+	}
+
+	private FontConfiguration getFontConfiguration(boolean isRed) {
+		return getFontConfiguration(9, isRed ? HColors.RED : HColors.BLACK);
 	}
 
 	private FontConfiguration getFontConfiguration(int size) {

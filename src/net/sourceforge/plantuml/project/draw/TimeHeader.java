@@ -162,18 +162,18 @@ public abstract class TimeHeader {
 
 		ug = ug.apply(HColors.none());
 		ug = ug.apply(new UTranslate(x1, getFullHeaderHeight(ug.getStringBounder())));
-		ug.draw(URectangle.build(x2 - x1, height));
+		if (x2 > x1)
+			ug.draw(URectangle.build(x2 - x1, height));
 	}
 
 	protected void printVerticalSeparators(UGraphic ug, double totalHeightWithoutFooter) {
 		ug = thParam.forVerticalSeparator(ug);
 		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment())
 			if (isBold2(wink))
-				drawVline(ug, getTimeScale().getStartingPosition(wink),
-						getFullHeaderHeight(ug.getStringBounder()), totalHeightWithoutFooter);
+				drawVline(ug, getTimeScale().getStartingPosition(wink), getFullHeaderHeight(ug.getStringBounder()),
+						totalHeightWithoutFooter);
 	}
-	
-	
+
 	protected Pragma getPragma() {
 		return Pragma.createEmpty();
 	}

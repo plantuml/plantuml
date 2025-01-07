@@ -35,6 +35,8 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import java.util.Map;
+
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -52,11 +54,19 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 	private final WeekNumberStrategy weekNumberStrategy;
 	private final WeeklyHeaderStrategy headerStrategy;
 
+	private double getH1(StringBounder stringBounder) {
+		final double h = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble() + 4;
+		return h;
+	}
+
+	private double getH2(StringBounder stringBounder) {
+		final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 1;
+		return getH1(stringBounder) + h;
+	}
+
 	@Override
 	public double getTimeHeaderHeight(StringBounder stringBounder) {
-		final double h1 = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble();
-		final double h2 = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble();
-		return h1 + h2 + 5;
+		return getH2(stringBounder);
 	}
 
 	@Override
@@ -65,28 +75,40 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 		return h;
 	}
 
+	private double getHeaderNameDayHeight() {
+		if (nameDays.size() > 0) {
+			final double h = thParam.getStyle(SName.timeline, SName.day).value(PName.FontSize).asDouble() + 6;
+			return h;
+		}
+
+		return 0;
+	}
+
 	@Override
 	public double getFullHeaderHeight(StringBounder stringBounder) {
-		return getTimeHeaderHeight(stringBounder);
+		return getTimeHeaderHeight(stringBounder) + getHeaderNameDayHeight();
 	}
 
-	private double getH1(StringBounder stringBounder) {
-		final double h = thParam.getStyle(SName.timeline, SName.month).value(PName.FontSize).asDouble() + 4;
-		return h;
-	}
+	private final Map<Day, String> nameDays;
 
 	public TimeHeaderWeekly(StringBounder stringBounder, TimeHeaderParameters thParam,
-			WeekNumberStrategy weekNumberStrategy, WeeklyHeaderStrategy headerStrategy, Day printStart) {
+			WeekNumberStrategy weekNumberStrategy, WeeklyHeaderStrategy headerStrategy, Map<Day, String> nameDays,
+			Day printStart) {
 		super(thParam, new TimeScaleCompressed(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),
 				thParam.getScale(), printStart));
 		this.weekNumberStrategy = weekNumberStrategy;
 		this.headerStrategy = headerStrategy;
+		this.nameDays = nameDays;
 	}
 
 	@Override
 	public void drawTimeHeader(final UGraphic ug, double totalHeightWithoutFooter) {
 		drawTextsBackground(ug, totalHeightWithoutFooter);
 		drawCalendar(ug, totalHeightWithoutFooter);
+		
+		printNamedDays(ug);
+
+		
 		drawHline(ug, 0);
 		drawHline(ug, getH1(ug.getStringBounder()));
 		drawHline(ug, getFullHeaderHeight(ug.getStringBounder()));
@@ -126,6 +148,28 @@ public class TimeHeaderWeekly extends TimeHeaderCalendar {
 			printMonth(ug, last, lastChangeMonth, x1);
 
 	}
+	
+	private void printNamedDays(final UGraphic ug) {
+		if (nameDays.size() > 0) {
+			String last = null;
+			for (Day wink = getMin(); wink.compareTo(getMax().increment()) <= 0; wink = wink.increment()) {
+				final String name = nameDays.get(wink);
+				if (name != null && name.equals(last) == false) {
+					final double x1 = getTimeScale().getStartingPosition(wink);
+					final double x2 = getTimeScale().getEndingPosition(wink);
+					final TextBlock label = getTextBlock(SName.month, name, false, openFontColor());
+					final double h = label.calculateDimension(ug.getStringBounder()).getHeight();
+					double y1 = getTimeHeaderHeight(ug.getStringBounder());
+					double y2 = getFullHeaderHeight(ug.getStringBounder());
+
+					final double position = getH2(ug.getStringBounder());
+					label.drawU(ug.apply(new UTranslate(x1, position)));
+				}
+				last = name;
+			}
+		}
+	}
+
 
 	@Override
 	protected void printVerticalSeparators(final UGraphic ug, double totalHeightWithoutFooter) {

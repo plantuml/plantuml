@@ -85,7 +85,8 @@ import net.sourceforge.plantuml.project.core.TaskInstant;
 import net.sourceforge.plantuml.project.core.TaskSeparator;
 import net.sourceforge.plantuml.project.draw.FingerPrint;
 import net.sourceforge.plantuml.project.draw.ResourceDraw;
-import net.sourceforge.plantuml.project.draw.ResourceDrawBasic;
+import net.sourceforge.plantuml.project.draw.ResourceDrawHistogram;
+import net.sourceforge.plantuml.project.draw.ResourceDrawNumbers;
 import net.sourceforge.plantuml.project.draw.TaskDraw;
 import net.sourceforge.plantuml.project.draw.TaskDrawDiamond;
 import net.sourceforge.plantuml.project.draw.TaskDrawGroup;
@@ -311,7 +312,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		else if (printScale == PrintScale.DAILY)
 			return new TimeHeaderDaily(stringBounder, thParam(), nameDays, printStart);
 		else if (printScale == PrintScale.WEEKLY)
-			return new TimeHeaderWeekly(stringBounder, thParam(), weekNumberStrategy, weeklyHeaderStrategy, printStart);
+			return new TimeHeaderWeekly(stringBounder, thParam(), weekNumberStrategy, weeklyHeaderStrategy, nameDays,
+					printStart);
 		else if (printScale == PrintScale.MONTHLY)
 			return new TimeHeaderMonthly(stringBounder, thParam(), nameDays, printStart);
 		else if (printScale == PrintScale.QUARTERLY)
@@ -325,7 +327,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private TimeHeaderParameters thParam() {
 		return new TimeHeaderParameters(colorDays(), getFactorScale(), min, max, getIHtmlColorSet(), locale, openClose,
-				colorDaysOfWeek, verticalSeparatorBefore, this);
+				colorDaysOfWeek, verticalSeparatorBefore, this, hideSaturdayAndSunday);
 	}
 
 	private Map<Day, HColor> colorDays() {
@@ -457,7 +459,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 					draw = new TaskDrawRegular(timeScale, y, disp, getStart(tmp), getEnd(tmp), oddStart, oddEnd,
 							getSkinParam(), task, this, getConstraints(task), task.getStyleBuilder());
 				}
-				draw.setColorsAndCompletion(tmp.getColors(), tmp.getCompletion(), tmp.getUrl(), tmp.getNote(), tmp.getNoteStereotype());
+				draw.setColorsAndCompletion(tmp.getColors(), tmp.getCompletion(), tmp.getUrl(), tmp.getNote(),
+						tmp.getNoteStereotype());
 			}
 			if (task.getRow() == null)
 				y = y.addAtLeast(draw.getFullHeightTask(stringBounder));
@@ -481,17 +484,20 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private ResourceDraw buildResourceDraw(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, Day min,
 			Day max) {
-		return new ResourceDrawBasic(gantt, res, timeScale, y, min, max);
+		if (printScale == PrintScale.DAILY || printScale == PrintScale.MONTHLY || printScale == PrintScale.QUARTERLY
+				|| printScale == PrintScale.YEARLY)
+			return new ResourceDrawHistogram(gantt, res, timeScale, y, min, max);
+
+		return new ResourceDrawNumbers(gantt, res, timeScale, y, min, max);
 		// return new ResourceDrawVersion2(gantt, res, timeScale, y, min, max);
 	}
 
 	private Collection<GanttConstraint> getConstraints(Task task) {
 		final List<GanttConstraint> result = new ArrayList<>();
-		for (GanttConstraint constraint : constraints) {
+		for (GanttConstraint constraint : constraints)
 			if (constraint.isOn(task))
 				result.add(constraint);
 
-		}
 		return Collections.unmodifiableCollection(result);
 	}
 
@@ -614,7 +620,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 				currentGroup.addTask(result);
 
 			tasks.put(code, result);
-			
+
 			if (previous != null)
 				forceTaskOrder(previous, result);
 
@@ -900,5 +906,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 	public final void setThey(Resource they) {
 		this.they = they;
 	}
+
+	public boolean hideSaturdayAndSunday = false;
 
 }

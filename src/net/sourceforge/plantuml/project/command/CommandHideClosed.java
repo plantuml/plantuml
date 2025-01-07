@@ -33,35 +33,36 @@
  * 
  *
  */
-package net.sourceforge.plantuml.project.core;
+package net.sourceforge.plantuml.project.command;
 
-public enum PrintScale {
-	DAILY(1), WEEKLY(4), MONTHLY(15), QUARTERLY(40), YEARLY(60);
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.project.GanttDiagram;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.utils.LineLocation;
 
-	private final double defaultScale;
+public class CommandHideClosed extends SingleLineCommand2<GanttDiagram> {
 
-	private PrintScale(int compress) {
-		this.defaultScale = 1.0 / compress;
+	public CommandHideClosed() {
+		super(getRegexConcat());
 	}
 
-	public final double getDefaultScale() {
-		return defaultScale;
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandHideClosed.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("hide"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("closed"), //
+				RegexLeaf.end());
 	}
 
-	static public PrintScale fromString(String value) {
-		if (value.startsWith("w"))
-			return WEEKLY;
-
-		if (value.startsWith("m"))
-			return MONTHLY;
-
-		if (value.startsWith("q"))
-			return QUARTERLY;
-
-		if (value.startsWith("y"))
-			return YEARLY;
-
-		return DAILY;
+	@Override
+	protected CommandExecutionResult executeArg(GanttDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+		diagram.hideSaturdayAndSunday = true;
+		return CommandExecutionResult.ok();
 	}
 
 }
