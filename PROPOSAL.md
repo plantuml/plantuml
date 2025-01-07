@@ -6,19 +6,19 @@ To address these issues and simplify syntax, the `\n` escape sequence will be re
 
 # Multiline text blocks
 
-A new syntax for defining multiline text blocks is introduced, inspired by the triple-quoted strings found in Python and Java (`"""`). However, instead of `"""`, the `!!!` delimiter is used as the block separator. This feature provides a straightforward way to define multiline strings where explicit newlines are preserved in the rendered output.
+A new syntax for defining multiline text blocks is introduced, inspired by the triple-quoted strings found in Python and Java (`'''` and `"""`) by also allowing the use of the `!!!` delimiter as a block separator. This approach aligns closely with established standards while adding flexibility for use in existing source code. Explicit newlines are preserved in the rendered output, ensuring readability and consistency.  
 
 ### Syntax and example
 
 Consider the following syntax:
 
 ```
-Alice -> Bob : !!!012
+Alice -> Bob : """012
                   345
-                  678!!! <<blue>>   
+                  678""" <<blue>>   
 ```
 
-The content enclosed between the `!!!` delimiters is treated as a multiline string, with each line explicitly separated by `%newline()` in the rendered output. This ensures that the visual structure of the string in the source code is faithfully preserved in the diagram.
+The content enclosed between the `"""` delimiters is treated as a multiline string, with each line explicitly separated by `%newline()` in the rendered output. This ensures that the visual structure of the string in the source code is faithfully preserved in the diagram.
 
 The above block will render as:
 
@@ -29,9 +29,9 @@ Alice -> Bob : 012%newline()345%newline()678 <<blue>>
 You can also write it with less indentation, as shown below:
 
 ```
-Alice -> Bob : !!!012
+Alice -> Bob : """012
    345
-   678!!! <<blue>>   
+   678""" <<blue>>   
 ```
 
 
