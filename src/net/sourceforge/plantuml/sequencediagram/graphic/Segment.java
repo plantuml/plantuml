@@ -100,13 +100,13 @@ public class Segment {
 		final List<Segment> result2 = new ArrayList<>();
 		double pendingStart = pos1;
 		for (Segment pause : sortedDelay) {
-			if (pause.pos1 == pendingStart) {
+			if (Math.abs(pause.pos1 - pendingStart) < 0.001) {
 				pendingStart = pause.pos2;
 				continue;
 			}
-			if (pause.pos1 < pendingStart) {
+			if (pause.pos1 < pendingStart)
 				continue;
-			}
+
 			if (pause.pos1 > this.pos2) {
 				if (pendingStart < this.pos2)
 					result2.add(new Segment(pendingStart, this.pos2));
@@ -120,6 +120,7 @@ public class Segment {
 		}
 		if (pendingStart < this.pos2)
 			result2.add(new Segment(pendingStart, this.pos2));
+
 		return Collections.unmodifiableCollection(result2);
 	}
 

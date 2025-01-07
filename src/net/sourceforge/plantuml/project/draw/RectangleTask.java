@@ -58,11 +58,11 @@ public class RectangleTask {
 	public RectangleTask(double startPos, double endPos, double round, int completion, Collection<Segment> paused) {
 		this.round = round;
 		this.completion = completion;
-		if (startPos < endPos) {
+		if (startPos < endPos)
 			this.segments = new ArrayList<>(new Segment(startPos, endPos).cutSegmentIfNeed(paused));
-		} else {
+		else
 			this.segments = Collections.singletonList(new Segment(startPos, startPos + 1));
-		}
+
 	}
 
 	private void draw2hlines(UGraphic ug, double height, ULine hline) {
@@ -160,12 +160,12 @@ public class RectangleTask {
 
 			drawPartly(widthCompletion, ug, segment, height, documentBackground, i);
 
-			if (!oddStart && i == 0) {
+			if (!oddStart && i == 0)
 				ug.apply(UTranslate.dx(segment.getPos1())).draw(vline);
-			}
-			if (!oddEnd && i == segments.size() - 1) {
+
+			if (!oddEnd && i == segments.size() - 1)
 				ug.apply(UTranslate.dx(segment.getPos2())).draw(vline);
-			}
+
 			current = next;
 		}
 		drawIntermediateDotted(ug, height);
@@ -183,36 +183,36 @@ public class RectangleTask {
 		for (int i = 0; i < segments.size() - 1; i++) {
 			final double v1 = segments.get(i).getPos2() + 3;
 			final double v2 = segments.get(i + 1).getPos1() - 3;
-			if (v2 > v1) {
+			if (v2 > v1)
 				draw2hlines(ug.apply(UTranslate.dx(v1)), height, ULine.hline(v2 - v1));
-			}
+
 		}
 	}
 
 	private void drawPartly(double widthCompletion, UGraphic ug, final Segment segment, double height,
 			HColor documentBackground, int i) {
 		double width = segment.getLength();
-		if (i != segments.size() - 1) {
+		if (i != segments.size() - 1)
 			width++;
-		}
-		if (width > 0) {
+
+		if (width > 0)
 			drawRect(widthCompletion, ug.apply(HColors.none()).apply(UTranslate.dx(segment.getPos1())),
 					documentBackground, width, height);
-		}
 
 		double pos1 = segment.getPos1();
 		double len = segment.getLength();
 		if (i == 0) {
-			if (segments.size() > 1) {
+			if (segments.size() > 1)
 				len--;
-			}
+
 		} else {
 			pos1++;
 			len--;
 		}
-		if (len > 0) {
+
+		if (len > 0)
 			draw2hlines(ug.apply(UTranslate.dx(pos1)), height, ULine.hline(len));
-		}
+
 	}
 
 }
