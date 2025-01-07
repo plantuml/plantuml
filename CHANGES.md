@@ -1,3 +1,20 @@
+## V1.2025.0 (Jan 15, 2024)
+
+- [Gantt Chart with closed weekends does not render correctly depending on the theme](https://github.com/plantuml/plantuml/issues/2022)
+- [Allow hide closed in the Gantt chart](https://github.com/plantuml/plantuml/issues/1807)
+- [Ressources footer is messed when in monthly mode](https://github.com/plantuml/plantuml/issues/1973)
+- [Gantt with weekly scale doesn't show named regions](https://github.com/plantuml/plantuml/issues/1999)
+- [guillemotleft guillemotright](https://github.com/plantuml/plantuml/issues/2029)
+- [Improve head of arrow position](https://github.com/plantuml/plantuml/issues/1627)
+- [Smetana throws an ArrayIndexOutOfBoundsException](https://github.com/plantuml/plantuml/issues/2006)
+- [test ExportOnUText](https://github.com/plantuml/plantuml/pull/1936)
+- [Extend error message with diagram type](https://github.com/plantuml/plantuml/pull/1997)
+- [Allow RoundCorner for object, map and json element](https://github.com/plantuml/plantuml/issues/1991)
+- [Update DomainStory to version Delta 0.4.0](https://github.com/plantuml/plantuml-stdlib/pull/125)
+- [Hiding/showing a specific stereotype hides/shows all of them](https://github.com/plantuml/plantuml/issues/1984)
+- [Allow YAML frontmatter on beginning of theme files](https://github.com/plantuml/plantuml/issues/1980)
+- [Allow to expand a element with the corresponding alternative element](https://github.com/plantuml/plantuml/issues/1929)
+
 ## V1.2024.8 (Nov 15, 2024)
 
 - [Nwdiag: Allow line border for group](https://github.com/plantuml/plantuml/issues/1226)
