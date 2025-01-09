@@ -98,10 +98,12 @@ public class ComponentRoseLine extends AbstractComponent {
 	}
 
 	private void drawTitleHoverTargetRect(UGraphic ug, XDimension2D dimensionToUse) {
-		final double hoverTargetWidth = 8;
-		ug = ug.apply(UStroke.withThickness(0));
-		ug = ug.apply(HColors.transparent());
-		ug = ug.apply(UTranslate.dx((dimensionToUse.getWidth() - hoverTargetWidth) / 2));
-		ug.draw(URectangle.build(hoverTargetWidth, dimensionToUse.getHeight()));
+		if (dimensionToUse.getHeight() > 0) {
+			final double hoverTargetWidth = 8;
+			ug = ug.apply(UStroke.withThickness(0));
+			ug = ug.apply(HColors.transparent());
+			ug = ug.apply(UTranslate.dx((dimensionToUse.getWidth() - hoverTargetWidth) / 2));
+			ug.draw(URectangle.build(hoverTargetWidth, dimensionToUse.getHeight()));
+		}
 	}
 }
