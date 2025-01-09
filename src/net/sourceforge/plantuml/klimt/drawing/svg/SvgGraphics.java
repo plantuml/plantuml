@@ -416,8 +416,10 @@ public class SvgGraphics {
 	}
 
 	// https://forum.plantuml.net/12469/package-background-transparent-package-default-background?show=12479#c12479
+	// https://github.com/plantuml/plantuml-server/issues/348#issuecomment-2581253011
 	private String fixColor(String color) {
-		return color == null || "#00000000".equals(color) ? "transparent" : color;
+		// Since "transparent" isn’t being recognized (even though it should be), we use #FFFFFF00 as an alternative
+		return color == null || "#00000000".equals(color) ? "#FFFFFF00" : color;
 	}
 
 	public final void setStrokeWidth(double strokeWidth, String strokeDasharray) {
