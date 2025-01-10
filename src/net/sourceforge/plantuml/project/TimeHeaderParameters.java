@@ -63,11 +63,11 @@ public class TimeHeaderParameters implements GanttStyle {
 	private final OpenClose openClose;
 	private final Map<DayOfWeek, HColor> colorDaysOfWeek;
 	private final Set<Day> verticalSeparatorBefore;
-	private final boolean hideSaturdayAndSunday;
+	private final boolean hideClosed;
 
 	public TimeHeaderParameters(Map<Day, HColor> colorDays, double scale, Day min, Day max, HColorSet colorSet,
 			Locale locale, OpenClose openClose, Map<DayOfWeek, HColor> colorDaysOfWeek,
-			Set<Day> verticalSeparatorBefore, GanttStyle ganttStyle, boolean hideSaturdayAndSunday) {
+			Set<Day> verticalSeparatorBefore, GanttStyle ganttStyle, boolean hideClosed) {
 		this.colorDays = colorDays;
 		this.scale = scale;
 		this.min = min;
@@ -78,7 +78,7 @@ public class TimeHeaderParameters implements GanttStyle {
 		this.openClose = openClose;
 		this.colorDaysOfWeek = colorDaysOfWeek;
 		this.verticalSeparatorBefore = verticalSeparatorBefore;
-		this.hideSaturdayAndSunday = hideSaturdayAndSunday;
+		this.hideClosed = hideClosed;
 	}
 
 	public HColor getColor(Day wink) {
@@ -151,8 +151,12 @@ public class TimeHeaderParameters implements GanttStyle {
 		return w * 1.6;
 	}
 	
-	public boolean isHideSaturdayAndSunday() {
-		return hideSaturdayAndSunday;
+	public boolean isHideClosed() {
+		return hideClosed;
+	}
+
+	public OpenClose getOpenClose() {
+		return openClose;
 	}
 
 

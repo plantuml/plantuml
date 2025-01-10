@@ -38,47 +38,63 @@ package net.sourceforge.plantuml.project.timescale;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sourceforge.plantuml.project.OpenClose;
 import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.DayOfWeek;
 
-public final class TimeScaleDailyNoWeekend implements TimeScale {
+public final class TimeScaleDailyHideClosed implements TimeScale {
 	// ::remove folder when __HAXE__
 
 	private final double cellWidth;
 	private final Day startingDay;
-	private final Map<Day, Double> startingPosition = new HashMap<>();
+	private Day biggest;
+	private final OpenClose openClose;
+	private final Map<Day, Integer> startingInt = new HashMap<>();
 
-	public TimeScaleDailyNoWeekend(double size, Day startingDay, double scale) {
+	public TimeScaleDailyHideClosed(double size, Day startingDay, double scale, OpenClose openClose) {
 		this.cellWidth = size * scale;
 		this.startingDay = startingDay;
+		this.biggest = startingDay;
+		this.openClose = openClose;
+		this.startingInt.put(startingDay, 0);
 	}
 
+	@Override
 	public double getStartingPosition(Day instant) {
 		if (instant.compareTo(this.startingDay) < 0)
 			throw new IllegalArgumentException();
 
-		final Double cached = startingPosition.get(instant);
-		if (cached != null)
-			return cached;
+		computeUpTo(instant);
 
-		double result = 0;
-		for (Day i = startingDay; i.compareTo(instant) < 0; i = i.increment())
-			result += getWidth(i);
-		startingPosition.put(instant, result);
-		return result;
+		return startingInt.get(instant) * cellWidth;
 	}
 
+	private void computeUpTo(Day dest) {
+		if (dest.compareTo(biggest) <= 0)
+			return;
+
+		Day i = biggest;
+		int current = startingInt.get(i);
+		do {
+			if (getWidth(i) > 0)
+				current++;
+			i = i.increment();
+			startingInt.put(i, current);
+		} while (i.compareTo(dest) < 0);
+	}
+
+	@Override
 	public double getEndingPosition(Day instant) {
 		return getStartingPosition(instant) + getWidth(instant);
 	}
 
+	@Override
 	public double getWidth(Day instant) {
-		final DayOfWeek dayOfWeek = instant.getDayOfWeek();
-		if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
+		if (openClose.isClosed(instant))
 			return 0;
 		return cellWidth;
 	}
 
+	@Override
 	public boolean isBreaking(Day instant) {
 		return true;
 	}

@@ -44,10 +44,9 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.project.TimeHeaderParameters;
 import net.sourceforge.plantuml.project.time.Day;
-import net.sourceforge.plantuml.project.time.DayOfWeek;
 import net.sourceforge.plantuml.project.time.MonthYear;
 import net.sourceforge.plantuml.project.timescale.TimeScaleDaily;
-import net.sourceforge.plantuml.project.timescale.TimeScaleDailyNoWeekend;
+import net.sourceforge.plantuml.project.timescale.TimeScaleDailyHideClosed;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 
@@ -100,9 +99,9 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	public TimeHeaderDaily(StringBounder stringBounder, TimeHeaderParameters thParam, Map<Day, String> nameDays,
 			Day printStart) {
 		super(thParam,
-				thParam.isHideSaturdayAndSunday()
-						? new TimeScaleDailyNoWeekend(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),
-								thParam.getScale())
+				thParam.isHideClosed()
+						? new TimeScaleDailyHideClosed(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),
+								thParam.getScale(), thParam.getOpenClose())
 						: new TimeScaleDaily(thParam.getCellWidth(stringBounder), thParam.getStartingDay(),
 								thParam.getScale(), printStart));
 		this.nameDays = nameDays;
@@ -170,11 +169,8 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 	}
 
 	private boolean isHidden(Day wink) {
-		if (thParam.isHideSaturdayAndSunday()) {
-			final DayOfWeek dayOfWeek = wink.getDayOfWeek();
-			if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY)
-				return true;
-		}
+		if (thParam.isHideClosed() && thParam.getOpenClose().isClosed(wink))
+			return true;
 		return false;
 	}
 

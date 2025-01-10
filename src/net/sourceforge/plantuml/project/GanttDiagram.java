@@ -327,7 +327,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private TimeHeaderParameters thParam() {
 		return new TimeHeaderParameters(colorDays(), getFactorScale(), min, max, getIHtmlColorSet(), locale, openClose,
-				colorDaysOfWeek, verticalSeparatorBefore, this, hideSaturdayAndSunday);
+				colorDaysOfWeek, verticalSeparatorBefore, this, hideClosed);
 	}
 
 	private Map<Day, HColor> colorDays() {
@@ -907,6 +907,10 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		this.they = they;
 	}
 
-	public boolean hideSaturdayAndSunday = false;
+	private boolean hideClosed = false;
+
+	public void setHideClosed(boolean hideClosed) {
+		this.hideClosed = hideClosed;
+	}
 
 }

@@ -48,19 +48,23 @@ public class TimeScaleWink implements TimeScale {
 		this.printScale = printScale;
 	}
 
+	@Override
 	public double getStartingPosition(Day instant) {
 		final long wink = instant.getMillis();
 		return wink * cellWidth / Day.MILLISECONDS_PER_DAY;
 	}
 
+	@Override
 	public double getEndingPosition(Day instant) {
 		return getStartingPosition(instant) + getWidth(instant);
 	}
 
+	@Override
 	public double getWidth(Day instant) {
 		return cellWidth;
 	}
 
+	@Override
 	public boolean isBreaking(Day instant) {
 		if (printScale == PrintScale.WEEKLY) {
 			final long num = instant.getMillis() / Day.MILLISECONDS_PER_DAY;

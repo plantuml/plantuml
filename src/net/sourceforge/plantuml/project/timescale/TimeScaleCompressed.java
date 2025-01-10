@@ -46,18 +46,22 @@ public class TimeScaleCompressed implements TimeScale {
 		this.daily = new TimeScaleDaily(size, calendar, scale, zeroDay);
 	}
 
+	@Override
 	public double getStartingPosition(Day instant) {
 		return daily.getStartingPosition(instant);
 	}
 
+	@Override
 	public double getEndingPosition(Day instant) {
 		return daily.getEndingPosition(instant);
 	}
 
+	@Override
 	public double getWidth(Day instant) {
 		return daily.getWidth(instant);
 	}
 
+	@Override
 	public boolean isBreaking(Day instant) {
 		return instant.getDayOfWeek() == DayOfWeek.SUNDAY;
 	}

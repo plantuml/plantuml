@@ -53,18 +53,22 @@ public final class TimeScaleDaily implements TimeScale {
 
 	}
 
+	@Override
 	public double getStartingPosition(Day instant) {
 		return basic.getStartingPosition(instant) - delta;
 	}
 
+	@Override
 	public double getEndingPosition(Day instant) {
 		return basic.getEndingPosition(instant) - delta;
 	}
 
+	@Override
 	public double getWidth(Day instant) {
 		return basic.getWidth(instant);
 	}
 
+	@Override
 	public boolean isBreaking(Day instant) {
 		return true;
 	}
