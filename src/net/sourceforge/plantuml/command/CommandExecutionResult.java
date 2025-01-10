@@ -73,11 +73,15 @@ public class CommandExecutionResult {
 	}
 
 	public static CommandExecutionResult badColor() {
-		return new CommandExecutionResult(null, "No such color", 1, null);
+		return new CommandExecutionResult(null, "No such color", 10, null);
 	}
 
 	public static CommandExecutionResult error(String error) {
 		return new CommandExecutionResult(null, error, 0, null);
+	}
+
+	public static CommandExecutionResult error(String error, int score) {
+		return new CommandExecutionResult(null, error, score, null);
 	}
 
 	public static CommandExecutionResult error(String error, Throwable t) {

@@ -46,7 +46,11 @@ public class PSystemErrorV2 extends PSystemError {
 		super(source);
 		this.trace = trace;
 		this.singleError = singleError;
+	}
 
+	@Override
+	public String toString() {
+		return super.toString() + " " + singleError;
 	}
 
 }

@@ -124,7 +124,7 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 
 		final Failable<Quark<Entity>> quark = diagram.quarkInContextSafe(false, idShort);
 		if (quark.isFail())
-			return CommandExecutionResult.error(quark.getError());
+			return CommandExecutionResult.error(quark.getError(), quark.getScore());
 
 		Entity entity = quark.get().getData();
 

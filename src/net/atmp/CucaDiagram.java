@@ -247,6 +247,9 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			if (result != null)
 				return Failable.ok(result);
 			return Failable.ok(getCurrentGroup().getQuark().child(full));
+		} else {
+			if (badName(sep, full))
+				return Failable.error("Bad name since " + sep + " is a separator", 3);
 		}
 
 		final Quark<Entity> currentQuark = getCurrentGroup().getQuark();
@@ -274,6 +277,19 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 			return Failable.ok(this.root.child(full));
 		return Failable.ok(currentQuark.child(full));
 
+	}
+
+	private boolean badName(String separator, String full) {
+		if (full.startsWith(separator))
+			return true;
+
+		if (full.endsWith(separator))
+			return true;
+
+		if (full.contains(separator + separator))
+			return true;
+
+		return false;
 	}
 
 	public String removePortId(String id) {
