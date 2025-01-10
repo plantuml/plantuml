@@ -105,7 +105,7 @@ implements <a href="GanttStyle.html" title="interface in net.sourceforge.plantum
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="time/DayOfWeek.html" title="enum class in net.sourceforge.plantuml.project.time">DayOfWeek</a>,<wbr><a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&gt;&nbsp;colorDaysOfWeek,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&gt;&nbsp;verticalSeparatorBefore,
  <a href="GanttStyle.html" title="interface in net.sourceforge.plantuml.project">GanttStyle</a>&nbsp;ganttStyle,
- boolean&nbsp;hideSaturdayAndSunday)</code></div>
+ boolean&nbsp;hideClosed)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -151,28 +151,31 @@ implements <a href="GanttStyle.html" title="interface in net.sourceforge.plantum
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMin()" class="member-name-link">getMin</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final double</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getScale()" class="member-name-link">getScale</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="OpenClose.html" title="class in net.sourceforge.plantuml.project">OpenClose</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOpenClose()" class="member-name-link">getOpenClose</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStartingDay()" class="member-name-link">getStartingDay</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final double</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getScale()" class="member-name-link">getScale</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStyle(net.sourceforge.plantuml.style.SName)" class="member-name-link">getStyle</a><wbr>(<a href="../style/SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;param)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStartingDay()" class="member-name-link">getStartingDay</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStyle(net.sourceforge.plantuml.style.SName,net.sourceforge.plantuml.style.SName)" class="member-name-link">getStyle</a><wbr>(<a href="../style/SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;param1,
- <a href="../style/SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;param2)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStyle(net.sourceforge.plantuml.style.SName)" class="member-name-link">getStyle</a><wbr>(<a href="../style/SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;param)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTimelineStyle()" class="member-name-link">getTimelineStyle</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStyle(net.sourceforge.plantuml.style.SName,net.sourceforge.plantuml.style.SName)" class="member-name-link">getStyle</a><wbr>(<a href="../style/SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;param1,
+ <a href="../style/SName.html" title="enum class in net.sourceforge.plantuml.style">SName</a>&nbsp;param2)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getVerticalSeparatorBefore()" class="member-name-link">getVerticalSeparatorBefore</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTimelineStyle()" class="member-name-link">getTimelineStyle</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isHideSaturdayAndSunday()" class="member-name-link">isHideSaturdayAndSunday</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getVerticalSeparatorBefore()" class="member-name-link">getVerticalSeparatorBefore</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isHideClosed()" class="member-name-link">isHideClosed</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -203,7 +206,7 @@ implements <a href="GanttStyle.html" title="interface in net.sourceforge.plantum
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="time/DayOfWeek.html" title="enum class in net.sourceforge.plantuml.project.time">DayOfWeek</a>,<wbr><a href="../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&gt;&nbsp;colorDaysOfWeek,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&gt;&nbsp;verticalSeparatorBefore,
  <a href="GanttStyle.html" title="interface in net.sourceforge.plantuml.project">GanttStyle</a>&nbsp;ganttStyle,
- boolean&nbsp;hideSaturdayAndSunday)</span></div>
+ boolean&nbsp;hideClosed)</span></div>
 </section>
 </li>
 </ul>
@@ -320,9 +323,15 @@ implements <a href="GanttStyle.html" title="interface in net.sourceforge.plantum
 </section>
 </li>
 <li>
-<section class="detail" id="isHideSaturdayAndSunday()">
-<h3>isHideSaturdayAndSunday</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isHideSaturdayAndSunday</span>()</div>
+<section class="detail" id="isHideClosed()">
+<h3>isHideClosed</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isHideClosed</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getOpenClose()">
+<h3>getOpenClose</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="OpenClose.html" title="class in net.sourceforge.plantuml.project">OpenClose</a></span>&nbsp;<span class="element-name">getOpenClose</span>()</div>
 </section>
 </li>
 </ul>

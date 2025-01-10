@@ -52,7 +52,7 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -95,15 +95,6 @@ implements <a href="ToTaskDraw.html" title="interface in net.sourceforge.plantum
 <li>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
-<div class="caption"><span>Fields</span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Field</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><code><a href="#hideSaturdayAndSunday" class="member-name-link">hideSaturdayAndSunday</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-</div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-net.sourceforge.plantuml.TitledDiagram">Fields inherited from class&nbsp;net.sourceforge.plantuml.<a href="../TitledDiagram.html" title="class in net.sourceforge.plantuml">TitledDiagram</a></h3>
 <code><a href="../TitledDiagram.html#FORCE_ELK">FORCE_ELK</a>, <a href="../TitledDiagram.html#FORCE_SMETANA">FORCE_SMETANA</a></code></div>
@@ -287,43 +278,46 @@ implements <a href="ToTaskDraw.html" title="interface in net.sourceforge.plantum
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setFactorScale(double)" class="member-name-link">setFactorScale</a><wbr>(double&nbsp;factorScale)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setIt(net.sourceforge.plantuml.project.core.Task)" class="member-name-link">setIt</a><wbr>(<a href="core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&nbsp;result)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setHideClosed(boolean)" class="member-name-link">setHideClosed</a><wbr>(boolean&nbsp;hideClosed)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLabelStrategy(net.sourceforge.plantuml.project.LabelStrategy)" class="member-name-link">setLabelStrategy</a><wbr>(<a href="LabelStrategy.html" title="class in net.sourceforge.plantuml.project">LabelStrategy</a>&nbsp;strategy)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setIt(net.sourceforge.plantuml.project.core.Task)" class="member-name-link">setIt</a><wbr>(<a href="core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&nbsp;result)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPrintInterval(net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day)" class="member-name-link">setPrintInterval</a><wbr>(<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;start,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLabelStrategy(net.sourceforge.plantuml.project.LabelStrategy)" class="member-name-link">setLabelStrategy</a><wbr>(<a href="LabelStrategy.html" title="class in net.sourceforge.plantuml.project">LabelStrategy</a>&nbsp;strategy)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPrintInterval(net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.time.Day)" class="member-name-link">setPrintInterval</a><wbr>(<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;start,
  <a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;end)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPrintScale(net.sourceforge.plantuml.project.core.PrintScale)" class="member-name-link">setPrintScale</a><wbr>(<a href="core/PrintScale.html" title="enum class in net.sourceforge.plantuml.project.core">PrintScale</a>&nbsp;printScale)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setProjectStartingDate(net.sourceforge.plantuml.project.time.Day)" class="member-name-link">setProjectStartingDate</a><wbr>(<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;start)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPrintScale(net.sourceforge.plantuml.project.core.PrintScale)" class="member-name-link">setPrintScale</a><wbr>(<a href="core/PrintScale.html" title="enum class in net.sourceforge.plantuml.project.core">PrintScale</a>&nbsp;printScale)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setShowFootbox(boolean)" class="member-name-link">setShowFootbox</a><wbr>(boolean&nbsp;footbox)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setProjectStartingDate(net.sourceforge.plantuml.project.time.Day)" class="member-name-link">setProjectStartingDate</a><wbr>(<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;start)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTaskDefaultCompletion(int)" class="member-name-link">setTaskDefaultCompletion</a><wbr>(int&nbsp;defaultCompletion)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setThey(net.sourceforge.plantuml.project.core.Resource)" class="member-name-link">setThey</a><wbr>(<a href="core/Resource.html" title="class in net.sourceforge.plantuml.project.core">Resource</a>&nbsp;they)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setToday(net.sourceforge.plantuml.project.time.Day)" class="member-name-link">setToday</a><wbr>(<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;date)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setShowFootbox(boolean)" class="member-name-link">setShowFootbox</a><wbr>(boolean&nbsp;footbox)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTodayColors(net.sourceforge.plantuml.project.lang.CenterBorderColor)" class="member-name-link">setTodayColors</a><wbr>(<a href="lang/CenterBorderColor.html" title="class in net.sourceforge.plantuml.project.lang">CenterBorderColor</a>&nbsp;colors)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTaskDefaultCompletion(int)" class="member-name-link">setTaskDefaultCompletion</a><wbr>(int&nbsp;defaultCompletion)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setThey(net.sourceforge.plantuml.project.core.Resource)" class="member-name-link">setThey</a><wbr>(<a href="core/Resource.html" title="class in net.sourceforge.plantuml.project.core">Resource</a>&nbsp;they)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setToday(net.sourceforge.plantuml.project.time.Day)" class="member-name-link">setToday</a><wbr>(<a href="time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;date)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setWeeklyHeaderStrategy(net.sourceforge.plantuml.project.draw.WeeklyHeaderStrategy)" class="member-name-link">setWeeklyHeaderStrategy</a><wbr>(<a href="draw/WeeklyHeaderStrategy.html" title="enum class in net.sourceforge.plantuml.project.draw">WeeklyHeaderStrategy</a>&nbsp;weeklyHeaderStrategy)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTodayColors(net.sourceforge.plantuml.project.lang.CenterBorderColor)" class="member-name-link">setTodayColors</a><wbr>(<a href="lang/CenterBorderColor.html" title="class in net.sourceforge.plantuml.project.lang">CenterBorderColor</a>&nbsp;colors)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setWeekNumberStrategy(net.sourceforge.plantuml.project.time.DayOfWeek,int)" class="member-name-link">setWeekNumberStrategy</a><wbr>(<a href="time/DayOfWeek.html" title="enum class in net.sourceforge.plantuml.project.time">DayOfWeek</a>&nbsp;firstDayOfWeek,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setWeeklyHeaderStrategy(net.sourceforge.plantuml.project.draw.WeeklyHeaderStrategy)" class="member-name-link">setWeeklyHeaderStrategy</a><wbr>(<a href="draw/WeeklyHeaderStrategy.html" title="enum class in net.sourceforge.plantuml.project.draw">WeeklyHeaderStrategy</a>&nbsp;weeklyHeaderStrategy)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setWeekNumberStrategy(net.sourceforge.plantuml.project.time.DayOfWeek,int)" class="member-name-link">setWeekNumberStrategy</a><wbr>(<a href="time/DayOfWeek.html" title="enum class in net.sourceforge.plantuml.project.time">DayOfWeek</a>&nbsp;firstDayOfWeek,
  int&nbsp;minimalDaysInFirstWeek)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -348,20 +342,6 @@ implements <a href="ToTaskDraw.html" title="interface in net.sourceforge.plantum
 </section>
 <section class="details">
 <ul class="details-list">
-<!-- ============ FIELD DETAIL =========== -->
-<li>
-<section class="field-details" id="field-detail">
-<h2>Field Details</h2>
-<ul class="member-list">
-<li>
-<section class="detail" id="hideSaturdayAndSunday">
-<h3>hideSaturdayAndSunday</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hideSaturdayAndSunday</span></div>
-</section>
-</li>
-</ul>
-</section>
-</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">
@@ -787,6 +767,12 @@ implements <a href="ToTaskDraw.html" title="interface in net.sourceforge.plantum
 <section class="detail" id="setThey(net.sourceforge.plantuml.project.core.Resource)">
 <h3>setThey</h3>
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setThey</span><wbr><span class="parameters">(<a href="core/Resource.html" title="class in net.sourceforge.plantuml.project.core">Resource</a>&nbsp;they)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="setHideClosed(boolean)">
+<h3>setHideClosed</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setHideClosed</span><wbr><span class="parameters">(boolean&nbsp;hideClosed)</span></div>
 </section>
 </li>
 </ul>
