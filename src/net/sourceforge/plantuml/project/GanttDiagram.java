@@ -484,9 +484,9 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 	private ResourceDraw buildResourceDraw(GanttDiagram gantt, Resource res, TimeScale timeScale, double y, Day min,
 			Day max) {
-		if (printScale == PrintScale.DAILY || printScale == PrintScale.MONTHLY || printScale == PrintScale.QUARTERLY
-				|| printScale == PrintScale.YEARLY)
-			return new ResourceDrawHistogram(gantt, res, timeScale, y, min, max);
+//		if (printScale == PrintScale.DAILY || printScale == PrintScale.MONTHLY || printScale == PrintScale.QUARTERLY
+//				|| printScale == PrintScale.YEARLY)
+//			return new ResourceDrawHistogram(gantt, res, timeScale, y, min, max);
 
 		return new ResourceDrawNumbers(gantt, res, timeScale, y, min, max);
 		// return new ResourceDrawVersion2(gantt, res, timeScale, y, min, max);
