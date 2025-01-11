@@ -73,7 +73,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	private SwimlaneStrategy swimlaneStrategy;
 
-	private final Swimlanes swinlanes = new Swimlanes(getSkinParam(), getPragma());
+	private final Swimlanes swimlanes = new Swimlanes(getSkinParam(), getPragma());
 
 	public ActivityDiagram3(UmlSource source, Map<String, String> skinMap) {
 		super(source, UmlDiagramType.ACTIVITY, skinMap);
@@ -214,7 +214,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	private TextBlock getTextBlock(final StringBounder stringBounder) {
 		swimlanes.computeSize(stringBounder);
-		TextBlock result = swinlanes;
+		TextBlock result = swimlanes;
 
 		// BUG42
 		// COMMENT TO DISABLE COMPRESS
@@ -362,7 +362,7 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	public void startRepeat(HColor color, Display label, BoxStyle boxStyleIn, Colors colors, Stereotype stereotype) {
 		manageSwimlaneStrategy();
-		final InstructionRepeat instructionRepeat = new InstructionRepeat(swinlanes, current(), nextLinkRenderer(),
+		final InstructionRepeat instructionRepeat = new InstructionRepeat(swimlanes, current(), nextLinkRenderer(),
 				color, label, boxStyleIn, colors, stereotype);
 		current().add(instructionRepeat);
 		setCurrent(instructionRepeat);

@@ -44,19 +44,19 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 
 public class GotoInterceptor extends AbstractTextBlock implements TextBlock {
 
-	private final TextBlock swinlanes;
+	private final TextBlock swimlanes;
 
-	public GotoInterceptor(TextBlock swinlanes) {
-		this.swinlanes = swinlanes;
+	public GotoInterceptor(TextBlock swimlanes) {
+		this.swimlanes = swimlanes;
 	}
 
 	public void drawU(UGraphic ug) {
-		new UGraphicInterceptorGoto(ug).draw(swinlanes);
+		new UGraphicInterceptorGoto(ug).draw(swimlanes);
 
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
-		return swinlanes.calculateDimension(stringBounder);
+		return swimlanes.calculateDimension(stringBounder);
 	}
 
 }

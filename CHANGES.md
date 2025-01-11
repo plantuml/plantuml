@@ -1300,7 +1300,7 @@
 - [It is still would be useful to style partitions in activity-beta diagrams with skinparam](https://forum.plantuml.net/3626/still-would-useful-partitions-activity-diagrams-skinparam)
 - [Elseif SkinParam doesn't seem to use the ActivityDiamond](https://forum.plantuml.net/8025/elseif-skinparam-doesnt-seem-to-use-the-activitydiamond)
 - [Improve text on arrows in activity diagram](https://forum.plantuml.net/8158/improve-text-on-arrows-in-activity-diagram)
-- [partition are not compacted if distributed over multiple swinlane](https://forum.plantuml.net/7859/partition-are-compacted-distributed-over-multiple-swinlane)
+- [partition are not compacted if distributed over multiple swimlane](https://forum.plantuml.net/7859/partition-are-compacted-distributed-over-multiple-swimlane)
 - [Formatting state actions sometimes doesn't work](https://forum.plantuml.net/8264/formatting-state-actions-sometimes-doesnt-work)
 
 ## V1.2018.10 (August 26, 2018)

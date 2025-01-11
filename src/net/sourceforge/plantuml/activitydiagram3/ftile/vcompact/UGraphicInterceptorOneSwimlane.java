@@ -67,8 +67,8 @@ public class UGraphicInterceptorOneSwimlane extends UGraphicDelegator {
 		// System.err.println("inter=" + shape.getClass());
 		if (shape instanceof Ftile) {
 			final Ftile tile = (Ftile) shape;
-			final Set<Swimlane> swinlanes = tile.getSwimlanes();
-			final boolean contained = swinlanes.contains(swimlane);
+			final Set<Swimlane> swimlanes = tile.getSwimlanes();
+			final boolean contained = swimlanes.contains(swimlane);
 			if (contained) {
 				tile.drawU(this);
 				// drawGoto();
@@ -76,8 +76,8 @@ public class UGraphicInterceptorOneSwimlane extends UGraphicDelegator {
 			// ::comment when __CORE__
 		} else if (shape instanceof Gtile) {
 			final Gtile tile = (Gtile) shape;
-			final Set<Swimlane> swinlanes = tile.getSwimlanes();
-			final boolean contained = swinlanes.contains(swimlane);
+			final Set<Swimlane> swimlanes = tile.getSwimlanes();
+			final boolean contained = swimlanes.contains(swimlane);
 			if (contained)
 				tile.drawU(this);
 
