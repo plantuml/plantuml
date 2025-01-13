@@ -70,20 +70,6 @@ public class RectangleTask {
 		ug.apply(UTranslate.dy(height)).draw(hline);
 	}
 
-	private void drawRect(double widthCompletion, UGraphic ug, HColor documentBackground, double width, double height) {
-		if (widthCompletion == -1 || widthCompletion == 0) {
-			if (widthCompletion == 0)
-				ug = ug.apply(documentBackground.bg());
-			final URectangle rect = URectangle.build(width, height);
-			ug.draw(rect);
-		} else {
-			final URectangle rect1 = URectangle.build(widthCompletion, height);
-			ug.draw(rect1);
-			final URectangle rect2 = URectangle.build(width - widthCompletion, height);
-			ug.apply(documentBackground.bg()).apply(UTranslate.dx(widthCompletion)).draw(rect2);
-		}
-	}
-
 	public void draw(UGraphic ug, double height, HColor documentBackground, boolean oddStart, boolean oddEnd) {
 
 		if (round == 0) {
@@ -128,7 +114,8 @@ public class RectangleTask {
 
 		for (int i = 1; i < segments.size() - 1; i++) {
 			final Segment segment = segments.get(i);
-			drawPartly(segment.getLength() * completion / 100, ug, segment, height, documentBackground, i);
+			drawPartly(segment.getLength() * completion / 100, ug, segment, height, documentBackground, i, false,
+					false);
 		}
 
 		final Segment last = segments.get(segments.size() - 1);
@@ -139,10 +126,13 @@ public class RectangleTask {
 
 	private void drawWithoutRound(UGraphic ug, double height, HColor documentBackground, boolean oddStart,
 			boolean oddEnd) {
-		final ULine vline = ULine.vline(height);
 
-		final double sum = getFullSegmentsLength();
-		final double lim = completion == 100 ? sum : sum * completion / 100;
+		final double sumWidth = getFullSegmentsLength();
+		final double lim = completion == 100 ? sumWidth : sumWidth * completion / 100;
+		if (segments.size() == 1 && !oddStart && !oddEnd) {
+			drawFull(completion == 100 ? -1 : lim, ug, segments.get(0), height, documentBackground);
+			return;
+		}
 		double current = 0;
 
 		for (int i = 0; i < segments.size(); i++) {
@@ -158,13 +148,8 @@ public class RectangleTask {
 				widthCompletion = lim - current;
 			}
 
-			drawPartly(widthCompletion, ug, segment, height, documentBackground, i);
-
-			if (!oddStart && i == 0)
-				ug.apply(UTranslate.dx(segment.getPos1())).draw(vline);
-
-			if (!oddEnd && i == segments.size() - 1)
-				ug.apply(UTranslate.dx(segment.getPos2())).draw(vline);
+			drawPartly(widthCompletion, ug, segment, height, documentBackground, i, !oddStart && i == 0,
+					!oddEnd && i == segments.size() - 1);
 
 			current = next;
 		}
@@ -189,30 +174,55 @@ public class RectangleTask {
 		}
 	}
 
-	private void drawPartly(double widthCompletion, UGraphic ug, final Segment segment, double height,
-			HColor documentBackground, int i) {
+	private void drawFull(double widthCompletion, UGraphic ug, final Segment segment, double height,
+			HColor documentBackground) {
 		double width = segment.getLength();
+		ug = ug.apply(UTranslate.dx(segment.getPos1()));
+		drawBackgroundRect(widthCompletion, ug.apply(HColors.none()), documentBackground, width, height);
+		final URectangle rect = URectangle.build(width, height);
+		ug.apply(HColors.none().bg()).draw(rect);
+	}
+
+	private void drawPartly(double widthCompletion, UGraphic ug, final Segment segment, double height,
+			HColor documentBackground, int i, boolean withStartVline, boolean withEndVline) {
+
+		if (withStartVline && withEndVline)
+			throw new IllegalArgumentException();
+
+		double widthBack = segment.getLength();
 		if (i != segments.size() - 1)
-			width++;
+			widthBack++;
 
-		if (width > 0)
-			drawRect(widthCompletion, ug.apply(HColors.none()).apply(UTranslate.dx(segment.getPos1())),
-					documentBackground, width, height);
+		ug = ug.apply(UTranslate.dx(segment.getPos1()));
 
-		double pos1 = segment.getPos1();
-		double len = segment.getLength();
-		if (i == 0) {
-			if (segments.size() > 1)
-				len--;
+		if (widthBack > 0)
+			drawBackgroundRect(widthCompletion, ug.apply(HColors.none()), documentBackground, widthBack, height);
 
+		ug = ug.apply(HColors.none().bg());
+
+		if (withStartVline)
+			ug.draw(PathUtils.UtoLeft(segment.getLength(), height, 0));
+		else if (withEndVline)
+			ug.apply(UTranslate.dx(segment.getLength() - segment.getLength()))
+					.draw(PathUtils.UtoRight(segment.getLength(), height, 0));
+		else
+			draw2hlines(ug, height, ULine.hline(segment.getLength()));
+
+	}
+
+	private void drawBackgroundRect(double widthCompletion, UGraphic ug, HColor documentBackground, double width,
+			double height) {
+		if (widthCompletion == -1 || widthCompletion == 0) {
+			if (widthCompletion == 0)
+				ug = ug.apply(documentBackground.bg());
+			final URectangle rect = URectangle.build(width, height);
+			ug.draw(rect);
 		} else {
-			pos1++;
-			len--;
+			final URectangle rect1 = URectangle.build(widthCompletion, height);
+			ug.draw(rect1);
+			final URectangle rect2 = URectangle.build(width - widthCompletion, height);
+			ug.apply(documentBackground.bg()).apply(UTranslate.dx(widthCompletion)).draw(rect2);
 		}
-
-		if (len > 0)
-			draw2hlines(ug.apply(UTranslate.dx(pos1)), height, ULine.hline(len));
-
 	}
 
 }

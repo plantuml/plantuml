@@ -260,26 +260,19 @@ RECTANGLE:
   color: NULL_COLOR
   backcolor: ffe6e6fa
 
-LINE:
-  pt1: [ 2.0000 ; 29.0000 ]
-  pt2: [ 7.0000 ; 29.0000 ]
+PATH:
+   - type: SEG_MOVETO
+     pt1: [ 6.0000 ; 11.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 0.0000 ; 11.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 0.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 6.0000 ; 0.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ffadd8e6
-
-LINE:
-  pt1: [ 2.0000 ; 40.0000 ]
-  pt2: [ 7.0000 ; 40.0000 ]
-  stroke: 0.0-0.0-1.0
-  shadow: 0
-  color: ffadd8e6
-
-LINE:
-  pt1: [ 2.0000 ; 29.0000 ]
-  pt2: [ 2.0000 ; 40.0000 ]
-  stroke: 0.0-0.0-1.0
-  shadow: 0
-  color: ffadd8e6
+  backcolor: NULL_COLOR
 
 RECTANGLE:
   pt1: [ 16.0000 ; 29.0000 ]
@@ -292,14 +285,14 @@ RECTANGLE:
   backcolor: ffe6e6fa
 
 LINE:
-  pt1: [ 17.0000 ; 29.0000 ]
+  pt1: [ 16.0000 ; 29.0000 ]
   pt2: [ 36.0000 ; 29.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ffadd8e6
 
 LINE:
-  pt1: [ 17.0000 ; 40.0000 ]
+  pt1: [ 16.0000 ; 40.0000 ]
   pt2: [ 36.0000 ; 40.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
@@ -316,14 +309,14 @@ RECTANGLE:
   backcolor: ffe6e6fa
 
 LINE:
-  pt1: [ 45.0000 ; 29.0000 ]
+  pt1: [ 44.0000 ; 29.0000 ]
   pt2: [ 64.0000 ; 29.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ffadd8e6
 
 LINE:
-  pt1: [ 45.0000 ; 40.0000 ]
+  pt1: [ 44.0000 ; 40.0000 ]
   pt2: [ 64.0000 ; 40.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
@@ -340,14 +333,14 @@ RECTANGLE:
   backcolor: ffe6e6fa
 
 LINE:
-  pt1: [ 73.0000 ; 29.0000 ]
+  pt1: [ 72.0000 ; 29.0000 ]
   pt2: [ 92.0000 ; 29.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ffadd8e6
 
 LINE:
-  pt1: [ 73.0000 ; 40.0000 ]
+  pt1: [ 72.0000 ; 40.0000 ]
   pt2: [ 92.0000 ; 40.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
@@ -364,14 +357,14 @@ RECTANGLE:
   backcolor: ffe6e6fa
 
 LINE:
-  pt1: [ 101.0000 ; 29.0000 ]
+  pt1: [ 100.0000 ; 29.0000 ]
   pt2: [ 120.0000 ; 29.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ffadd8e6
 
 LINE:
-  pt1: [ 101.0000 ; 40.0000 ]
+  pt1: [ 100.0000 ; 40.0000 ]
   pt2: [ 120.0000 ; 40.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
@@ -387,26 +380,19 @@ RECTANGLE:
   color: NULL_COLOR
   backcolor: ffe6e6fa
 
-LINE:
-  pt1: [ 129.0000 ; 29.0000 ]
-  pt2: [ 138.0000 ; 29.0000 ]
+PATH:
+   - type: SEG_MOVETO
+     pt1: [ 0.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 10.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 10.0000 ; 11.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 0.0000 ; 11.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ffadd8e6
-
-LINE:
-  pt1: [ 129.0000 ; 40.0000 ]
-  pt2: [ 138.0000 ; 40.0000 ]
-  stroke: 0.0-0.0-1.0
-  shadow: 0
-  color: ffadd8e6
-
-LINE:
-  pt1: [ 138.0000 ; 29.0000 ]
-  pt2: [ 138.0000 ; 40.0000 ]
-  stroke: 0.0-0.0-1.0
-  shadow: 0
-  color: ffadd8e6
+  backcolor: NULL_COLOR
 
 LINE:
   pt1: [ 11.0000 ; 29.0000 ]
@@ -488,26 +474,19 @@ RECTANGLE:
   color: NULL_COLOR
   backcolor: ffe2e2f0
 
-LINE:
-  pt1: [ 142.0000 ; 44.0000 ]
-  pt2: [ 147.0000 ; 44.0000 ]
+PATH:
+   - type: SEG_MOVETO
+     pt1: [ 6.0000 ; 11.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 0.0000 ; 11.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 0.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 6.0000 ; 0.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
-
-LINE:
-  pt1: [ 142.0000 ; 55.0000 ]
-  pt2: [ 147.0000 ; 55.0000 ]
-  stroke: 0.0-0.0-1.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 142.0000 ; 44.0000 ]
-  pt2: [ 142.0000 ; 55.0000 ]
-  stroke: 0.0-0.0-1.0
-  shadow: 0
-  color: ff181818
+  backcolor: NULL_COLOR
 
 RECTANGLE:
   pt1: [ 156.0000 ; 44.0000 ]
@@ -519,26 +498,19 @@ RECTANGLE:
   color: NULL_COLOR
   backcolor: ffe2e2f0
 
-LINE:
-  pt1: [ 157.0000 ; 44.0000 ]
-  pt2: [ 166.0000 ; 44.0000 ]
+PATH:
+   - type: SEG_MOVETO
+     pt1: [ 0.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 10.0000 ; 0.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 10.0000 ; 11.0000 ]
+   - type: SEG_LINETO
+     pt1: [ 0.0000 ; 11.0000 ]
   stroke: 0.0-0.0-1.0
   shadow: 0
   color: ff181818
-
-LINE:
-  pt1: [ 157.0000 ; 55.0000 ]
-  pt2: [ 166.0000 ; 55.0000 ]
-  stroke: 0.0-0.0-1.0
-  shadow: 0
-  color: ff181818
-
-LINE:
-  pt1: [ 166.0000 ; 44.0000 ]
-  pt2: [ 166.0000 ; 55.0000 ]
-  stroke: 0.0-0.0-1.0
-  shadow: 0
-  color: ff181818
+  backcolor: NULL_COLOR
 
 LINE:
   pt1: [ 151.0000 ; 44.0000 ]

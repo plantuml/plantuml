@@ -91,16 +91,20 @@ public class TimeHeaderSimple extends TimeHeader {
 
 		for (int i = 0; i < delta; i++)
 			day = day.increment(printScale);
-		
+
 		return day;
 	}
 
 	private void initDelta(Day day) {
-		final double x1 = getTimeScale().getStartingPosition(day);
-		do {
-			delta++;
-			day = day.increment();
-		} while (getTimeScale().getStartingPosition(day) < x1 + 16);
+		if (printScale == PrintScale.DAILY) {
+			final double x1 = getTimeScale().getStartingPosition(day);
+			do {
+				delta++;
+				day = day.increment();
+			} while (getTimeScale().getStartingPosition(day) < x1 + 16);
+		} else {
+			delta = 1;
+		}
 
 	}
 

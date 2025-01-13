@@ -280,9 +280,6 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	}
 
 	private boolean badName(String separator, String full) {
-		if (full.startsWith(separator))
-			return true;
-
 		if (full.endsWith(separator))
 			return true;
 
