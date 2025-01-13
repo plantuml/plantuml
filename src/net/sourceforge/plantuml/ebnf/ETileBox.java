@@ -56,6 +56,9 @@ import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.utils.Direction;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ETileBox extends ETile {
 
 	private final String value;
@@ -68,6 +71,20 @@ public class ETileBox extends ETile {
 	private String commentAbove;
 	private String commentBelow;
 
+	private static final Map<String, String> VALUE_MAP = new HashMap<>();
+
+	static {
+		VALUE_MAP.put("\\b", "WordBoundary");
+		VALUE_MAP.put("\\B", "NonWordBoundary");
+		VALUE_MAP.put("\\d", "Digit");
+		VALUE_MAP.put("\\D", "NonDigit");
+		VALUE_MAP.put("\\w", "Word");
+		VALUE_MAP.put("\\W", "NonWord");
+		VALUE_MAP.put("\\s", "Whitespace");
+		VALUE_MAP.put("\\S", "NonWhitespace");
+		VALUE_MAP.put(".", "AnyChar");
+	}
+
 	public ETileBox mergeWith(ETileBox other) {
 		return new ETileBox(this.value + other.value, symbol, fc, style, colorSet, skinParam);
 	}
@@ -76,9 +93,9 @@ public class ETileBox extends ETile {
 			ISkinParam skinParam) {
 		this.symbol = symbol;
 		this.skinParam = skinParam;
-		this.value = value;
+		this.value = getDrawValue(value);
 		this.fc = fc;
-		this.utext = UText.build(value, fc);
+		this.utext = UText.build(this.value, fc);
 		this.style = style;
 		this.colorSet = colorSet;
 	}
@@ -231,6 +248,10 @@ public class ETileBox extends ETile {
 
 	public final Symbol getSymbol() {
 		return symbol;
+	}
+
+	private String getDrawValue(String value) {
+		return VALUE_MAP.getOrDefault(value, value);
 	}
 
 }
