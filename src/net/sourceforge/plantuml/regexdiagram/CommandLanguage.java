@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,44 +30,37 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.regexdiagram;
 
-import java.util.List;
-import java.util.Map;
+import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.regex.IRegex;
+import net.sourceforge.plantuml.regex.RegexConcat;
+import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexResult;
+import net.sourceforge.plantuml.utils.LineLocation;
 
-import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.CommonCommands;
-import net.sourceforge.plantuml.command.PSystemCommandFactory;
-import net.sourceforge.plantuml.core.DiagramType;
-import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
+public class CommandLanguage extends SingleLineCommand2<PSystemRegex> {
 
-public class PSystemRegexFactory extends PSystemCommandFactory {
+	public CommandLanguage() {
+		super(getRegexConcat());
+	}
 
-	public PSystemRegexFactory() {
-		super(DiagramType.REGEX);
+	static IRegex getRegexConcat() {
+		return RegexConcat.build(CommandLanguage.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("language"), //
+				RegexLeaf.spaceOneOrMore(), //
+				new RegexLeaf("LANG", "(\\w+)"), //
+				RegexLeaf.end());
 	}
 
 	@Override
-	protected void initCommandsList(List<Command> cmds) {
-		CommonCommands.addCommonCommands1(cmds);
-		cmds.add(new CommandUseDescriptiveNames());
-		cmds.add(new CommandLanguage());
-		cmds.add(new CommandRegexfSingleLine());
+	protected CommandExecutionResult executeArg(PSystemRegex diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+		return diagram.changeLanguage(arg.get("LANG", 0));
 	}
-
-	@Override
-	public PSystemRegex createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
-		return new PSystemRegex(source);
-	}
-	
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.REGEX;
-	}
-
 
 }

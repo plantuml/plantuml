@@ -55,8 +55,10 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.I18n;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class ETileBox extends ETile {
@@ -74,15 +76,15 @@ public class ETileBox extends ETile {
 	private static final Map<String, String> VALUE_MAP = new HashMap<>();
 
 	static {
-		VALUE_MAP.put("\\b", "WordBoundary");
-		VALUE_MAP.put("\\B", "NonWordBoundary");
-		VALUE_MAP.put("\\d", "Digit");
-		VALUE_MAP.put("\\D", "NonDigit");
-		VALUE_MAP.put("\\w", "Word");
-		VALUE_MAP.put("\\W", "NonWord");
-		VALUE_MAP.put("\\s", "Whitespace");
-		VALUE_MAP.put("\\S", "NonWhitespace");
-		VALUE_MAP.put(".", "AnyChar");
+		VALUE_MAP.put("\\b", "wordBoundary");
+		VALUE_MAP.put("\\B", "nonWordBoundary");
+		VALUE_MAP.put("\\d", "digit");
+		VALUE_MAP.put("\\D", "nonDigit");
+		VALUE_MAP.put("\\w", "word");
+		VALUE_MAP.put("\\W", "nonWord");
+		VALUE_MAP.put("\\s", "whitespace");
+		VALUE_MAP.put("\\S", "nonWhitespace");
+		VALUE_MAP.put(".", "anyChar");
 	}
 
 	public ETileBox mergeWith(ETileBox other) {
@@ -93,7 +95,7 @@ public class ETileBox extends ETile {
 			ISkinParam skinParam) {
 		this.symbol = symbol;
 		this.skinParam = skinParam;
-		this.value = getDrawValue(value);
+		this.value = getDrawValue(value, skinParam);
 		this.fc = fc;
 		this.utext = UText.build(this.value, fc);
 		this.style = style;
@@ -250,8 +252,15 @@ public class ETileBox extends ETile {
 		return symbol;
 	}
 
-	private String getDrawValue(String value) {
-		return VALUE_MAP.getOrDefault(value, value);
+	private String getDrawValue(String value, ISkinParam skinParam) {
+		if (!Boolean.parseBoolean(skinParam.getValue("descriptive")) || !VALUE_MAP.containsKey(value)) {
+			return value;
+		}
+		String language = skinParam.getValue("language");
+		if (language == null) {
+			language = Locale.getDefault().getLanguage();
+		}
+		return I18n.get(Locale.forLanguageTag(language), "ebnf." + VALUE_MAP.get(value));
 	}
 
 }

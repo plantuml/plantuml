@@ -111,6 +111,11 @@
 				<include name="**/*.css" />
 			</fileset>
 		</copy>
+		<copy todir = "build/resources">
+			<fileset dir = "resources">
+				<include name = "**/*.properties"/>
+			</fileset>
+		</copy>
 	</target>
 
 
