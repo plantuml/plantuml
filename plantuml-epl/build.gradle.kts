@@ -77,7 +77,7 @@ tasks.withType<Jar>().configureEach {
 	from("../stdlib") { into("stdlib") }
 	from("../svg") { into("svg") }
 	from("../themes") { into("themes") }
-	
+	from("../resources") { into("resources") }
 	// Add dependencies to the JAR
     val runtimeClasspath = configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) }
     from(runtimeClasspath) {

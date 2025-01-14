@@ -55,6 +55,11 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.I18n;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class ETileBox extends ETile {
 
@@ -68,6 +73,20 @@ public class ETileBox extends ETile {
 	private String commentAbove;
 	private String commentBelow;
 
+	private static final Map<String, String> VALUE_MAP = new HashMap<>();
+
+	static {
+		VALUE_MAP.put("\\b", "wordBoundary");
+		VALUE_MAP.put("\\B", "nonWordBoundary");
+		VALUE_MAP.put("\\d", "digit");
+		VALUE_MAP.put("\\D", "nonDigit");
+		VALUE_MAP.put("\\w", "word");
+		VALUE_MAP.put("\\W", "nonWord");
+		VALUE_MAP.put("\\s", "whitespace");
+		VALUE_MAP.put("\\S", "nonWhitespace");
+		VALUE_MAP.put(".", "anyChar");
+	}
+
 	public ETileBox mergeWith(ETileBox other) {
 		return new ETileBox(this.value + other.value, symbol, fc, style, colorSet, skinParam);
 	}
@@ -76,9 +95,9 @@ public class ETileBox extends ETile {
 			ISkinParam skinParam) {
 		this.symbol = symbol;
 		this.skinParam = skinParam;
-		this.value = value;
+		this.value = getDrawValue(value, skinParam);
 		this.fc = fc;
-		this.utext = UText.build(value, fc);
+		this.utext = UText.build(this.value, fc);
 		this.style = style;
 		this.colorSet = colorSet;
 	}
@@ -231,6 +250,17 @@ public class ETileBox extends ETile {
 
 	public final Symbol getSymbol() {
 		return symbol;
+	}
+
+	private String getDrawValue(String value, ISkinParam skinParam) {
+		if (!Boolean.parseBoolean(skinParam.getValue("descriptive")) || !VALUE_MAP.containsKey(value)) {
+			return value;
+		}
+		String language = skinParam.getValue("language");
+		if (language == null) {
+			language = Locale.getDefault().getLanguage();
+		}
+		return I18n.get(Locale.forLanguageTag(language), "ebnf." + VALUE_MAP.get(value));
 	}
 
 }

@@ -51,7 +51,7 @@ dependencies {
     configurations.create("pdfJarDeps")
     "pdfJarDeps"(libs.fop)
     "pdfJarDeps"(libs.batik.all)
-    
+
 }
 
 repositories {
@@ -65,11 +65,12 @@ sourceSets {
 			srcDirs("src")
 		}
 		resources {
-			srcDirs("src")
+			srcDirs("src","resources")
 			include("**/graphviz.dat")
 			include("**/*.png")
 			include("**/*.svg")
 			include("**/*.txt")
+			include("resources/**/*.properties")
 		}
 	}
 	test {
@@ -77,9 +78,10 @@ sourceSets {
 			srcDirs("test")
 		}
 		resources {
-			srcDirs(".")
+			srcDirs(".", "resources")
 			include("skin/**/*.skin")
 			include("themes/**/*.puml")
+			include("resources/**/*.properties")
 		}
 	}
 }
@@ -103,16 +105,22 @@ tasks.withType<Jar>().configureEach {
     from("stdlib") { into("stdlib") }
     from("svg") { into("svg") }
     from("themes") { into("themes") }
+		from("resources") { into("resources") }
 
     // Add dependencies to the JAR
     val runtimeClasspath = configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) }
     from(runtimeClasspath) {
         exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA") // Avoid conflict on signature
     }
-    
+
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
+tasks.named<Copy>("processResources") {
+	from("resources") {
+		include("**/*")
+	}
+}
 
 publishing {
 	publications.create<MavenPublication>("maven") {

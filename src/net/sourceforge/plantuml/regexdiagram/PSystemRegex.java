@@ -114,6 +114,16 @@ public class PSystemRegex extends TitledDiagram {
 		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);
 	}
 
+	public CommandExecutionResult changeLanguage(String lang) {
+		setParam("language", lang);
+		return CommandExecutionResult.ok();
+	}
+
+	public CommandExecutionResult useDescriptiveNames(String useDescriptive) {
+		setParam("descriptive", useDescriptive);
+		return CommandExecutionResult.ok();
+	}
+
 	@Override
 	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
 //		while (stack.size() > 1)
