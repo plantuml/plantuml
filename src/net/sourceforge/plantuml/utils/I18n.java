@@ -42,19 +42,25 @@ import java.util.ResourceBundle;
 public class I18n {
 
 	/**
-	 * Retrieves a localized value for a given language and key.
+	 * Retrieves a localized value for a given language and key, with the option to
+	 * specify a default value.
 	 *
-	 * @param language the language code (e.g., "en", "cn", "fr"); if null, the
-	 *                 default locale's language is used
-	 * @param key      the key for the message to retrieve; must not be null
+	 * @param language     the language code (e.g., "en", "cn", "fr"); if null, the
+	 *                     default locale's language is used
+	 * @param key          the key for the message to retrieve; must not be null
+	 * @param defaultValue the fallback value to return if no translation is found;
+	 *                     must not be null
 	 * 
-	 * @return the localized value corresponding to the key, or the key itself if no
-	 *         match is found
-	 * @throws IllegalArgumentException if the key is null
+	 * @return the localized value corresponding to the key, or the
+	 *         {@code defaultValue} if no match is found
+	 * @throws IllegalArgumentException if {@code key} or {@code defaultValue} is
+	 *                                  null
 	 */
-	public static String getLocalizedValue(String language, String key) {
+	public static String getLocalizedValue(String language, String key, String defaultValue) {
 		if (key == null)
 			throw new IllegalArgumentException("Key must not be null.");
+		if (defaultValue == null)
+			throw new IllegalArgumentException("defaultValue must not be null.");
 
 		// Default to the system's default language if none is provided
 		if (language == null)
@@ -66,8 +72,8 @@ public class I18n {
 			final ResourceBundle bundle = ResourceBundle.getBundle("i18n", locale);
 			return bundle.getString(key);
 		} catch (MissingResourceException e) {
-			// Return the key itself if the translation is not found
-			return key;
+			// Return the default value if the translation is not found
+			return defaultValue;
 		}
 	}
 }
