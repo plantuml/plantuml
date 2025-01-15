@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.project.command.CommandColorTask;
 import net.sourceforge.plantuml.project.command.CommandFootbox;
 import net.sourceforge.plantuml.project.command.CommandGanttArrow;
@@ -149,8 +150,8 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public GanttDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
-		return new GanttDiagram(source);
+	public GanttDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore option) {
+		return new GanttDiagram(source, option);
 	}
 	
 	@Override

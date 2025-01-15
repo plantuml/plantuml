@@ -73,6 +73,7 @@ import net.sourceforge.plantuml.nwdiag.next.GridTextBlockDecorated;
 import net.sourceforge.plantuml.nwdiag.next.NBar;
 import net.sourceforge.plantuml.nwdiag.next.NPlayField;
 import net.sourceforge.plantuml.nwdiag.next.NServerDraw;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.SName;
@@ -94,8 +95,8 @@ public class NwDiagram extends UmlDiagram {
 		return new DiagramDescription("(Nwdiag)");
 	}
 
-	public NwDiagram(UmlSource source) {
-		super(source, UmlDiagramType.NWDIAG, null);
+	public NwDiagram(UmlSource source, ConfigurationStore option) {
+		super(source, UmlDiagramType.NWDIAG, null, option);
 	}
 
 	public void init() {

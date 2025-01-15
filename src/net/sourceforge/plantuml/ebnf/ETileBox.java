@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FloatingNote;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -50,16 +53,13 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.I18n;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 public class ETileBox extends ETile {
 
@@ -70,6 +70,7 @@ public class ETileBox extends ETile {
 	private final HColorSet colorSet;
 	private final Symbol symbol;
 	private final ISkinParam skinParam;
+	private final ConfigurationStore option;
 	private String commentAbove;
 	private String commentBelow;
 
@@ -88,14 +89,15 @@ public class ETileBox extends ETile {
 	}
 
 	public ETileBox mergeWith(ETileBox other) {
-		return new ETileBox(this.value + other.value, symbol, fc, style, colorSet, skinParam);
+		return new ETileBox(this.value + other.value, symbol, fc, style, colorSet, skinParam, option);
 	}
 
 	public ETileBox(String value, Symbol symbol, FontConfiguration fc, Style style, HColorSet colorSet,
-			ISkinParam skinParam) {
+			ISkinParam skinParam, ConfigurationStore option) {
 		this.symbol = symbol;
 		this.skinParam = skinParam;
-		this.value = getDrawValue(value, skinParam);
+		this.option = option;
+		this.value = getDrawValue(value);
 		this.fc = fc;
 		this.utext = UText.build(this.value, fc);
 		this.style = style;
@@ -185,8 +187,8 @@ public class ETileBox extends ETile {
 //			ug.apply(new UTranslate(posxBox + 1, posy + 1)).apply(lineColor).apply(UStroke.withThickness(0.5)).draw(rect2);
 		} else {
 			final URectangle rect = URectangle.build(dimBox).rounded(10);
-			ug.apply(new UTranslate(posxBox, posy)).apply(lineColor).apply(backgroundColor.bg()).apply(UStroke.withThickness(1.5))
-					.draw(rect);
+			ug.apply(new UTranslate(posxBox, posy)).apply(lineColor).apply(backgroundColor.bg())
+					.apply(UStroke.withThickness(1.5)).draw(rect);
 		}
 
 		ug.apply(new UTranslate(5 + posxBox, posy + 5 + dimText.getHeight() - utext.getDescent(stringBounder)))
@@ -214,8 +216,8 @@ public class ETileBox extends ETile {
 		if (commentAbove == null)
 			return TextBlockUtils.EMPTY_TEXT_BLOCK;
 
-		final FloatingNote note = FloatingNote.createOpale(Display.getWithNewlines(skinParam.getPragma(), commentAbove), skinParam,
-				SName.ebnf);
+		final FloatingNote note = FloatingNote.createOpale(Display.getWithNewlines(skinParam.getPragma(), commentAbove),
+				skinParam, SName.ebnf);
 		final XDimension2D dim = note.calculateDimension(stringBounder);
 		final double pos = dim.getWidth() * .5;
 		XPoint2D pp1 = new XPoint2D(pos, dim.getHeight());
@@ -228,8 +230,8 @@ public class ETileBox extends ETile {
 		if (commentBelow == null)
 			return TextBlockUtils.EMPTY_TEXT_BLOCK;
 
-		final FloatingNote note = FloatingNote.createOpale(Display.getWithNewlines(skinParam.getPragma(), commentBelow), skinParam,
-				SName.ebnf);
+		final FloatingNote note = FloatingNote.createOpale(Display.getWithNewlines(skinParam.getPragma(), commentBelow),
+				skinParam, SName.ebnf);
 		final XDimension2D dim = note.calculateDimension(stringBounder);
 		final double pos = dim.getWidth() * .5;
 		XPoint2D pp1 = new XPoint2D(pos, 0);
@@ -252,15 +254,12 @@ public class ETileBox extends ETile {
 		return symbol;
 	}
 
-	private String getDrawValue(String value, ISkinParam skinParam) {
-		if (!Boolean.parseBoolean(skinParam.getValue("descriptive")) || !VALUE_MAP.containsKey(value)) {
+	private String getDrawValue(String value) {
+		if (!Boolean.parseBoolean(option.getValue("useDescriptiveNames")) || !VALUE_MAP.containsKey(value))
 			return value;
-		}
-		String language = skinParam.getValue("language");
-		if (language == null) {
-			language = Locale.getDefault().getLanguage();
-		}
-		return I18n.get(Locale.forLanguageTag(language), "ebnf." + VALUE_MAP.get(value));
+
+		final String language = option.getValue("language");
+		return I18n.getLocalizedValue(language, "ebnf." + VALUE_MAP.get(value));
 	}
 
 }

@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class BoardDiagramFactory extends PSystemCommandFactory {
@@ -65,8 +66,8 @@ public class BoardDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public BoardDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
-		return new BoardDiagram(source);
+	public BoardDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore option) {
+		return new BoardDiagram(source, option);
 	}
 
 	@Override

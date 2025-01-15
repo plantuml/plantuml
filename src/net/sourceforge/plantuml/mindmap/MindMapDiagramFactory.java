@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class MindMapDiagramFactory extends PSystemCommandFactory {
@@ -65,8 +66,8 @@ public class MindMapDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public MindMapDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
-		return new MindMapDiagram(source);
+	public MindMapDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore option) {
+		return new MindMapDiagram(source, option);
 	}
 	
 	@Override

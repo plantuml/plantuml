@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class NwDiagramFactory extends PSystemCommandFactory {
@@ -53,8 +54,8 @@ public class NwDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public NwDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
-		return new NwDiagram(source);
+	public NwDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore option) {
+		return new NwDiagram(source, option);
 	}
 
 	@Override

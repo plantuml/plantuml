@@ -44,12 +44,13 @@ import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class DescriptionDiagram extends AbstractEntityDiagram {
 
-	public DescriptionDiagram(UmlSource source, Map<String, String> skinMap) {
-		super(source, UmlDiagramType.DESCRIPTION, skinMap);
+	public DescriptionDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore config) {
+		super(source, UmlDiagramType.DESCRIPTION, skinMap, config);
 	}
 
 	@Override

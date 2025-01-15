@@ -36,22 +36,38 @@
 package net.sourceforge.plantuml.utils;
 
 import java.util.Locale;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class I18n {
 
 	/**
-	 * get the localized language word by key
+	 * Retrieves a localized value for a given language and key.
 	 *
-	 * @param locale -  the locale
-	 * @param key    - The key must not be null
-	 * @return the localized language word
+	 * @param language the language code (e.g., "en", "cn", "fr"); if null, the
+	 *                 default locale's language is used
+	 * @param key      the key for the message to retrieve; must not be null
+	 * 
+	 * @return the localized value corresponding to the key, or the key itself if no
+	 *         match is found
+	 * @throws IllegalArgumentException if the key is null
 	 */
-	public static String get(Locale locale, String key) {
-		if (key == null) {
-			throw new RuntimeException("localized language key must not be null");
+	public static String getLocalizedValue(String language, String key) {
+		if (key == null)
+			throw new IllegalArgumentException("Key must not be null.");
+
+		// Default to the system's default language if none is provided
+		if (language == null)
+			language = Locale.getDefault().getLanguage();
+
+		final Locale locale = Locale.forLanguageTag(language);
+
+		try {
+			final ResourceBundle bundle = ResourceBundle.getBundle("i18n", locale);
+			return bundle.getString(key);
+		} catch (MissingResourceException e) {
+			// Return the key itself if the translation is not found
+			return key;
 		}
-		ResourceBundle bundle = ResourceBundle.getBundle("i18n", locale);
-		return bundle.getString(key);
 	}
 }

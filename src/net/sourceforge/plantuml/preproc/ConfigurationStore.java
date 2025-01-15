@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- *
+ * 
  * If you like this project or if you find it useful, you can support us at:
- *
+ * 
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- *
+ * 
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,37 +30,39 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.regexdiagram;
+package net.sourceforge.plantuml.preproc;
 
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.ParserPass;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexResult;
-import net.sourceforge.plantuml.utils.LineLocation;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-public class CommandLanguage extends SingleLineCommand2<PSystemRegex> {
+public class ConfigurationStore {
 
-	public CommandLanguage() {
-		super(getRegexConcat());
+	private final Map<String, String> values = new LinkedHashMap<String, String>();
+
+	private ConfigurationStore() {
 	}
 
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandLanguage.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("language"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("LANG", "(\\w+)"), //
-				RegexLeaf.end());
+	public static ConfigurationStore createEmpty() {
+		return new ConfigurationStore();
 	}
 
-	@Override
-	protected CommandExecutionResult executeArg(PSystemRegex diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		return diagram.changeLanguage(arg.get("LANG", 0));
+	public void define(String name, String value) {
+		values.put(name, value);
+	}
+
+	public boolean isDefine(String name) {
+		return values.containsKey(name);
+	}
+
+	public void undefine(String name) {
+		values.remove(name);
+	}
+
+	public String getValue(String name) {
+		return values.get(name);
 	}
 
 }

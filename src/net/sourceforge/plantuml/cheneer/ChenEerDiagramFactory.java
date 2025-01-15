@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ChenEerDiagramFactory extends PSystemCommandFactory {
@@ -73,8 +74,8 @@ public class ChenEerDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public AbstractPSystem createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
-		return new ChenEerDiagram(source, skinMap);
+	public AbstractPSystem createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore option) {
+		return new ChenEerDiagram(source, skinMap, option);
 	}
 
 	@Override

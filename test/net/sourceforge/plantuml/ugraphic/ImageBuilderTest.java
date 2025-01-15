@@ -13,6 +13,7 @@ import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.PlainDiagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.creole.legacy.PSystemCreole;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.wbs.WBSDiagram;
 
@@ -50,7 +51,7 @@ class ImageBuilderTest {
 			nullValues = {"NULL"}
 	)
 	public void test_preserveAspectRatio_styledDiagram(String inSkinParam, String inFileFormatOption, String expected) throws Exception {
-		final WBSDiagram diagram = new WBSDiagram(UmlSource.create(new ArrayList<StringLocated>(), false));
+		final WBSDiagram diagram = new WBSDiagram(UmlSource.create(new ArrayList<StringLocated>(), false), ConfigurationStore.createEmpty());
 		FileFormatOption fileFormatOption = new FileFormatOption(DEBUG);
 
 		if (inSkinParam != null) diagram.setParam("preserveAspectRatio", inSkinParam);

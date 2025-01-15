@@ -72,6 +72,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.project.core.Moment;
 import net.sourceforge.plantuml.project.core.MomentImpl;
 import net.sourceforge.plantuml.project.core.PrintScale;
@@ -171,8 +172,8 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 		this.weekNumberStrategy = new WeekNumberStrategy(firstDayOfWeek, minimalDaysInFirstWeek);
 	}
 
-	public GanttDiagram(UmlSource source) {
-		super(source, UmlDiagramType.GANTT, null);
+	public GanttDiagram(UmlSource source, ConfigurationStore option) {
+		super(source, UmlDiagramType.GANTT, null, option);
 	}
 
 	public final int getDpi(FileFormatOption fileFormatOption) {

@@ -41,7 +41,7 @@ public enum TLineType {
 	PLAIN, AFFECTATION_DEFINE, AFFECTATION, ASSERT, IF, IFDEF, UNDEF, IFNDEF, ELSE, ELSEIF, ENDIF, WHILE, ENDWHILE,
 	FOREACH, ENDFOREACH, DECLARE_RETURN_FUNCTION, DECLARE_PROCEDURE, END_FUNCTION, RETURN, LEGACY_DEFINE,
 	LEGACY_DEFINELONG, THEME, INCLUDE, INCLUDE_SPRITES, INCLUDE_DEF, IMPORT, STARTSUB, ENDSUB, INCLUDESUB, LOG, DUMP_MEMORY,
-	COMMENT_SIMPLE, COMMENT_LONG_START;
+	COMMENT_SIMPLE, COMMENT_LONG_START, OPTION;
 
 	private static final Pattern PATTERN_LEGACY_DEFINE = Pattern.compile("^\\s*!define\\s+[\\p{L}_][\\p{L}_0-9]*\\(.*");
 
@@ -116,6 +116,9 @@ public enum TLineType {
 	private static final Pattern PATTERN_LOG = Pattern.compile("^\\s*!(log)\\b.*");
 
 	private static final Pattern PATTERN_DUMP_MEMORY = Pattern.compile("^\\s*!(dump_memory)\\b.*");
+	
+	private static final Pattern PATTERN_OPTION = Pattern.compile("^\\s*!option\\b.*");
+
 
 	public static TLineType getFromLineInternal(String s) {
 		if (PATTERN_LEGACY_DEFINE.matcher(s).matches())
@@ -216,6 +219,10 @@ public enum TLineType {
 
 		if (PATTERN_DUMP_MEMORY.matcher(s).matches())
 			return DUMP_MEMORY;
+		
+		if (PATTERN_OPTION.matcher(s).matches())
+			return OPTION;
+
 
 		return PLAIN;
 	}

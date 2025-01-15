@@ -36,10 +36,11 @@
 package net.sourceforge.plantuml.ebnf;
 
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.style.ISkinParam;
 
 public interface TextBlockable {
 
-	public TextBlock getUDrawable(ISkinParam skinParam);
+	public TextBlock getUDrawable(ISkinParam skinParam, ConfigurationStore option);
 
 }

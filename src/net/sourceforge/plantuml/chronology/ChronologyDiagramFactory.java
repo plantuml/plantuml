@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.project.command.NaturalCommand;
 import net.sourceforge.plantuml.project.lang.SentenceAnd;
 import net.sourceforge.plantuml.project.lang.SentenceAndAnd;
@@ -120,8 +121,8 @@ public class ChronologyDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public ChronologyDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
-		return new ChronologyDiagram(source);
+	public ChronologyDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore option) {
+		return new ChronologyDiagram(source, option);
 	}
 
 	@Override

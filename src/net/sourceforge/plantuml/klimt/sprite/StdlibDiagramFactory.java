@@ -41,6 +41,7 @@ import java.util.Map;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class StdlibDiagramFactory extends PSystemCommandFactory {
@@ -52,8 +53,8 @@ public class StdlibDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public StdlibDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
-		return new StdlibDiagram(source, skinMap);
+	public StdlibDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore option) {
+		return new StdlibDiagram(source, skinMap, option);
 	}
 	
 	@Override

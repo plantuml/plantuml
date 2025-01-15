@@ -29,39 +29,30 @@
  * USA.
  *
  *
- * Original Author:  Shunli Han
- *
+ * Original Author:  Arnaud Roques
  *
  */
-package net.sourceforge.plantuml.regexdiagram;
+package net.sourceforge.plantuml.tim;
 
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.ParserPass;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexResult;
-import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.tim.expression.TValue;
 
-public class CommandUseDescriptiveNames extends SingleLineCommand2<PSystemRegex> {
+public class EaterOption extends Eater {
 
-	public CommandUseDescriptiveNames() {
-		super(getRegexConcat());
-	}
-
-	private static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandUseDescriptiveNames.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("useDescriptiveNames"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("DESCRIPTIVE", "(true|false)"), //
-				RegexLeaf.end());
+	public EaterOption(StringLocated s) {
+		super(s);
 	}
 
 	@Override
-	final protected CommandExecutionResult executeArg(PSystemRegex diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		final String format = arg.get("DESCRIPTIVE", 0);
-		return diagram.useDescriptiveNames(format);
+	public void analyze(TContext context, TMemory memory) throws EaterException {
+		skipSpaces();
+		checkAndEatChar("!option");
+		skipSpaces();
+		final String key = eatAndGetVarname();
+		skipSpaces();
+		final TValue value = eatExpression(context, memory);
+		skipSpaces();
+		context.getOption().define(key, value.toString());
 	}
 
 }

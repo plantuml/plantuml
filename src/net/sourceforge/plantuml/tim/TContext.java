@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
@@ -177,6 +178,8 @@ public class TContext {
 
 	// private final Set<FileWithSuffix> usedFiles = new HashSet<>();
 	private final Set<FileWithSuffix> filesUsedCurrent = new HashSet<>();
+
+	private final ConfigurationStore option = ConfigurationStore.createEmpty();
 
 	public Set<FileWithSuffix> getFilesUsedCurrent() {
 		return Collections.unmodifiableSet(filesUsedCurrent);
@@ -389,6 +392,9 @@ public class TContext {
 		} else if (type == TLineType.ASSERT) {
 			this.executeAssert(memory, s.getTrimmed());
 			return null;
+		} else if (type == TLineType.OPTION) {
+			this.executeOption(memory, s.getTrimmed());
+			return null;
 		} else if (type == TLineType.UNDEF) {
 			this.executeUndef(memory, s);
 			return null;
@@ -451,6 +457,11 @@ public class TContext {
 
 	private void executeAssert(TMemory memory, StringLocated s) throws EaterException {
 		final EaterAssert condition = new EaterAssert(s);
+		condition.analyze(this, memory);
+	}
+
+	private void executeOption(TMemory memory, StringLocated s) throws EaterException {
+		final EaterOption condition = new EaterOption(s);
 		condition.analyze(this, memory);
 	}
 
@@ -885,6 +896,10 @@ public class TContext {
 			return Optional.empty();
 
 		return Optional.of(first.substring(idx + 1).trim());
+	}
+
+	public ConfigurationStore getOption() {
+		return option;
 	}
 
 }

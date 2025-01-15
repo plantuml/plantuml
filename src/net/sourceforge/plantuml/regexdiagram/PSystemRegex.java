@@ -30,6 +30,7 @@
  *
  *
  * Original Author:  Arnaud Roques
+ * Modified by    :  Shunli Han
  * 
  *
  */
@@ -71,6 +72,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
@@ -81,8 +83,8 @@ import net.sourceforge.plantuml.utils.CharInspector;
 
 public class PSystemRegex extends TitledDiagram {
 
-	public PSystemRegex(UmlSource source) {
-		super(source, UmlDiagramType.REGEX, null);
+	public PSystemRegex(UmlSource source, ConfigurationStore option) {
+		super(source, UmlDiagramType.REGEX, null, option);
 		final StyleExtractor styleExtractor = new StyleExtractor(source.iterator2());
 
 		final ISkinParam skinParam = getSkinParam();
@@ -114,15 +116,15 @@ public class PSystemRegex extends TitledDiagram {
 		return createImageBuilder(fileFormatOption).drawable(getTextMainBlock(fileFormatOption)).write(os);
 	}
 
-	public CommandExecutionResult changeLanguage(String lang) {
-		setParam("language", lang);
-		return CommandExecutionResult.ok();
-	}
-
-	public CommandExecutionResult useDescriptiveNames(String useDescriptive) {
-		setParam("descriptive", useDescriptive);
-		return CommandExecutionResult.ok();
-	}
+//	public CommandExecutionResult changeLanguage(String lang) {
+//		setParam("language", lang);
+//		return CommandExecutionResult.ok();
+//	}
+//
+//	public CommandExecutionResult useDescriptiveNames(String useDescriptive) {
+//		setParam("descriptive", useDescriptive);
+//		return CommandExecutionResult.ok();
+//	}
 
 	@Override
 	protected TextBlock getTextMainBlock(FileFormatOption fileFormatOption) {
@@ -206,7 +208,7 @@ public class PSystemRegex extends TitledDiagram {
 	}
 
 	private void pushEtileBox(ReToken element, Symbol type) {
-		stack.addFirst(new ETileBox(element.getData(), type, fontConfiguration, style, colorSet, getSkinParam()));
+		stack.addFirst(new ETileBox(element.getData(), type, fontConfiguration, style, colorSet, getSkinParam(), getOption()));
 	}
 
 	private void pushRegexGroup(ReToken element) {

@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.skin.SkinParam;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
@@ -76,8 +77,8 @@ public class BpmDiagram extends UmlDiagram {
 		return new DiagramDescription("(Bpm Diagram)");
 	}
 
-	public BpmDiagram(UmlSource source) {
-		super(source, UmlDiagramType.BPM, null);
+	public BpmDiagram(UmlSource source, ConfigurationStore option) {
+		super(source, UmlDiagramType.BPM, null, option);
 	}
 
 	@Override

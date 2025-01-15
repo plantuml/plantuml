@@ -57,13 +57,14 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ListSpriteDiagram extends UmlDiagram {
 	// ::remove file when __CORE__
 
-	public ListSpriteDiagram(UmlSource source, Map<String, String> skinMap) {
-		super(source, UmlDiagramType.HELP, skinMap);
+	public ListSpriteDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore option) {
+		super(source, UmlDiagramType.HELP, skinMap, option);
 	}
 
 	public DiagramDescription getDescription() {

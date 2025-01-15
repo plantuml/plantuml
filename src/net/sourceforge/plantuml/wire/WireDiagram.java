@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class WireDiagram extends UmlDiagram {
@@ -68,8 +69,8 @@ public class WireDiagram extends UmlDiagram {
 		return new DiagramDescription("Wire Diagram");
 	}
 
-	public WireDiagram(UmlSource source) {
-		super(source, UmlDiagramType.WIRE, null);
+	public WireDiagram(UmlSource source, ConfigurationStore option) {
+		super(source, UmlDiagramType.WIRE, null, option);
 	}
 
 	@Override

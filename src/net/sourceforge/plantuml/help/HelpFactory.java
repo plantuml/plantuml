@@ -41,6 +41,7 @@ import java.util.Map;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class HelpFactory extends PSystemCommandFactory {
@@ -48,8 +49,8 @@ public class HelpFactory extends PSystemCommandFactory {
 	// ::comment when __HAXE__
 
 	@Override
-	public Help createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
-		return new Help(source);
+	public Help createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore option) {
+		return new Help(source, option);
 	}
 
 	@Override

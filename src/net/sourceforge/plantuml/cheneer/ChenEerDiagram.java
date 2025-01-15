@@ -40,12 +40,13 @@ import java.util.Stack;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ChenEerDiagram extends AbstractEntityDiagram {
 
-	public ChenEerDiagram(UmlSource source, Map<String, String> skinMap) {
-		super(source, UmlDiagramType.CHEN_EER, skinMap);
+	public ChenEerDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore config) {
+		super(source, UmlDiagramType.CHEN_EER, skinMap, config);
 	}
 
 	private final Stack<Entity> ownerStack = new Stack<Entity>();

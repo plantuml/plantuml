@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -75,8 +76,8 @@ public class StdlibDiagram extends UmlDiagram {
 	private static final int WIDTH = 1800;
 	private String name;
 
-	public StdlibDiagram(UmlSource source, Map<String, String> skinMap) {
-		super(source, UmlDiagramType.HELP, skinMap);
+	public StdlibDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore option) {
+		super(source, UmlDiagramType.HELP, skinMap, option);
 	}
 
 	public DiagramDescription getDescription() {

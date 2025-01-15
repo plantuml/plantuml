@@ -66,6 +66,7 @@ import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.salt.element.Element;
 import net.sourceforge.plantuml.salt.factory.AbstractElementFactoryComplex;
 import net.sourceforge.plantuml.salt.factory.ElementFactory;
@@ -98,13 +99,13 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 	private final SaltDictionary dictionary = new SaltDictionary();
 
 	@Deprecated
-	public PSystemSalt(UmlSource source, List<String> data) {
-		super(source, UmlDiagramType.SALT, null);
+	public PSystemSalt(UmlSource source, List<String> data, ConfigurationStore option) {
+		super(source, UmlDiagramType.SALT, null, option);
 		this.data = data;
 	}
 
-	public PSystemSalt(UmlSource source) {
-		this(source, new ArrayList<String>());
+	public PSystemSalt(UmlSource source, ConfigurationStore option) {
+		this(source, new ArrayList<String>(), option);
 	}
 
 	public void add(String s) {

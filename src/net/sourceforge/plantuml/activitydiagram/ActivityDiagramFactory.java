@@ -55,14 +55,15 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteActivity;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ActivityDiagramFactory extends PSystemCommandFactory {
     // ::remove folder when __HAXE__
 
 	@Override
-	public ActivityDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap) {
-		return new ActivityDiagram(source, skinMap);
+	public ActivityDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore option) {
+		return new ActivityDiagram(source, skinMap, option);
 	}
 
 	@Override
