@@ -53,12 +53,13 @@ import net.sourceforge.plantuml.decoration.LinkType;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public abstract class AbstractClassOrObjectDiagram extends AbstractEntityDiagram {
 	// ::remove folder when __HAXE__
 
-	public AbstractClassOrObjectDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig, ConfigurationStore config) {
+	public AbstractClassOrObjectDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig, ConfigurationStore<OptionKey> config) {
 		super(source, type, orig, config);
 		setNamespaceSeparator(".");
 	}

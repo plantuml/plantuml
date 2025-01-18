@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
+import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.preproc.ReadLineWithYamlHeader;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.text.BackSlash;
@@ -78,7 +79,7 @@ public class BlockUml {
 	private final Defines localDefines;
 	private final Map<String, String> skinMap;
 	private final Set<FileWithSuffix> included = new HashSet<>();
-	private final ConfigurationStore option;
+	private final ConfigurationStore<OptionKey> option;
 
 	public Set<FileWithSuffix> getIncluded() {
 		return Collections.unmodifiableSet(included);

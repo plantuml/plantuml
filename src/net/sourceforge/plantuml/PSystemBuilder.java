@@ -92,6 +92,7 @@ import net.sourceforge.plantuml.openiconic.PSystemListOpenIconicFactory;
 import net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory;
 import net.sourceforge.plantuml.oregon.PSystemOregonFactory;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.project.GanttDiagramFactory;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regexdiagram.PSystemRegexFactory;
@@ -126,7 +127,7 @@ public class PSystemBuilder {
 	public static final long startTime = System.currentTimeMillis();
 
 	final public Diagram createPSystem(List<StringLocated> source, List<StringLocated> rawSource,
-			Map<String, String> skinMap, ConfigurationStore option) {
+			Map<String, String> skinMap, ConfigurationStore<OptionKey> option) {
 
 		WasmLog.log("..compiling diagram...");
 

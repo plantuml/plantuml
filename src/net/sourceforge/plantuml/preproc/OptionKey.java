@@ -30,26 +30,30 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.api;
+package net.sourceforge.plantuml.preproc;
 
-import java.util.Map;
+public enum OptionKey {
 
-import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.core.DiagramType;
-import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
-import net.sourceforge.plantuml.preproc.OptionKey;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
+	LANGUAGE, USE_DESCRIPTIVE_NAMES;
 
-public interface PSystemFactory {
+	public static String simplify(String s) {
+		final StringBuilder result = new StringBuilder();
 
-	Diagram createSystem(UmlSource source, Map<String, String> skinMap, ConfigurationStore<OptionKey> option);
+		for (char c : s.toCharArray())
+			if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+				result.append(Character.toLowerCase(c));
 
-	DiagramType getDiagramType();
+		return result.toString();
+	}
 
-	UmlDiagramType getUmlDiagramType();
+	public static OptionKey lazyFrom(String s) {
+		for (OptionKey key : values())
+			if (simplify(s).equals(simplify(key.name())))
+				return key;
+		return null;
+	}
 
 }

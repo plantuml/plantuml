@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class BoardDiagram extends UmlDiagram {
@@ -66,7 +67,7 @@ public class BoardDiagram extends UmlDiagram {
 		return new DiagramDescription("Board");
 	}
 
-	public BoardDiagram(UmlSource source, ConfigurationStore option) {
+	public BoardDiagram(UmlSource source, ConfigurationStore<OptionKey> option) {
 		super(source, UmlDiagramType.BOARD, null, option);
 	}
 

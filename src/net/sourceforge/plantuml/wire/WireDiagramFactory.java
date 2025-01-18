@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class WireDiagramFactory extends PSystemCommandFactory {
@@ -65,7 +66,7 @@ public class WireDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public WireDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore option) {
+	public WireDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore<OptionKey> option) {
 		return new WireDiagram(source, option);
 	}
 	

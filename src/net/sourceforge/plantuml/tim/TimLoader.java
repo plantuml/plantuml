@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
+import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.text.StringLocated;
 
 public class TimLoader {
@@ -52,7 +53,7 @@ public class TimLoader {
 	private final TMemory global = new TMemoryGlobal();
 	private boolean preprocessorError;
 	private List<StringLocated> resultList;
-	private ConfigurationStore option;
+	private ConfigurationStore<OptionKey> option;
 
 	public TimLoader(ImportedFiles importedFiles, Defines defines, Charset charset,
 			DefinitionsContainer definitionsContainer, StringLocated location) {
@@ -96,7 +97,7 @@ public class TimLoader {
 		return preprocessorError;
 	}
 
-	public ConfigurationStore getOption() {
+	public ConfigurationStore<OptionKey> getOption() {
 		return option;
 	}
 

@@ -60,6 +60,7 @@ import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
+import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineList;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
@@ -179,7 +180,7 @@ public class TContext {
 	// private final Set<FileWithSuffix> usedFiles = new HashSet<>();
 	private final Set<FileWithSuffix> filesUsedCurrent = new HashSet<>();
 
-	private final ConfigurationStore option = ConfigurationStore.createEmpty();
+	private final ConfigurationStore<OptionKey> option = ConfigurationStore.createEmpty();
 
 	public Set<FileWithSuffix> getFilesUsedCurrent() {
 		return Collections.unmodifiableSet(filesUsedCurrent);
@@ -898,7 +899,7 @@ public class TContext {
 		return Optional.of(first.substring(idx + 1).trim());
 	}
 
-	public ConfigurationStore getOption() {
+	public ConfigurationStore<OptionKey> getOption() {
 		return option;
 	}
 

@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -131,7 +132,7 @@ public class EbnfExpression implements TextBlockable {
 	}
 
 	@Override
-	public TextBlock getUDrawable(ISkinParam skinParam, ConfigurationStore option) {
+	public TextBlock getUDrawable(ISkinParam skinParam, ConfigurationStore<OptionKey> option) {
 		final Style style = ETile.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final FontConfiguration fc = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 
@@ -187,7 +188,7 @@ public class EbnfExpression implements TextBlockable {
 		return note;
 	}
 
-	private TextBlock getMainDrawing(ISkinParam skinParam, ConfigurationStore option, Iterator<Token> it) {
+	private TextBlock getMainDrawing(ISkinParam skinParam, ConfigurationStore<OptionKey> option, Iterator<Token> it) {
 		final EbnfEngine engine = new EbnfEngine(skinParam, option);
 		while (it.hasNext()) {
 			final Token element = it.next();

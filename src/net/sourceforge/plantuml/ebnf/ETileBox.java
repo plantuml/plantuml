@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
@@ -70,7 +71,7 @@ public class ETileBox extends ETile {
 	private final HColorSet colorSet;
 	private final Symbol symbol;
 	private final ISkinParam skinParam;
-	private final ConfigurationStore option;
+	private final ConfigurationStore<OptionKey> option;
 	private String commentAbove;
 	private String commentBelow;
 
@@ -93,7 +94,7 @@ public class ETileBox extends ETile {
 	}
 
 	public ETileBox(String value, Symbol symbol, FontConfiguration fc, Style style, HColorSet colorSet,
-			ISkinParam skinParam, ConfigurationStore option) {
+			ISkinParam skinParam, ConfigurationStore<OptionKey> option) {
 		this.symbol = symbol;
 		this.skinParam = skinParam;
 		this.option = option;
@@ -255,10 +256,10 @@ public class ETileBox extends ETile {
 	}
 
 	private String getDrawValue(String value) {
-		if (!Boolean.parseBoolean(option.getValue("useDescriptiveNames")) || !VALUE_MAP.containsKey(value))
+		if (!Boolean.parseBoolean(option.getValue(OptionKey.USE_DESCRIPTIVE_NAMES)) || !VALUE_MAP.containsKey(value))
 			return value;
 
-		final String language = option.getValue("language");
+		final String language = option.getValue(OptionKey.LANGUAGE);
 		return I18n.getLocalizedValue(language, "ebnf." + VALUE_MAP.get(value), value);
 	}
 

@@ -38,31 +38,31 @@ package net.sourceforge.plantuml.preproc;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class ConfigurationStore {
+public class ConfigurationStore<K> {
 
-	private final Map<String, String> values = new LinkedHashMap<String, String>();
+	private final Map<K, String> values = new LinkedHashMap<K, String>();
 
 	private ConfigurationStore() {
 	}
 
-	public static ConfigurationStore createEmpty() {
-		return new ConfigurationStore();
+	public static <K> ConfigurationStore<K> createEmpty() {
+		return new ConfigurationStore<>();
 	}
 
-	public void define(String name, String value) {
-		values.put(name, value);
+	public void define(K key, String value) {
+		values.put(key, value);
 	}
 
-	public boolean isDefine(String name) {
-		return values.containsKey(name);
+	public boolean isDefine(K key) {
+		return values.containsKey(key);
 	}
 
-	public void undefine(String name) {
-		values.remove(name);
+	public void undefine(K key) {
+		values.remove(key);
 	}
 
-	public String getValue(String name) {
-		return values.get(name);
+	public String getValue(K key) {
+		return values.get(key);
 	}
 
 }

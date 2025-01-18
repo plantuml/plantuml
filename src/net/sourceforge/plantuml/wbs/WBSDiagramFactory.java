@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class WBSDiagramFactory extends PSystemCommandFactory {
@@ -62,7 +63,7 @@ public class WBSDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public WBSDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore option) {
+	public WBSDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore<OptionKey> option) {
 		return new WBSDiagram(source, option);
 	}
 	

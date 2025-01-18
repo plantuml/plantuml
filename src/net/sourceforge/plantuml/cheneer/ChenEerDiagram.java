@@ -41,11 +41,12 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ChenEerDiagram extends AbstractEntityDiagram {
 
-	public ChenEerDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore config) {
+	public ChenEerDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore<OptionKey> config) {
 		super(source, UmlDiagramType.CHEN_EER, skinMap, config);
 	}
 

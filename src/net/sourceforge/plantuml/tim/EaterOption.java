@@ -34,6 +34,7 @@
  */
 package net.sourceforge.plantuml.tim;
 
+import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.expression.TValue;
 
@@ -52,7 +53,9 @@ public class EaterOption extends Eater {
 		skipSpaces();
 		final TValue value = eatExpression(context, memory);
 		skipSpaces();
-		context.getOption().define(key, value.toString());
+		final OptionKey optionKey = OptionKey.lazyFrom(key);
+		if (optionKey != null)
+			context.getOption().define(optionKey, value.toString());
 	}
 
 }
