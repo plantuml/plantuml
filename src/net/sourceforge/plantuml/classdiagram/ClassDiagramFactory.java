@@ -81,14 +81,14 @@ import net.sourceforge.plantuml.objectdiagram.command.CommandCreateEntityObjectM
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJson;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJsonSingleLine;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateMap;
-import net.sourceforge.plantuml.preproc.ProcessingArtifact;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ClassDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public ClassDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ProcessingArtifact preprocessing) {
+	public ClassDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessing) {
 		return new ClassDiagram(source, skinMap, preprocessing);
 	}
 

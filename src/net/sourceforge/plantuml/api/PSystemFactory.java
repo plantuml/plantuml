@@ -40,13 +40,13 @@ import java.util.Map;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.preproc.ProcessingArtifact;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public interface PSystemFactory {
 
-	Diagram createSystem(UmlSource source, Map<String, String> skinMap, ProcessingArtifact preprocessing);
+	Diagram createSystem(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessing);
 
 	DiagramType getDiagramType();
 

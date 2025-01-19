@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
-import net.sourceforge.plantuml.preproc.ProcessingArtifact;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -63,7 +63,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 	protected abstract void initCommandsList(List<Command> cmds);
 
-	public abstract AbstractPSystem createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ProcessingArtifact preprocessing);
+	public abstract AbstractPSystem createEmptyDiagram(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessing);
 
 	protected PSystemCommandFactory() {
 		this(DiagramType.UML);
@@ -74,7 +74,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 	}
 
 	@Override
-	final public Diagram createSystem(UmlSource source, Map<String, String> skinMap, ProcessingArtifact preprocessing) {
+	final public Diagram createSystem(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessing) {
 		IteratorCounter2 it = source.iterator2();
 		final StringLocated startLine = it.next();
 		if (StartUtils.isArobaseStartDiagram(startLine.getString()) == false)

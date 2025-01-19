@@ -57,7 +57,7 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.preproc.ProcessingArtifact;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.project.GanttStyle;
 import net.sourceforge.plantuml.project.LabelPosition;
@@ -135,7 +135,7 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 //		this.weekNumberStrategy = new WeekNumberStrategy(firstDayOfWeek, minimalDaysInFirstWeek);
 //	}
 
-	public ChronologyDiagram(UmlSource source, ProcessingArtifact preprocessing) {
+	public ChronologyDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, UmlDiagramType.CHRONOLOGY, null, preprocessing);
 	}
 

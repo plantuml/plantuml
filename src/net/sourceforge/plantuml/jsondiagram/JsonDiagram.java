@@ -67,7 +67,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
-import net.sourceforge.plantuml.preproc.ProcessingArtifact;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -80,7 +80,7 @@ public class JsonDiagram extends TitledDiagram {
 	private final boolean handwritten;
 
 	public JsonDiagram(UmlSource source, UmlDiagramType type, JsonValue json, List<Highlighted> highlighted,
-			StyleExtractor styleExtractor, ProcessingArtifact preprocessing) {
+			StyleExtractor styleExtractor, PreprocessingArtifact preprocessing) {
 		super(source, type, null, preprocessing);
 		this.handwritten = styleExtractor.isHandwritten();
 		if (json != null && (json.isString() || json.isBoolean() || json.isNumber() || json.isNull())) {

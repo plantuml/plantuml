@@ -53,8 +53,8 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
-import net.sourceforge.plantuml.preproc.ProcessingArtifact;
-import net.sourceforge.plantuml.preproc.ConfigurationStore2;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.preproc.ConfigurationStore;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
@@ -72,7 +72,7 @@ public class ETileBox extends ETile {
 	private final HColorSet colorSet;
 	private final Symbol symbol;
 	private final ISkinParam skinParam;
-	private final ConfigurationStore2<OptionKey> option;
+	private final ConfigurationStore<OptionKey> option;
 	private String commentAbove;
 	private String commentBelow;
 
@@ -95,7 +95,7 @@ public class ETileBox extends ETile {
 	}
 
 	public ETileBox(String value, Symbol symbol, FontConfiguration fc, Style style, HColorSet colorSet,
-			ISkinParam skinParam, ConfigurationStore2<OptionKey> option) {
+			ISkinParam skinParam, ConfigurationStore<OptionKey> option) {
 		this.symbol = symbol;
 		this.skinParam = skinParam;
 		this.option = option;

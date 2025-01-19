@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.error.PSystemErrorPreprocessor;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.preproc.ProcessingArtifact;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.OptionKey;
@@ -79,7 +79,7 @@ public class BlockUml {
 	private final Defines localDefines;
 	private final Map<String, String> skinMap;
 	private final Set<FileWithSuffix> included = new HashSet<>();
-	private final ProcessingArtifact option;
+	private final PreprocessingArtifact option;
 
 	public Set<FileWithSuffix> getIncluded() {
 		return Collections.unmodifiableSet(included);
@@ -143,7 +143,7 @@ public class BlockUml {
 
 		if (definitions == null) {
 			this.data = new ArrayList<>(this.rawSource);
-			this.option = new ProcessingArtifact();
+			this.option = new PreprocessingArtifact();
 		} else {
 			final TimLoader timLoader = new TimLoader(definitions.getImportedFiles(), defines, charset, definitions,
 					this.rawSource.get(0));

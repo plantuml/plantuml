@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.sprite.Sprite;
-import net.sourceforge.plantuml.preproc.ProcessingArtifact;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.SkinParam;
@@ -88,9 +88,9 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 	private final UmlDiagramType type;
 
 	private final SkinParam skinParam;
-	private final ProcessingArtifact preprocessing;
+	private final PreprocessingArtifact preprocessing;
 
-	public TitledDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig, ProcessingArtifact preprocessing) {
+	public TitledDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig, PreprocessingArtifact preprocessing) {
 		super(source);
 		this.preprocessing = preprocessing;
 		this.type = type;
@@ -265,7 +265,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		return skinParam.getPragma();
 	}
 
-	final public ProcessingArtifact getOption() {
+	final public PreprocessingArtifact getOption() {
 		return preprocessing;
 	}
 

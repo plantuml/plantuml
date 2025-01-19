@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.preproc.ProcessingArtifact;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
@@ -180,7 +180,7 @@ public class TContext {
 	// private final Set<FileWithSuffix> usedFiles = new HashSet<>();
 	private final Set<FileWithSuffix> filesUsedCurrent = new HashSet<>();
 
-	private final ProcessingArtifact artifact = new ProcessingArtifact();
+	private final PreprocessingArtifact artifact = new PreprocessingArtifact();
 
 	public Set<FileWithSuffix> getFilesUsedCurrent() {
 		return Collections.unmodifiableSet(filesUsedCurrent);
@@ -899,7 +899,7 @@ public class TContext {
 		return Optional.of(first.substring(idx + 1).trim());
 	}
 
-	public ProcessingArtifact getArtifact() {
+	public PreprocessingArtifact getArtifact() {
 		return artifact;
 	}
 

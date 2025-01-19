@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.command.CommandFootboxIgnored;
 import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.preproc.ProcessingArtifact;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.timingdiagram.command.CommandAnalog;
@@ -71,7 +71,7 @@ import net.sourceforge.plantuml.timingdiagram.command.CommandUseDateFormat;
 public class TimingDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public TimingDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ProcessingArtifact preprocessing) {
+	public TimingDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessing) {
 		return new TimingDiagram(source, preprocessing);
 	}
 

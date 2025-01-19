@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
-import net.sourceforge.plantuml.preproc.ProcessingArtifact;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.text.StringLocated;
@@ -61,7 +61,7 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 	}
 
 	@Override
-	final public Diagram createSystem(UmlSource source, Map<String, String> skinMap, ProcessingArtifact preprocessing) {
+	final public Diagram createSystem(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessing) {
 
 		if (source.getTotalLineCount() != 3)
 			return null;

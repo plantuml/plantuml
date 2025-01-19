@@ -40,7 +40,7 @@ import java.util.Set;
 
 import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.preproc.ProcessingArtifact;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
@@ -53,7 +53,7 @@ public class TimLoader {
 	private final TMemory global = new TMemoryGlobal();
 	private boolean preprocessorError;
 	private List<StringLocated> resultList;
-	private ProcessingArtifact option;
+	private PreprocessingArtifact option;
 
 	public TimLoader(ImportedFiles importedFiles, Defines defines, Charset charset,
 			DefinitionsContainer definitionsContainer, StringLocated location) {
@@ -97,7 +97,7 @@ public class TimLoader {
 		return preprocessorError;
 	}
 
-	public ProcessingArtifact getOption() {
+	public PreprocessingArtifact getOption() {
 		return option;
 	}
 

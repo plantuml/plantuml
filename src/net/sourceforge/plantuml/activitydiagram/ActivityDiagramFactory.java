@@ -55,7 +55,7 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteActivity;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.preproc.ProcessingArtifact;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
@@ -63,7 +63,7 @@ public class ActivityDiagramFactory extends PSystemCommandFactory {
     // ::remove folder when __HAXE__
 
 	@Override
-	public ActivityDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ProcessingArtifact preprocessing) {
+	public ActivityDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessing) {
 		return new ActivityDiagram(source, skinMap, preprocessing);
 	}
 

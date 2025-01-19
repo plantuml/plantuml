@@ -71,7 +71,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
-import net.sourceforge.plantuml.preproc.ProcessingArtifact;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -83,7 +83,7 @@ import net.sourceforge.plantuml.utils.CharInspector;
 
 public class PSystemRegex extends TitledDiagram {
 
-	public PSystemRegex(UmlSource source, ProcessingArtifact preprocessing) {
+	public PSystemRegex(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, UmlDiagramType.REGEX, null, preprocessing);
 		final StyleExtractor styleExtractor = new StyleExtractor(source.iterator2());
 

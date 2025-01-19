@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.preproc.ProcessingArtifact;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.project.command.CommandColorTask;
 import net.sourceforge.plantuml.project.command.CommandFootbox;
@@ -151,7 +151,7 @@ public class GanttDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public GanttDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ProcessingArtifact preprocessing) {
+	public GanttDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessing) {
 		return new GanttDiagram(source, preprocessing);
 	}
 	

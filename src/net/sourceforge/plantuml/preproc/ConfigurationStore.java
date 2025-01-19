@@ -38,15 +38,15 @@ package net.sourceforge.plantuml.preproc;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class ConfigurationStore2<K> {
+public class ConfigurationStore<K> {
 
 	private final Map<K, String> values = new LinkedHashMap<K, String>();
 
-	public ConfigurationStore2() {
+	public ConfigurationStore() {
 	}
 
-	public static <K> ConfigurationStore2<K> createEmpty() {
-		return new ConfigurationStore2<>();
+	public static <K> ConfigurationStore<K> createEmpty() {
+		return new ConfigurationStore<>();
 	}
 
 	public void define(K key, String value) {

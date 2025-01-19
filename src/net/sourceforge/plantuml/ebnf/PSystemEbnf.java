@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
-import net.sourceforge.plantuml.preproc.ProcessingArtifact;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -66,7 +66,7 @@ public class PSystemEbnf extends TitledDiagram {
 
 	private final List<TextBlockable> expressions = new ArrayList<>();
 
-	public PSystemEbnf(UmlSource source, ProcessingArtifact preprocessing) {
+	public PSystemEbnf(UmlSource source, PreprocessingArtifact preprocessing) {
 		super(source, UmlDiagramType.EBNF, null, preprocessing);
 	}
 
@@ -88,7 +88,7 @@ public class PSystemEbnf extends TitledDiagram {
 	public CommandExecutionResult addNote(final Display note, Colors colors) {
 		expressions.add(new TextBlockable() {
 			@Override
-			public TextBlock getUDrawable(ISkinParam skinParam, ProcessingArtifact preprocessing) {
+			public TextBlock getUDrawable(ISkinParam skinParam, PreprocessingArtifact preprocessing) {
 				final FloatingNote f = FloatingNote.create(note, skinParam, SName.ebnf);
 				return TextBlockUtils.withMargin(f, 0, 0, 5, 15);
 			}
