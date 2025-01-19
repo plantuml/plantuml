@@ -30,11 +30,17 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.preproc;
+package net.sourceforge.plantuml.warning;
 
-public class Warning {
+public enum JawsWarning {
+	BACKSLASH_NEWLINE,
+	BACKSLASH_LEFT,
+	BACKSLASH_RIGHT,
+	BACKSLASH_TABULATION,
+	BACKSLASH_BACKSLASH,
+	OTHER
 
 }

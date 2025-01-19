@@ -48,7 +48,6 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jaws.JawsStrange;
-import net.sourceforge.plantuml.jaws.JawsWarning;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -81,6 +80,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
+import net.sourceforge.plantuml.warning.JawsWarning;
 
 public class Display implements Iterable<CharSequence> {
 

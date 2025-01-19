@@ -61,7 +61,6 @@ import net.sourceforge.plantuml.api.ImageDataComplex;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.braille.UGraphicBraille;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.jaws.JawsWarning;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -106,6 +105,7 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.text.SvgCharSizeHack;
 import net.sourceforge.plantuml.url.CMapData;
 import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.warning.JawsWarning;
 
 public class ImageBuilder {
 
@@ -224,7 +224,7 @@ public class ImageBuilder {
 		seed = diagram.seed();
 		titledDiagram = diagram;
 		warningOrError = diagram.getWarningOrError();
-		warnings = diagram.getPragma().warnings();
+		warnings = diagram.getPragma().getWarnings();
 		return this;
 	}
 

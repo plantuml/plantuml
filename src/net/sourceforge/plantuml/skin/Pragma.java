@@ -40,7 +40,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.plantuml.jaws.JawsWarning;
+import net.sourceforge.plantuml.warning.JawsWarning;
 
 public class Pragma {
 
@@ -114,7 +114,7 @@ public class Pragma {
 		this.warnings.add(warning);
 	}
 
-	public Set<JawsWarning> warnings() {
+	public Set<JawsWarning> getWarnings() {
 		if (isTrue(getValue("warning")))
 			return this.warnings;
 		return null;
