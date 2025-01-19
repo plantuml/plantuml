@@ -91,7 +91,7 @@ import net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
 import net.sourceforge.plantuml.openiconic.PSystemListOpenIconicFactory;
 import net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory;
 import net.sourceforge.plantuml.oregon.PSystemOregonFactory;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.ProcessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.project.GanttDiagramFactory;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -127,7 +127,7 @@ public class PSystemBuilder {
 	public static final long startTime = System.currentTimeMillis();
 
 	final public Diagram createPSystem(List<StringLocated> source, List<StringLocated> rawSource,
-			Map<String, String> skinMap, ConfigurationStore<OptionKey> option) {
+			Map<String, String> skinMap, ProcessingArtifact preprocessing) {
 
 		WasmLog.log("..compiling diagram...");
 
@@ -159,7 +159,7 @@ public class PSystemBuilder {
 					continue;
 
 				// WasmLog.log("...trying " + systemFactory.getClass().getName() + " ...");
-				final Diagram sys = systemFactory.createSystem(umlSource, skinMap, option);
+				final Diagram sys = systemFactory.createSystem(umlSource, skinMap, preprocessing);
 				if (isOk(sys)) {
 					result = sys;
 					return sys;

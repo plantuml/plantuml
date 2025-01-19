@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.compositediagram.command.CommandCreatePackageBlo
 import net.sourceforge.plantuml.compositediagram.command.CommandEndPackageBlock;
 import net.sourceforge.plantuml.compositediagram.command.CommandLinkBlock;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.ProcessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinSimple;
@@ -69,8 +69,8 @@ public class CompositeDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public CompositeDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore<OptionKey> option) {
-		return new CompositeDiagram(source, skinMap, option);
+	public CompositeDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ProcessingArtifact preprocessing) {
+		return new CompositeDiagram(source, skinMap, preprocessing);
 	}
 	
 	@Override

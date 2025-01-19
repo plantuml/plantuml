@@ -48,14 +48,14 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.plasma.Quark;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.ProcessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.svek.image.EntityImageClass;
 
 public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
-	public ClassDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore<OptionKey> config) {
+	public ClassDiagram(UmlSource source, Map<String, String> skinMap, ProcessingArtifact config) {
 		super(source, UmlDiagramType.CLASS, skinMap, config);
 	}
 

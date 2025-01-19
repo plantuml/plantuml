@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.ProcessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.utils.Direction;
@@ -59,8 +59,8 @@ public class ActivityDiagram extends CucaDiagram {
 	private Entity lastEntityBrancheConsulted;
 	private ConditionalContext currentContext;
 
-	public ActivityDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore<OptionKey> option) {
-		super(source, UmlDiagramType.ACTIVITY, skinMap, option);
+	public ActivityDiagram(UmlSource source, Map<String, String> skinMap, ProcessingArtifact preprocessing) {
+		super(source, UmlDiagramType.ACTIVITY, skinMap, preprocessing);
 		setNamespaceSeparator(null);
 	}
 

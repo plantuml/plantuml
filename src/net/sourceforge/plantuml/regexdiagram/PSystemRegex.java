@@ -71,7 +71,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.ProcessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -83,8 +83,8 @@ import net.sourceforge.plantuml.utils.CharInspector;
 
 public class PSystemRegex extends TitledDiagram {
 
-	public PSystemRegex(UmlSource source, ConfigurationStore<OptionKey> option) {
-		super(source, UmlDiagramType.REGEX, null, option);
+	public PSystemRegex(UmlSource source, ProcessingArtifact preprocessing) {
+		super(source, UmlDiagramType.REGEX, null, preprocessing);
 		final StyleExtractor styleExtractor = new StyleExtractor(source.iterator2());
 
 		final ISkinParam skinParam = getSkinParam();
@@ -208,7 +208,7 @@ public class PSystemRegex extends TitledDiagram {
 	}
 
 	private void pushEtileBox(ReToken element, Symbol type) {
-		stack.addFirst(new ETileBox(element.getData(), type, fontConfiguration, style, colorSet, getSkinParam(), getOption()));
+		stack.addFirst(new ETileBox(element.getData(), type, fontConfiguration, style, colorSet, getSkinParam(), getOption().getOption()));
 	}
 
 	private void pushRegexGroup(ReToken element) {

@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJson;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJsonSingleLine;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateMap;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.ProcessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
@@ -71,8 +71,8 @@ import net.sourceforge.plantuml.statediagram.command.CommandLinkStateReverse;
 public class StateDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public StateDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore<OptionKey> option) {
-		return new StateDiagram(source, skinMap, option);
+	public StateDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ProcessingArtifact preprocessing) {
+		return new StateDiagram(source, skinMap, preprocessing);
 	}
 
 	@Override

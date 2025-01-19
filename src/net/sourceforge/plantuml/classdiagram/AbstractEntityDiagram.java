@@ -46,15 +46,15 @@ import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.ProcessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public abstract class AbstractEntityDiagram extends CucaDiagram {
 	// ::remove folder when __HAXE__
 
-	public AbstractEntityDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig, ConfigurationStore<OptionKey> option) {
-		super(source, type, orig, option);
+	public AbstractEntityDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig, ProcessingArtifact preprocessing) {
+		super(source, type, orig, preprocessing);
 	}
 
 	final protected List<String> getDotStrings() {

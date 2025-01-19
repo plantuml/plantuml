@@ -64,7 +64,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.ProcessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.sequencediagram.graphic.FileMaker;
 import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramFileMakerPuma2;
@@ -97,8 +97,8 @@ public class SequenceDiagram extends UmlDiagram {
 
 	private final Rose skin2 = new Rose();
 
-	public SequenceDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore<OptionKey> option) {
-		super(source, UmlDiagramType.SEQUENCE, skinMap, option);
+	public SequenceDiagram(UmlSource source, Map<String, String> skinMap, ProcessingArtifact preprocessing) {
+		super(source, UmlDiagramType.SEQUENCE, skinMap, preprocessing);
 	}
 
 	@Deprecated

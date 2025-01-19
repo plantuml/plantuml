@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.jsondiagram.JsonDiagram;
 import net.sourceforge.plantuml.jsondiagram.StyleExtractor;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.ProcessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.yaml.Highlighted;
@@ -60,7 +60,7 @@ public class HclDiagramFactory extends PSystemAbstractFactory {
 	}
 
 	@Override
-	public Diagram createSystem(UmlSource source, Map<String, String> skinMap, ConfigurationStore<OptionKey> option) {
+	public Diagram createSystem(UmlSource source, Map<String, String> skinMap, ProcessingArtifact preprocessing) {
 		final List<Highlighted> highlighted = new ArrayList<>();
 		JsonValue data = null;
 		StyleExtractor styleExtractor = null;
@@ -81,7 +81,7 @@ public class HclDiagramFactory extends PSystemAbstractFactory {
 		} catch (Exception e) {
 			Logme.error(e);
 		}
-		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.HCL, data, highlighted, styleExtractor, option);
+		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.HCL, data, highlighted, styleExtractor, preprocessing);
 //		if (styleExtractor != null) {
 //			styleExtractor.applyStyles(result.getSkinParam());
 //			final String title = styleExtractor.getTitle();

@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.ProcessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
@@ -55,8 +55,8 @@ public class NwDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public NwDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore<OptionKey> option) {
-		return new NwDiagram(source, option);
+	public NwDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ProcessingArtifact preprocessing) {
+		return new NwDiagram(source, preprocessing);
 	}
 
 	@Override

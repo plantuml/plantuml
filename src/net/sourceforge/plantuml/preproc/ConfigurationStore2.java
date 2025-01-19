@@ -30,50 +30,39 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.wire;
+package net.sourceforge.plantuml.preproc;
 
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.CommonCommands;
-import net.sourceforge.plantuml.command.PSystemCommandFactory;
-import net.sourceforge.plantuml.core.DiagramType;
-import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.preproc.ProcessingArtifact;
-import net.sourceforge.plantuml.preproc.OptionKey;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
+public class ConfigurationStore2<K> {
 
-public class WireDiagramFactory extends PSystemCommandFactory {
+	private final Map<K, String> values = new LinkedHashMap<K, String>();
 
-	public WireDiagramFactory() {
-		super(DiagramType.WIRE);
+	public ConfigurationStore2() {
 	}
 
-	@Override
-	protected void initCommandsList(List<Command> cmds) {
-		CommonCommands.addCommonCommands1(cmds);
-		cmds.add(new CommandComponent());
-		cmds.add(new CommandSpot());
-		cmds.add(new CommandGoto());
-		cmds.add(new CommandMove());
-		cmds.add(new CommandWLink());
-		cmds.add(new CommandNewColumn());
-		cmds.add(new CommandPrint());
+	public static <K> ConfigurationStore2<K> createEmpty() {
+		return new ConfigurationStore2<>();
 	}
 
-	@Override
-	public WireDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ProcessingArtifact preprocessing) {
-		return new WireDiagram(source, preprocessing);
-	}
-	
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.WIRE;
+	public void define(K key, String value) {
+		values.put(key, value);
 	}
 
+	public boolean isDefine(K key) {
+		return values.containsKey(key);
+	}
+
+	public void undefine(K key) {
+		values.remove(key);
+	}
+
+	public String getValue(K key) {
+		return values.get(key);
+	}
 
 }

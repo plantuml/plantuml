@@ -58,7 +58,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockRecentred;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.ProcessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.sequencediagram.NoteType;
@@ -77,8 +77,8 @@ public class ActivityDiagram3 extends UmlDiagram {
 
 	private final Swimlanes swimlanes = new Swimlanes(getSkinParam(), getPragma());
 
-	public ActivityDiagram3(UmlSource source, Map<String, String> skinMap, ConfigurationStore<OptionKey> option) {
-		super(source, UmlDiagramType.ACTIVITY, skinMap, option);
+	public ActivityDiagram3(UmlSource source, Map<String, String> skinMap, ProcessingArtifact preprocessing) {
+		super(source, UmlDiagramType.ACTIVITY, skinMap, preprocessing);
 	}
 
 	private void manageSwimlaneStrategy() {

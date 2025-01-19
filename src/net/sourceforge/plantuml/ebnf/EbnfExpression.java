@@ -46,7 +46,8 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.ProcessingArtifact;
+import net.sourceforge.plantuml.preproc.ConfigurationStore2;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
@@ -132,7 +133,7 @@ public class EbnfExpression implements TextBlockable {
 	}
 
 	@Override
-	public TextBlock getUDrawable(ISkinParam skinParam, ConfigurationStore<OptionKey> option) {
+	public TextBlock getUDrawable(ISkinParam skinParam, ProcessingArtifact preprocessing) {
 		final Style style = ETile.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final FontConfiguration fc = style.getFontConfiguration(skinParam.getIHtmlColorSet());
 
@@ -152,7 +153,7 @@ public class EbnfExpression implements TextBlockable {
 				if (full.size() == 0)
 					return EbnfEngine.syntaxError(fc, skinParam);
 
-				main = getMainDrawing(skinParam, option, full.iterator());
+				main = getMainDrawing(skinParam, preprocessing.getOption(), full.iterator());
 			} else {
 				final HColor lineColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 				main = new ETileWithCircles(new ETileEmpty(), lineColor);
@@ -188,7 +189,7 @@ public class EbnfExpression implements TextBlockable {
 		return note;
 	}
 
-	private TextBlock getMainDrawing(ISkinParam skinParam, ConfigurationStore<OptionKey> option, Iterator<Token> it) {
+	private TextBlock getMainDrawing(ISkinParam skinParam, ConfigurationStore2<OptionKey> option, Iterator<Token> it) {
 		final EbnfEngine engine = new EbnfEngine(skinParam, option);
 		while (it.hasNext()) {
 			final Token element = it.next();

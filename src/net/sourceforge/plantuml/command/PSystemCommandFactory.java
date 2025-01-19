@@ -49,7 +49,7 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.ProcessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -63,7 +63,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 	protected abstract void initCommandsList(List<Command> cmds);
 
-	public abstract AbstractPSystem createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ConfigurationStore<OptionKey> option);
+	public abstract AbstractPSystem createEmptyDiagram(UmlSource source, Map<String, String> skinMap, ProcessingArtifact preprocessing);
 
 	protected PSystemCommandFactory() {
 		this(DiagramType.UML);
@@ -74,7 +74,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 	}
 
 	@Override
-	final public Diagram createSystem(UmlSource source, Map<String, String> skinMap, ConfigurationStore<OptionKey> option) {
+	final public Diagram createSystem(UmlSource source, Map<String, String> skinMap, ProcessingArtifact preprocessing) {
 		IteratorCounter2 it = source.iterator2();
 		final StringLocated startLine = it.next();
 		if (StartUtils.isArobaseStartDiagram(startLine.getString()) == false)
@@ -86,7 +86,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 
 			return buildEmptyError(source, startLine.getLocation(), it.getTrace());
 		}
-		AbstractPSystem sys = createEmptyDiagram(source, skinMap, option);
+		AbstractPSystem sys = createEmptyDiagram(source, skinMap, preprocessing);
 
 		final Set<ParserPass> requiredPass = sys.getRequiredPass();
 

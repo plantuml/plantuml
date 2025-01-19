@@ -14,7 +14,7 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.decoration.LinkMiddleDecor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.ProcessingArtifact;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.BlocLines;
@@ -23,7 +23,7 @@ public class CommandMultiSubclassTest {
 
 	private final Command<ChenEerDiagram> command = new CommandMultiSubclass();
 
-	private final ChenEerDiagram diagram = new ChenEerDiagram(UmlSource.create(new ArrayList<>(), false), null, ConfigurationStore.createEmpty());
+	private final ChenEerDiagram diagram = new ChenEerDiagram(UmlSource.create(new ArrayList<>(), false), null, new ProcessingArtifact());
 
 	@Test
 	void test_parse() {

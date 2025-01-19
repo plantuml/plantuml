@@ -84,7 +84,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.plasma.Plasma;
 import net.sourceforge.plantuml.plasma.Quark;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.ProcessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
@@ -143,8 +143,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		this.setSeparator(namespaceSeparator);
 	}
 
-	public CucaDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig, ConfigurationStore<OptionKey> option) {
-		super(source, type, orig, option);
+	public CucaDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig, ProcessingArtifact preprocessing) {
+		super(source, type, orig, preprocessing);
 		this.namespace = new Plasma<Entity>();
 		this.root = namespace.root();
 		new Entity(this.root, this, null, GroupType.ROOT, 0);

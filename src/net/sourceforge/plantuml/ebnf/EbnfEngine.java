@@ -44,7 +44,8 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.ProcessingArtifact;
+import net.sourceforge.plantuml.preproc.ConfigurationStore2;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.ISkinSimple;
@@ -58,10 +59,10 @@ public class EbnfEngine {
 	private final Style style;
 	private final HColorSet colorSet;
 	private final ISkinParam skinParam;
-	private final ConfigurationStore<OptionKey> option;
+	private final ConfigurationStore2<OptionKey> option;
 	private final HColor lineColor;
 
-	public EbnfEngine(ISkinParam skinParam, ConfigurationStore<OptionKey> option) {
+	public EbnfEngine(ISkinParam skinParam, ConfigurationStore2<OptionKey> option) {
 		this.skinParam = skinParam;
 		this.option = option;
 		this.style = ETile.getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());

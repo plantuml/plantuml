@@ -35,34 +35,12 @@
  */
 package net.sourceforge.plantuml.preproc;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+public class ProcessingArtifact {
 
-public class ConfigurationStore<K> {
+	private final ConfigurationStore2<OptionKey> option = ConfigurationStore2.createEmpty();
 
-	private final Map<K, String> values = new LinkedHashMap<K, String>();
-
-	private ConfigurationStore() {
-	}
-
-	public static <K> ConfigurationStore<K> createEmpty() {
-		return new ConfigurationStore<>();
-	}
-
-	public void define(K key, String value) {
-		values.put(key, value);
-	}
-
-	public boolean isDefine(K key) {
-		return values.containsKey(key);
-	}
-
-	public void undefine(K key) {
-		values.remove(key);
-	}
-
-	public String getValue(K key) {
-		return values.get(key);
+	public ConfigurationStore2<OptionKey> getOption() {
+		return option;
 	}
 
 }

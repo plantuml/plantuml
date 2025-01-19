@@ -73,7 +73,7 @@ import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.pdf.PdfConverter;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.ProcessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
@@ -95,8 +95,8 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 //		super(style, source, type);
 //	}
 
-	public UmlDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig, ConfigurationStore<OptionKey> option) {
-		super(source, type, orig, option);
+	public UmlDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig, ProcessingArtifact preprocessing) {
+		super(source, type, orig, preprocessing);
 	}
 
 	final public int getMinwidth() {
