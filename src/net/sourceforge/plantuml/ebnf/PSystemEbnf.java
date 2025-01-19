@@ -53,7 +53,7 @@ import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -66,8 +66,8 @@ public class PSystemEbnf extends TitledDiagram {
 
 	private final List<TextBlockable> expressions = new ArrayList<>();
 
-	public PSystemEbnf(UmlSource source, ConfigurationStore<OptionKey> option) {
-		super(source, UmlDiagramType.EBNF, null, option);
+	public PSystemEbnf(UmlSource source, PreprocessingArtifact preprocessing) {
+		super(source, UmlDiagramType.EBNF, null, preprocessing);
 	}
 
 	public DiagramDescription getDescription() {
@@ -88,7 +88,7 @@ public class PSystemEbnf extends TitledDiagram {
 	public CommandExecutionResult addNote(final Display note, Colors colors) {
 		expressions.add(new TextBlockable() {
 			@Override
-			public TextBlock getUDrawable(ISkinParam skinParam, ConfigurationStore<OptionKey> option) {
+			public TextBlock getUDrawable(ISkinParam skinParam, PreprocessingArtifact preprocessing) {
 				final FloatingNote f = FloatingNote.create(note, skinParam, SName.ebnf);
 				return TextBlockUtils.withMargin(f, 0, 0, 5, 15);
 			}
@@ -112,9 +112,9 @@ public class PSystemEbnf extends TitledDiagram {
 			return TextBlockUtils.addBackcolor(tmp, null);
 		}
 
-		TextBlock result = expressions.get(0).getUDrawable(getSkinParam(), getOption());
+		TextBlock result = expressions.get(0).getUDrawable(getSkinParam(), getPreprocessingArtifact());
 		for (int i = 1; i < expressions.size(); i++)
-			result = TextBlockUtils.mergeTB(result, expressions.get(i).getUDrawable(getSkinParam(), getOption()),
+			result = TextBlockUtils.mergeTB(result, expressions.get(i).getUDrawable(getSkinParam(), getPreprocessingArtifact()),
 					HorizontalAlignment.LEFT);
 		return TextBlockUtils.addBackcolor(result, null);
 	}

@@ -30,17 +30,36 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.jaws;
+package net.sourceforge.plantuml.preproc;
 
-public enum JawsWarning {
-	BACKSLASH_NEWLINE,
-	BACKSLASH_LEFT,
-	BACKSLASH_RIGHT,
-	BACKSLASH_TABULATION,
-	BACKSLASH_BACKSLASH,
-	OTHER
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import net.sourceforge.plantuml.warning.Warning;
+import net.sourceforge.plantuml.warning.WarningHandler;
+
+public class PreprocessingArtifact implements WarningHandler {
+
+	private final ConfigurationStore<OptionKey> option = ConfigurationStore.createEmpty();
+
+	public ConfigurationStore<OptionKey> getOption() {
+		return option;
+	}
+
+	private final Set<Warning> warnings = new LinkedHashSet<>();
+
+	@Override
+	public void addWarning(Warning warning) {
+		this.warnings.add(warning);
+	}
+
+	@Override
+	public Collection<Warning> getWarnings() {
+		return this.warnings;
+	}
 
 }

@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.StartUtils;
@@ -60,20 +60,20 @@ public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSy
 		this(DiagramType.UML);
 	}
 
-	public abstract P executeLine(UmlSource source, P system, String line);
+	public abstract P executeLine(UmlSource source, P system, String line, PreprocessingArtifact preprocessing);
 
-	public abstract P initDiagram(UmlSource source, String startLine);
+	public abstract P initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing);
 
 	private boolean isEmptyLine(StringLocated result) {
 		return result.getTrimmed().getString().length() == 0;
 	}
 
 	@Override
-	final public Diagram createSystem(UmlSource source, Map<String, String> skinMap, ConfigurationStore<OptionKey> option) {
+	final public Diagram createSystem(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessing) {
 		source = source.removeInitialSkinparam();
 		final IteratorCounter2 it = source.iterator2();
 		final StringLocated startLine = it.next();
-		P system = initDiagram(source, startLine.getString());
+		P system = initDiagram(source, startLine.getString(), preprocessing);
 		boolean first = true;
 		while (it.hasNext()) {
 			final StringLocated s = it.next();
@@ -83,15 +83,15 @@ public abstract class PSystemBasicFactory<P extends AbstractPSystem> extends PSy
 			first = false;
 			if (StartUtils.isArobaseEndDiagram(s.getString())) {
 				if (source.getTotalLineCount() == 2 && source.isStartDef() == false)
-					return buildEmptyError(source, s.getLocation(), it.getTrace());
+					return buildEmptyError(source, s.getLocation(), it.getTrace(), preprocessing);
 
 				return system;
 			}
-			system = executeLine(source, system, s.getString());
+			system = executeLine(source, system, s.getString(), preprocessing);
 			if (system == null) {
 				final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, s.getLocation(), getUmlDiagramType());
 				// return PSystemErrorUtils.buildV1(source, err, null);
-				return PSystemErrorUtils.buildV2(source, err, null, it.getTrace());
+				return PSystemErrorUtils.buildV2(source, err, null, it.getTrace(), preprocessing);
 			}
 		}
 		return system;

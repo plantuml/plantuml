@@ -30,42 +30,17 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.klimt.creole.legacy;
+package net.sourceforge.plantuml.warning;
 
-import net.sourceforge.plantuml.command.PSystemBasicFactory;
-import net.sourceforge.plantuml.core.DiagramType;
-import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
+import java.util.Collection;
 
-public class PSystemCreoleFactory extends PSystemBasicFactory<PSystemCreole> {
-	// ::remove file when __CORE__
+public interface WarningHandler {
 
-	public PSystemCreoleFactory() {
-		super(DiagramType.CREOLE);
-	}
+	public void addWarning(Warning warning);
 
-	@Override
-	public PSystemCreole initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
-		if (getDiagramType() == DiagramType.CREOLE)
-			return new PSystemCreole(source, preprocessing);
-
-		return null;
-	}
-
-	@Override
-	public PSystemCreole executeLine(UmlSource source, PSystemCreole system, String line, PreprocessingArtifact preprocessing) {
-		system.doCommandLine(line);
-		return system;
-	}
-	
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return null;
-	}
-
+	public Collection<Warning> getWarnings();
 
 }

@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.Version;
 
@@ -53,8 +54,8 @@ public class PSystemUnsupported extends PlainDiagram {
 
 	private final List<String> strings = new ArrayList<>();
 
-	public PSystemUnsupported(UmlSource source) {
-		super(source);
+	public PSystemUnsupported(UmlSource source, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 		strings.add("<b>Diagram not supported by this release of PlantUML");
 		strings.add(Version.fullDescription());
 		strings.add("License " + new License().toString());

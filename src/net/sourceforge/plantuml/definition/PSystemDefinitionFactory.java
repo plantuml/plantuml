@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.definition;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemDefinitionFactory extends PSystemBasicFactory<PSystemDefinition> {
@@ -47,15 +48,15 @@ public class PSystemDefinitionFactory extends PSystemBasicFactory<PSystemDefinit
 	}
 
 	@Override
-	public PSystemDefinition initDiagram(UmlSource source, String startLine) {
+	public PSystemDefinition initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
 		if (getDiagramType() == DiagramType.DEFINITION)
-			return new PSystemDefinition(source, startLine);
+			return new PSystemDefinition(source, startLine, preprocessing);
 
 		return null;
 	}
 
 	@Override
-	public PSystemDefinition executeLine(UmlSource source, PSystemDefinition system, String line) {
+	public PSystemDefinition executeLine(UmlSource source, PSystemDefinition system, String line, PreprocessingArtifact preprocessing) {
 		system.doCommandLine(line);
 		return system;
 	}

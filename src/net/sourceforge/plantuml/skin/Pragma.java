@@ -35,17 +35,20 @@
  */
 package net.sourceforge.plantuml.skin;
 
-import java.util.EnumSet;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.plantuml.jaws.JawsWarning;
+import net.sourceforge.plantuml.warning.Warning;
+import net.sourceforge.plantuml.warning.WarningHandler;
 
-public class Pragma {
+public class Pragma implements WarningHandler {
 
 	private final Map<String, String> values = new LinkedHashMap<String, String>();
-	private final Set<JawsWarning> warnings = EnumSet.noneOf(JawsWarning.class);
+	private final Set<Warning> warnings = new LinkedHashSet<>();
 
 	private Pragma() {
 	}
@@ -110,13 +113,15 @@ public class Pragma {
 		return true;
 	}
 
-	public void addWarning(JawsWarning warning) {
+	@Override
+	public void addWarning(Warning warning) {
 		this.warnings.add(warning);
 	}
 
-	public Set<JawsWarning> warnings() {
+	@Override
+	public Collection<Warning> getWarnings() {
 		if (isTrue(getValue("warning")))
 			return this.warnings;
-		return null;
+		return Collections.emptyList();
 	}
 }

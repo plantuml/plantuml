@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemMath extends AbstractPSystem {
     // ::remove folder when __HAXE__
@@ -58,8 +59,8 @@ public class PSystemMath extends AbstractPSystem {
 	private Color color = Color.BLACK;
 	private Color backColor = Color.WHITE;
 
-	public PSystemMath(UmlSource source) {
-		super(source);
+	public PSystemMath(UmlSource source, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 	}
 
 	public DiagramDescription getDescription() {

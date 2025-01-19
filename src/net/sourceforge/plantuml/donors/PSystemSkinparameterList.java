@@ -50,13 +50,14 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.SkinParam;
 
 public class PSystemSkinparameterList extends PlainDiagram {
 	// ::remove file when __CORE__
 
-	public PSystemSkinparameterList(UmlSource source) {
-		super(source);
+	public PSystemSkinparameterList(UmlSource source, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 	}
 
 	@Override
@@ -96,8 +97,8 @@ public class PSystemSkinparameterList extends PlainDiagram {
 		return new DiagramDescription("(Parameters)");
 	}
 
-	public static PSystemSkinparameterList create(UmlSource source) {
-		return new PSystemSkinparameterList(source);
+	public static PSystemSkinparameterList create(UmlSource source, PreprocessingArtifact preprocessing) {
+		return new PSystemSkinparameterList(source, preprocessing);
 	}
 
 }

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.directdot;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemDotFactory extends PSystemBasicFactory<PSystemDot> {
@@ -48,24 +49,24 @@ public class PSystemDotFactory extends PSystemBasicFactory<PSystemDot> {
 	}
 
 	@Override
-	public PSystemDot initDiagram(UmlSource source, String startLine) {
+	public PSystemDot initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
 		data = null;
 		return null;
 	}
 
 	@Override
-	public PSystemDot executeLine(UmlSource source, PSystemDot system, String line) {
+	public PSystemDot executeLine(UmlSource source, PSystemDot system, String line, PreprocessingArtifact preprocessing) {
 		if (system == null && line.matches("(strict\\s+)?(di)?graph\\s+\"?[-\\w]+\"?\\s*\\{")) {
 			data = new StringBuilder(line);
 			data.append("\n");
-			return new PSystemDot(source, data.toString());
+			return new PSystemDot(source, data.toString(), preprocessing);
 		}
 		if (data == null || system == null)
 			return null;
 
 		data.append(line);
 		data.append("\n");
-		return new PSystemDot(source, data.toString());
+		return new PSystemDot(source, data.toString(), preprocessing);
 	}
 	
 	@Override

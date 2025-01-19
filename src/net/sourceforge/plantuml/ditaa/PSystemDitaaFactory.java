@@ -41,6 +41,7 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
@@ -58,7 +59,7 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 	}
 
 	@Override
-	public PSystemDitaa initDiagram(UmlSource source, String startLine) {
+	public PSystemDitaa initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
 		boolean performSeparationOfCommonEdges = true;
 		if (startLine != null && (startLine.contains("-E") || startLine.contains("--no-separation")))
 			performSeparationOfCommonEdges = false;
@@ -83,12 +84,12 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 		final Font font = extractFont(startLine);
 
 		return new PSystemDitaa(source, "", performSeparationOfCommonEdges, dropShadows, allCornersAreRound,
-				transparentBackground, scale, font, forceFontSize);
+				transparentBackground, scale, font, forceFontSize, preprocessing);
 
 	}
 
 	@Override
-	public PSystemDitaa executeLine(UmlSource source, PSystemDitaa system, String line) {
+	public PSystemDitaa executeLine(UmlSource source, PSystemDitaa system, String line, PreprocessingArtifact preprocessing) {
 		if (system == null && (line.equals("ditaa") || line.startsWith("ditaa("))) {
 			boolean performSeparationOfCommonEdges = true;
 			if (line.contains("-E") || line.contains("--no-separation"))
@@ -113,12 +114,12 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 			final float scale = extractScale(line);
 			final Font font = extractFont(line);
 			return new PSystemDitaa(source, "", performSeparationOfCommonEdges, dropShadows, allCornersAreRound,
-					transparentBackground, scale, font, forceFontSize);
+					transparentBackground, scale, font, forceFontSize, preprocessing);
 		}
 		if (system == null)
 			return null;
 
-		return system.add(line);
+		return system.add(line, preprocessing);
 	}
 
 	private float extractScale(String line) {

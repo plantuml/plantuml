@@ -56,6 +56,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.CompoundBorder;
 
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.version.PSystemVersion;
 import net.sourceforge.plantuml.version.Version;
@@ -120,13 +121,13 @@ class AboutWindow extends JFrame {
 
 	private JComponent getInfoVersion() {
 		final PSystemVersion p1 = PSystemVersion
-				.createShowVersion2(UmlSource.create(new ArrayList<StringLocated>(), false));
+				.createShowVersion2(UmlSource.create(new ArrayList<StringLocated>(), false), new PreprocessingArtifact());
 		return getJComponent(skip(p1.getLines()));
 	}
 
 	private JComponent getInfoAuthors() {
 		final PSystemVersion p1 = PSystemVersion
-				.createShowAuthors2(UmlSource.create(new ArrayList<StringLocated>(), false));
+				.createShowAuthors2(UmlSource.create(new ArrayList<StringLocated>(), false), new PreprocessingArtifact());
 		return getJComponent(skip(p1.getLines()));
 	}
 

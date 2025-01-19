@@ -83,6 +83,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.text.BackSlash;
@@ -93,7 +94,7 @@ import net.sourceforge.plantuml.version.PSystemVersion;
 import net.sourceforge.plantuml.version.Version;
 
 public abstract class PSystemError extends PlainDiagram {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	// Dodgy kludge for testing - we will need a different approach if we want to
 	// test addMessageDedication() etc.
@@ -106,8 +107,8 @@ public abstract class PSystemError extends PlainDiagram {
 	protected List<StringLocated> trace;
 	protected ErrorUml singleError;
 
-	public PSystemError(UmlSource source) {
-		super(source);
+	public PSystemError(UmlSource source, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 	}
 
 	@Override
@@ -291,7 +292,8 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private TextBlock getWelcome() throws IOException {
-		return new PSystemWelcome(getSource(), GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT).getGraphicStrings();
+		return new PSystemWelcome(getSource(), GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT, getPreprocessingArtifact())
+				.getGraphicStrings();
 	}
 
 	private TextBlock addWelcome(final TextBlock result) throws IOException {

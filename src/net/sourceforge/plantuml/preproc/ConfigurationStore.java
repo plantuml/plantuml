@@ -42,7 +42,7 @@ public class ConfigurationStore<K> {
 
 	private final Map<K, String> values = new LinkedHashMap<K, String>();
 
-	private ConfigurationStore() {
+	public ConfigurationStore() {
 	}
 
 	public static <K> ConfigurationStore<K> createEmpty() {

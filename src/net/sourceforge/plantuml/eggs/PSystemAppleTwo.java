@@ -41,13 +41,14 @@ import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemAppleTwo extends PlainStringsDiagram {
 	// ::remove file when __CORE__
 
-	public PSystemAppleTwo(UmlSource source) throws IOException {
-		super(source);
+	public PSystemAppleTwo(UmlSource source, PreprocessingArtifact preprocessing) throws IOException {
+		super(source, preprocessing);
 		strings.add("                             <b><size:18>Apple //e for ever !                             ");
 		strings.add(" ");
 

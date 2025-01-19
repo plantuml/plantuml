@@ -91,7 +91,7 @@ import net.sourceforge.plantuml.nwdiag.NwDiagramFactory;
 import net.sourceforge.plantuml.openiconic.PSystemListOpenIconicFactory;
 import net.sourceforge.plantuml.openiconic.PSystemOpenIconicFactory;
 import net.sourceforge.plantuml.oregon.PSystemOregonFactory;
-import net.sourceforge.plantuml.preproc.ConfigurationStore;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.project.GanttDiagramFactory;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -127,7 +127,7 @@ public class PSystemBuilder {
 	public static final long startTime = System.currentTimeMillis();
 
 	final public Diagram createPSystem(List<StringLocated> source, List<StringLocated> rawSource,
-			Map<String, String> skinMap, ConfigurationStore<OptionKey> option) {
+			Map<String, String> skinMap, PreprocessingArtifact preprocessing) {
 
 		WasmLog.log("..compiling diagram...");
 
@@ -145,13 +145,13 @@ public class PSystemBuilder {
 					Log.error("Preprocessor Error: " + s.getPreprocessorError());
 					final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, s.getPreprocessorError(), 0,
 							s.getLocation(), null);
-					return PSystemErrorUtils.buildV2(umlSource, err, Collections.<String>emptyList(), source);
+					return PSystemErrorUtils.buildV2(umlSource, err, Collections.<String>emptyList(), source, preprocessing);
 				}
 			}
 
 			final DiagramType diagramType = umlSource.getDiagramType();
 			if (diagramType == DiagramType.UNKNOWN)
-				return new PSystemUnsupported(umlSource);
+				return new PSystemUnsupported(umlSource, preprocessing);
 
 			final List<PSystemError> errors = new ArrayList<>();
 			for (PSystemFactory systemFactory : factories) {
@@ -159,7 +159,7 @@ public class PSystemBuilder {
 					continue;
 
 				// WasmLog.log("...trying " + systemFactory.getClass().getName() + " ...");
-				final Diagram sys = systemFactory.createSystem(umlSource, skinMap, option);
+				final Diagram sys = systemFactory.createSystem(umlSource, skinMap, preprocessing);
 				if (isOk(sys)) {
 					result = sys;
 					return sys;
@@ -167,7 +167,7 @@ public class PSystemBuilder {
 				errors.add((PSystemError) sys);
 			}
 			if (errors.size() == 0)
-				return new PSystemUnsupported(umlSource);
+				return new PSystemUnsupported(umlSource, preprocessing);
 
 			result = PSystemErrorUtils.merge(errors);
 			return result;

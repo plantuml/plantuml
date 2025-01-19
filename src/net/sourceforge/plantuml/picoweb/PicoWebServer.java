@@ -71,6 +71,7 @@ import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonArray;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.LineLocationImpl;
@@ -269,8 +270,9 @@ public class PicoWebServer implements Runnable {
 
 		if (ssr.getBlocks().size() == 0) {
 			system = PSystemErrorUtils.buildV2(null,
-					new ErrorUml(SYNTAX_ERROR, "No valid @start/@end found, please check the version", 0, new LineLocationImpl("", null), null), null,
-					Collections.<StringLocated>emptyList());
+					new ErrorUml(SYNTAX_ERROR, "No valid @start/@end found, please check the version", 0,
+							new LineLocationImpl("", null), null),
+					null, Collections.<StringLocated>emptyList(), new PreprocessingArtifact());
 			imageData = ssr.noValidStartFound(os, option.getFileFormatOption());
 		} else {
 			system = ssr.getBlocks().get(0).getDiagram();

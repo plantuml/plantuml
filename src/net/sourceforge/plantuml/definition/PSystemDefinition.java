@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.Pragma;
 
 public class PSystemDefinition extends PlainDiagram implements UDrawable {
@@ -60,8 +61,8 @@ public class PSystemDefinition extends PlainDiagram implements UDrawable {
 	private final List<String> lines = new ArrayList<>();
 	private final String startLine;
 
-	public PSystemDefinition(UmlSource source, String startLine) {
-		super(source);
+	public PSystemDefinition(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 		this.startLine = startLine;
 	}
 

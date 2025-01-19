@@ -39,17 +39,18 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemListEmojiFactory extends PSystemSingleLineFactory {
 	// ::remove file when __CORE__
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line) {
+	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		final String lineLower = StringUtils.goLowerCase(line);
 		if (lineLower.equals("emoji") || lineLower.startsWith("emoji ")) {
 			final int idx = line.indexOf(' ');
 			final String code = idx == -1 ? "26" : line.substring(idx + 1);
-			return new PSystemListEmoji(source, code.toLowerCase());
+			return new PSystemListEmoji(source, code.toLowerCase(), preprocessing);
 		}
 		return null;
 	}

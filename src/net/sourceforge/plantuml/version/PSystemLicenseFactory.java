@@ -39,15 +39,16 @@ import java.io.IOException;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemLicenseFactory extends PSystemSingleLineFactory {
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line) {
+	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		try {
 			if (line.matches("(?i)^li[sc][ea]n[sc]e\\s*$")) {
-				return PSystemLicense.create(source);
+				return PSystemLicense.create(source, preprocessing);
 			}
 		} catch (IOException e) {
 			Log.error("Error " + e);

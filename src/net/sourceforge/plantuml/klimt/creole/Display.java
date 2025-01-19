@@ -48,7 +48,6 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.jaws.JawsStrange;
-import net.sourceforge.plantuml.jaws.JawsWarning;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -81,6 +80,7 @@ import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
+import net.sourceforge.plantuml.warning.JawsWarning;
 
 public class Display implements Iterable<CharSequence> {
 
@@ -277,27 +277,27 @@ public class Display implements Iterable<CharSequence> {
 				if (c2 == 'n' || c2 == 'r' || c2 == 'l') {
 					if (c2 == 'r') {
 						naturalHorizontalAlignment = HorizontalAlignment.RIGHT;
-						pragma.addWarning(JawsWarning.BACKSLASH_RIGHT);
+						pragma.addWarning(JawsWarning.BACKSLASH_RIGHT.toWarning());
 					} else if (c2 == 'l') {
 						naturalHorizontalAlignment = HorizontalAlignment.LEFT;
-						pragma.addWarning(JawsWarning.BACKSLASH_LEFT);
+						pragma.addWarning(JawsWarning.BACKSLASH_LEFT.toWarning());
 					} else {
-						pragma.addWarning(JawsWarning.BACKSLASH_NEWLINE);
+						pragma.addWarning(JawsWarning.BACKSLASH_NEWLINE.toWarning());
 					}
 
 					result.add(current.toString());
 					current.setLength(0);
 				} else if (c2 == 't') {
 					current.append('\t');
-					pragma.addWarning(JawsWarning.BACKSLASH_TABULATION);
+					pragma.addWarning(JawsWarning.BACKSLASH_TABULATION.toWarning());
 				} else if (c2 == '\\') {
 					current.append(c2);
-					pragma.addWarning(JawsWarning.BACKSLASH_BACKSLASH);
+					pragma.addWarning(JawsWarning.BACKSLASH_BACKSLASH.toWarning());
 				} else {
 					current.append(c);
 					current.append(c2);
 				}
-				pragma.addWarning(JawsWarning.OTHER);
+				pragma.addWarning(JawsWarning.OTHER.toWarning());
 			} else if (c == Jaws.BLOCK_E1_REAL_TABULATION) {
 				// current.append('\t');
 				current.append(c);

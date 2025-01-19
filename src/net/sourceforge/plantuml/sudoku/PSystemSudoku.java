@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemSudoku extends AbstractPSystem {
 
@@ -79,8 +80,8 @@ public class PSystemSudoku extends AbstractPSystem {
 		return new DiagramDescription("(Sudoku)");
 	}
 
-	public PSystemSudoku(UmlSource source, Long seed) {
-		super(source);
+	public PSystemSudoku(UmlSource source, Long seed, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 		sudoku = new SudokuDLX(seed);
 	}
 

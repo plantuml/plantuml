@@ -30,42 +30,29 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.klimt.creole.legacy;
+package net.sourceforge.plantuml.warning;
 
-import net.sourceforge.plantuml.command.PSystemBasicFactory;
-import net.sourceforge.plantuml.core.DiagramType;
-import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
+import java.util.Arrays;
+import java.util.List;
 
-public class PSystemCreoleFactory extends PSystemBasicFactory<PSystemCreole> {
-	// ::remove file when __CORE__
-
-	public PSystemCreoleFactory() {
-		super(DiagramType.CREOLE);
-	}
-
-	@Override
-	public PSystemCreole initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
-		if (getDiagramType() == DiagramType.CREOLE)
-			return new PSystemCreole(source, preprocessing);
-
-		return null;
-	}
-
-	@Override
-	public PSystemCreole executeLine(UmlSource source, PSystemCreole system, String line, PreprocessingArtifact preprocessing) {
-		system.doCommandLine(line);
-		return system;
-	}
+public enum JawsWarning {
+	BACKSLASH_NEWLINE,
+	BACKSLASH_LEFT,
+	BACKSLASH_RIGHT,
+	BACKSLASH_TABULATION,
+	BACKSLASH_BACKSLASH,
+	OTHER;
 	
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return null;
-	}
 
+	private final static List<String> WARNINGS = Arrays.asList(
+			"This diagram is using \\n which is deprecated and will be removed in the future.",
+			"You should use %n() instead in your diagram.", "More info on https://plantuml.com/newline");
+
+	public Warning toWarning() {
+		return new Warning(WARNINGS);
+	}
 
 }

@@ -33,39 +33,39 @@
  * 
  *
  */
-package net.sourceforge.plantuml.klimt.creole.legacy;
+package net.sourceforge.plantuml.warning;
 
-import net.sourceforge.plantuml.command.PSystemBasicFactory;
-import net.sourceforge.plantuml.core.DiagramType;
-import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
-public class PSystemCreoleFactory extends PSystemBasicFactory<PSystemCreole> {
-	// ::remove file when __CORE__
+public final class Warning {
 
-	public PSystemCreoleFactory() {
-		super(DiagramType.CREOLE);
+	private final List<String> message;
+
+	public Warning(List<String> message) {
+		this.message = message;
+	}
+
+	public Warning(String message) {
+		this.message = Collections.singletonList(message);
+	}
+
+	public List<String> getMessage() {
+		return message;
 	}
 
 	@Override
-	public PSystemCreole initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
-		if (getDiagramType() == DiagramType.CREOLE)
-			return new PSystemCreole(source, preprocessing);
-
-		return null;
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		final Warning warning = (Warning) o;
+		return Objects.equals(message, warning.message);
 	}
 
 	@Override
-	public PSystemCreole executeLine(UmlSource source, PSystemCreole system, String line, PreprocessingArtifact preprocessing) {
-		system.doCommandLine(line);
-		return system;
+	public int hashCode() {
+		return Objects.hash(message);
 	}
-	
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return null;
-	}
-
 
 }

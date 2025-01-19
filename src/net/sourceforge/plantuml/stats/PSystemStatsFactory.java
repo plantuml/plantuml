@@ -39,16 +39,17 @@ import java.io.IOException;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemStatsFactory extends PSystemSingleLineFactory {
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line) {
+	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		try {
-			if (line.matches("(?i)^stats\\s*$")) {
-				return PSystemStats.create(source);
-			}
+			if (line.matches("(?i)^stats\\s*$")) 
+				return PSystemStats.create(source, preprocessing);
+			
 		} catch (IOException e) {
 			Log.error("Error " + e);
 		}

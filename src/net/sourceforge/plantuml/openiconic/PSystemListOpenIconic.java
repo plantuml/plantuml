@@ -52,12 +52,13 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockHorizontal;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.openiconic.data.DummyIcon;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemListOpenIconic extends PlainDiagram {
 	// ::remove file when __CORE__
 
-	public PSystemListOpenIconic(UmlSource source) {
-		super(source);
+	public PSystemListOpenIconic(UmlSource source, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 	}
 
 	@Override
