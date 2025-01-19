@@ -35,17 +35,12 @@
  */
 package net.sourceforge.plantuml.warning;
 
-public enum JawsWarning {
-	BACKSLASH_NEWLINE,
-	BACKSLASH_LEFT,
-	BACKSLASH_RIGHT,
-	BACKSLASH_TABULATION,
-	BACKSLASH_BACKSLASH,
-	OTHER;
-	
-	
-	public Warning toWarning() {
-		return new Warning();
-	}
+import java.util.Collection;
+
+public interface WarningHandler {
+
+	public void addWarning(Warning warning);
+
+	public Collection<Warning> getWarnings();
 
 }
