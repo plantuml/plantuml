@@ -35,17 +35,6 @@
  */
 package net.sourceforge.plantuml.preproc;
 
-public class PreprocessingArtifact {
-
-	private final ConfigurationStore<OptionKey> option = ConfigurationStore.createEmpty();
-
-	public ConfigurationStore<OptionKey> getOption() {
-		return option;
-	}
-
-	public void addWarning(String warning) {
-		// WIP
-
-	}
+public class Warning {
 
 }

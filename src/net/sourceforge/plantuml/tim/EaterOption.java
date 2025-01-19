@@ -54,7 +54,9 @@ public class EaterOption extends Eater {
 		final TValue value = eatExpression(context, memory);
 		skipSpaces();
 		final OptionKey optionKey = OptionKey.lazyFrom(key);
-		if (optionKey != null)
+		if (optionKey == null)
+			context.getPreprocessingArtifact().addWarning("No such !option " + key);
+		else
 			context.getPreprocessingArtifact().getOption().define(optionKey, value.toString());
 	}
 
