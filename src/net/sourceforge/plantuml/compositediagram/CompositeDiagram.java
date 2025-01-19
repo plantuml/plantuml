@@ -40,14 +40,13 @@ import java.util.Map;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class CompositeDiagram extends AbstractEntityDiagram {
 	// ::remove folder when __HAXE__
 
-	public CompositeDiagram(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact config) {
-		super(source, UmlDiagramType.COMPOSITE, skinMap, config);
+	public CompositeDiagram(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessingArtifact) {
+		super(source, UmlDiagramType.COMPOSITE, skinMap, preprocessingArtifact);
 	}
 
 //	@Override

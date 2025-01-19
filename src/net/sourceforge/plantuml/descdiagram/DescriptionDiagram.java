@@ -45,13 +45,12 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class DescriptionDiagram extends AbstractEntityDiagram {
 
-	public DescriptionDiagram(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact config) {
-		super(source, UmlDiagramType.DESCRIPTION, skinMap, config);
+	public DescriptionDiagram(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessingArtifact) {
+		super(source, UmlDiagramType.DESCRIPTION, skinMap, preprocessingArtifact);
 	}
 
 	@Override

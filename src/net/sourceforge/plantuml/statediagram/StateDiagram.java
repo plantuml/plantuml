@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class StateDiagram extends AbstractEntityDiagram {
@@ -57,8 +56,8 @@ public class StateDiagram extends AbstractEntityDiagram {
 
 	private static final String CONCURRENT_PREFIX = "CONC";
 
-	public StateDiagram(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact config) {
-		super(source, UmlDiagramType.STATE, skinMap, config);
+	public StateDiagram(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessingArtifact) {
+		super(source, UmlDiagramType.STATE, skinMap, preprocessingArtifact);
 		setNamespaceSeparator(".");
 	}
 
