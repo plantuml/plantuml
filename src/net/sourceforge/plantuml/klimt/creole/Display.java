@@ -277,27 +277,27 @@ public class Display implements Iterable<CharSequence> {
 				if (c2 == 'n' || c2 == 'r' || c2 == 'l') {
 					if (c2 == 'r') {
 						naturalHorizontalAlignment = HorizontalAlignment.RIGHT;
-						pragma.addWarning(JawsWarning.BACKSLASH_RIGHT);
+						pragma.addWarning(JawsWarning.BACKSLASH_RIGHT.toWarning());
 					} else if (c2 == 'l') {
 						naturalHorizontalAlignment = HorizontalAlignment.LEFT;
-						pragma.addWarning(JawsWarning.BACKSLASH_LEFT);
+						pragma.addWarning(JawsWarning.BACKSLASH_LEFT.toWarning());
 					} else {
-						pragma.addWarning(JawsWarning.BACKSLASH_NEWLINE);
+						pragma.addWarning(JawsWarning.BACKSLASH_NEWLINE.toWarning());
 					}
 
 					result.add(current.toString());
 					current.setLength(0);
 				} else if (c2 == 't') {
 					current.append('\t');
-					pragma.addWarning(JawsWarning.BACKSLASH_TABULATION);
+					pragma.addWarning(JawsWarning.BACKSLASH_TABULATION.toWarning());
 				} else if (c2 == '\\') {
 					current.append(c2);
-					pragma.addWarning(JawsWarning.BACKSLASH_BACKSLASH);
+					pragma.addWarning(JawsWarning.BACKSLASH_BACKSLASH.toWarning());
 				} else {
 					current.append(c);
 					current.append(c2);
 				}
-				pragma.addWarning(JawsWarning.OTHER);
+				pragma.addWarning(JawsWarning.OTHER.toWarning());
 			} else if (c == Jaws.BLOCK_E1_REAL_TABULATION) {
 				// current.append('\t');
 				current.append(c);

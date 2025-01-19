@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.warning;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum JawsWarning {
 	BACKSLASH_NEWLINE,
 	BACKSLASH_LEFT,
@@ -43,9 +46,13 @@ public enum JawsWarning {
 	BACKSLASH_BACKSLASH,
 	OTHER;
 	
-	
+
+	private final static List<String> WARNINGS = Arrays.asList(
+			"This diagram is using \\n which is deprecated and will be removed in the future.",
+			"You should use %n() instead in your diagram.", "More info on https://plantuml.com/newline");
+
 	public Warning toWarning() {
-		return new Warning();
+		return new Warning(WARNINGS);
 	}
 
 }

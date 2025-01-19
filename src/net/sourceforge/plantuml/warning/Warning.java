@@ -35,6 +35,32 @@
  */
 package net.sourceforge.plantuml.warning;
 
-public class Warning {
+import java.util.List;
+import java.util.Objects;
+
+public final class Warning {
+
+	private final List<String> message;
+
+	public Warning(List<String> message) {
+		this.message = message;
+	}
+
+	public List<String> getMessage() {
+		return message;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		final Warning warning = (Warning) o;
+		return Objects.equals(message, warning.message);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(message);
+	}
 
 }
