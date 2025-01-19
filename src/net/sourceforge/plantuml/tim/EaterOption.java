@@ -55,7 +55,7 @@ public class EaterOption extends Eater {
 		skipSpaces();
 		final OptionKey optionKey = OptionKey.lazyFrom(key);
 		if (optionKey != null)
-			context.getArtifact().getOption().define(optionKey, value.toString());
+			context.getPreprocessingArtifact().getOption().define(optionKey, value.toString());
 	}
 
 }

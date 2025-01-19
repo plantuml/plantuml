@@ -79,7 +79,7 @@ public class BlockUml {
 	private final Defines localDefines;
 	private final Map<String, String> skinMap;
 	private final Set<FileWithSuffix> included = new HashSet<>();
-	private final PreprocessingArtifact option;
+	private final PreprocessingArtifact preprocessingArtifact;
 
 	public Set<FileWithSuffix> getIncluded() {
 		return Collections.unmodifiableSet(included);
@@ -143,7 +143,7 @@ public class BlockUml {
 
 		if (definitions == null) {
 			this.data = new ArrayList<>(this.rawSource);
-			this.option = new PreprocessingArtifact();
+			this.preprocessingArtifact = new PreprocessingArtifact();
 		} else {
 			final TimLoader timLoader = new TimLoader(definitions.getImportedFiles(), defines, charset, definitions,
 					this.rawSource.get(0));
@@ -151,7 +151,7 @@ public class BlockUml {
 			this.data = Jaws.expandsJawsForPreprocessor(timLoader.getResultList());
 			this.debug = timLoader.getDebug();
 			this.preprocessorError = timLoader.isPreprocessorError();
-			this.option = timLoader.getOption();
+			this.preprocessingArtifact = timLoader.getPreprocessingArtifact();
 		}
 	}
 
@@ -189,7 +189,7 @@ public class BlockUml {
 			if (preprocessorError)
 				system = new PSystemErrorPreprocessor(data, debug);
 			else
-				system = new PSystemBuilder().createPSystem(data, rawSource, skinMap, option);
+				system = new PSystemBuilder().createPSystem(data, rawSource, skinMap, preprocessingArtifact);
 		}
 		return system;
 	}

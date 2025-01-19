@@ -208,7 +208,7 @@ public class PSystemRegex extends TitledDiagram {
 	}
 
 	private void pushEtileBox(ReToken element, Symbol type) {
-		stack.addFirst(new ETileBox(element.getData(), type, fontConfiguration, style, colorSet, getSkinParam(), getOption().getOption()));
+		stack.addFirst(new ETileBox(element.getData(), type, fontConfiguration, style, colorSet, getSkinParam(), getPreprocessingArtifact().getOption()));
 	}
 
 	private void pushRegexGroup(ReToken element) {

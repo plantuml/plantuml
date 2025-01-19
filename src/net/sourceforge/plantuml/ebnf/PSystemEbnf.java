@@ -112,9 +112,9 @@ public class PSystemEbnf extends TitledDiagram {
 			return TextBlockUtils.addBackcolor(tmp, null);
 		}
 
-		TextBlock result = expressions.get(0).getUDrawable(getSkinParam(), getOption());
+		TextBlock result = expressions.get(0).getUDrawable(getSkinParam(), getPreprocessingArtifact());
 		for (int i = 1; i < expressions.size(); i++)
-			result = TextBlockUtils.mergeTB(result, expressions.get(i).getUDrawable(getSkinParam(), getOption()),
+			result = TextBlockUtils.mergeTB(result, expressions.get(i).getUDrawable(getSkinParam(), getPreprocessingArtifact()),
 					HorizontalAlignment.LEFT);
 		return TextBlockUtils.addBackcolor(result, null);
 	}

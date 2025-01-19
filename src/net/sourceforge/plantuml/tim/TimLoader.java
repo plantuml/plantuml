@@ -53,7 +53,7 @@ public class TimLoader {
 	private final TMemory global = new TMemoryGlobal();
 	private boolean preprocessorError;
 	private List<StringLocated> resultList;
-	private PreprocessingArtifact option;
+	private PreprocessingArtifact preprocessingArtifact;
 
 	public TimLoader(ImportedFiles importedFiles, Defines defines, Charset charset,
 			DefinitionsContainer definitionsContainer, StringLocated location) {
@@ -75,7 +75,7 @@ public class TimLoader {
 			this.preprocessorError = true;
 		}
 		this.resultList = context.getResultList();
-		this.option = context.getArtifact();
+		this.preprocessingArtifact = context.getPreprocessingArtifact();
 		return context.getFilesUsedCurrent();
 	}
 
@@ -97,8 +97,8 @@ public class TimLoader {
 		return preprocessorError;
 	}
 
-	public PreprocessingArtifact getOption() {
-		return option;
+	public PreprocessingArtifact getPreprocessingArtifact() {
+		return preprocessingArtifact;
 	}
 
 }

@@ -180,7 +180,7 @@ public class TContext {
 	// private final Set<FileWithSuffix> usedFiles = new HashSet<>();
 	private final Set<FileWithSuffix> filesUsedCurrent = new HashSet<>();
 
-	private final PreprocessingArtifact artifact = new PreprocessingArtifact();
+	private final PreprocessingArtifact preprocessingArtifact = new PreprocessingArtifact();
 
 	public Set<FileWithSuffix> getFilesUsedCurrent() {
 		return Collections.unmodifiableSet(filesUsedCurrent);
@@ -899,8 +899,8 @@ public class TContext {
 		return Optional.of(first.substring(idx + 1).trim());
 	}
 
-	public PreprocessingArtifact getArtifact() {
-		return artifact;
+	public PreprocessingArtifact getPreprocessingArtifact() {
+		return preprocessingArtifact;
 	}
 
 }

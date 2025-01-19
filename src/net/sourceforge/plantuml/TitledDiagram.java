@@ -265,7 +265,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		return skinParam.getPragma();
 	}
 
-	final public PreprocessingArtifact getOption() {
+	final public PreprocessingArtifact getPreprocessingArtifact() {
 		return preprocessing;
 	}
 
