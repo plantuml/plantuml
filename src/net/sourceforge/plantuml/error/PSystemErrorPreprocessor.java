@@ -40,13 +40,14 @@ import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.text.StringLocated;
 
 public class PSystemErrorPreprocessor extends PSystemError {
 
-	public PSystemErrorPreprocessor(List<StringLocated> input, List<StringLocated> trace) {
+	public PSystemErrorPreprocessor(List<StringLocated> input, List<StringLocated> trace, PreprocessingArtifact preprocessing) {
 		super(UmlSource.create(input,
-				DiagramType.getTypeFromArobaseStart(input.get(0).getString()) == DiagramType.UML));
+				DiagramType.getTypeFromArobaseStart(input.get(0).getString()) == DiagramType.UML), preprocessing);
 		this.trace = trace;
 		this.singleError = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, getLastLine().getPreprocessorError(), 0,
 				getLastLine().getLocation(), null);

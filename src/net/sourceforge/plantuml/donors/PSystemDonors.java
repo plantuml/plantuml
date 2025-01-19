@@ -62,6 +62,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
@@ -101,8 +102,8 @@ public class PSystemDonors extends PlainDiagram {
 	 * - Noam Tamim
 	 */
 
-	public PSystemDonors(UmlSource source) {
-		super(source);
+	public PSystemDonors(UmlSource source, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 	}
 
 	@Override
@@ -164,8 +165,8 @@ public class PSystemDonors extends PlainDiagram {
 		return new DiagramDescription("(Donors)");
 	}
 
-	public static PSystemDonors create(UmlSource source) {
-		return new PSystemDonors(source);
+	public static PSystemDonors create(UmlSource source, PreprocessingArtifact preprocessing) {
+		return new PSystemDonors(source, preprocessing);
 	}
 
 }

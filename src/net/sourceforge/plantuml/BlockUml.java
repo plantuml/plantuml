@@ -187,7 +187,7 @@ public class BlockUml {
 	public Diagram getDiagram() {
 		if (system == null) {
 			if (preprocessorError)
-				system = new PSystemErrorPreprocessor(data, debug);
+				system = new PSystemErrorPreprocessor(data, debug, preprocessingArtifact);
 			else
 				system = new PSystemBuilder().createPSystem(data, rawSource, skinMap, preprocessingArtifact);
 		}

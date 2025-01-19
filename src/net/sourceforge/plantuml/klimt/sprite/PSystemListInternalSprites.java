@@ -48,12 +48,13 @@ import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockHorizontal;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemListInternalSprites extends PlainDiagram {
 	// ::remove file when __CORE__
 
-	public PSystemListInternalSprites(UmlSource source) {
-		super(source);
+	public PSystemListInternalSprites(UmlSource source, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 	}
 
 	@Override

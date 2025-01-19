@@ -38,12 +38,13 @@ package net.sourceforge.plantuml.eggs;
 import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemLost extends PlainStringsDiagram {
 	// ::remove file when __CORE__
 
-	public PSystemLost(UmlSource source) {
-		super(source);
+	public PSystemLost(UmlSource source, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 		strings.add("Thank you for choosing Oceanic Airlines.");
 	}
 

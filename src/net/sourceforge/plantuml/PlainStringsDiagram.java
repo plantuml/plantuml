@@ -43,6 +43,7 @@ import java.util.List;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public abstract class PlainStringsDiagram extends PlainDiagram {
 	// ::remove file when __HAXE__
@@ -52,8 +53,8 @@ public abstract class PlainStringsDiagram extends PlainDiagram {
 
 	protected final List<String> strings = new ArrayList<>();
 
-	public PlainStringsDiagram(UmlSource source) {
-		super(source);
+	public PlainStringsDiagram(UmlSource source, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 	}
 
 	@Override

@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.text.BackSlash;
@@ -72,8 +73,9 @@ public class PSystemDitaa extends AbstractPSystem {
 	private final boolean allCornersAreRound;
 
 	public PSystemDitaa(UmlSource source, String data, boolean performSeparationOfCommonEdges, boolean dropShadows,
-			boolean allCornersAreRound, boolean transparentBackground, float scale, Font font, boolean forceFontSize) {
-		super(source);
+			boolean allCornersAreRound, boolean transparentBackground, float scale, Font font, boolean forceFontSize,
+			PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 		this.data = data;
 		this.dropShadows = dropShadows;
 		this.performSeparationOfCommonEdges = performSeparationOfCommonEdges;
@@ -96,9 +98,9 @@ public class PSystemDitaa extends AbstractPSystem {
 		this.forceFontSize = forceFontSize;
 	}
 
-	PSystemDitaa add(String line) {
+	PSystemDitaa add(String line, PreprocessingArtifact preprocessing) {
 		return new PSystemDitaa(getSource(), data + line + BackSlash.NEWLINE, performSeparationOfCommonEdges,
-				dropShadows, allCornersAreRound, transparentBackground, scale, font, forceFontSize);
+				dropShadows, allCornersAreRound, transparentBackground, scale, font, forceFontSize, preprocessing);
 	}
 
 	public DiagramDescription getDescription() {

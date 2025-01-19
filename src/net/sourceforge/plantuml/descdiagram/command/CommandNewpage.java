@@ -69,7 +69,7 @@ public class CommandNewpage extends SingleLineCommand2<UmlDiagram> {
 		if (dpi != 96)
 			emptyDiagram.setParam("dpi", "" + dpi);
 
-		final NewpagedDiagram result = new NewpagedDiagram(diagram.getSource(), diagram, emptyDiagram);
+		final NewpagedDiagram result = new NewpagedDiagram(diagram.getSource(), diagram, emptyDiagram, diagram.getPreprocessingArtifact());
 		return CommandExecutionResult.newDiagram(result);
 	}
 }

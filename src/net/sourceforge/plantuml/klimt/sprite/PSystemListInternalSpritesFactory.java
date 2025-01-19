@@ -39,16 +39,17 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemListInternalSpritesFactory extends PSystemSingleLineFactory {
 	// ::remove file when __CORE__
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line) {
+	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		final String lineLower = StringUtils.goLowerCase(line);
-		if (lineLower.startsWith("listsprite")) {
-			return new PSystemListInternalSprites(source);
-		}
+		if (lineLower.startsWith("listsprite")) 
+			return new PSystemListInternalSprites(source, preprocessing);
+		
 		return null;
 	}
 

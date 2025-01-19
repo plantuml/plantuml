@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemWelcome extends PlainDiagram {
@@ -54,8 +55,8 @@ public class PSystemWelcome extends PlainDiagram {
 	private final List<String> strings = new ArrayList<>();
 	private final GraphicPosition position;
 
-	public PSystemWelcome(UmlSource source, GraphicPosition position) {
-		super(source);
+	public PSystemWelcome(UmlSource source, GraphicPosition position, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 		this.position = position;
 		strings.add("<b>Welcome to PlantUML!");
 		strings.add(" ");

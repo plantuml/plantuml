@@ -54,14 +54,15 @@ import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.dot.ProcessState;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemDot extends AbstractPSystem {
 	// ::remove folder when __CORE__
 
 	private final String data;
 
-	public PSystemDot(UmlSource source, String data) {
-		super(source);
+	public PSystemDot(UmlSource source, String data, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 		this.data = data;
 	}
 

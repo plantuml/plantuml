@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.klimt.creole.legacy;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemCreoleFactory extends PSystemBasicFactory<PSystemCreole> {
@@ -48,15 +49,15 @@ public class PSystemCreoleFactory extends PSystemBasicFactory<PSystemCreole> {
 	}
 
 	@Override
-	public PSystemCreole initDiagram(UmlSource source, String startLine) {
+	public PSystemCreole initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
 		if (getDiagramType() == DiagramType.CREOLE)
-			return new PSystemCreole(source);
+			return new PSystemCreole(source, preprocessing);
 
 		return null;
 	}
 
 	@Override
-	public PSystemCreole executeLine(UmlSource source, PSystemCreole system, String line) {
+	public PSystemCreole executeLine(UmlSource source, PSystemCreole system, String line, PreprocessingArtifact preprocessing) {
 		system.doCommandLine(line);
 		return system;
 	}

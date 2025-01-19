@@ -38,13 +38,14 @@ package net.sourceforge.plantuml.eggs;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemCharlieFactory extends PSystemSingleLineFactory {
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line) {
+	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		if (line.equalsIgnoreCase("charlie") || line.equalsIgnoreCase("jesuischarlie")) {
-			return new PSystemCharlie(source);
+			return new PSystemCharlie(source, preprocessing);
 		}
 		return null;
 	}

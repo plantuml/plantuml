@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.utils.SignatureUtils;
 
@@ -64,8 +65,8 @@ public class PSystemKeygen extends PlainDiagram {
 
 	final private String key;
 
-	public PSystemKeygen(UmlSource source, String key) {
-		super(source);
+	public PSystemKeygen(UmlSource source, String key, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 		this.key = key;
 	}
 

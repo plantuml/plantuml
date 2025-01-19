@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.math;
 import net.sourceforge.plantuml.command.PSystemBasicFactory;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemLatexFactory extends PSystemBasicFactory<PSystemLatex> {
@@ -47,15 +48,15 @@ public class PSystemLatexFactory extends PSystemBasicFactory<PSystemLatex> {
 	}
 
 	@Override
-	public PSystemLatex initDiagram(UmlSource source, String startLine) {
+	public PSystemLatex initDiagram(UmlSource source, String startLine, PreprocessingArtifact preprocessing) {
 		if (getDiagramType() == DiagramType.LATEX)
-			return new PSystemLatex(source);
+			return new PSystemLatex(source, preprocessing);
 
 		return null;
 	}
 
 	@Override
-	public PSystemLatex executeLine(UmlSource source, PSystemLatex system, String line) {
+	public PSystemLatex executeLine(UmlSource source, PSystemLatex system, String line, PreprocessingArtifact preprocessing) {
 		system.doCommandLine(line);
 		return system;
 	}

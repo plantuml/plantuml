@@ -29,7 +29,7 @@ class ImageBuilderTest {
 			nullValues = {"NULL"}
 	)
 	public void test_preserveAspectRatio_plainDiagram(String inFileFormatOption, String expected) throws Exception {
-		final PlainDiagram diagram = new PSystemCreole(UmlSource.create(new ArrayList<StringLocated>(), false));
+		final PlainDiagram diagram = new PSystemCreole(UmlSource.create(new ArrayList<StringLocated>(), false), new PreprocessingArtifact());
 		FileFormatOption fileFormatOption = new FileFormatOption(DEBUG);
 
 		if (inFileFormatOption != null) fileFormatOption = fileFormatOption.withPreserveAspectRatio(inFileFormatOption);

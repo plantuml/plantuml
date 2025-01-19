@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemOregon extends PlainDiagram {
 
@@ -55,8 +56,8 @@ public class PSystemOregon extends PlainDiagram {
 	private List<String> inputs;
 
 	@Deprecated
-	public PSystemOregon(UmlSource source, Keyboard keyboard) {
-		super(source);
+	public PSystemOregon(UmlSource source, Keyboard keyboard, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 		final BasicGame game = new OregonBasicGame();
 		try {
 			game.run(keyboard);
@@ -73,8 +74,8 @@ public class PSystemOregon extends PlainDiagram {
 		return super.createImageBuilder(fileFormatOption).blackBackcolor();
 	}
 
-	public PSystemOregon(UmlSource source) {
-		super(source);
+	public PSystemOregon(UmlSource source, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 		this.inputs = new ArrayList<>();
 	}
 

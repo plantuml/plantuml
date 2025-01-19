@@ -47,14 +47,15 @@ import net.sourceforge.plantuml.klimt.AffineTransformType;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.UImage;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.version.PSystemVersion;
 
 public class PSystemCharlie extends PlainDiagram {
 
 	private BufferedImage image;
 
-	PSystemCharlie(UmlSource source) {
-		super(source);
+	PSystemCharlie(UmlSource source, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 		image = PSystemVersion.getCharlieImage();
 	}
 

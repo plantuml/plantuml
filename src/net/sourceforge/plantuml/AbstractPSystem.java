@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.klimt.font.UFont;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.stats.StatsUtilsIncrement;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.text.BackSlash;
@@ -88,6 +89,7 @@ public abstract class AbstractPSystem implements Diagram {
 	private int splitPagesVertical = 1;
 
 	private String namespaceSeparator = null;
+	private final PreprocessingArtifact preprocessing;
 
 	public void setNamespaceSeparator(String namespaceSeparator) {
 		this.namespaceSeparator = namespaceSeparator;
@@ -97,8 +99,9 @@ public abstract class AbstractPSystem implements Diagram {
 		return namespaceSeparator;
 	}
 
-	public AbstractPSystem(UmlSource source) {
+	public AbstractPSystem(UmlSource source, PreprocessingArtifact preprocessing) {
 		this.source = Objects.requireNonNull(source);
+		this.preprocessing = preprocessing;
 	}
 
 	private String getVersion() {
@@ -262,6 +265,10 @@ public abstract class AbstractPSystem implements Diagram {
 	}
 
 	public void startingPass(ParserPass pass) {
+	}
+
+	final public PreprocessingArtifact getPreprocessingArtifact() {
+		return preprocessing;
 	}
 
 }

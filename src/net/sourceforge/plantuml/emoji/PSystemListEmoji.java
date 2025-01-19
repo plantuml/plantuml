@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemListEmoji extends PlainDiagram {
 	// ::remove file when __CORE__
@@ -108,8 +109,8 @@ public class PSystemListEmoji extends PlainDiagram {
 		};
 	}
 
-	public PSystemListEmoji(UmlSource source, String text) {
-		super(source);
+	public PSystemListEmoji(UmlSource source, String text, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 		this.text = text;
 	}
 

@@ -84,7 +84,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 			if (it.hasNext())
 				it.next();
 
-			return buildEmptyError(source, startLine.getLocation(), it.getTrace());
+			return buildEmptyError(source, startLine.getLocation(), it.getTrace(), preprocessing);
 		}
 		AbstractPSystem sys = createEmptyDiagram(source, skinMap, preprocessing);
 
@@ -99,27 +99,27 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 					// For next pass
 					break;
 				}
-				sys = executeFewLines(sys, source, it, pass);
+				sys = executeFewLines(sys, source, it, pass, preprocessing);
 				if (sys instanceof PSystemError)
 					return sys;
 			}
 		}
-		return finalizeDiagram(sys, source, it);
+		return finalizeDiagram(sys, source, it, preprocessing);
 
 	}
 
-	private Diagram finalizeDiagram(AbstractPSystem sys, UmlSource source, IteratorCounter2 it) {
+	private Diagram finalizeDiagram(AbstractPSystem sys, UmlSource source, IteratorCounter2 it, PreprocessingArtifact preprocessing) {
 		if (sys == null)
 			return null;
 
 		final String err = sys.checkFinalError();
 		if (err != null) {
 			final LineLocation location = it.next().getLocation();
-			return buildExecutionError(source, err, location, it.getTrace());
+			return buildExecutionError(source, err, location, it.getTrace(), preprocessing);
 		}
 		if (source.getTotalLineCount() == 2) {
 			final LineLocation location = it.next().getLocation();
-			return buildEmptyError(source, location, it.getTrace());
+			return buildEmptyError(source, location, it.getTrace(), preprocessing);
 		}
 		sys.makeDiagramReady();
 		if (sys.isOk() == false)
@@ -129,12 +129,12 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 	}
 
 	private AbstractPSystem executeFewLines(AbstractPSystem sys, UmlSource source, final IteratorCounter2 it,
-			ParserPass currentPass) {
+			ParserPass currentPass, PreprocessingArtifact preprocessing) {
 		final Step step = getCandidate(it);
 		if (step == null) {
 			final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, "Syntax Error?", 0, it.peek().getLocation(), getUmlDiagramType());
 			it.next();
-			return PSystemErrorUtils.buildV2(source, err, null, it.getTrace());
+			return PSystemErrorUtils.buildV2(source, err, null, it.getTrace(), preprocessing);
 		}
 
 		if (step.command.isEligibleFor(currentPass) == false)
@@ -145,7 +145,7 @@ public abstract class PSystemCommandFactory extends PSystemAbstractFactory {
 			final LineLocation location = ((StringLocated) step.blocLines.getFirst()).getLocation();
 			final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, result.getError(), result.getScore(),
 					location, getUmlDiagramType());
-			sys = PSystemErrorUtils.buildV2(source, err, result.getDebugLines(), it.getTrace());
+			sys = PSystemErrorUtils.buildV2(source, err, result.getDebugLines(), it.getTrace(), preprocessing);
 		}
 		if (result.getNewDiagram() != null)
 			sys = result.getNewDiagram();

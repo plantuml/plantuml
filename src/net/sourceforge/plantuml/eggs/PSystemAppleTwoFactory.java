@@ -41,17 +41,18 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.utils.Log;
 
 public class PSystemAppleTwoFactory extends PSystemSingleLineFactory {
 	// ::remove file when __CORE__
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line) {
+	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		if (line.equalsIgnoreCase("apple //e") || line.equalsIgnoreCase("apple ][") || line.equalsIgnoreCase("apple II")
 				|| line.equalsIgnoreCase("Steve Jobs") || line.equalsIgnoreCase("Steve Wozniak")) {
 			try {
-				return new PSystemAppleTwo(source);
+				return new PSystemAppleTwo(source, preprocessing);
 			} catch (IOException e) {
 				Log.error("Error " + e);
 				Logme.error(e);

@@ -51,7 +51,7 @@ public class PSystemWelcomeFactory implements PSystemFactory {
 	@Override
 	public Diagram createSystem(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessing) {
 		if (source.getTotalLineCount() == 2)
-			return new PSystemWelcome(source, GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT);
+			return new PSystemWelcome(source, GraphicPosition.BACKGROUND_CORNER_BOTTOM_RIGHT, preprocessing);
 
 		return null;
 	}

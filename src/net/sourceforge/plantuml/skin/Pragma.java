@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.skin;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -121,6 +122,6 @@ public class Pragma implements WarningHandler {
 	public Collection<Warning> getWarnings() {
 		if (isTrue(getValue("warning")))
 			return this.warnings;
-		return null;
+		return Collections.emptyList();
 	}
 }

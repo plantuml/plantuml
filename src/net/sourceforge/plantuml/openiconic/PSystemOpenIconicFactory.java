@@ -39,16 +39,17 @@ import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.command.PSystemSingleLineFactory;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 
 public class PSystemOpenIconicFactory extends PSystemSingleLineFactory {
 	// ::remove file when __CORE__
 
 	@Override
-	protected AbstractPSystem executeLine(UmlSource source, String line) {
+	protected AbstractPSystem executeLine(UmlSource source, String line, PreprocessingArtifact preprocessing) {
 		final String lineLower = StringUtils.goLowerCase(line);
 		if (lineLower.startsWith("openiconic ")) {
 			final int idx = line.indexOf(' ');
-			return new PSystemOpenIconic(source, lineLower.substring(idx + 1), 1.0);
+			return new PSystemOpenIconic(source, lineLower.substring(idx + 1), 1.0, preprocessing);
 		}
 		return null;
 	}

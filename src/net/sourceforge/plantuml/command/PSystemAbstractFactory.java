@@ -44,6 +44,7 @@ import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.error.PSystemErrorUtils;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.LineLocation;
 
@@ -57,16 +58,16 @@ public abstract class PSystemAbstractFactory implements PSystemFactory {
 	}
 
 	final protected PSystemError buildEmptyError(UmlSource source, LineLocation lineLocation,
-			List<StringLocated> trace) {
+			List<StringLocated> trace, PreprocessingArtifact preprocessing) {
 		final ErrorUml err = new ErrorUml(ErrorUmlType.SYNTAX_ERROR, EMPTY_DESCRIPTION, 0, lineLocation, getUmlDiagramType());
-		final PSystemError result = PSystemErrorUtils.buildV2(source, err, null, trace);
+		final PSystemError result = PSystemErrorUtils.buildV2(source, err, null, trace, preprocessing);
 		return result;
 	}
 
 	final protected PSystemError buildExecutionError(UmlSource source, String stringError, LineLocation lineLocation,
-			List<StringLocated> trace) {
+			List<StringLocated> trace, PreprocessingArtifact preprocessing) {
 		final ErrorUml err = new ErrorUml(ErrorUmlType.EXECUTION_ERROR, stringError, 0, lineLocation, getUmlDiagramType());
-		final PSystemError result = PSystemErrorUtils.buildV2(source, err, null, trace);
+		final PSystemError result = PSystemErrorUtils.buildV2(source, err, null, trace, preprocessing);
 		return result;
 	}
 

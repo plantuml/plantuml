@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.log.Logme;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.Stdlib;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
 import net.sourceforge.plantuml.security.SFile;
@@ -61,8 +62,8 @@ import net.sourceforge.plantuml.svek.GraphvizCrash;
 
 public class PSystemVersion extends PlainStringsDiagram {
 
-	PSystemVersion(UmlSource source, boolean withImage, List<String> args) {
-		super(source);
+	PSystemVersion(UmlSource source, boolean withImage, List<String> args, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 		this.strings.addAll(args);
 		try {
 			if (withImage) {
@@ -74,8 +75,8 @@ public class PSystemVersion extends PlainStringsDiagram {
 		}
 	}
 
-	private PSystemVersion(UmlSource source, List<String> args, BufferedImage image) {
-		super(source);
+	private PSystemVersion(UmlSource source, List<String> args, BufferedImage image, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 		this.strings.addAll(args);
 		this.image = image;
 		this.imagePosition = BACKGROUND_CORNER_BOTTOM_RIGHT;
@@ -164,7 +165,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 		return transparentIcon;
 	}
 
-	public static PSystemVersion createShowVersion2(UmlSource source) {
+	public static PSystemVersion createShowVersion2(UmlSource source, PreprocessingArtifact preprocessing) {
 		final List<String> strings = new ArrayList<>();
 		strings.add("<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")");
 		strings.add("(" + License.getCurrent() + " source distribution)");
@@ -197,23 +198,23 @@ public class PSystemVersion extends PlainStringsDiagram {
 
 		// ::done
 
-		return new PSystemVersion(source, true, strings);
+		return new PSystemVersion(source, true, strings, preprocessing);
 	}
 
 	// :: comment when __CORE__
-	public static PSystemVersion createStdLib(UmlSource source) {
+	public static PSystemVersion createStdLib(UmlSource source, PreprocessingArtifact preprocessing) {
 		final List<String> strings = new ArrayList<>();
 		Stdlib.addInfoVersion(strings, true);
 		strings.add(" ");
 
-		return new PSystemVersion(source, true, strings);
+		return new PSystemVersion(source, true, strings, preprocessing);
 	}
 	// ::done
 
-	public static PSystemVersion createShowAuthors2(UmlSource source) {
+	public static PSystemVersion createShowAuthors2(UmlSource source, PreprocessingArtifact preprocessing) {
 		// Duplicate in OptionPrint
 		final List<String> strings = getAuthorsStrings(true);
-		return new PSystemVersion(source, true, strings);
+		return new PSystemVersion(source, true, strings, preprocessing);
 	}
 
 	public static List<String> getAuthorsStrings(boolean withTag) {
@@ -251,11 +252,11 @@ public class PSystemVersion extends PlainStringsDiagram {
 	}
 
 	// ::comment when __CORE__
-	public static PSystemVersion createTestDot(UmlSource source) throws IOException {
+	public static PSystemVersion createTestDot(UmlSource source, PreprocessingArtifact preprocessing) throws IOException {
 		final List<String> strings = new ArrayList<>();
 		strings.add(Version.fullDescription());
 		GraphvizUtils.addDotStatus(strings, true);
-		return new PSystemVersion(source, false, strings);
+		return new PSystemVersion(source, false, strings, preprocessing);
 	}
 	// ::done
 
@@ -270,7 +271,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 //	}
 
 	// ::comment when __CORE__
-	public static PSystemVersion createKeyDistributor(UmlSource source) throws IOException {
+	public static PSystemVersion createKeyDistributor(UmlSource source, PreprocessingArtifact preprocessing) throws IOException {
 		final LicenseInfo license = LicenseInfo.retrieveDistributor();
 		BufferedImage im = null;
 		final List<String> strings = new ArrayList<>();
@@ -283,7 +284,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 			strings.add(license.getExpirationDate().toString());
 			im = LicenseInfo.retrieveDistributorImage(license);
 		}
-		return new PSystemVersion(source, strings, im);
+		return new PSystemVersion(source, strings, im, preprocessing);
 	}
 	// ::done
 

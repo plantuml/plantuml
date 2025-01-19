@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 
 public class PSystemOpenIconic extends PlainDiagram {
@@ -49,8 +50,8 @@ public class PSystemOpenIconic extends PlainDiagram {
 	private final String iconName;
 	private final double factor;
 
-	public PSystemOpenIconic(UmlSource source, String iconName, double factor) {
-		super(source);
+	public PSystemOpenIconic(UmlSource source, String iconName, double factor, PreprocessingArtifact preprocessing) {
+		super(source, preprocessing);
 		this.iconName = iconName;
 		this.factor = factor;
 	}
