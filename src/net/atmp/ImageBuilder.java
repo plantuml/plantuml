@@ -223,7 +223,7 @@ public class ImageBuilder {
 		seed = diagram.seed();
 		titledDiagram = diagram;
 		warningOrError = diagram.getWarningOrError();
-		warnings.addAll(diagram.getPragma().getWarnings());
+		warnings.addAll(diagram.getWarnings());
 		return this;
 	}
 
