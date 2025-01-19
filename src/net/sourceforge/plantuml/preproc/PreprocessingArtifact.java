@@ -35,7 +35,14 @@
  */
 package net.sourceforge.plantuml.preproc;
 
-public class PreprocessingArtifact {
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import net.sourceforge.plantuml.warning.Warning;
+import net.sourceforge.plantuml.warning.WarningHandler;
+
+public class PreprocessingArtifact implements WarningHandler {
 
 	private final ConfigurationStore<OptionKey> option = ConfigurationStore.createEmpty();
 
@@ -43,9 +50,16 @@ public class PreprocessingArtifact {
 		return option;
 	}
 
-	public void addWarning(String warning) {
-		// WIP
+	private final Set<Warning> warnings = new LinkedHashSet<>();
 
+	@Override
+	public void addWarning(Warning warning) {
+		this.warnings.add(warning);
+	}
+
+	@Override
+	public Collection<Warning> getWarnings() {
+		return this.warnings;
 	}
 
 }

@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.tim;
 import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.tim.expression.TValue;
+import net.sourceforge.plantuml.warning.Warning;
 
 public class EaterOption extends Eater {
 
@@ -55,7 +56,7 @@ public class EaterOption extends Eater {
 		skipSpaces();
 		final OptionKey optionKey = OptionKey.lazyFrom(key);
 		if (optionKey == null)
-			context.getPreprocessingArtifact().addWarning("No such !option " + key);
+			context.getPreprocessingArtifact().addWarning(new Warning("No such !option " + key));
 		else
 			context.getPreprocessingArtifact().getOption().define(optionKey, value.toString());
 	}

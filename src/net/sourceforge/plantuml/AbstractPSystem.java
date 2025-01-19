@@ -39,6 +39,7 @@ import static net.atmp.ImageBuilder.imageBuilder;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Set;
@@ -70,6 +71,8 @@ import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.version.License;
 import net.sourceforge.plantuml.version.Version;
+import net.sourceforge.plantuml.warning.Warning;
+import net.sourceforge.plantuml.warning.WarningHandler;
 
 /**
  * An abstract class for all diagram classes.
@@ -80,7 +83,7 @@ import net.sourceforge.plantuml.version.Version;
  *
  * @see PSystemBuilder
  */
-public abstract class AbstractPSystem implements Diagram {
+public abstract class AbstractPSystem implements Diagram, WarningHandler {
 	// ::remove file when __HAXE__
 
 	private final UmlSource source;
@@ -269,6 +272,17 @@ public abstract class AbstractPSystem implements Diagram {
 
 	final public PreprocessingArtifact getPreprocessingArtifact() {
 		return preprocessing;
+	}
+
+	@Override
+	public void addWarning(Warning warning) {
+		throw new UnsupportedOperationException();
+
+	}
+
+	@Override
+	public Collection<Warning> getWarnings() {
+		return preprocessing.getWarnings();
 	}
 
 }

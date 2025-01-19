@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.warning;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -44,6 +45,10 @@ public final class Warning {
 
 	public Warning(List<String> message) {
 		this.message = message;
+	}
+
+	public Warning(String message) {
+		this.message = Collections.singletonList(message);
 	}
 
 	public List<String> getMessage() {
