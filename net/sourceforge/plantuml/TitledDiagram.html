@@ -80,7 +80,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="Annotated.html" title="interface in net.sourceforge.plantuml">Annotated</a></code>, <code><a href="core/Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a></code></dd>
+<dd><code><a href="Annotated.html" title="interface in net.sourceforge.plantuml">Annotated</a></code>, <code><a href="core/Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a></code>, <code><a href="warning/WarningHandler.html" title="interface in net.sourceforge.plantuml.warning">WarningHandler</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
@@ -119,10 +119,10 @@ implements <a href="core/Diagram.html" title="interface in net.sourceforge.plant
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.skin.UmlDiagramType,java.util.Map,net.sourceforge.plantuml.preproc.ConfigurationStore)" class="member-name-link">TitledDiagram</a><wbr>(<a href="core/UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.skin.UmlDiagramType,java.util.Map,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">TitledDiagram</a><wbr>(<a href="core/UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
  <a href="skin/UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a>&nbsp;type,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;orig,
- <a href="preproc/ConfigurationStore.html" title="class in net.sourceforge.plantuml.preproc">ConfigurationStore</a>&lt;<a href="preproc/OptionKey.html" title="enum class in net.sourceforge.plantuml.preproc">OptionKey</a>&gt;&nbsp;option)</code></div>
+ <a href="preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -142,39 +142,39 @@ implements <a href="core/Diagram.html" title="interface in net.sourceforge.plant
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addSprite(java.lang.String,net.sourceforge.plantuml.klimt.sprite.Sprite)" class="member-name-link">addSprite</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="klimt/sprite/Sprite.html" title="interface in net.sourceforge.plantuml.klimt.sprite">Sprite</a>&nbsp;sprite)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#calculateBackColor()" class="member-name-link">calculateBackColor</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../atmp/ImageBuilder.html" title="class in net.atmp">ImageBuilder</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createImageBuilder(net.sourceforge.plantuml.FileFormatOption)" class="member-name-link">createImageBuilder</a><wbr>(<a href="FileFormatOption.html" title="class in net.sourceforge.plantuml">FileFormatOption</a>&nbsp;fileFormatOption)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#exportDiagramGraphic(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.FileFormatOption)" class="member-name-link">exportDiagramGraphic</a><wbr>(<a href="klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addWarning(net.sourceforge.plantuml.warning.Warning)" class="member-name-link">addWarning</a><wbr>(<a href="warning/Warning.html" title="class in net.sourceforge.plantuml.warning">Warning</a>&nbsp;warning)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#calculateBackColor()" class="member-name-link">calculateBackColor</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../atmp/ImageBuilder.html" title="class in net.atmp">ImageBuilder</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createImageBuilder(net.sourceforge.plantuml.FileFormatOption)" class="member-name-link">createImageBuilder</a><wbr>(<a href="FileFormatOption.html" title="class in net.sourceforge.plantuml">FileFormatOption</a>&nbsp;fileFormatOption)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#exportDiagramGraphic(net.sourceforge.plantuml.klimt.drawing.UGraphic,net.sourceforge.plantuml.FileFormatOption)" class="member-name-link">exportDiagramGraphic</a><wbr>(<a href="klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug,
  <a href="FileFormatOption.html" title="class in net.sourceforge.plantuml">FileFormatOption</a>&nbsp;fileFormatOption)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="abel/DisplayPositioned.html" title="class in net.sourceforge.plantuml.abel">DisplayPositioned</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCaption()" class="member-name-link">getCaption</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentStyleBuilder()" class="member-name-link">getCurrentStyleBuilder</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="style/ClockwiseTopRightBottomLeft.html" title="class in net.sourceforge.plantuml.style">ClockwiseTopRightBottomLeft</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDefaultMargins()" class="member-name-link">getDefaultMargins</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="cucadiagram/DisplaySection.html" title="class in net.sourceforge.plantuml.cucadiagram">DisplaySection</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFooter()" class="member-name-link">getFooter</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="cucadiagram/DisplaySection.html" title="class in net.sourceforge.plantuml.cucadiagram">DisplaySection</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHeader()" class="member-name-link">getHeader</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="abel/DisplayPositioned.html" title="class in net.sourceforge.plantuml.abel">DisplayPositioned</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLegend()" class="member-name-link">getLegend</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCaption()" class="member-name-link">getCaption</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMainFrame()" class="member-name-link">getMainFrame</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentStyleBuilder()" class="member-name-link">getCurrentStyleBuilder</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="preproc/ConfigurationStore.html" title="class in net.sourceforge.plantuml.preproc">ConfigurationStore</a>&lt;<a href="preproc/OptionKey.html" title="enum class in net.sourceforge.plantuml.preproc">OptionKey</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOption()" class="member-name-link">getOption</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="style/ClockwiseTopRightBottomLeft.html" title="class in net.sourceforge.plantuml.style">ClockwiseTopRightBottomLeft</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDefaultMargins()" class="member-name-link">getDefaultMargins</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="cucadiagram/DisplaySection.html" title="class in net.sourceforge.plantuml.cucadiagram">DisplaySection</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFooter()" class="member-name-link">getFooter</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="cucadiagram/DisplaySection.html" title="class in net.sourceforge.plantuml.cucadiagram">DisplaySection</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHeader()" class="member-name-link">getHeader</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="abel/DisplayPositioned.html" title="class in net.sourceforge.plantuml.abel">DisplayPositioned</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLegend()" class="member-name-link">getLegend</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMainFrame()" class="member-name-link">getMainFrame</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="skin/Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPragma()" class="member-name-link">getPragma</a>()</code></div>
@@ -194,46 +194,49 @@ implements <a href="core/Diagram.html" title="interface in net.sourceforge.plant
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="skin/UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUmlDiagramType()" class="member-name-link">getUmlDiagramType</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isUseElk()" class="member-name-link">isUseElk</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="warning/Warning.html" title="class in net.sourceforge.plantuml.warning">Warning</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWarnings()" class="member-name-link">getWarnings</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isUseSmetana()" class="member-name-link">isUseSmetana</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isUseElk()" class="member-name-link">isUseElk</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadSkin(java.lang.String)" class="member-name-link">loadSkin</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newSkin)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isUseSmetana()" class="member-name-link">isUseSmetana</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="klimt/color/ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#muteColorMapper(net.sourceforge.plantuml.klimt.color.ColorMapper)" class="member-name-link">muteColorMapper</a><wbr>(<a href="klimt/color/ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a>&nbsp;init)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadSkin(java.lang.String)" class="member-name-link">loadSkin</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newSkin)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCaption(net.sourceforge.plantuml.abel.DisplayPositioned)" class="member-name-link">setCaption</a><wbr>(<a href="abel/DisplayPositioned.html" title="class in net.sourceforge.plantuml.abel">DisplayPositioned</a>&nbsp;caption)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="klimt/color/ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#muteColorMapper(net.sourceforge.plantuml.klimt.color.ColorMapper)" class="member-name-link">muteColorMapper</a><wbr>(<a href="klimt/color/ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a>&nbsp;init)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLegend(net.sourceforge.plantuml.abel.DisplayPositioned)" class="member-name-link">setLegend</a><wbr>(<a href="abel/DisplayPositioned.html" title="class in net.sourceforge.plantuml.abel">DisplayPositioned</a>&nbsp;legend)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setMainFrame(net.sourceforge.plantuml.klimt.creole.Display)" class="member-name-link">setMainFrame</a><wbr>(<a href="klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;mainFrame)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setParam(java.lang.String,java.lang.String)" class="member-name-link">setParam</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTitle(net.sourceforge.plantuml.abel.DisplayPositioned)" class="member-name-link">setTitle</a><wbr>(<a href="abel/DisplayPositioned.html" title="class in net.sourceforge.plantuml.abel">DisplayPositioned</a>&nbsp;title)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setUseElk(boolean)" class="member-name-link">setUseElk</a><wbr>(boolean&nbsp;useElk)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCaption(net.sourceforge.plantuml.abel.DisplayPositioned)" class="member-name-link">setCaption</a><wbr>(<a href="abel/DisplayPositioned.html" title="class in net.sourceforge.plantuml.abel">DisplayPositioned</a>&nbsp;caption)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setUseSmetana(boolean)" class="member-name-link">setUseSmetana</a><wbr>(boolean&nbsp;useSmetana)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLegend(net.sourceforge.plantuml.abel.DisplayPositioned)" class="member-name-link">setLegend</a><wbr>(<a href="abel/DisplayPositioned.html" title="class in net.sourceforge.plantuml.abel">DisplayPositioned</a>&nbsp;legend)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setMainFrame(net.sourceforge.plantuml.klimt.creole.Display)" class="member-name-link">setMainFrame</a><wbr>(<a href="klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;mainFrame)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setParam(java.lang.String,java.lang.String)" class="member-name-link">setParam</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTitle(net.sourceforge.plantuml.abel.DisplayPositioned)" class="member-name-link">setTitle</a><wbr>(<a href="abel/DisplayPositioned.html" title="class in net.sourceforge.plantuml.abel">DisplayPositioned</a>&nbsp;title)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setUseElk(boolean)" class="member-name-link">setUseElk</a><wbr>(boolean&nbsp;useElk)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setUseSmetana(boolean)" class="member-name-link">setUseSmetana</a><wbr>(boolean&nbsp;useSmetana)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-net.sourceforge.plantuml.AbstractPSystem">Methods inherited from class&nbsp;net.sourceforge.plantuml.<a href="AbstractPSystem.html" title="class in net.sourceforge.plantuml">AbstractPSystem</a></h3>
-<code><a href="AbstractPSystem.html#checkFinalError()">checkFinalError</a>, <a href="AbstractPSystem.html#executeCommand(net.sourceforge.plantuml.command.Command,net.sourceforge.plantuml.utils.BlocLines,net.sourceforge.plantuml.command.ParserPass)">executeCommand</a>, <a href="AbstractPSystem.html#exportDiagram(java.io.OutputStream,int,net.sourceforge.plantuml.FileFormatOption)">exportDiagram</a>, <a href="AbstractPSystem.html#exportDiagramNow(java.io.OutputStream,int,net.sourceforge.plantuml.FileFormatOption)">exportDiagramNow</a>, <a href="AbstractPSystem.html#getMetadata()">getMetadata</a>, <a href="AbstractPSystem.html#getNamespaceSeparator()">getNamespaceSeparator</a>, <a href="AbstractPSystem.html#getNbImages()">getNbImages</a>, <a href="AbstractPSystem.html#getRequiredPass()">getRequiredPass</a>, <a href="AbstractPSystem.html#getScale()">getScale</a>, <a href="AbstractPSystem.html#getSource()">getSource</a>, <a href="AbstractPSystem.html#getSplitPagesHorizontal()">getSplitPagesHorizontal</a>, <a href="AbstractPSystem.html#getSplitPagesVertical()">getSplitPagesVertical</a>, <a href="AbstractPSystem.html#getWarningOrError()">getWarningOrError</a>, <a href="AbstractPSystem.html#hasUrl()">hasUrl</a>, <a href="AbstractPSystem.html#isOk()">isOk</a>, <a href="AbstractPSystem.html#makeDiagramReady()">makeDiagramReady</a>, <a href="AbstractPSystem.html#seed()">seed</a>, <a href="AbstractPSystem.html#setNamespaceSeparator(java.lang.String)">setNamespaceSeparator</a>, <a href="AbstractPSystem.html#setScale(net.sourceforge.plantuml.Scale)">setScale</a>, <a href="AbstractPSystem.html#setSplitPagesHorizontal(int)">setSplitPagesHorizontal</a>, <a href="AbstractPSystem.html#setSplitPagesVertical(int)">setSplitPagesVertical</a>, <a href="AbstractPSystem.html#startingPass(net.sourceforge.plantuml.command.ParserPass)">startingPass</a></code></div>
+<code><a href="AbstractPSystem.html#checkFinalError()">checkFinalError</a>, <a href="AbstractPSystem.html#executeCommand(net.sourceforge.plantuml.command.Command,net.sourceforge.plantuml.utils.BlocLines,net.sourceforge.plantuml.command.ParserPass)">executeCommand</a>, <a href="AbstractPSystem.html#exportDiagram(java.io.OutputStream,int,net.sourceforge.plantuml.FileFormatOption)">exportDiagram</a>, <a href="AbstractPSystem.html#exportDiagramNow(java.io.OutputStream,int,net.sourceforge.plantuml.FileFormatOption)">exportDiagramNow</a>, <a href="AbstractPSystem.html#getMetadata()">getMetadata</a>, <a href="AbstractPSystem.html#getNamespaceSeparator()">getNamespaceSeparator</a>, <a href="AbstractPSystem.html#getNbImages()">getNbImages</a>, <a href="AbstractPSystem.html#getPreprocessingArtifact()">getPreprocessingArtifact</a>, <a href="AbstractPSystem.html#getRequiredPass()">getRequiredPass</a>, <a href="AbstractPSystem.html#getScale()">getScale</a>, <a href="AbstractPSystem.html#getSource()">getSource</a>, <a href="AbstractPSystem.html#getSplitPagesHorizontal()">getSplitPagesHorizontal</a>, <a href="AbstractPSystem.html#getSplitPagesVertical()">getSplitPagesVertical</a>, <a href="AbstractPSystem.html#getWarningOrError()">getWarningOrError</a>, <a href="AbstractPSystem.html#hasUrl()">hasUrl</a>, <a href="AbstractPSystem.html#isOk()">isOk</a>, <a href="AbstractPSystem.html#makeDiagramReady()">makeDiagramReady</a>, <a href="AbstractPSystem.html#seed()">seed</a>, <a href="AbstractPSystem.html#setNamespaceSeparator(java.lang.String)">setNamespaceSeparator</a>, <a href="AbstractPSystem.html#setScale(net.sourceforge.plantuml.Scale)">setScale</a>, <a href="AbstractPSystem.html#setSplitPagesHorizontal(int)">setSplitPagesHorizontal</a>, <a href="AbstractPSystem.html#setSplitPagesVertical(int)">setSplitPagesVertical</a>, <a href="AbstractPSystem.html#startingPass(net.sourceforge.plantuml.command.ParserPass)">startingPass</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -272,12 +275,12 @@ implements <a href="core/Diagram.html" title="interface in net.sourceforge.plant
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.skin.UmlDiagramType,java.util.Map,net.sourceforge.plantuml.preproc.ConfigurationStore)">
+<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.skin.UmlDiagramType,java.util.Map,net.sourceforge.plantuml.preproc.PreprocessingArtifact)">
 <h3>TitledDiagram</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">TitledDiagram</span><wbr><span class="parameters">(<a href="core/UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
  <a href="skin/UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a>&nbsp;type,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;orig,
- <a href="preproc/ConfigurationStore.html" title="class in net.sourceforge.plantuml.preproc">ConfigurationStore</a>&lt;<a href="preproc/OptionKey.html" title="enum class in net.sourceforge.plantuml.preproc">OptionKey</a>&gt;&nbsp;option)</span></div>
+ <a href="preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</span></div>
 </section>
 </li>
 </ul>
@@ -518,9 +521,27 @@ implements <a href="core/Diagram.html" title="interface in net.sourceforge.plant
 </section>
 </li>
 <li>
-<section class="detail" id="getOption()">
-<h3>getOption</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="preproc/ConfigurationStore.html" title="class in net.sourceforge.plantuml.preproc">ConfigurationStore</a>&lt;<a href="preproc/OptionKey.html" title="enum class in net.sourceforge.plantuml.preproc">OptionKey</a>&gt;</span>&nbsp;<span class="element-name">getOption</span>()</div>
+<section class="detail" id="addWarning(net.sourceforge.plantuml.warning.Warning)">
+<h3>addWarning</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addWarning</span><wbr><span class="parameters">(<a href="warning/Warning.html" title="class in net.sourceforge.plantuml.warning">Warning</a>&nbsp;warning)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="warning/WarningHandler.html#addWarning(net.sourceforge.plantuml.warning.Warning)">addWarning</a></code>&nbsp;in interface&nbsp;<code><a href="warning/WarningHandler.html" title="interface in net.sourceforge.plantuml.warning">WarningHandler</a></code></dd>
+<dt>Overrides:</dt>
+<dd><code><a href="AbstractPSystem.html#addWarning(net.sourceforge.plantuml.warning.Warning)">addWarning</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPSystem.html" title="class in net.sourceforge.plantuml">AbstractPSystem</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getWarnings()">
+<h3>getWarnings</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="warning/Warning.html" title="class in net.sourceforge.plantuml.warning">Warning</a>&gt;</span>&nbsp;<span class="element-name">getWarnings</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="warning/WarningHandler.html#getWarnings()">getWarnings</a></code>&nbsp;in interface&nbsp;<code><a href="warning/WarningHandler.html" title="interface in net.sourceforge.plantuml.warning">WarningHandler</a></code></dd>
+<dt>Overrides:</dt>
+<dd><code><a href="AbstractPSystem.html#getWarnings()">getWarnings</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPSystem.html" title="class in net.sourceforge.plantuml">AbstractPSystem</a></code></dd>
+</dl>
 </section>
 </li>
 </ul>

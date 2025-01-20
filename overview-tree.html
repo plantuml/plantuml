@@ -251,6 +251,7 @@ loadScripts(document, 'script');</script>
 <li><a href="net/sourceforge/plantuml/utils/package-tree.html">net.sourceforge.plantuml.utils</a>, </li>
 <li><a href="net/sourceforge/plantuml/version/package-tree.html">net.sourceforge.plantuml.version</a>, </li>
 <li><a href="net/sourceforge/plantuml/vizjs/package-tree.html">net.sourceforge.plantuml.vizjs</a>, </li>
+<li><a href="net/sourceforge/plantuml/warning/package-tree.html">net.sourceforge.plantuml.warning</a>, </li>
 <li><a href="net/sourceforge/plantuml/wbs/package-tree.html">net.sourceforge.plantuml.wbs</a>, </li>
 <li><a href="net/sourceforge/plantuml/webp/package-tree.html">net.sourceforge.plantuml.webp</a>, </li>
 <li><a href="net/sourceforge/plantuml/windowsdot/package-tree.html">net.sourceforge.plantuml.windowsdot</a>, </li>
@@ -513,7 +514,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.klimt.geom.<a href="net/sourceforge/plantuml/klimt/geom/PlacementStrategyY1Y2Right.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.geom">PlacementStrategyY1Y2Right</a></li>
 </ul>
 </li>
-<li class="circle">net.sourceforge.plantuml.<a href="net/sourceforge/plantuml/AbstractPSystem.html" class="type-name-link" title="class in net.sourceforge.plantuml">AbstractPSystem</a> (implements net.sourceforge.plantuml.core.<a href="net/sourceforge/plantuml/core/Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a>)
+<li class="circle">net.sourceforge.plantuml.<a href="net/sourceforge/plantuml/AbstractPSystem.html" class="type-name-link" title="class in net.sourceforge.plantuml">AbstractPSystem</a> (implements net.sourceforge.plantuml.core.<a href="net/sourceforge/plantuml/core/Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a>, net.sourceforge.plantuml.warning.<a href="net/sourceforge/plantuml/warning/WarningHandler.html" title="interface in net.sourceforge.plantuml.warning">WarningHandler</a>)
 <ul>
 <li class="circle">net.sourceforge.plantuml.<a href="net/sourceforge/plantuml/NewpagedDiagram.html" class="type-name-link" title="class in net.sourceforge.plantuml">NewpagedDiagram</a></li>
 <li class="circle">net.sourceforge.plantuml.<a href="net/sourceforge/plantuml/PlainDiagram.html" class="type-name-link" title="class in net.sourceforge.plantuml">PlainDiagram</a>
@@ -1985,7 +1986,8 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/PostScriptCommandQuadTo.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.eps">PostScriptCommandQuadTo</a> (implements net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/PostScriptCommand.html" title="interface in net.sourceforge.plantuml.klimt.drawing.eps">PostScriptCommand</a>)</li>
 <li class="circle">net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/PostScriptCommandRaw.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.eps">PostScriptCommandRaw</a> (implements net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/PostScriptCommand.html" title="interface in net.sourceforge.plantuml.klimt.drawing.eps">PostScriptCommand</a>)</li>
 <li class="circle">net.sourceforge.plantuml.klimt.drawing.eps.<a href="net/sourceforge/plantuml/klimt/drawing/eps/PostScriptData.html" class="type-name-link" title="class in net.sourceforge.plantuml.klimt.drawing.eps">PostScriptData</a></li>
-<li class="circle">net.sourceforge.plantuml.skin.<a href="net/sourceforge/plantuml/skin/Pragma.html" class="type-name-link" title="class in net.sourceforge.plantuml.skin">Pragma</a></li>
+<li class="circle">net.sourceforge.plantuml.skin.<a href="net/sourceforge/plantuml/skin/Pragma.html" class="type-name-link" title="class in net.sourceforge.plantuml.skin">Pragma</a> (implements net.sourceforge.plantuml.warning.<a href="net/sourceforge/plantuml/warning/WarningHandler.html" title="interface in net.sourceforge.plantuml.warning">WarningHandler</a>)</li>
+<li class="circle">net.sourceforge.plantuml.preproc.<a href="net/sourceforge/plantuml/preproc/PreprocessingArtifact.html" class="type-name-link" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a> (implements net.sourceforge.plantuml.warning.<a href="net/sourceforge/plantuml/warning/WarningHandler.html" title="interface in net.sourceforge.plantuml.warning">WarningHandler</a>)</li>
 <li class="circle">net.sourceforge.plantuml.preproc2.<a href="net/sourceforge/plantuml/preproc2/Preprocessor.html" class="type-name-link" title="class in net.sourceforge.plantuml.preproc2">Preprocessor</a> (implements net.sourceforge.plantuml.preproc.<a href="net/sourceforge/plantuml/preproc/ReadLineNumbered.html" title="interface in net.sourceforge.plantuml.preproc">ReadLineNumbered</a>)</li>
 <li class="circle">net.sourceforge.plantuml.preproc2.<a href="net/sourceforge/plantuml/preproc2/PreprocessorUtils.html" class="type-name-link" title="class in net.sourceforge.plantuml.preproc2">PreprocessorUtils</a></li>
 <li class="circle">org.stathissideris.ascii2image.core.<a href="org/stathissideris/ascii2image/core/ProcessingOptions.html" class="type-name-link" title="class in org.stathissideris.ascii2image.core">ProcessingOptions</a></li>
@@ -3057,6 +3059,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.vizjs.<a href="net/sourceforge/plantuml/vizjs/VizJsEngine.html" class="type-name-link" title="class in net.sourceforge.plantuml.vizjs">VizJsEngine</a></li>
 <li class="circle">net.sourceforge.plantuml.webp.<a href="net/sourceforge/plantuml/webp/VP8Decoder.html" class="type-name-link" title="class in net.sourceforge.plantuml.webp">VP8Decoder</a></li>
 <li class="circle">net.sourceforge.plantuml.webp.<a href="net/sourceforge/plantuml/webp/VP8Frame.html" class="type-name-link" title="class in net.sourceforge.plantuml.webp">VP8Frame</a></li>
+<li class="circle">net.sourceforge.plantuml.warning.<a href="net/sourceforge/plantuml/warning/Warning.html" class="type-name-link" title="class in net.sourceforge.plantuml.warning">Warning</a></li>
 <li class="circle">com.plantuml.api.cheerpj.<a href="com/plantuml/api/cheerpj/WasmLog.html" class="type-name-link" title="class in com.plantuml.api.cheerpj">WasmLog</a></li>
 <li class="circle">net.sourceforge.plantuml.wire.<a href="net/sourceforge/plantuml/wire/WBlock.html" class="type-name-link" title="class in net.sourceforge.plantuml.wire">WBlock</a></li>
 <li class="circle">net.sourceforge.plantuml.wire.<a href="net/sourceforge/plantuml/wire/WCursor.html" class="type-name-link" title="class in net.sourceforge.plantuml.wire">WCursor</a></li>
@@ -3504,6 +3507,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.style.<a href="net/sourceforge/plantuml/style/Value.html" class="type-name-link" title="interface in net.sourceforge.plantuml.style">Value</a></li>
 <li class="circle">net.sourceforge.plantuml.project.lang.<a href="net/sourceforge/plantuml/project/lang/Verb.html" class="type-name-link" title="interface in net.sourceforge.plantuml.project.lang">Verb</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.drawing.visio.<a href="net/sourceforge/plantuml/klimt/drawing/visio/VisioShape.html" class="type-name-link" title="interface in net.sourceforge.plantuml.klimt.drawing.visio">VisioShape</a></li>
+<li class="circle">net.sourceforge.plantuml.warning.<a href="net/sourceforge/plantuml/warning/WarningHandler.html" class="type-name-link" title="interface in net.sourceforge.plantuml.warning">WarningHandler</a></li>
 <li class="circle">net.sourceforge.plantuml.activitydiagram3.ftile.<a href="net/sourceforge/plantuml/activitydiagram3/ftile/WeldingPoint.html" class="type-name-link" title="interface in net.sourceforge.plantuml.activitydiagram3.ftile">WeldingPoint</a></li>
 <li class="circle">net.sourceforge.plantuml.svek.<a href="net/sourceforge/plantuml/svek/WithPorts.html" class="type-name-link" title="interface in net.sourceforge.plantuml.svek">WithPorts</a></li>
 <li class="circle">zext.plantuml.com.google.zxing.<a href="zext/plantuml/com/google/zxing/Writer.html" class="type-name-link" title="interface in zext.plantuml.com.google.zxing">Writer</a></li>
@@ -3600,7 +3604,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">net.sourceforge.plantuml.mindmap.<a href="net/sourceforge/plantuml/mindmap/IdeaShape.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.mindmap">IdeaShape</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.geom.<a href="net/sourceforge/plantuml/klimt/geom/ImgValign.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.klimt.geom">ImgValign</a></li>
 <li class="circle">net.atmp.<a href="net/atmp/InnerStrategy.html" class="type-name-link" title="enum class in net.atmp">InnerStrategy</a></li>
-<li class="circle">net.sourceforge.plantuml.jaws.<a href="net/sourceforge/plantuml/jaws/JawsWarning.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.jaws">JawsWarning</a></li>
+<li class="circle">net.sourceforge.plantuml.warning.<a href="net/sourceforge/plantuml/warning/JawsWarning.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.warning">JawsWarning</a></li>
 <li class="circle">net.sourceforge.plantuml.project.<a href="net/sourceforge/plantuml/project/LabelPosition.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.project">LabelPosition</a></li>
 <li class="circle">net.sourceforge.plantuml.abel.<a href="net/sourceforge/plantuml/abel/LeafType.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.abel">LeafType</a></li>
 <li class="circle">net.sourceforge.plantuml.klimt.drawing.svg.<a href="net/sourceforge/plantuml/klimt/drawing/svg/LengthAdjust.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.klimt.drawing.svg">LengthAdjust</a></li>

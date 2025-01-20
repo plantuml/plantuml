@@ -124,26 +124,28 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PSystemCreole.html" title="class in net.sourceforge.plantuml.klimt.creole.legacy">PSystemCreole</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#executeLine(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.klimt.creole.legacy.PSystemCreole,java.lang.String)" class="member-name-link">executeLine</a><wbr>(<a href="../../../core/UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#executeLine(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.klimt.creole.legacy.PSystemCreole,java.lang.String,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">executeLine</a><wbr>(<a href="../../../core/UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
  <a href="PSystemCreole.html" title="class in net.sourceforge.plantuml.klimt.creole.legacy">PSystemCreole</a>&nbsp;system,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;line)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;line,
+ <a href="../../../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../skin/UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUmlDiagramType()" class="member-name-link">getUmlDiagramType</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PSystemCreole.html" title="class in net.sourceforge.plantuml.klimt.creole.legacy">PSystemCreole</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initDiagram(net.sourceforge.plantuml.core.UmlSource,java.lang.String)" class="member-name-link">initDiagram</a><wbr>(<a href="../../../core/UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;startLine)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initDiagram(net.sourceforge.plantuml.core.UmlSource,java.lang.String,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">initDiagram</a><wbr>(<a href="../../../core/UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;startLine,
+ <a href="../../../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-net.sourceforge.plantuml.command.PSystemBasicFactory">Methods inherited from class&nbsp;net.sourceforge.plantuml.command.<a href="../../../command/PSystemBasicFactory.html" title="class in net.sourceforge.plantuml.command">PSystemBasicFactory</a></h3>
-<code><a href="../../../command/PSystemBasicFactory.html#createSystem(net.sourceforge.plantuml.core.UmlSource,java.util.Map,net.sourceforge.plantuml.preproc.ConfigurationStore)">createSystem</a></code></div>
+<code><a href="../../../command/PSystemBasicFactory.html#createSystem(net.sourceforge.plantuml.core.UmlSource,java.util.Map,net.sourceforge.plantuml.preproc.PreprocessingArtifact)">createSystem</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-net.sourceforge.plantuml.command.PSystemAbstractFactory">Methods inherited from class&nbsp;net.sourceforge.plantuml.command.<a href="../../../command/PSystemAbstractFactory.html" title="class in net.sourceforge.plantuml.command">PSystemAbstractFactory</a></h3>
-<code><a href="../../../command/PSystemAbstractFactory.html#buildEmptyError(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.utils.LineLocation,java.util.List)">buildEmptyError</a>, <a href="../../../command/PSystemAbstractFactory.html#buildExecutionError(net.sourceforge.plantuml.core.UmlSource,java.lang.String,net.sourceforge.plantuml.utils.LineLocation,java.util.List)">buildExecutionError</a>, <a href="../../../command/PSystemAbstractFactory.html#getDiagramType()">getDiagramType</a></code></div>
+<code><a href="../../../command/PSystemAbstractFactory.html#buildEmptyError(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.utils.LineLocation,java.util.List,net.sourceforge.plantuml.preproc.PreprocessingArtifact)">buildEmptyError</a>, <a href="../../../command/PSystemAbstractFactory.html#buildExecutionError(net.sourceforge.plantuml.core.UmlSource,java.lang.String,net.sourceforge.plantuml.utils.LineLocation,java.util.List,net.sourceforge.plantuml.preproc.PreprocessingArtifact)">buildExecutionError</a>, <a href="../../../command/PSystemAbstractFactory.html#getDiagramType()">getDiagramType</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -173,25 +175,27 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="initDiagram(net.sourceforge.plantuml.core.UmlSource,java.lang.String)">
+<section class="detail" id="initDiagram(net.sourceforge.plantuml.core.UmlSource,java.lang.String,net.sourceforge.plantuml.preproc.PreprocessingArtifact)">
 <h3>initDiagram</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PSystemCreole.html" title="class in net.sourceforge.plantuml.klimt.creole.legacy">PSystemCreole</a></span>&nbsp;<span class="element-name">initDiagram</span><wbr><span class="parameters">(<a href="../../../core/UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;startLine)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;startLine,
+ <a href="../../../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../../command/PSystemBasicFactory.html#initDiagram(net.sourceforge.plantuml.core.UmlSource,java.lang.String)">initDiagram</a></code>&nbsp;in class&nbsp;<code><a href="../../../command/PSystemBasicFactory.html" title="class in net.sourceforge.plantuml.command">PSystemBasicFactory</a>&lt;<a href="PSystemCreole.html" title="class in net.sourceforge.plantuml.klimt.creole.legacy">PSystemCreole</a>&gt;</code></dd>
+<dd><code><a href="../../../command/PSystemBasicFactory.html#initDiagram(net.sourceforge.plantuml.core.UmlSource,java.lang.String,net.sourceforge.plantuml.preproc.PreprocessingArtifact)">initDiagram</a></code>&nbsp;in class&nbsp;<code><a href="../../../command/PSystemBasicFactory.html" title="class in net.sourceforge.plantuml.command">PSystemBasicFactory</a>&lt;<a href="PSystemCreole.html" title="class in net.sourceforge.plantuml.klimt.creole.legacy">PSystemCreole</a>&gt;</code></dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="executeLine(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.klimt.creole.legacy.PSystemCreole,java.lang.String)">
+<section class="detail" id="executeLine(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.klimt.creole.legacy.PSystemCreole,java.lang.String,net.sourceforge.plantuml.preproc.PreprocessingArtifact)">
 <h3>executeLine</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PSystemCreole.html" title="class in net.sourceforge.plantuml.klimt.creole.legacy">PSystemCreole</a></span>&nbsp;<span class="element-name">executeLine</span><wbr><span class="parameters">(<a href="../../../core/UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
  <a href="PSystemCreole.html" title="class in net.sourceforge.plantuml.klimt.creole.legacy">PSystemCreole</a>&nbsp;system,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;line)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;line,
+ <a href="../../../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../../../command/PSystemBasicFactory.html#executeLine(net.sourceforge.plantuml.core.UmlSource,P,java.lang.String)">executeLine</a></code>&nbsp;in class&nbsp;<code><a href="../../../command/PSystemBasicFactory.html" title="class in net.sourceforge.plantuml.command">PSystemBasicFactory</a>&lt;<a href="PSystemCreole.html" title="class in net.sourceforge.plantuml.klimt.creole.legacy">PSystemCreole</a>&gt;</code></dd>
+<dd><code><a href="../../../command/PSystemBasicFactory.html#executeLine(net.sourceforge.plantuml.core.UmlSource,P,java.lang.String,net.sourceforge.plantuml.preproc.PreprocessingArtifact)">executeLine</a></code>&nbsp;in class&nbsp;<code><a href="../../../command/PSystemBasicFactory.html" title="class in net.sourceforge.plantuml.command">PSystemBasicFactory</a>&lt;<a href="PSystemCreole.html" title="class in net.sourceforge.plantuml.klimt.creole.legacy">PSystemCreole</a>&gt;</code></dd>
 </dl>
 </section>
 </li>

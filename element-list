@@ -197,6 +197,7 @@ net.sourceforge.plantuml.url
 net.sourceforge.plantuml.utils
 net.sourceforge.plantuml.version
 net.sourceforge.plantuml.vizjs
+net.sourceforge.plantuml.warning
 net.sourceforge.plantuml.wbs
 net.sourceforge.plantuml.webp
 net.sourceforge.plantuml.windowsdot

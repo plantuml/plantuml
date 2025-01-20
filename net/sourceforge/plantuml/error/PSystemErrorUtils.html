@@ -107,10 +107,11 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="PSystemError.html" title="class in net.sourceforge.plantuml.error">PSystemError</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildV2(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.ErrorUml,java.util.List,java.util.List)" class="member-name-link">buildV2</a><wbr>(<a href="../core/UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#buildV2(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.ErrorUml,java.util.List,java.util.List,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">buildV2</a><wbr>(<a href="../core/UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
  <a href="../ErrorUml.html" title="class in net.sourceforge.plantuml">ErrorUml</a>&nbsp;singleError,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;debugLines,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&gt;&nbsp;list)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&gt;&nbsp;list,
+ <a href="../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isDiagramError(java.lang.Class)" class="member-name-link">isDiagramError</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;? extends <a href="../core/Diagram.html" title="interface in net.sourceforge.plantuml.core">Diagram</a>&gt;&nbsp;type)</code></div>
@@ -150,12 +151,13 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="buildV2(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.ErrorUml,java.util.List,java.util.List)">
+<section class="detail" id="buildV2(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.ErrorUml,java.util.List,java.util.List,net.sourceforge.plantuml.preproc.PreprocessingArtifact)">
 <h3>buildV2</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="PSystemError.html" title="class in net.sourceforge.plantuml.error">PSystemError</a></span>&nbsp;<span class="element-name">buildV2</span><wbr><span class="parameters">(<a href="../core/UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
  <a href="../ErrorUml.html" title="class in net.sourceforge.plantuml">ErrorUml</a>&nbsp;singleError,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;debugLines,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&gt;&nbsp;list)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../text/StringLocated.html" title="class in net.sourceforge.plantuml.text">StringLocated</a>&gt;&nbsp;list,
+ <a href="../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</span></div>
 </section>
 </li>
 <li>

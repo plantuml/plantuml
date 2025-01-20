@@ -76,9 +76,14 @@ loadScripts(document, 'script');</script>
 <div class="inheritance">net.sourceforge.plantuml.skin.Pragma</div>
 </div>
 <section class="class-description" id="class-description">
+<dl class="notes">
+<dt>All Implemented Interfaces:</dt>
+<dd><code><a href="../warning/WarningHandler.html" title="interface in net.sourceforge.plantuml.warning">WarningHandler</a></code></dd>
+</dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">Pragma</span>
-<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
+implements <a href="../warning/WarningHandler.html" title="interface in net.sourceforge.plantuml.warning">WarningHandler</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -94,7 +99,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addWarning(net.sourceforge.plantuml.jaws.JawsWarning)" class="member-name-link">addWarning</a><wbr>(<a href="../jaws/JawsWarning.html" title="enum class in net.sourceforge.plantuml.jaws">JawsWarning</a>&nbsp;warning)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addWarning(net.sourceforge.plantuml.warning.Warning)" class="member-name-link">addWarning</a><wbr>(<a href="../warning/Warning.html" title="class in net.sourceforge.plantuml.warning">Warning</a>&nbsp;warning)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#backToLegacyPackage()" class="member-name-link">backToLegacyPackage</a>()</code></div>
@@ -109,35 +114,35 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getValue(java.lang.String)" class="member-name-link">getValue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#horizontalLineBetweenDifferentPackageAllowed()" class="member-name-link">horizontalLineBetweenDifferentPackageAllowed</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../warning/Warning.html" title="class in net.sourceforge.plantuml.warning">Warning</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWarnings()" class="member-name-link">getWarnings</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDefine(java.lang.String)" class="member-name-link">isDefine</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#horizontalLineBetweenDifferentPackageAllowed()" class="member-name-link">horizontalLineBetweenDifferentPackageAllowed</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#legacyReplaceBackslashNByNewline()" class="member-name-link">legacyReplaceBackslashNByNewline</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#undefine(java.lang.String)" class="member-name-link">undefine</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useIntermediatePackages()" class="member-name-link">useIntermediatePackages</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDefine(java.lang.String)" class="member-name-link">isDefine</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useKermor()" class="member-name-link">useKermor</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#legacyReplaceBackslashNByNewline()" class="member-name-link">legacyReplaceBackslashNByNewline</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useNewPackage()" class="member-name-link">useNewPackage</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#undefine(java.lang.String)" class="member-name-link">undefine</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useTeozLayout()" class="member-name-link">useTeozLayout</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useIntermediatePackages()" class="member-name-link">useIntermediatePackages</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useVerticalIf()" class="member-name-link">useVerticalIf</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useKermor()" class="member-name-link">useKermor</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../jaws/JawsWarning.html" title="enum class in net.sourceforge.plantuml.jaws">JawsWarning</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#warnings()" class="member-name-link">warnings</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useNewPackage()" class="member-name-link">useNewPackage</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useTeozLayout()" class="member-name-link">useTeozLayout</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useVerticalIf()" class="member-name-link">useVerticalIf</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -236,15 +241,23 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="addWarning(net.sourceforge.plantuml.jaws.JawsWarning)">
+<section class="detail" id="addWarning(net.sourceforge.plantuml.warning.Warning)">
 <h3>addWarning</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addWarning</span><wbr><span class="parameters">(<a href="../jaws/JawsWarning.html" title="enum class in net.sourceforge.plantuml.jaws">JawsWarning</a>&nbsp;warning)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addWarning</span><wbr><span class="parameters">(<a href="../warning/Warning.html" title="class in net.sourceforge.plantuml.warning">Warning</a>&nbsp;warning)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../warning/WarningHandler.html#addWarning(net.sourceforge.plantuml.warning.Warning)">addWarning</a></code>&nbsp;in interface&nbsp;<code><a href="../warning/WarningHandler.html" title="interface in net.sourceforge.plantuml.warning">WarningHandler</a></code></dd>
+</dl>
 </section>
 </li>
 <li>
-<section class="detail" id="warnings()">
-<h3>warnings</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../jaws/JawsWarning.html" title="enum class in net.sourceforge.plantuml.jaws">JawsWarning</a>&gt;</span>&nbsp;<span class="element-name">warnings</span>()</div>
+<section class="detail" id="getWarnings()">
+<h3>getWarnings</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../warning/Warning.html" title="class in net.sourceforge.plantuml.warning">Warning</a>&gt;</span>&nbsp;<span class="element-name">getWarnings</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../warning/WarningHandler.html#getWarnings()">getWarnings</a></code>&nbsp;in interface&nbsp;<code><a href="../warning/WarningHandler.html" title="interface in net.sourceforge.plantuml.warning">WarningHandler</a></code></dd>
+</dl>
 </section>
 </li>
 </ul>
