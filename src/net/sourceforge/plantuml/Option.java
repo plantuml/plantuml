@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -156,6 +156,9 @@ public class Option {
 
 			} else if (s.equalsIgnoreCase("-txmi:argo") || s.equalsIgnoreCase("-xmi:argo")) {
 				setFileFormatOption(new FileFormatOption(FileFormat.XMI_ARGO));
+
+			} else if (s.equalsIgnoreCase("-txmi:custom") || s.equalsIgnoreCase("-xmi:custom")) {
+				setFileFormatOption(new FileFormatOption(FileFormat.XMI_CUSTOM));
 
 			} else if (s.equalsIgnoreCase("-txmi:script") || s.equalsIgnoreCase("-xmi:script")) {
 				setFileFormatOption(new FileFormatOption(FileFormat.XMI_SCRIPT));

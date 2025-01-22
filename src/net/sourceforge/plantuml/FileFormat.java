@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -73,6 +73,7 @@ public enum FileFormat {
 	XMI_STANDARD("application/vnd.xmi+xml"), //
 	XMI_STAR("application/vnd.xmi+xml"), //
 	XMI_ARGO("application/vnd.xmi+xml"), //
+	XMI_CUSTOM("application/vnd.xmi+xml"), //
 	XMI_SCRIPT("application/vnd.xmi+xml"), //
 	SCXML("application/scxml+xml"), //
 	GRAPHML("application/graphml+xml"), //
@@ -108,6 +109,9 @@ public enum FileFormat {
 	 */
 	public String getFileSuffix() {
 		// ::comment when __CORE__
+		if (name().startsWith("XMI_CUSTOM"))
+			return ".xmi_custom";
+
 		if (name().startsWith("XMI"))
 			return ".xmi";
 

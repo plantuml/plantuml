@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -69,7 +69,7 @@ public final class CucaDiagramXmiMaker {
 		try {
 			final XmlDiagramTransformer xmi;
 			if (diagram instanceof StateDiagram)
-				xmi = new XmiStateDiagram((StateDiagram) diagram);
+				xmi = createStateDiagram();
 			else if (diagram instanceof DescriptionDiagram)
 				xmi = createDescriptionDiagram();
 			else if (diagram instanceof ClassDiagram)
@@ -90,6 +90,14 @@ public final class CucaDiagramXmiMaker {
 		}
 	}
 
+	private XmlDiagramTransformer createStateDiagram() throws ParserConfigurationException {
+		if (fileFormat == FileFormat.XMI_CUSTOM) {
+			return new XmiCucaDiagramCustom<>(XmiStateDiagramCustom.class, diagram);
+		} else {
+			return new XmiStateDiagram((StateDiagram) diagram);
+		}
+	}
+
 	private XmlDiagramTransformer createClassDiagram() throws ParserConfigurationException {
 		if (fileFormat == FileFormat.XMI_STANDARD)
 			return new XmiClassDiagramStandard((ClassDiagram) diagram);
@@ -99,13 +107,17 @@ public final class CucaDiagramXmiMaker {
 			return new XmiClassDiagramScript((ClassDiagram) diagram);
 		else if (fileFormat == FileFormat.XMI_STAR)
 			return new XmiClassDiagramStar((ClassDiagram) diagram);
-		else 
+		else if (fileFormat == FileFormat.XMI_CUSTOM)
+			return new XmiCucaDiagramCustom<>(XmiClassDiagramCustom.class, diagram);
+		else
 			throw new UnsupportedOperationException();
 	}
 
 	private XmlDiagramTransformer createDescriptionDiagram() throws ParserConfigurationException {
 		if (fileFormat == FileFormat.XMI_SCRIPT) {
 			return new XmiDescriptionDiagramScript((DescriptionDiagram) diagram);
+		} else if (fileFormat == FileFormat.XMI_CUSTOM) {
+			return new XmiCucaDiagramCustom<>(XmiDescriptionDiagramCustom.class, diagram);
 		} else {
 			// dont care about which file format is specified, to keep backwards
 			// compatibility
