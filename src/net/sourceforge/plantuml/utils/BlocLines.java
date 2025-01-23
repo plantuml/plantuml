@@ -68,10 +68,10 @@ public class BlocLines implements Iterable<StringLocated> {
 		return sb.toString();
 	}
 
-	public BlocLines expandsJaws5() {
+	public BlocLines expandsNewline() {
 		final List<StringLocated> copy = new ArrayList<>();
 		for (StringLocated sl : lines)
-			copy.addAll(sl.expandsJaws5());
+			copy.addAll(sl.expandsNewline());
 
 		return new BlocLines(copy);
 	}

@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.DefinitionsContainer;
 import net.sourceforge.plantuml.FileSystem;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
@@ -80,6 +81,7 @@ import net.sourceforge.plantuml.tim.builtin.AlwaysFalse;
 import net.sourceforge.plantuml.tim.builtin.AlwaysTrue;
 import net.sourceforge.plantuml.tim.builtin.Backslash;
 import net.sourceforge.plantuml.tim.builtin.BoolVal;
+import net.sourceforge.plantuml.tim.builtin.Breakline;
 import net.sourceforge.plantuml.tim.builtin.CallUserFunction;
 import net.sourceforge.plantuml.tim.builtin.Chr;
 import net.sourceforge.plantuml.tim.builtin.Darken;
@@ -191,6 +193,7 @@ public class TContext {
 		functionsSet.addFunction(new AlwaysTrue());
 		functionsSet.addFunction(new Backslash());
 		functionsSet.addFunction(new BoolVal());
+		functionsSet.addFunction(new Breakline());
 		functionsSet.addFunction(new CallUserFunction());
 		functionsSet.addFunction(new Chr());
 		functionsSet.addFunction(new Darken());
@@ -471,6 +474,7 @@ public class TContext {
 		undef.analyze(this, memory);
 	}
 
+	@JawsStrange
 	private StringLocated[] applyFunctionsAndVariablesInternal(TMemory memory, StringLocated located)
 			throws EaterException {
 		if (memory.isEmpty() && functionsSet.size() == 0)
@@ -490,6 +494,7 @@ public class TContext {
 
 	private String pendingAdd = null;
 
+	@JawsStrange
 	public String applyFunctionsAndVariables(TMemory memory, final StringLocated str) throws EaterException {
 		// https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore%E2%80%93Horspool_algorithm
 		// https://stackoverflow.com/questions/1326682/java-replacing-multiple-different-substring-in-a-string-at-once-or-in-the-most
@@ -533,7 +538,16 @@ public class TContext {
 						|| function.getFunctionType() == TFunctionType.LEGACY_DEFINE;
 				final TValue functionReturn = function.executeReturnFunction(this, memory, str, call.getValues(),
 						call.getNamedArguments());
-				result.append(functionReturn.toString());
+				String tmp = functionReturn.toString();
+				// if (tmp.indexOf(Jaws.BLOCK_E1_NEWLINE) > 0)
+				//System.err.println("tmp=" + tmp + " (" + function.getFunctionType() + ")");
+				// if (function.getFunctionType() == TFunctionType.RETURN_FUNCTION && tmp.length() > 1) {
+					// System.err.println("JE REPLACE");
+					// tmp = StringLocated.expandsJaws32(tmp);
+					// tmp = tmp.replace(Jaws.BLOCK_E1_NEWLINE, '\n');
+					// System.err.println("DONC tmp=" + tmp);
+				// }
+				result.append(tmp);
 				i += call.getCurrentPosition() - 1;
 			} else if (new VariableManager(this, memory, str).getVarnameAt(str.getString(), i) != null) {
 				i = new VariableManager(this, memory, str).replaceVariables(str.getString(), i, result);

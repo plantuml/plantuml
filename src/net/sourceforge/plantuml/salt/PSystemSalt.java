@@ -109,7 +109,7 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 	}
 
 	public void add(String s) {
-		data.addAll(StringLocated.expandsJaws4(s));
+		data.addAll(StringLocated.expandsNewline(s));
 	}
 
 	@Override

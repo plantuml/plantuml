@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -31,17 +31,37 @@
  *
  * Original Author:  Arnaud Roques
  *
- *
  */
-package net.sourceforge.plantuml.jaws;
+package net.sourceforge.plantuml.tim.builtin;
 
-public class JawsFlags {
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-	public static final boolean USE_BLOCK_E1_IN_NEWLINE_FUNCTION = true;
-	public static final boolean USE_CommandSkinParamJaws = true;
-	public static final boolean PARSE_NEW_MULTILINE_TRIPLE_MARKS = false;
-	public static final boolean SPECIAL_NEWLINE_IN_DISPLAY_CLASS = false;
+import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.jaws.JawsFlags;
+import net.sourceforge.plantuml.text.StringLocated;
+import net.sourceforge.plantuml.tim.TContext;
+import net.sourceforge.plantuml.tim.TFunctionSignature;
+import net.sourceforge.plantuml.tim.TMemory;
+import net.sourceforge.plantuml.tim.expression.TValue;
 
-	//public static final boolean OLD_DISPLAY_HACK = true;
+public class Breakline extends SimpleReturnFunction {
 
+	public TFunctionSignature getSignature() {
+		return new TFunctionSignature("%breakline", 0);
+	}
+
+	@Override
+	public boolean canCover(int nbArg, Set<String> namedArgument) {
+		return nbArg == 0;
+	}
+
+	@Override
+	public TValue executeReturnFunction(TContext context, TMemory memory, StringLocated location, List<TValue> values,
+			Map<String, TValue> named) {
+		if (JawsFlags.USE_BLOCK_E1_IN_NEWLINE_FUNCTION)
+			return TValue.fromString("" + Jaws.BLOCK_E1_BREAKLINE);
+		return TValue.fromString("\n");
+	}
 }

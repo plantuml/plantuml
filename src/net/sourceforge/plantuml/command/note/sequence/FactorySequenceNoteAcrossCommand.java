@@ -130,7 +130,7 @@ public final class FactorySequenceNoteAcrossCommand implements SingleMultiFactor
 					ParserPass currentPass) throws NoSuchColorException {
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
-				lines = lines.removeEmptyColumns().expandsJaws5();
+				lines = lines.removeEmptyColumns().expandsNewline();
 				final Display display = lines.toDisplay();
 				return executeInternal(diagram, line0, diagram.manageVariable(display));
 			}

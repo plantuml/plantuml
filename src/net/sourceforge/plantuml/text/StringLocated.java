@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -94,22 +95,78 @@ final public class StringLocated {
 		return -1;
 	}
 
-	public List<StringLocated> expandsJaws5() {
+	public List<StringLocated> expandsNewline() {
 		final List<StringLocated> copy = new ArrayList<>();
-		for (String s : expandsJaws3())
+		for (String s : Arrays.asList(s.split("" + Jaws.BLOCK_E1_NEWLINE)))
 			copy.add(new StringLocated(s, location, preprocessorError));
 		return copy;
 	}
+
+	public List<StringLocated> expandsBreakline() {
+		final List<StringLocated> copy = new ArrayList<>();
+		for (String s : Arrays.asList(s.split("" + Jaws.BLOCK_E1_BREAKLINE)))
+			copy.add(new StringLocated(s, location, preprocessorError));
+		return copy;
+	}
+
+//	public List<StringLocated> expandsJaws51() {
+//		final List<StringLocated> copy = new ArrayList<>();
+//		for (String s : expandsJaws31())
+//			copy.add(new StringLocated(s, location, preprocessorError));
+//		return copy;
+//	}
+
+//	public List<StringLocated> expandsJaws51() {
+//		final List<StringLocated> copy = new ArrayList<>();
+//		for (String s : expandsJaws31())
+//			copy.add(new StringLocated(s, location, preprocessorError));
+//		return copy;
+//	}
+//
+
+//	public List<String> expandsJaws31() {
+//		final List<String> result = new ArrayList<>();
+//		boolean inGuillement = false;
+//		StringBuilder pending = new StringBuilder();
+//		for (char ch : s.toCharArray()) {
+//			if (ch == '"')
+//				inGuillement = !inGuillement;
+//			if (inGuillement) {
+//				pending.append(ch);
+//			} else if (ch == Jaws.BLOCK_E1_NEWLINE) {
+//				result.add(pending.toString());
+//				pending.setLength(0);
+//			} else {
+//				pending.append(ch);
+//			}
+//		}
+//		result.add(pending.toString());
+//
+//		return result;
+//	}
+//
+//	public static String expandsJaws32(String s) {
+//		boolean inGuillement = false;
+//		final StringBuilder pending = new StringBuilder();
+//		for (char ch : s.toCharArray()) {
+//			if (ch == '"')
+//				inGuillement = !inGuillement;
+//			if (inGuillement)
+//				pending.append(ch);
+//			else if (ch == Jaws.BLOCK_E1_NEWLINE)
+//				pending.append('\n');
+//			else
+//				pending.append(ch);
+//
+//		}
+//		return pending.toString();
+//	}
 
 	public StringLocated jawsHideBackslash() {
 		return new StringLocated(s.replace('\\', Jaws.BLOCK_E1_REAL_BACKSLASH), location, preprocessorError);
 	}
 
-	public List<String> expandsJaws3() {
-		return Arrays.asList(s.split("" + Jaws.BLOCK_E1_NEWLINE));
-	}
-
-	public static List<String> expandsJaws4(String s) {
+	public static List<String> expandsNewline(String s) {
 		return Arrays.asList(s.split("" + Jaws.BLOCK_E1_NEWLINE));
 	}
 

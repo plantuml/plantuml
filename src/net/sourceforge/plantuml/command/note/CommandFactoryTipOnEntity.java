@@ -141,7 +141,7 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 					ParserPass currentPass) throws NoSuchColorException {
 				// StringUtils.trim(lines, false);
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
-				lines = lines.subExtract(1, 1).expandsJaws5();
+				lines = lines.subExtract(1, 1).expandsNewline();
 				lines = lines.removeEmptyColumns();
 				final Display display = lines.toDisplay();
 

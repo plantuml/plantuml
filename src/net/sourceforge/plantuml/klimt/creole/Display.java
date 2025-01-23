@@ -47,6 +47,7 @@ import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.jaws.Jaws;
+import net.sourceforge.plantuml.jaws.JawsFlags;
 import net.sourceforge.plantuml.jaws.JawsStrange;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -260,12 +261,12 @@ public class Display implements Iterable<CharSequence> {
 			else if (sub.startsWith("</math>") || sub.startsWith("</latex>") || sub.startsWith("]]"))
 				rawMode = false;
 
-			if (sub.startsWith("%newline()")) {
+			if (JawsFlags.SPECIAL_NEWLINE_IN_DISPLAY_CLASS && sub.startsWith("%newline()")) {
 				result.add(current.toString());
 				current.setLength(0);
 				i += 9;
 				// throw new IllegalStateException();
-			} else if (sub.startsWith("%n()")) {
+			} else if (JawsFlags.SPECIAL_NEWLINE_IN_DISPLAY_CLASS && sub.startsWith("%n()")) {
 				result.add(current.toString());
 				current.setLength(0);
 				i += 3;
