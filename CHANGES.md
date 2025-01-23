@@ -1,3 +1,9 @@
+## V1.2025.1 (no date yet)
+
+https://github.com/plantuml/plantuml/pull/2049
+https://forum.plantuml.net/19607/1-2025-0-has-%25newline-bug-older-version-1-2024-7-was-working
+https://github.com/plantuml/plantuml/issues/2040
+
 ## V1.2025.0 (Jan 15, 2024)
 
 - [Gantt Chart with closed weekends does not render correctly depending on the theme](https://github.com/plantuml/plantuml/issues/2022)
