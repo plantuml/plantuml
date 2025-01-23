@@ -39,7 +39,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum JawsWarning {
-	BACKSLASH_NEWLINE("\\n", "%n()"), //
+	BACKSLASH_NEWLINE("\\n", "%newline() or %n()"), //
 	BACKSLASH_LEFT("\\l", "%left_align()"), //
 	BACKSLASH_RIGHT("\\r", "%right_align()"), //
 	BACKSLASH_TABULATION("\\t", "%tab()"), //

@@ -96,8 +96,6 @@ public class Pragma implements WarningHandler {
 
 	@Override
 	public Collection<Warning> getWarnings() {
-		if (isTrue(PragmaKey.WARNING))
-			return this.warnings;
-		return Collections.emptyList();
+		return this.warnings;
 	}
 }

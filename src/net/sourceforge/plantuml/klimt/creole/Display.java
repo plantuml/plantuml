@@ -69,6 +69,7 @@ import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.sequencediagram.MessageNumber;
 import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinSimple;
@@ -281,27 +282,22 @@ public class Display implements Iterable<CharSequence> {
 				if (c2 == 'n' || c2 == 'r' || c2 == 'l') {
 					if (c2 == 'r') {
 						naturalHorizontalAlignment = HorizontalAlignment.RIGHT;
-						pragma.addWarning(MORE_INFO);
-						pragma.addWarning(JawsWarning.BACKSLASH_RIGHT.toWarning());
+						addWarning(pragma, JawsWarning.BACKSLASH_RIGHT);
 					} else if (c2 == 'l') {
 						naturalHorizontalAlignment = HorizontalAlignment.LEFT;
-						pragma.addWarning(MORE_INFO);
-						pragma.addWarning(JawsWarning.BACKSLASH_LEFT.toWarning());
+						addWarning(pragma, JawsWarning.BACKSLASH_LEFT);
 					} else {
-						pragma.addWarning(MORE_INFO);
-						pragma.addWarning(JawsWarning.BACKSLASH_NEWLINE.toWarning());
+						addWarning(pragma, JawsWarning.BACKSLASH_NEWLINE);
 					}
 
 					result.add(current.toString());
 					current.setLength(0);
 				} else if (c2 == 't') {
 					current.append('\t');
-					pragma.addWarning(MORE_INFO);
-					pragma.addWarning(JawsWarning.BACKSLASH_TABULATION.toWarning());
+					addWarning(pragma, JawsWarning.BACKSLASH_TABULATION);
 				} else if (c2 == '\\') {
 					current.append(c2);
-					pragma.addWarning(MORE_INFO);
-					pragma.addWarning(JawsWarning.BACKSLASH_BACKSLASH.toWarning());
+					addWarning(pragma, JawsWarning.BACKSLASH_BACKSLASH);
 				} else {
 					current.append(c);
 					current.append(c2);
@@ -333,6 +329,13 @@ public class Display implements Iterable<CharSequence> {
 		}
 		result.add(current.toString());
 		return new Display(true, result, naturalHorizontalAlignment, false, CreoleMode.FULL);
+	}
+
+	private static void addWarning(Pragma pragma, JawsWarning warning) {
+		if (pragma.isTrue(PragmaKey.SHOW_DEPRECATION)) {
+			pragma.addWarning(MORE_INFO);
+			pragma.addWarning(warning.toWarning());
+		}
 	}
 
 	private Display(boolean showStereotype, Display other, CreoleMode mode) {

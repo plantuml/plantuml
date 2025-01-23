@@ -47,6 +47,7 @@ public enum PragmaKey {
 	LABEL_ANGLE, //
 	LABEL_DISTANCE, //
 	RATIO, //
+	SHOW_DEPRECATION, //
 	SVG_FONT, //
 	SVG_INTERACTIVE, //
 	SVEK_TRACE, //
@@ -54,8 +55,7 @@ public enum PragmaKey {
 	TEX_SYSTEM, //
 	TEX_PREAMBLE, //
 	USE_INTERMEDIATE_PACKAGES, //
-	USE_VERTICAL_IF, //
-	WARNING; //
+	USE_VERTICAL_IF;
 
 	private static String simplify(String s) {
 		final StringBuilder result = new StringBuilder();
