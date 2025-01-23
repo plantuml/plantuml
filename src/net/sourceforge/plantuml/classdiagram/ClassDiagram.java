@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.objectdiagram.AbstractClassOrObjectDiagram;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.svek.image.EntityImageClass;
 
@@ -120,7 +121,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
 		}
 
-		if (getPragma().useIntermediatePackages() == false)
+		if (getPragma().isFalse(PragmaKey.USE_INTERMEDIATE_PACKAGES))
 			packSomePackage();
 
 		this.applySingleStrategy();

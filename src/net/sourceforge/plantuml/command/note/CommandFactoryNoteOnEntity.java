@@ -63,6 +63,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.skin.ColorParam;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.stereo.Stereotag;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
@@ -249,7 +250,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 					ColorParam.noteBorder);
 		}
 
-		if (diagram.getPragma().useKermor() && cl1.isGroup()) {
+		if (diagram.getPragma().isTrue(PragmaKey.KERMOR) && cl1.isGroup()) {
 			cl1.addNote(display, position, colors);
 			return CommandExecutionResult.ok();
 		}

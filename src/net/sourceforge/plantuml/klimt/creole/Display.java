@@ -82,6 +82,7 @@ import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.warning.JawsWarning;
+import net.sourceforge.plantuml.warning.Warning;
 
 public class Display implements Iterable<CharSequence> {
 
@@ -91,8 +92,8 @@ public class Display implements Iterable<CharSequence> {
 	private final CreoleMode defaultCreoleMode;
 	private final boolean showStereotype;
 
-	// Ideally, we should have implemented the Null Object Pattern from the start, 
-	// but it was not incorporated. We are now gradually removing occurrences of 
+	// Ideally, we should have implemented the Null Object Pattern from the start,
+	// but it was not incorporated. We are now gradually removing occurrences of
 	// <code>null</code> in the <code>Display</code> logic throughout our codebase.
 	// Reference: https://en.wikipedia.org/wiki/Null_object_pattern
 	public final static Display NULL = new Display(true, null, null, true, CreoleMode.FULL);
@@ -245,6 +246,8 @@ public class Display implements Iterable<CharSequence> {
 		return Collections.unmodifiableList(result);
 	}
 
+	private final static Warning MORE_INFO = new Warning("More info on https://plantuml.com/newline");
+
 	public static Display getWithNewlines(Pragma pragma, String s) {
 		if (s == null)
 			return NULL;
@@ -278,11 +281,14 @@ public class Display implements Iterable<CharSequence> {
 				if (c2 == 'n' || c2 == 'r' || c2 == 'l') {
 					if (c2 == 'r') {
 						naturalHorizontalAlignment = HorizontalAlignment.RIGHT;
+						pragma.addWarning(MORE_INFO);
 						pragma.addWarning(JawsWarning.BACKSLASH_RIGHT.toWarning());
 					} else if (c2 == 'l') {
 						naturalHorizontalAlignment = HorizontalAlignment.LEFT;
+						pragma.addWarning(MORE_INFO);
 						pragma.addWarning(JawsWarning.BACKSLASH_LEFT.toWarning());
 					} else {
+						pragma.addWarning(MORE_INFO);
 						pragma.addWarning(JawsWarning.BACKSLASH_NEWLINE.toWarning());
 					}
 
@@ -290,15 +296,16 @@ public class Display implements Iterable<CharSequence> {
 					current.setLength(0);
 				} else if (c2 == 't') {
 					current.append('\t');
+					pragma.addWarning(MORE_INFO);
 					pragma.addWarning(JawsWarning.BACKSLASH_TABULATION.toWarning());
 				} else if (c2 == '\\') {
 					current.append(c2);
+					pragma.addWarning(MORE_INFO);
 					pragma.addWarning(JawsWarning.BACKSLASH_BACKSLASH.toWarning());
 				} else {
 					current.append(c);
 					current.append(c2);
 				}
-				pragma.addWarning(JawsWarning.OTHER.toWarning());
 			} else if (c == Jaws.BLOCK_E1_REAL_TABULATION) {
 				// current.append('\t');
 				current.append(c);
@@ -573,13 +580,12 @@ public class Display implements Iterable<CharSequence> {
 		}
 		return Collections.unmodifiableList(result);
 	}
-	
+
 	public String toTooltipText() {
 		if (size() == 0)
 			return "";
 		return get(0).toString();
 	}
-
 
 	// ------
 

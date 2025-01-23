@@ -45,6 +45,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class DescriptionDiagram extends AbstractEntityDiagram {
@@ -90,7 +91,7 @@ public class DescriptionDiagram extends AbstractEntityDiagram {
 	@Override
 	public String checkFinalError() {
 
-		if (getPragma().useIntermediatePackages() == false)
+		if (getPragma().isFalse(PragmaKey.USE_INTERMEDIATE_PACKAGES))
 			packSomePackage();
 
 		this.applySingleStrategy();

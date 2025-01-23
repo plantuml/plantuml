@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.klimt.geom.Moveable;
 import net.sourceforge.plantuml.klimt.geom.Rankdir;
 import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.security.SFile;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.utils.Position;
@@ -101,7 +102,7 @@ public final class DotStringFactory implements Moveable {
 				max = c;
 
 		}
-		if (root.diagram.getPragma().useKermor())
+		if (root.diagram.getPragma().isTrue(PragmaKey.KERMOR))
 			return max / 100;
 		return max / 10;
 	}
@@ -169,7 +170,7 @@ public final class DotStringFactory implements Moveable {
 
 		manageMinMaxCluster(sb);
 
-		if (root.diagram.getPragma().useKermor()) {
+		if (root.diagram.getPragma().isTrue(PragmaKey.KERMOR)) {
 			for (SvekEdge line : getBibliotekon().lines0())
 				line.appendLine(getGraphvizVersion(), sb, dotMode, dotSplines);
 			for (SvekEdge line : getBibliotekon().lines1())
@@ -239,7 +240,7 @@ public final class DotStringFactory implements Moveable {
 			// return 29;
 			return 40;
 		}
-		if (root.diagram.getPragma().useKermor())
+		if (root.diagram.getPragma().isTrue(PragmaKey.KERMOR))
 			return 40;
 		return 60;
 	}
@@ -404,7 +405,7 @@ public final class DotStringFactory implements Moveable {
 			final List<XPoint2D> pointsTitle = svgResult.substring(idx).extractList(SvgResult.POINTS_EQUALS);
 			cluster.setTitlePosition(SvekUtils.getMinXY(pointsTitle));
 
-			if (root.diagram.getPragma().useKermor()) {
+			if (root.diagram.getPragma().isTrue(PragmaKey.KERMOR)) {
 				if (cluster.getGroup().getNotes(Position.TOP).size() > 0) {
 					final List<XPoint2D> noteUp = svgResult.substring(getClusterIndex(svg, cluster.getColorNoteTop()))
 							.extractList(SvgResult.POINTS_EQUALS);

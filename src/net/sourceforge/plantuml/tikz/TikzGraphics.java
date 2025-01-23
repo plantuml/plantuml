@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.klimt.drawing.eps.EpsGraphics;
 import net.sourceforge.plantuml.klimt.geom.USegment;
 import net.sourceforge.plantuml.klimt.geom.USegmentType;
 import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
@@ -88,7 +89,7 @@ public class TikzGraphics {
 		this.withPreamble = withPreamble;
 		this.scale = scale;
 		this.mapper = mapper;
-		this.preamble = pragma != null ? pragma.getValue("texpreamble") : null;
+		this.preamble = pragma != null ? pragma.getValue(PragmaKey.TEX_PREAMBLE) : null;
 	}
 
 	private final Map<String, Integer> styles = new LinkedHashMap<String, Integer>();

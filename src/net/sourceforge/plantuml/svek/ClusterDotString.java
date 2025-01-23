@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.dot.GraphvizVersion;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.skin.AlignmentParam;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 
@@ -72,7 +73,7 @@ public class ClusterDotString {
 
 	void printInternal(StringBuilder sb, Collection<SvekEdge> lines, StringBounder stringBounder, DotMode dotMode,
 			GraphvizVersion graphvizVersion, UmlDiagramType type) {
-		if (cluster.diagram.getPragma().useKermor()) {
+		if (cluster.diagram.getPragma().isTrue(PragmaKey.KERMOR)) {
 			new ClusterDotStringKermor(cluster, skinParam).printInternal(sb, lines, stringBounder, dotMode,
 					graphvizVersion, type);
 			return;

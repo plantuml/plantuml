@@ -38,6 +38,7 @@ package net.sourceforge.plantuml;
 import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.skin.PragmaKey;
 
 public class TikzFontDistortion {
 	// ::remove file when __HAXE__
@@ -97,8 +98,8 @@ public class TikzFontDistortion {
 	}
 
 	public void updateFromPragma(Pragma pragma) {
-		this.texSystem = pragma.getValue("texsystem");
-		this.texPreamble = pragma.getValue("texpreamble");
+		this.texSystem = pragma.getValue(PragmaKey.TEX_SYSTEM);
+		this.texPreamble = pragma.getValue(PragmaKey.TEX_PREAMBLE);
 	}
 
 }

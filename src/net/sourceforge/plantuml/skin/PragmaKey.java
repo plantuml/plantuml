@@ -30,36 +30,48 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.warning;
+package net.sourceforge.plantuml.skin;
 
-import java.util.Arrays;
-import java.util.List;
+public enum PragmaKey {
 
-public enum JawsWarning {
-	BACKSLASH_NEWLINE("\\n", "%n()"), //
-	BACKSLASH_LEFT("\\l", "%left_align()"), //
-	BACKSLASH_RIGHT("\\r", "%right_align()"), //
-	BACKSLASH_TABULATION("\\t", "%tab()"), //
-	BACKSLASH_BACKSLASH("\\\\", "%backslash()");
+	ASPECT, //
+	COMPACT, //
+	DEFAULT_LABEL_ANGLE, //
+	DEFAULT_LABEL_DISTANCE, //
+	GRAPH_ATTRIBUTES, //
+	HORIZONTAL_LINE_BETWEEN_DIFFERENT_PACKAGE_ALLOWED, //
+	KERMOR, //
+	LABEL_ANGLE, //
+	LABEL_DISTANCE, //
+	RATIO, //
+	SVG_FONT, //
+	SVG_INTERACTIVE, //
+	SVEK_TRACE, //
+	TEOZ, //
+	TEX_SYSTEM, //
+	TEX_PREAMBLE, //
+	USE_INTERMEDIATE_PACKAGES, //
+	USE_VERTICAL_IF, //
+	WARNING; //
 
-	private final String ch;
-	private final String function;
+	private static String simplify(String s) {
+		final StringBuilder result = new StringBuilder();
 
-	JawsWarning(String ch, String function) {
-		this.ch = ch;
-		this.function = function;
+		for (char c : s.toCharArray())
+			if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+				result.append(Character.toLowerCase(c));
+
+		return result.toString();
 	}
 
-	public Warning toWarning() {
-
-		final List<String> WARNINGS = Arrays.asList(
-				"This diagram is using " + ch + " which is deprecated and will be removed in the future.",
-				"You should use " + function + " instead in your diagram.");
-
-		return new Warning(WARNINGS);
+	public static PragmaKey lazyFrom(String s) {
+		for (PragmaKey key : values())
+			if (simplify(s).equals(simplify(key.name())))
+				return key;
+		return null;
 	}
 
 }

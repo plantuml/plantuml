@@ -37,9 +37,8 @@ package net.sourceforge.plantuml.skin;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedHashMap;
+import java.util.EnumMap;
 import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.warning.Warning;
@@ -47,7 +46,8 @@ import net.sourceforge.plantuml.warning.WarningHandler;
 
 public class Pragma implements WarningHandler {
 
-	private final Map<String, String> values = new LinkedHashMap<String, String>();
+	private final EnumMap<PragmaKey, String> values = new EnumMap<>(PragmaKey.class);
+
 	private final Set<Warning> warnings = new LinkedHashSet<>();
 
 	private Pragma() {
@@ -57,56 +57,32 @@ public class Pragma implements WarningHandler {
 		return new Pragma();
 	}
 
-	public void define(String name, String value) {
-		values.put(name, value);
+	public void define(String keyName, String value) {
+		final PragmaKey key = PragmaKey.lazyFrom(keyName);
+		if (key != null)
+			values.put(key, value);
 	}
 
-	public boolean isDefine(String name) {
-		return values.containsKey(name);
+	public boolean isDefine(PragmaKey key) {
+		return values.containsKey(key);
 	}
 
-	public void undefine(String name) {
-		values.remove(name);
+	public void undefine(PragmaKey key) {
+		values.remove(key);
 	}
 
-	public String getValue(String name) {
-		return values.get(name);
+	public String getValue(PragmaKey key) {
+		return values.get(key);
 	}
 
-	public boolean horizontalLineBetweenDifferentPackageAllowed() {
-		return isDefine("horizontallinebetweendifferentpackageallowed");
+	public boolean isTrue(PragmaKey key) {
+		final String value = getValue(key);
+		return "true".equalsIgnoreCase(value) || "on".equalsIgnoreCase(value);
 	}
 
-	public boolean backToLegacyPackage() {
-		return isDefine("backtolegacypackage");
-	}
-
-	public boolean useNewPackage() {
-		return isDefine("usenewpackage");
-	}
-
-	private boolean isTrue(final String s) {
-		return "true".equalsIgnoreCase(s) || "on".equalsIgnoreCase(s);
-	}
-
-	private boolean isFalse(final String s) {
-		return "false".equalsIgnoreCase(s) || "off".equalsIgnoreCase(s);
-	}
-
-	public boolean useVerticalIf() {
-		return isTrue(getValue("useverticalif"));
-	}
-
-	public boolean useTeozLayout() {
-		return isTrue(getValue("teoz"));
-	}
-
-	public boolean useKermor() {
-		return isTrue(getValue("kermor"));
-	}
-
-	public boolean useIntermediatePackages() {
-		return !isFalse(getValue("useintermediatepackages"));
+	public boolean isFalse(PragmaKey key) {
+		final String value = getValue(key);
+		return "false".equalsIgnoreCase(value) || "off".equalsIgnoreCase(value);
 	}
 
 	public boolean legacyReplaceBackslashNByNewline() {
@@ -120,7 +96,7 @@ public class Pragma implements WarningHandler {
 
 	@Override
 	public Collection<Warning> getWarnings() {
-		if (isTrue(getValue("warning")))
+		if (isTrue(PragmaKey.WARNING))
 			return this.warnings;
 		return Collections.emptyList();
 	}

@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
@@ -75,7 +76,7 @@ public class PSystemEbnf extends TitledDiagram {
 	}
 
 	public CommandExecutionResult addBlocLines(BlocLines blines, String commentAbove, String commentBelow) {
-		final boolean isCompact = getPragma().isDefine("compact");
+		final boolean isCompact = getPragma().isDefine(PragmaKey.COMPACT);
 		final CharInspector it = blines.inspector();
 		final EbnfExpression tmp1 = EbnfExpression.create(it, isCompact, commentAbove, commentBelow);
 		if (tmp1.isEmpty())
@@ -114,7 +115,8 @@ public class PSystemEbnf extends TitledDiagram {
 
 		TextBlock result = expressions.get(0).getUDrawable(getSkinParam(), getPreprocessingArtifact());
 		for (int i = 1; i < expressions.size(); i++)
-			result = TextBlockUtils.mergeTB(result, expressions.get(i).getUDrawable(getSkinParam(), getPreprocessingArtifact()),
+			result = TextBlockUtils.mergeTB(result,
+					expressions.get(i).getUDrawable(getSkinParam(), getPreprocessingArtifact()),
 					HorizontalAlignment.LEFT);
 		return TextBlockUtils.addBackcolor(result, null);
 	}

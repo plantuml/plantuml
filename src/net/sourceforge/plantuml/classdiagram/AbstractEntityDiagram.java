@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.OptionKey;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public abstract class AbstractEntityDiagram extends CucaDiagram {
@@ -60,10 +61,10 @@ public abstract class AbstractEntityDiagram extends CucaDiagram {
 	final protected List<String> getDotStrings() {
 		final List<String> def = Arrays.asList("nodesep=.35;", "ranksep=0.8;", "edge [fontsize=11,labelfontsize=11];",
 				"node [fontsize=11,height=.35,width=.55];");
-		if (getPragma().isDefine("graphattributes") == false) 
+		if (getPragma().isDefine(PragmaKey.GRAPH_ATTRIBUTES) == false) 
 			return def;
 		
-		final String attribute = getPragma().getValue("graphattributes");
+		final String attribute = getPragma().getValue(PragmaKey.GRAPH_ATTRIBUTES);
 		final List<String> result = new ArrayList<>(def);
 		result.add(attribute);
 		return Collections.unmodifiableList(result);

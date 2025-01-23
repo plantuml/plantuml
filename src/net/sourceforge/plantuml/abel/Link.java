@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UComment;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinSimple;
@@ -132,7 +133,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 		this.linkArg = linkArg;
 
-		if (cucaDiagram.getPragma().useKermor())
+		if (cucaDiagram.getPragma().isTrue(PragmaKey.KERMOR))
 			if (cl1.getEntityPosition().isNormal() == false ^ cl2.getEntityPosition().isNormal() == false)
 				setConstraint(false);
 

@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.activitydiagram3.ftile.Swimlane;
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.cond.ConditionalBuilder;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
@@ -82,7 +83,7 @@ public class FtileFactoryDelegatorIf extends FtileFactoryDelegator {
 				: branch0.getColor();
 
 		if (thens.size() > 1) {
-			if (pragma.useVerticalIf()/* OptionFlags.USE_IF_VERTICAL */)
+			if (pragma.isTrue(PragmaKey.USE_VERTICAL_IF)/* OptionFlags.USE_IF_VERTICAL */)
 				return FtileIfLongVertical.create(swimlane, backColor, getFactory(), conditionStyle, thens, elseBranch,
 						topInlinkRendering, afterEndwhile, styleArrow, styleDiamond);
 			return FtileIfLongHorizontal.create(swimlane, backColor, getFactory(), conditionStyle, thens, elseBranch,

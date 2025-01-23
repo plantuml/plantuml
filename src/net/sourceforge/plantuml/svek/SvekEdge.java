@@ -93,6 +93,7 @@ import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.LineParam;
 import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
 import net.sourceforge.plantuml.skin.rose.Rose;
@@ -388,7 +389,7 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 			length = 2;
 
 		if (useRankSame) {
-			if (pragma.horizontalLineBetweenDifferentPackageAllowed() || link.isInvis() || length != 1) {
+			if (pragma.isDefine(PragmaKey.HORIZONTAL_LINE_BETWEEN_DIFFERENT_PACKAGE_ALLOWED) || link.isInvis() || length != 1) {
 				// if (graphvizVersion.isJs() == false) {
 				sb.append("minlen=" + (length - 1));
 				sb.append(",");
@@ -454,7 +455,7 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		// if (graphvizVersion == GraphvizVersion.V2_34_0) {
 		// return null;
 		// }
-		if (pragma.horizontalLineBetweenDifferentPackageAllowed() == false && link.getLength() == 1
+		if (pragma.isDefine(PragmaKey.HORIZONTAL_LINE_BETWEEN_DIFFERENT_PACKAGE_ALLOWED) == false && link.getLength() == 1
 		/* && graphvizVersion.isJs() == false */) {
 			return "{rank=same; " + getStartUidPrefix() + "; " + getEndUidPrefix() + "}";
 		}

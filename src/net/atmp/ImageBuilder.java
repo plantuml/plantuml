@@ -93,6 +93,7 @@ import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.CornerParam;
 import net.sourceforge.plantuml.skin.LineParam;
 import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.SkinParam;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
@@ -304,24 +305,27 @@ public class ImageBuilder {
 		ug = ug.apply(HColors.BLACK);
 		ug = ug.apply(new UTranslate(10, 15));
 
-		for (Warning w : warnings)
+		for (Warning w : warnings) {
 			for (String s : w.getMessage()) {
 				final UText text = UText.build(s, fc);
 				ug.draw(text);
 				final double height = text.calculateDimension(ug.getStringBounder()).getHeight();
 				ug = ug.apply(UTranslate.dy(height));
 			}
+			ug = ug.apply(UTranslate.dy(10));
+		}
 	}
 
 	private XDimension2D getWarningDimension(StringBounder stringBounder) {
 		XDimension2D result = new XDimension2D(0, 0);
-		for (Warning w : warnings)
+		for (Warning w : warnings) {
 			for (String s : w.getMessage()) {
 				final UText text = UText.build(s, fc);
 				final XDimension2D dim = text.calculateDimension(stringBounder);
 				result = result.mergeTB(dim);
 			}
-		return result.delta(10, 5);
+		}
+		return result.delta(10, 5 + 10 * (warnings.size() - 1));
 	}
 
 	private void maybeDrawBorder(UGraphic ug, XDimension2D dim) {
@@ -414,13 +418,13 @@ public class ImageBuilder {
 		option = option.withScale(scaleFactor);
 		option = option.withColorMapper(fileFormatOption.getColorMapper());
 		option = option.withLinkTarget(getSvgLinkTarget());
-		option = option.withFont(pragma.getValue("svgfont"));
+		option = option.withFont(pragma.getValue(PragmaKey.SVG_FONT));
 		if (titledDiagram != null) {
 			option = option.withTitle(titledDiagram.getTitleDisplay());
 			option = option.withRootAttribute("data-diagram-type", titledDiagram.getUmlDiagramType().name());
 		}
 
-		if ("true".equalsIgnoreCase(pragma.getValue("svginteractive"))) {
+		if ("true".equalsIgnoreCase(pragma.getValue(PragmaKey.SVG_INTERACTIVE))) {
 			String interactiveBaseFilename = "default";
 			// To be uncommented when SequenceDiagramFloatingHeader will be ready
 //			if (titledDiagram != null && titledDiagram.getUmlDiagramType() == UmlDiagramType.SEQUENCE)

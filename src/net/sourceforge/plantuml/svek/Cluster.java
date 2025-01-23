@@ -79,6 +79,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UComment;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.skin.AlignmentParam;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ISkinParam;
@@ -292,7 +293,7 @@ public class Cluster implements Moveable {
 		if (group.isHidden())
 			return;
 
-		if (diagram.getPragma().useKermor()) {
+		if (diagram.getPragma().isTrue(PragmaKey.KERMOR)) {
 			if (xyNoteTop != null)
 				getCucaNote(Position.TOP).drawU(ug.apply(UTranslate.point(xyNoteTop)));
 			if (xyNoteBottom != null)

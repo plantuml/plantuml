@@ -72,6 +72,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.SkinParam;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -298,7 +299,7 @@ public final class GraphvizImageBuilder {
 	}
 
 	private boolean isSvekTrace() {
-		final String value = pragma.getValue("svek_trace");
+		final String value = pragma.getValue(PragmaKey.SVEK_TRACE);
 		return "true".equalsIgnoreCase(value) || "on".equalsIgnoreCase(value);
 	}
 

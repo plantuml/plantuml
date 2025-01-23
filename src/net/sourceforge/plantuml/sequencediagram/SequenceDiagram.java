@@ -71,6 +71,7 @@ import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramFileMaker
 import net.sourceforge.plantuml.sequencediagram.graphic.SequenceDiagramTxtMaker;
 import net.sourceforge.plantuml.sequencediagram.teoz.SequenceDiagramFileMakerTeoz;
 import net.sourceforge.plantuml.skin.ColorParam;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -282,7 +283,7 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	private boolean modeTeoz() {
-		return OptionFlags.FORCE_TEOZ || getPragma().useTeozLayout();
+		return OptionFlags.FORCE_TEOZ || getPragma().isTrue(PragmaKey.TEOZ);
 	}
 
 	
