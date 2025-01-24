@@ -102,10 +102,28 @@ final public class StringLocated {
 		return copy;
 	}
 
-	public List<StringLocated> expandsBreakline() {
+	public List<StringLocated> expandsBreaklineButEmbedded() {
 		final List<StringLocated> copy = new ArrayList<>();
-		for (String s : Arrays.asList(s.split("" + Jaws.BLOCK_E1_BREAKLINE)))
-			copy.add(new StringLocated(s, location, preprocessorError));
+		int level = 0;
+		StringBuilder pending = new StringBuilder();
+		for (int i = 0; i < s.length(); i++) {
+			if (s.substring(i).startsWith("{{"))
+				level++;
+			else if (s.substring(i).startsWith("}}"))
+				level--;
+
+			final char ch = s.charAt(i);
+			if (level > 0) {
+				pending.append(ch);
+			} else if (ch == Jaws.BLOCK_E1_BREAKLINE) {
+				copy.add(new StringLocated(pending.toString(), location, preprocessorError));
+				pending.setLength(0);
+			} else {
+				pending.append(ch);
+			}
+		}
+		copy.add(new StringLocated(pending.toString(), location, preprocessorError));
+
 		return copy;
 	}
 

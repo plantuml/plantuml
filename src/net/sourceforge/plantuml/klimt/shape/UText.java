@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.klimt.shape;
 
+import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -53,7 +54,7 @@ public class UText implements UShape {
 
 	private UText(String text, FontConfiguration font, int orientation) {
 		assert text.indexOf('\t') == -1;
-		this.text = text;
+		this.text = text.replace(Jaws.BLOCK_E1_NEWLINE, '\u21b5').replace(Jaws.BLOCK_E1_BREAKLINE, '\u23ce');
 		this.font = font;
 		this.orientation = orientation;
 	}

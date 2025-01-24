@@ -275,7 +275,7 @@ public class Display implements Iterable<CharSequence> {
 				current.setLength(0);
 				i += 3;
 				// throw new IllegalStateException();
-			} else if (pragma.legacyReplaceBackslashNByNewline() && rawMode == false && c == '\\'
+			} else if (Pragma.legacyReplaceBackslashNByNewline() && rawMode == false && c == '\\'
 					&& i < s.length() - 1) {
 				final char c2 = s.charAt(i + 1);
 				i++;
@@ -318,6 +318,10 @@ public class Display implements Iterable<CharSequence> {
 				result.add(current.toString());
 				current.setLength(0);
 			} else if (rawMode == false && c == Jaws.BLOCK_E1_NEWLINE) {
+				result.add(current.toString());
+				current.setLength(0);
+			} else if (c == Jaws.BLOCK_E1_BREAKLINE) {
+				// Because of embedded diagrams
 				result.add(current.toString());
 				current.setLength(0);
 			} else if (rawMode == false && c == BackSlash.hiddenNewLine()) {
@@ -703,7 +707,11 @@ public class Display implements Iterable<CharSequence> {
 
 	@JawsStrange
 	public static boolean hasSeveralGuideLines(String s) {
-		final List<String> splitted = Arrays.asList(s.split("\\\\n"));
+		final List<String> splitted;
+		if (Pragma.legacyReplaceBackslashNByNewline())
+			splitted = Arrays.asList(s.split("\\\\n"));
+		else
+			splitted = Arrays.asList(s.split("" + Jaws.BLOCK_E1_NEWLINE));
 		return hasSeveralGuideLines(splitted);
 	}
 

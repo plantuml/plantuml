@@ -83,7 +83,7 @@ public class Jaws {
 	public static List<StringLocated> expands0(List<StringLocated> input) {
 		final List<StringLocated> output = new ArrayList<StringLocated>();
 		for (StringLocated sl : input) 
-			output.addAll(sl.expandsBreakline());
+			output.addAll(sl.expandsBreaklineButEmbedded());
 		
 		return output;
 	}

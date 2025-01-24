@@ -85,7 +85,7 @@ public class Pragma implements WarningHandler {
 		return "false".equalsIgnoreCase(value) || "off".equalsIgnoreCase(value);
 	}
 
-	public boolean legacyReplaceBackslashNByNewline() {
+	public static boolean legacyReplaceBackslashNByNewline() {
 		return true;
 	}
 

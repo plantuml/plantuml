@@ -87,7 +87,7 @@ public final class AtomText extends AbstractAtom implements Atom {
 			s = StringUtils.manageEscapedTabs(s);
 		}
 		this.manageSpecialChars = manageSpecialChars;
-		this.text = s.replace(Jaws.BLOCK_E1_NEWLINE, '\u21b5');
+		this.text = s;
 		this.fontConfiguration = style;
 		this.url = url;
 	}

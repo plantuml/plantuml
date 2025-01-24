@@ -441,9 +441,14 @@ public class TContext {
 				pendingAdd = null;
 			}
 			for (StringLocated line : tmp)
-				resultList.add(line);
+				addToResultList(line);
 
 		}
+	}
+
+	private boolean addToResultList(StringLocated line) {
+		// System.err.println("adding " + line);
+		return resultList.add(line);
 	}
 
 	private void simulatePlain(TMemory memory, StringLocated s) throws EaterException {
@@ -540,12 +545,13 @@ public class TContext {
 						call.getNamedArguments());
 				String tmp = functionReturn.toString();
 				// if (tmp.indexOf(Jaws.BLOCK_E1_NEWLINE) > 0)
-				//System.err.println("tmp=" + tmp + " (" + function.getFunctionType() + ")");
-				// if (function.getFunctionType() == TFunctionType.RETURN_FUNCTION && tmp.length() > 1) {
-					// System.err.println("JE REPLACE");
-					// tmp = StringLocated.expandsJaws32(tmp);
-					// tmp = tmp.replace(Jaws.BLOCK_E1_NEWLINE, '\n');
-					// System.err.println("DONC tmp=" + tmp);
+				// System.err.println("tmp=" + tmp + " (" + function.getFunctionType() + ")");
+				// if (function.getFunctionType() == TFunctionType.RETURN_FUNCTION &&
+				// tmp.length() > 1) {
+				// System.err.println("JE REPLACE");
+				// tmp = StringLocated.expandsJaws32(tmp);
+				// tmp = tmp.replace(Jaws.BLOCK_E1_NEWLINE, '\n');
+				// System.err.println("DONC tmp=" + tmp);
 				// }
 				result.append(tmp);
 				i += call.getCurrentPosition() - 1;
