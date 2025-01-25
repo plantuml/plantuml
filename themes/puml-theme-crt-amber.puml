@@ -1,10 +1,15 @@
-''
-'' An orange on black theme based on monochrome CRT monitors
-''
-'' (The colors came from https://superuser.com/a/1206781)
-''
-'' Original Author: Matthew Leather
-''
+---
+name: ctr-amber
+display_name: Cathode-ray tube (CTR) amber
+description: An orange on black theme based on monochrome CRT monitors
+author: Matthew Leather
+release: 
+license: 
+version: 
+source: 
+origin: 
+inspiration: https://superuser.com/a/1206781
+---
 
 !$THEME = "crt-amber"
 
