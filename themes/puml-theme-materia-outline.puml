@@ -1,9 +1,15 @@
-''
-'' materia theme based off of the bootstrap theme of the same name
-'' https://bootswatch.com/materia/
-''
-'' Author: Brett Schwarz
-'' Copyright (c) 2019 by Brett Schwarz
+---
+name: materia-outline
+display_name: Materia Outline
+description: Theme based off of the bootstrap theme of the same name
+author: Brett Schwarz
+release: 
+license: 
+version: 
+source: https://github.com/bschwarz/puml-themes
+origin: 
+inspiration: https://bootswatch.com/materia/
+---
 
 !$THEME = "materia-outline"
 
