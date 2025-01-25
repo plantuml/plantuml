@@ -868,8 +868,9 @@ public class TContext {
 
 	@JawsStrange
 	private String getFunctionNameAt(String s, int pos) {
-		if (pos > 0 && TLineType.isLetterOrUnderscoreOrDigit(s.charAt(pos - 1)) && s.charAt(pos) != '%'
-				&& VariableManager.justAfterBackslashN(s, pos) == false)
+		final boolean justAfterALetter = pos > 0 && TLineType.isLetterOrUnderscoreOrDigit(s.charAt(pos - 1))
+				&& VariableManager.justAfterBackslashN(s, pos) == false;
+		if (justAfterALetter && s.charAt(pos) != '%' && s.charAt(pos) != '$')
 			return null;
 
 		final String fname = functionsSet.getLonguestMatchStartingIn(s, pos);

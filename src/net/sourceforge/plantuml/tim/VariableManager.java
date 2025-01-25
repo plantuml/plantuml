@@ -141,10 +141,11 @@ public class VariableManager {
 
 	@JawsStrange
 	public String getVarnameAt(String s, int pos) {
-		if (pos > 0 && TLineType.isLetterOrUnderscoreOrDigit(s.charAt(pos - 1))
-				&& justAfterBackslashN(s, pos) == false) {
+		final boolean justAfterALetter = pos > 0 && TLineType.isLetterOrUnderscoreOrDigit(s.charAt(pos - 1))
+				&& justAfterBackslashN(s, pos) == false;
+		if (justAfterALetter && s.charAt(pos) != '$')
 			return null;
-		}
+
 		final String varname = memory.variablesNames3().getLonguestMatchStartingIn(s, pos);
 		if (varname.length() == 0)
 			return null;
