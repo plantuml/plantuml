@@ -1,9 +1,15 @@
-''
-'' A white on blue theme based on the Blueprint reproduction process
-'' https://en.wikipedia.org/wiki/Blueprint
-''
-'' Original Author: Matthew Leather
-''
+---
+name: blueprint
+display_name: Blueprint
+description: A white on blue theme based on the Blueprint reproduction process
+author: Matthew Leather
+release: 
+license: 
+version: 
+source: 
+origin: 
+inspiration: https://en.wikipedia.org/wiki/Blueprint
+---
 
 !$THEME = "blueprint"
 
