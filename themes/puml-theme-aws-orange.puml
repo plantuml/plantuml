@@ -1,8 +1,16 @@
-''
-'' Theme based off of the colors used by Amazon Web Services
-''
-'' Author: Brett Schwarz
-''
+---
+name: aws-orange
+display_name: AWS orange
+description: Theme based off of the colors used by Amazon Web Services
+author: Brett Schwarz
+release: 
+license: 
+version: 
+source: https://github.com/bschwarz/puml-themes
+origin: 
+inspiration: 
+---
+
 !$PUML_THEME = "aws-orange"
 !$THEME      = "aws-orange"
 ''
