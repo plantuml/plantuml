@@ -73,6 +73,7 @@ import net.sourceforge.plantuml.preproc2.PreprocessorIncludeStrategy;
 import net.sourceforge.plantuml.preproc2.PreprocessorUtils;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SURL;
+import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.text.TLineType;
 import net.sourceforge.plantuml.theme.Theme;
@@ -489,12 +490,18 @@ public class TContext {
 		if (result == null)
 			return null;
 
-		final String[] splited = result.split("\n");
-		final StringLocated[] tab = new StringLocated[splited.length];
-		for (int i = 0; i < splited.length; i++)
-			tab[i] = new StringLocated(splited[i], located.getLocation());
+		if (Pragma.legacyReplaceBackslashNByNewline()) {
+			final String[] splited = result.split("\n");
+			final StringLocated[] tab = new StringLocated[splited.length];
+			for (int i = 0; i < splited.length; i++)
+				tab[i] = new StringLocated(splited[i], located.getLocation());
 
-		return tab;
+			return tab;
+		}
+		if (result.contains("\n"))
+			throw new IllegalStateException(result);
+		return new StringLocated[] { new StringLocated(result, located.getLocation()) };
+
 	}
 
 	private String pendingAdd = null;
@@ -859,6 +866,7 @@ public class TContext {
 		return false;
 	}
 
+	@JawsStrange
 	private String getFunctionNameAt(String s, int pos) {
 		if (pos > 0 && TLineType.isLetterOrUnderscoreOrDigit(s.charAt(pos - 1)) && s.charAt(pos) != '%'
 				&& VariableManager.justAfterBackslashN(s, pos) == false)

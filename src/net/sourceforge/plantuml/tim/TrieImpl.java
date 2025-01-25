@@ -42,16 +42,16 @@ public class TrieImpl implements Trie {
 	private final Map<Character, TrieImpl> brothers = new HashMap<Character, TrieImpl>();
 
 	public void add(String s) {
-		if (s.indexOf('\0') != -1) {
+		if (s.indexOf('\0') != -1)
 			throw new IllegalArgumentException();
-		}
+
 		addInternal(this, s + "\0");
 	}
 
 	private static void addInternal(TrieImpl current, String s) {
-		if (s.length() == 0) {
+		if (s.length() == 0)
 			throw new UnsupportedOperationException();
-		}
+
 		while (s.length() > 0) {
 			final Character added = s.charAt(0);
 			final TrieImpl child = current.getOrCreate(added);
@@ -65,15 +65,15 @@ public class TrieImpl implements Trie {
 	}
 
 	private static boolean removeInternal(TrieImpl current, String s) {
-		if (s.length() <= 1) {
+		if (s.length() <= 1)
 			throw new UnsupportedOperationException();
-		}
+
 		while (s.length() > 0) {
 			final Character first = s.charAt(0);
 			final TrieImpl child = current.brothers.get(first);
-			if (child == null) {
+			if (child == null)
 				return false;
-			}
+
 			s = s.substring(1);
 			if (s.length() == 1) {
 				assert s.charAt(0) == '\0';
@@ -100,21 +100,19 @@ public class TrieImpl implements Trie {
 	private static String getLonguestMatchStartingIn(TrieImpl current, String s, int pos) {
 		final StringBuilder result = new StringBuilder();
 		while (current != null) {
-			if (s.length() == pos) {
+			if (s.length() == pos)
 				if (current.brothers.containsKey('\0'))
 					return result.toString();
 				else
 					return "";
 
-			}
 			final TrieImpl child = current.brothers.get(s.charAt(pos));
-			if (child == null || child.brothers.size() == 0) {
+			if (child == null || child.brothers.size() == 0)
 				if (current.brothers.containsKey('\0'))
 					return result.toString();
 				else
 					return "";
 
-			}
 			result.append(s.charAt(pos));
 			current = child;
 			pos++;
