@@ -1,8 +1,15 @@
-''
-'' A mostly monochrome theme with monospaced font, that adds more structure and tidiness with better shapes control, brought by monospaced font
-''
-'' Original Author: Denis Bondarenko feat Matthew Leather
-''
+---
+name: mono
+display_name: Mono
+description: A mostly monochrome theme with monospaced font, that adds more structure and tidiness with better shapes control, brought by monospaced font
+author: Denis Bondarenko feat Matthew Leather
+release: 
+license: 
+version: 
+source: 
+origin: 
+inspiration: 
+---
 
 !$THEME = "mono"
 
