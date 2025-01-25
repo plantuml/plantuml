@@ -1,8 +1,15 @@
-''
-'' Silver theme - mostly grays
-''
-'' Author: Brett Schwarz
-'' Copyright (c) 2019 by Brett Schwarz
+---
+name: silver
+display_name: Silver
+description: Mostly silver grays Theme
+author: Brett Schwarz
+release: 
+license:
+version: 
+source: https://github.com/bschwarz/puml-themes
+origin: 
+inspiration: 
+---
 
 !$THEME = "silver"
 
