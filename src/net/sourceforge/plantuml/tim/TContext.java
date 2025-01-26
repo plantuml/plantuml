@@ -88,6 +88,7 @@ import net.sourceforge.plantuml.tim.builtin.Darken;
 import net.sourceforge.plantuml.tim.builtin.DateFunction;
 import net.sourceforge.plantuml.tim.builtin.Dec2hex;
 import net.sourceforge.plantuml.tim.builtin.Dirpath;
+import net.sourceforge.plantuml.tim.builtin.Dollar;
 import net.sourceforge.plantuml.tim.builtin.Eval;
 import net.sourceforge.plantuml.tim.builtin.Feature;
 import net.sourceforge.plantuml.tim.builtin.FileExists;
@@ -201,6 +202,7 @@ public class TContext {
 		functionsSet.addFunction(new DateFunction());
 		functionsSet.addFunction(new Dec2hex());
 		functionsSet.addFunction(new Dirpath(defines));
+		functionsSet.addFunction(new Dollar());
 		functionsSet.addFunction(new Eval());
 		functionsSet.addFunction(new Feature());
 		functionsSet.addFunction(new Filedate(defines));
