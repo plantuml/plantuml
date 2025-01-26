@@ -57,11 +57,10 @@ import net.sourceforge.plantuml.json.Json;
 import net.sourceforge.plantuml.json.JsonObject;
 import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.log.Logme;
-import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
-import net.sourceforge.plantuml.preproc.OptionKey;
+import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.ReadLine;
 import net.sourceforge.plantuml.preproc.ReadLineList;
 import net.sourceforge.plantuml.preproc.ReadLineReader;
@@ -450,7 +449,8 @@ public class TContext {
 	}
 
 	private boolean addToResultList(StringLocated line) {
-		// System.err.println("adding " + line);
+		if (Jaws.TRACE)
+			System.err.println("adding " + line);
 		return resultList.add(line);
 	}
 

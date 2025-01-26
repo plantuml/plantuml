@@ -125,7 +125,7 @@ public final class FactorySequenceNoteOnArrowCommand implements SingleMultiFacto
 			protected CommandExecutionResult executeNow(final SequenceDiagram diagram, BlocLines lines,
 					ParserPass currentPass) throws NoSuchColorException {
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
-				lines = lines.subExtract(1, 1).expandsNewline();
+				lines = lines.subExtract(1, 1).expandsNewline(false);
 				lines = lines.removeEmptyColumns();
 				final Display display = lines.toDisplay();
 				return executeInternal(diagram, line0, diagram.manageVariable(display));

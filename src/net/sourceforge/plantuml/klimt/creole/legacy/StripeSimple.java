@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.emoji.Emoji;
+import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.CreoleContext;
@@ -213,6 +214,11 @@ public class StripeSimple implements Stripe {
 	public void analyzeAndAdd(String line) {
 //		if (Objects.requireNonNull(line).contains("" + BackSlash.hiddenNewLine()))
 //			throw new IllegalArgumentException(line);
+
+		if (Jaws.TRACE)
+			System.err.println("analyzeAndAdd " + line);
+		if (line.indexOf(Jaws.BLOCK_E1_NEWLINE) != -1)
+			throw new IllegalArgumentException(line);
 
 		line = CharHidder.hide(line);
 		if (style.getType() == StripeStyleType.HEADING) {

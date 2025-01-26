@@ -199,7 +199,7 @@ public final class CommandFactoryNoteOnEntity implements SingleMultiFactoryComma
 					ParserPass currentPass) throws NoSuchColorException {
 				// StringUtils.trim(lines, false);
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
-				lines = lines.subExtract(1, 1).expandsNewline();
+				lines = lines.subExtract(1, 1).expandsNewline(false);
 				lines = lines.removeEmptyColumns();
 				final Display display = lines.toDisplay();
 

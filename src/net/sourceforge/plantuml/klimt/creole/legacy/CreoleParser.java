@@ -44,6 +44,7 @@ import java.util.Objects;
 
 import net.sourceforge.plantuml.EmbeddedDiagram;
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorRuntimeException;
 import net.sourceforge.plantuml.klimt.creole.CreoleContext;
@@ -78,7 +79,7 @@ public class CreoleParser implements SheetBuilder {
 		this.horizontalAlignment = horizontalAlignment;
 	}
 
-	private Stripe createStripe(String line, CreoleContext context, Stripe lastStripe,
+	private List<Stripe> createStripes(String line, CreoleContext context, Stripe lastStripe,
 			FontConfiguration fontConfiguration) {
 		if (lastStripe instanceof StripeRaw) {
 			final StripeRaw code = (StripeRaw) lastStripe;
@@ -99,18 +100,18 @@ public class CreoleParser implements SheetBuilder {
 			tree.analyzeAndAdd(line);
 			return null;
 		} else if (isTableLine(line)) {
-			return new StripeTable(fontConfiguration, skinParam, line);
+			return Arrays.asList(new StripeTable(fontConfiguration, skinParam, line));
 		} else if (Parser.isTreeStart(line)) {
-			return new StripeTree(fontConfiguration, skinParam, line);
+			return Arrays.asList(new StripeTree(fontConfiguration, skinParam, line));
 		} else if (Parser.isCodeStart(line)) {
-			return new StripeCode(fontConfiguration.changeFamily(Parser.MONOSPACED));
+			return Arrays.asList(new StripeCode(fontConfiguration.changeFamily(Parser.MONOSPACED)));
 			// ::comment when __CORE__
 		} else if (Parser.isLatexStart(line)) {
-			return new StripeLatex(fontConfiguration);
+			return Arrays.asList(new StripeLatex(fontConfiguration));
 			// ::done
 		}
 		return new CreoleStripeSimpleParser(line, context, fontConfiguration, skinParam, creoleMode)
-				.createStripe(context);
+				.createStripes(context);
 	}
 
 	public static boolean isTableLine(String line) {
@@ -124,6 +125,8 @@ public class CreoleParser implements SheetBuilder {
 	private final Map<Display, Sheet> cache = new HashMap<>();
 
 	public Sheet createSheet(Display display) {
+		if (Jaws.TRACE)
+			System.err.println("createSheet " + display);
 		Sheet result = cache.get(display);
 		if (result == null) {
 			result = createSheetSlow(display, false);
@@ -139,14 +142,16 @@ public class CreoleParser implements SheetBuilder {
 			final Iterator<CharSequence> it = display.iterator();
 			while (it.hasNext()) {
 				final CharSequence cs = it.next();
-				final Stripe stripe;
+				if (Jaws.TRACE)
+					System.err.println("createSheetSlow:" + cs);
+				final List<Stripe> stripes;
 				final String type = EmbeddedDiagram.getEmbeddedType(StringUtils.trinNoTrace(cs));
 				if (type != null) {
 					final Atom embeddedDiagram = EmbeddedDiagram.createAndSkip(type, it, skinParam);
 					if (checkColor)
-						stripe = null;
+						stripes = null;
 					else {
-						stripe = new Stripe() {
+						stripes = Arrays.asList(new Stripe() {
 							public Atom getLHeader() {
 								return null;
 							}
@@ -154,21 +159,21 @@ public class CreoleParser implements SheetBuilder {
 							public List<Atom> getAtoms() {
 								return Arrays.asList(embeddedDiagram);
 							}
-						};
+						});
 					}
 				} else if (cs instanceof Stereotype) {
 					if (display.showStereotype())
 						for (String st : ((Stereotype) cs).getLabels(skinParam.guillemet()))
-							sheet.add(createStripe(st, context, sheet.getLastStripe(), stereotype));
+							sheet.add(createStripes(st, context, sheet.getLastStripe(), stereotype));
 
 					continue;
 				} else {
-					stripe = createStripe(skinParam.guillemet().manageGuillemet(cs.toString()), context,
+					stripes = createStripes(skinParam.guillemet().manageGuillemet(cs.toString()), context,
 							sheet.getLastStripe(), fontConfiguration);
 				}
 
-				if (stripe != null)
-					sheet.add(stripe);
+				if (stripes != null)
+					sheet.add(stripes);
 
 			}
 		}

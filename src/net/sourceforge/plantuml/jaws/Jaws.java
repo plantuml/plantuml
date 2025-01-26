@@ -42,6 +42,8 @@ import java.util.List;
 import net.sourceforge.plantuml.text.StringLocated;
 
 public class Jaws {
+	
+	public static final boolean TRACE = false;
 
 	public static final char BLOCK_E1_NEWLINE = '\uE100';
 	public static final char BLOCK_E1_NEWLINE_LEFT_ALIGN = '\uE101';

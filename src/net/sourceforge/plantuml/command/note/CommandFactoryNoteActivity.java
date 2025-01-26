@@ -105,7 +105,7 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 					throws NoSuchColorException {
 				// StringUtils.trim(lines, true);
 				final RegexResult arg = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
-				lines = lines.subExtract(1, 1).expandsNewline();
+				lines = lines.subExtract(1, 1).expandsNewline(false);
 				lines = lines.removeEmptyColumns();
 
 				Display strings = lines.toDisplay();

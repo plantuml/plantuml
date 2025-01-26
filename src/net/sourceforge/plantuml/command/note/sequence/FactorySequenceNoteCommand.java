@@ -125,7 +125,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 					ParserPass currentPass) throws NoSuchColorException {
 				final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 				lines = lines.subExtract(1, 1);
-				lines = lines.removeEmptyColumns().expandsNewline();
+				lines = lines.removeEmptyColumns().expandsNewline(false);
 				final Display display = lines.toDisplay();
 				return executeInternal(diagram, line0, diagram.manageVariable(display));
 			}

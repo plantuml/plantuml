@@ -35,9 +35,13 @@
  */
 package net.sourceforge.plantuml.klimt.creole.legacy;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.jaws.Jaws;
 import net.sourceforge.plantuml.klimt.creole.CreoleContext;
 import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Stripe;
@@ -48,7 +52,6 @@ import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.regex.MyPattern;
 import net.sourceforge.plantuml.regex.Pattern2;
 import net.sourceforge.plantuml.style.ISkinSimple;
-import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.utils.CharHidder;
 
 public class CreoleStripeSimpleParser {
@@ -65,6 +68,8 @@ public class CreoleStripeSimpleParser {
 //		if (line.contains("" + BackSlash.hiddenNewLine()))
 //			throw new IllegalArgumentException(line);
 
+		if (Jaws.TRACE)
+			System.err.println("CreoleStripeSimpleParser " + line);
 		this.fontConfiguration = fontConfiguration;
 		this.modeSimpleLine = mode;
 		this.skinParam = Objects.requireNonNull(skinParam);
@@ -153,10 +158,14 @@ public class CreoleStripeSimpleParser {
 
 	}
 
-	public Stripe createStripe(CreoleContext context) {
-		final StripeSimple result = new StripeSimple(fontConfiguration, style, context, skinParam, modeSimpleLine);
-		result.analyzeAndAdd(line);
-		return result;
+	public List<Stripe> createStripes(CreoleContext context) {
+		final List<Stripe> result = new ArrayList<>();
+		for (String singleLine : line.split("" + Jaws.BLOCK_E1_NEWLINE)) {
+			final StripeSimple stripe = new StripeSimple(fontConfiguration, style, context, skinParam, modeSimpleLine);
+			stripe.analyzeAndAdd(singleLine);
+			result.add(stripe);
+		}
+		return Collections.unmodifiableList(result);
 	}
 
 }

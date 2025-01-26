@@ -59,6 +59,11 @@ public class Sheet implements Iterable<Stripe> {
 		stripes.add(stripe);
 	}
 
+	public void add(List<Stripe> stripes) {
+		for (Stripe s : stripes)
+			this.add(s);
+	}
+
 	public Iterator<Stripe> iterator() {
 		return stripes.iterator();
 	}
