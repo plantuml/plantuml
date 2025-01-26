@@ -132,6 +132,7 @@ import net.sourceforge.plantuml.tim.builtin.Newline;
 import net.sourceforge.plantuml.tim.builtin.NewlineShort;
 import net.sourceforge.plantuml.tim.builtin.Now;
 import net.sourceforge.plantuml.tim.builtin.Ord;
+import net.sourceforge.plantuml.tim.builtin.Percent;
 import net.sourceforge.plantuml.tim.builtin.RandomFunction;
 import net.sourceforge.plantuml.tim.builtin.RetrieveProcedure;
 import net.sourceforge.plantuml.tim.builtin.ReverseColor;
@@ -245,6 +246,7 @@ public class TContext {
 		functionsSet.addFunction(new NewlineShort());
 		functionsSet.addFunction(new Now());
 		functionsSet.addFunction(new Ord());
+		functionsSet.addFunction(new Percent());
 		functionsSet.addFunction(new RandomFunction());
 		functionsSet.addFunction(new RetrieveProcedure());
 		functionsSet.addFunction(new ReverseColor());
