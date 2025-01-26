@@ -1,9 +1,15 @@
-''
-'' Cerulean theme based off of the bootstrap theme of the same name
-'' https://bootswatch.com/cerulean/
-''
-'' Author: Brett Schwarz
-'' Copyright (c) 2019 by Brett Schwarz
+---
+name: cerulean
+display_name: Cerulean
+description: Cerulean theme based off of the bootstrap theme of the same name
+author: Brett Schwarz
+release: 
+license: 
+version: 
+source: https://github.com/bschwarz/puml-themes
+origin: 
+inspiration: https://bootswatch.com/cerulean/
+---
 
 !$THEME = "cerulean"
 

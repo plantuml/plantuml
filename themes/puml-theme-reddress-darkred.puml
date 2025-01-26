@@ -1,9 +1,15 @@
-''
-'' A dark red style from "Red Dress"
-''
-'' Original Author: https://github.com/Drakemor
-'' https://github.com/Drakemor/RedDress-PlantUML
-''
+---
+name: reddress-darkred
+display_name: Reddress Darkred
+description: A dark red style from "Red Dress"
+author: [Drakemor](https://github.com/Drakemor)
+release: 
+license: MIT
+version: 
+source: https://github.com/Drakemor/RedDress-PlantUML
+origin: 
+inspiration: 
+---
 
 !if (%not(%variable_exists("$FONTNAME")))
 !$FONTNAME = "Verdana"

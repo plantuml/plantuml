@@ -1,9 +1,15 @@
-''
-'' sketchy-outline theme based off of the bootstrap theme of the same name
-'' https://bootswatch.com/sketchy/
-''
-'' Author = "Brett Schwarz
-'' Copyright (c) 2020 by Brett Schwarz
+---
+name: sketchy-outline
+display_name: Sketchy Outline
+description: Theme based off of the bootstrap theme of the same name
+author: Brett Schwarz
+release: 
+license: 
+version: 
+source: https://github.com/bschwarz/puml-themes
+origin: 
+inspiration: https://bootswatch.com/sketchy/
+---
 
 !$THEME = "sketchy-outline"
 

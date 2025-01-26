@@ -1,8 +1,15 @@
-''
-'' lightgray theme - mostly grays
-''
-'' Author: Brett Schwarz
-'' Copyright (c) 2019 by Brett Schwarz
+---
+name: lightgray
+display_name: Lightgray
+description: Lightgray theme - mostly grays
+author: Brett Schwarz
+release: 
+license: 
+version: 
+source: https://github.com/bschwarz/puml-themes
+origin: 
+inspiration: 
+---
 
 !$THEME = "lightgray"
 

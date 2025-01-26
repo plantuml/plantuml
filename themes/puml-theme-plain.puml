@@ -1,8 +1,15 @@
-''
-'' A simple black on white theme (with blue hyperlinks)
-''
-'' Original Author: Matthew Leather
-''
+---
+name: plain 
+display_name: Plain
+description: A simple black on white theme (with blue hyperlinks)
+author: Matthew Leather
+release: 
+license: 
+version: 
+source: 
+origin: 
+inspiration: 
+---
 
 !$THEME = "plain"
 

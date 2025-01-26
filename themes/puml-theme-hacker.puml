@@ -1,9 +1,15 @@
-''
-'' hacker theme based off of the Jekyll theme of the same name
-'' https://github.com/pages-themes/hacker
-''
-'' Author: Brett Schwarz
-'' Copyright (c) 2019 by Brett Schwarz
+---
+name: hacker
+display_name: Hacker
+description: Theme based off of the Jekyll theme of the same name
+author: Brett Schwarz
+release: 
+license: 
+version: 
+source: https://github.com/bschwarz/puml-themes
+origin: 
+inspiration: https://github.com/pages-themes/hacker
+---
 
 !$THEME = "hacker"
 

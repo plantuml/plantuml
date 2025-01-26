@@ -1,7 +1,15 @@
-'' NAME = "Sunlust"
-'' DESCRIPTION = "Sunlust theme based off of the [solarized theme](https://ethanschoonover.com/solarized)"
-'' AUTHORS = ["Artem V. Ageev"]
-'' LICENCE = "GPL 3+"
+---
+name: sunlust
+display_name: Sunlust
+description: A theme based off of the [solarized theme](https://ethanschoonover.com/solarized)
+author: Artem V. Ageev
+release: 
+license: GPL 3+
+version: 
+source: 
+origin: 
+inspiration: https://ethanschoonover.com/solarized
+---
 
 !$THEME = 'sunlust'
 !$colors = {

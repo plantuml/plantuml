@@ -1,8 +1,15 @@
-''
-'' Carbon Gray theme - using the Gray palette from  https://carbondesignsystem.com
-''
-'' Author: Bharat Rajagopalan
-'' Copyright (c) 2022 by Bharat Rajagopalan
+---
+name: carbon-gray
+display_name: Carbon Gray
+description: A gray theme using the Carbon Design Gray palette
+author: Bharat Rajagopalan
+release: 
+license: 
+version: 
+source: 
+origin: 
+inspiration: https://carbondesignsystem.com/elements/color/overview/
+---
 
 !$THEME = "carbon-gray"
 

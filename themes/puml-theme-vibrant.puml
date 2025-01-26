@@ -1,10 +1,16 @@
-''
-'' The vibrant theme from https://github.com/future-architect/puml-themes
-'' 
-'' Original Author: [future-architect](https://github.com/future-architect)
-'' Source: [future-architect/puml-themes](https://github.com/future-architect/puml-themes/tree/master/themes)
-'' License: [Apache License, Version 2.0](https://github.com/future-architect/puml-themes/blob/master/LICENSE) 
-''
+---
+name: vibrant
+display_name: Vibrant
+description: The vibrant theme from https://github.com/future-architect/puml-themes
+author: [future-architect](https://github.com/future-architect)
+release: 
+license: Apache License, Version 2.0
+version: 
+source: https://github.com/future-architect/puml-themes/tree/master/themes
+origin: 
+inspiration: 
+---
+
 skinparam BackgroundColor FFFFFF
 skinparam shadowing false
 skinparam RoundCorner 7

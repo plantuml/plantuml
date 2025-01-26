@@ -1,9 +1,15 @@
-''
-'' superhero theme based off of the bootstrap theme of the same name
-'' https://bootswatch.com/spacelab/
-''
-'' Author = "Brett Schwarz
-'' Copyright (c) 2020 by Brett Schwarz
+---
+name: spacelab-white
+display_name: Spacelab White
+description: Theme based off of the bootstrap theme of the same name
+author: Brett Schwarz
+release: 
+license: 
+version: 
+source: https://github.com/bschwarz/puml-themes
+origin: 
+inspiration: https://bootswatch.com/spacelab/
+---
 
 !$THEME = "spacelab"
 
