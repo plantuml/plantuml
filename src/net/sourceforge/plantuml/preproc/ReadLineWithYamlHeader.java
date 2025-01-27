@@ -76,7 +76,8 @@ public class ReadLineWithYamlHeader implements ReadLine {
 					yamlHeader.add(tmp);
 					if (tmp.contains(":")) {
 						final String[] split = tmp.split(":");
-						metadata.put(split[0].trim(), split[1].trim());
+						if (split.length == 2)
+							metadata.put(split[0].trim(), split[1].trim());
 					}
 				} while (true);
 				// Skip the second separator
