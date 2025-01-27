@@ -102,7 +102,7 @@ public class FtileCircleSpot extends AbstractFtile {
 		final HColor backColor = this.backColor == null ? style.value(PName.BackGroundColor).asColor(getIHtmlColorSet())
 				: this.backColor;
 		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
-		final double shadow = style.value(PName.Shadowing).asDouble();
+		final double shadow = style.getShadowing();
 
 		circle.setDeltaShadow(shadow);
 		ug.apply(borderColor).apply(backColor.bg()).apply(getThickness(style)).draw(circle);

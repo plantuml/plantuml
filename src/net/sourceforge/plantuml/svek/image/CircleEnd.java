@@ -79,7 +79,7 @@ public class CircleEnd implements UDrawable {
 			backColor = colors.getColor(ColorType.BACK);
 		}
 
-		final double shadowing = style.value(PName.Shadowing).asDouble();
+		final double shadowing = style.getShadowing();
 
 		circle.setDeltaShadow(shadowing);
 		ug.apply(HColors.none().bg()).apply(lineColor).draw(circle);

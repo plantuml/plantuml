@@ -75,7 +75,7 @@ public class CircleStart implements UDrawable {
 			backColor = colors.getColor(ColorType.BACK);
 		}
 
-		final double shadowing = style.value(PName.Shadowing).asDouble();
+		final double shadowing = style.getShadowing();
 
 		circle.setDeltaShadow(shadowing);
 		ug.apply(lineColor).apply(backColor.bg()).draw(circle);

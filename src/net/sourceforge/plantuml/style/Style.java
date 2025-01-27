@@ -105,6 +105,14 @@ public class Style {
 		return result;
 	}
 
+	public double getShadowing() {
+		final Value result = map.get(PName.Shadowing);
+		if (result == null)
+			return 0;
+
+		return value(PName.Shadowing).asDoubleDefaultTo(1.5);
+	}
+
 	public boolean hasValue(PName name) {
 		return map.containsKey(name);
 	}
@@ -211,7 +219,7 @@ public class Style {
 		HColor foreColor = colors == null ? null : colors.getColor(ColorType.LINE);
 		if (foreColor == null)
 			foreColor = value(PName.LineColor).asColor(set);
-		final double deltaShadowing = value(PName.Shadowing).asDouble();
+		final double deltaShadowing = getShadowing();
 		final double roundCorner = value(PName.RoundCorner).asDouble();
 		final double diagonalCorner = value(PName.DiagonalCorner).asDouble();
 		return new Fashion(backColor, foreColor).withStroke(getStroke()).withDeltaShadow(deltaShadowing)

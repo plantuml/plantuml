@@ -167,7 +167,7 @@ public class FtileBox extends AbstractFtile {
 		this.padding = style.getPadding();
 		this.margin = style.getMargin();
 		this.roundCorner = style.value(PName.RoundCorner).asDouble();
-		this.shadowing = style.value(PName.Shadowing).asDouble();
+		this.shadowing = style.getShadowing();
 
 		final LineBreakStrategy wrapWidth = style.wrapWidth();
 		this.minimumWidth = style.value(PName.MinimumWidth).asDouble();

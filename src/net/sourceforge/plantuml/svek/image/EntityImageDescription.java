@@ -159,7 +159,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		final double roundCorner = styleTitle.value(PName.RoundCorner).asDouble();
 		final double diagonalCorner = styleTitle.value(PName.DiagonalCorner).asDouble();
-		final double deltaShadow = styleTitle.value(PName.Shadowing).asDouble();
+		final double deltaShadow = styleTitle.getShadowing();
 		final UStroke stroke = styleTitle.getStroke(colors);
 		final FontConfiguration fcTitle = styleTitle.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());

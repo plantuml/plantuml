@@ -44,7 +44,7 @@ import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 
 public class ValueImpl implements Value {
-    // ::remove file when __HAXE__
+	// ::remove file when __HAXE__
 
 	private final DarkString value;
 
@@ -125,6 +125,17 @@ public class ValueImpl implements Value {
 		String s = value.getValue1();
 		s = s.replaceAll("[^.0-9]", "");
 		return Double.parseDouble(s);
+	}
+
+	public double asDoubleDefaultTo(double defaultValue) {
+		String s = value.getValue1();
+		s = s.replaceAll("[^.0-9]", "");
+		if (s.length() > 0)
+			try {
+				return Double.parseDouble(s);
+			} catch (NumberFormatException e) {
+			}
+		return defaultValue;
 	}
 
 	public int asFontStyle() {

@@ -73,7 +73,7 @@ public class FloatingNote extends AbstractTextBlock implements Stencil, TextBloc
 		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final UStroke stroke = style.getStroke();
-		final double shadowing = style.value(PName.Shadowing).asDouble();
+		final double shadowing = style.getShadowing();
 
 		final Sheet sheet = skinParam
 				.sheet(fc, skinParam.getDefaultTextAlignment(HorizontalAlignment.LEFT), CreoleMode.FULL)

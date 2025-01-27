@@ -72,7 +72,7 @@ public class FtileCircleEndCross extends AbstractFtile {
 	public FtileCircleEndCross(ISkinParam skinParam, Swimlane swimlane, Style style) {
 		super(skinParam);
 		this.swimlane = swimlane;
-		this.shadowing = style.value(PName.Shadowing).asDouble();
+		this.shadowing = style.getShadowing();
 		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 		this.lineColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 

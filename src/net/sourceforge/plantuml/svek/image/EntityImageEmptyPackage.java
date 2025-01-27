@@ -98,7 +98,7 @@ public class EntityImageEmptyPackage extends AbstractEntityImage {
 		Style style = getStyle();
 		style = style.eventuallyOverride(colors);
 		this.borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
-		this.shadowing = style.value(PName.Shadowing).asDouble();
+		this.shadowing = style.getShadowing();
 		this.stroke = style.getStroke(colors);
 		this.roundCorner = style.value(PName.RoundCorner).asDouble();
 		this.diagonalCorner = style.value(PName.DiagonalCorner).asDouble();

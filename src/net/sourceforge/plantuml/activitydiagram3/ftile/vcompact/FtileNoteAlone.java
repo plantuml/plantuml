@@ -105,7 +105,7 @@ public class FtileNoteAlone extends AbstractFtile implements Stencil, Styleable 
 		final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 		final HColor borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
-		final double shadowing = style.value(PName.Shadowing).asDouble();
+		final double shadowing = style.getShadowing();
 		final LineBreakStrategy wrapWidth = style.wrapWidth();
 		final UStroke stroke = style.getStroke();
 

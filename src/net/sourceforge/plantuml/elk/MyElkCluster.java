@@ -92,7 +92,7 @@ public class MyElkCluster {
 		final Style style = Cluster
 				.getDefaultStyleDefinition(umlDiagramType.getStyleName(), group.getUSymbol(), group.getGroupType())
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
-		final double shadowing = style.value(PName.Shadowing).asDouble();
+		final double shadowing = style.getShadowing();
 		final UStroke stroke = Cluster.getStrokeInternal(group, style);
 
 		HColor backColor = getBackColor(umlDiagramType);

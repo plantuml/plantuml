@@ -77,7 +77,7 @@ public class EntityImageActivity extends AbstractEntityImage {
 		final Style style = getDefaultStyleDefinition().getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 		final FontConfiguration fontConfiguration = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		final HorizontalAlignment horizontalAlignment = style.getHorizontalAlignment();
-		this.shadowing = style.value(PName.Shadowing).asDouble();
+		this.shadowing = style.getShadowing();
 
 		this.desc = entity.getDisplay().create(fontConfiguration, horizontalAlignment, getSkinParam());
 		this.url = entity.getUrl99();

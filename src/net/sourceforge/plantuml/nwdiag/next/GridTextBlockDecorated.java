@@ -149,7 +149,7 @@ public class GridTextBlockDecorated extends GridTextBlockSimple {
 			UGraphic ug2 = ug.apply(new UTranslate(network.getXmin(), y));
 			final StyleBuilder styleBuilder = getSkinParam().getCurrentStyleBuilder();
 			final Style style = getStyleDefinitionNetwork(SName.network).getMergedStyle(styleBuilder);
-			final double deltaShadow = style.value(PName.Shadowing).asDouble();
+			final double deltaShadow = style.getShadowing();
 			ug2 = ug2.apply(style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet()));
 			ug2 = ug2.apply(style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet()).bg());
 

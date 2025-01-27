@@ -112,7 +112,7 @@ public abstract class EntityImageStateCommon extends AbstractEntityImage {
 	final protected URectangle getShape(final XDimension2D dimTotal) {
 
 		final double corner = getStyleState().value(PName.RoundCorner).asDouble();
-		final double deltaShadow = getStyleState().value(PName.Shadowing).asDouble();
+		final double deltaShadow = getStyleState().getShadowing();
 
 		final URectangle rect = URectangle.build(dimTotal).rounded(corner);
 		rect.setDeltaShadow(deltaShadow);

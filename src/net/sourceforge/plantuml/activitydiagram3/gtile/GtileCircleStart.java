@@ -64,7 +64,7 @@ public class GtileCircleStart extends AbstractGtile {
 		super(stringBounder, skinParam, swimlane);
 		this.backColor = backColor;
 		final Style style = getDefaultStyleDefinitionCircle().getMergedStyle(skinParam().getCurrentStyleBuilder());
-		this.shadowing = style.value(PName.Shadowing).asDouble();
+		this.shadowing = style.getShadowing();
 
 	}
 

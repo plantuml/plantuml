@@ -82,7 +82,7 @@ public final class InnerStateAutonom extends AbstractTextBlock implements IEntit
 		this.styleHeader = EntityImageStateCommon.getStyleStateHeader(group, skinParam);
 
 		this.rounded = style.value(PName.RoundCorner).asDouble();
-		this.shadowing = style.value(PName.Shadowing).asDouble();
+		this.shadowing = style.getShadowing();
 
 		final FontConfiguration titleFontConfiguration = styleTitle.getFontConfiguration(skinParam.getIHtmlColorSet());
 		this.title = group.getDisplay().create(titleFontConfiguration, styleTitle.getHorizontalAlignment(), skinParam);

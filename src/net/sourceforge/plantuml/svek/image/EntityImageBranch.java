@@ -82,7 +82,7 @@ public class EntityImageBranch extends AbstractEntityImage {
 		final HColor border = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 		final HColor back = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 		final UStroke stroke = style.getStroke();
-		final double shadowing = style.value(PName.Shadowing).asDouble();
+		final double shadowing = style.getShadowing();
 
 		diams.setDeltaShadow(shadowing);
 		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);

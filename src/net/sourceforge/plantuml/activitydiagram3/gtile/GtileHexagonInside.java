@@ -88,7 +88,7 @@ public class GtileHexagonInside extends AbstractGtile {
 		final Style style = getDefaultStyleDefinition().getMergedStyle(skinParam.getCurrentStyleBuilder());
 		this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 		this.backColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
-		this.shadowing = style.value(PName.Shadowing).asDouble();
+		this.shadowing = style.getShadowing();
 
 		this.label = label;
 		this.dimLabel = label.calculateDimension(stringBounder);

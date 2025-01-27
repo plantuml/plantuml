@@ -61,6 +61,11 @@ public class ValueNull extends ValueAbstract implements Value {
 	}
 
 	@Override
+	public double asDoubleDefaultTo(double defaultValue) {
+		return defaultValue;
+	}
+
+	@Override
 	public boolean asBoolean() {
 		return false;
 	}

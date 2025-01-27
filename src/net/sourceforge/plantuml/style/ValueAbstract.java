@@ -58,6 +58,10 @@ public abstract class ValueAbstract implements Value {
 		throw new UnsupportedOperationException("Class=" + getClass());
 	}
 
+	public double asDoubleDefaultTo(double defaultValue) {
+		throw new UnsupportedOperationException("Class=" + getClass());
+	}
+
 	public boolean asBoolean() {
 		throw new UnsupportedOperationException("Class=" + getClass());
 	}

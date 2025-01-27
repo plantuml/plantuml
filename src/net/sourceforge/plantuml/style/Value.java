@@ -49,6 +49,8 @@ public interface Value {
 	public int asInt(boolean minusOneIfError);
 
 	public double asDouble();
+	
+	public double asDoubleDefaultTo(double defaultValue);
 
 	public boolean asBoolean();
 

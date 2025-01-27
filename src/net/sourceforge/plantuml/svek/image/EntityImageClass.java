@@ -185,7 +185,7 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 		HColor headerBackcolor = getEntity().getColors().getColor(ColorType.HEADER);
 		HColor backcolor = getEntity().getColors().getColor(ColorType.BACK);
 
-		shadow = getStyle().value(PName.Shadowing).asDouble();
+		shadow = getStyle().getShadowing();
 
 		if (borderColor == null)
 			borderColor = getStyle().value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());

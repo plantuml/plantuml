@@ -211,7 +211,7 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 
 		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getColorSet());
 		final HColor borderColor = style.value(PName.LineColor).asColor(getColorSet());
-		final double shadowing = style.value(PName.Shadowing).asDouble();
+		final double shadowing = style.getShadowing();
 
 		return new Opale(shadowing, borderColor, noteBackgroundColor, sheet1, false, style.getStroke());
 	}

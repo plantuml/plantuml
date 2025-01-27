@@ -306,7 +306,7 @@ public class Cluster implements Moveable {
 
 		final UmlDiagramType umlDiagramType = diagram.getUmlDiagramType();
 		final Style style = getStyle();
-		final double shadowing = style.value(PName.Shadowing).asDouble();
+		final double shadowing = style.getShadowing();
 		HColor borderColor;
 		if (group.getColors().getColor(ColorType.LINE) != null)
 			borderColor = group.getColors().getColor(ColorType.LINE);

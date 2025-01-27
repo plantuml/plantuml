@@ -164,7 +164,7 @@ public class EntityImageJson extends AbstractEntityImage implements Stencil, Wit
 		if (backcolor == null)
 			backcolor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
 
-		rect.setDeltaShadow(style.value(PName.Shadowing).asDouble());
+		rect.setDeltaShadow(style.getShadowing());
 		final UStroke stroke = style.getStroke();
 
 		ug = ug.apply(borderColor).apply(backcolor.bg());

@@ -116,7 +116,7 @@ public class FtileIfWithDiamonds extends FtileIfNude {
 		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(skinParam.getIHtmlColorSet());
 		final HColor borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		final FontConfiguration fc = style.getFontConfiguration(skinParam.getIHtmlColorSet());
-		final double shadowing = style.value(PName.Shadowing).asDouble();
+		final double shadowing = style.getShadowing();
 		final LineBreakStrategy wrapWidth = style.wrapWidth();
 		final UStroke stroke = style.getStroke();
 

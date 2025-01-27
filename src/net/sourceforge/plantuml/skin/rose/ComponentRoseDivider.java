@@ -70,7 +70,7 @@ public class ComponentRoseDivider extends AbstractTextualComponent {
 		this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 		this.stroke = style.getStroke();
 		this.roundCorner = style.value(PName.RoundCorner).asInt(false);
-		this.shadow = style.value(PName.Shadowing).asDouble();
+		this.shadow = style.getShadowing();
 
 		this.empty = stringsToDisplay.get(0).length() == 0;
 	}

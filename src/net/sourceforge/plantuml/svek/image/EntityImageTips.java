@@ -171,7 +171,7 @@ public class EntityImageTips extends AbstractEntityImage {
 
 	private Opale getOpale(final Display display) {
 
-		final double shadowing = style.value(PName.Shadowing).asDouble();
+		final double shadowing = style.getShadowing();
 		final FontConfiguration fc = style.getFontConfiguration(getSkinParam().getIHtmlColorSet());
 		final UStroke stroke = style.getStroke();
 

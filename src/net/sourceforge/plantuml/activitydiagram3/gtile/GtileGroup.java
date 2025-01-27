@@ -100,7 +100,7 @@ public class GtileGroup extends AbstractGtileRoot {
 		this.roundCorner = style.value(PName.RoundCorner).asDouble();
 
 		final FontConfiguration fc = style.getFontConfiguration(skinParam.getIHtmlColorSet());
-		this.shadowing = style.value(PName.Shadowing).asDouble();
+		this.shadowing = style.getShadowing();
 
 		if (title == null)
 			this.name = TextBlockUtils.empty(0, 0);

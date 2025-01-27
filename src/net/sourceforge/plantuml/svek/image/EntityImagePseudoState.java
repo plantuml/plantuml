@@ -93,7 +93,7 @@ public class EntityImagePseudoState extends AbstractEntityImage {
 		final Style style = getStyle();
 		final HColor borderColor = style.value(PName.LineColor).asColor(getSkinParam().getIHtmlColorSet());
 		final HColor backgroundColor = style.value(PName.BackGroundColor).asColor(getSkinParam().getIHtmlColorSet());
-		final double shadow = style.value(PName.Shadowing).asDouble();
+		final double shadow = style.getShadowing();
 		final UStroke stroke = style.getStroke();
 
 		circle.setDeltaShadow(shadow);

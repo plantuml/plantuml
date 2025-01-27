@@ -119,7 +119,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		final Style style = getStyle();
-		final double shadow = style.value(PName.Shadowing).asDouble();
+		final double shadow = style.getShadowing();
 
 		final TextBlockInEllipse ellipse = new TextBlockInEllipse(desc, stringBounder);
 		ellipse.setDeltaShadow(shadow);

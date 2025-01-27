@@ -97,7 +97,7 @@ public class FtileGroup extends AbstractFtile {
 		this.inner = FtileUtils.addHorizontalMargin(inner, 10);
 
 		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());
-		this.shadowing = style.value(PName.Shadowing).asDouble();
+		this.shadowing = style.getShadowing();
 		this.backColor = backColor == null ? style.value(PName.BackGroundColor).asColor(getIHtmlColorSet()) : backColor;
 		this.borderColor = style.value(PName.LineColor).asColor(skinParam.getIHtmlColorSet());
 		this.roundCorner = style.value(PName.RoundCorner).asDouble();
