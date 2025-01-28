@@ -124,8 +124,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="NwDiagram.html" title="class in net.sourceforge.plantuml.nwdiag">NwDiagram</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createEmptyDiagram(net.sourceforge.plantuml.core.UmlSource,java.util.Map,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createEmptyDiagram</a><wbr>(<a href="../core/UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;skinMap,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createEmptyDiagram(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)" class="member-name-link">createEmptyDiagram</a><wbr>(<a href="../core/UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
+ <a href="../Previous.html" title="class in net.sourceforge.plantuml">Previous</a>&nbsp;previous,
  <a href="../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../skin/UmlDiagramType.html" title="enum class in net.sourceforge.plantuml.skin">UmlDiagramType</a></code></div>
@@ -139,7 +139,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-net.sourceforge.plantuml.command.PSystemCommandFactory">Methods inherited from class&nbsp;net.sourceforge.plantuml.command.<a href="../command/PSystemCommandFactory.html" title="class in net.sourceforge.plantuml.command">PSystemCommandFactory</a></h3>
-<code><a href="../command/PSystemCommandFactory.html#createSystem(net.sourceforge.plantuml.core.UmlSource,java.util.Map,net.sourceforge.plantuml.preproc.PreprocessingArtifact)">createSystem</a></code></div>
+<code><a href="../command/PSystemCommandFactory.html#createSystem(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)">createSystem</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-net.sourceforge.plantuml.command.PSystemAbstractFactory">Methods inherited from class&nbsp;net.sourceforge.plantuml.command.<a href="../command/PSystemAbstractFactory.html" title="class in net.sourceforge.plantuml.command">PSystemAbstractFactory</a></h3>
 <code><a href="../command/PSystemAbstractFactory.html#buildEmptyError(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.utils.LineLocation,java.util.List,net.sourceforge.plantuml.preproc.PreprocessingArtifact)">buildEmptyError</a>, <a href="../command/PSystemAbstractFactory.html#buildExecutionError(net.sourceforge.plantuml.core.UmlSource,java.lang.String,net.sourceforge.plantuml.utils.LineLocation,java.util.List,net.sourceforge.plantuml.preproc.PreprocessingArtifact)">buildExecutionError</a>, <a href="../command/PSystemAbstractFactory.html#getDiagramType()">getDiagramType</a></code></div>
@@ -172,14 +172,14 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="createEmptyDiagram(net.sourceforge.plantuml.core.UmlSource,java.util.Map,net.sourceforge.plantuml.preproc.PreprocessingArtifact)">
+<section class="detail" id="createEmptyDiagram(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)">
 <h3>createEmptyDiagram</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="NwDiagram.html" title="class in net.sourceforge.plantuml.nwdiag">NwDiagram</a></span>&nbsp;<span class="element-name">createEmptyDiagram</span><wbr><span class="parameters">(<a href="../core/UmlSource.html" title="class in net.sourceforge.plantuml.core">UmlSource</a>&nbsp;source,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;skinMap,
+ <a href="../Previous.html" title="class in net.sourceforge.plantuml">Previous</a>&nbsp;previous,
  <a href="../preproc/PreprocessingArtifact.html" title="class in net.sourceforge.plantuml.preproc">PreprocessingArtifact</a>&nbsp;preprocessing)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../command/PSystemCommandFactory.html#createEmptyDiagram(net.sourceforge.plantuml.core.UmlSource,java.util.Map,net.sourceforge.plantuml.preproc.PreprocessingArtifact)">createEmptyDiagram</a></code>&nbsp;in class&nbsp;<code><a href="../command/PSystemCommandFactory.html" title="class in net.sourceforge.plantuml.command">PSystemCommandFactory</a></code></dd>
+<dd><code><a href="../command/PSystemCommandFactory.html#createEmptyDiagram(net.sourceforge.plantuml.core.UmlSource,net.sourceforge.plantuml.Previous,net.sourceforge.plantuml.preproc.PreprocessingArtifact)">createEmptyDiagram</a></code>&nbsp;in class&nbsp;<code><a href="../command/PSystemCommandFactory.html" title="class in net.sourceforge.plantuml.command">PSystemCommandFactory</a></code></dd>
 </dl>
 </section>
 </li>
