@@ -151,6 +151,10 @@ public class YamlLines implements Iterable<String> {
 	}
 
 	private String isMultilineStart(int i) {
+		boolean isLastLine = (lines.size() - 1) - i == 0;
+		if (isLastLine) {
+			return null;
+		}
 		if (nameOnly(lines.get(i)) != null && textOnly(lines.get(i + 1))) {
 			final int idx = lines.get(i).indexOf(':');
 			return lines.get(i).substring(0, idx + 1);
