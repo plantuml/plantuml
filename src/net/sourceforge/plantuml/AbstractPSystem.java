@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml;
 
-import static net.atmp.ImageBuilder.imageBuilder;
+
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -235,7 +235,7 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {
 		final ColorMapper init = fileFormatOption.getColorMapper();
 		final ColorMapper newColorMappter = muteColorMapper(init);
-		return imageBuilder(fileFormatOption.withColorMapper(newColorMappter));
+		return ImageBuilder.create(fileFormatOption.withColorMapper(newColorMappter));
 	}
 
 	protected ColorMapper muteColorMapper(ColorMapper init) {

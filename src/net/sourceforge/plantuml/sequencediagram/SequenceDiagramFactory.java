@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.sequencediagram;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
@@ -86,8 +87,8 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 public class SequenceDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public SequenceDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessing) {
-		return new SequenceDiagram(source, skinMap, preprocessing);
+	public SequenceDiagram createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+		return new SequenceDiagram(source, previous, preprocessing);
 	}
 
 	@Override

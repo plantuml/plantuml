@@ -37,9 +37,9 @@ package net.sourceforge.plantuml.classdiagram;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Map;
 
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -55,8 +55,8 @@ import net.sourceforge.plantuml.svek.image.EntityImageClass;
 
 public class ClassDiagram extends AbstractClassOrObjectDiagram {
 
-	public ClassDiagram(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessingArtifact) {
-		super(source, UmlDiagramType.CLASS, skinMap, preprocessingArtifact);
+	public ClassDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessingArtifact) {
+		super(source, UmlDiagramType.CLASS, previous, preprocessingArtifact);
 	}
 
 	private boolean allowMixing;

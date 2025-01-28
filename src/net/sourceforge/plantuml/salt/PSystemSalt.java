@@ -96,11 +96,12 @@ import net.sourceforge.plantuml.utils.Log;
 public class PSystemSalt extends TitledDiagram implements WithSprite {
 
 	private final List<String> data;
-	private final SaltDictionary dictionary = new SaltDictionary();
+	private final SaltDictionary dictionary;
 
 	@Deprecated
 	public PSystemSalt(UmlSource source, List<String> data, PreprocessingArtifact preprocessing) {
 		super(source, UmlDiagramType.SALT, null, preprocessing);
+		this.dictionary = new SaltDictionary(preprocessing.getOption());
 		this.data = data;
 	}
 

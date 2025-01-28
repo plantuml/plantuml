@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.math;
 
-import static net.atmp.ImageBuilder.plainImageBuilder;
+
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -103,7 +103,7 @@ public class ScientificEquationSafe {
 			}
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
-			dimSvg = plainImageBuilder(getRollback(), new FileFormatOption(FileFormat.SVG)).write(baos);
+			dimSvg = ImageBuilder.create(new FileFormatOption(FileFormat.SVG), getRollback()).write(baos);
 		} catch (IOException e1) {
 			return null;
 		}
@@ -118,7 +118,7 @@ public class ScientificEquationSafe {
 				printTrace(e);
 			}
 		try {
-			final byte[] bytes = ImageBuilder.plainPngBuilder(getRollback()).writeByteArray();
+			final byte[] bytes = ImageBuilder.create(new FileFormatOption(FileFormat.PNG), getRollback()).writeByteArray();
 			return new PixelImage(SImageIO.read(bytes), AffineTransformType.TYPE_BILINEAR);
 		} catch (IOException e1) {
 			return null;

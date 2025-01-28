@@ -89,6 +89,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.klimt.shape.UText;
+import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.ColorParam;
 import net.sourceforge.plantuml.skin.CornerParam;
 import net.sourceforge.plantuml.skin.LineParam;
@@ -121,21 +122,17 @@ public class ImageBuilder {
 	private ISkinParam skinParam;
 	private StringBounder stringBounder;
 	private int status = 0;
-	private TitledDiagram titledDiagram;
+	private TitledDiagram diagram;
 	private boolean randomPixel;
 	private String warningOrError;
 	private final Collection<Warning> warnings = new LinkedHashSet<>();
 
-	public static ImageBuilder imageBuilder(FileFormatOption fileFormatOption) {
+	public static ImageBuilder create(FileFormatOption fileFormatOption) {
 		return new ImageBuilder(fileFormatOption);
 	}
 
-	public static ImageBuilder plainImageBuilder(UDrawable drawable, FileFormatOption fileFormatOption) {
-		return imageBuilder(fileFormatOption).drawable(drawable);
-	}
-
-	public static ImageBuilder plainPngBuilder(UDrawable drawable) {
-		return imageBuilder(new FileFormatOption(FileFormat.PNG)).drawable(drawable);
+	public static ImageBuilder create(FileFormatOption fileFormatOption, UDrawable drawable) {
+		return create(fileFormatOption).drawable(drawable);
 	}
 
 	private ImageBuilder(FileFormatOption fileFormatOption) {
@@ -214,26 +211,26 @@ public class ImageBuilder {
 		return this;
 	}
 
-	public ImageBuilder styled(TitledDiagram diagram) {
-		skinParam = diagram.getSkinParam();
-		stringBounder = fileFormatOption.getDefaultStringBounder(skinParam);
-		annotations = true;
-		backcolor = diagram.calculateBackColor();
-		margin = calculateMargin(diagram);
-		metadata = fileFormatOption.isWithMetadata() ? diagram.getMetadata() : null;
-		seed = diagram.seed();
-		titledDiagram = diagram;
-		warningOrError = diagram.getWarningOrError();
-		warnings.addAll(diagram.getWarnings());
+	public ImageBuilder styled(TitledDiagram fromDiagram) {
+		this.skinParam = fromDiagram.getSkinParam();
+		this.stringBounder = fileFormatOption.getDefaultStringBounder(skinParam);
+		this.annotations = true;
+		this.backcolor = fromDiagram.calculateBackColor();
+		this.margin = calculateMargin(fromDiagram);
+		this.metadata = fileFormatOption.isWithMetadata() ? fromDiagram.getMetadata() : null;
+		this.seed = fromDiagram.seed();
+		this.diagram = fromDiagram;
+		this.warningOrError = fromDiagram.getWarningOrError();
+		this.warnings.addAll(fromDiagram.getWarnings());
 		return this;
 	}
 
 	public ImageData write(OutputStream os) throws IOException {
-		if (annotations && titledDiagram != null) {
+		if (annotations && diagram != null) {
 			if (!(udrawable instanceof TextBlock))
 				throw new IllegalStateException("udrawable is not a TextBlock");
-			final AnnotatedBuilder builder = new AnnotatedBuilder(titledDiagram, skinParam, stringBounder);
-			final AnnotatedWorker annotatedWorker = new AnnotatedWorker(titledDiagram, skinParam, stringBounder,
+			final AnnotatedBuilder builder = new AnnotatedBuilder(diagram, skinParam, stringBounder);
+			final AnnotatedWorker annotatedWorker = new AnnotatedWorker(diagram, skinParam, stringBounder,
 					builder);
 			udrawable = annotatedWorker.addAdd((TextBlock) udrawable);
 		}
@@ -256,14 +253,14 @@ public class ImageBuilder {
 			dim = dim.atLeast(dimWarning.getWidth(), 0);
 			dim = dim.delta(15, dimWarning.getHeight() + 20);
 		}
-		final Scale scale = titledDiagram == null ? null : titledDiagram.getScale();
+		final Scale scale = diagram == null ? null : diagram.getScale();
 		final double scaleFactor = (scale == null ? 1 : scale.getScale(dim.getWidth(), dim.getHeight())) * getDpi()
 				/ 96.0;
 		if (scaleFactor <= 0)
 			throw new IllegalStateException("Bad scaleFactor");
 		WasmLog.log("...image drawing...");
 		UGraphic ug = createUGraphic(dim, scaleFactor,
-				titledDiagram == null ? Pragma.createEmpty() : titledDiagram.getPragma());
+				diagram == null ? Pragma.createEmpty() : diagram.getPragma());
 
 		if (warnings.size() > 0) {
 			drawWarning(dimWarning, ug.apply(UTranslate.dy(5)), dim.getWidth());
@@ -370,6 +367,9 @@ public class ImageBuilder {
 	private UGraphic handwritten(UGraphic ug) {
 		if (skinParam != null && skinParam.handwritten())
 			return new UGraphicHandwritten(ug);
+		if (diagram != null
+				&& diagram.getPreprocessingArtifact().getOption().isDefine(OptionKey.HANDWRITTEN))
+			return new UGraphicHandwritten(ug);
 
 		return ug;
 	}
@@ -419,9 +419,9 @@ public class ImageBuilder {
 		option = option.withColorMapper(fileFormatOption.getColorMapper());
 		option = option.withLinkTarget(getSvgLinkTarget());
 		option = option.withFont(pragma.getValue(PragmaKey.SVG_FONT));
-		if (titledDiagram != null) {
-			option = option.withTitle(titledDiagram.getTitleDisplay());
-			option = option.withRootAttribute("data-diagram-type", titledDiagram.getUmlDiagramType().name());
+		if (diagram != null) {
+			option = option.withTitle(diagram.getTitleDisplay());
+			option = option.withRootAttribute("data-diagram-type", diagram.getUmlDiagramType().name());
 		}
 
 		if ("true".equalsIgnoreCase(pragma.getValue(PragmaKey.SVG_INTERACTIVE))) {

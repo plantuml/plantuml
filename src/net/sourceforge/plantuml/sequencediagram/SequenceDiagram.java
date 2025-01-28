@@ -52,6 +52,7 @@ import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.OptionFlags;
+import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.abel.EntityPortion;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -98,8 +99,8 @@ public class SequenceDiagram extends UmlDiagram {
 
 	private final Rose skin2 = new Rose();
 
-	public SequenceDiagram(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.SEQUENCE, skinMap, preprocessing);
+	public SequenceDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+		super(source, UmlDiagramType.SEQUENCE, previous, preprocessing);
 	}
 
 	@Deprecated

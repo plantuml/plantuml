@@ -38,6 +38,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.atmp.ImageBuilder;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.klimt.ClipContainer;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -112,6 +114,6 @@ public class UGraphicBraille extends AbstractUGraphic<BrailleGrid> implements Cl
 
 	@Override
 	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException {
-		ImageBuilder.plainPngBuilder(new BrailleDrawer(getGraphicObject())).metadata(metadata).write(os);
+		ImageBuilder.create(new FileFormatOption(FileFormat.PNG), new BrailleDrawer(getGraphicObject())).metadata(metadata).write(os);
 	}
 }

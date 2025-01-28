@@ -37,10 +37,10 @@ package net.sourceforge.plantuml.klimt.sprite;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Map;
 
 import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -58,14 +58,13 @@ import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ListSpriteDiagram extends UmlDiagram {
 	// ::remove file when __CORE__
 
-	public ListSpriteDiagram(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessing) {
-		super(source, UmlDiagramType.HELP, skinMap, preprocessing);
+	public ListSpriteDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+		super(source, UmlDiagramType.HELP, previous, preprocessing);
 	}
 
 	public DiagramDescription getDescription() {

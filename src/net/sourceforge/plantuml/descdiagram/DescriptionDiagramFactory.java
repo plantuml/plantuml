@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.descdiagram;
 import java.util.List;
 import java.util.Map;
 
+import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShow2;
 import net.sourceforge.plantuml.classdiagram.command.CommandRemoveRestore;
 import net.sourceforge.plantuml.classdiagram.command.CommandUrl;
@@ -72,8 +73,8 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 public class DescriptionDiagramFactory extends PSystemCommandFactory {
 
 	@Override
-	public DescriptionDiagram createEmptyDiagram(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessing) {
-		return new DescriptionDiagram(source, skinMap, preprocessing);
+	public DescriptionDiagram createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+		return new DescriptionDiagram(source, previous, preprocessing);
 	}
 
 	@Override

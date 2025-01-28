@@ -49,6 +49,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.abel.Bag;
@@ -144,9 +145,9 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		this.setSeparator(namespaceSeparator);
 	}
 
-	public CucaDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig,
+	public CucaDiagram(UmlSource source, UmlDiagramType type, Previous previous,
 			PreprocessingArtifact preprocessing) {
-		super(source, type, orig, preprocessing);
+		super(source, type, previous, preprocessing);
 		this.namespace = new Plasma<Entity>();
 		this.root = namespace.root();
 		new Entity(this.root, this, null, GroupType.ROOT, 0);

@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.AbstractPSystem;
+import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.cheneer.command.CommandAssociate;
 import net.sourceforge.plantuml.cheneer.command.CommandCreateAttribute;
 import net.sourceforge.plantuml.cheneer.command.CommandCreateEntity;
@@ -75,8 +76,8 @@ public class ChenEerDiagramFactory extends PSystemCommandFactory {
 	}
 
 	@Override
-	public AbstractPSystem createEmptyDiagram(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessing) {
-		return new ChenEerDiagram(source, skinMap, preprocessing);
+	public AbstractPSystem createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+		return new ChenEerDiagram(source, previous, preprocessing);
 	}
 
 	@Override

@@ -35,8 +35,7 @@
  */
 package net.sourceforge.plantuml.descdiagram;
 
-import java.util.Map;
-
+import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
@@ -50,8 +49,8 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class DescriptionDiagram extends AbstractEntityDiagram {
 
-	public DescriptionDiagram(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessingArtifact) {
-		super(source, UmlDiagramType.DESCRIPTION, skinMap, preprocessingArtifact);
+	public DescriptionDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessingArtifact) {
+		super(source, UmlDiagramType.DESCRIPTION, previous, preprocessingArtifact);
 	}
 
 	@Override

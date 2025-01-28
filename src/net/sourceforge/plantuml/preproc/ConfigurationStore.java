@@ -57,6 +57,10 @@ public class ConfigurationStore<K> {
 		return values.containsKey(key);
 	}
 
+	public boolean isTrue(K key) {
+		return "true".equalsIgnoreCase(values.get(key));
+	}
+
 	public void undefine(K key) {
 		values.remove(key);
 	}

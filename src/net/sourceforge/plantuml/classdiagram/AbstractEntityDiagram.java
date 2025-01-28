@@ -42,6 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -54,8 +55,8 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 public abstract class AbstractEntityDiagram extends CucaDiagram {
 	// ::remove folder when __HAXE__
 
-	public AbstractEntityDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig, PreprocessingArtifact preprocessing) {
-		super(source, type, orig, preprocessing);
+	public AbstractEntityDiagram(UmlSource source, UmlDiagramType type, Previous previous, PreprocessingArtifact preprocessing) {
+		super(source, type, previous, preprocessing);
 	}
 
 	final protected List<String> getDotStrings() {

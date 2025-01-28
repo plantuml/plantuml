@@ -30,36 +30,29 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
-package net.sourceforge.plantuml.filesdiagram;
+package net.sourceforge.plantuml;
 
-import net.sourceforge.plantuml.Previous;
-import net.sourceforge.plantuml.command.PSystemAbstractFactory;
-import net.sourceforge.plantuml.core.Diagram;
-import net.sourceforge.plantuml.core.DiagramType;
-import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.jsondiagram.StyleExtractor;
-import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
+import java.util.HashMap;
+import java.util.Map;
 
-public class FilesDiagramFactory extends PSystemAbstractFactory {
+public class Previous {
 
-	public FilesDiagramFactory() {
-		super(DiagramType.FILES);
+	private final Map<String, String> values = new HashMap<>();
+
+	public static Previous createEmpty() {
+		return new Previous();
 	}
 
-	@Override
-	public Diagram createSystem(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
-		final StyleExtractor styleExtractor = new StyleExtractor(source.iterator2());
-
-		return new FilesDiagram(source, styleExtractor, preprocessing);
+	public static Previous createFrom(Map<String, String> values) {
+		final Previous previous = new Previous();
+		previous.values.putAll(values);
+		return previous;
 	}
 
-	@Override
-	public UmlDiagramType getUmlDiagramType() {
-		return UmlDiagramType.FILES;
+	public Map<String, String> values() {
+		return values;
 	}
-
 }

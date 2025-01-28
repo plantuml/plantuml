@@ -43,7 +43,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.core.Diagram;
@@ -233,9 +232,9 @@ public class EmbeddedDiagram extends AbstractTextBlock implements Line, Atom {
 	}
 
 	private Diagram getSystem() throws IOException, InterruptedException {
-		final Map<String, String> skinMap = skinParam == null ? Collections.<String, String>emptyMap()
-				: skinParam.values();
-		final BlockUml blockUml = new BlockUml(list, Defines.createEmpty(), skinMap, null, null);
+		final Previous previous = skinParam == null ? Previous.createEmpty()
+				: Previous.createFrom(skinParam.values());
+		final BlockUml blockUml = new BlockUml(list, Defines.createEmpty(), previous, null, null);
 		return blockUml.getDiagram();
 
 	}

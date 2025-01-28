@@ -34,12 +34,11 @@
  */
 package net.sourceforge.plantuml.directdot;
 
-import static net.atmp.ImageBuilder.plainImageBuilder;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
 
+import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.FileImageData;
@@ -78,7 +77,7 @@ public class PSystemDot extends AbstractPSystem {
 		if (graphviz.getExeState() != ExeState.OK) {
 			final TextBlock result = GraphicStrings
 					.createForError(Arrays.asList("There is an issue with your Dot/Graphviz installation"), false);
-			return plainImageBuilder(result, fileFormat).seed(seed()).status(FileImageData.CRASH).write(os);
+			return ImageBuilder.create(fileFormat, result).seed(seed()).status(FileImageData.CRASH).write(os);
 		}
 		final CounterOutputStream counter = new CounterOutputStream(os);
 		final ProcessState state = graphviz.createFile3(counter);
@@ -87,7 +86,7 @@ public class PSystemDot extends AbstractPSystem {
 		// }
 		if (counter.getLength() == 0 || state.differs(ProcessState.TERMINATED_OK())) {
 			final TextBlock result = GraphicStrings.createForError(Arrays.asList("GraphViz has crashed"), false);
-			return plainImageBuilder(result, fileFormat).seed(seed()).status(FileImageData.CRASH).write(os);
+			return ImageBuilder.create(fileFormat, result).seed(seed()).status(FileImageData.CRASH).write(os);
 		}
 
 		return ImageDataSimple.ok();

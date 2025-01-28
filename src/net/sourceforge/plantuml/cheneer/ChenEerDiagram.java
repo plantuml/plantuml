@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.cheneer;
 import java.util.Map;
 import java.util.Stack;
 
+import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -45,8 +46,8 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ChenEerDiagram extends AbstractEntityDiagram {
 
-	public ChenEerDiagram(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessingArtifact) {
-		super(source, UmlDiagramType.CHEN_EER, skinMap, preprocessingArtifact);
+	public ChenEerDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessingArtifact) {
+		super(source, UmlDiagramType.CHEN_EER, previous, preprocessingArtifact);
 	}
 
 	private final Stack<Entity> ownerStack = new Stack<Entity>();

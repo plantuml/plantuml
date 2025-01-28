@@ -35,11 +35,10 @@
  */
 package net.sourceforge.plantuml.command;
 
-import java.util.Map;
-
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.ErrorUml;
 import net.sourceforge.plantuml.ErrorUmlType;
+import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramType;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -60,7 +59,7 @@ public abstract class PSystemSingleLineFactory extends PSystemAbstractFactory {
 	}
 
 	@Override
-	final public Diagram createSystem(UmlSource source, Map<String, String> skinMap, PreprocessingArtifact preprocessing) {
+	final public Diagram createSystem(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
 
 		if (source.getTotalLineCount() != 3)
 			return null;

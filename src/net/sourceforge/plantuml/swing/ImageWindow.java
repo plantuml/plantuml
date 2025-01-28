@@ -67,6 +67,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import net.atmp.ImageBuilder;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.GeneratedImage;
 import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
@@ -336,7 +338,7 @@ class ImageWindow extends JFrame {
 			final String msg = "Error reading file: " + ex.toString();
 			final TextBlock error = GraphicStrings.createForError(Arrays.asList(msg), false);
 			try {
-				final byte[] bytes = ImageBuilder.plainPngBuilder(error).writeByteArray();
+				final byte[] bytes = ImageBuilder.create(new FileFormatOption(FileFormat.PNG), error).writeByteArray();
 				image = SImageIO.read(bytes);
 			} catch (IOException e) {
 				Logme.error(e);

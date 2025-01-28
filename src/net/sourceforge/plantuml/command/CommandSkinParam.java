@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
 import net.sourceforge.plantuml.utils.LineLocation;
+import net.sourceforge.plantuml.warning.Warning;
 
 public class CommandSkinParam extends SingleLineCommand2<TitledDiagram> {
 
@@ -61,9 +62,15 @@ public class CommandSkinParam extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		try {
-			diagram.setParam(arg.get("NAME", 0), arg.get("VALUE", 0));
+			final String name = arg.get("NAME", 0);
+			if ("handwritten".equalsIgnoreCase(name))
+				diagram.addWarning(new Warning("Please use '!option handwritten true' to enable handwritten "));
+
+			diagram.setParam(name, arg.get("VALUE", 0));
+
 			return CommandExecutionResult.ok();
 		} catch (NoStyleAvailableException e) {
 			// Logme.error(e);

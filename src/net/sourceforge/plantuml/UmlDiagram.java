@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml;
 
-import static net.atmp.ImageBuilder.plainImageBuilder;
+
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -47,8 +47,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Map;
 
+import net.atmp.ImageBuilder;
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
@@ -74,7 +74,6 @@ import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.pdf.PdfConverter;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
@@ -95,8 +94,8 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 //		super(style, source, type);
 //	}
 
-	public UmlDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig, PreprocessingArtifact preprocessing) {
-		super(source, type, orig, preprocessing);
+	public UmlDiagram(UmlSource source, UmlDiagramType type, Previous previous, PreprocessingArtifact preprocessing) {
+		super(source, type, previous, preprocessing);
 	}
 
 	final public int getMinwidth() {
@@ -202,7 +201,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 			}
 		};
 
-		plainImageBuilder(drawable, fileFormat).metadata(metadata).seed(seed).write(os);
+		ImageBuilder.create(fileFormat, drawable).metadata(metadata).seed(seed).write(os);
 	}
 
 	// ::comment when __CORE__
@@ -317,6 +316,10 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 	}
 
 	public void setHideEmptyDescription(boolean hideEmptyDescription) {
+	}
+
+	public Previous getPrevious() {
+		return Previous.createFrom(getSkinParam().values());
 	}
 
 }

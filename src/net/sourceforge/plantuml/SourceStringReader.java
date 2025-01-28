@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static net.atmp.ImageBuilder.plainImageBuilder;
 import static net.sourceforge.plantuml.utils.CharsetUtils.charsetOrDefault;
 
 import java.io.IOException;
@@ -47,6 +46,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
@@ -259,7 +259,7 @@ public class SourceStringReader {
 				Arrays.asList("No valid @start/@end found, please check the version"),
 				fileFormatOption.isUseRedForError());
 
-		return plainImageBuilder(error, fileFormatOption).write(os);
+		return ImageBuilder.create(fileFormatOption, error).write(os);
 	}
 
 	public final List<BlockUml> getBlocks() {

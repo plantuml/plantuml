@@ -36,7 +36,6 @@
 package net.sourceforge.plantuml.skin;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.LinkedHashSet;
 import java.util.Set;

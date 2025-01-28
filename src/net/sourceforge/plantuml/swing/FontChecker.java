@@ -51,6 +51,8 @@ import java.util.Set;
 import javax.xml.transform.TransformerException;
 
 import net.atmp.ImageBuilder;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.LimitFinder;
@@ -186,7 +188,7 @@ public class FontChecker {
 				}
 			}
 		};
-		final byte[] bytes = ImageBuilder.plainPngBuilder(drawable).writeByteArray();
+		final byte[] bytes = ImageBuilder.create(new FileFormatOption(FileFormat.PNG), drawable).writeByteArray();
 		return SImageIO.read(bytes);
 	}
 

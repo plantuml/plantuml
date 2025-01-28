@@ -39,7 +39,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.LinkedHashSet;
-import java.util.Map;
 
 import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
@@ -91,13 +90,13 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 
 	private final SkinParam skinParam;
 
-	public TitledDiagram(UmlSource source, UmlDiagramType type, Map<String, String> orig,
+	public TitledDiagram(UmlSource source, UmlDiagramType type, Previous previous,
 			PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
 		this.type = type;
-		this.skinParam = SkinParam.create(type, Pragma.createEmpty());
-		if (orig != null)
-			this.skinParam.copyAllFrom(orig);
+		this.skinParam = SkinParam.create(type, Pragma.createEmpty(), preprocessing.getOption());
+		if (previous != null)
+			this.skinParam.copyAllFrom(previous);
 
 	}
 
