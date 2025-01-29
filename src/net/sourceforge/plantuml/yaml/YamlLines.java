@@ -53,7 +53,7 @@ public class YamlLines implements Iterable<String> {
 			if (s.startsWith("#"))
 				continue;
 
-			s = removeDiese(s);
+			s = removeYamlComment(s);
 			if (s.trim().length() == 0)
 				continue;
 			lines.add(s);
@@ -77,12 +77,27 @@ public class YamlLines implements Iterable<String> {
 
 	}
 
-	private String removeDiese(String s) {
-		final int idx = s.indexOf(" #");
-		if (idx == -1)
+	private String removeYamlComment(String s) {
+		if (s == null || s.isEmpty())
 			return s;
 
-		return s.substring(0, idx);
+		char inQuoteChar = '\0';
+
+		for (int i = 0; i < s.length(); i++) {
+			final char c = s.charAt(i);
+
+			if (c == '\'' || c == '"')
+				if (inQuoteChar == '\0')
+					inQuoteChar = c;
+				else if (c == inQuoteChar)
+					inQuoteChar = '\0';
+
+			if (inQuoteChar == '\0' && i < s.length() - 1 && c == ' ' && s.charAt(i + 1) == '#')
+				return s.substring(0, i);
+
+		}
+
+		return s;
 	}
 
 	private void manageList() {
