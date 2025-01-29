@@ -95,12 +95,13 @@ implements <a href="Pushable.html" title="interface in net.sourceforge.plantuml.
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,double,int)" class="member-name-link">ParticipantBox</a><wbr>(<a href="../../skin/Component.html" title="interface in net.sourceforge.plantuml.skin">Component</a>&nbsp;head,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,double,int,java.lang.String)" class="member-name-link">ParticipantBox</a><wbr>(<a href="../../skin/Component.html" title="interface in net.sourceforge.plantuml.skin">Component</a>&nbsp;head,
  <a href="../../skin/Component.html" title="interface in net.sourceforge.plantuml.skin">Component</a>&nbsp;line,
  <a href="../../skin/Component.html" title="interface in net.sourceforge.plantuml.skin">Component</a>&nbsp;tail,
  <a href="../../skin/Component.html" title="interface in net.sourceforge.plantuml.skin">Component</a>&nbsp;delayLine,
  double&nbsp;startingX,
- int&nbsp;outMargin)</code></div>
+ int&nbsp;outMargin,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;participantCode)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -153,24 +154,27 @@ implements <a href="Pushable.html" title="interface in net.sourceforge.plantuml.
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMinX()" class="member-name-link">getMinX</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPreferredWidth(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPreferredWidth</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getParticipantCode()" class="member-name-link">getParticipantCode</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStartingX()" class="member-name-link">getStartingX</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPreferredWidth(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPreferredWidth</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTailHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getTailHeight</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStartingX()" class="member-name-link">getStartingX</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#magicMargin(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">magicMargin</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTailHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getTailHeight</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pushToLeft(double)" class="member-name-link">pushToLeft</a><wbr>(double&nbsp;deltaX)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#magicMargin(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">magicMargin</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pushToLeft(double)" class="member-name-link">pushToLeft</a><wbr>(double&nbsp;deltaX)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -189,14 +193,15 @@ implements <a href="Pushable.html" title="interface in net.sourceforge.plantuml.
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,double,int)">
+<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,double,int,java.lang.String)">
 <h3>ParticipantBox</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ParticipantBox</span><wbr><span class="parameters">(<a href="../../skin/Component.html" title="interface in net.sourceforge.plantuml.skin">Component</a>&nbsp;head,
  <a href="../../skin/Component.html" title="interface in net.sourceforge.plantuml.skin">Component</a>&nbsp;line,
  <a href="../../skin/Component.html" title="interface in net.sourceforge.plantuml.skin">Component</a>&nbsp;tail,
  <a href="../../skin/Component.html" title="interface in net.sourceforge.plantuml.skin">Component</a>&nbsp;delayLine,
  double&nbsp;startingX,
- int&nbsp;outMargin)</span></div>
+ int&nbsp;outMargin,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;participantCode)</span></div>
 </section>
 </li>
 </ul>
@@ -318,6 +323,12 @@ implements <a href="Pushable.html" title="interface in net.sourceforge.plantuml.
 <section class="detail" id="addDelay(net.sourceforge.plantuml.sequencediagram.graphic.GraphicalDelayText)">
 <h3>addDelay</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addDelay</span><wbr><span class="parameters">(net.sourceforge.plantuml.sequencediagram.graphic.GraphicalDelayText&nbsp;delay)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getParticipantCode()">
+<h3>getParticipantCode</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getParticipantCode</span>()</div>
 </section>
 </li>
 <li>
