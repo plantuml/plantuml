@@ -79,6 +79,7 @@ class MessageSelfArrow extends Arrow {
 
 	@Override
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
+		startGroup(ug);
 		final StringBounder stringBounder = ug.getStringBounder();
 		ug = ug.apply(new UTranslate(getStartingX(stringBounder), getStartingY() + deltaY));
 		final Area area = new Area(
@@ -89,6 +90,7 @@ class MessageSelfArrow extends Arrow {
 		startUrl(ug);
 		getArrowComponent().drawU(ug, area, context);
 		endUrl(ug);
+		endGroup(ug);
 	}
 
 	@Override
@@ -150,6 +152,16 @@ class MessageSelfArrow extends Arrow {
 	@Override
 	public LivingParticipantBox getParticipantAt(StringBounder stringBounder, NotePosition position) {
 		return p1;
+	}
+
+	@Override
+	protected String getParticipant1Code() {
+		return p1.getParticipantCode();
+	}
+
+	@Override
+	protected String getParticipant2Code() {
+		return getParticipant1Code();
 	}
 
 	@Override

@@ -349,9 +349,10 @@ public class DrawableSet {
 		for (Participant p : getAllParticipants())
 			drawLifeLineU(ug, p);
 
-		for (GraphicalElement element : getAllGraphicalElements())
+		for (Event ev : eventsList) {
+			GraphicalElement element = events.get(ev);
 			element.drawU(ug, getMaxX(), context);
-
+		}
 	}
 
 	private void drawDolls(UGraphic ug, double height, Context2D context) {

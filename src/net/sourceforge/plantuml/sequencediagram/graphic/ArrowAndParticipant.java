@@ -89,6 +89,16 @@ class ArrowAndParticipant extends Arrow implements InGroupable {
 	}
 
 	@Override
+	protected String getParticipant1Code() {
+		return arrow.getParticipant1Code();
+	}
+
+	@Override
+	protected String getParticipant2Code() {
+		return arrow.getParticipant2Code();
+	}
+
+	@Override
 	protected void drawInternalU(final UGraphic ug, double maxX, Context2D context) {
 		final double participantBoxStartingX = participantBox.getStartingX();
 		final double arrowStartingX = arrow.getStartingX(ug.getStringBounder());

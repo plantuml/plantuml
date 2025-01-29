@@ -158,4 +158,13 @@ class ArrowAndNoteBox extends Arrow implements InGroupable {
 		return arrow.getParticipantAt(stringBounder, position);
 	}
 
+	@Override
+	protected String getParticipant1Code() {
+		return arrow.getParticipant1Code();
+	}
+
+	@Override
+	protected String getParticipant2Code() {
+		return arrow.getParticipant2Code();
+	}
 }

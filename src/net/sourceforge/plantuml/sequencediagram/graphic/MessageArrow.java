@@ -127,17 +127,29 @@ class MessageArrow extends Arrow {
 	}
 
 	@Override
+	protected String getParticipant1Code() {
+		return p1.getParticipantCode();
+	}
+
+	@Override
+	protected String getParticipant2Code() {
+		return p2.getParticipantCode();
+	}
+
+	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
 		return getArrowComponent().getPreferredWidth(stringBounder);
 	}
 
 	@Override
 	protected void drawInternalU(UGraphic ug, double maxX, Context2D context) {
+		startGroup(ug);
 		final StringBounder stringBounder = ug.getStringBounder();
 		ug = ug.apply(new UTranslate(getStartingX(stringBounder), getStartingY()));
 		startUrl(ug);
 		getArrowComponent().drawU(ug, new Area(getActualDimension(stringBounder)), context);
 		endUrl(ug);
+		endGroup(ug);
 	}
 
 	private XDimension2D getActualDimension(StringBounder stringBounder) {

@@ -1,82 +1,83 @@
-function addItemToMapOfLists(mapOfLists, name, item) {
-  // mapOfLists = {
-  //   'key1': [item1, item2, ...],
-  //   'key2': [item3, item4, ...],
-  // }
-  if (mapOfLists[name].length > 0) {
-    if (!mapOfLists[name].includes(item)) {
-      mapOfLists[name].push(item);
-    }
-  } else {
-    mapOfLists[name] = [item];
-  }
-}
+(function() {
+	function addItemToMapOfLists(mapOfLists, name, item) {
+		// mapOfLists = {
+		//   'key1': [item1, item2, ...],
+		//   'key2': [item3, item4, ...],
+		// }
+		if (mapOfLists[name].length > 0) {
+			if (!mapOfLists[name].includes(item)) {
+				mapOfLists[name].push(item);
+			}
+		} else {
+			mapOfLists[name] = [item];
+		}
+	}
 
-function main() {
-  let elems = Array.from(document.getElementsByClassName('elem'));
-  let links = Array.from(document.getElementsByClassName('link'));
+	function main(svg) {
+		let elems = Array.from(svg.getElementsByClassName('elem'));
+		let links = Array.from(svg.getElementsByClassName('link'));
 
-  let elemsMap = {};
-  let linkedFromElems = {};
-  let linkedToElems = {};
-  let linkedFromLinks = {};
-  let linkedToLinks = {};
+		let elemsMap = {};
+		let linkedFromElems = {};
+		let linkedToElems = {};
+		let linkedFromLinks = {};
+		let linkedToLinks = {};
 
-  elems.forEach(elem => {
-    let name = elem.classList[1];
-    elemsMap[name] = elem;
-    linkedFromElems[name] = [];
-    linkedToElems[name] = [];
-    linkedFromLinks[name] = [];
-    linkedToLinks[name] = [];
-  });
+		elems.forEach(elem => {
+			let name = elem.classList[1];
+			elemsMap[name] = elem;
+			linkedFromElems[name] = [];
+			linkedToElems[name] = [];
+			linkedFromLinks[name] = [];
+			linkedToLinks[name] = [];
+		});
 
-  links.forEach(link => {
-    let fromName = link.classList[1];
-    let toName = link.classList[2];
+		links.forEach(link => {
+			let fromName = link.classList[1];
+			let toName = link.classList[2];
 
-    if (elemsMap[fromName] && elemsMap[toName]) {
-      let fromElem = elemsMap[fromName];
-      let toElem = elemsMap[toName];
+			if (elemsMap[fromName] && elemsMap[toName]) {
+				let fromElem = elemsMap[fromName];
+				let toElem = elemsMap[toName];
 
-      addItemToMapOfLists(linkedFromElems, toName, fromElem);
-      addItemToMapOfLists(linkedToElems, fromName, toElem);
+				addItemToMapOfLists(linkedFromElems, toName, fromElem);
+				addItemToMapOfLists(linkedToElems, fromName, toElem);
 
-      addItemToMapOfLists(linkedFromLinks, toName, link);
-      addItemToMapOfLists(linkedToLinks, fromName, link);
-    }
-  });
+				addItemToMapOfLists(linkedFromLinks, toName, link);
+				addItemToMapOfLists(linkedToLinks, fromName, link);
+			}
+		});
 
-  let selectedElems = [];
-  let selectedLinks = [];
-  let selectedElemName = null;
+		let selectedElems = [];
+		let selectedLinks = [];
+		let selectedElemName = null;
 
-  function clearSelected() {
-    selectedElems.forEach(item => {
-      item.classList.remove('selected');
-    });
-    selectedElems = [];
+		function clearSelected() {
+			selectedElems.forEach(item => {
+				item.classList.remove('selected');
+			});
+			selectedElems = [];
 
-    selectedLinks.forEach(item => {
-      item.classList.remove('selected');
-    });
-    selectedLinks = [];
-  }
+			selectedLinks.forEach(item => {
+				item.classList.remove('selected');
+			});
+			selectedLinks = [];
+		}
 
-  function selectAll() {
-    selectedElemName = null;
-    clearSelected();
+		function selectAll() {
+			selectedElemName = null;
+			clearSelected();
 
-    selectedElems = Array.from(elems);
-    selectedElems.forEach(item => {
-      item.classList.add('selected');
-    });
+			selectedElems = Array.from(elems);
+			selectedElems.forEach(item => {
+				item.classList.add('selected');
+			});
 
-    selectedLinks = Array.from(links);
-    selectedLinks.forEach(item => {
-      item.classList.add('selected');
-    });
-  }
+			selectedLinks = Array.from(links);
+			selectedLinks.forEach(item => {
+				item.classList.add('selected');
+			});
+		}
 
   function selectElem(elemName) {
     if (elemName === selectedElemName) {
@@ -213,6 +214,16 @@ function main() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', (event) => {
-  main();
-});
+	function findAncestorWithTagName(elem, tagName) {
+		while (elem && elem.nodeName.toLowerCase() !== tagName) {
+			elem = elem.parentElement;
+		}
+		return elem;
+	}
+
+	const svgRoot = findAncestorWithTagName(document.currentScript, "svg");
+
+	document.addEventListener('DOMContentLoaded', (event) => {
+		main(svgRoot);
+	})
+})();

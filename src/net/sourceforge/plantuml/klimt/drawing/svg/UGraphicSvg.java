@@ -138,13 +138,12 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 				// create so we can register
 				// the event handlers on them we will append to the end of the document
 				getGraphicObject().addStyle("onmouseinteractivefooter.css");
-				getGraphicObject().addScriptTag("https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js");
 				getGraphicObject().addScript("onmouseinteractivefooter.js");
 			}
 
 			getGraphicObject().createXml(os);
 		} catch (TransformerException e) {
-			throw new IOException(e.toString());
+			throw new IOException(e);
 		}
 	}
 

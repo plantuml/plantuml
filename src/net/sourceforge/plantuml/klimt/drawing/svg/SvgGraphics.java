@@ -150,6 +150,9 @@ public class SvgGraphics {
 			for (Map.Entry<String, String> ent : option.getRootAttributes().entrySet())
 				root.setAttribute(ent.getKey(), ent.getValue());
 
+			for (Map.Entry<String, String> ent : option.getRootAttributes().entrySet())
+				root.setAttribute(ent.getKey(), ent.getValue());
+
 			// Create a node named defs, which will be the parent
 			// for a pair of linear gradient definitions.
 			defs = simpleElement("defs");
@@ -1117,12 +1120,26 @@ public class SvgGraphics {
 		for (Map.Entry<UGroupType, String> typeIdent : typeIdents.entrySet()) {
 			if (typeIdent.getKey() == UGroupType.ID)
 				pendingAction.get(0).setAttribute("id", typeIdent.getValue());
-			if (option.isInteractive() && typeIdent.getKey() == UGroupType.CLASS)
-				pendingAction.get(0).setAttribute("class", typeIdent.getValue());
 			if (typeIdent.getKey() == UGroupType.TITLE) {
 				Element title = document.createElement("title");
 				title.setTextContent(typeIdent.getValue());
 				pendingAction.get(0).appendChild(title);
+			}
+			if (option.isInteractive()) {
+				switch (typeIdent.getKey()) {
+					case CLASS:
+						pendingAction.get(0).setAttribute("class", typeIdent.getValue());
+						break;
+					case PARTICIPANT_NAME:
+						pendingAction.get(0).setAttribute("data-participant", typeIdent.getValue());
+						break;
+					case PARTICIPANT_1_NAME:
+						pendingAction.get(0).setAttribute("data-participant-1", typeIdent.getValue());
+						break;
+					case PARTICIPANT_2_NAME:
+						pendingAction.get(0).setAttribute("data-participant-2", typeIdent.getValue());
+						break;
+				}
 			}
 		}
 	}
