@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -43,9 +46,6 @@ import net.sourceforge.plantuml.sequencediagram.NotePosition;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.url.Url;
-
-import java.util.HashMap;
-import java.util.Map;
 
 abstract class Arrow extends GraphicalElement implements InGroupable {
 
@@ -56,9 +56,9 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 	private final Url url;
 
 	public void setMaxX(double m) {
-		if (maxX != 0) {
+		if (maxX != 0)
 			throw new IllegalStateException();
-		}
+
 		this.maxX = m;
 	}
 
@@ -83,10 +83,10 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 	}
 
 	protected final void startGroup(UGraphic ug) {
-		Map<UGroupType, String> typeIdents = new HashMap<>();
+		final Map<UGroupType, String> typeIdents = new EnumMap<>(UGroupType.class);
 		typeIdents.put(UGroupType.CLASS, "message");
-		typeIdents.put(UGroupType.PARTICIPANT_1_NAME, getParticipant1Code());
-		typeIdents.put(UGroupType.PARTICIPANT_2_NAME, getParticipant2Code());
+		typeIdents.put(UGroupType.DATA_PARTICIPANT_1, getParticipant1Code());
+		typeIdents.put(UGroupType.DATA_PARTICIPANT_2, getParticipant2Code());
 		ug.startGroup(typeIdents);
 	}
 
@@ -95,15 +95,15 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 	}
 
 	protected final void startUrl(UGraphic ug) {
-		if (url != null) {
+		if (url != null)
 			ug.startUrl(url);
-		}
+
 	}
 
 	protected final void endUrl(UGraphic ug) {
-		if (url != null) {
+		if (url != null)
 			ug.closeUrl();
-		}
+
 	}
 
 	public abstract int getDirection(StringBounder stringBounder);

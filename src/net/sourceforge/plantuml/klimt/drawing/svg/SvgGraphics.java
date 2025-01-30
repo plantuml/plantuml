@@ -150,9 +150,6 @@ public class SvgGraphics {
 			for (Map.Entry<String, String> ent : option.getRootAttributes().entrySet())
 				root.setAttribute(ent.getKey(), ent.getValue());
 
-			for (Map.Entry<String, String> ent : option.getRootAttributes().entrySet())
-				root.setAttribute(ent.getKey(), ent.getValue());
-
 			// Create a node named defs, which will be the parent
 			// for a pair of linear gradient definitions.
 			defs = simpleElement("defs");
@@ -421,7 +418,8 @@ public class SvgGraphics {
 	// https://forum.plantuml.net/12469/package-background-transparent-package-default-background?show=12479#c12479
 	// https://github.com/plantuml/plantuml-server/issues/348#issuecomment-2581253011
 	private String fixColor(String color) {
-		// Since "transparent" isn’t being recognized (even though it should be), we use #FFFFFF00 as an alternative
+		// Since "transparent" isn’t being recognized (even though it should be), we use
+		// #FFFFFF00 as an alternative
 		return color == null || "#00000000".equals(color) ? "#FFFFFF00" : color;
 	}
 
@@ -1119,28 +1117,23 @@ public class SvgGraphics {
 
 		for (Map.Entry<UGroupType, String> typeIdent : typeIdents.entrySet()) {
 			if (typeIdent.getKey() == UGroupType.ID)
-				pendingAction.get(0).setAttribute("id", typeIdent.getValue());
+				pendingAction.get(0).setAttribute(UGroupType.ID.getSvgKeyAttributeName(), typeIdent.getValue());
+			
 			if (typeIdent.getKey() == UGroupType.TITLE) {
-				Element title = document.createElement("title");
+				Element title = document.createElement(UGroupType.TITLE.getSvgKeyAttributeName());
 				title.setTextContent(typeIdent.getValue());
 				pendingAction.get(0).appendChild(title);
 			}
-			if (option.isInteractive()) {
+			
+			if (option.isInteractive())
 				switch (typeIdent.getKey()) {
-					case CLASS:
-						pendingAction.get(0).setAttribute("class", typeIdent.getValue());
-						break;
-					case PARTICIPANT_NAME:
-						pendingAction.get(0).setAttribute("data-participant", typeIdent.getValue());
-						break;
-					case PARTICIPANT_1_NAME:
-						pendingAction.get(0).setAttribute("data-participant-1", typeIdent.getValue());
-						break;
-					case PARTICIPANT_2_NAME:
-						pendingAction.get(0).setAttribute("data-participant-2", typeIdent.getValue());
-						break;
+				case CLASS:
+				case DATA_PARTICIPANT:
+				case DATA_PARTICIPANT_1:
+				case DATA_PARTICIPANT_2:
+					pendingAction.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
+							typeIdent.getValue());
 				}
-			}
 		}
 	}
 

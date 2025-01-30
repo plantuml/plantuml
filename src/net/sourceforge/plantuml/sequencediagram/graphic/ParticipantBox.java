@@ -38,7 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -126,9 +126,9 @@ public class ParticipantBox implements Pushable {
 		final StringBounder stringBounder = ug.getStringBounder();
 
 		if (showHead) {
-			Map<UGroupType, String> typeIdents = new HashMap<>();
+			final Map<UGroupType, String> typeIdents = new EnumMap<>(UGroupType.class);
 			typeIdents.put(UGroupType.CLASS, "participant participant-head");
-			typeIdents.put(UGroupType.PARTICIPANT_NAME, participantCode);
+			typeIdents.put(UGroupType.DATA_PARTICIPANT, participantCode);
 			ug.startGroup(typeIdents);
 
 			final double y1 = topStartingY - head.getPreferredHeight(stringBounder)
@@ -142,9 +142,9 @@ public class ParticipantBox implements Pushable {
 		}
 
 		if (positionTail > 0) {
-			Map<UGroupType, String> typeIdents = new HashMap<>();
+			final Map<UGroupType, String> typeIdents = new EnumMap<>(UGroupType.class);
 			typeIdents.put(UGroupType.CLASS, "participant participant-tail");
-			typeIdents.put(UGroupType.PARTICIPANT_NAME, participantCode);
+			typeIdents.put(UGroupType.DATA_PARTICIPANT, participantCode);
 			ug.startGroup(typeIdents);
 
 			// final double y2 = positionTail - topStartingY +

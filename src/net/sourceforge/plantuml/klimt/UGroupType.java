@@ -36,5 +36,10 @@
 package net.sourceforge.plantuml.klimt;
 
 public enum UGroupType {
-	ID, CLASS, TITLE, PARTICIPANT_NAME, PARTICIPANT_1_NAME, PARTICIPANT_2_NAME
+	ID, CLASS, TITLE, DATA_PARTICIPANT, DATA_PARTICIPANT_1, DATA_PARTICIPANT_2;
+
+	public String getSvgKeyAttributeName() {
+		return name().toLowerCase().replace('_', '-');
+	}
+
 }

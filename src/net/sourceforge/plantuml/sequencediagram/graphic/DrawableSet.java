@@ -35,10 +35,12 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
+import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,12 +113,38 @@ public class DrawableSet {
 		return Collections.unmodifiableCollection(participants.values());
 	}
 
-	public Collection<GraphicalElement> getAllGraphicalElements() {
-		final Collection<GraphicalElement> result = new ArrayList<>();
-		for (Event ev : eventsList)
-			result.add(events.get(ev));
+//	public Collection<GraphicalElement> getAllGraphicalElements() {
+//		final Collection<GraphicalElement> result = new ArrayList<>();
+//		for (Event ev : eventsList)
+//			result.add(events.get(ev));
+//
+//		return Collections.unmodifiableCollection(result);
+//	}
 
-		return Collections.unmodifiableCollection(result);
+	public Collection<GraphicalElement> getAllGraphicalElements() {
+		return new AbstractCollection<GraphicalElement>() {
+			@Override
+			public Iterator<GraphicalElement> iterator() {
+				return new Iterator<GraphicalElement>() {
+					private final Iterator<Event> eventIterator = eventsList.iterator();
+
+					@Override
+					public boolean hasNext() {
+						return eventIterator.hasNext();
+					}
+
+					@Override
+					public GraphicalElement next() {
+						return events.get(eventIterator.next());
+					}
+				};
+			}
+
+			@Override
+			public int size() {
+				return eventsList.size();
+			}
+		};
 	}
 
 	public LivingParticipantBox getLivingParticipantBox(Participant p) {
@@ -349,10 +377,9 @@ public class DrawableSet {
 		for (Participant p : getAllParticipants())
 			drawLifeLineU(ug, p);
 
-		for (Event ev : eventsList) {
-			GraphicalElement element = events.get(ev);
+		for (GraphicalElement element : getAllGraphicalElements())
 			element.drawU(ug, getMaxX(), context);
-		}
+
 	}
 
 	private void drawDolls(UGraphic ug, double height, Context2D context) {

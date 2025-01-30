@@ -231,8 +231,7 @@ public class ImageBuilder {
 			if (!(udrawable instanceof TextBlock))
 				throw new IllegalStateException("udrawable is not a TextBlock");
 			final AnnotatedBuilder builder = new AnnotatedBuilder(diagram, skinParam, stringBounder);
-			final AnnotatedWorker annotatedWorker = new AnnotatedWorker(diagram, skinParam, stringBounder,
-					builder);
+			final AnnotatedWorker annotatedWorker = new AnnotatedWorker(diagram, skinParam, stringBounder, builder);
 			udrawable = annotatedWorker.addAdd((TextBlock) udrawable);
 		}
 
@@ -260,8 +259,7 @@ public class ImageBuilder {
 		if (scaleFactor <= 0)
 			throw new IllegalStateException("Bad scaleFactor");
 		WasmLog.log("...image drawing...");
-		UGraphic ug = createUGraphic(dim, scaleFactor,
-				diagram == null ? Pragma.createEmpty() : diagram.getPragma());
+		UGraphic ug = createUGraphic(dim, scaleFactor, diagram == null ? Pragma.createEmpty() : diagram.getPragma());
 
 		if (warnings.size() > 0) {
 			drawWarning(dimWarning, ug.apply(UTranslate.dy(5)), dim.getWidth());
@@ -368,8 +366,7 @@ public class ImageBuilder {
 	private UGraphic handwritten(UGraphic ug) {
 		if (skinParam != null && skinParam.handwritten())
 			return new UGraphicHandwritten(ug);
-		if (diagram != null
-				&& diagram.getPreprocessingArtifact().getOption().isDefine(OptionKey.HANDWRITTEN))
+		if (diagram != null && diagram.getPreprocessingArtifact().getOption().isDefine(OptionKey.HANDWRITTEN))
 			return new UGraphicHandwritten(ug);
 
 		return ug;
@@ -425,7 +422,7 @@ public class ImageBuilder {
 			option = option.withRootAttribute("data-diagram-type", diagram.getUmlDiagramType().name());
 		}
 
-		if ((pragma.isTrue(PragmaKey.SVG_INTERACTIVE))) {
+		if (pragma.isTrue(PragmaKey.SVG_INTERACTIVE)) {
 			String interactiveBaseFilename = "default";
 			if (diagram != null && diagram.getUmlDiagramType() == UmlDiagramType.SEQUENCE)
 				interactiveBaseFilename = "sequencediagram";
