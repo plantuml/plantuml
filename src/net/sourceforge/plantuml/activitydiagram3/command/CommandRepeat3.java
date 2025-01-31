@@ -91,6 +91,7 @@ public class CommandRepeat3 extends SingleLineCommand2<ActivityDiagram3> {
 			boxStyle = BoxStyle.PLAIN;
 		else
 			boxStyle = BoxStyle.fromString(styleString);
+		BoxStyle.checkDeprecatedWarning(diagram, styleString);
 
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		String stereo = arg.get("STEREO", 0);

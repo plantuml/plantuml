@@ -98,6 +98,8 @@ public class CommandBackward3 extends SingleLineCommand2<ActivityDiagram3> {
 		else
 			boxStyle = BoxStyle.fromString(styleString);
 
+		BoxStyle.checkDeprecatedWarning(diagram, styleString);
+
 		final String stereo = arg.get("STYLE", 1);
 
 		Stereotype stereotype = null;

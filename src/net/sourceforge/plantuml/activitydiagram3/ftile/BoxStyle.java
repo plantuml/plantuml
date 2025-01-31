@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram3.ftile;
 
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.klimt.Shadowable;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -45,6 +46,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.UPolygon;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.stereo.Stereotype;
+import net.sourceforge.plantuml.warning.Warning;
 
 // Created from Luc Trudeau original work
 public enum BoxStyle {
@@ -152,6 +154,18 @@ public enum BoxStyle {
 		this.stereotype = stereotype;
 		this.style = style;
 		this.shield = shield;
+	}
+
+	public static void checkDeprecatedWarning(TitledDiagram diagram, String style) {
+		if (style != null && style.length() == 1) {
+			final BoxStyle boxStyle = fromString(style);
+			if (boxStyle != PLAIN)
+				diagram.addWarning(new Warning(//
+						"The syntax using the " + boxStyle.style + " character is now obsolete.",
+						"Please use the <<" + boxStyle.stereotype + ">> stereotype instead.",
+						"For more details, visit https://plantuml.com/activity-diagram-beta"));
+		}
+
 	}
 
 	public static BoxStyle fromString(String style) {

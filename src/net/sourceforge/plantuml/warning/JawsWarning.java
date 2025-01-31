@@ -55,11 +55,8 @@ public enum JawsWarning {
 
 	public Warning toWarning() {
 
-		final List<String> WARNINGS = Arrays.asList(
-				"This diagram is using " + ch + " which is deprecated and will be removed in the future.",
+		return new Warning("This diagram is using " + ch + " which is deprecated and will be removed in the future.",
 				"You should use " + function + " instead in your diagram.");
-
-		return new Warning(WARNINGS);
 	}
 
 }

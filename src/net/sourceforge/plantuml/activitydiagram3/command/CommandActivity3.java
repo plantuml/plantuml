@@ -118,8 +118,8 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(ActivityDiagram3 diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 
 		final Url url;
 		if (arg.get("URL", 0) == null) {
@@ -139,6 +139,9 @@ public class CommandActivity3 extends SingleLineCommand2<ActivityDiagram3> {
 			stereotype = Stereotype.build(stereo);
 			colors = colors.applyStereotype(stereotype, diagram.getSkinParam(), ColorParam.activityBackground);
 		}
+
+		BoxStyle.checkDeprecatedWarning(diagram, arg.get("STYLE", 0));
+
 		BoxStyle style = BoxStyle.fromString(arg.get("STEREO", 0));
 		if (style == BoxStyle.PLAIN)
 			style = BoxStyle.fromString(arg.get("STYLE", 0));
