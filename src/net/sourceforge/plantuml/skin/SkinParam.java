@@ -102,6 +102,10 @@ import net.sourceforge.plantuml.utils.BlocLines;
 
 public class SkinParam implements ISkinParam {
 
+	public static boolean isDark(ISkinParam skinParam) {
+		return "dark".equalsIgnoreCase(skinParam.getValue("mode"));
+	}
+
 	// TODO not clear whether SkinParam or ImageBuilder is responsible for defaults
 	public static final String DEFAULT_PRESERVE_ASPECT_RATIO = "none";
 

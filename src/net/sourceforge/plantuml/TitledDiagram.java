@@ -230,7 +230,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 
 	@Override
 	protected ColorMapper muteColorMapper(ColorMapper init) {
-		if ("dark".equalsIgnoreCase(getSkinParam().getValue("mode")))
+		if (SkinParam.isDark(getSkinParam()))
 			return ColorMapper.DARK_MODE;
 		final String monochrome = getSkinParam().getValue("monochrome");
 		if ("true".equals(monochrome))

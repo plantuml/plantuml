@@ -292,8 +292,9 @@ public class ImageBuilder {
 
 		final HColorSet set = HColorSet.instance();
 
-		final HColor back = set.getColorOrWhite("ffffcc");
-		final HColor border = set.getColorOrWhite("ffdd88");
+		final HColor back = set.getColorOrWhite("ffffcc").withDark(set.getColorOrWhite("774400"));
+		final HColor border = set.getColorOrWhite("ffdd88").withDark(set.getColorOrWhite("aa5500"));
+
 		ug = ug.apply(back.bg()).apply(border);
 		final URectangle rect = URectangle.build(fullWidth - 10, dimWarning.getHeight() + 10).rounded(5);
 		ug.apply(new UTranslate(5, 0)).apply(UStroke.withThickness(3)).draw(rect);
