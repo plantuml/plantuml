@@ -180,7 +180,7 @@ public class PSystemRegex extends TitledDiagram {
 				else if (token.getType() == ReTokenType.ALTERNATIVE)
 					alternation();
 				else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().startsWith("*"))
-					repetitionZeroOrMore(false);
+					repetitionZeroOrMore();
 				else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().startsWith("+"))
 					repetitionOneOrMore();
 				else if (token.getType() == ReTokenType.QUANTIFIER && token.getData().startsWith("?"))
@@ -208,7 +208,8 @@ public class PSystemRegex extends TitledDiagram {
 	}
 
 	private void pushEtileBox(ReToken element, Symbol type) {
-		stack.addFirst(new ETileBox(element.getData(), type, fontConfiguration, style, colorSet, getSkinParam(), getPreprocessingArtifact().getOption()));
+		stack.addFirst(new ETileBox(element.getData(), type, fontConfiguration, style, colorSet, getSkinParam(),
+				getPreprocessingArtifact().getOption()));
 	}
 
 	private void pushRegexGroup(ReToken element) {
@@ -229,12 +230,9 @@ public class PSystemRegex extends TitledDiagram {
 		stack.addFirst(new ETileNamedGroup(arg1, fontConfiguration, colorSet, getSkinParam(), name));
 	}
 
-	private void repetitionZeroOrMore(boolean isCompact) {
+	private void repetitionZeroOrMore() {
 		final ETile arg1 = stack.removeFirst();
-		if (isCompact)
-			stack.addFirst(new ETileZeroOrMore(arg1));
-		else
-			stack.addFirst(new ETileOptional(new ETileOneOrMore(arg1), getSkinParam()));
+		stack.addFirst(new ETileZeroOrMore(arg1, getSkinParam()));
 	}
 
 	private void optional() {

@@ -35,36 +35,50 @@
  */
 package net.sourceforge.plantuml.ebnf;
 
+import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FloatingNote;
+import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.SName;
 
 public class ETileZeroOrMore extends ETile {
 
-	private final double deltax;
+	private final double deltax = 20;
 	private final double deltay = 20;
 	private final ETile orig;
-	private final boolean specialForAlternate;
+	private final ISkinParam skinParam;
+	private String commentAbove;
+	private String commentBelow;
 
-	public ETileZeroOrMore(ETile orig) {
-		this.orig = orig;
-		this.specialForAlternate = orig instanceof ETileAlternation;
-		this.deltax = this.specialForAlternate ? 0 : 20;
-		if (this.specialForAlternate)
-			((ETileAlternation) orig).setInZeroOrMore(true);
+	public ETileZeroOrMore(ETile orig, ISkinParam skinParam) {
+		this.skinParam = skinParam;
+		this.orig = new ETileOneOrMore(orig);
 	}
 
 	@Override
 	public double getH1(StringBounder stringBounder) {
-		return 10;
+		final TextBlock note = getNoteAbove(stringBounder);
+		return 10 + note.calculateDimension(stringBounder).getHeight();
+	}
+
+	private double getDeltaY(StringBounder stringBounder) {
+		final TextBlock note = getNoteAbove(stringBounder);
+		return deltay + note.calculateDimension(stringBounder).getHeight();
 	}
 
 	@Override
 	public double getH2(StringBounder stringBounder) {
-		return 10 + orig.getH1(stringBounder) + orig.getH2(stringBounder);
+		final TextBlock note = getNoteAbove(stringBounder);
+		return 10 + orig.getH1(stringBounder) + orig.getH2(stringBounder)
+				+ note.calculateDimension(stringBounder).getHeight();
 	}
 
 	@Override
@@ -75,48 +89,74 @@ public class ETileZeroOrMore extends ETile {
 	@Override
 	public void drawU(UGraphic ug) {
 		final StringBounder stringBounder = ug.getStringBounder();
-		final XDimension2D fullDim = calculateDimension(stringBounder);
-		if (TRACE) {
-			if (specialForAlternate)
-				ug.apply(HColors.COL_B38D22).draw(URectangle.build(fullDim));
-			else
-				ug.apply(HColors.GREEN).draw(URectangle.build(fullDim));
-		}
+		final XDimension2D dim = calculateDimension(stringBounder);
+		if (TRACE)
+			ug.apply(HColors.GREEN).draw(URectangle.build(dim));
 
 		final double linePos = getH1(stringBounder);
 
-		drawHline(ug, linePos, 0, fullDim.getWidth());
+		drawHlineDirected(ug, linePos, 0, dim.getWidth(), 0.4, 25);
 		final double corner = 12;
 
-		if (specialForAlternate) {
-			CornerCurved.createNE_arrow(corner).drawU(ug.apply(new UTranslate(corner, linePos)));
-			CornerCurved.createNW(corner).drawU(ug.apply(new UTranslate(corner, linePos)));
+		CornerCurved.createNE(corner).drawU(ug.apply(new UTranslate(corner, linePos)));
+		CornerCurved.createSW(corner)
+				.drawU(ug.apply(new UTranslate(corner, getDeltaY(stringBounder) + orig.getH1(stringBounder))));
+		drawVline(ug, corner, linePos + corner, getDeltaY(stringBounder) + orig.getH1(stringBounder) - corner);
 
-			final double posB = fullDim.getWidth() - corner;
-			CornerCurved.createNW_arrow(corner).drawU(ug.apply(new UTranslate(posB, linePos)));
-			CornerCurved.createNE(corner).drawU(ug.apply(new UTranslate(posB, linePos)));
+		final double posB = dim.getWidth() - corner;
 
-		} else {
+		CornerCurved.createNW(corner).drawU(ug.apply(new UTranslate(posB, linePos)));
+		CornerCurved.createSE(corner)
+				.drawU(ug.apply(new UTranslate(posB, getDeltaY(stringBounder) + orig.getH1(stringBounder))));
+		drawVline(ug, posB, linePos + corner, getDeltaY(stringBounder) + orig.getH1(stringBounder) - corner);
 
-			CornerCurved.createNE_arrow(corner).drawU(ug.apply(new UTranslate(deltax - corner, linePos)));
-			CornerCurved.createNW(corner).drawU(ug.apply(new UTranslate(deltax - corner, linePos)));
-			drawVline(ug, deltax - corner, linePos + corner, deltay + orig.getH1(stringBounder) - corner);
-			CornerCurved.createSW(corner)
-					.drawU(ug.apply(new UTranslate(deltax - corner, deltay + orig.getH1(stringBounder))));
+		orig.drawU(ug.apply(new UTranslate(deltax, getDeltaY(stringBounder))));
 
-			final double posB = fullDim.getWidth() - deltax + corner;
-			CornerCurved.createSE(corner).drawU(ug.apply(new UTranslate(posB, deltay + orig.getH1(stringBounder))));
-			drawVline(ug, posB, linePos + corner, deltay + orig.getH1(stringBounder) - corner);
-			CornerCurved.createNW_arrow(corner).drawU(ug.apply(new UTranslate(posB, linePos)));
-			CornerCurved.createNE(corner).drawU(ug.apply(new UTranslate(posB, linePos)));
+		final TextBlock noteAbove = getNoteAbove(stringBounder);
+		if (noteAbove != TextBlockUtils.EMPTY_TEXT_BLOCK) {
+			final double pos2 = (dim.getWidth() - noteAbove.calculateDimension(stringBounder).getWidth()) / 2;
+			noteAbove.drawU(ug.apply(UTranslate.dx(pos2)));
 		}
 
-		orig.drawU(ug.apply(new UTranslate(deltax, deltay)));
+		final TextBlock noteBelow = getNoteBelow(stringBounder);
+		if (noteBelow != TextBlockUtils.EMPTY_TEXT_BLOCK) {
+			final XDimension2D dimBelow = noteBelow.calculateDimension(stringBounder);
+			final double pos2 = (dim.getWidth() - dimBelow.getWidth()) / 2;
+			noteBelow.drawU(ug.apply(new UTranslate(pos2, dim.getHeight() - dimBelow.getHeight())));
+		}
+
 	}
 
 	@Override
 	public void push(ETile tile) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected void addCommentAbove(String comment) {
+		this.commentAbove = comment;
+	}
+
+	@Override
+	protected void addCommentBelow(String comment) {
+		this.commentBelow = comment;
+	}
+
+	@DuplicateCode(reference = "EtileOptional")
+	private TextBlock getNoteAbove(StringBounder stringBounder) {
+		if (commentAbove == null)
+			return TextBlockUtils.EMPTY_TEXT_BLOCK;
+		final FloatingNote note = FloatingNote.create(Display.getWithNewlines(skinParam.getPragma(), commentAbove),
+				skinParam, SName.ebnf);
+		return TextBlockUtils.withMargin(note, 0, 0, 0, 10);
+	}
+
+	private TextBlock getNoteBelow(StringBounder stringBounder) {
+		if (commentBelow == null)
+			return TextBlockUtils.EMPTY_TEXT_BLOCK;
+		final FloatingNote note = FloatingNote.create(Display.getWithNewlines(skinParam.getPragma(), commentBelow),
+				skinParam, SName.ebnf);
+		return TextBlockUtils.withMargin(note, 0, 0, 10, 0);
 	}
 
 }

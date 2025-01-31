@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.ebnf;
 
 import net.sourceforge.plantuml.activitydiagram3.ftile.vcompact.FloatingNote;
+import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -148,6 +149,7 @@ public class ETileOptional extends ETile {
 		this.commentBelow = comment;
 	}
 
+	@DuplicateCode(reference = "ETileZeroOrMore")
 	private TextBlock getNoteAbove(StringBounder stringBounder) {
 		if (commentAbove == null)
 			return TextBlockUtils.EMPTY_TEXT_BLOCK;

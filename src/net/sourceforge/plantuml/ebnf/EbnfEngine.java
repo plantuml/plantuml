@@ -73,8 +73,8 @@ public class EbnfEngine {
 	}
 
 	public void push(Token element) {
-		stack.addFirst(
-				new ETileBox(element.getData(), element.getSymbol(), fontConfiguration, style, colorSet, skinParam, option));
+		stack.addFirst(new ETileBox(element.getData(), element.getSymbol(), fontConfiguration, style, colorSet,
+				skinParam, option));
 	}
 
 	public void optional() {
@@ -87,12 +87,9 @@ public class EbnfEngine {
 		stack.addFirst(new ETileNot(arg1, fontConfiguration, style, colorSet, skinParam));
 	}
 
-	public void repetitionZeroOrMore(boolean isCompact) {
+	public void repetitionZeroOrMore() {
 		final ETile arg1 = stack.removeFirst();
-		if (isCompact)
-			stack.addFirst(new ETileZeroOrMore(arg1));
-		else
-			stack.addFirst(new ETileOptional(new ETileOneOrMore(arg1), skinParam));
+		stack.addFirst(new ETileZeroOrMore(arg1, skinParam));
 	}
 
 	public void repetitionOneOrMore() {

@@ -209,7 +209,7 @@ public class EbnfExpression implements TextBlockable {
 			else if (element.getSymbol() == Symbol.NOT)
 				engine.not();
 			else if (element.getSymbol() == Symbol.REPETITION_ZERO_OR_MORE)
-				engine.repetitionZeroOrMore(isCompact);
+				engine.repetitionZeroOrMore();
 			else if (element.getSymbol() == Symbol.REPETITION_ONE_OR_MORE)
 				engine.repetitionOneOrMore();
 			else if (element.getSymbol() == Symbol.REPETITION_SYMBOL)

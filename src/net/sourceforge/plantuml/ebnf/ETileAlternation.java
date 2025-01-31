@@ -155,6 +155,8 @@ public class ETileAlternation extends ETile {
 
 	}
 
+	// To be removed, never used
+	@Deprecated
 	public void setInZeroOrMore(boolean inZeroOrMore) {
 		this.inZeroOrMore = true;
 
