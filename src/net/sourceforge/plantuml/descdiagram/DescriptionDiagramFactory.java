@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,13 +30,12 @@
  *
  *
  * Original Author:  Arnaud Roques
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.descdiagram;
 
 import java.util.List;
-import java.util.Map;
 
 import net.sourceforge.plantuml.Previous;
 import net.sourceforge.plantuml.classdiagram.command.CommandHideShow2;
@@ -65,7 +64,6 @@ import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJson;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateJsonSingleLine;
 import net.sourceforge.plantuml.objectdiagram.command.CommandCreateMap;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
@@ -130,7 +128,7 @@ public class DescriptionDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new CommandArchimateMultilines());
 		cmds.add(new CommandCreateDomain());
 	}
-	
+
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
 		return UmlDiagramType.DESCRIPTION;

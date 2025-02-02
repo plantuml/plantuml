@@ -44,7 +44,6 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.preproc.Defines;
 import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.preproc.ImportedFiles;
-import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.text.StringLocated;
 
 public class TimLoader {
