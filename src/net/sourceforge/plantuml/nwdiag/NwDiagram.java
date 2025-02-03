@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2024, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -74,7 +74,6 @@ import net.sourceforge.plantuml.nwdiag.next.NBar;
 import net.sourceforge.plantuml.nwdiag.next.NPlayField;
 import net.sourceforge.plantuml.nwdiag.next.NServerDraw;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
-import net.sourceforge.plantuml.preproc.OptionKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
 import net.sourceforge.plantuml.style.SName;

@@ -5,12 +5,12 @@
  * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
- * 
+ *
  * If you like this project or if you find it useful, you can support us at:
- * 
+ *
  * https://plantuml.com/patreon (only 1$ per month!)
  * https://plantuml.com/paypal
- * 
+ *
  * This file is part of PlantUML.
  *
  * PlantUML is free software; you can redistribute it and/or modify it
@@ -30,7 +30,7 @@
  *
  *
  * Original Author:  Valentin Vasiu
- * 
+ *
  *
  */
 package net.sourceforge.plantuml.xmi;
@@ -45,14 +45,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import net.atmp.CucaDiagram;
-import net.sourceforge.plantuml.classdiagram.ClassDiagram;
-import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
-import net.sourceforge.plantuml.statediagram.StateDiagram;
 
 /**
  * Generic class for managing a custom XMI transformation, using services
  * provided by external providers via dependency injection.
- * 
+ *
  * @param <S> the class of the service type.
  */
 public final class XmiCucaDiagramCustom<S> implements XmlDiagramTransformer {
@@ -66,7 +63,7 @@ public final class XmiCucaDiagramCustom<S> implements XmlDiagramTransformer {
     /**
      * Transform a diagram into a custom XMI format, using dependency injection to
      * load the external class responsible for the custom transformation.
-     * 
+     *
      * @param serviceType the class of the service type.
      * @param diagram     the diagram to convert.
      * @throws ParserConfigurationException if the converting fails or the custom
