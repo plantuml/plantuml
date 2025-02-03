@@ -74,8 +74,13 @@ final public class WElement {
 	private StyleSignatureBasic getDefaultStyleDefinitionNode(int level) {
 		final String depth = SName.depth(level);
 		if (level == 0)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode)
-					.addS(stereotype).add(depth);
+			if (shape == IdeaShape.NONE)
+				return StyleSignatureBasic
+						.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode, SName.boxless)
+						.addS(stereotype).add(depth);
+			else
+				return StyleSignatureBasic.of(SName.root, SName.element, SName.wbsDiagram, SName.node, SName.rootNode)
+						.addS(stereotype).add(depth);
 
 		if (shape == IdeaShape.NONE && isLeaf())
 			return StyleSignatureBasic
@@ -115,12 +120,13 @@ final public class WElement {
 		return result;
 	}
 
-	public WElement(HColor backColor, Display label, Stereotype stereotype, StyleBuilder styleBuilder, IdeaShape shape) {
+	public WElement(HColor backColor, Display label, Stereotype stereotype, StyleBuilder styleBuilder,
+			IdeaShape shape) {
 		this(backColor, 0, label, stereotype, null, shape, styleBuilder);
 	}
 
-	private WElement(HColor backColor, int level, Display label, Stereotype stereotype, WElement parent, IdeaShape shape,
-			StyleBuilder styleBuilder) {
+	private WElement(HColor backColor, int level, Display label, Stereotype stereotype, WElement parent,
+			IdeaShape shape, StyleBuilder styleBuilder) {
 		this.label = label;
 		this.backColor = backColor;
 		this.level = level;

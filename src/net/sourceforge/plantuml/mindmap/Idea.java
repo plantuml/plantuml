@@ -64,8 +64,14 @@ class Idea {
 	private StyleSignatureBasic getDefaultStyleDefinitionNode(int level) {
 		final String depth = SName.depth(level);
 		if (level == 0)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode)
-					.addS(stereotype).add(depth);
+			if (shape == IdeaShape.NONE)
+				return StyleSignatureBasic
+						.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode, SName.boxless)
+						.addS(stereotype).add(depth);
+			else
+				return StyleSignatureBasic
+						.of(SName.root, SName.element, SName.mindmapDiagram, SName.node, SName.rootNode)
+						.addS(stereotype).add(depth);
 
 		if (shape == IdeaShape.NONE && children.size() == 0)
 			return StyleSignatureBasic
