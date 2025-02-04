@@ -40,6 +40,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
@@ -71,6 +72,7 @@ final public class WElement {
 	private UTranslate position;
 	private XDimension2D dimension;
 
+	@DuplicateCode(reference = "Idea")
 	private StyleSignatureBasic getDefaultStyleDefinitionNode(int level) {
 		final String depth = SName.depth(level);
 		if (level == 0)

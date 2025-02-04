@@ -78,7 +78,7 @@ public class EbnfEngine {
 
 	public void optional() {
 		final ETile arg1 = stack.removeFirst();
-		stack.addFirst(new ETileOptional(arg1, skinParam));
+		stack.addFirst(new ETileOptional2(arg1, skinParam));
 	}
 
 	public void not() {

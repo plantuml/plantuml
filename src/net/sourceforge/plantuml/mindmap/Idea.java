@@ -40,6 +40,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -61,6 +62,7 @@ class Idea {
 	private final StyleBuilder styleBuilder;
 	private final Stereotype stereotype;
 
+	@DuplicateCode(reference = "WElement")
 	private StyleSignatureBasic getDefaultStyleDefinitionNode(int level) {
 		final String depth = SName.depth(level);
 		if (level == 0)

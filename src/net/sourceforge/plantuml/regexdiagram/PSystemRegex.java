@@ -56,7 +56,7 @@ import net.sourceforge.plantuml.ebnf.ETileConcatenation;
 import net.sourceforge.plantuml.ebnf.ETileLookAheadOrBehind;
 import net.sourceforge.plantuml.ebnf.ETileNamedGroup;
 import net.sourceforge.plantuml.ebnf.ETileOneOrMore;
-import net.sourceforge.plantuml.ebnf.ETileOptional;
+import net.sourceforge.plantuml.ebnf.ETileOptional2;
 import net.sourceforge.plantuml.ebnf.ETileRegexGroup;
 import net.sourceforge.plantuml.ebnf.ETileRegexGroupAllBut;
 import net.sourceforge.plantuml.ebnf.ETileZeroOrMore;
@@ -236,7 +236,7 @@ public class PSystemRegex extends TitledDiagram {
 
 	private void optional() {
 		final ETile arg1 = stack.removeFirst();
-		stack.addFirst(new ETileOptional(arg1, getSkinParam()));
+		stack.addFirst(new ETileOptional2(arg1, getSkinParam()));
 	}
 
 	private void repetitionOneOrMore() {

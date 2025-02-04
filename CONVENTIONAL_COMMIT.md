@@ -72,6 +72,8 @@ The **subject** is a succinct description of the change and follows these guidel
 | 👷      | Add or update CI build system              |
 | 📸      | Snapshot or preview release                |
 | 🐾      | Small, incremental changes or tweaks       |
+| 🖼️      | Enhance visual representation              |
+| 💡      | Suggesting or implementing ideas          |
 
 #### Guidelines for Using Gitmoji
 - Place the corresponding emoji at the beginning of the **description** in the commit message header.
