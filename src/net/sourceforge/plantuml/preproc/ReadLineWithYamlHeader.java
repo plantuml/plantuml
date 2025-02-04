@@ -74,11 +74,10 @@ public class ReadLineWithYamlHeader implements ReadLine {
 						break;
 					final String tmp = line.getString();
 					yamlHeader.add(tmp);
-					if (tmp.contains(":")) {
-						final String[] split = tmp.split(":");
-						if (split.length == 2)
-							metadata.put(split[0].trim(), split[1].trim());
-					}
+					final int idx = tmp.indexOf(':');
+					if (idx > 0)
+						metadata.put(tmp.substring(0, idx).trim(), tmp.substring(idx + 1).trim());
+
 				} while (true);
 				// Skip the second separator
 				line = source.readLine();
