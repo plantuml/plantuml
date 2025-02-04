@@ -206,6 +206,7 @@ net.sourceforge.plantuml.xmi
 net.sourceforge.plantuml.xml
 net.sourceforge.plantuml.xmlsc
 net.sourceforge.plantuml.yaml
+net.sourceforge.plantuml.yaml.parser
 net.sourceforge.plantuml.zopfli
 org.stathissideris.ascii2image.core
 org.stathissideris.ascii2image.graphics
