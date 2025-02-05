@@ -4,11 +4,10 @@ display_name: Cloudscape design
 description: Theme based off of the colors used by Cloudscape design
 author: Brett Schwarz
 release: 
-license: 
+license: MIT
 version: 
 source: https://github.com/bschwarz/puml-themes
-origin: 
-inspiration: 
+inspiration: https://cloudscape.design/foundation/visual-foundation/data-vis-colors/
 ---
 
 '!$PUML_OUTLINE = "true"

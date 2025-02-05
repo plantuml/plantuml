@@ -4,10 +4,9 @@ display_name: Lightgray
 description: Lightgray theme - mostly grays
 author: Brett Schwarz
 release: 
-license: 
+license: MIT
 version: 
 source: https://github.com/bschwarz/puml-themes
-origin: 
 inspiration: 
 ---
 

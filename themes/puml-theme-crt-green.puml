@@ -1,13 +1,12 @@
 ---
-name: ctr-green
-display_name: Cathode-ray tube (CTR) green
+name: crt-green
+display_name: Cathode-ray tube (CRT) green
 description: A green on black theme based on monochrome CRT monitors
 author: Matthew Leather
 release: 
 license: 
 version: 
 source: 
-origin: 
 inspiration: https://superuser.com/a/1206781
 ---
 
