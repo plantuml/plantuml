@@ -568,7 +568,7 @@ public class Option {
 	}
 
 	private void manageDefine(String s) {
-		final Pattern2 p = MyPattern.cmpile("^(\\w+)(?:=(.*))?$");
+		final Pattern2 p = MyPattern.cmpile("^(\\$?\\w+)(?:=(.*))?$");
 		final Matcher2 m = p.matcher(s);
 		if (m.find())
 			define(m.group(1), m.group(2));
