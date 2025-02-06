@@ -34,6 +34,9 @@
  */
 package net.sourceforge.plantuml.yaml.parser;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import net.sourceforge.plantuml.annotation.DuplicateCode;
@@ -43,7 +46,9 @@ public class YamlLine {
 	private final int indent;
 	private final String key;
 	private final String value;
+	private final List<String> values;
 	private final boolean listItem;
+	private final YamlValueType type;
 
 	public static Optional<YamlLine> build(String line) {
 		int count = 0;
@@ -64,19 +69,44 @@ public class YamlLine {
 
 		final int colonIndex = trimmedLine.indexOf(':');
 		if (colonIndex == -1)
-			return Optional.empty();
+			if (listItem)
+				return Optional.of(new YamlLine(count, null, unquote(trimmedLine), null,
+						YamlValueType.PLAIN_ELEMENT_LIST, listItem));
+			else
+				return Optional.empty();
 
 		final String rawKey = trimmedLine.substring(0, colonIndex).trim();
 		final String rawValue = trimmedLine.substring(colonIndex + 1).trim();
 
-		return Optional.of(new YamlLine(count, unquote(rawKey), unquote(rawValue), listItem));
+		YamlValueType type = YamlValueType.REGULAR;
+
+		if (rawValue.isEmpty())
+			type = YamlValueType.ABSENT;
+		else if (rawValue.equals("|"))
+			type = YamlValueType.BLOCK_STYLE;
+		else if (rawValue.equals(">"))
+			type = YamlValueType.FOLDED_STYLE;
+		else if (rawValue.startsWith("[") && rawValue.endsWith("]"))
+			return Optional.of(new YamlLine(count, unquote(rawKey), null,
+					toList(rawValue.substring(1, rawValue.length() - 1)), YamlValueType.FLOW_SEQUENCE, listItem));
+
+		return Optional.of(new YamlLine(count, unquote(rawKey), unquote(rawValue), null, type, listItem));
 
 	}
 
-	private YamlLine(int indent, String key, String value, boolean listItem) {
+	private static List<String> toList(String rawValue) {
+		final List<String> result = new ArrayList<>();
+		for (String s : rawValue.split(","))
+			result.add(unquote(s));
+		return result;
+	}
+
+	private YamlLine(int indent, String key, String value, List<String> values, YamlValueType type, boolean listItem) {
 		this.indent = indent;
 		this.key = key;
 		this.value = value;
+		this.values = values;
+		this.type = type;
 		this.listItem = listItem;
 	}
 
@@ -128,11 +158,24 @@ public class YamlLine {
 	}
 
 	public String getValue() {
-		return value;
+		if (type == YamlValueType.REGULAR || type == YamlValueType.FLOW_SEQUENCE
+				|| type == YamlValueType.PLAIN_ELEMENT_LIST)
+			return value;
+		throw new IllegalStateException(type.name());
 	}
 
 	public boolean isListItem() {
 		return listItem;
+	}
+
+	public YamlValueType getType() {
+		return type;
+	}
+
+	public List<String> getValues() {
+		if (type == YamlValueType.FLOW_SEQUENCE)
+			return Collections.unmodifiableList(values);
+		throw new IllegalStateException(type.name());
 	}
 
 	@Override

@@ -34,39 +34,39 @@
  */
 package net.sourceforge.plantuml.yaml.parser;
 
-/**
- * Enumeration representing the possible types of YAML values.
- */
-public enum YamlValueType {
-	
-	/**
-	 * Indicates that no value was provided.
-	 */
-	ABSENT,
-	
-	/**
-	 * Indicates a simple regular scalar value.
-	 */
-	REGULAR,
-	
-	/**
-	 * Indicates an inline list (e.g. ["a", "b", "c"]).
-	 */
-	FLOW_SEQUENCE,
-	
-	/**
-	 * Indicates a plain element in a list (e.g.  - red )
-	 */
-	PLAIN_ELEMENT_LIST,
-	
-	/**
-	 * Indicates a block style scalar value (using the '|' indicator).
-	 */
-	BLOCK_STYLE,
-	
-	/**
-	 * Indicates a folded style scalar value (using the '>' indicator).
-	 */
-	FOLDED_STYLE
-}
+import java.util.ArrayDeque;
+import java.util.Deque;
 
+public class IndentationStack {
+
+	private final Deque<Integer> stack = new ArrayDeque<>();
+
+	public int size() {
+		return stack.size();
+	}
+
+	public void push(int value) {
+		if (size() > 0 && value <= peek())
+			throw new IllegalArgumentException();
+
+		stack.addLast(value);
+	}
+
+	public int peek() {
+		return stack.getLast();
+	}
+
+	public int pop() {
+		return stack.removeLast();
+	}
+
+	public boolean contains(int value) {
+		return stack.contains(value);
+	}
+	
+	@Override
+	public String toString() {
+		return stack.toString();
+	}
+
+}

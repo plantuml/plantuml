@@ -35,17 +35,61 @@
 package net.sourceforge.plantuml.yaml.parser;
 
 import java.util.List;
+import java.util.Optional;
 
+import net.sourceforge.plantuml.json.JsonObject;
+
+// https://yaml.org/spec/1.2.2/
 public class YamlParser {
-	
-	public YamlParser(int indentSize) {
-	}
 
-	// In some future, we will return something
-	public void parse(List<String> lines) {
-		System.err.println(lines);
-		
-	}
+	public JsonObject parse(List<String> lines) {
+		final IndentationStack indentationStack = new IndentationStack();
+		final YamlBuilder yamlBuilder = new YamlBuilder();
 
+		for (int i = 0; i < lines.size(); i++) {
+			final String line = lines.get(i);
+			final Optional<YamlLine> optionalYamlLine = YamlLine.build(line);
+			// System.err.println(line + " --> " + optionalYamlLine);
+			if (optionalYamlLine.isPresent()) {
+				final YamlLine yamlLine = optionalYamlLine.get();
+
+				if (indentationStack.size() == 0)
+					indentationStack.push(yamlLine.getIndent());
+
+				if (yamlLine.getIndent() > indentationStack.peek()) {
+					yamlBuilder.increaseIndentation();
+					indentationStack.push(yamlLine.getIndent());
+				} else
+					while (yamlLine.getIndent() < indentationStack.peek()) {
+						yamlBuilder.indentationDecrease();
+						indentationStack.pop();
+					}
+
+				if (yamlLine.getIndent() == indentationStack.peek()) {
+
+					if (yamlLine.isListItem())
+						if (yamlLine.getType() == YamlValueType.ABSENT)
+							yamlBuilder.onListItemOnlyKey(yamlLine.getKey());
+						else if (yamlLine.getType() == YamlValueType.PLAIN_ELEMENT_LIST)
+							yamlBuilder.onListItemOnlyValue(yamlLine.getValue());
+						else
+							yamlBuilder.onListItemKeyAndValue(yamlLine.getKey(), yamlLine.getValue());
+					else if (yamlLine.getType() == YamlValueType.ABSENT)
+						yamlBuilder.onOnlyKey(yamlLine.getKey());
+					else if (yamlLine.getType() == YamlValueType.FLOW_SEQUENCE)
+						throw new IllegalArgumentException("wip");
+						// yamlBuilder.onKeyAndValue(yamlLine.getKey(), yamlLine.getValue());
+					else
+						yamlBuilder.onKeyAndValue(yamlLine.getKey(), yamlLine.getValue());
+
+				} else
+					throw new YamlSyntaxException("wip");
+
+			}
+		}
+
+		return yamlBuilder.getResult();
+
+	}
 
 }
