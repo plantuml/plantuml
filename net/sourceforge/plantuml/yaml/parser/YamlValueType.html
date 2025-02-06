@@ -106,17 +106,25 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Enum Constant</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="#BLOCK_STYLE" class="member-name-link">BLOCK_STYLE</a></code></div>
+<div class="col-first even-row-color"><code><a href="#ABSENT" class="member-name-link">ABSENT</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">Indicates that no value was provided.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="#BLOCK_STYLE" class="member-name-link">BLOCK_STYLE</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Indicates a block style scalar value (using the '|' indicator).</div>
+</div>
+<div class="col-first even-row-color"><code><a href="#FLOW_SEQUENCE" class="member-name-link">FLOW_SEQUENCE</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Indicates an inline list (e.g.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="#FOLDED_STYLE" class="member-name-link">FOLDED_STYLE</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">Indicates a folded style scalar value (using the '>' indicator).</div>
 </div>
-<div class="col-first even-row-color"><code><a href="#NO_VALUE" class="member-name-link">NO_VALUE</a></code></div>
+<div class="col-first even-row-color"><code><a href="#PLAIN_ELEMENT_LIST" class="member-name-link">PLAIN_ELEMENT_LIST</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Indicates that no value was provided.</div>
+<div class="block">Indicates a plain element in a list (e.g.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="#REGULAR" class="member-name-link">REGULAR</a></code></div>
 <div class="col-last odd-row-color">
@@ -168,9 +176,9 @@ the order they are declared.</div>
 <h2>Enum Constant Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="NO_VALUE">
-<h3>NO_VALUE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="YamlValueType.html" title="enum class in net.sourceforge.plantuml.yaml.parser">YamlValueType</a></span>&nbsp;<span class="element-name">NO_VALUE</span></div>
+<section class="detail" id="ABSENT">
+<h3>ABSENT</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="YamlValueType.html" title="enum class in net.sourceforge.plantuml.yaml.parser">YamlValueType</a></span>&nbsp;<span class="element-name">ABSENT</span></div>
 <div class="block">Indicates that no value was provided.</div>
 </section>
 </li>
@@ -179,6 +187,20 @@ the order they are declared.</div>
 <h3>REGULAR</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="YamlValueType.html" title="enum class in net.sourceforge.plantuml.yaml.parser">YamlValueType</a></span>&nbsp;<span class="element-name">REGULAR</span></div>
 <div class="block">Indicates a simple regular scalar value.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="FLOW_SEQUENCE">
+<h3>FLOW_SEQUENCE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="YamlValueType.html" title="enum class in net.sourceforge.plantuml.yaml.parser">YamlValueType</a></span>&nbsp;<span class="element-name">FLOW_SEQUENCE</span></div>
+<div class="block">Indicates an inline list (e.g. ["a", "b", "c"]).</div>
+</section>
+</li>
+<li>
+<section class="detail" id="PLAIN_ELEMENT_LIST">
+<h3>PLAIN_ELEMENT_LIST</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="YamlValueType.html" title="enum class in net.sourceforge.plantuml.yaml.parser">YamlValueType</a></span>&nbsp;<span class="element-name">PLAIN_ELEMENT_LIST</span></div>
+<div class="block">Indicates a plain element in a list (e.g.  - red )</div>
 </section>
 </li>
 <li>
