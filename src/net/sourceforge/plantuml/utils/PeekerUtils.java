@@ -37,15 +37,15 @@ package net.sourceforge.plantuml.utils;
 
 import java.util.List;
 
-public abstract class InspectorUtils {
+public abstract class PeekerUtils {
 	// ::remove file when __HAXE__
 
-	private InspectorUtils() {
+	private PeekerUtils() {
 
 	}
 
-	public static <O> Inspector<O> inspector(final List<O> list) {
-		return new Inspector<O>() {
+	public static <O> Peeker<O> peeker(final List<O> list) {
+		return new Peeker<O>() {
 
 			private int pos = 0;
 
@@ -60,6 +60,13 @@ public abstract class InspectorUtils {
 			@Override
 			public void jump() {
 				pos++;
+			}
+
+			@Override
+			public String toString() {
+				if (peek(0) == null)
+					return super.toString();
+				return peek(0).toString();
 			}
 		};
 	}

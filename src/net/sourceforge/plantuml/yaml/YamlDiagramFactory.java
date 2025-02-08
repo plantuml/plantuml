@@ -84,10 +84,12 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 				list.add(line);
 			}
 			yaml = new SimpleYamlParser().parse(list);
+			// yaml = new YamlParser().parse(list);
 		} catch (Exception e) {
 			Logme.error(e);
 		}
-		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.YAML, yaml, highlighted, styleExtractor, preprocessing);
+		final JsonDiagram result = new JsonDiagram(source, UmlDiagramType.YAML, yaml, highlighted, styleExtractor,
+				preprocessing);
 		if (styleExtractor != null) {
 			try {
 				styleExtractor.applyStyles(result.getSkinParam());
@@ -96,16 +98,15 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 			}
 			final String title = styleExtractor.getTitle();
 			if (title != null)
-				result.setTitle(DisplayPositioned.single(Display.getWithNewlines(result.getPragma(), title), HorizontalAlignment.CENTER,
-						VerticalAlignment.CENTER));
+				result.setTitle(DisplayPositioned.single(Display.getWithNewlines(result.getPragma(), title),
+						HorizontalAlignment.CENTER, VerticalAlignment.CENTER));
 		}
 		return result;
 	}
-	
+
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
 		return UmlDiagramType.YAML;
 	}
-
 
 }

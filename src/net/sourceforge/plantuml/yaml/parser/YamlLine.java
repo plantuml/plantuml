@@ -48,9 +48,9 @@ public class YamlLine {
 	private final String value;
 	private final List<String> values;
 	private final boolean listItem;
-	private final YamlValueType type;
+	private final YamlLineType type;
 
-	public static Optional<YamlLine> build(String line) {
+	public static YamlLine build(String line) {
 		int count = 0;
 		while (count < line.length() && line.charAt(count) == ' ')
 			count++;
@@ -58,7 +58,10 @@ public class YamlLine {
 		String trimmedLine = removeYamlComment(line.substring(count).trim());
 
 		if (trimmedLine.isEmpty())
-			return Optional.empty();
+			return new YamlLine(YamlLineType.EMPTY_LINE, 0, null, null, null, false);
+
+		if (trimmedLine.equals("-"))
+			return new YamlLine(YamlLineType.PLAIN_DASH, count + 1, null, null, null, true);
 
 		final boolean listItem = trimmedLine.startsWith("- ");
 
@@ -70,43 +73,97 @@ public class YamlLine {
 		final int colonIndex = trimmedLine.indexOf(':');
 		if (colonIndex == -1)
 			if (listItem)
-				return Optional.of(new YamlLine(count, null, unquote(trimmedLine), null,
-						YamlValueType.PLAIN_ELEMENT_LIST, listItem));
+				return new YamlLine(YamlLineType.PLAIN_ELEMENT_LIST, count, null, unquote(trimmedLine), null, listItem);
 			else
-				return Optional.empty();
+				return new YamlLine(YamlLineType.NO_KEY_ONLY_TEXT, count, null, unquote(trimmedLine), null, false);
 
 		final String rawKey = trimmedLine.substring(0, colonIndex).trim();
 		final String rawValue = trimmedLine.substring(colonIndex + 1).trim();
 
-		YamlValueType type = YamlValueType.REGULAR;
+		YamlLineType type = YamlLineType.KEY_AND_VALUE;
 
 		if (rawValue.isEmpty())
-			type = YamlValueType.ABSENT;
+			type = YamlLineType.KEY_ONLY;
 		else if (rawValue.equals("|"))
-			type = YamlValueType.BLOCK_STYLE;
+			type = YamlLineType.KEY_AND_BLOCK_STYLE;
 		else if (rawValue.equals(">"))
-			type = YamlValueType.FOLDED_STYLE;
+			type = YamlLineType.KEY_AND_FOLDED_STYLE;
 		else if (rawValue.startsWith("[") && rawValue.endsWith("]"))
-			return Optional.of(new YamlLine(count, unquote(rawKey), null,
-					toList(rawValue.substring(1, rawValue.length() - 1)), YamlValueType.FLOW_SEQUENCE, listItem));
+			return new YamlLine(YamlLineType.KEY_AND_FLOW_SEQUENCE, count, unquote(rawKey), null,
+					toList(rawValue.substring(1, rawValue.length() - 1)), listItem);
 
-		return Optional.of(new YamlLine(count, unquote(rawKey), unquote(rawValue), null, type, listItem));
+		return new YamlLine(type, count, unquote(rawKey), unquote(rawValue), null, listItem);
 
 	}
 
 	private static List<String> toList(String rawValue) {
 		final List<String> result = new ArrayList<>();
-		for (String s : rawValue.split(","))
-			result.add(unquote(s));
+
+		final StringBuilder current = new StringBuilder();
+
+		// Zero if we are not in a quoted state or
+		// represents the quote character if we are in a quoted string
+		char inQuotedString = '\0';
+
+		// Indicates that the current field started with a quote
+		boolean fieldStartWithQuote = false;
+
+		for (int i = 0; i < rawValue.length(); i++) {
+			final char c = rawValue.charAt(i);
+
+			if (inQuotedString != '\0') {
+				// Processing a quoted string
+				if (c == '\\') {
+					// Handle escaping: append the next character as is if it exists
+					if (i + 1 < rawValue.length()) {
+						current.append(rawValue.charAt(i + 1));
+						i++; // Skip the escaped character
+					}
+				} else if (c == inQuotedString) {
+					// End of the quoted string
+					inQuotedString = '\0';
+				} else {
+					current.append(c);
+				}
+			} else {
+				// We are not in a quoted string.
+				// If the field contains only spaces and we encounter a quote,
+				// we consider that the field actually starts with a quote.
+				if (fieldStartWithQuote == false && current.toString().trim().isEmpty() && (c == '\'' || c == '"')) {
+					inQuotedString = c;
+					fieldStartWithQuote = true;
+					current.setLength(0); // Clear any preliminary spaces
+				} else if (c == ',') {
+					// The field separator is encountered.
+					// For a quoted field, keep the content as is,
+					// otherwise apply trim.
+					result.add(fieldStartWithQuote ? current.toString() : current.toString().trim());
+					// Reset for the next field
+					current.setLength(0);
+					fieldStartWithQuote = false;
+				} else if (c == '\\') {
+					// Handle escaping outside of quotes
+					if (i + 1 < rawValue.length()) {
+						current.append(rawValue.charAt(i + 1));
+						i++; // Skip the escaped character
+					}
+				} else {
+					current.append(c);
+				}
+			}
+		}
+		// Add the last field (even if it's empty)
+		result.add(fieldStartWithQuote ? current.toString() : current.toString().trim());
+
 		return result;
 	}
 
-	private YamlLine(int indent, String key, String value, List<String> values, YamlValueType type, boolean listItem) {
+	private YamlLine(YamlLineType type, int indent, String key, String value, List<String> values, boolean listItem) {
+		this.type = type;
 		this.indent = indent;
 		this.key = key;
 		this.value = value;
 		this.values = values;
-		this.type = type;
 		this.listItem = listItem;
 	}
 
@@ -158,8 +215,8 @@ public class YamlLine {
 	}
 
 	public String getValue() {
-		if (type == YamlValueType.REGULAR || type == YamlValueType.FLOW_SEQUENCE
-				|| type == YamlValueType.PLAIN_ELEMENT_LIST)
+		if (type == YamlLineType.KEY_AND_VALUE || type == YamlLineType.KEY_AND_FLOW_SEQUENCE
+				|| type == YamlLineType.PLAIN_ELEMENT_LIST || type == YamlLineType.NO_KEY_ONLY_TEXT)
 			return value;
 		throw new IllegalStateException(type.name());
 	}
@@ -168,19 +225,19 @@ public class YamlLine {
 		return listItem;
 	}
 
-	public YamlValueType getType() {
+	public YamlLineType getType() {
 		return type;
 	}
 
 	public List<String> getValues() {
-		if (type == YamlValueType.FLOW_SEQUENCE)
+		if (type == YamlLineType.KEY_AND_FLOW_SEQUENCE)
 			return Collections.unmodifiableList(values);
 		throw new IllegalStateException(type.name());
 	}
 
 	@Override
 	public String toString() {
-		return "YamlLine(indent=" + indent + ", key=" + key + ", value=" + value + ")";
+		return "YamlLine(" + type + " indent=" + indent + ", key=" + key + ", value=" + value + ")";
 	}
 
 }

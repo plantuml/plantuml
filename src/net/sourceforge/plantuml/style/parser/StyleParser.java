@@ -50,8 +50,8 @@ import net.sourceforge.plantuml.style.Value;
 import net.sourceforge.plantuml.style.ValueImpl;
 import net.sourceforge.plantuml.utils.BlocLines;
 import net.sourceforge.plantuml.utils.CharInspector;
-import net.sourceforge.plantuml.utils.Inspector;
-import net.sourceforge.plantuml.utils.InspectorUtils;
+import net.sourceforge.plantuml.utils.Peeker;
+import net.sourceforge.plantuml.utils.PeekerUtils;
 
 public class StyleParser {
 
@@ -73,9 +73,9 @@ public class StyleParser {
 //			for (StyleToken t : tokens)
 //				System.err.println(t);
 
-		for (Inspector<StyleToken> ins = InspectorUtils.inspector(tokens); ins.peek(0) != null;) {
-			final StyleToken token = ins.peek(0);
-			ins.jump();
+		for (Peeker<StyleToken> peeker = PeekerUtils.peeker(tokens); peeker.peek(0) != null;) {
+			final StyleToken token = peeker.peek(0);
+			peeker.jump();
 			if (token.getType() == StyleTokenType.NEWLINE)
 				continue;
 			if (token.getType() == StyleTokenType.SEMICOLON)
@@ -86,33 +86,33 @@ public class StyleParser {
 			if (token.getType() == StyleTokenType.STRING && token.getData().equalsIgnoreCase("</style>"))
 				continue;
 
-			if (ins.peek(0).getType() == StyleTokenType.COMMA) {
-				final String full = token.getData() + readWithComma(ins);
-				skipNewLines(ins);
-				if (ins.peek(0).getType() == StyleTokenType.OPEN_BRACKET) {
+			if (peeker.peek(0).getType() == StyleTokenType.COMMA) {
+				final String full = token.getData() + readWithComma(peeker);
+				skipNewLines(peeker);
+				if (peeker.peek(0).getType() == StyleTokenType.OPEN_BRACKET) {
 					context = context.push(full);
-					ins.jump();
+					peeker.jump();
 					continue;
 				}
 				throw new IllegalStateException();
 			}
 			if (token.getType() == StyleTokenType.STRING) {
 				String full = token.getData();
-				if (ins.peek(0).getType() == StyleTokenType.STAR) {
-					ins.jump();
+				if (peeker.peek(0).getType() == StyleTokenType.STAR) {
+					peeker.jump();
 					full += StyleSignatureBasic.STAR;
 				}
-				skipNewLines(ins);
-				if (ins.peek(0).getType() == StyleTokenType.OPEN_BRACKET) {
+				skipNewLines(peeker);
+				if (peeker.peek(0).getType() == StyleTokenType.OPEN_BRACKET) {
 					context = context.push(full);
-					ins.jump();
+					peeker.jump();
 					continue;
 				}
-				skipColon(ins);
+				skipColon(peeker);
 				if (token.getData().startsWith("--")) {
-					variables.learn(token.getData(), readValue(ins));
-				} else if (ins.peek(0).getType() == StyleTokenType.STRING) {
-					final String valueString = variables.value(readValue(ins));
+					variables.learn(token.getData(), readValue(peeker));
+				} else if (peeker.peek(0).getType() == StyleTokenType.STRING) {
+					final String valueString = variables.value(readValue(peeker));
 					final String keyString = token.getData();
 					final PName key = PName.getFromName(keyString, scheme);
 					if (key == null) {
@@ -135,21 +135,21 @@ public class StyleParser {
 			} else if (token.getType() == StyleTokenType.AROBASE_MEDIA) {
 				scheme = StyleScheme.DARK;
 				continue;
-			} else if (token.getType() == StyleTokenType.COLON && ins.peek(0).getType() == StyleTokenType.STRING
-					&& ins.peek(1).getType() == StyleTokenType.OPEN_BRACKET) {
-				final String full = token.getData() + ins.peek(0).getData();
+			} else if (token.getType() == StyleTokenType.COLON && peeker.peek(0).getType() == StyleTokenType.STRING
+					&& peeker.peek(1).getType() == StyleTokenType.OPEN_BRACKET) {
+				final String full = token.getData() + peeker.peek(0).getData();
 				context = context.push(full);
-				ins.jump();
-				ins.jump();
+				peeker.jump();
+				peeker.jump();
 				continue;
-			} else if (token.getType() == StyleTokenType.COLON && ins.peek(0).getType() == StyleTokenType.STRING
-					&& ins.peek(1).getType() == StyleTokenType.STAR
-					&& ins.peek(2).getType() == StyleTokenType.OPEN_BRACKET) {
-				final String full = token.getData() + ins.peek(0).getData() + ins.peek(1).getData();
+			} else if (token.getType() == StyleTokenType.COLON && peeker.peek(0).getType() == StyleTokenType.STRING
+					&& peeker.peek(1).getType() == StyleTokenType.STAR
+					&& peeker.peek(2).getType() == StyleTokenType.OPEN_BRACKET) {
+				final String full = token.getData() + peeker.peek(0).getData() + peeker.peek(1).getData();
 				context = context.push(full);
-				ins.jump();
-				ins.jump();
-				ins.jump();
+				peeker.jump();
+				peeker.jump();
+				peeker.jump();
 				continue;
 			} else if (token.getType() == StyleTokenType.OPEN_BRACKET) {
 				throw new StyleParsingException("Invalid open bracket");
@@ -160,7 +160,7 @@ public class StyleParser {
 		return Collections.unmodifiableList(result);
 	}
 
-	private static String readWithComma(Inspector<StyleToken> ins) {
+	private static String readWithComma(Peeker<StyleToken> ins) {
 		final StringBuilder result = new StringBuilder();
 		while (ins.peek(0) != null) {
 			final StyleToken current = ins.peek(0);
@@ -172,7 +172,7 @@ public class StyleParser {
 		return result.toString();
 	}
 
-	private static String readValue(Inspector<StyleToken> ins) throws StyleParsingException {
+	private static String readValue(Peeker<StyleToken> ins) throws StyleParsingException {
 		final StringBuilder result = new StringBuilder();
 		while (ins.peek(0) != null) {
 			final StyleToken current = ins.peek(0);
@@ -203,7 +203,7 @@ public class StyleParser {
 		return result.toString();
 	}
 
-	private static void skipNewLines(Inspector<StyleToken> ins) {
+	private static void skipNewLines(Peeker<StyleToken> ins) {
 		while (true) {
 			final StyleToken token = ins.peek(0);
 			if (token == null || token.getType() != StyleTokenType.NEWLINE)
@@ -212,7 +212,7 @@ public class StyleParser {
 		}
 	}
 
-	private static void skipColon(Inspector<StyleToken> ins) {
+	private static void skipColon(Peeker<StyleToken> ins) {
 		while (true) {
 			final StyleToken token = ins.peek(0);
 			if (token == null || token.getType() != StyleTokenType.COLON)

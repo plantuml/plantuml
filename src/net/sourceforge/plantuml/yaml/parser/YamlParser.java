@@ -35,61 +35,134 @@
 package net.sourceforge.plantuml.yaml.parser;
 
 import java.util.List;
-import java.util.Optional;
 
-import net.sourceforge.plantuml.json.JsonObject;
+import net.sourceforge.plantuml.json.JsonValue;
+import net.sourceforge.plantuml.utils.Peeker;
+import net.sourceforge.plantuml.utils.PeekerUtils;
 
 // https://yaml.org/spec/1.2.2/
 public class YamlParser {
 
-	public JsonObject parse(List<String> lines) {
+	public JsonValue parse(List<String> lines) {
 		final IndentationStack indentationStack = new IndentationStack();
 		final YamlBuilder yamlBuilder = new YamlBuilder();
 
-		for (int i = 0; i < lines.size(); i++) {
-			final String line = lines.get(i);
-			final Optional<YamlLine> optionalYamlLine = YamlLine.build(line);
-			// System.err.println(line + " --> " + optionalYamlLine);
-			if (optionalYamlLine.isPresent()) {
-				final YamlLine yamlLine = optionalYamlLine.get();
+		for (Peeker<String> peeker = PeekerUtils.peeker(lines); peeker.peek(0) != null; peeker.jump()) {
 
-				if (indentationStack.size() == 0)
-					indentationStack.push(yamlLine.getIndent());
+			final YamlLine yamlLine = YamlLine.build(peeker.peek(0));
+			if (yamlLine.getType() == YamlLineType.EMPTY_LINE)
+				continue;
 
-				if (yamlLine.getIndent() > indentationStack.peek()) {
-					yamlBuilder.increaseIndentation();
-					indentationStack.push(yamlLine.getIndent());
-				} else
-					while (yamlLine.getIndent() < indentationStack.peek()) {
-						yamlBuilder.indentationDecrease();
-						indentationStack.pop();
-					}
+			if (yamlLine.getType() == YamlLineType.NO_KEY_ONLY_TEXT)
+				throw new YamlSyntaxException("YamlLineType.NO_KEY_ONLY_TEXT");
 
-				if (yamlLine.getIndent() == indentationStack.peek()) {
-
-					if (yamlLine.isListItem())
-						if (yamlLine.getType() == YamlValueType.ABSENT)
-							yamlBuilder.onListItemOnlyKey(yamlLine.getKey());
-						else if (yamlLine.getType() == YamlValueType.PLAIN_ELEMENT_LIST)
-							yamlBuilder.onListItemOnlyValue(yamlLine.getValue());
-						else
-							yamlBuilder.onListItemKeyAndValue(yamlLine.getKey(), yamlLine.getValue());
-					else if (yamlLine.getType() == YamlValueType.ABSENT)
-						yamlBuilder.onOnlyKey(yamlLine.getKey());
-					else if (yamlLine.getType() == YamlValueType.FLOW_SEQUENCE)
-						throw new IllegalArgumentException("wip");
-						// yamlBuilder.onKeyAndValue(yamlLine.getKey(), yamlLine.getValue());
-					else
-						yamlBuilder.onKeyAndValue(yamlLine.getKey(), yamlLine.getValue());
-
-				} else
-					throw new YamlSyntaxException("wip");
-
+			if (yamlLine.getType() == YamlLineType.PLAIN_DASH) {
+				yamlBuilder.onListItemPlainDash();
+				continue;
 			}
+
+			if (indentationStack.size() == 0)
+				indentationStack.push(yamlLine.getIndent());
+
+			if (yamlLine.getIndent() > indentationStack.peek()) {
+				yamlBuilder.increaseIndentation();
+				indentationStack.push(yamlLine.getIndent());
+			} else
+				while (yamlLine.getIndent() < indentationStack.peek()) {
+					yamlBuilder.decreaseIndentation();
+					indentationStack.pop();
+				}
+
+			if (yamlLine.getIndent() == indentationStack.peek()) {
+				if (yamlLine.isListItem())
+					if (yamlLine.getType() == YamlLineType.KEY_ONLY)
+						yamlBuilder.onListItemOnlyKey(yamlLine.getKey());
+					else if (yamlLine.getType() == YamlLineType.PLAIN_ELEMENT_LIST)
+						yamlBuilder.onListItemOnlyValue(yamlLine.getValue());
+					else
+						yamlBuilder.onListItemKeyAndValue(yamlLine.getKey(), yamlLine.getValue());
+				else if (yamlLine.getType() == YamlLineType.KEY_ONLY) {
+					final YamlLine next = peekNext(peeker);
+					if (next == null || next.getIndent() <= yamlLine.getIndent())
+						yamlBuilder.onKeyAndValue(yamlLine.getKey(), "");
+					else if (next.getType() == YamlLineType.NO_KEY_ONLY_TEXT) {
+						yamlBuilder.onKeyAndValue(yamlLine.getKey(), peekNextOnlyText(peeker));
+					} else
+						yamlBuilder.onOnlyKey(yamlLine.getKey());
+
+				} else if (yamlLine.getType() == YamlLineType.KEY_AND_FLOW_SEQUENCE)
+					throw new IllegalArgumentException("wip");
+				else if (yamlLine.getType() == YamlLineType.KEY_AND_BLOCK_STYLE)
+					yamlBuilder.onKeyAndValue(yamlLine.getKey(), getBlockStyleString(yamlLine.getIndent(), peeker));
+				else
+					yamlBuilder.onKeyAndValue(yamlLine.getKey(), yamlLine.getValue());
+
+			} else
+				throw new YamlSyntaxException("wip");
+
 		}
 
 		return yamlBuilder.getResult();
 
+	}
+
+	private String peekNextOnlyText(Peeker<String> peeker) {
+		final StringBuilder result = new StringBuilder();
+		do {
+			final String peek = peeker.peek(1);
+			if (peek == null)
+				return result.toString();
+			final YamlLine next = YamlLine.build(peek);
+			if (next != null && next.getType() == YamlLineType.EMPTY_LINE) {
+				peeker.jump();
+				continue;
+			}
+			if (next.getType() == YamlLineType.NO_KEY_ONLY_TEXT) {
+				if (result.length() > 0)
+					result.append(" ");
+				result.append(next.getValue());
+				peeker.jump();
+				continue;
+			}
+			return result.toString();
+		} while (true);
+	}
+
+	private YamlLine peekNext(Peeker<String> peeker) {
+		int i = 1;
+		do {
+			final String peek = peeker.peek(i);
+			if (peek == null)
+				return null;
+			final YamlLine next = YamlLine.build(peek);
+			if (next != null && next.getType() == YamlLineType.EMPTY_LINE)
+				i++;
+			else
+				return next;
+		} while (true);
+	}
+
+	private String getBlockStyleString(int indent, Peeker<String> peeker) {
+		final StringBuilder result = new StringBuilder();
+		while (peeker.peek(1) != null) {
+			final String line = peeker.peek(1);
+			if (line == null)
+				return result.toString();
+			final YamlLine yamlLine = YamlLine.build(line);
+			if (yamlLine.getType() != YamlLineType.NO_KEY_ONLY_TEXT && yamlLine.getType() != YamlLineType.EMPTY_LINE
+					&& yamlLine.getIndent() <= indent)
+				return result.toString();
+
+			result.append(cleanBlockStyle(indent, line));
+			result.append("\n");
+			peeker.jump();
+
+		}
+		return result.toString();
+	}
+
+	private static String cleanBlockStyle(int indent, String s) {
+		return s.trim();
 	}
 
 }

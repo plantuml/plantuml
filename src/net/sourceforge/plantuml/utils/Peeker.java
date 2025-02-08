@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2020, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -31,42 +31,13 @@
  *
  * Original Author:  Arnaud Roques
  *
+ *
  */
-package net.sourceforge.plantuml.yaml.parser;
+package net.sourceforge.plantuml.utils;
 
-/**
- * Enumeration representing the possible types of YAML values.
- */
-public enum YamlValueType {
-	
-	/**
-	 * Indicates that no value was provided.
-	 */
-	ABSENT,
-	
-	/**
-	 * Indicates a simple regular scalar value.
-	 */
-	REGULAR,
-	
-	/**
-	 * Indicates an inline list (e.g. ["a", "b", "c"]).
-	 */
-	FLOW_SEQUENCE,
-	
-	/**
-	 * Indicates a plain element in a list (e.g.  - red )
-	 */
-	PLAIN_ELEMENT_LIST,
-	
-	/**
-	 * Indicates a block style scalar value (using the '|' indicator).
-	 */
-	BLOCK_STYLE,
-	
-	/**
-	 * Indicates a folded style scalar value (using the '>' indicator).
-	 */
-	FOLDED_STYLE
+public interface Peeker<O> {
+	// ::remove file when __HAXE__
+	O peek(int ahead);
+
+	void jump();
 }
-

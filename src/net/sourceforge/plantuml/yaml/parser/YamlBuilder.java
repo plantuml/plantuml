@@ -45,6 +45,7 @@ public class YamlBuilder {
 
 	private final Deque<JsonValue> stack = new ArrayDeque<>();
 	private JsonValue current;
+	private JsonArray currentArray;
 	private String lastEmpiledKey;
 
 	public YamlBuilder() {
@@ -57,8 +58,15 @@ public class YamlBuilder {
 
 	}
 
-	public void indentationDecrease() {
+	public void decreaseIndentation() {
 		stack.removeLast();
+		current = new JsonObject();
+	}
+
+	private void onNoKeyOnlyText(String value) {
+		final JsonObject pending = getPending();
+		pending.set(lastEmpiledKey, value);
+
 	}
 
 	public void onOnlyKey(String key) {
@@ -76,54 +84,92 @@ public class YamlBuilder {
 	}
 
 	private JsonObject getPending() {
-		final JsonObject pending;
 		if (stack.getLast() instanceof JsonArray) {
 			final JsonArray array = (JsonArray) stack.getLast();
-			pending = array.get(array.size() - 1).asObject();
-		} else {
-			pending = (JsonObject) stack.getLast();
+			return array.get(array.size() - 1).asObject();
 		}
-		return pending;
+		return (JsonObject) stack.getLast();
+	}
+
+	public void onListItemPlainDash() {
+		if (areWeJustStarting()) {
+			currentArray = new JsonArray();
+			stack.removeLast();
+			stack.addLast(currentArray);
+			current = new JsonObject();
+			currentArray.add(current);
+			stack.addLast(current);
+			return;
+		}
+
+		if (areWeBuildingAnArray())
+			decreaseIndentation();
+		else
+			increaseIndentation();
+
+		updateCurrentArray();
+		currentArray.add(current);
+	}
+
+	private boolean areWeJustStarting() {
+		if (stack.size() != 1)
+			return false;
+		final JsonValue first = stack.getLast();
+		if (first instanceof JsonObject == false)
+			return false;
+		return ((JsonObject) first).size() == 0;
+	}
+
+	private boolean areWeBuildingAnArray() {
+		if (stack.size() < 2)
+			return false;
+		if (currentArray.size() < 1)
+			return false;
+		return stack.getLast() == currentArray.get(currentArray.size() - 1);
 	}
 
 	public void onListItemKeyAndValue(String key, String value) {
-		final JsonArray array = getCurrentArray();
+		updateCurrentArray();
 		current = new JsonObject();
-		array.add(current);
+		currentArray.add(current);
 		((JsonObject) current).add(key, value);
 	}
 
 	public void onListItemOnlyKey(String key) {
-		final JsonArray array = getCurrentArray();
+		updateCurrentArray();
 		current = new JsonObject();
 		final JsonObject firstTableElement = new JsonObject();
-		array.add(firstTableElement);
+		currentArray.add(firstTableElement);
 		firstTableElement.add(key, current);
 	}
 
 	public void onListItemOnlyValue(String value) {
-		final JsonArray array = getCurrentArray();
-		array.add(value);
+		updateCurrentArray();
+		currentArray.add(value);
 
 	}
 
-	private JsonArray getCurrentArray() {
-		final JsonArray array;
+	private void updateCurrentArray() {
+		if (areWeJustStarting()) {
+			currentArray = new JsonArray();
+			stack.removeLast();
+			stack.addLast(currentArray);
+			return;
+		}
 		if (stack.getLast() instanceof JsonObject && ((JsonObject) stack.getLast()).size() == 0) {
-			array = new JsonArray();
+			currentArray = new JsonArray();
 			stack.removeLast();
 			final JsonObject parent = (JsonObject) stack.getLast();
-			parent.set(lastEmpiledKey, array);
-			stack.addLast(array);
+			parent.set(lastEmpiledKey, currentArray);
+			stack.addLast(currentArray);
 		} else if (stack.getLast() instanceof JsonArray) {
-			array = (JsonArray) stack.getLast();
+			currentArray = (JsonArray) stack.getLast();
 		} else
 			throw new IllegalStateException("wip");
-		return array;
 	}
 
-	public JsonObject getResult() {
-		return (JsonObject) stack.getFirst();
+	public JsonValue getResult() {
+		return stack.getFirst();
 	}
 
 }
