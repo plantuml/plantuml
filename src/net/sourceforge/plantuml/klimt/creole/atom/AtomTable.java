@@ -254,7 +254,10 @@ public class AtomTable extends AbstractAtom implements Atom {
 	}
 
 	private int getNbCols() {
-		return lines.get(0).size();
+		int result = lines.get(0).size();
+		for (int i = 1; i < lines.size(); i++)
+			result = Math.max(result, lines.get(i).size());
+		return result;
 	}
 
 	private int getNbLines() {
