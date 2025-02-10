@@ -34,142 +34,110 @@
  */
 package net.sourceforge.plantuml.yaml.parser;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-
-import net.sourceforge.plantuml.json.JsonArray;
-import net.sourceforge.plantuml.json.JsonObject;
-import net.sourceforge.plantuml.json.JsonValue;
+import java.util.ArrayList;
+import java.util.List;
 
 public class YamlBuilder {
 
-	private final Deque<JsonValue> stack = new ArrayDeque<>();
-	private JsonValue current;
-	private JsonArray currentArray;
-	private String lastEmpiledKey;
+	private final List<Monomorph> stack = new ArrayList<>();
 
 	public YamlBuilder() {
-		current = new JsonObject();
-		stack.addLast(current);
+		stack.add(new Monomorph());
 	}
 
 	public void increaseIndentation() {
-		stack.addLast(current);
+		// stack.addLast(new Monomorph());
 
 	}
 
 	public void decreaseIndentation() {
-		stack.removeLast();
-		current = new JsonObject();
+		stack.remove(stack.size() - 1);
+		if (getLast().getType() == MonomorphType.LIST)
+			stack.remove(stack.size() - 1);
 	}
 
-	private void onNoKeyOnlyText(String value) {
-		final JsonObject pending = getPending();
-		pending.set(lastEmpiledKey, value);
-
+	public Monomorph getResult() {
+		return stack.get(0);
 	}
 
-	public void onOnlyKey(String key) {
-		lastEmpiledKey = key;
-		current = new JsonObject();
-
-		final JsonObject pending = getPending();
-		pending.add(key, current);
-
-	}
-
-	public void onKeyAndValue(String key, String value) {
-		final JsonObject pending = getPending();
-		pending.add(key, value);
-	}
-
-	private JsonObject getPending() {
-		if (stack.getLast() instanceof JsonArray) {
-			final JsonArray array = (JsonArray) stack.getLast();
-			return array.get(array.size() - 1).asObject();
-		}
-		return (JsonObject) stack.getLast();
+	private Monomorph getLast() {
+		return stack.get(stack.size() - 1);
 	}
 
 	public void onListItemPlainDash() {
-		if (areWeJustStarting()) {
-			currentArray = new JsonArray();
-			stack.removeLast();
-			stack.addLast(currentArray);
-			current = new JsonObject();
-			currentArray.add(current);
-			stack.addLast(current);
-			return;
-		}
-
-		if (areWeBuildingAnArray())
-			decreaseIndentation();
-		else
-			increaseIndentation();
-
-		updateCurrentArray();
-		currentArray.add(current);
+		if (isArrayAlreadyThere())
+			stack.remove(stack.size() - 1);
+		final Monomorph newElement = new Monomorph();
+		getLast().addInList(newElement);
+		stack.add(newElement);
 	}
 
-	private boolean areWeJustStarting() {
-		if (stack.size() != 1)
-			return false;
-		final JsonValue first = stack.getLast();
-		if (first instanceof JsonObject == false)
-			return false;
-		return ((JsonObject) first).size() == 0;
-	}
-
-	private boolean areWeBuildingAnArray() {
+	private boolean isArrayAlreadyThere() {
 		if (stack.size() < 2)
 			return false;
-		if (currentArray.size() < 1)
+		final Monomorph potentialList = stack.get(stack.size() - 2);
+		if (potentialList.getType() != MonomorphType.LIST)
 			return false;
-		return stack.getLast() == currentArray.get(currentArray.size() - 1);
+		return potentialList.getElementAt(potentialList.size() - 1) == stack.get(stack.size() - 1);
 	}
 
-	public void onListItemKeyAndValue(String key, String value) {
-		updateCurrentArray();
-		current = new JsonObject();
-		currentArray.add(current);
-		((JsonObject) current).add(key, value);
+	public void onKeyAndValue(String key, String value) {
+		getLast().putInMap(key, Monomorph.scalar(value));
+	}
+
+	public void onKeyAndFlowSequence(String key, List<String> list) {
+		getLast().putInMap(key, Monomorph.list(list));
+	}
+
+	public void onOnlyKey(String key) {
+		final Monomorph newElement = new Monomorph();
+		getLast().putInMap(key, newElement);
+		stack.add(newElement);
+	}
+
+	@Override
+	public String toString() {
+		return stack.toString();
 	}
 
 	public void onListItemOnlyKey(String key) {
-		updateCurrentArray();
-		current = new JsonObject();
-		final JsonObject firstTableElement = new JsonObject();
-		currentArray.add(firstTableElement);
-		firstTableElement.add(key, current);
+		if (isArrayAlreadyThere())
+			stack.remove(stack.size() - 1);
+		final Monomorph newElement = new Monomorph();
+		getLast().addInList(newElement);
+		stack.add(newElement);
+		final Monomorph newElement2 = new Monomorph();
+		getLast().putInMap(key, newElement2);
+		stack.add(newElement2);
+
 	}
 
 	public void onListItemOnlyValue(String value) {
-		updateCurrentArray();
-		currentArray.add(value);
+		if (isArrayAlreadyThere())
+			stack.remove(stack.size() - 1);
+		getLast().addInList(Monomorph.scalar(value));
 
 	}
 
-	private void updateCurrentArray() {
-		if (areWeJustStarting()) {
-			currentArray = new JsonArray();
-			stack.removeLast();
-			stack.addLast(currentArray);
-			return;
-		}
-		if (stack.getLast() instanceof JsonObject && ((JsonObject) stack.getLast()).size() == 0) {
-			currentArray = new JsonArray();
-			stack.removeLast();
-			final JsonObject parent = (JsonObject) stack.getLast();
-			parent.set(lastEmpiledKey, currentArray);
-			stack.addLast(currentArray);
-		} else if (stack.getLast() instanceof JsonArray) {
-			currentArray = (JsonArray) stack.getLast();
-		} else
-			throw new IllegalStateException("wip");
+	public void onListItemKeyAndValue(String key, String value) {
+		if (isArrayAlreadyThere())
+			stack.remove(stack.size() - 1);
+		final Monomorph newElement = new Monomorph();
+		getLast().addInList(newElement);
+		stack.add(newElement);
+		getLast().putInMap(key, Monomorph.scalar(value));
+
 	}
 
-	public JsonValue getResult() {
-		return stack.getFirst();
+	public void onListItemKeyAndFlowSequence(String key, List<String> values) {
+		if (isArrayAlreadyThere())
+			stack.remove(stack.size() - 1);
+		final Monomorph newElement = new Monomorph();
+		getLast().addInList(newElement);
+		stack.add(newElement);
+		getLast().putInMap(key, Monomorph.list(values));
+		
 	}
+
 
 }

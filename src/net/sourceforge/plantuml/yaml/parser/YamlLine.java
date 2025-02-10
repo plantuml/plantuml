@@ -37,7 +37,6 @@ package net.sourceforge.plantuml.yaml.parser;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import net.sourceforge.plantuml.annotation.DuplicateCode;
 
@@ -52,6 +51,7 @@ public class YamlLine {
 
 	public static YamlLine build(String line) {
 		int count = 0;
+		line = line.replaceAll("\t", "    ");
 		while (count < line.length() && line.charAt(count) == ' ')
 			count++;
 

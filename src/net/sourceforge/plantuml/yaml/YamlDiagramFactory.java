@@ -55,6 +55,8 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.parser.StyleParsingException;
+import net.sourceforge.plantuml.yaml.parser.MonomorphToJson;
+import net.sourceforge.plantuml.yaml.parser.YamlParser;
 
 public class YamlDiagramFactory extends PSystemAbstractFactory {
 
@@ -83,8 +85,8 @@ public class YamlDiagramFactory extends PSystemAbstractFactory {
 				}
 				list.add(line);
 			}
-			yaml = new SimpleYamlParser().parse(list);
-			// yaml = new YamlParser().parse(list);
+			// yaml = new SimpleYamlParser().parse(list);
+			yaml = MonomorphToJson.convert(new YamlParser().parse(list));
 		} catch (Exception e) {
 			Logme.error(e);
 		}

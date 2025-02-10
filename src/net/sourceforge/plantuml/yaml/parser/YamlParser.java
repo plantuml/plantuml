@@ -36,14 +36,12 @@ package net.sourceforge.plantuml.yaml.parser;
 
 import java.util.List;
 
-import net.sourceforge.plantuml.json.JsonValue;
 import net.sourceforge.plantuml.utils.Peeker;
 import net.sourceforge.plantuml.utils.PeekerUtils;
 
-// https://yaml.org/spec/1.2.2/
 public class YamlParser {
 
-	public JsonValue parse(List<String> lines) {
+	public Monomorph parse(List<String> lines) {
 		final IndentationStack indentationStack = new IndentationStack();
 		final YamlBuilder yamlBuilder = new YamlBuilder();
 
@@ -74,32 +72,36 @@ public class YamlParser {
 				}
 
 			if (yamlLine.getIndent() == indentationStack.peek()) {
-				if (yamlLine.isListItem())
+				if (yamlLine.isListItem()) {
 					if (yamlLine.getType() == YamlLineType.KEY_ONLY)
 						yamlBuilder.onListItemOnlyKey(yamlLine.getKey());
 					else if (yamlLine.getType() == YamlLineType.PLAIN_ELEMENT_LIST)
 						yamlBuilder.onListItemOnlyValue(yamlLine.getValue());
-					else
+					else if (yamlLine.getType() == YamlLineType.KEY_AND_VALUE)
 						yamlBuilder.onListItemKeyAndValue(yamlLine.getKey(), yamlLine.getValue());
-				else if (yamlLine.getType() == YamlLineType.KEY_ONLY) {
+					else if (yamlLine.getType() == YamlLineType.KEY_AND_FLOW_SEQUENCE)
+						yamlBuilder.onListItemKeyAndFlowSequence(yamlLine.getKey(), yamlLine.getValues());
+					else
+						throw new UnsupportedOperationException("wip3 " + yamlLine);
+				} else if (yamlLine.getType() == YamlLineType.KEY_ONLY) {
 					final YamlLine next = peekNext(peeker);
 					if (next == null || next.getIndent() <= yamlLine.getIndent())
 						yamlBuilder.onKeyAndValue(yamlLine.getKey(), "");
-					else if (next.getType() == YamlLineType.NO_KEY_ONLY_TEXT) {
+					else if (next.getType() == YamlLineType.NO_KEY_ONLY_TEXT)
 						yamlBuilder.onKeyAndValue(yamlLine.getKey(), peekNextOnlyText(peeker));
-					} else
+					else
 						yamlBuilder.onOnlyKey(yamlLine.getKey());
-
-				} else if (yamlLine.getType() == YamlLineType.KEY_AND_FLOW_SEQUENCE)
-					throw new IllegalArgumentException("wip");
+				} else if (yamlLine.getType() == YamlLineType.KEY_AND_VALUE)
+					yamlBuilder.onKeyAndValue(yamlLine.getKey(), yamlLine.getValue());
 				else if (yamlLine.getType() == YamlLineType.KEY_AND_BLOCK_STYLE)
 					yamlBuilder.onKeyAndValue(yamlLine.getKey(), getBlockStyleString(yamlLine.getIndent(), peeker));
+				else if (yamlLine.getType() == YamlLineType.KEY_AND_FLOW_SEQUENCE)
+					yamlBuilder.onKeyAndFlowSequence(yamlLine.getKey(), yamlLine.getValues());
 				else
-					yamlBuilder.onKeyAndValue(yamlLine.getKey(), yamlLine.getValue());
+					throw new UnsupportedOperationException("wip4 " + yamlLine);
 
 			} else
-				throw new YamlSyntaxException("wip");
-
+				throw new UnsupportedOperationException("wip5 " + yamlLine);
 		}
 
 		return yamlBuilder.getResult();
@@ -162,6 +164,7 @@ public class YamlParser {
 	}
 
 	private static String cleanBlockStyle(int indent, String s) {
+		// Not finished!
 		return s.trim();
 	}
 
