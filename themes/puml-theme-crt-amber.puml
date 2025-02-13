@@ -1,13 +1,12 @@
 ---
-name: ctr-amber
-display_name: Cathode-ray tube (CTR) amber
+name: crt-amber
+display_name: Cathode-ray tube (CRT) amber
 description: An orange on black theme based on monochrome CRT monitors
 author: Matthew Leather
 release: 
 license: 
 version: 
 source: 
-origin: 
 inspiration: https://superuser.com/a/1206781
 ---
 

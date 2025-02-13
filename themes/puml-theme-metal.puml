@@ -4,10 +4,9 @@ display_name: Metal
 description: Mostly metal grays theme
 author: Brett Schwarz
 release: 
-license: 
+license: MIT
 version: 
 source: https://github.com/bschwarz/puml-themes
-origin: 
 inspiration: 
 ---
 

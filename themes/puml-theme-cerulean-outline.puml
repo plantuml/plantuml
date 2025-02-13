@@ -1,13 +1,12 @@
 ---
 name: cerulean-outline
 display_name: Cerulean Outline
-description: Cerulean theme based off of the bootstrap theme of the same name
+description: Cerulean theme based off of the bootstrap theme of the same name, with outline colors
 author: Brett Schwarz
 release: 
-license: 
+license: MIT
 version: 
 source: https://github.com/bschwarz/puml-themes
-origin: 
 inspiration: https://bootswatch.com/cerulean/
 ---
 
