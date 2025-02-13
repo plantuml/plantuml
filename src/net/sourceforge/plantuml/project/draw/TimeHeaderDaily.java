@@ -185,6 +185,8 @@ public class TimeHeaderDaily extends TimeHeaderCalendar {
 		MonthYear last = null;
 		double lastChangeMonth = -1;
 		for (Day wink = getMin(); wink.compareTo(getMax()) <= 0; wink = wink.increment()) {
+			if (isHidden(wink)) 
+				continue;
 			final double x1 = getTimeScale().getStartingPosition(wink);
 			if (wink.monthYear().equals(last) == false) {
 				if (last != null)
