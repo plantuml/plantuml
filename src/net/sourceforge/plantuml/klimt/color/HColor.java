@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -56,6 +56,11 @@ class Back implements UBackground {
 
 public abstract class HColor implements UChange {
 
+	public enum TransparentFillBehavior {
+		WITH_FILL_NONE,
+		WITH_FILL_OPACITY
+	}
+
 	public UBackground bg() {
 		return new Back(this);
 	}
@@ -103,6 +108,10 @@ public abstract class HColor implements UChange {
 		return true;
 	}
 
+	public TransparentFillBehavior transparentFillBehavior() {
+		return TransparentFillBehavior.WITH_FILL_NONE;
+	}
+
 	// ::comment when __HAXE__
 	public String asString() {
 		return "?" + getClass().getSimpleName();
@@ -121,13 +130,15 @@ public abstract class HColor implements UChange {
 		throw new UnsupportedOperationException();
 	}
 
+	public HColor withTransparentFillBehavior(TransparentFillBehavior transparentFillBehavior) {
+		throw new UnsupportedOperationException();
+	}
+
 	public HColor opposite() {
 		throw new UnsupportedOperationException();
 	}
 
 	public boolean isTransparent() {
 		return false;
-
 	}
-
 }

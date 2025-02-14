@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -88,7 +88,7 @@ public class DriverRectangleSvg implements UDriver<URectangle, SvgGraphics> {
 					gr.getPolicy());
 			svg.setFillColor("url(#" + id + ")");
 		} else {
-			svg.setFillColor(background.toSvg(mapper));
+			svg.setFillColor(background.toSvg(mapper), background.transparentFillBehavior());
 		}
 	}
 
