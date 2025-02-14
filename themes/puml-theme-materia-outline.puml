@@ -1,13 +1,12 @@
 ---
 name: materia-outline
 display_name: Materia Outline
-description: Theme based off of the bootstrap theme of the same name
+description: Theme based off of the bootstrap theme of the same name, with outline colors
 author: Brett Schwarz
 release: 
-license: 
+license: MIT
 version: 
 source: https://github.com/bschwarz/puml-themes
-origin: 
 inspiration: https://bootswatch.com/materia/
 ---
 

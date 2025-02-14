@@ -4,10 +4,9 @@ display_name: Minty
 description: Theme based off of the bootstrap theme of the same name
 author: Brett Schwarz
 release: 
-license: 
+license: MIT
 version: 
 source: https://github.com/bschwarz/puml-themes
-origin: 
 inspiration: https://bootswatch.com/minty/
 ---
 
