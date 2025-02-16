@@ -33,7 +33,7 @@ jobs:
         include:
           - os: 'ubuntu-latest'
             platform: 'linux-amd64'
-          - os: 'ubuntu-latest'
+          - os: 'ubuntu-24.04-arm'
             platform: 'linux-arm64'
           - os: 'macos-latest'
             platform: 'darwin-arm64'
