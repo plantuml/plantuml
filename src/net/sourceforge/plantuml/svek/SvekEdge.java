@@ -802,9 +802,10 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 
 		ug.draw(link.commentForSvg());
 		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
-		typeIDent.put(UGroupType.CLASS,
-				"link " + link.getEntity1().getName() + " " + link.getEntity2().getName() + " selected");
+		typeIDent.put(UGroupType.CLASS, "link");
 		typeIDent.put(UGroupType.ID, "link_" + link.getEntity1().getName() + "_" + link.getEntity2().getName());
+		typeIDent.put(UGroupType.DATA_ENTITY_1, link.getEntity1().getName());
+		typeIDent.put(UGroupType.DATA_ENTITY_2, link.getEntity2().getName());
 		ug.startGroup(typeIDent);
 		double x = 0;
 		double y = 0;

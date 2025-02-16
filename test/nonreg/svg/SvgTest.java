@@ -2,7 +2,10 @@ package nonreg.svg;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -42,6 +45,20 @@ public class SvgTest {
 
 	private static final Transformer xmlTransformer = createPrettyPrintTransformer();
 
+	private boolean originalForceSmetanaSetting;
+
+	@BeforeEach
+	void setup() {
+		// The `nonreg/simple/BasicTest` sets `FORCE_SMETANA = true`, which means that our links don't get
+		// rendered properly.
+		originalForceSmetanaSetting = TitledDiagram.FORCE_SMETANA;
+		TitledDiagram.FORCE_SMETANA = false;
+	}
+
+	@AfterEach
+	void tearDown() {
+		TitledDiagram.FORCE_SMETANA = originalForceSmetanaSetting;
+	}
 
 	protected void checkXmlAndDescription(final String expectedDescription)
 			throws IOException {

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  *
@@ -1030,31 +1030,6 @@ public class SvgGraphics {
 		getG().appendChild(commentElement);
 	}
 
-	public void addScriptTag(String url) {
-		final Element script = document.createElement("script");
-		script.setAttribute("type", "text/javascript");
-		script.setAttribute("xlink:href", url);
-		root.appendChild(script);
-	}
-
-	public void addScript(String scriptTextPath) {
-		final Element script = document.createElement("script");
-		final String scriptText = getData(scriptTextPath);
-		final CDATASection cDATAScript = document.createCDATASection(scriptText);
-		script.appendChild(cDATAScript);
-		root.appendChild(script);
-	}
-
-	public void addStyle(String cssStylePath) {
-		final Element style = simpleElement("style");
-		final String text = getData(cssStylePath);
-
-		final CDATASection cdata = document.createCDATASection(text);
-		style.setAttribute("type", "text/css");
-		style.appendChild(cdata);
-		root.appendChild(style);
-	}
-
 	private boolean isThereAlreadyAnOpenLink() {
 		for (Element elt : pendingAction)
 			if (elt.getTagName().equals("a"))
@@ -1137,6 +1112,9 @@ public class SvgGraphics {
 			if (option.isInteractive())
 				switch (typeIdent.getKey()) {
 				case CLASS:
+				case DATA_ENTITY:
+				case DATA_ENTITY_1:
+				case DATA_ENTITY_2:
 				case DATA_PARTICIPANT:
 				case DATA_PARTICIPANT_1:
 				case DATA_PARTICIPANT_2:

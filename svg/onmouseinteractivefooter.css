@@ -1,6 +1,0 @@
-svg g[data-mouse-over-active] * {
-	opacity: 0.2;
-}
-svg g[data-mouse-over-active] g[data-mouse-over-selected="true"] * {
-	opacity: 1.0;
-}

@@ -161,8 +161,6 @@ Expected result MUST be put between triple brackets
       <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing">Acknowledge it</text>
     </g>
   </g>
-  <style type="text/css"/>
-  <script/>
 </svg>
 }}}
 

@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  *
@@ -36,10 +36,17 @@
 package net.sourceforge.plantuml.klimt;
 
 public enum UGroupType {
-	ID, CLASS, TITLE, DATA_PARTICIPANT, DATA_PARTICIPANT_1, DATA_PARTICIPANT_2;
+	ID,
+	CLASS,
+	TITLE,
+	DATA_ENTITY,
+	DATA_ENTITY_1,
+	DATA_ENTITY_2,
+	DATA_PARTICIPANT,
+	DATA_PARTICIPANT_1,
+	DATA_PARTICIPANT_2;
 
 	public String getSvgKeyAttributeName() {
 		return name().toLowerCase().replace('_', '-');
 	}
-
 }
