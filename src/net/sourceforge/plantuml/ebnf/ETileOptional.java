@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 
+@Deprecated()
 public class ETileOptional extends ETile {
 
 	private final double deltax;

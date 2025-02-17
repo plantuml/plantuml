@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.style.SName;
 
 public class ETileOptional2 extends ETile {
 
-	private final double deltax = 25;
+	private final double deltax = 24;
 	private final double deltay = 20;
 	private final ETile orig;
 	private final ISkinParam skinParam;
@@ -96,19 +96,12 @@ public class ETileOptional2 extends ETile {
 		final double linePos = getH1(stringBounder);
 
 		drawHlineDirected(ug, linePos, 0, dim.getWidth(), 0.4, 25);
-		final double corner = 12;
+		final double corner = 12; // deltax/2
 
-		CornerCurved.createNE(corner).drawU(ug.apply(new UTranslate(corner, linePos)));
-		CornerCurved.createSW(corner)
-				.drawU(ug.apply(new UTranslate(corner, getDeltaY(stringBounder) + orig.getH1(stringBounder))));
-		drawVline(ug, corner, linePos + corner, getDeltaY(stringBounder) + orig.getH1(stringBounder) - corner);
+		final Zigzag zigzag = new Zigzag(9, 2 * corner, getDeltaY(stringBounder) + orig.getH1(stringBounder) - linePos);
 
-		final double posB = dim.getWidth() - corner;
-
-		CornerCurved.createNW(corner).drawU(ug.apply(new UTranslate(posB, linePos)));
-		CornerCurved.createSE(corner)
-				.drawU(ug.apply(new UTranslate(posB, getDeltaY(stringBounder) + orig.getH1(stringBounder))));
-		drawVline(ug, posB, linePos + corner, getDeltaY(stringBounder) + orig.getH1(stringBounder) - corner);
+		ug.apply(new UTranslate(0, linePos)).draw(zigzag.pathDown());
+		ug.apply(new UTranslate(dim.getWidth() - 2 * corner, linePos)).draw(zigzag.pathUp());
 
 		orig.drawU(ug.apply(new UTranslate(deltax, getDeltaY(stringBounder))));
 
