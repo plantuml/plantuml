@@ -36,62 +36,62 @@ Expected result MUST be put between triple brackets
     </g>
     <g>
       <title>my_actor</title>
-      <rect fill="#FFFFFF" fill-opacity="0.00000"/>
+      <rect fill="#000000" fill-opacity="0.00000"/>
       <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
     </g>
     <g>
       <title>my_boundary</title>
-      <rect fill="#FFFFFF" fill-opacity="0.00000"/>
+      <rect fill="#000000" fill-opacity="0.00000"/>
       <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
     </g>
     <g>
       <title>my_collections</title>
-      <rect fill="#FFFFFF" fill-opacity="0.00000"/>
+      <rect fill="#000000" fill-opacity="0.00000"/>
       <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
     </g>
     <g>
       <title>my_control</title>
-      <rect fill="#FFFFFF" fill-opacity="0.00000"/>
+      <rect fill="#000000" fill-opacity="0.00000"/>
       <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
     </g>
     <g>
       <title>my_database</title>
-      <rect fill="#FFFFFF" fill-opacity="0.00000"/>
+      <rect fill="#000000" fill-opacity="0.00000"/>
       <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
     </g>
     <g>
       <title>my_entity</title>
-      <rect fill="#FFFFFF" fill-opacity="0.00000"/>
+      <rect fill="#000000" fill-opacity="0.00000"/>
       <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
     </g>
     <g>
       <title>my_participant</title>
-      <rect fill="#FFFFFF" fill-opacity="0.00000"/>
+      <rect fill="#000000" fill-opacity="0.00000"/>
       <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
     </g>
     <g>
       <title>my_queue</title>
-      <rect fill="#FFFFFF" fill-opacity="0.00000"/>
+      <rect fill="#000000" fill-opacity="0.00000"/>
       <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
     </g>
     <g>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">my_actor</text>
       <ellipse fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
-      <path fill="#FFFFFF" fill-opacity="0.00000" style="stroke:#181818;stroke-width:0.5;"/>
+      <path fill="none" style="stroke:#181818;stroke-width:0.5;"/>
     </g>
     <g>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">my_actor</text>
       <ellipse fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
-      <path fill="#FFFFFF" fill-opacity="0.00000" style="stroke:#181818;stroke-width:0.5;"/>
+      <path fill="none" style="stroke:#181818;stroke-width:0.5;"/>
     </g>
     <g>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">my_boundary</text>
-      <path fill="#FFFFFF" fill-opacity="0.00000" style="stroke:#181818;stroke-width:0.5;"/>
+      <path fill="none" style="stroke:#181818;stroke-width:0.5;"/>
       <ellipse fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
     </g>
     <g>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">my_boundary</text>
-      <path fill="#FFFFFF" fill-opacity="0.00000" style="stroke:#181818;stroke-width:0.5;"/>
+      <path fill="none" style="stroke:#181818;stroke-width:0.5;"/>
       <ellipse fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
     </g>
     <g>
@@ -117,12 +117,12 @@ Expected result MUST be put between triple brackets
     <g>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">my_database</text>
       <path fill="#E2E2F0" style="stroke:#181818;stroke-width:1.5;"/>
-      <path fill="#FFFFFF" fill-opacity="0.00000" style="stroke:#181818;stroke-width:1.5;"/>
+      <path fill="none" style="stroke:#181818;stroke-width:1.5;"/>
     </g>
     <g>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">my_database</text>
       <path fill="#E2E2F0" style="stroke:#181818;stroke-width:1.5;"/>
-      <path fill="#FFFFFF" fill-opacity="0.00000" style="stroke:#181818;stroke-width:1.5;"/>
+      <path fill="none" style="stroke:#181818;stroke-width:1.5;"/>
     </g>
     <g>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">my_entity</text>
@@ -144,12 +144,12 @@ Expected result MUST be put between triple brackets
     </g>
     <g>
       <path fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
-      <path fill="#FFFFFF" fill-opacity="0.00000" style="stroke:#181818;stroke-width:0.5;"/>
+      <path fill="none" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">my_queue</text>
     </g>
     <g>
       <path fill="#E2E2F0" style="stroke:#181818;stroke-width:0.5;"/>
-      <path fill="#FFFFFF" fill-opacity="0.00000" style="stroke:#181818;stroke-width:0.5;"/>
+      <path fill="none" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">my_queue</text>
     </g>
     <g>

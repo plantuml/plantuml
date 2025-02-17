@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
 import static java.util.Collections.singletonMap;
+import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior.WITH_FILL_OPACITY;
 
 public class ComponentRoseLine extends AbstractComponent {
 
@@ -102,6 +103,7 @@ public class ComponentRoseLine extends AbstractComponent {
 			final double hoverTargetWidth = 8;
 			ug = ug.apply(UStroke.withThickness(0));
 			ug = ug.apply(HColors.transparent());
+			ug = ug.apply(HColors.transparent(WITH_FILL_OPACITY).bg());
 			ug = ug.apply(UTranslate.dx((dimensionToUse.getWidth() - hoverTargetWidth) / 2));
 			ug.draw(URectangle.build(hoverTargetWidth, dimensionToUse.getHeight()));
 		}

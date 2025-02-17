@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -39,10 +39,13 @@ import java.awt.Color;
 
 import net.sourceforge.plantuml.StringUtils;
 
+import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior.WITH_FILL_NONE;
+
 public class HColorSimple extends HColor {
 
 	private final Color color;
 	private final HColor dark;
+	private final TransparentFillBehavior transparentFillBehavior;
 
 	@Override
 	public String toString() {
@@ -57,6 +60,8 @@ public class HColorSimple extends HColor {
 		sb.append(color.getAlpha());
 		if (isTransparent())
 			sb.append(" transparent");
+		if (transparentFillBehavior != WITH_FILL_NONE)
+			sb.append(" ").append(transparentFillBehavior);
 		return sb.toString();
 	}
 
@@ -120,13 +125,19 @@ public class HColorSimple extends HColor {
 		return color.getAlpha() == 0;
 	}
 
-	public static HColorSimple create(Color c) {
-		return new HColorSimple(c, null);
+	@Override
+	public TransparentFillBehavior transparentFillBehavior() {
+		return transparentFillBehavior;
 	}
 
-	private HColorSimple(Color c, HColor dark) {
+	public static HColorSimple create(Color c) {
+		return new HColorSimple(c, null, WITH_FILL_NONE);
+	}
+
+	private HColorSimple(Color c, HColor dark, TransparentFillBehavior transparentFillBehavior) {
 		this.color = c;
 		this.dark = dark;
+		this.transparentFillBehavior = transparentFillBehavior;
 	}
 
 	public Color getAwtColor() {
@@ -205,7 +216,12 @@ public class HColorSimple extends HColor {
 
 	@Override
 	public HColor withDark(HColor dark) {
-		return new HColorSimple(color, dark);
+		return new HColorSimple(color, dark, transparentFillBehavior);
+	}
+
+	@Override
+	public HColor withTransparentFillBehavior(TransparentFillBehavior transparentFillBehavior) {
+		return new HColorSimple(color, dark, transparentFillBehavior);
 	}
 
 	@Override
