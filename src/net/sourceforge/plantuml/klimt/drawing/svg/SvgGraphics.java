@@ -1055,6 +1055,14 @@ public class SvgGraphics {
 		root.appendChild(style);
 	}
 
+	private boolean isThereAlreadyAnOpenLink() {
+		for (Element elt : pendingAction)
+			if (elt.getTagName().equals("a"))
+				return true;
+
+		return false;
+	}
+
 	public void openLink(String url, String title, String target) {
 		Objects.requireNonNull(url);
 
@@ -1063,7 +1071,8 @@ public class SvgGraphics {
 			return;
 
 		// https://github.com/plantuml/plantuml/issues/1951
-		if (pendingAction.size() > 0)
+		// https://github.com/plantuml/plantuml/issues/2069
+		if (isThereAlreadyAnOpenLink())
 			closeLink();
 
 		pendingAction.add(0, (Element) document.createElement("a"));
@@ -1118,13 +1127,13 @@ public class SvgGraphics {
 		for (Map.Entry<UGroupType, String> typeIdent : typeIdents.entrySet()) {
 			if (typeIdent.getKey() == UGroupType.ID)
 				pendingAction.get(0).setAttribute(UGroupType.ID.getSvgKeyAttributeName(), typeIdent.getValue());
-			
+
 			if (typeIdent.getKey() == UGroupType.TITLE) {
 				Element title = document.createElement(UGroupType.TITLE.getSvgKeyAttributeName());
 				title.setTextContent(typeIdent.getValue());
 				pendingAction.get(0).appendChild(title);
 			}
-			
+
 			if (option.isInteractive())
 				switch (typeIdent.getKey()) {
 				case CLASS:
