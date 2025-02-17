@@ -45,7 +45,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
@@ -91,6 +91,21 @@ implements <a href="../UChange.html" title="interface in net.sourceforge.plantum
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="HColor.TransparentFillBehavior.html" class="type-name-link" title="enum class in net.sourceforge.plantuml.klimt.color">HColor.TransparentFillBehavior</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
@@ -157,8 +172,14 @@ implements <a href="../UChange.html" title="interface in net.sourceforge.plantum
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toSvg(net.sourceforge.plantuml.klimt.color.ColorMapper)" class="member-name-link">toSvg</a><wbr>(<a href="ColorMapper.html" title="class in net.sourceforge.plantuml.klimt.color">ColorMapper</a>&nbsp;mapper)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="HColor.TransparentFillBehavior.html" title="enum class in net.sourceforge.plantuml.klimt.color">HColor.TransparentFillBehavior</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#transparentFillBehavior()" class="member-name-link">transparentFillBehavior</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withDark(net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">withDark</a><wbr>(<a href="HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;dark)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withDark(net.sourceforge.plantuml.klimt.color.HColor)" class="member-name-link">withDark</a><wbr>(<a href="HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;dark)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withTransparentFillBehavior(net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior)" class="member-name-link">withTransparentFillBehavior</a><wbr>(<a href="HColor.TransparentFillBehavior.html" title="enum class in net.sourceforge.plantuml.klimt.color">HColor.TransparentFillBehavior</a>&nbsp;transparentFillBehavior)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -246,6 +267,12 @@ implements <a href="../UChange.html" title="interface in net.sourceforge.plantum
 </section>
 </li>
 <li>
+<section class="detail" id="transparentFillBehavior()">
+<h3>transparentFillBehavior</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="HColor.TransparentFillBehavior.html" title="enum class in net.sourceforge.plantuml.klimt.color">HColor.TransparentFillBehavior</a></span>&nbsp;<span class="element-name">transparentFillBehavior</span>()</div>
+</section>
+</li>
+<li>
 <section class="detail" id="asString()">
 <h3>asString</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">asString</span>()</div>
@@ -267,6 +294,12 @@ implements <a href="../UChange.html" title="interface in net.sourceforge.plantum
 <section class="detail" id="withDark(net.sourceforge.plantuml.klimt.color.HColor)">
 <h3>withDark</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></span>&nbsp;<span class="element-name">withDark</span><wbr><span class="parameters">(<a href="HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a>&nbsp;dark)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="withTransparentFillBehavior(net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior)">
+<h3>withTransparentFillBehavior</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></span>&nbsp;<span class="element-name">withTransparentFillBehavior</span><wbr><span class="parameters">(<a href="HColor.TransparentFillBehavior.html" title="enum class in net.sourceforge.plantuml.klimt.color">HColor.TransparentFillBehavior</a>&nbsp;transparentFillBehavior)</span></div>
 </section>
 </li>
 <li>
