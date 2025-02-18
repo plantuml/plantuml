@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.klimt.color;
 import java.awt.Color;
 
 import net.sourceforge.plantuml.klimt.UChange;
+import net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 
 public class HColors {
@@ -122,6 +123,10 @@ public class HColors {
 
 	public static HColor transparent() {
 		return TRANSPARENT;
+	}
+
+	public static HColor transparent(TransparentFillBehavior fillBehavior) {
+		return TRANSPARENT.withTransparentFillBehavior(fillBehavior);
 	}
 
 	public static HColor none() {

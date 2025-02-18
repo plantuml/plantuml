@@ -60,6 +60,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
@@ -82,6 +83,8 @@ import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.utils.Base64Coder;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.xml.XmlFactories;
+
+import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior.WITH_FILL_NONE;
 
 public class SvgGraphics {
 	// ::remove file when __HAXE__
@@ -408,7 +411,18 @@ public class SvgGraphics {
 	}
 
 	public final void setFillColor(String fill) {
-		this.fill = fixColor(fill);
+		setFillColor(fill, WITH_FILL_NONE);
+	}
+
+	public final void setFillColor(String fill, TransparentFillBehavior transparentFillBehaviour) {
+		switch (transparentFillBehaviour) {
+			case WITH_FILL_NONE:
+				this.fill = fixColor(fill);
+				break;
+			case WITH_FILL_OPACITY:
+				this.fill = fill;
+				break;
+		}
 	}
 
 	public final void setStrokeColor(String stroke) {
@@ -417,10 +431,9 @@ public class SvgGraphics {
 
 	// https://forum.plantuml.net/12469/package-background-transparent-package-default-background?show=12479#c12479
 	// https://github.com/plantuml/plantuml-server/issues/348#issuecomment-2581253011
+	// https://github.com/plantuml/plantuml/issues/2071
 	private String fixColor(String color) {
-		// Since "transparent" isn’t being recognized (even though it should be), we use
-		// #FFFFFF00 as an alternative
-		return color == null || "#00000000".equals(color) ? "#FFFFFF00" : color;
+		return color == null || "#00000000".equals(color) ? "none" : color;
 	}
 
 	public final void setStrokeWidth(double strokeWidth, String strokeDasharray) {
@@ -756,9 +769,6 @@ public class SvgGraphics {
 	}
 
 	private void fillMe(Element elt) {
-		if (fill.equals("#00000000"))
-			return;
-
 		if (fill.matches("#[0-9A-Fa-f]{8}")) {
 			elt.setAttribute("fill", fill.substring(0, 7));
 			final double opacity = Integer.parseInt(fill.substring(7), 16) / 255.0;
