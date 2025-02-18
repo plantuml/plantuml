@@ -13,7 +13,7 @@ Test diagram MUST be put between triple quotes
 
 class "pkg1.pkg2.Class 1 with ASCII special chars\r\n\t!#$%&'()*+,-/:;<=>?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ😀☕️"
 
-"pkg1.pkg2.Class 1 with ASCII special chars\r\n\t!#$%&'()*+,-/:;<=>?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ😀☕️" -> "pkg1.pkg2.Class 1 with ASCII special chars\r\n\t!#$%&'()*+,-/:;<=>?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ😀☕️"
+"pkg1.pkg2.Class 1 with ASCII special chars\r\n\t!#$%&'()*+,-/:;<=>?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ😀☕️" -> "pkg1.pkg2.Class 1 with ASCII special chars\r\n\t!#$%&'()*+,-/:;<=>?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ😀☕️": Hello
 
 @enduml
 """
@@ -54,15 +54,20 @@ Expected result MUST be put between triple brackets
     <g class="link" data-entity-1="Class 1 with ASCII special chars\r\n\t!#$%&amp;'()*+,-/:;&lt;=&gt;?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ&#128512;☕️" data-entity-2="Class 1 with ASCII special chars\r\n\t!#$%&amp;'()*+,-/:;&lt;=&gt;?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ&#128512;☕️" id="link_Class 1 with ASCII special chars\r\n\t!#$%&amp;'()*+,-/:;&lt;=&gt;?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ&#128512;☕️_Class 1 with ASCII special chars\r\n\t!#$%&amp;'()*+,-/:;&lt;=&gt;?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ&#128512;☕️">
       <path codeLine="5" fill="#FFFFFF" fill-opacity="0.00000" id="Class 1 with ASCII special chars\r\n\t!#$%&amp;'()*+,-/:;&lt;=&gt;?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ&#128512;☕️-to-Class 1 with ASCII special chars\r\n\t!#$%&amp;'()*+,-/:;&lt;=&gt;?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ&#128512;☕️" style="stroke:#181818;stroke-width:1;"/>
       <polygon fill="#181818" style="stroke:#181818;stroke-width:1;"/>
+      <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing">Hello</text>
     </g>
   </g>
 </svg>
 }}}
  */
-public class SVG0003_Test extends SvgTest {
+
+public class SVG0004_Svek_Test extends SvekSvgTest {
 
 	@Test
 	void testProperEscapingOfSpecialCharactersInSvgClassNames() throws IOException {
 		checkXmlAndDescription("(1 entities)");
+	}
+	static boolean checkit() {
+		return true;
 	}
 }

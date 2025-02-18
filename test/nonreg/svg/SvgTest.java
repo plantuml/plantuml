@@ -41,24 +41,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SvgTest {
 
+	public SvgTest() {
+		// We want a fully portable way of non regression test, so we force the usage of
+		// Smetana. It probably means that non regression tests on
+		// class/component/usecase are not complete.
+		TitledDiagram.FORCE_SMETANA = true;
+	}
+
 	private static final String TRIPLE_QUOTE = "\"\"\"";
 
 	private static final Transformer xmlTransformer = createPrettyPrintTransformer();
-
-	private boolean originalForceSmetanaSetting;
-
-	@BeforeEach
-	void setup() {
-		// The `nonreg/simple/BasicTest` sets `FORCE_SMETANA = true`, which means that our links don't get
-		// rendered properly.
-		originalForceSmetanaSetting = TitledDiagram.FORCE_SMETANA;
-		TitledDiagram.FORCE_SMETANA = false;
-	}
-
-	@AfterEach
-	void tearDown() {
-		TitledDiagram.FORCE_SMETANA = originalForceSmetanaSetting;
-	}
 
 	protected void checkXmlAndDescription(final String expectedDescription)
 			throws IOException {
