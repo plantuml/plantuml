@@ -29,13 +29,13 @@ Expected result MUST be put between triple brackets
   <g>
     <!--cluster pkg1-->
     <g id="cluster_pkg1">
-      <path fill="#FFFFFF" fill-opacity="0.00000" style="stroke:#000000;stroke-width:1.5;"/>
+      <path fill="none" style="stroke:#000000;stroke-width:1.5;"/>
       <line style="stroke:#000000;stroke-width:1.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing">pkg1</text>
     </g>
     <!--cluster pkg2-->
     <g id="cluster_pkg2">
-      <path fill="#FFFFFF" fill-opacity="0.00000" style="stroke:#000000;stroke-width:1.5;"/>
+      <path fill="none" style="stroke:#000000;stroke-width:1.5;"/>
       <line style="stroke:#000000;stroke-width:1.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing">pkg2</text>
     </g>
@@ -52,7 +52,7 @@ Expected result MUST be put between triple brackets
     </g>
     <g class="link" data-entity-1="Class 1 with ASCII special chars\r\n\t!#$%&amp;'()*+,-/:;&lt;=&gt;?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ&#128512;☕️" data-entity-2="Class 1 with ASCII special chars\r\n\t!#$%&amp;'()*+,-/:;&lt;=&gt;?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ&#128512;☕️" id="link_Class 1 with ASCII special chars\r\n\t!#$%&amp;'()*+,-/:;&lt;=&gt;?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ&#128512;☕️_Class 1 with ASCII special chars\r\n\t!#$%&amp;'()*+,-/:;&lt;=&gt;?@[\\]^_`{|}~¡™£€∞§¶•ªºæ≤≥π¥ƒ©ç®¬÷≠åø´¨ˆ∂˙†˜ß-«œ∆˚≈♭µ∑√Ωìñ&#128512;☕️">
       <polygon fill="#181818" style="stroke:#181818;stroke-width:1;"/>
-      <path fill="#FFFFFF" fill-opacity="0.00000" style="stroke:#181818;stroke-width:1;"/>
+      <path fill="none" style="stroke:#181818;stroke-width:1;"/>
       <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing">Hello</text>
     </g>
   </g>
@@ -65,8 +65,5 @@ public class SVG0004_Smetana_Test extends SvgTest {
 	@Test
 	void testProperEscapingOfSpecialCharactersInSvgClassNames() throws IOException {
 		checkXmlAndDescription("(1 entities)");
-	}
-	static boolean checkit() {
-		return true;
 	}
 }
