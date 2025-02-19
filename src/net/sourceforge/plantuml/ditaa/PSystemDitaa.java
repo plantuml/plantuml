@@ -176,6 +176,7 @@ public class PSystemDitaa extends AbstractPSystem {
 			final int height = image.getHeight();
 			return new ImageDataSimple(width, height);
 		} catch (Throwable e) {
+			e.printStackTrace();
 			final List<String> strings = new ArrayList<>();
 			strings.add("DITAA has crashed");
 			strings.add(" ");
