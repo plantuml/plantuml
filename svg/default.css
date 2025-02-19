@@ -1,3 +1,15 @@
-.elem {cursor: pointer;} 
-.elem, .link {opacity: 0.3;}
-.elem.selected, .link.selected {opacity: 1;}
+svg .entity {
+    cursor: pointer;
+}
+svg.mouseover-active > g > * {
+	opacity: 0.2 !important;
+}
+svg.mouseover-active > g > g.mouseover-highlighted {
+	opacity: 1.0 !important;
+}
+svg.click-active > g > * {
+    opacity: 0.3;
+}
+svg.click-active > g > g.click-highlighted {
+    opacity: 1.0;
+}

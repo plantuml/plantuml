@@ -1,219 +1,36 @@
-(function() {
-	function addItemToMapOfLists(mapOfLists, name, item) {
-		// mapOfLists = {
-		//   'key1': [item1, item2, ...],
-		//   'key2': [item3, item4, ...],
-		// }
-		if (mapOfLists[name].length > 0) {
-			if (!mapOfLists[name].includes(item)) {
-				mapOfLists[name].push(item);
+(function (){
+    function escapeForCssAttributeSelector(entityName) {
+        return entityName
+            ?.replaceAll('\\', '\\\\')
+            ?.replaceAll('"', '\\"');
+    }
+
+	function getEdgesAndDistance1Nodes(startingNode) {
+		const nodeName = startingNode.getAttribute("data-entity");
+		const escapedNodeName = escapeForCssAttributeSelector(nodeName);
+		let results = new Set();
+
+        svg.querySelectorAll(`.link[data-entity-1="${escapedNodeName}"], .link[data-entity-2="${escapedNodeName}"]`).forEach(link => {
+            const linkStartNodeName = link.getAttribute("data-entity-1");
+            const linkEndNodeName = link.getAttribute("data-entity-2");
+
+            if (linkStartNodeName === nodeName) {
+                results.add(svg.querySelector(`[data-entity="${escapeForCssAttributeSelector(linkEndNodeName)}"]`));
+                results.add(link);
+            } else if (linkEndNodeName === nodeName) {
+                results.add(svg.querySelector(`[data-entity="${escapeForCssAttributeSelector(linkStartNodeName)}"]`));
+                results.add(link);
 			}
-		} else {
-			mapOfLists[name] = [item];
-		}
+		});
+
+		return results;
 	}
 
-	function main(svg) {
-		let elems = Array.from(svg.getElementsByClassName('elem'));
-		let links = Array.from(svg.getElementsByClassName('link'));
-
-		let elemsMap = {};
-		let linkedFromElems = {};
-		let linkedToElems = {};
-		let linkedFromLinks = {};
-		let linkedToLinks = {};
-
-		elems.forEach(elem => {
-			let name = elem.classList[1];
-			elemsMap[name] = elem;
-			linkedFromElems[name] = [];
-			linkedToElems[name] = [];
-			linkedFromLinks[name] = [];
-			linkedToLinks[name] = [];
-		});
-
-		links.forEach(link => {
-			let fromName = link.classList[1];
-			let toName = link.classList[2];
-
-			if (elemsMap[fromName] && elemsMap[toName]) {
-				let fromElem = elemsMap[fromName];
-				let toElem = elemsMap[toName];
-
-				addItemToMapOfLists(linkedFromElems, toName, fromElem);
-				addItemToMapOfLists(linkedToElems, fromName, toElem);
-
-				addItemToMapOfLists(linkedFromLinks, toName, link);
-				addItemToMapOfLists(linkedToLinks, fromName, link);
-			}
-		});
-
-		let selectedElems = [];
-		let selectedLinks = [];
-		let selectedElemName = null;
-
-		function clearSelected() {
-			selectedElems.forEach(item => {
-				item.classList.remove('selected');
-			});
-			selectedElems = [];
-
-			selectedLinks.forEach(item => {
-				item.classList.remove('selected');
-			});
-			selectedLinks = [];
-		}
-
-		function selectAll() {
-			selectedElemName = null;
-			clearSelected();
-
-			selectedElems = Array.from(elems);
-			selectedElems.forEach(item => {
-				item.classList.add('selected');
-			});
-
-			selectedLinks = Array.from(links);
-			selectedLinks.forEach(item => {
-				item.classList.add('selected');
-			});
-		}
-
-  function selectElem(elemName) {
-    if (elemName === selectedElemName) {
-      selectAll();
-    } else {
-      clearSelected();
-      selectedElemName = elemName;
-
-      elemsMap[elemName].classList.add('selected');
-      selectedElems.push(elemsMap[elemName]);
-
-      linkedFromElems[elemName].forEach(linkedElem => {
-        // Avoid repetitive processing
-        if (selectedElems.includes(linkedElem)) {
-          return;
-        }
-        selectedElems.push(linkedElem);
-        linkedElem.classList.add('selected');
-      });
-      linkedToElems[elemName].forEach(linkedElem => {
-        // Avoid repetitive processing
-        if (selectedElems.includes(linkedElem)) {
-          return;
-        }
-        selectedElems.push(linkedElem);
-        linkedElem.classList.add('selected');
-      });
-
-      linkedFromLinks[elemName].forEach(linkedLink => {
-        // Avoid repetitive processing
-        if (selectedLinks.includes(linkedLink)) {
-          return;
-        }
-        selectedLinks.push(linkedLink);
-        linkedLink.classList.add('selected');
-      });
-      linkedToLinks[elemName].forEach(linkedLink => {
-        // Avoid repetitive processing
-        if (selectedLinks.includes(linkedLink)) {
-          return;
-        }
-        selectedLinks.push(linkedLink);
-        linkedLink.classList.add('selected');
-      });
-    }
-  }
-
-  function selectElemOfLine(elemName) {
-    clearSelected();
-    selectedElemName = elemName;
-
-    elemsMap[elemName].classList.add('selected');
-    selectedElems.push(elemsMap[elemName]);
-
-    selectFromElem(elemName);
-    selectToElem(elemName);
-  }
-
-  function selectFromElem(elemName) {
-    console.log(elemName, "linkedFromLinks", linkedFromLinks[elemName])
-    linkedFromLinks[elemName].forEach(linkedLink => {
-      // Avoid repetitive processing
-      if (selectedLinks.includes(linkedLink)) {
-        return;
-      }
-      selectedLinks.push(linkedLink);
-      linkedLink.classList.add('selected');
-      console.log(elemName, "from link", linkedLink);
-    });
-
-    console.log(elemName, "linkedFromElems", linkedFromElems[elemName])
-    linkedFromElems[elemName].forEach(linkedElem => {
-      // break loop reference
-      if (selectedElems.includes(linkedElem)) {
-        return;
-      }
-      selectedElems.push(linkedElem);
-      linkedElem.classList.add('selected');
-      console.log(elemName, "from elem", linkedElem);
-
-      let nextName = linkedElem.classList[1];
-      selectFromElem(nextName);
-    });
-  }
-
-  function selectToElem(elemName) {
-    console.log(elemName, "linkedToLinks", linkedToLinks[elemName]);
-    linkedToLinks[elemName].forEach(linkedLink => {
-      // Avoid repetitive processing
-      if (selectedLinks.includes(linkedLink)) {
-        return;
-      }
-      selectedLinks.push(linkedLink);
-      linkedLink.classList.add('selected');
-      console.log(elemName, "to link", linkedLink);
-    });
-
-    console.log(elemName, "linkedToElems", linkedToElems[elemName])
-    linkedToElems[elemName].forEach(linkedElem => {
-      // break loop reference
-      if (selectedElems.includes(linkedElem)) {
-        return;
-      }
-      selectedElems.push(linkedElem);
-      linkedElem.classList.add('selected');
-      console.log(elemName, "to elem", linkedElem);
-
-      let nextName = linkedElem.classList[1];
-      selectToElem(nextName);
-    });
-  }
-
-  Object.keys(elemsMap).forEach(name => {
-    elemsMap[name].onclick = (event) => {
-      console.log("onclick: ", event);
-      selectElem(name);
-    };
-    // double click, and then selectElemOfLine
-    elemsMap[name].ondblclick = (event) => {
-      console.log("ondblclick", event);
-      selectElemOfLine(name);
-    };
-  });
-
-  selectAll();
-
-  document.querySelector('svg').addEventListener('keydown', event => {
-    console.log('svg keydown: ', event.key);
-    // Press Escape, and then selectAll
-    // https://www.freecodecamp.org/news/javascript-keycode-list-keypress-event-key-codes/
-    if (event.code === "Escape") {
-      selectAll();
-    }
-  });
-}
-
+	/**
+	 * @param {SVGElement} elem
+	 * @param tagName in lowercase, e.g. "g" or "svg"
+	 * @return {{SVGElement}} or null if no matching ancestor is found
+	 */
 	function findAncestorWithTagName(elem, tagName) {
 		while (elem && elem.nodeName.toLowerCase() !== tagName) {
 			elem = elem.parentElement;
@@ -221,9 +38,58 @@
 		return elem;
 	}
 
-	const svgRoot = findAncestorWithTagName(document.currentScript, "svg");
+    function onClickEntity() {
+        if (svg.classList.contains("click-active") && this.classList.contains("click-selected")) {
+            handleDeselect("click");
+        } else {
+            handleSelect(this, "click");
+        }
+    }
 
-	document.addEventListener('DOMContentLoaded', (event) => {
-		main(svgRoot);
-	})
+	function onMouseOverEntity() {
+	    handleSelect(this, "mouseover");
+	}
+
+	function onMouseOutEntity() {
+	    handleDeselect("mouseover");
+	}
+
+    // CSS class descriptions:
+    //   xxx-active: highlight styles will be ignored when this is not added to the the parent <svg>.
+    //   xxx-selected: lets us track which entity `<g>` was clicked/hovered.
+    //   xxx-highlighted: when highlighting is 'active', elements without this class will be dimmed.
+    //
+    // 'xxx' event type will be 'hover' or 'mouseover'.
+	function handleSelect(selectedEntityElem, eventType) {
+	    svg.querySelectorAll(`.${eventType}-selected, .${eventType}-highlighted`).forEach(elem => {
+            elem.classList.remove(`${eventType}-selected`, `${eventType}-highlighted`);
+        });
+
+        svg.classList.add(`${eventType}-active`);
+        selectedEntityElem.classList.add(`${eventType}-selected`, `${eventType}-highlighted`);
+
+        getEdgesAndDistance1Nodes(selectedEntityElem).forEach(node => {
+            node.classList.add(`${eventType}-highlighted`);
+        });
+	}
+
+    function handleDeselect(eventType) {
+		svg.classList.remove(`${eventType}-active`);
+    }
+
+	const svg = findAncestorWithTagName(document.currentScript, "svg");
+
+    document.addEventListener("DOMContentLoaded", () => {
+        svg.querySelectorAll("g.entity").forEach(entity => {
+            entity.addEventListener("mouseover", onMouseOverEntity);
+            entity.addEventListener("mouseout", onMouseOutEntity);
+            entity.addEventListener("click", onClickEntity);
+        });
+
+        svg.addEventListener("keydown", event => {
+            if (event.code === "Escape") {
+              handleDeselect("click");
+            }
+          });
+    });
 })();

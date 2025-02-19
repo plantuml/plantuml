@@ -135,8 +135,9 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		final UGraphic ug2 = new MyUGraphicEllipse(ug, 0, 0, ellipse.getUEllipse());
 
 		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
-		typeIDent.put(UGroupType.CLASS, "elem " + getEntity().getName() + " selected");
-		typeIDent.put(UGroupType.ID, "elem_" + getEntity().getName());
+		typeIDent.put(UGroupType.CLASS, "entity");
+		typeIDent.put(UGroupType.ID, "entity_" + getEntity().getName());
+		typeIDent.put(UGroupType.DATA_ENTITY, getEntity().getName());
 		ug.startGroup(typeIDent);
 		ellipse.drawU(ug2);
 		ug2.closeGroup();

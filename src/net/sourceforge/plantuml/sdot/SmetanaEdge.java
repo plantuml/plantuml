@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  * 
@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.cruise.XAbstractEdge;
 import net.sourceforge.plantuml.cruise.XEdge;
 import net.sourceforge.plantuml.decoration.LinkType;
 import net.sourceforge.plantuml.decoration.Rainbow;
+import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorType;
@@ -60,7 +61,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.LineParam;
-import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
@@ -72,6 +72,9 @@ import net.sourceforge.plantuml.svek.extremity.Extremity;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Direction;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 
@@ -99,6 +102,13 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 
 		if (link.isHidden())
 			return;
+
+		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
+		typeIDent.put(UGroupType.CLASS, "link");
+		typeIDent.put(UGroupType.ID, "link_" + link.getEntity1().getName() + "_" + link.getEntity2().getName());
+		typeIDent.put(UGroupType.DATA_ENTITY_1, link.getEntity1().getName());
+		typeIDent.put(UGroupType.DATA_ENTITY_2, link.getEntity2().getName());
+		ug.startGroup(typeIDent);
 
 		DotPath dotPath = getDotPathInternal();
 
@@ -174,8 +184,8 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 		if (getLabelRectangleTranslate("tail_label") != null)
 			tailLabel.drawU(ug.apply(getLabelRectangleTranslate("tail_label")));
 
+		ug.closeGroup();
 		// printDebug(ug);
-
 	}
 
 	private Style getStyle() {

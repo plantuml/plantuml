@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  *
@@ -132,14 +132,6 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 		try {
 			if (metadata != null)
 				getGraphicObject().addCommentMetadata(metadata);
-
-			if (option.isInteractive()) {
-				// For performance reasons and also because we want the entire graph DOM to be
-				// create so we can register
-				// the event handlers on them we will append to the end of the document
-				getGraphicObject().addStyle("onmouseinteractivefooter.css");
-				getGraphicObject().addScript("onmouseinteractivefooter.js");
-			}
 
 			getGraphicObject().createXml(os);
 		} catch (TransformerException e) {

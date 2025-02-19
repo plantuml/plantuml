@@ -2,6 +2,7 @@ package nonreg.svg;
 
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
+import net.sourceforge.plantuml.TitledDiagram;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -38,10 +39,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SvgTest {
 
+	public SvgTest() {
+		// We want a fully portable way of non regression test, so we force the usage of
+		// Smetana. It probably means that non regression tests on
+		// class/component/usecase are not complete.
+		TitledDiagram.FORCE_SMETANA = true;
+	}
+
 	private static final String TRIPLE_QUOTE = "\"\"\"";
 
 	private static final Transformer xmlTransformer = createPrettyPrintTransformer();
-
 
 	protected void checkXmlAndDescription(final String expectedDescription)
 			throws IOException {
