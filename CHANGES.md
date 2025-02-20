@@ -1,10 +1,19 @@
-## V1.2025.1 (no date yet)
+## V1.2025.1 (Feb 16, 2025)
+- [Backslash future deprecation and introduction of new functions](https://plantuml.com/newline)
+- [newline%() fix](https://forum.plantuml.net/19607/1-2025-0-has-%25newline-bug-older-version-1-2024-7-was-working)
+- [Add method to map regex patterns to descriptive names](https://github.com/plantuml/plantuml/pull/2036)
+- [Allow interactive SVG sequence diagram's header to float](https://github.com/plantuml/plantuml/pull/2058)
+- [Add support for custom XMI generation](https://github.com/plantuml/plantuml/pull/2049)
+- [svg results with black box in Visio](https://github.com/plantuml/plantuml/issues/2040)
+- [Problem with <style> and parameter Shadowing for rectangle](https://github.com/plantuml/plantuml/issues/2053)
+- [YAML string quotes do not escape comment character](https://github.com/plantuml/plantuml/issues/2054)
+- [Style boxless root on mindmap](https://github.com/plantuml/plantuml/issues/2061)
+- [Allow colon character (:) on the value of a YAML field](https://github.com/plantuml/plantuml/issues/2063)
+- [Unable to define variables on plantuml command line with -D](https://github.com/plantuml/plantuml/issues/2065)
+- [diagram sequence regression](https://forum.plantuml.net/19698/seems-to-break-diagrams)
 
-https://github.com/plantuml/plantuml/pull/2049
-https://forum.plantuml.net/19607/1-2025-0-has-%25newline-bug-older-version-1-2024-7-was-working
-https://github.com/plantuml/plantuml/issues/2040
 
-## V1.2025.0 (Jan 15, 2024)
+## V1.2025.0 (Jan 15, 2025)
 
 - [Gantt Chart with closed weekends does not render correctly depending on the theme](https://github.com/plantuml/plantuml/issues/2022)
 - [Allow hide closed in the Gantt chart](https://github.com/plantuml/plantuml/issues/1807)
