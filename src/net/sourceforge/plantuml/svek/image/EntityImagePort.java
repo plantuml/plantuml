@@ -39,6 +39,7 @@ package net.sourceforge.plantuml.svek.image;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPosition;
 import net.sourceforge.plantuml.klimt.Shadowable;
+import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorType;
@@ -58,6 +59,9 @@ import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.svek.SvekNode;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 public class EntityImagePort extends AbstractEntityImageBorder {
 
@@ -103,6 +107,12 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 		else
 			y += 2 * EntityPosition.RADIUS;
 
+		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
+		typeIDent.put(UGroupType.CLASS, "entity");
+		typeIDent.put(UGroupType.ID, "entity_" + getEntity().getName());
+		typeIDent.put(UGroupType.DATA_ENTITY, getEntity().getName());
+		ug.startGroup(typeIDent);
+
 		desc.drawU(ug.apply(new UTranslate(x, y)));
 
 		final Style style = getStyle();
@@ -120,6 +130,8 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 		ug = ug.apply(getUStroke()).apply(backcolor.bg());
 
 		drawSymbol(ug);
+
+		ug.closeGroup();
 	}
 
 	private UStroke getUStroke() {
