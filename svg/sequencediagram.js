@@ -120,7 +120,7 @@
 	    }
 	}
 
-	function init() {
+	function initFloatingHeader() {
 	    try {
 	        const header = groupParticipantHeaders()
             const toggleButton = createFloatingHeaderToggleButton(header);
@@ -155,9 +155,76 @@
         }
 	}
 
+    function handleParticipantFilterClick(clickedParticipantElem) {
+        const clickedParticipantName = clickedParticipantElem.getAttribute("data-participant");
+
+        const allFilteredParticipantsNames = new Set(Array
+                .from(svgRoot.querySelectorAll("g.participant.filter-highlight"))
+                .map(elem => elem.getAttribute("data-participant")));
+
+        if (allFilteredParticipantsNames.has(clickedParticipantName)) {
+            allFilteredParticipantsNames.delete(clickedParticipantName);
+        } else {
+            allFilteredParticipantsNames.add(clickedParticipantName);
+        }
+
+        svgRoot.querySelectorAll("g.participant").forEach(participantElem => {
+            const shouldHighlight = allFilteredParticipantsNames.has(participantElem.getAttribute("data-participant"));
+            participantElem.classList.toggle("filter-highlight", shouldHighlight);
+        });
+
+        svgRoot.querySelectorAll("g.message").forEach(messageElem => {
+            const participant1 = messageElem.getAttribute("data-participant-1");
+            const participant2 = messageElem.getAttribute("data-participant-2");
+
+            const participant1Matches = allFilteredParticipantsNames.has(participant1);
+            const participant2Matches = allFilteredParticipantsNames.has(participant2);
+
+            const shouldHighlight = (allFilteredParticipantsNames.size === 1)
+                ? (participant1Matches || participant2Matches)
+                : (participant1Matches && participant2Matches && participant1 !== participant2);
+
+            messageElem.classList.toggle("filter-highlight", shouldHighlight);
+        });
+
+        if (allFilteredParticipantsNames.size === 0) {
+            svgRoot.classList.remove("filter-active", "filter-nomatch");
+        } else {
+            svgRoot.classList.add("filter-active");
+            if (svgRoot.querySelector("g.message.filter-highlight")) {
+                svgRoot.classList.remove("filter-nomatch");
+            } else {
+                svgRoot.classList.add("filter-nomatch");
+            }
+        }
+    }
+
+	function initParticipantFiltering() {
+	    svgRoot.querySelectorAll(".participant").forEach(participantElem => {
+	        participantElem.addEventListener("click", () => {
+	            handleParticipantFilterClick(participantElem);
+	        });
+	    });
+
+	    svgRoot.querySelector("svg > defs").innerHTML += `
+            <filter id="colorize-green">
+              <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0
+                                                                      0.2 0.2 0.2 0.2 0
+                                                                      0 0 0 0 0
+                                                                      0 0 0 1 0" />
+            </filter>
+            <filter id="colorize-red">
+              <feColorMatrix in="SourceGraphic" type="matrix" values="0.2 0.2 0.2 0.2 0
+                                                                      0 0 0 0 0
+                                                                      0 0 0 0 0
+                                                                      0 0 0 1 0" />
+            </filter>`;
+	}
+
 	const svgRoot = findAncestorWithTagName(document.currentScript, "svg");
 
 	document.addEventListener("DOMContentLoaded", () => {
-		init(svgRoot);
+		initFloatingHeader();
+		initParticipantFiltering();
 	});
 })();

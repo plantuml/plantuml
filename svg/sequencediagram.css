@@ -53,3 +53,26 @@ svg[data-diagram-type=SEQUENCE] g.floating-header-toggle-button:hover * {
     visibility: hidden;
   }
 }
+
+svg[data-diagram-type=SEQUENCE] g.participant {
+    cursor: pointer;
+}
+
+xsvg[data-diagram-type=SEQUENCE].filter-active g,
+svg[data-diagram-type=SEQUENCE].filter-active g  > g:not(.header) {
+    opacity: 0.2;
+}
+
+svg[data-diagram-type=SEQUENCE].filter-active g.filter-highlight {
+    filter: url(#colorize-green);
+    opacity: 1.0 !important;
+}
+
+svg[data-diagram-type=SEQUENCE].filter-active.filter-nomatch g.filter-highlight {
+    filter: url(#colorize-red) !important;
+}
+
+svg[data-diagram-type=SEQUENCE].filter-active:not(.filter-nomatch) g.filter-highlight text {
+    font-weight: bold;
+}
+
