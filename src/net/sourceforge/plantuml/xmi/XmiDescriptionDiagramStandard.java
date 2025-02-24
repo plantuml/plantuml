@@ -53,7 +53,7 @@ public class XmiDescriptionDiagramStandard extends XmiDescriptionDiagramAbstract
 
 	@Override
 	protected void addLink(Link link) {
-		final String assId = "ass" + diagram.getUniqueSequence("");
+		final String assId = diagram.getUniqueSequence("ass");
 
 		final Element association = document.createElement("UML:Association");
 		association.setAttribute("xmi.id", assId);
@@ -63,7 +63,7 @@ public class XmiDescriptionDiagramStandard extends XmiDescriptionDiagramAbstract
 
 		final Element connection = document.createElement("UML:Association.connection");
 		final Element end1 = document.createElement("UML:AssociationEnd");
-		end1.setAttribute("xmi.id", "end" + diagram.getUniqueSequence(""));
+		end1.setAttribute("xmi.id", diagram.getUniqueSequence("end"));
 		end1.setAttribute("association", assId);
 		end1.setAttribute("type", link.getEntity1().getUid());
 		if (link.getQuantifier1() != null)
@@ -81,7 +81,7 @@ public class XmiDescriptionDiagramStandard extends XmiDescriptionDiagramAbstract
 		connection.appendChild(end1);
 
 		final Element end2 = document.createElement("UML:AssociationEnd");
-		end2.setAttribute("xmi.id", "end" + diagram.getUniqueSequence(""));
+		end2.setAttribute("xmi.id", diagram.getUniqueSequence("end"));
 		end2.setAttribute("association", assId);
 		end2.setAttribute("type", link.getEntity2().getUid());
 		if (link.getQuantifier2() != null)

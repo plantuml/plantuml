@@ -84,7 +84,7 @@ public class CommandPackageEmpty extends SingleLineCommand2<AbstractEntityDiagra
 		final String display;
 		if (arg.get("CODE", 0) == null) {
 			if (StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("DISPLAY", 0)).length() == 0) {
-				idShort = "##" + diagram.getUniqueSequence("");
+				idShort = diagram.getUniqueSequence("##");
 				display = null;
 			} else {
 				idShort = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("DISPLAY", 0));

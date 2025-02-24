@@ -132,7 +132,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		this.cl2 = Objects.requireNonNull(cl2);
 
 		this.type = type;
-		this.uid = "lnk" + cucaDiagram.getUniqueSequence("");
+		this.uid = cucaDiagram.getUniqueSequence("lnk");
 
 		this.linkArg = linkArg;
 

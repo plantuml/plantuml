@@ -65,7 +65,7 @@ public class ActivityDiagram extends CucaDiagram {
 	}
 
 	private String getAutoBranch() {
-		return "#" + this.getUniqueSequence("");
+		return this.getUniqueSequence("#");
 	}
 
 	public void startIf(LineLocation location, String optionalCodeString) {
@@ -141,7 +141,7 @@ public class ActivityDiagram extends CucaDiagram {
 
 	public Entity createInnerActivity(LineLocation location) {
 
-		final String idShort = "##" + this.getUniqueSequence("");
+		final String idShort = this.getUniqueSequence("##");
 
 		final Quark<Entity> quark = quarkInContext(true, idShort);
 		gotoGroup(location, quark, Display.getWithNewlines(getPragma(), quark.getName()), GroupType.INNER_ACTIVITY);
@@ -157,7 +157,7 @@ public class ActivityDiagram extends CucaDiagram {
 		if (getCurrentGroup().getGroupType() == GroupType.CONCURRENT_ACTIVITY)
 			endGroup();
 
-		final String idShort = "##" + this.getUniqueSequence("");
+		final String idShort = this.getUniqueSequence("##");
 
 		if (getCurrentGroup().getGroupType() != GroupType.INNER_ACTIVITY)
 			throw new IllegalStateException("type=" + getCurrentGroup().getGroupType());
