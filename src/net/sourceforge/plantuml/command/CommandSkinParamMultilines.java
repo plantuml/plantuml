@@ -65,6 +65,8 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<TitledD
 
 	public CommandExecutionResult execute(TitledDiagram diagram, BlocLines lines, ParserPass currentPass) {
 		final SkinLoader skinLoader = new SkinLoader(diagram);
+		
+		lines = lines.expandsNewline(true);
 
 		final Matcher2 mStart = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		if (mStart.find() == false)

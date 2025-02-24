@@ -56,7 +56,7 @@ public class CommandSkinParam extends SingleLineCommand2<TitledDiagram> {
 		return RegexConcat.build(CommandSkinParam.class.getName(), RegexLeaf.start(), //
 				new RegexLeaf("TYPE", "(skinparam|skinparamlocked)"), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "([\\w.]*(?:\\<\\<.*\\>\\>)?[\\w.]*)"), //
+				new RegexLeaf("NAME", "([\\w.]*(?:\\<\\<[^<>]*\\>\\>)?[\\w.]*)"), //
 				RegexLeaf.spaceOneOrMore(), //
 				new RegexLeaf("VALUE", "([^{}]*)"), RegexLeaf.end()); //
 	}

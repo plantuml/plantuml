@@ -63,9 +63,9 @@ public final class CommonCommands {
 		cmds.add(CommandAssumeTransparent.ME);
 
 		cmds.add(CommandSkinParam.ME);
-		if (JawsFlags.USE_CommandSkinParamJaws)
-			cmds.add(CommandSkinParamJaws.ME);
+		cmds.add(CommandSkinParamJaws.ME);
 		cmds.add(CommandSkinParamMultilines.ME);
+		
 		cmds.add(CommandSkin.ME);
 		cmds.add(CommandMinwidth.ME);
 		cmds.add(CommandPage.ME);
