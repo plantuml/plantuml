@@ -33,7 +33,7 @@ Expected result MUST be put between triple brackets
   </defs>
   <g>
     <!--cluster c1-->
-    <g id="cluster_c1">
+    <g class="cluster" data-entity="c1" data-source-line="3" data-uid="ent0002" id="cluster_c1">
       <rect fill="none" style="stroke:#181818;stroke-width:1;"/>
       <rect fill="none" style="stroke:#181818;stroke-width:1;"/>
       <rect fill="none" style="stroke:#181818;stroke-width:1;"/>
@@ -41,7 +41,7 @@ Expected result MUST be put between triple brackets
       <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing">c1</text>
     </g>
     <!--cluster c2-->
-    <g id="cluster_c2">
+    <g class="cluster" data-entity="c2" data-source-line="7" data-uid="ent0004" id="cluster_c2">
       <rect fill="none" style="stroke:#181818;stroke-width:1;"/>
       <rect fill="none" style="stroke:#181818;stroke-width:1;"/>
       <rect fill="none" style="stroke:#181818;stroke-width:1;"/>
@@ -49,13 +49,13 @@ Expected result MUST be put between triple brackets
       <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing">c2</text>
     </g>
     <g class="entity" data-entity="p1" id="entity_p1">
-		<text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">p1</text>
-		<rect fill="#F1F1F1" style="stroke:#181818;stroke-width:1.5;"/>
-	</g>
-	<g class="entity" data-entity="p2" id="entity_p2">
-		<text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">p2</text>
-		<rect fill="#F1F1F1" style="stroke:#181818;stroke-width:1.5;"/>
-	</g>
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">p1</text>
+      <rect fill="#F1F1F1" style="stroke:#181818;stroke-width:1.5;"/>
+    </g>
+    <g class="entity" data-entity="p2" id="entity_p2">
+      <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">p2</text>
+      <rect fill="#F1F1F1" style="stroke:#181818;stroke-width:1.5;"/>
+    </g>
     <g class="link" data-entity-1="p1" data-entity-2="p2" id="link_p1_p2">
       <polygon fill="#181818" style="stroke:#181818;stroke-width:1;"/>
       <path fill="none" style="stroke:#181818;stroke-width:1;"/>

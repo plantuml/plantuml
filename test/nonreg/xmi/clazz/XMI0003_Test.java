@@ -42,15 +42,15 @@ Expected result MUST be put between triple brackets
     <XMI.content>
         <UML:Model name="PlantUML" xmi.id="model1">
             <UML:Namespace.ownedElement>
-                <UML:Class name="A" xmi.id="cl0002">
+                <UML:Class name="A" xmi.id="ent0002">
                     <UML:Classifier.feature>
                         <UML:Operation isStatic="true" name="method" visibility="public" xmi.id="att7"/>
                     </UML:Classifier.feature>
                 </UML:Class>
-                <UML:Class isAbstract="true" name="B" xmi.id="cl0003">
+                <UML:Class isAbstract="true" name="B" xmi.id="ent0003">
                     <UML:Classifier.feature/>
                 </UML:Class>
-                <UML:Class isStatic="true" name="C" xmi.id="cl0004">
+                <UML:Class isStatic="true" name="C" xmi.id="ent0004">
                     <UML:Classifier.feature/>
                 </UML:Class>
             </UML:Namespace.ownedElement>
@@ -71,15 +71,15 @@ Expected result MUST be put between triple brackets
     <XMI.content>
         <UML:Model name="PlantUML" xmi.id="model1">
             <UML:Namespace.ownedElement>
-                <UML:Class name="A" xmi.id="cl0002">
+                <UML:Class name="A" xmi.id="ent0002">
                     <UML:Classifier.feature>
                         <UML:Operation isStatic="true" name="method" visibility="public" xmi.id="att7"/>
                     </UML:Classifier.feature>
                 </UML:Class>
-                <UML:Class isAbstract="true" name="B" xmi.id="cl0003">
+                <UML:Class isAbstract="true" name="B" xmi.id="ent0003">
                     <UML:Classifier.feature/>
                 </UML:Class>
-                <UML:Class isStatic="true" name="C" xmi.id="cl0004">
+                <UML:Class isStatic="true" name="C" xmi.id="ent0004">
                     <UML:Classifier.feature/>
                 </UML:Class>
             </UML:Namespace.ownedElement>
@@ -100,15 +100,15 @@ Expected result MUST be put between triple brackets
     <XMI.content>
         <UML:Model name="PlantUML" xmi.id="model1">
             <UML:Namespace.ownedElement>
-                <UML:Class name="A" xmi.id="cl0002">
+                <UML:Class name="A" xmi.id="ent0002">
                     <UML:Classifier.feature>
                         <UML:Operation isStatic="true" name="method" visibility="public" xmi.id="att7"/>
                     </UML:Classifier.feature>
                 </UML:Class>
-                <UML:Class isAbstract="true" name="B" xmi.id="cl0003">
+                <UML:Class isAbstract="true" name="B" xmi.id="ent0003">
                     <UML:Classifier.feature/>
                 </UML:Class>
-                <UML:Class isStatic="true" name="C" xmi.id="cl0004">
+                <UML:Class isStatic="true" name="C" xmi.id="ent0004">
                     <UML:Classifier.feature/>
                 </UML:Class>
             </UML:Namespace.ownedElement>

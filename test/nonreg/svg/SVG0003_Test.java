@@ -131,135 +131,135 @@ Expected result MUST be put between triple brackets
       <rect fill="#000000" fill-opacity="0.00000"/>
       <line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;"/>
     </g>
-    <g>
+    <g class="participant participant-head" data-participant="transparent_keyword">
       <rect fill="none" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">transparent_keyword</text>
     </g>
-    <g>
+    <g class="participant participant-tail" data-participant="transparent_keyword">
       <rect fill="none" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">transparent_keyword</text>
     </g>
-    <g>
+    <g class="participant participant-head" data-participant="white_with_zero_alpha">
       <rect fill="none" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">white_with_zero_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-tail" data-participant="white_with_zero_alpha">
       <rect fill="none" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">white_with_zero_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-head" data-participant="black_with_zero_alpha">
       <rect fill="none" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">black_with_zero_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-tail" data-participant="black_with_zero_alpha">
       <rect fill="none" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">black_with_zero_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-head" data-participant="gray_with_zero_alpha">
       <rect fill="none" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">gray_with_zero_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-tail" data-participant="gray_with_zero_alpha">
       <rect fill="none" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">gray_with_zero_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-head" data-participant="white_with_low_alpha">
       <rect fill="#FFFFFF" fill-opacity="0.00392" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">white_with_low_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-tail" data-participant="white_with_low_alpha">
       <rect fill="#FFFFFF" fill-opacity="0.00392" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">white_with_low_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-head" data-participant="black_with_low_alpha">
       <rect fill="#000000" fill-opacity="0.00392" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">black_with_low_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-tail" data-participant="black_with_low_alpha">
       <rect fill="#000000" fill-opacity="0.00392" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">black_with_low_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-head" data-participant="gray_with_low_alpha">
       <rect fill="#CCCCCC" fill-opacity="0.00392" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">gray_with_low_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-tail" data-participant="gray_with_low_alpha">
       <rect fill="#CCCCCC" fill-opacity="0.00392" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">gray_with_low_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-head" data-participant="white_with_high_alpha">
       <rect fill="#FFFFFF" fill-opacity="0.99608" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">white_with_high_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-tail" data-participant="white_with_high_alpha">
       <rect fill="#FFFFFF" fill-opacity="0.99608" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">white_with_high_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-head" data-participant="black_with_high_alpha">
       <rect fill="#000000" fill-opacity="0.99608" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">black_with_high_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-tail" data-participant="black_with_high_alpha">
       <rect fill="#000000" fill-opacity="0.99608" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">black_with_high_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-head" data-participant="gray_with_high_alpha">
       <rect fill="#CCCCCC" fill-opacity="0.99608" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">gray_with_high_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-tail" data-participant="gray_with_high_alpha">
       <rect fill="#CCCCCC" fill-opacity="0.99608" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">gray_with_high_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-head" data-participant="white_with_full_alpha">
       <rect fill="#FFFFFF" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">white_with_full_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-tail" data-participant="white_with_full_alpha">
       <rect fill="#FFFFFF" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">white_with_full_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-head" data-participant="black_with_full_alpha">
       <rect fill="#000000" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">black_with_full_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-tail" data-participant="black_with_full_alpha">
       <rect fill="#000000" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">black_with_full_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-head" data-participant="gray_with_full_alpha">
       <rect fill="#CCCCCC" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">gray_with_full_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-tail" data-participant="gray_with_full_alpha">
       <rect fill="#CCCCCC" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">gray_with_full_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-head" data-participant="white_with_unspecified_alpha">
       <rect fill="#FFFFFF" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">white_with_unspecified_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-tail" data-participant="white_with_unspecified_alpha">
       <rect fill="#FFFFFF" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">white_with_unspecified_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-head" data-participant="black_with_unspecified_alpha">
       <rect fill="#000000" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">black_with_unspecified_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-tail" data-participant="black_with_unspecified_alpha">
       <rect fill="#000000" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">black_with_unspecified_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-head" data-participant="gray_with_unspecified_alpha">
       <rect fill="#CCCCCC" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">gray_with_unspecified_alpha</text>
     </g>
-    <g>
+    <g class="participant participant-tail" data-participant="gray_with_unspecified_alpha">
       <rect fill="#CCCCCC" style="stroke:#181818;stroke-width:0.5;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">gray_with_unspecified_alpha</text>
     </g>
-    <g>
+    <g class="message" data-participant-1="white_with_zero_alpha" data-participant-2="black_with_zero_alpha">
       <polygon fill="#181818" style="stroke:#181818;stroke-width:1;"/>
       <line style="stroke:#181818;stroke-width:1;"/>
       <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing">Hello</text>

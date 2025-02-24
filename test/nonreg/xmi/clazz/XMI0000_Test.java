@@ -35,7 +35,7 @@ Expected result MUST be put between triple brackets
     <XMI.content>
         <UML:Model name="PlantUML" xmi.id="model1">
             <UML:Namespace.ownedElement>
-                <UML:Class name="foo" visibility="private" xmi.id="cl0002">
+                <UML:Class name="foo" visibility="private" xmi.id="ent0002">
                     <UML:Classifier.feature>
                         <UML:Attribute name="field1 : type" visibility="protected" xmi.id="att3"/>
                     </UML:Classifier.feature>
@@ -58,7 +58,7 @@ Expected result MUST be put between triple brackets
     <XMI.content>
         <UML:Model name="PlantUML" xmi.id="model1">
             <UML:Namespace.ownedElement>
-                <UML:Class name="foo" visibility="private" xmi.id="cl0002">
+                <UML:Class name="foo" visibility="private" xmi.id="ent0002">
                     <UML:Classifier.feature>
                         <UML:Attribute name="field1 : type" visibility="protected" xmi.id="att3"/>
                     </UML:Classifier.feature>
@@ -81,7 +81,7 @@ Expected result MUST be put between triple brackets
     <XMI.content>
         <UML:Model name="PlantUML" xmi.id="model1">
             <UML:Namespace.ownedElement>
-                <UML:Class name="foo" visibility="private" xmi.id="cl0002">
+                <UML:Class name="foo" visibility="private" xmi.id="ent0002">
                     <UML:Classifier.feature>
                         <UML:Attribute name="field1 : type" visibility="protected" xmi.id="att3"/>
                     </UML:Classifier.feature>

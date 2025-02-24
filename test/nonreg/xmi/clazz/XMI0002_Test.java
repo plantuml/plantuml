@@ -40,18 +40,18 @@ Expected result MUST be put between triple brackets
     <XMI.content>
         <UML:Model name="PlantUML" xmi.id="model1">
             <UML:Namespace.ownedElement>
-                <UML:Class name="A" xmi.id="cl0002">
+                <UML:Class name="A" xmi.id="ent0002">
                     <UML:Classifier.feature/>
                 </UML:Class>
-                <UML:Class name="B" xmi.id="cl0003">
+                <UML:Class name="B" xmi.id="ent0003">
                     <UML:Classifier.feature/>
                 </UML:Class>
                 <UML:Association namespace="model1" xmi.id="ass5">
                     <UML:Association.connection>
-                        <UML:AssociationEnd association="ass5" type="cl0002" xmi.id="end6">
+                        <UML:AssociationEnd association="ass5" type="ent0002" xmi.id="end6">
                             <UML:AssociationEnd.participant/>
                         </UML:AssociationEnd>
-                        <UML:AssociationEnd association="ass5" type="cl0003" xmi.id="end7">
+                        <UML:AssociationEnd association="ass5" type="ent0003" xmi.id="end7">
                             <UML:AssociationEnd.participant/>
                         </UML:AssociationEnd>
                     </UML:Association.connection>
@@ -74,18 +74,18 @@ Expected result MUST be put between triple brackets
     <XMI.content>
         <UML:Model name="PlantUML" xmi.id="model1">
             <UML:Namespace.ownedElement>
-                <UML:Class name="A" xmi.id="cl0002">
+                <UML:Class name="A" xmi.id="ent0002">
                     <UML:Classifier.feature/>
                 </UML:Class>
-                <UML:Class name="B" xmi.id="cl0003">
+                <UML:Class name="B" xmi.id="ent0003">
                     <UML:Classifier.feature/>
                 </UML:Class>
                 <UML:Association xmi.id="ass5">
                     <UML:Association.connection>
-                        <UML:AssociationEnd association="ass5" type="cl0002" xmi.id="end6">
+                        <UML:AssociationEnd association="ass5" type="ent0002" xmi.id="end6">
                             <UML:AssociationEnd.participant/>
                         </UML:AssociationEnd>
-                        <UML:AssociationEnd association="ass5" type="cl0003" xmi.id="end7">
+                        <UML:AssociationEnd association="ass5" type="ent0003" xmi.id="end7">
                             <UML:AssociationEnd.participant/>
                         </UML:AssociationEnd>
                     </UML:Association.connection>
@@ -108,16 +108,16 @@ Expected result MUST be put between triple brackets
     <XMI.content>
         <UML:Model name="PlantUML" xmi.id="model1">
             <UML:Namespace.ownedElement>
-                <UML:Class name="A" xmi.id="cl0002">
+                <UML:Class name="A" xmi.id="ent0002">
                     <UML:Classifier.feature/>
                 </UML:Class>
-                <UML:Class name="B" xmi.id="cl0003">
+                <UML:Class name="B" xmi.id="ent0003">
                     <UML:Classifier.feature/>
                 </UML:Class>
                 <UML:Association xmi.id="ass5">
                     <UML:Association.connection>
-                        <UML:AssociationEnd isNavigable="false" association="ass5" participant="cl0002" xmi.id="end6"/>
-                        <UML:AssociationEnd isNavigable="true" association="ass5" participant="cl0003" xmi.id="end7"/>
+                        <UML:AssociationEnd isNavigable="false" association="ass5" participant="ent0002" xmi.id="end6"/>
+                        <UML:AssociationEnd isNavigable="true" association="ass5" participant="ent0003" xmi.id="end7"/>
                     </UML:Association.connection>
                 </UML:Association>
             </UML:Namespace.ownedElement>

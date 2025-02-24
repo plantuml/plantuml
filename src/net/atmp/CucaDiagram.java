@@ -149,7 +149,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		super(source, type, previous, preprocessing);
 		this.namespace = new Plasma<Entity>();
 		this.root = namespace.root();
-		new Entity(source.iterator2().peek().getLocation(), this.root, this, null, GroupType.ROOT, 0);
+		new Entity(null, this.root, this, null, GroupType.ROOT, 0);
 
 		this.stacks.add(this.root.getData());
 	}
