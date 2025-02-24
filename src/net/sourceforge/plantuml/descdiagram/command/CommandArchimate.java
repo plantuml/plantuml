@@ -114,7 +114,7 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 
 		Entity entity = (Entity) quark.getData();
 		if (entity == null)
-			entity = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(diagram.getPragma(), display), LeafType.DESCRIPTION,
+			entity = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), display), LeafType.DESCRIPTION,
 					USymbols.ARCHIMATE);
 
 		final String icon = StereotypePattern.removeChevronBrackets(arg.getLazzy("STEREOTYPE", 0));

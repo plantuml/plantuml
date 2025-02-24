@@ -120,7 +120,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-		final Entity entity1 = getEntity(diagram, arg, true);
+		final Entity entity1 = getEntity(location, diagram, arg, true);
 
 		if (entity1 == null)
 			return CommandExecutionResult.error("No such activity");
@@ -133,7 +133,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			entity1.setSpecificColorTOBEREMOVED(ColorType.BACK, diagram.getSkinParam().getIHtmlColorSet().getColor(s));
 		}
 
-		final Entity entity2 = getEntity(diagram, arg, false);
+		final Entity entity2 = getEntity(location, diagram, arg, false);
 		if (entity2 == null)
 			return CommandExecutionResult.error("No such activity");
 
@@ -162,7 +162,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			type = type.goDotted();
 
 		final LinkArg linkArg = LinkArg.build(linkLabel, lenght, diagram.getSkinParam().classAttributeIconSize() > 0);
-		Link link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1,
+		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1,
 				entity2, type, linkArg);
 		if (arrowDirection.contains("*"))
 			link.setConstraint(false);
@@ -184,21 +184,21 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 
 	}
 
-	static Entity getEntity(ActivityDiagram diagram, RegexResult arg, final boolean start) {
+	static Entity getEntity(LineLocation location, ActivityDiagram diagram, RegexResult arg, final boolean start) {
 		final String suf = start ? "" : "2";
 
 		final String openBracket2 = arg.get("OPENBRACKET" + suf, 0);
 		if (openBracket2 != null)
-			return diagram.createInnerActivity();
+			return diagram.createInnerActivity(location);
 
 		if (arg.get("STAR" + suf, 0) != null) {
 			final String suppId = arg.get("STAR" + suf, 1);
 			if (start) {
 //				if (suppId != null)
 //					diagram.getStart().setTop(true);
-				return diagram.getStart();
+				return diagram.getStart(location);
 			}
-			return diagram.getEnd(suppId);
+			return diagram.getEnd(location, suppId);
 		}
 		String partition = arg.get("PARTITION" + suf, 0);
 		if (partition != null)
@@ -208,14 +208,14 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		if (idShort != null) {
 			if (partition != null) {
 				final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(partition));
-				diagram.gotoGroup(quark, Display.getWithNewlines(quark), GroupType.PACKAGE);
+				diagram.gotoGroup(location, quark, Display.getWithNewlines(quark), GroupType.PACKAGE);
 			}
 			final Quark<Entity> ident = diagram.quarkInContext(true, diagram.cleanId(idShort));
 
 			final LeafType type = getTypeIfExisting(diagram, ident);
 			Entity result = ident.getData();
 			if (result == null)
-				result = diagram.reallyCreateLeaf(ident, Display.getWithNewlines(diagram.getPragma(), idShort), type, null);
+				result = diagram.reallyCreateLeaf(location, ident, Display.getWithNewlines(diagram.getPragma(), idShort), type, null);
 
 			if (partition != null)
 				diagram.endGroup();
@@ -227,7 +227,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(bar));
 			Entity result = quark.getData();
 			if (result == null)
-				result = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(diagram.getPragma(), bar), LeafType.SYNCHRO_BAR, null);
+				result = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), bar), LeafType.SYNCHRO_BAR, null);
 			return result;
 		}
 		final RegexPartialMatch quoted = arg.get("QUOTED" + suf);
@@ -235,7 +235,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			final String quotedString = quoted.get(1) == null ? quoted.get(0) : quoted.get(1);
 			if (partition != null) {
 				final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(partition));
-				diagram.gotoGroup(quark, Display.getWithNewlines(diagram.getPragma(), partition), GroupType.PACKAGE);
+				diagram.gotoGroup(location, quark, Display.getWithNewlines(diagram.getPragma(), partition), GroupType.PACKAGE);
 			}
 
 			final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(quotedString));
@@ -243,7 +243,7 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 			final LeafType type = getTypeIfExisting(diagram, quark);
 			Entity result = quark.getData();
 			if (result == null)
-				result = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(diagram.getPragma(), quoted.get(0)), type, null);
+				result = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), quoted.get(0)), type, null);
 			if (partition != null)
 				diagram.endGroup();
 
@@ -253,12 +253,12 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 		if (quoteInvisibleString != null) {
 			if (partition != null) {
 				final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(partition));
-				diagram.gotoGroup(quark, Display.getWithNewlines(quark), GroupType.PACKAGE);
+				diagram.gotoGroup(location, quark, Display.getWithNewlines(quark), GroupType.PACKAGE);
 			}
 			final Quark<Entity> identInvisible = diagram.quarkInContext(true, diagram.cleanId(quoteInvisibleString));
 			Entity result = identInvisible.getData();
 			if (result == null)
-				result = diagram.reallyCreateLeaf(identInvisible, Display.getWithNewlines(diagram.getPragma(), identInvisible.getName()),
+				result = diagram.reallyCreateLeaf(location, identInvisible, Display.getWithNewlines(diagram.getPragma(), identInvisible.getName()),
 						LeafType.ACTIVITY, null);
 			if (partition != null)
 				diagram.endGroup();

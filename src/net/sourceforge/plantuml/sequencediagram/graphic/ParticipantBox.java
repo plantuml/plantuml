@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class ParticipantBox implements Pushable {
 
@@ -68,7 +69,7 @@ public class ParticipantBox implements Pushable {
 
 	private int cpt = CPT++;
 
-	public ParticipantBox(Component head, Component line, Component tail, Component delayLine, double startingX,
+	public ParticipantBox(LineLocation location, Component head, Component line, Component tail, Component delayLine, double startingX,
 			int outMargin, String participantCode) {
 		this.outMargin = outMargin;
 		this.startingX = startingX;

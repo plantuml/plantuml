@@ -64,7 +64,7 @@ public class CommandConcurrentState extends SingleLineCommand2<StateDiagram> {
 
 	@Override
 	protected CommandExecutionResult executeArg(StateDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		if (diagram.concurrentState(arg.get("TYPE", 0).charAt(0), currentPass))
+		if (diagram.concurrentState(location, arg.get("TYPE", 0).charAt(0), currentPass))
 			return CommandExecutionResult.ok();
 
 		return CommandExecutionResult.error("Error 42");

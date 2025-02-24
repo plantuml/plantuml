@@ -43,6 +43,7 @@ import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArg;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class Magma {
 
@@ -58,12 +59,12 @@ public class Magma {
 	public void putInSquare() {
 		final SquareLinker<Entity> linker = new SquareLinker<Entity>() {
 			public void topDown(Entity top, Entity down) {
-				diagram.addLink(new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(),
+				diagram.addLink(new Link(null, diagram, diagram.getSkinParam().getCurrentStyleBuilder(),
 						top, down, linkType, LinkArg.noDisplay(2)));
 			}
 
 			public void leftRight(Entity left, Entity right) {
-				diagram.addLink(new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(),
+				diagram.addLink(new Link(null, diagram, diagram.getSkinParam().getCurrentStyleBuilder(),
 						left, right, linkType, LinkArg.noDisplay(1)));
 			}
 		};
@@ -110,13 +111,13 @@ public class Magma {
 	}
 
 	public void linkToDown(Magma down) {
-		diagram.addLink(new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), this.getBottomLeft(),
+		diagram.addLink(new Link(null, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), this.getBottomLeft(),
 				down.getTopLeft(), linkType, LinkArg.noDisplay(2)));
 
 	}
 
 	public void linkToRight(Magma right) {
-		diagram.addLink(new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), this.getTopRight(),
+		diagram.addLink(new Link(null, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), this.getTopRight(),
 				right.getTopLeft(), linkType, LinkArg.noDisplay(1)));
 	}
 

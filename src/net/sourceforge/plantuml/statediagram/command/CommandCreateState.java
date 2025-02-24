@@ -134,11 +134,11 @@ public class CommandCreateState extends SingleLineCommand2<StateDiagram> {
 
 		Entity ent = quark.getData();
 		if (ent == null)
-			ent = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(diagram.getPragma(), display), type, null);
+			ent = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), display), type, null);
 		else
 			diagram.setLastEntity(ent);
 		
-		diagram.ensureParentState(quark);
+		diagram.ensureParentState(location, quark);
 
 		if (currentPass == ParserPass.ONE) {
 

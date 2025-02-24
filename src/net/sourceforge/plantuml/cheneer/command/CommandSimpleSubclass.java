@@ -108,7 +108,7 @@ public class CommandSimpleSubclass extends SingleLineCommand2<ChenEerDiagram> {
 		} else {
 			linkType = linkType.withMiddleSubset();
 		}
-		final Link link = new Link(diagram, diagram.getCurrentStyleBuilder(), entity1, entity2,
+		final Link link = new Link(location, diagram, diagram.getCurrentStyleBuilder(), entity1, entity2,
 				linkType, LinkArg.build(Display.NULL, 3));
 		link.setPortMembers(diagram.getPortId(entity1.getName()), diagram.getPortId(entity2.getName()));
 		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));

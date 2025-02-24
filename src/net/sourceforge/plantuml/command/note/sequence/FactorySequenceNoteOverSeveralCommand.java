@@ -125,7 +125,7 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 			protected CommandExecutionResult executeArg(final SequenceDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
 				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get("NOTE", 0));
-				return executeInternal(diagram, arg, diagram.manageVariable(display));
+				return executeInternal(location, diagram, arg, diagram.manageVariable(display));
 			}
 
 		};
@@ -147,18 +147,18 @@ public final class FactorySequenceNoteOverSeveralCommand implements SingleMultiF
 				lines = lines.subExtract(1, 1).expandsNewline(false);
 				lines = lines.removeEmptyColumns();
 				final Display display = lines.toDisplay();
-				return executeInternal(diagram, line0, diagram.manageVariable(display));
+				return executeInternal(lines.getLocation(), diagram, line0, diagram.manageVariable(display));
 			}
 
 		};
 	}
 
-	private CommandExecutionResult executeInternal(SequenceDiagram diagram, final RegexResult line0, Display display)
+	private CommandExecutionResult executeInternal(LineLocation location, SequenceDiagram diagram, final RegexResult line0, Display display)
 			throws NoSuchColorException {
 		final Participant p1 = diagram
-				.getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get("P1", 0)));
+				.getOrCreateParticipant(location, StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get("P1", 0)));
 		final Participant p2 = diagram
-				.getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get("P2", 0)));
+				.getOrCreateParticipant(location, StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(line0.get("P2", 0)));
 
 		if (display.size() > 0) {
 			final boolean tryMerge = line0.get("VMERGE", 0) != null;

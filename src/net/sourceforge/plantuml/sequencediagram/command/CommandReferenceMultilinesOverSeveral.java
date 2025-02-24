@@ -98,7 +98,7 @@ public class CommandReferenceMultilinesOverSeveral extends CommandMultilines<Seq
 		final List<String> participants = StringUtils.splitComma(arg.get("PARTS", 0));
 		final List<Participant> p = new ArrayList<>();
 		for (String s : participants)
-			p.add(diagram.getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));
+			p.add(diagram.getOrCreateParticipant(lines.getLocation(), StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));
 
 		lines = lines.subExtract(1, 1);
 		lines = lines.removeEmptyColumns();

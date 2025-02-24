@@ -163,7 +163,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(idShort));
 		Entity result = quark.getData();
 		if (quark.getData() == null)
-			result = diagram.reallyCreateLeaf(quark, display, type, usymbol);
+			result = diagram.reallyCreateLeaf(lines.getLocation(), quark, display, type, usymbol);
 
 		if (CommandCreateElementFull.existsWithBadType3(diagram, quark, type, usymbol))
 			return CommandExecutionResult.error("This element (" + quark.getName() + ") is already defined");

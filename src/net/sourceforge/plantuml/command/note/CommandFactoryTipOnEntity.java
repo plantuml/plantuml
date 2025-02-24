@@ -67,6 +67,7 @@ import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.Position;
 
 public final class CommandFactoryTipOnEntity implements SingleMultiFactoryCommand<AbstractEntityDiagram> {
@@ -152,12 +153,12 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 					url = urlBuilder.getUrl(line0.get("URL", 0));
 				}
 
-				return executeInternal(line0, system, url, display);
+				return executeInternal(lines.getLocation(), line0, system, url, display);
 			}
 		};
 	}
 
-	private CommandExecutionResult executeInternal(RegexResult line0, AbstractEntityDiagram diagram, Url url,
+	private CommandExecutionResult executeInternal(LineLocation location, RegexResult line0, AbstractEntityDiagram diagram, Url url,
 			Display display) throws NoSuchColorException {
 
 		final String pos = line0.get("POSITION", 0);
@@ -178,15 +179,15 @@ public final class CommandFactoryTipOnEntity implements SingleMultiFactoryComman
 		Entity tips = identTip.getData();
 
 		if (tips == null) {
-			tips = diagram.reallyCreateLeaf(identTip, Display.getWithNewlines(diagram.getPragma(), ""), LeafType.TIPS,
+			tips = diagram.reallyCreateLeaf(location, identTip, Display.getWithNewlines(diagram.getPragma(), ""), LeafType.TIPS,
 					null);
 			final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).getInvisible();
 			final Link link;
 			if (position == Position.RIGHT)
-				link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, tips, type,
+				link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, tips, type,
 						LinkArg.noDisplay(1));
 			else
-				link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), tips, cl1, type,
+				link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), tips, cl1, type,
 						LinkArg.noDisplay(1));
 
 			diagram.addLink(link);

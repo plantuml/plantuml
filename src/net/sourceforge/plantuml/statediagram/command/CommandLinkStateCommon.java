@@ -82,12 +82,12 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 		final String ent1 = arg.get("ENT1", 0);
 		final String ent2 = arg.get("ENT2", 0);
 
-		final Entity cl1 = getEntityStart(diagram, ent1);
+		final Entity cl1 = getEntityStart(location, diagram, ent1);
 		if (cl1 == null)
 			return CommandExecutionResult
 					.error("The state " + ent1 + " has been created in a concurrent state : it cannot be used here.");
 
-		final Entity cl2 = getEntityEnd(diagram, ent2);
+		final Entity cl2 = getEntityEnd(location, diagram, ent2);
 		if (cl2 == null)
 			return CommandExecutionResult
 					.error("The state " + ent2 + " has been created in a concurrent state : it cannot be used here.");
@@ -122,7 +122,7 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 
 		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));
 		final LinkArg linkArg = LinkArg.build(label, lenght, diagram.getSkinParam().classAttributeIconSize() > 0);
-		Link link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
+		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
 				linkType, linkArg);
 		if (dir == Direction.LEFT || dir == Direction.UP)
 			link = link.getInv();
@@ -145,39 +145,39 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 		return null;
 	}
 
-	private Entity getEntityStart(StateDiagram diagram, final String code) {
+	private Entity getEntityStart(LineLocation location, StateDiagram diagram, final String code) {
 		if (code.startsWith("[*]"))
-			return diagram.getStart();
+			return diagram.getStart(location);
 
-		return getEntity(diagram, code);
+		return getEntity(location, diagram, code);
 	}
 
-	private Entity getEntityEnd(StateDiagram diagram, final String code) {
+	private Entity getEntityEnd(LineLocation location, StateDiagram diagram, final String code) {
 		if (code.startsWith("[*]"))
-			return diagram.getEnd();
+			return diagram.getEnd(location);
 
-		return getEntity(diagram, code);
+		return getEntity(location, diagram, code);
 	}
 
-	private Entity getEntity(StateDiagram diagram, final String code) {
+	private Entity getEntity(LineLocation location, StateDiagram diagram, final String code) {
 		if (code.equalsIgnoreCase("[H]"))
-			return diagram.getHistorical();
+			return diagram.getHistorical(location);
 
 		if (code.endsWith("[H]"))
-			return diagram.getHistorical(code.substring(0, code.length() - 3));
+			return diagram.getHistorical(location, code.substring(0, code.length() - 3));
 
 		if (code.equalsIgnoreCase("[H*]"))
-			return diagram.getDeepHistory();
+			return diagram.getDeepHistory(location);
 
 		if (code.endsWith("[H*]"))
-			return diagram.getDeepHistory(code.substring(0, code.length() - 4));
+			return diagram.getDeepHistory(location, code.substring(0, code.length() - 4));
 
 		if (code.startsWith("=") && code.endsWith("=")) {
 			final String codeString1 = removeEquals(code);
 			final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(codeString1));
 			if (quark.getData() != null)
 				return quark.getData();
-			return diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark), LeafType.SYNCHRO_BAR, null);
+			return diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(quark), LeafType.SYNCHRO_BAR, null);
 		}
 
 		if (diagram.getCurrentGroup().getName().equals(code))
@@ -189,7 +189,7 @@ abstract class CommandLinkStateCommon extends SingleLineCommand2<StateDiagram> {
 
 		if (quark.getData() != null)
 			return quark.getData();
-		return diagram.reallyCreateLeaf(quark, Display.getWithNewlines(diagram.getPragma(), quark.getName()), LeafType.STATE, null);
+		return diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), quark.getName()), LeafType.STATE, null);
 	}
 
 	private String removeEquals(String code) {

@@ -76,8 +76,7 @@ public class DriverRectangleSvg implements UDriver<URectangle, SvgGraphics> {
 				return;
 			}
 		}
-		svg.svgRectangle(x, y, width, height, rx / 2, ry / 2, rect.getDeltaShadow(), rect.getComment(),
-				rect.getCodeLine());
+		svg.svgRectangle(x, y, width, height, rx / 2, ry / 2, rect.getDeltaShadow()/*, rect.getComment(),	rect.getCodeLine()*/);
 	}
 
 	public static void applyFillColor(SvgGraphics svg, ColorMapper mapper, UParam param) {

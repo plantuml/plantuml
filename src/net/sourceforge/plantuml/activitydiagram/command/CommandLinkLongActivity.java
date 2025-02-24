@@ -121,7 +121,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		lines = lines.trim();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 
-		final Entity entity1 = CommandLinkActivity.getEntity(diagram, line0, true);
+		final Entity entity1 = CommandLinkActivity.getEntity(lines.getLocation(), diagram, line0, true);
 		if (entity1 == null)
 			return CommandExecutionResult.error("No such entity");
 
@@ -178,13 +178,13 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 		}
 		if (partition != null) {
 			final Quark<Entity> idNewLong = diagram.quarkInContext(true, diagram.cleanId(partition));
-			diagram.gotoGroup(idNewLong, Display.getWithNewlines(diagram.getPragma(), partition), GroupType.PACKAGE);
+			diagram.gotoGroup(lines.getLocation(), idNewLong, Display.getWithNewlines(diagram.getPragma(), partition), GroupType.PACKAGE);
 		}
 		final Quark<Entity> ident = diagram.quarkInContext(true, diagram.cleanId(idShort));
 
 		Entity entity2 = ident.getData();
 		if (entity2 == null)
-			entity2 = diagram.reallyCreateLeaf(ident, Display.getWithNewlines(diagram.getPragma(), displayString), LeafType.ACTIVITY, null);
+			entity2 = diagram.reallyCreateLeaf(lines.getLocation(), ident, Display.getWithNewlines(diagram.getPragma(), displayString), LeafType.ACTIVITY, null);
 
 		diagram.setLastEntityConsulted(entity2);
 
@@ -217,7 +217,7 @@ public class CommandLinkLongActivity extends CommandMultilines2<ActivityDiagram>
 			type = type.goDotted();
 
 		final LinkArg linkArg = LinkArg.build(linkLabel, lenght, diagram.getSkinParam().classAttributeIconSize() > 0);
-		Link link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1, entity2, type, linkArg);
+		Link link = new Link(lines.getLocation(), diagram, diagram.getSkinParam().getCurrentStyleBuilder(), entity1, entity2, type, linkArg);
 		final Direction direction = StringUtils.getArrowDirection(arrowBody1 + arrowDirection + arrowBody2 + ">");
 		if (direction == Direction.LEFT || direction == Direction.UP)
 			link = link.getInv();

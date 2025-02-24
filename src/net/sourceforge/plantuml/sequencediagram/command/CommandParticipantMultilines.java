@@ -107,7 +107,7 @@ public class CommandParticipantMultilines extends CommandMultilines2<SequenceDia
 		final String orderString = arg.get("ORDER", 0);
 		final int order = orderString == null ? 0 : Integer.parseInt(orderString);
 
-		final Participant participant = diagram.createNewParticipant(type, code, strings, order);
+		final Participant participant = diagram.createNewParticipant(lines.getLocation(), type, code, strings, order);
 
 		final String stereotype = arg.get("STEREO", 0);
 

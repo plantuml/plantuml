@@ -106,7 +106,7 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 			protected CommandExecutionResult executeArg(final AbstractEntityDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
 				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get("DISPLAY", 0));
-				return executeInternal(diagram, arg, display);
+				return executeInternal(location, diagram, arg, display);
 			}
 
 		};
@@ -129,12 +129,12 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 				lines = lines.subExtract(1, 1).expandsNewline(false);
 				lines = lines.removeEmptyColumns();
 				final Display display = lines.toDisplay();
-				return executeInternal(diagram, line0, display);
+				return executeInternal(lines.getLocation(), diagram, line0, display);
 			}
 		};
 	}
 
-	private CommandExecutionResult executeInternal(AbstractEntityDiagram diagram, RegexResult arg, Display display)
+	private CommandExecutionResult executeInternal(LineLocation location, AbstractEntityDiagram diagram, RegexResult arg, Display display)
 			throws NoSuchColorException {
 		final String idShort = arg.get("CODE", 0);
 		final Quark<Entity> quark = diagram.quarkInContext(false, diagram.cleanId(idShort));
@@ -142,7 +142,7 @@ public final class CommandFactoryNote implements SingleMultiFactoryCommand<Abstr
 		if (quark.getData() != null)
 			return CommandExecutionResult.error("Note already created: " + quark.getName());
 
-		final Entity entity = diagram.reallyCreateLeaf(quark, display, LeafType.NOTE, null);
+		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.NOTE, null);
 
 		assert entity != null;
 		final String s = arg.get("COLOR", 0);

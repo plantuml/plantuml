@@ -50,6 +50,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class StateDiagram extends AbstractEntityDiagram {
 	// ::remove folder when __HAXE__
@@ -88,104 +89,104 @@ public class StateDiagram extends AbstractEntityDiagram {
 		return true;
 	}
 
-	public Entity getStart() {
+	public Entity getStart(LineLocation location) {
 		final Entity g = getCurrentGroup();
 		if (g.isRoot()) {
 			final String idShort = "*start*";
 			final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 			if (quark.getData() == null)
-				reallyCreateLeaf(quark, Display.getWithNewlines(getPragma(), ""), LeafType.CIRCLE_START, null);
+				reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), ""), LeafType.CIRCLE_START, null);
 			return quark.getData();
 		}
 		final String idShort = "*start*" + g.getName();
 		final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 		if (quark.getData() == null)
-			reallyCreateLeaf(quark, Display.getWithNewlines(getPragma(), ""), LeafType.CIRCLE_START, null);
+			reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), ""), LeafType.CIRCLE_START, null);
 		return quark.getData();
 	}
 
-	public Entity getEnd() {
+	public Entity getEnd(LineLocation location) {
 		final Entity p = getCurrentGroup();
 		if (p.isRoot()) {
 			final String idShort = "*end*";
 			final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 			if (quark.getData() == null)
-				reallyCreateLeaf(quark, Display.getWithNewlines(getPragma(), ""), LeafType.CIRCLE_END, null);
+				reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), ""), LeafType.CIRCLE_END, null);
 			return quark.getData();
 		}
 		final String idShort = "*end*" + p.getName();
 		final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 		if (quark.getData() == null)
-			reallyCreateLeaf(quark, Display.getWithNewlines(getPragma(), ""), LeafType.CIRCLE_END, null);
+			reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), ""), LeafType.CIRCLE_END, null);
 		return quark.getData();
 	}
 
-	public Entity getHistorical() {
+	public Entity getHistorical(LineLocation location) {
 		final Entity g = getCurrentGroup();
 		if (g.isRoot()) {
 			final String idShort = "*historical*";
 			final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 			if (quark.getData() == null)
-				reallyCreateLeaf(quark, Display.getWithNewlines(getPragma(), ""), LeafType.PSEUDO_STATE, null);
+				reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), ""), LeafType.PSEUDO_STATE, null);
 			return quark.getData();
 		}
 		final String idShort = "*historical*" + g.getName();
 		final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 		if (quark.getData() == null)
-			reallyCreateLeaf(quark, Display.getWithNewlines(getPragma(), ""), LeafType.PSEUDO_STATE, null);
+			reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), ""), LeafType.PSEUDO_STATE, null);
 		return quark.getData();
 	}
 
-	public Entity getHistorical(String idShort) {
+	public Entity getHistorical(LineLocation location, String idShort) {
 		final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
-		gotoGroup(quark, Display.getWithNewlines(quark), GroupType.STATE);
+		gotoGroup(location, quark, Display.getWithNewlines(quark), GroupType.STATE);
 		final Entity g = getCurrentGroup();
 		final String tmp = "*historical*" + g.getName();
 		final Quark<Entity> ident = quarkInContext(true, tmp);
 		final Entity result;
 		if (ident.getData() == null)
-			result = reallyCreateLeaf(ident, Display.getWithNewlines(getPragma(), ""), LeafType.PSEUDO_STATE, null);
+			result = reallyCreateLeaf(location, ident, Display.getWithNewlines(getPragma(), ""), LeafType.PSEUDO_STATE, null);
 		else
 			result = ident.getData();
 		endGroup();
 		return result;
 	}
 
-	public Entity getDeepHistory() {
+	public Entity getDeepHistory(LineLocation location) {
 		final Entity g = getCurrentGroup();
 		if (g.isRoot()) {
 			final String idShort = "*deephistory*";
 			final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 			if (quark.getData() == null)
-				reallyCreateLeaf(quark, Display.getWithNewlines(getPragma(), ""), LeafType.DEEP_HISTORY, null);
+				reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), ""), LeafType.DEEP_HISTORY, null);
 			return quark.getData();
 		}
 
 		final String idShort = "*deephistory*" + g.getName();
 		final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 		if (quark.getData() == null)
-			reallyCreateLeaf(quark, Display.getWithNewlines(getPragma(), ""), LeafType.DEEP_HISTORY, null);
+			reallyCreateLeaf(location, quark, Display.getWithNewlines(getPragma(), ""), LeafType.DEEP_HISTORY, null);
 		return quark.getData();
 
 	}
 
-	public Entity getDeepHistory(String idShort) {
+	public Entity getDeepHistory(LineLocation location, String idShort) {
 		final Quark<Entity> quark = quarkInContext(true, cleanId(idShort));
 
-		gotoGroup(quark, Display.getWithNewlines(quark), GroupType.STATE);
+		gotoGroup(location, quark, Display.getWithNewlines(quark), GroupType.STATE);
 		final Entity g = getCurrentGroup();
 		final String tmp = "*deephistory*" + g.getName();
 		final Quark<Entity> ident = quarkInContext(true, cleanId(tmp));
 		final Entity result;
 		if (ident.getData() == null)
-			result = reallyCreateLeaf(ident, Display.getWithNewlines(getPragma(), ""), LeafType.DEEP_HISTORY, null);
+			result = reallyCreateLeaf(location, ident, Display.getWithNewlines(getPragma(), ""), LeafType.DEEP_HISTORY, null);
 		else
 			result = ident.getData();
 		endGroup();
 		return result;
 	}
 
-	public boolean concurrentState(char direction, ParserPass currentPass) {
+	public boolean concurrentState(LineLocation location, char direction, ParserPass currentPass) {
 		final Entity cur = getCurrentGroup();
 		getCurrentGroup().setConcurrentSeparator(direction);
 
@@ -195,7 +196,7 @@ public class StateDiagram extends AbstractEntityDiagram {
 		final String tmp1 = this.getUniqueSequence2(CONCURRENT_PREFIX);
 		final Quark<Entity> ident1 = quarkInContext(true, cleanId(tmp1));
 
-		gotoGroup(ident1, Display.create(""), GroupType.CONCURRENT_STATE);
+		gotoGroup(location, ident1, Display.create(""), GroupType.CONCURRENT_STATE);
 		getCurrentGroup().setConcurrentSeparator(direction);
 
 		return true;
@@ -258,14 +259,14 @@ public class StateDiagram extends AbstractEntityDiagram {
 
 	}
 
-	public void ensureParentState(Quark<Entity> current) {
+	public void ensureParentState(LineLocation location, Quark<Entity> current) {
 		while (current != null) {
 			final Quark<Entity> parent = current.getParent();
 
 			if (parent == null || parent.getData() != null)
 				return;
 
-			final Entity parentGroup = this.createGroup(parent, GroupType.STATE);
+			final Entity parentGroup = this.createGroup(location, parent, GroupType.STATE);
 			parentGroup.setDisplay(Display.getWithNewlines(parent));
 
 			current = parent;

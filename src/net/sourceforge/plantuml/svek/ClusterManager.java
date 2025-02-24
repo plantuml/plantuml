@@ -52,7 +52,7 @@ public class ClusterManager {
 	}
 
 	public void openCluster(Entity g, ClusterHeader clusterHeader) {
-		this.current = current.createChild(clusterHeader, bibliotekon.getColorSequence(), g);
+		this.current = current.createChild(g.getLocation(), clusterHeader, bibliotekon.getColorSequence(), g);
 		bibliotekon.addCluster(this.current);
 	}
 

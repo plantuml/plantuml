@@ -45,7 +45,6 @@ import net.sourceforge.plantuml.klimt.compress.CompressionMode;
 import net.sourceforge.plantuml.klimt.compress.UShapeIgnorableForCompression;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.geom.MinMax;
-import net.sourceforge.plantuml.klimt.geom.USegmentType;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 
 public class URectangle extends AbstractShadowable implements UShapeSized, UShapeIgnorableForCompression {
@@ -54,8 +53,8 @@ public class URectangle extends AbstractShadowable implements UShapeSized, UShap
 	private final double height;
 	private final double rx;
 	private final double ry;
-	private final String comment;
-	private final String codeLine;
+	private final String comment = null;
+	private final String codeLine = null;
 	private final boolean ignoreForCompressionOnX;
 	private final boolean ignoreForCompressionOnY;
 
@@ -144,8 +143,8 @@ public class URectangle extends AbstractShadowable implements UShapeSized, UShap
 
 		this.ignoreForCompressionOnX = ignoreForCompressionOnX;
 		this.ignoreForCompressionOnY = ignoreForCompressionOnY;
-		this.comment = comment;
-		this.codeLine = codeLine;
+		// this.comment = comment;
+		// this.codeLine = codeLine;
 		this.width = width;
 		this.height = height;
 		this.rx = rx;
@@ -181,13 +180,13 @@ public class URectangle extends AbstractShadowable implements UShapeSized, UShap
 		return MinMax.fromMax(width, height);
 	}
 
-	public final String getComment() {
-		return comment;
-	}
-
-	public String getCodeLine() {
-		return codeLine;
-	}
+//	public final String getComment() {
+//		return comment;
+//	}
+//
+//	public String getCodeLine() {
+//		return codeLine;
+//	}
 
 	public void drawWhenCompressed(UGraphic ug, CompressionMode mode) {
 		if (mode == CompressionMode.ON_X) {

@@ -71,6 +71,7 @@ import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.svek.WithPorts;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Direction;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class EntityImageClass extends AbstractEntityImage implements Stencil, WithPorts {
 
@@ -144,9 +145,12 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 			ug.startUrl(url);
 
 		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
+		typeIDent.put(UGroupType.DATA_UID, getEntity().getUid());
 		typeIDent.put(UGroupType.CLASS, "entity");
 		typeIDent.put(UGroupType.ID, "entity_" + getEntity().getName());
 		typeIDent.put(UGroupType.DATA_ENTITY, getEntity().getName());
+		if (getEntity().getLocation() != null)
+			typeIDent.put(UGroupType.DATA_SOURCE_LINE, "" + getEntity().getLocation().getPosition());
 		ug.startGroup(typeIDent);
 		drawInternal(ug);
 		ug.closeGroup();
@@ -177,8 +181,9 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 
 		final double widthTotal = dimTotal.getWidth();
 		final double heightTotal = dimTotal.getHeight();
+		final LineLocation location = getEntity().getLocation();
 		final Shadowable rect = URectangle.build(widthTotal, heightTotal).rounded(roundCorner)
-				.withCommentAndCodeLine(getEntity().getName(), getEntity().getCodeLine());
+				.withCommentAndCodeLine(getEntity().getName(), location == null ? null : "" + location);
 
 		double shadow = 0;
 

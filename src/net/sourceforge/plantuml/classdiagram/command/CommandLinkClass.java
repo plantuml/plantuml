@@ -174,13 +174,13 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		String ent1String = diagram.cleanId(arg.get("ENT1", 0));
 		String ent2String = diagram.cleanId(arg.get("ENT2", 0));
 		if (ent1String == null && ent2String == null)
-			return executeArgSpecial3(diagram, arg);
+			return executeArgSpecial3(location, diagram, arg);
 
 		if (ent1String == null)
-			return executeArgSpecial1(diagram, arg);
+			return executeArgSpecial1(location, diagram, arg);
 
 		if (ent2String == null)
-			return executeArgSpecial2(diagram, arg);
+			return executeArgSpecial2(location, diagram, arg);
 
 //		if (isGroupButNotTheCurrentGroup(diagram, ent1String) && isGroupButNotTheCurrentGroup(diagram, ent2String)) {
 //			return executePackageLink(diagram, arg);
@@ -208,10 +208,10 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		Entity cl1 = quark1.get().getData();
 		if (cl1 == null)
-			cl1 = diagram.reallyCreateLeaf(quark1.get(), Display.getWithNewlines(diagram.getPragma(), quark1.get().getName()), LeafType.CLASS, null);
+			cl1 = diagram.reallyCreateLeaf(location, quark1.get(), Display.getWithNewlines(diagram.getPragma(), quark1.get().getName()), LeafType.CLASS, null);
 		Entity cl2 = quark2.get().getData();
 		if (cl2 == null)
-			cl2 = diagram.reallyCreateLeaf(quark2.get(), Display.getWithNewlines(diagram.getPragma(), quark2.get().getName()), LeafType.CLASS, null);
+			cl2 = diagram.reallyCreateLeaf(location, quark2.get(), Display.getWithNewlines(diagram.getPragma(), quark2.get().getName()), LeafType.CLASS, null);
 
 		final Direction dir = getDirection(arg);
 		final int queue;
@@ -230,7 +230,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 				.withQuantifier(labels.getFirstLabel(), labels.getSecondLabel())
 				.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()).withKal(kal1, kal2);
 
-		Link link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
+		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
 				linkType, linkArg);
 		if (arg.get("URL", 0) != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
@@ -281,7 +281,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		}
 	}
 
-	private CommandExecutionResult executePackageLink(AbstractClassOrObjectDiagram diagram, RegexResult arg)
+	private CommandExecutionResult executePackageLink(LineLocation location, AbstractClassOrObjectDiagram diagram, RegexResult arg)
 			throws NoSuchColorException {
 		final String ent1String = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT1", 0), "\"");
 		final String ent2String = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("ENT2", 0), "\"");
@@ -300,7 +300,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final String firstLabel = arg.get("FIRST_LABEL", 0);
 		final String secondLabel = arg.get("SECOND_LABEL", 0);
 		final LinkArg linkArg = LinkArg.build(labelLink, queue, diagram.getSkinParam().classAttributeIconSize() > 0);
-		final Link link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
+		final Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
 				cl2, linkType, linkArg.withQuantifier(firstLabel, secondLabel)
 						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
 		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));
@@ -313,7 +313,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		return CommandExecutionResult.ok();
 	}
 
-	private CommandExecutionResult executeArgSpecial1(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
+	private CommandExecutionResult executeArgSpecial1(LineLocation location, AbstractClassOrObjectDiagram diagram, RegexResult arg) {
 		final String name1A = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE1", 0));
 		final String name1B = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE1", 1));
 
@@ -334,19 +334,19 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		Entity cl2 = ent2.getData();
 		if (cl2 == null)
-			cl2 = diagram.reallyCreateLeaf(ent2, Display.getWithNewlines(diagram.getPragma(), ent2.getName()), LeafType.CLASS, null);
+			cl2 = diagram.reallyCreateLeaf(location, ent2, Display.getWithNewlines(diagram.getPragma(), ent2.getName()), LeafType.CLASS, null);
 
 		final LinkType linkType = getLinkType(arg);
 		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL_LINK", 0));
 
-		final boolean result = diagram.associationClass(1, cl1A, cl1B, cl2, linkType, label);
+		final boolean result = diagram.associationClass(location, 1, cl1A, cl1B, cl2, linkType, label);
 		if (result == false)
 			return CommandExecutionResult.error("Cannot have more than 2 assocications");
 
 		return CommandExecutionResult.ok();
 	}
 
-	private CommandExecutionResult executeArgSpecial2(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
+	private CommandExecutionResult executeArgSpecial2(LineLocation location, AbstractClassOrObjectDiagram diagram, RegexResult arg) {
 		final String name2A = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE2", 0));
 		final String name2B = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE2", 1));
 
@@ -367,19 +367,19 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 
 		Entity cl1 = (Entity) ent1.getData();
 		if (cl1 == null)
-			cl1 = diagram.reallyCreateLeaf(ent1, Display.getWithNewlines(diagram.getPragma(), ent1.getName()), LeafType.CLASS, null);
+			cl1 = diagram.reallyCreateLeaf(location, ent1, Display.getWithNewlines(diagram.getPragma(), ent1.getName()), LeafType.CLASS, null);
 
 		final LinkType linkType = getLinkType(arg);
 		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL_LINK", 0));
 
-		final boolean result = diagram.associationClass(2, cl2A, cl2B, cl1, linkType, label);
+		final boolean result = diagram.associationClass(location, 2, cl2A, cl2B, cl1, linkType, label);
 		if (result == false)
 			return CommandExecutionResult.error("Cannot have more than 2 assocications");
 
 		return CommandExecutionResult.ok();
 	}
 
-	private CommandExecutionResult executeArgSpecial3(AbstractClassOrObjectDiagram diagram, RegexResult arg) {
+	private CommandExecutionResult executeArgSpecial3(LineLocation location, AbstractClassOrObjectDiagram diagram, RegexResult arg) {
 
 		final String name1A = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE1", 0));
 		final String name1B = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("COUPLE1", 1));
@@ -408,7 +408,7 @@ final public class CommandLinkClass extends SingleLineCommand2<AbstractClassOrOb
 		final LinkType linkType = getLinkType(arg);
 		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL_LINK", 0));
 
-		return diagram.associationClass(cl1A, cl1B, cl2A, cl2B, linkType, label);
+		return diagram.associationClass(location, cl1A, cl1B, cl2A, cl2B, linkType, label);
 	}
 
 	private LinkDecor getDecors1(String s) {

@@ -128,7 +128,7 @@ public class ClassDiagram extends AbstractClassOrObjectDiagram {
 		return super.checkFinalError();
 	}
 
-	public CommandExecutionResult checkIfPackageHierarchyIfOk(Entity entity) {
+	public CommandExecutionResult checkIfPackageHierarchyIsOk(Entity entity) {
 		Quark<Entity> current = entity.getQuark().getParent();
 		while (current.isRoot() == false) {
 			if (current.getData() != null && current.getData().isGroup() == false)

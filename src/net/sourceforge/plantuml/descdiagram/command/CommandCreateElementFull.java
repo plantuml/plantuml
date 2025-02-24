@@ -228,7 +228,7 @@ public class CommandCreateElementFull extends SingleLineCommand2<DescriptionDiag
 
 		Entity entity = quark.getData();
 		if (entity == null)
-			entity = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(diagram.getPragma(), display), type, usymbol);
+			entity = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), display), type, usymbol);
 
 		entity.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));
 

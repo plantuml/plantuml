@@ -54,7 +54,7 @@ public class DriverPixelSvg implements UDriver<UPixel, SvgGraphics> {
 		}
 		svg.setStrokeWidth(0.5, "");
 
-		svg.svgRectangle(x, y, 0.5, 0.5, 0, 0, 0, null, null);
+		svg.svgRectangle(x, y, 0.5, 0.5, 0, 0, 0/*, null, null*/);
 
 	}
 }

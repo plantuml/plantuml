@@ -120,7 +120,7 @@ public class DriverTextSvg implements UDriver<UText, SvgGraphics> {
 				svg.setFillColor("url(#" + id + ")");
 				svg.setStrokeColor(null);
 				final double deltaPatch = 2;
-				svg.svgRectangle(x, y - height + deltaPatch, width, height, 0, 0, 0, null, null);
+				svg.svgRectangle(x, y - height + deltaPatch, width, height, 0, 0, 0/*, null, null*/);
 
 			} else {
 				backColor = back.toRGB(mapper);

@@ -132,7 +132,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 				RegexLeaf.end()).protectSize(2000);
 	}
 
-	private List<Participant> getMulticasts(SequenceDiagram system, RegexResult arg2) {
+	private List<Participant> getMulticasts(LineLocation location, SequenceDiagram system, RegexResult arg2) {
 		final String multicast = arg2.get("MULTICAST", 0);
 		if (multicast != null) {
 			final List<Participant> result = new ArrayList<>();
@@ -141,7 +141,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 				if (s.length() == 0)
 					continue;
 
-				final Participant participant = system.getOrCreateParticipant(s);
+				final Participant participant = system.getOrCreateParticipant(location, s);
 				if (participant != null)
 					result.add(participant);
 
@@ -151,7 +151,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		return Collections.emptyList();
 	}
 
-	private Participant getOrCreateParticipant(SequenceDiagram system, RegexResult arg2, String n) {
+	private Participant getOrCreateParticipant(LineLocation location, SequenceDiagram system, RegexResult arg2, String n) {
 		final String code;
 		final Display display;
 		if (arg2.get(n + "CODE", 0) != null) {
@@ -166,11 +166,11 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		} else if (arg2.get(n + "CODELONG", 0) != null) {
 			code = arg2.get(n + "CODELONG", 0);
 			display = Display.getWithNewlines(system.getPragma(), arg2.get(n + "CODELONG", 1));
-			return system.getOrCreateParticipant(code, display);
+			return system.getOrCreateParticipant(location, code, display);
 		} else {
 			throw new IllegalStateException();
 		}
-		return system.getOrCreateParticipant(code, display);
+		return system.getOrCreateParticipant(location, code, display);
 	}
 
 	private boolean contains(String string, String... totest) {
@@ -233,15 +233,15 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		if (reverseDefine) {
 			// Keep the order
 			// See https://github.com/plantuml/plantuml/issues/1819#issuecomment-2158524871
-			p2 = getOrCreateParticipant(diagram, arg, "PART1");
-			p1 = getOrCreateParticipant(diagram, arg, "PART2");
+			p2 = getOrCreateParticipant(location, diagram, arg, "PART1");
+			p1 = getOrCreateParticipant(location, diagram, arg, "PART2");
 			circleAtStart = dressing2.contains("o");
 			circleAtEnd = dressing1.contains("o");
 			sync2 = contains(dressing1, "<<", "\\\\", "//");
 			sync1 = contains(dressing2, ">>", "\\\\", "//");
 		} else {
-			p1 = getOrCreateParticipant(diagram, arg, "PART1");
-			p2 = getOrCreateParticipant(diagram, arg, "PART2");
+			p1 = getOrCreateParticipant(location, diagram, arg, "PART1");
+			p2 = getOrCreateParticipant(location, diagram, arg, "PART2");
 			circleAtStart = dressing1.contains("o");
 			circleAtEnd = dressing2.contains("o");
 			sync1 = contains(dressing1, "<<", "\\\\", "//");
@@ -312,7 +312,7 @@ public class CommandArrow extends SingleLineCommand2<SequenceDiagram> {
 		final String messageNumber = diagram.getNextMessageNumber();
 		final Message msg = new Message(diagram.getSkinParam().getCurrentStyleBuilder(), p1, p2,
 				diagram.manageVariable(labels), config, messageNumber);
-		msg.setMulticast(getMulticasts(diagram, arg));
+		msg.setMulticast(getMulticasts(location, diagram, arg));
 		final String url = arg.get("URL", 0);
 		if (url != null) {
 			final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);

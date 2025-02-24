@@ -195,7 +195,7 @@ final public class UmlSource {
 		return StringUtils.seed(getPlainString("\n"));
 	}
 
-	public String getLine(LineLocation n) {
+	private String getLine(LineLocation n) {
 		for (StringLocated s : source)
 			if (s.getLocation().compareTo(n) == 0)
 				return s.getString();

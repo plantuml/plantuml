@@ -124,10 +124,10 @@ public class CommandCreateDomain extends SingleLineCommand2<DescriptionDiagram> 
 		final String group = arg.get("GROUP", 0);
 		Entity entity;
 		if (group != null) {
-			diagram.gotoGroup(quark, display, type, usymbol);
+			diagram.gotoGroup(location, quark, display, type, usymbol);
 			entity = diagram.getCurrentGroup();
 		} else {
-			entity = diagram.reallyCreateLeaf(quark, display, type2, usymbol);
+			entity = diagram.reallyCreateLeaf(location, quark, display, type2, usymbol);
 		}
 		if (stereotype != null)
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),

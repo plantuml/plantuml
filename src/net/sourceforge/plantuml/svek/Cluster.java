@@ -39,6 +39,7 @@ package net.sourceforge.plantuml.svek;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -92,6 +93,7 @@ import net.sourceforge.plantuml.svek.image.EntityImageNoteLink;
 import net.sourceforge.plantuml.svek.image.EntityImageState;
 import net.sourceforge.plantuml.svek.image.EntityImageStateCommon;
 import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.utils.Position;
 
 public class Cluster implements Moveable {
@@ -120,6 +122,7 @@ public class Cluster implements Moveable {
 	private XPoint2D xyNoteBottom;
 
 	private RectangleArea rectangleArea;
+	private final LineLocation location;
 
 	public void moveDelta(double deltaX, double deltaY) {
 		if (this.xyNoteTop != null)
@@ -142,14 +145,15 @@ public class Cluster implements Moveable {
 		return Collections.unmodifiableSet(result);
 	}
 
-	public Cluster(CucaDiagram diagram, ColorSequence colorSequence, Entity root) {
-		this(diagram, null, colorSequence, root);
+	public Cluster(LineLocation location, CucaDiagram diagram, ColorSequence colorSequence, Entity root) {
+		this(location, diagram, null, colorSequence, root);
 	}
 
-	private Cluster(CucaDiagram diagram, Cluster parentCluster, ColorSequence colorSequence, Entity group) {
+	private Cluster(LineLocation location, CucaDiagram diagram, Cluster parentCluster, ColorSequence colorSequence, Entity group) {
 		if (group == null)
 			throw new IllegalStateException();
-
+		
+		this.location = location;
 		this.parentCluster = parentCluster;
 		this.group = group;
 		this.diagram = diagram;
@@ -237,8 +241,8 @@ public class Cluster implements Moveable {
 		return Collections.unmodifiableList(children);
 	}
 
-	public Cluster createChild(ClusterHeader clusterHeader, ColorSequence colorSequence, Entity g) {
-		final Cluster child = new Cluster(diagram, this, colorSequence, g);
+	public Cluster createChild(LineLocation location, ClusterHeader clusterHeader, ColorSequence colorSequence, Entity g) {
+		final Cluster child = new Cluster(location, diagram, this, colorSequence, g);
 		child.clusterHeader = clusterHeader;
 		this.children.add(child);
 		return child;
@@ -319,7 +323,17 @@ public class Cluster implements Moveable {
 
 		final double diagonalCorner = style.value(PName.DiagonalCorner).asDouble();
 
-		ug.startGroup(Collections.singletonMap(UGroupType.ID, "cluster_" + fullName));
+		// ug.startGroup(Collections.singletonMap(UGroupType.ID, "cluster_" + fullName));
+		
+		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
+		typeIDent.put(UGroupType.DATA_UID, group.getUid());
+		typeIDent.put(UGroupType.CLASS, "cluster");
+		typeIDent.put(UGroupType.ID, "cluster_" + fullName);
+		typeIDent.put(UGroupType.DATA_ENTITY, group.getName());
+		if (group.getLocation() != null)
+			typeIDent.put(UGroupType.DATA_SOURCE_LINE, "" + group.getLocation().getPosition());
+		ug.startGroup(typeIDent);
+		
 
 		final Url url = group.getUrl99();
 		if (url != null)

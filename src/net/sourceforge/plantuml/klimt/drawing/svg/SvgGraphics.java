@@ -450,8 +450,8 @@ public class SvgGraphics {
 		return pendingAction.get(0);
 	}
 
-	public void svgRectangle(double x, double y, double width, double height, double rx, double ry, double deltaShadow,
-			String id, String codeLine) {
+	public void svgRectangle(double x, double y, double width, double height, double rx, double ry, double deltaShadow
+			/*, String id, String codeLine*/) {
 		if (height <= 0 || width <= 0) {
 			return;
 			// To be restored when Teoz will be finished
@@ -465,11 +465,11 @@ public class SvgGraphics {
 				elt.setAttribute("rx", format(rx));
 				elt.setAttribute("ry", format(ry));
 			}
-			if (id != null)
-				elt.setAttribute("id", id);
-
-			if (codeLine != null)
-				elt.setAttribute("codeLine", codeLine);
+//			if (id != null)
+//				elt.setAttribute("id", id);
+//
+//			if (codeLine != null)
+//				elt.setAttribute("codeLine", codeLine);
 
 			getG().appendChild(elt);
 		}
@@ -1110,16 +1110,20 @@ public class SvgGraphics {
 		pendingAction.add(0, (Element) document.createElement("g"));
 
 		for (Map.Entry<UGroupType, String> typeIdent : typeIdents.entrySet()) {
-			if (typeIdent.getKey() == UGroupType.ID)
-				pendingAction.get(0).setAttribute(UGroupType.ID.getSvgKeyAttributeName(), typeIdent.getValue());
-
 			if (typeIdent.getKey() == UGroupType.TITLE) {
 				Element title = document.createElement(UGroupType.TITLE.getSvgKeyAttributeName());
 				title.setTextContent(typeIdent.getValue());
 				pendingAction.get(0).appendChild(title);
 			}
 
-			if (option.isInteractive())
+			switch (typeIdent.getKey()) {
+			case DATA_UID:
+			case ID:
+			case DATA_SOURCE_LINE:
+				pendingAction.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(), typeIdent.getValue());
+			}
+
+			//if (option.isInteractive())
 				switch (typeIdent.getKey()) {
 				case CLASS:
 				case DATA_ENTITY:

@@ -133,7 +133,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 
 			final Quark<Entity> idNewLong = diagram.quarkInContext(true, diagram.cleanId(ent1) + suffix);
 			final LeafType type = getType(arg.get("ENT_THEN_LOL", 1));
-			cl2 = diagram.reallyCreateLeaf(idNewLong, Display.getWithNewlines(diagram.getPragma(), ent2), type, null);
+			cl2 = diagram.reallyCreateLeaf(location, idNewLong, Display.getWithNewlines(diagram.getPragma(), ent2), type, null);
 			normalEntity = cl1;
 
 //			assert arg.get("ENT_THEN_LOL", 0) != null;
@@ -152,7 +152,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 
 			final Quark<Entity> idNewLong = diagram.quarkInContext(true, diagram.cleanId(ent2) + suffix);
 			final LeafType type = getType(arg.get("LOL_THEN_ENT", 0));
-			cl1 = diagram.reallyCreateLeaf(idNewLong, Display.getWithNewlines(diagram.getPragma(), ent1), type, null);
+			cl1 = diagram.reallyCreateLeaf(location, idNewLong, Display.getWithNewlines(diagram.getPragma(), ent1), type, null);
 			normalEntity = cl2;
 		}
 
@@ -202,7 +202,7 @@ final public class CommandLinkLollipop extends SingleLineCommand2<AbstractClassO
 		}
 		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), labelLink), length,
 				diagram.getSkinParam().classAttributeIconSize() > 0);
-		final Link link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
+		final Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1,
 				cl2, linkType, linkArg.withQuantifier(firstLabel, secondLabel)
 						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
 		diagram.resetPragmaLabel();

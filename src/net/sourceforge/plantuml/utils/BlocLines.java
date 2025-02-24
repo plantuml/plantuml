@@ -395,4 +395,10 @@ public class BlocLines implements Iterable<StringLocated> {
 		return new CharInspectorImpl(this, true);
 	}
 
+	public LineLocation getLocation() {
+		if (lines.size() == 0)
+			return null;
+		return lines.get(0).getLocation();
+	}
+
 }

@@ -93,7 +93,7 @@ public class CommandCreateEntityObject extends SingleLineCommand2<AbstractClassO
 		if (Display.isNull(display))
 			display = Display.getWithNewlines(diagram.getPragma(), quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
 
-		final Entity entity = diagram.reallyCreateLeaf(quark, display, LeafType.OBJECT, null);
+		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.OBJECT, null);
 		if (stereotype != null)
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),

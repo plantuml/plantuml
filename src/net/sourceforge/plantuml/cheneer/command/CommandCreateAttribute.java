@@ -113,7 +113,7 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
 		Entity entity = quark.getData();
 		if (entity == null) {
 			final Display display = Display.getWithNewlines(diagram.getPragma(), displayText);
-			entity = diagram.reallyCreateLeaf(quark, display, type, null);
+			entity = diagram.reallyCreateLeaf(location, quark, display, type, null);
 		} else {
 			return CommandExecutionResult.error("Attribute already exists");
 		}
@@ -126,7 +126,7 @@ public class CommandCreateAttribute extends SingleLineCommand2<ChenEerDiagram> {
 		entity.setColors(colors);
 
 		final LinkType linkType = new LinkType(LinkDecor.NONE, LinkDecor.NONE);
-		final Link link = new Link(diagram, diagram.getCurrentStyleBuilder(), entity, owner, linkType,
+		final Link link = new Link(location, diagram, diagram.getCurrentStyleBuilder(), entity, owner, linkType,
 				LinkArg.build(Display.NULL, 2));
 		link.setColors(colors);
 		diagram.addLink(link);

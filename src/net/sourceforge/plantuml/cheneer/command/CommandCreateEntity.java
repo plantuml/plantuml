@@ -113,7 +113,7 @@ public class CommandCreateEntity extends SingleLineCommand2<ChenEerDiagram> {
 
 		if (entity == null) {
 			Display display = Display.getWithNewlines(diagram.getPragma(), displayText);
-			entity = diagram.reallyCreateLeaf(quark, display, type, null);
+			entity = diagram.reallyCreateLeaf(location, quark, display, type, null);
 		} else {
 			if (entity.muteToType(type, null) == false)
 				return CommandExecutionResult.error("Bad name");

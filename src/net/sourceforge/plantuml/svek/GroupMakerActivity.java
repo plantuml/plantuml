@@ -120,7 +120,7 @@ public final class GroupMakerActivity {
 		final DotData dotData = new DotData(diagram, group, links, group.leafs(), new InnerGroupHierarchy(),
 				PortionShower.ALL);
 
-		final Cluster root = new Cluster(diagram, bibliotekon.getColorSequence(), dotData.getRootGroup());
+		final Cluster root = new Cluster(group.getLocation(), diagram, bibliotekon.getColorSequence(), dotData.getRootGroup());
 
 		final ClusterManager clusterManager = new ClusterManager(bibliotekon, root);
 		final DotStringFactory dotStringFactory = new DotStringFactory(bibliotekon, root, diagram.getUmlDiagramType(),

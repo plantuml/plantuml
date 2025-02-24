@@ -89,7 +89,7 @@ public class CommandNamespace2 extends SingleLineCommand2<ClassDiagram> {
 
 		final String disp = arg.getLazzy("DISPLAY", 0);
 		final Display display = Display.getWithNewlines(diagram.getPragma(), disp);
-		final CommandExecutionResult status = diagram.gotoGroup(quark, display, GroupType.PACKAGE);
+		final CommandExecutionResult status = diagram.gotoGroup(location, quark, display, GroupType.PACKAGE);
 		if (status.isOk() == false)
 			return status;
 		final Entity p = diagram.getCurrentGroup();

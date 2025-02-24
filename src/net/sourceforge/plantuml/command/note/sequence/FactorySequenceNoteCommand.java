@@ -127,7 +127,7 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 				lines = lines.subExtract(1, 1);
 				lines = lines.removeEmptyColumns().expandsNewline(false);
 				final Display display = lines.toDisplay();
-				return executeInternal(diagram, line0, diagram.manageVariable(display));
+				return executeInternal(lines.getLocation(), diagram, line0, diagram.manageVariable(display));
 			}
 		};
 	}
@@ -139,15 +139,15 @@ public final class FactorySequenceNoteCommand implements SingleMultiFactoryComma
 			protected CommandExecutionResult executeArg(final SequenceDiagram diagram, LineLocation location,
 					RegexResult arg, ParserPass currentPass) throws NoSuchColorException {
 				final Display display = Display.getWithNewlines(diagram.getPragma(), arg.get("NOTE", 0));
-				return executeInternal(diagram, arg, diagram.manageVariable(display));
+				return executeInternal(location, diagram, arg, diagram.manageVariable(display));
 			}
 
 		};
 	}
 
-	private CommandExecutionResult executeInternal(SequenceDiagram diagram, RegexResult arg, Display display)
+	private CommandExecutionResult executeInternal(LineLocation location, SequenceDiagram diagram, RegexResult arg, Display display)
 			throws NoSuchColorException {
-		final Participant p = diagram.getOrCreateParticipant(
+		final Participant p = diagram.getOrCreateParticipant(location,
 				StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("PARTICIPANT", 0)));
 
 		final NotePosition position = NotePosition.valueOf(StringUtils.goUpperCase(arg.get("POSITION", 0)));

@@ -93,6 +93,8 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	private final StyleBuilder styleBuilder;
 	private Stereotype stereotype;
 	private final CucaDiagram cucaDiagram;
+	
+	private final LineLocation location;
 
 	private Url url;
 
@@ -118,11 +120,12 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 		return new UComment("link " + getEntity1().getName() + " to " + getEntity2().getName());
 	}
 
-	public Link(CucaDiagram cucaDiagram, StyleBuilder styleBuilder, Entity cl1, Entity cl2, LinkType type,
+	public Link(LineLocation location, CucaDiagram cucaDiagram, StyleBuilder styleBuilder, Entity cl1, Entity cl2, LinkType type,
 			LinkArg linkArg) {
 		if (linkArg.getLength() < 1)
 			throw new IllegalArgumentException();
 
+		this.location = location;
 		this.cucaDiagram = cucaDiagram;
 		this.styleBuilder = styleBuilder;
 		this.cl1 = Objects.requireNonNull(cl1);
@@ -140,7 +143,7 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 	}
 
 	public Link getInv() {
-		final Link result = new Link(cucaDiagram, styleBuilder, cl2, cl1, getType().getInversed(), linkArg.getInv());
+		final Link result = new Link(location, cucaDiagram, styleBuilder, cl2, cl1, getType().getInversed(), linkArg.getInv());
 		result.inverted = !this.inverted;
 		result.port1 = this.port2;
 		result.port2 = this.port1;
@@ -561,5 +564,9 @@ public class Link extends WithLinkType implements Hideable, Removeable {
 
 	public final boolean hasKal2() {
 		return this.linkArg.getKal2() != null && !this.linkArg.getKal2().isEmpty();
+	}
+
+	public LineLocation getLocation() {
+		return location;
 	}
 }

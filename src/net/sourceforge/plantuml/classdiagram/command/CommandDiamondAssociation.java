@@ -71,7 +71,7 @@ public class CommandDiamondAssociation extends SingleLineCommand2<ClassDiagram> 
 		if (quark.getData() != null)
 			return CommandExecutionResult.error("Already existing : " + quark.getName());
 
-		diagram.reallyCreateLeaf(quark, Display.getWithNewlines(diagram.getPragma(), ""), LeafType.ASSOCIATION, null);
+		diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), ""), LeafType.ASSOCIATION, null);
 
 		return CommandExecutionResult.ok();
 	}

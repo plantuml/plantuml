@@ -132,13 +132,13 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 			Display display = Display.getWithNewlines(diagram.getPragma(), displayString);
 			if (Display.isNull(display))
 				display = Display.getWithNewlines(diagram.getPragma(), quark.get().getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
-			entity = diagram.reallyCreateLeaf(quark.get(), display, type, null);
+			entity = diagram.reallyCreateLeaf(location, quark.get(), display, type, null);
 		} else {
 			if (entity.muteToType(type, null) == false)
 				return CommandExecutionResult.error("Bad name");
 		}
 
-		final CommandExecutionResult check1 = diagram.checkIfPackageHierarchyIfOk(entity);
+		final CommandExecutionResult check1 = diagram.checkIfPackageHierarchyIsOk(entity);
 		if (check1.isOk() == false)
 			return check1;
 
@@ -159,7 +159,7 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 			final Url url = urlBuilder.getUrl(urlString);
 			entity.addUrl(url);
 		}
-		entity.setCodeLine(location);
+		// entity.setCodeLine(location);
 
 		Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
 		final String s = arg.get("LINECOLOR", 1);
@@ -173,8 +173,8 @@ public class CommandCreateClass extends SingleLineCommand2<ClassDiagram> {
 
 		entity.setColors(colors);
 
-		CommandCreateClassMultilines.manageExtends("EXTENDS", diagram, arg, entity);
-		CommandCreateClassMultilines.manageExtends("IMPLEMENTS", diagram, arg, entity);
+		CommandCreateClassMultilines.manageExtends(location, "EXTENDS", diagram, arg, entity);
+		CommandCreateClassMultilines.manageExtends(location, "IMPLEMENTS", diagram, arg, entity);
 		CommandCreateClassMultilines.addTags(entity, arg.getLazzy("TAGS", 0));
 
 		if (typeString.contains("STATIC"))

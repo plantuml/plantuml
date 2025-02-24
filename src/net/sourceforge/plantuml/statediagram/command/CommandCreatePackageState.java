@@ -125,7 +125,7 @@ public class CommandCreatePackageState extends SingleLineCommand2<StateDiagram> 
 
 		final String display = getNotNull(arg, "DISPLAY1", "DISPLAY2");
 
-		diagram.gotoGroup(quark, Display.getWithNewlines(diagram.getPragma(), display == null ? quark.getName() : display), GroupType.STATE);
+		diagram.gotoGroup(location, quark, Display.getWithNewlines(diagram.getPragma(), display == null ? quark.getName() : display), GroupType.STATE);
 		final Entity p = diagram.getCurrentGroup();
 		if (display != null)
 			p.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));

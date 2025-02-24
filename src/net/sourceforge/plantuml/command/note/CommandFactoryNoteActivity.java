@@ -121,11 +121,11 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 
 				final String codeString = diagram.getUniqueSequence("GMN");
 				final Quark<Entity> quark = diagram.quarkInContext(true, codeString);
-				final Entity note = diagram.reallyCreateLeaf(quark, strings, LeafType.NOTE, null);
+				final Entity note = diagram.reallyCreateLeaf(lines.getLocation(), quark, strings, LeafType.NOTE, null);
 				if (url != null)
 					note.addUrl(url);
 
-				return executeInternal(diagram, arg, note);
+				return executeInternal(lines.getLocation(), diagram, arg, note);
 			}
 		};
 	}
@@ -139,13 +139,13 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 				final String tmp = diagram.getUniqueSequence("GN");
 				final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(tmp));
 
-				final Entity note = diagram.createNote(quark, tmp, Display.getWithNewlines(diagram.getPragma(), arg.get("NOTE", 0)));
-				return executeInternal(diagram, arg, note);
+				final Entity note = diagram.createNote(location, quark, tmp, Display.getWithNewlines(diagram.getPragma(), arg.get("NOTE", 0)));
+				return executeInternal(location, diagram, arg, note);
 			}
 		};
 	}
 
-	private CommandExecutionResult executeInternal(ActivityDiagram diagram, RegexResult arg, Entity note)
+	private CommandExecutionResult executeInternal(LineLocation location, ActivityDiagram diagram, RegexResult arg, Entity note)
 			throws NoSuchColorException {
 
 		final String s = arg.get("COLOR", 0);
@@ -154,7 +154,7 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 
 		Entity activity = diagram.getLastEntityConsulted();
 		if (activity == null)
-			activity = diagram.getStart();
+			activity = diagram.getStart(location);
 
 		final Link link;
 
@@ -164,16 +164,16 @@ public final class CommandFactoryNoteActivity implements SingleMultiFactoryComma
 		final LinkType type = new LinkType(LinkDecor.NONE, LinkDecor.NONE).goDashed();
 
 		if (position == Position.RIGHT)
-			link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), activity,
+			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), activity,
 					note, type, LinkArg.noDisplay(1));
 		else if (position == Position.LEFT)
-			link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, activity,
+			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, activity,
 					type, LinkArg.noDisplay(1));
 		else if (position == Position.BOTTOM)
-			link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), activity,
+			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), activity,
 					note, type, LinkArg.noDisplay(2));
 		else if (position == Position.TOP)
-			link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, activity,
+			link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), note, activity,
 					type, LinkArg.noDisplay(2));
 		else
 			throw new IllegalArgumentException();

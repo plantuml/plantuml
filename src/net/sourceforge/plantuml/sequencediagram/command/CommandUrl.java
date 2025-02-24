@@ -74,7 +74,7 @@ public class CommandUrl extends SingleLineCommand2<SequenceDiagram> {
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final String code = arg.get("CODE", 0);
 		final String urlString = arg.get("URL", 0);
-		final Participant p = diagram.getOrCreateParticipant(code);
+		final Participant p = diagram.getOrCreateParticipant(location, code);
 		final UrlBuilder urlBuilder = new UrlBuilder(diagram.getSkinParam().getValue("topurl"), UrlMode.STRICT);
 		final Url url = urlBuilder.getUrl(urlString);
 		p.setUrl(url);

@@ -76,6 +76,7 @@ import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.xmi.SequenceDiagramXmiMaker;
 
 public class SequenceDiagram extends UmlDiagram {
@@ -103,14 +104,14 @@ public class SequenceDiagram extends UmlDiagram {
 	}
 
 	@Deprecated
-	public Participant getOrCreateParticipant(String code) {
-		return getOrCreateParticipant(code, Display.getWithNewlines(getPragma(), code));
+	public Participant getOrCreateParticipant(LineLocation location, String code) {
+		return getOrCreateParticipant(location, code, Display.getWithNewlines(getPragma(), code));
 	}
 
-	public Participant getOrCreateParticipant(String code, Display display) {
+	public Participant getOrCreateParticipant(LineLocation location, String code, Display display) {
 		Participant result = participantsget(code);
 		if (result == null) {
-			result = new Participant(ParticipantType.PARTICIPANT, code, display, hiddenPortions, 0,
+			result = new Participant(location, ParticipantType.PARTICIPANT, code, display, hiddenPortions, 0,
 					getSkinParam().getCurrentStyleBuilder());
 			addWithOrder(result);
 			participantEnglobers2.put(result, participantEnglober);
@@ -142,7 +143,7 @@ public class SequenceDiagram extends UmlDiagram {
 		return null;
 	}
 
-	public Participant createNewParticipant(ParticipantType type, String code, Display display, int order) {
+	public Participant createNewParticipant(LineLocation location, ParticipantType type, String code, Display display, int order) {
 		if (participantsget(code) != null)
 			throw new IllegalArgumentException();
 
@@ -150,7 +151,7 @@ public class SequenceDiagram extends UmlDiagram {
 			// display = Arrays.asList(code);
 			display = Display.getWithNewlines(getPragma(), code);
 		}
-		final Participant result = new Participant(type, code, display, hiddenPortions, order,
+		final Participant result = new Participant(location, type, code, display, hiddenPortions, order,
 				getSkinParam().getCurrentStyleBuilder());
 		addWithOrder(result);
 		participantEnglobers2.put(result, participantEnglober);

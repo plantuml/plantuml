@@ -68,7 +68,7 @@ public class CommandActivate2 extends SingleLineCommand2<SequenceDiagram> {
 	protected CommandExecutionResult executeArg(SequenceDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
 		final LifeEventType type = arg.get("TYPE", 0).equals("++") ? LifeEventType.ACTIVATE : LifeEventType.DEACTIVATE;
-		final Participant p = diagram.getOrCreateParticipant(arg.get("NAME", 0));
+		final Participant p = diagram.getOrCreateParticipant(location, arg.get("NAME", 0));
 		final String s = arg.get("COLOR", 0);
 		final String error = diagram.activate(p, type,
 				s == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(s));

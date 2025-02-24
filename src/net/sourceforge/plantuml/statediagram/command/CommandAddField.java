@@ -87,7 +87,7 @@ public class CommandAddField extends SingleLineCommand2<StateDiagram> {
 
 		Entity entity = quark.getData();
 		if (entity == null)
-			entity = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark), LeafType.STATE, null);
+			entity = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(quark), LeafType.STATE, null);
 
 		final String field = arg.get("FIELD", 0);
 

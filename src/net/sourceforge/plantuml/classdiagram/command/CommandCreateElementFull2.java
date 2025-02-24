@@ -196,7 +196,7 @@ public class CommandCreateElementFull2 extends SingleLineCommand2<ClassDiagram> 
 		final Quark<Entity> quark = diagram.quarkInContext(true, idShort);
 		Entity entity = quark.getData();
 		if (entity == null)
-			entity = diagram.reallyCreateLeaf(quark, display, type, usymbol);
+			entity = diagram.reallyCreateLeaf(location, quark, display, type, usymbol);
 
 		final String stereotype = arg.getLazzy("STEREOTYPE", 0);
 

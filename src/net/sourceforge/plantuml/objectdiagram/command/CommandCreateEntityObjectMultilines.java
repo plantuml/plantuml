@@ -61,6 +61,7 @@ import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateEntityObjectMultilines extends CommandMultilines2<AbstractClassOrObjectDiagram> {
 
@@ -92,7 +93,7 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 			throws NoSuchColorException {
 		lines = lines.trim().removeEmptyLines();
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
-		final Entity entity = executeArg0(diagram, line0);
+		final Entity entity = executeArg0(lines.getLocation(), diagram, line0);
 		if (entity == null)
 			return CommandExecutionResult.error("No such entity");
 
@@ -107,7 +108,7 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 		return CommandExecutionResult.ok();
 	}
 
-	private Entity executeArg0(AbstractClassOrObjectDiagram diagram, RegexResult line0) throws NoSuchColorException {
+	private Entity executeArg0(LineLocation location, AbstractClassOrObjectDiagram diagram, RegexResult line0) throws NoSuchColorException {
 		final String idShort = diagram.cleanId(line0.getLazzy("CODE", 0));
 		final Quark<Entity> quark = diagram.quarkInContext(true, idShort);
 
@@ -119,7 +120,7 @@ public class CommandCreateEntityObjectMultilines extends CommandMultilines2<Abst
 			display = Display.getWithNewlines(diagram.getPragma(), quark.getName()).withCreoleMode(CreoleMode.SIMPLE_LINE);
 		Entity entity = quark.getData();
 		if (entity == null)
-			entity = diagram.reallyCreateLeaf(quark, display, LeafType.OBJECT, null);
+			entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.OBJECT, null);
 
 		if (stereotype != null)
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),

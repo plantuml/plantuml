@@ -94,7 +94,7 @@ public class CommandReferenceOverSeveral extends SingleLineCommand2<SequenceDiag
 
 		final List<Participant> p = new ArrayList<>();
 		for (String s : participants)
-			p.add(diagram.getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));
+			p.add(diagram.getOrCreateParticipant(location, StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(s)));
 
 		final Display strings = Display.getWithNewlines(diagram.getPragma(), text);
 

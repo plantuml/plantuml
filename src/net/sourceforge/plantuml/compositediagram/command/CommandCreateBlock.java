@@ -82,7 +82,7 @@ public class CommandCreateBlock extends SingleLineCommand2<CompositeDiagram> {
 		if (quark.getData() != null)
 			return CommandExecutionResult.error("Already exists " + quark.getName());
 
-		final Entity ent = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark), LeafType.BLOCK, null);
+		final Entity ent = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(quark), LeafType.BLOCK, null);
 
 		return CommandExecutionResult.ok();
 	}

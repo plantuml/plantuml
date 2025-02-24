@@ -113,7 +113,7 @@ public abstract class CommandParticipant extends SingleLineCommand2<SequenceDiag
 		}
 		final String orderString = arg.get("ORDER", 0);
 		final int order = orderString == null ? 0 : Integer.parseInt(orderString);
-		final Participant participant = diagram.createNewParticipant(type, code, strings, order);
+		final Participant participant = diagram.createNewParticipant(location, type, code, strings, order);
 
 		final String stereotype = arg.get("STEREO", 0);
 

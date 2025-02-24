@@ -76,7 +76,7 @@ public class CommandActivate extends SingleLineCommand2<SequenceDiagram> {
 			throws NoSuchColorException {
 		final LifeEventType type = LifeEventType.valueOf(StringUtils.goUpperCase(arg.get("TYPE", 0)));
 		final Participant p = diagram
-				.getOrCreateParticipant(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("WHO", 0)));
+				.getOrCreateParticipant(location, StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.get("WHO", 0)));
 		final String back = arg.get("BACK", 0);
 		final HColor backColor = back == null ? null : diagram.getSkinParam().getIHtmlColorSet().getColor(back);
 		final String line = arg.get("LINE", 0);

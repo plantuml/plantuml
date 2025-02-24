@@ -92,7 +92,7 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractEnti
 	@Override
 	protected CommandExecutionResult executeArg(AbstractEntityDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) throws NoSuchColorException {
-		final Entity entity1 = executeArg0(diagram, arg);
+		final Entity entity1 = executeArg0(location, diagram, arg);
 		if (entity1 == null)
 			return CommandExecutionResult.error("No such entity");
 
@@ -117,7 +117,7 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractEnti
 		}
 	}
 
-	private Entity executeArg0(AbstractEntityDiagram diagram, RegexResult line0) throws NoSuchColorException {
+	private Entity executeArg0(LineLocation location, AbstractEntityDiagram diagram, RegexResult line0) throws NoSuchColorException {
 		final String name = line0.get("NAME", 1);
 
 		final Quark<Entity> quark = diagram.quarkInContext(false, diagram.cleanId(name));
@@ -131,7 +131,7 @@ public class CommandCreateJsonSingleLine extends SingleLineCommand2<AbstractEnti
 		if (Display.isNull(display))
 			display = Display.getWithNewlines(diagram.getPragma(), name).withCreoleMode(CreoleMode.SIMPLE_LINE);
 
-		final Entity entity = diagram.reallyCreateLeaf(quark, display, LeafType.JSON, null);
+		final Entity entity = diagram.reallyCreateLeaf(location, quark, display, LeafType.JSON, null);
 		if (stereotype != null)
 			entity.setStereotype(Stereotype.build(stereotype, diagram.getSkinParam().getCircledCharacterRadius(),
 					diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),

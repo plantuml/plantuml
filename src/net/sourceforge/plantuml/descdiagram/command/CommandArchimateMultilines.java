@@ -106,7 +106,7 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 
 		final String icon = StereotypePattern.removeChevronBrackets(line0.getLazzy("STEREOTYPE", 0));
 
-		final Entity entity = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark), LeafType.DESCRIPTION,
+		final Entity entity = diagram.reallyCreateLeaf(lines.getLocation(), quark, Display.getWithNewlines(quark), LeafType.DESCRIPTION,
 				USymbols.RECTANGLE);
 
 		lines = lines.subExtract(1, 1);

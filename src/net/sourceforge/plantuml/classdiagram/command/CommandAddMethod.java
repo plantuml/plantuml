@@ -74,7 +74,7 @@ public class CommandAddMethod extends SingleLineCommand2<ClassDiagram> {
 		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(idShort));
 		Entity entity = quark.getData();
 		if (entity == null)
-			entity = diagram.reallyCreateLeaf(quark, Display.getWithNewlines(quark), LeafType.CLASS, null);
+			entity = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(quark), LeafType.CLASS, null);
 
 		final String field = arg.get("DATA", 0);
 		if (field.length() > 0 && VisibilityModifier.isVisibilityCharacter(field))

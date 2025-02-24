@@ -105,7 +105,7 @@ public class CommandAssociate extends SingleLineCommand2<ChenEerDiagram> {
 		if (isDouble) {
 			linkType = linkType.goBold();
 		}
-		final Link link = new Link(diagram, diagram.getCurrentStyleBuilder(), entity1, entity2, linkType,
+		final Link link = new Link(location, diagram, diagram.getCurrentStyleBuilder(), entity1, entity2, linkType,
 				LinkArg.build(Display.getWithNewlines(diagram.getPragma(), cardinality), 3));
 		link.setPortMembers(diagram.getPortId(entity1.getName()), diagram.getPortId(entity2.getName()));
 		link.setColors(color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet()));

@@ -273,12 +273,12 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 			cl1 = diagram.getGroup(ent1clean);
 			cl2 = diagram.getGroup(ent2clean);
 		} else {
-			cl1 = getDummy(diagram, ent1);
-			cl2 = getDummy(diagram, ent2);
+			cl1 = getDummy(location, diagram, ent1);
+			cl2 = getDummy(location, diagram, ent2);
 		}
 		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), labels.getLabelLink()), queue.length(),
 				diagram.getSkinParam().classAttributeIconSize() > 0);
-		Link link = new Link(diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
+		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
 				linkType, linkArg.withQuantifier(labels.getFirstLabel(), labels.getSecondLabel())
 						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
 		if (dir == Direction.LEFT || dir == Direction.UP)
@@ -301,13 +301,13 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 //		return s;
 //	}
 
-	private Entity getDummy(DescriptionDiagram diagram, String ident) {
+	private Entity getDummy(LineLocation location, DescriptionDiagram diagram, String ident) {
 		if (ident.startsWith("()")) {
 			ident = diagram.cleanId(ident);
 			final Quark<Entity> quark = diagram.quarkInContext(true, ident);
 			if (quark.getData() != null)
 				return quark.getData();
-			return diagram.reallyCreateLeaf(quark, Display.getWithNewlines(diagram.getPragma(), quark.getName()), LeafType.DESCRIPTION,
+			return diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), quark.getName()), LeafType.DESCRIPTION,
 					USymbols.INTERFACE);
 		}
 
@@ -324,23 +324,23 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 
 		if (codeChar == '(') {
 			if (endWithSlash)
-				return diagram.reallyCreateLeaf(quark, display, LeafType.USECASE_BUSINESS, USymbols.USECASE);
+				return diagram.reallyCreateLeaf(location, quark, display, LeafType.USECASE_BUSINESS, USymbols.USECASE);
 			else
-				return diagram.reallyCreateLeaf(quark, display, LeafType.USECASE, USymbols.USECASE);
+				return diagram.reallyCreateLeaf(location, quark, display, LeafType.USECASE, USymbols.USECASE);
 		} else if (codeChar == ':') {
 			if (endWithSlash)
-				return diagram.reallyCreateLeaf(quark, display, LeafType.DESCRIPTION,
+				return diagram.reallyCreateLeaf(location, quark, display, LeafType.DESCRIPTION,
 						ActorStyle.STICKMAN_BUSINESS.toUSymbol());
 			else
-				return diagram.reallyCreateLeaf(quark, display, LeafType.DESCRIPTION,
+				return diagram.reallyCreateLeaf(location, quark, display, LeafType.DESCRIPTION,
 						diagram.getSkinParam().actorStyle().toUSymbol());
 
 		} else if (codeChar == '[') {
 			final USymbol sym = diagram.getSkinParam().componentStyle().toUSymbol();
-			return diagram.reallyCreateLeaf(quark, display, LeafType.DESCRIPTION, sym);
+			return diagram.reallyCreateLeaf(location, quark, display, LeafType.DESCRIPTION, sym);
 		}
 
-		return diagram.reallyCreateLeaf(quark, display, LeafType.STILL_UNKNOWN, null);
+		return diagram.reallyCreateLeaf(location, quark, display, LeafType.STILL_UNKNOWN, null);
 	}
 
 }

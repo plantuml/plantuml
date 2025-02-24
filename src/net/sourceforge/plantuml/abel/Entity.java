@@ -113,7 +113,8 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 	private USymbol symbol;
 	private final int rawLayout;
 	private char concurrentSeparator;
-	private LineLocation codeLine;
+	//private LineLocation codeLine;
+	private final LineLocation location;
 
 	private Set<Stereotag> tags = new LinkedHashSet<>();
 	private final List<CucaNote> notesTop = new ArrayList<>();
@@ -155,25 +156,26 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 	}
 
 	// Back to Entity
-	private Entity(Quark<Entity> quark, CucaDiagram diagram, Bodier bodier, int rawLayout) {
+	private Entity(LineLocation location, Quark<Entity> quark, CucaDiagram diagram, Bodier bodier, int rawLayout) {
+		this.location = location;
 		this.quark = Objects.requireNonNull(quark);
 		this.diagram = diagram;
 		if (quark.isRoot())
-			this.uid = "clroot";
+			this.uid = "entroot";
 		else
-			this.uid = StringUtils.getUid("cl", diagram.getUniqueSequenceValue());
+			this.uid = StringUtils.getUid("ent", diagram.getUniqueSequenceValue());
 		this.bodier = bodier;
 		this.rawLayout = rawLayout;
 		this.quark.setData(this);
 	}
 
-	public Entity(Quark<Entity> quark, CucaDiagram diagram, Bodier bodier, LeafType leafType, int rawLayout) {
-		this(Objects.requireNonNull(quark), diagram, bodier, rawLayout);
+	public Entity(LineLocation location, Quark<Entity> quark, CucaDiagram diagram, Bodier bodier, LeafType leafType, int rawLayout) {
+		this(location, Objects.requireNonNull(quark), diagram, bodier, rawLayout);
 		this.leafType = leafType;
 	}
 
-	public Entity(Quark<Entity> quark, CucaDiagram diagram, Bodier bodier, GroupType groupType, int rawLayout) {
-		this(Objects.requireNonNull(quark), diagram, bodier, rawLayout);
+	public Entity(LineLocation location, Quark<Entity> quark, CucaDiagram diagram, Bodier bodier, GroupType groupType, int rawLayout) {
+		this(location, Objects.requireNonNull(quark), diagram, bodier, rawLayout);
 		this.groupType = groupType;
 	}
 
@@ -538,16 +540,16 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		return legend;
 	}
 
-	public String getCodeLine() {
-		if (this.codeLine == null)
-			return null;
-
-		return "" + this.codeLine.getPosition();
-	}
-
-	public void setCodeLine(LineLocation codeLine) {
-		this.codeLine = codeLine;
-	}
+//	public String getCodeLine() {
+//		if (this.codeLine == null)
+//			return null;
+//
+//		return "" + this.codeLine.getPosition();
+//	}
+//
+//	public void setCodeLine(LineLocation codeLine) {
+//		this.codeLine = codeLine;
+//	}
 
 	public void setStereostyle(String stereo) {
 		this.stereostyles = Stereostyles.build(stereo);
@@ -726,6 +728,10 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 	
 	public final UmlDiagramType getUmlDiagramType() {
 		return diagram.getUmlDiagramType();
+	}
+
+	public LineLocation getLocation() {
+		return location;
 	}
 
 }
