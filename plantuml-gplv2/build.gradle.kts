@@ -193,7 +193,7 @@ application {
 graalvmNative {
   binaries.all { resources.autodetect() }
 	binaries.create("full") {
-		buildArgs(listOf("-Djava.awt.headless=false"))
+		buildArgs(listOf("-Djava.awt.headless=false", "--enable-url-protocols=https"))
 		runtimeArgs(listOf("-Djava.awt.headless=false"))
 		imageName.set("plantuml-full")
 		mainClass.set(application.mainClass)
@@ -204,7 +204,7 @@ graalvmNative {
 		mainClass.set(application.mainClass)
 		classpath(binaries.named("main").get().classpath)
 		runtimeArgs(listOf("-Djava.awt.headless=true"))
-		buildArgs(listOf("-Djava.awt.headless=true"))
+		buildArgs(listOf("-Djava.awt.headless=true", "--enable-url-protocols=https"))
 	}
   toolchainDetection = false
 }
