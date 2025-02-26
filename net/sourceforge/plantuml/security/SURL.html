@@ -139,7 +139,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>protected static void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#configure(java.net.URLConnection)" class="member-name-link">configure</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URLConnection.html" title="class or interface in java.net" class="external-link">URLConnection</a>&nbsp;connection)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Configures the given <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URLConnection.html" title="class or interface in java.net" class="external-link"><code>URLConnection</code></a> with specific settings.</div>
+<div class="block">Configures the specified <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URLConnection.html" title="class or interface in java.net" class="external-link"><code>URLConnection</code></a> with security-related settings.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SURL.html" title="class in net.sourceforge.plantuml.security">SURL</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(java.lang.String)" class="member-name-link">create</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;url)</code></div>
@@ -337,11 +337,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="configure(java.net.URLConnection)">
 <h3>configure</h3>
 <div class="member-signature"><span class="modifiers">protected static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">configure</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URLConnection.html" title="class or interface in java.net" class="external-link">URLConnection</a>&nbsp;connection)</span></div>
-<div class="block">Configures the given <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URLConnection.html" title="class or interface in java.net" class="external-link"><code>URLConnection</code></a> with specific settings.
+<div class="block">Configures the specified <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URLConnection.html" title="class or interface in java.net" class="external-link"><code>URLConnection</code></a> with security-related settings.
  <p>
- This method sets the connection to disallow user interactions and, if the 
- connection is an instance of <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/HttpURLConnection.html" title="class or interface in java.net" class="external-link"><code>HttpURLConnection</code></a>, it also disables 
- automatic following of HTTP redirects.
+ This method disables user interactions for the connection and, if the connection 
+ is an instance of <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/HttpURLConnection.html" title="class or interface in java.net" class="external-link"><code>HttpURLConnection</code></a>, it also disables automatic 
+ following of HTTP redirects, unless the security profile is set to 
+ <a href="SecurityProfile.html#UNSECURE"><code>SecurityProfile.UNSECURE</code></a>.
  </p></div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -351,6 +352,8 @@ loadScripts(document, 'script');</script>
 <ul class="see-list-long">
 <li><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URLConnection.html#setAllowUserInteraction(boolean)" title="class or interface in java.net" class="external-link"><code>URLConnection.setAllowUserInteraction(boolean)</code></a></li>
 <li><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/HttpURLConnection.html#setInstanceFollowRedirects(boolean)" title="class or interface in java.net" class="external-link"><code>HttpURLConnection.setInstanceFollowRedirects(boolean)</code></a></li>
+<li><a href="SecurityUtils.html#getSecurityProfile()"><code>SecurityUtils.getSecurityProfile()</code></a></li>
+<li><a href="SecurityProfile.html" title="enum class in net.sourceforge.plantuml.security"><code>SecurityProfile</code></a></li>
 </ul>
 </dd>
 </dl>
