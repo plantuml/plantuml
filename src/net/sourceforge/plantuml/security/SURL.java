@@ -446,24 +446,27 @@ public class SURL {
 			return null;
 		}
 	}
-	
 
-	/**
-	 * Configures the given {@link URLConnection} with specific settings.
-	 * <p>
-	 * This method sets the connection to disallow user interactions and, if the 
-	 * connection is an instance of {@link HttpURLConnection}, it also disables 
-	 * automatic following of HTTP redirects.
-	 * </p>
-	 *
-	 * @param connection the {@link URLConnection} to be configured
-	 *
-	 * @see URLConnection#setAllowUserInteraction(boolean)
-	 * @see HttpURLConnection#setInstanceFollowRedirects(boolean)
-	 */
+    /**
+     * Configures the specified {@link URLConnection} with security-related settings.
+     * <p>
+     * This method disables user interactions for the connection and, if the connection 
+     * is an instance of {@link HttpURLConnection}, it also disables automatic 
+     * following of HTTP redirects, unless the security profile is set to 
+     * {@link SecurityProfile#UNSECURE}.
+     * </p>
+     *
+     * @param connection the {@link URLConnection} to be configured
+     *
+     * @see URLConnection#setAllowUserInteraction(boolean)
+     * @see HttpURLConnection#setInstanceFollowRedirects(boolean)
+     * @see SecurityUtils#getSecurityProfile()
+     * @see SecurityProfile
+     */
 	protected static void configure(URLConnection connection) {
 		connection.setAllowUserInteraction(false);
-		if (connection instanceof HttpURLConnection)
+
+		if (SecurityUtils.getSecurityProfile() != SecurityProfile.UNSECURE && connection instanceof HttpURLConnection)
 			((HttpURLConnection) connection).setInstanceFollowRedirects(false);
 	}
 
@@ -508,7 +511,6 @@ public class SURL {
 			}
 		};
 	}
-
 
 	/**
 	 * Creates a POST request and response handler with a simple String content. The
