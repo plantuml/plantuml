@@ -418,6 +418,7 @@ public class ImageBuilder {
 		option = option.withColorMapper(fileFormatOption.getColorMapper());
 		option = option.withLinkTarget(getSvgLinkTarget());
 		option = option.withFont(pragma.getValue(PragmaKey.SVG_FONT));
+		option = option.withPragma(pragma);
 		if (diagram != null) {
 			option = option.withTitle(diagram.getTitleDisplay());
 			option = option.withRootAttribute("data-diagram-type", diagram.getUmlDiagramType().name());

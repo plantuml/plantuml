@@ -326,10 +326,11 @@ public class Cluster implements Moveable {
 		// ug.startGroup(Collections.singletonMap(UGroupType.ID, "cluster_" + fullName));
 		
 		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
-		typeIDent.put(UGroupType.DATA_UID, group.getUid());
 		typeIDent.put(UGroupType.CLASS, "cluster");
 		typeIDent.put(UGroupType.ID, "cluster_" + fullName);
 		typeIDent.put(UGroupType.DATA_ENTITY, group.getName());
+		typeIDent.put(UGroupType.DATA_UID, group.getUid());
+		typeIDent.put(UGroupType.DATA_QUALIFIED_NAME, group.getQuark().getQualifiedName());
 		if (group.getLocation() != null)
 			typeIDent.put(UGroupType.DATA_SOURCE_LINE, "" + group.getLocation().getPosition());
 		ug.startGroup(typeIDent);

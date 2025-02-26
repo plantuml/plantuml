@@ -106,8 +106,11 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
 		typeIDent.put(UGroupType.CLASS, "link");
 		typeIDent.put(UGroupType.ID, "link_" + link.getEntity1().getName() + "_" + link.getEntity2().getName());
+		typeIDent.put(UGroupType.DATA_UID, link.getUid());
 		typeIDent.put(UGroupType.DATA_ENTITY_1, link.getEntity1().getName());
 		typeIDent.put(UGroupType.DATA_ENTITY_2, link.getEntity2().getName());
+		typeIDent.put(UGroupType.DATA_ENTITY_1_UID, link.getEntity1().getUid());
+		typeIDent.put(UGroupType.DATA_ENTITY_2_UID, link.getEntity2().getUid());
 		ug.startGroup(typeIDent);
 
 		DotPath dotPath = getDotPathInternal();

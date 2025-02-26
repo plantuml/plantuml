@@ -49,11 +49,11 @@ Expected result MUST be put between triple brackets
       <rect fill="none" style="stroke:#181818;stroke-width:1;"/>
       <text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacing">c2</text>
     </g>
-    <g class="entity" data-entity="p1" id="entity_p1">
+    <g class="entity" data-entity="p1" data-source-line="4" data-uid="ent0003" id="entity_p1">
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">p1</text>
       <rect fill="#F1F1F1" style="stroke:#181818;stroke-width:1.5;"/>
     </g>
-    <g class="entity" data-entity="p2" id="entity_p2">
+    <g class="entity" data-entity="p2" data-source-line="8" data-uid="ent0005" id="entity_p2">
       <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing">p2</text>
       <rect fill="#F1F1F1" style="stroke:#181818;stroke-width:1.5;"/>
     </g>

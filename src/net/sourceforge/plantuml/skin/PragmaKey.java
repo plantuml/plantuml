@@ -36,6 +36,9 @@
 package net.sourceforge.plantuml.skin;
 
 public enum PragmaKey {
+	
+	// Temporary pragma
+	SVGNEWDATA,
 
 	ASPECT, //
 	COMPACT, //

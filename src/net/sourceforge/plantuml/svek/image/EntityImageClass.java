@@ -145,10 +145,11 @@ public class EntityImageClass extends AbstractEntityImage implements Stencil, Wi
 			ug.startUrl(url);
 
 		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
-		typeIDent.put(UGroupType.DATA_UID, getEntity().getUid());
 		typeIDent.put(UGroupType.CLASS, "entity");
 		typeIDent.put(UGroupType.ID, "entity_" + getEntity().getName());
 		typeIDent.put(UGroupType.DATA_ENTITY, getEntity().getName());
+		typeIDent.put(UGroupType.DATA_UID, getEntity().getUid());
+		typeIDent.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());
 		if (getEntity().getLocation() != null)
 			typeIDent.put(UGroupType.DATA_SOURCE_LINE, "" + getEntity().getLocation().getPosition());
 		ug.startGroup(typeIDent);

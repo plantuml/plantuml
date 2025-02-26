@@ -80,6 +80,7 @@ import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.utils.Base64Coder;
 import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.xml.XmlFactories;
@@ -416,12 +417,12 @@ public class SvgGraphics {
 
 	public final void setFillColor(String fill, TransparentFillBehavior transparentFillBehaviour) {
 		switch (transparentFillBehaviour) {
-			case WITH_FILL_NONE:
-				this.fill = fixColor(fill);
-				break;
-			case WITH_FILL_OPACITY:
-				this.fill = fill;
-				break;
+		case WITH_FILL_NONE:
+			this.fill = fixColor(fill);
+			break;
+		case WITH_FILL_OPACITY:
+			this.fill = fill;
+			break;
 		}
 	}
 
@@ -451,7 +452,7 @@ public class SvgGraphics {
 	}
 
 	public void svgRectangle(double x, double y, double width, double height, double rx, double ry, double deltaShadow
-			/*, String id, String codeLine*/) {
+	/* , String id, String codeLine */) {
 		if (height <= 0 || width <= 0) {
 			return;
 			// To be restored when Teoz will be finished
@@ -1109,21 +1110,66 @@ public class SvgGraphics {
 
 		pendingAction.add(0, (Element) document.createElement("g"));
 
-		for (Map.Entry<UGroupType, String> typeIdent : typeIdents.entrySet()) {
-			if (typeIdent.getKey() == UGroupType.TITLE) {
-				Element title = document.createElement(UGroupType.TITLE.getSvgKeyAttributeName());
-				title.setTextContent(typeIdent.getValue());
-				pendingAction.get(0).appendChild(title);
-			}
+		// Sorry for the code duplication: but this Pragma will be removed
+		// So we will simplify and refactor the code at that time.
+		if (option.pragma.isTrue(PragmaKey.SVGNEWDATA)) {
 
-			switch (typeIdent.getKey()) {
-			case DATA_UID:
-			case ID:
-			case DATA_SOURCE_LINE:
-				pendingAction.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(), typeIdent.getValue());
-			}
+			for (Map.Entry<UGroupType, String> typeIdent : typeIdents.entrySet()) {
+				if (typeIdent.getKey() == UGroupType.TITLE) {
+					Element title = document.createElement(UGroupType.TITLE.getSvgKeyAttributeName());
+					title.setTextContent(typeIdent.getValue());
+					pendingAction.get(0).appendChild(title);
+				}
 
-			//if (option.isInteractive())
+				switch (typeIdent.getKey()) {
+				case ID:
+					// ignored
+					break;
+				case DATA_UID:
+					// DATA_UID *will* be rename to ID, but right now, we do some hack
+					pendingAction.get(0).setAttribute("id", typeIdent.getValue());
+					break;
+
+				// I also suggest that we rename "data-participant-1" to "data-entity-1" and
+				// "data-participant-2" to "data-entity-2"
+
+				case DATA_PARTICIPANT_1:
+				case DATA_ENTITY_1_UID:
+					pendingAction.get(0).setAttribute("data-entity-1", typeIdent.getValue());
+					break;
+				case DATA_PARTICIPANT_2:
+				case DATA_ENTITY_2_UID:
+					pendingAction.get(0).setAttribute("data-entity-2", typeIdent.getValue());
+					break;
+
+				case CLASS:
+				case DATA_SOURCE_LINE:
+				case DATA_QUALIFIED_NAME:
+					pendingAction.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
+							typeIdent.getValue());
+
+				}
+			}
+		} else
+
+		{
+
+			for (Map.Entry<UGroupType, String> typeIdent : typeIdents.entrySet()) {
+				if (typeIdent.getKey() == UGroupType.TITLE) {
+					Element title = document.createElement(UGroupType.TITLE.getSvgKeyAttributeName());
+					title.setTextContent(typeIdent.getValue());
+					pendingAction.get(0).appendChild(title);
+				}
+
+				switch (typeIdent.getKey()) {
+				case DATA_UID:
+				case ID:
+				case DATA_SOURCE_LINE:
+					pendingAction.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
+							typeIdent.getValue());
+				}
+
+				// if (option.isInteractive())
 				switch (typeIdent.getKey()) {
 				case CLASS:
 				case DATA_ENTITY:
@@ -1135,6 +1181,8 @@ public class SvgGraphics {
 					pendingAction.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
 							typeIdent.getValue());
 				}
+			}
+
 		}
 	}
 

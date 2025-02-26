@@ -138,6 +138,10 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		typeIDent.put(UGroupType.CLASS, "entity");
 		typeIDent.put(UGroupType.ID, "entity_" + getEntity().getName());
 		typeIDent.put(UGroupType.DATA_ENTITY, getEntity().getName());
+		typeIDent.put(UGroupType.DATA_UID, getEntity().getUid());
+		typeIDent.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());
+		if (getEntity().getLocation() != null)
+			typeIDent.put(UGroupType.DATA_SOURCE_LINE, "" + getEntity().getLocation().getPosition());
 		ug.startGroup(typeIDent);
 		ellipse.drawU(ug2);
 		ug2.closeGroup();

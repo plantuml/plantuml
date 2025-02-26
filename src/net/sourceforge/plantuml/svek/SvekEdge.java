@@ -807,6 +807,8 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		typeIDent.put(UGroupType.ID, "link_" + link.getEntity1().getName() + "_" + link.getEntity2().getName());
 		typeIDent.put(UGroupType.DATA_ENTITY_1, link.getEntity1().getName());
 		typeIDent.put(UGroupType.DATA_ENTITY_2, link.getEntity2().getName());
+		typeIDent.put(UGroupType.DATA_ENTITY_1_UID, link.getEntity1().getUid());
+		typeIDent.put(UGroupType.DATA_ENTITY_2_UID, link.getEntity2().getUid());
 		if (link.getLocation() != null)
 			typeIDent.put(UGroupType.DATA_SOURCE_LINE, "" + link.getLocation().getPosition());
 		ug.startGroup(typeIDent);
