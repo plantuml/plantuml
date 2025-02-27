@@ -135,6 +135,10 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 	}
 
+	private boolean isEmpty() {
+		return nodes.values().isEmpty() && clusters.values().isEmpty();
+	}
+
 	private MinMaxMutable getSmetanaMinMax() {
 		final MinMaxMutable result = MinMaxMutable.getEmpty(false);
 		for (ST_Agnode_s n : nodes.values()) {
@@ -456,6 +460,10 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 	}
 
 	private TextBlock getTextBlock(StringBounder stringBounder, Globals zz) {
+
+		if (isEmpty())
+			return TextBlockUtils.EMPTY_TEXT_BLOCK;
+
 		final ST_Agraph_s g = agopen(zz, new CString("g"), zz.Agdirected, null);
 
 		exportEntities(zz, g, getUnpackagedEntities());
