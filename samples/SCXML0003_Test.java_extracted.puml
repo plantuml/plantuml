@@ -1,0 +1,42 @@
+@startuml
+
+state module {
+state Somp {
+  state entry1 <<inputPin>>
+  state entry2 <<inputPin>>
+  state sin
+  sin -> sin2
+}
+
+state flop{
+  state sig_in <<inputPin>>
+  state sig_ff <<outputPin>>
+  state flop_0: sig_ff := 0
+  state flop_1: sig_ff := 1
+  [*] -> flop_0
+  flop_0 -> flop_1 : sig_in
+  
+}
+
+state counter{
+  state count_start <<inputPin>>
+  state count_done <<outputPin>>  
+  state "count_val[3:0]" <<outputPin>>  
+  [*] -> count_idle
+  count_idle --> count_ongoing: count_start
+  state count_idle: count_val := 0
+  state count_ongoing: count_val := count_val +1
+  count_ongoing -> count_finish: count_val != MAX_VAL
+  state count_finish: count_done:=1
+  count_finish -> count_idle
+
+}
+state ex <<inputPin>>
+state exitAx <<inputPin>>
+
+exitAx --> entry1
+sig_ff -> entry2 : "!" 
+
+
+}
+@enduml

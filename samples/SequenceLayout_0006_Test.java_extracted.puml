@@ -1,0 +1,7 @@
+@startuml
+A -> B : a
+note right: Note
+activate B
+B --> A : b
+deactivate B
+@enduml

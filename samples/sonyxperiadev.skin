@@ -1,0 +1,37 @@
+SkinParam BackgroundColor #white
+SkinParam Shadowing false
+SkinParam SequenceMessageAlign center
+SkinParam DefaultFontName Arial
+SkinParam DefaultFontStyle bold
+SkinParam DefaultFontColor #333333
+
+SkinParam NoteBackgroundColor #fbfb77
+SkinParam NoteBorderColor #cbcb47
+
+SkinParam NoteBackgroundColor #ffffcd
+SkinParam NoteBorderColor #a9a980
+SkinParam NoteFontColor #676735
+SkinParam NoteFontStyle italic
+
+SkinParam SequenceArrowColor #555555
+SkinParam SequenceArrowFontColor #555555
+SkinParam SequenceArrowFontStyle none
+
+SkinParam SequenceBoxBackgroundColor #fafafa
+SkinParam SequenceBoxBorderColor #eeeeee
+SkinParam SequenceBoxFontColor #666666
+SkinParam SequenceBoxFontSize 12
+SkinParam SequenceBoxFontStyle italic
+
+SkinParam ParticipantBackgroundColor #dde5ff
+SkinParam ParticipantBorderColor #cccccc
+SkinParam ParticipantFontColor #333333
+SkinParam ParticipantFontStyle bold
+
+SkinParam DatabaseBackgroundColor #df4646
+SkinParam DatabaseFontColor #red
+SkinParam DatabaseFontStyle bold
+
+SkinParam EntityBackgroundColor #999999
+
+SkinParam SequenceLifeLineBorderColor #bbbbbb

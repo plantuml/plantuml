@@ -1,0 +1,12 @@
+@startuml
+
+state module {
+	state flop
+	state Somp {
+	  state entry1 <<inputPin>>
+	  state entry2 <<inputPin>>
+	  state sin
+	  sin -> sin2
+	}
+}
+@enduml

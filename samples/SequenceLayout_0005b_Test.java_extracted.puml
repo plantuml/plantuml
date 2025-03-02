@@ -1,0 +1,13 @@
+@startuml
+!pragma teoz true
+skinparam {
+  Maxmessagesize 200
+}
+
+group Grouping messages
+    Test <- Test    : The group frame [now] does draw a border around the text (located on the left side), [lo longer] ignores its presence, and [no longer]] ignores the presence of a line.
+    note left
+      A note on the self message
+    endnote
+end
+@enduml

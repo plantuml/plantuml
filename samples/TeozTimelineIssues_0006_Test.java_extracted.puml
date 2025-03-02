@@ -1,0 +1,10 @@
+@startuml
+!pragma teoz true
+'Issue #656
+A -> B++: Get data
+& A -> C++:
+& A -> D++:
+B -->> A--: Data
+& C -->> A--:
+& D -->> A--:
+@enduml

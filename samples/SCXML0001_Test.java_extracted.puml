@@ -1,0 +1,7 @@
+@startuml
+state s1
+state s2
+[*] --> s1
+
+s1 --> s2 : play
+@enduml

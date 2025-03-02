@@ -1,0 +1,14 @@
+@startuml
+state counter{
+state count_start
+state count_done
+state "count_val[3:0]"
+[*] -> count_idle
+count_idle --> count_ongoing: count_start
+state count_idle: count_val := 0
+state count_ongoing: count_val := count_val +1
+count_ongoing -> count_finish: count_val != MAX_VAL
+state count_finish: count_done:=1
+count_finish -> count_idle
+}
+@enduml
