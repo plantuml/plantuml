@@ -69,21 +69,21 @@ jobs:
         uses: thedoctor0/zip-release@0.7.6
         with:
           type: 'zip'
-          filename: "plantuml-full-${{ matrix.platform }}-${{ env.VERSION }}.zip"
+          filename: "plantuml-full-${{ matrix.platform }}-SNAPSHOT.zip"
           directory: plantuml-gplv2/build/native/nativeFullCompile/
 
       - name: Archive Headless Release
         uses: thedoctor0/zip-release@0.7.6
         with:
           type: 'zip'
-          filename: "plantuml-headless-${{ matrix.platform }}-${{ env.VERSION }}.zip"
+          filename: "plantuml-headless-${{ matrix.platform }}-SNAPSHOT.zip"
           directory: plantuml-gplv2/build/native/nativeHeadlessCompile/
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: "plantuml-gplv2/build/native/native*/plantuml-*-${{ matrix. platform }}-${{ env.VERSION }}.zip"
+          file: "plantuml-gplv2/build/native/native*/plantuml-*-${{ matrix. platform }}-SNAPSHOT.zip"
           file_glob: true
           tag: snapshot-native
           release_name: snapshot - Native Image (~v${{ env.VERSION }})
