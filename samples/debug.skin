@@ -1,0 +1,221 @@
+root {
+  FontName SansSerif
+  HyperLinkColor red
+  FontColor green
+  FontSize 19
+  FontStyle plain
+  HorizontalAlignment left
+  RoundCorner 15
+  DiagonalCorner 0
+  LineColor #3600A8
+  LineThickness 1.0
+  BackGroundColor #AAA
+  Shadowing 0.0
+}
+
+stereotype {
+  FontColor blue
+  FontSize 8
+  FontStyle bold
+}
+
+title {
+  HorizontalAlignment right
+  FontSize 24
+  FontColor blue
+}
+
+header {
+  HorizontalAlignment center
+  FontSize 26
+  FontColor purple
+}
+
+footer {
+  HorizontalAlignment left
+  FontSize 28
+  FontColor red
+}
+
+legend {
+  FontSize 30
+  BackGroundColor yellow
+  Margin 30
+  Padding 50
+}
+
+caption {
+  FontSize 32
+}
+
+
+element {
+  BackGroundColor #CEFEFE
+}
+
+sequenceDiagram {
+}
+
+classDiagram {
+}
+
+activityDiagram {
+}
+
+
+group {
+  LineThickness 3.5
+  BackGroundColor MistyRose
+  LineColor DarkOrange
+  
+  FontSize 12
+  FontStyle italic
+  FontColor red
+}
+
+groupHeader {
+  BackGroundColor tan
+  LineThickness 0.5
+  LineColor yellow
+
+  FontSize 18
+  FontStyle bold
+  FontColor blue
+}
+
+lifeLine {
+  BackGroundColor gold
+}
+
+destroy {
+  LineColor red
+}
+
+reference {
+  LineColor red
+  FontSize 10
+  FontStyle bold
+  FontColor blue
+  BackGroundColor gold
+  HorizontalAlignment right
+}
+
+box {
+  LineThickness 0.1
+  LineColor FireBrick
+  BackGroundColor PowderBlue
+
+  FontSize 12
+  FontStyle italic
+  FontColor Maroon
+}
+
+separator {
+  LineColor red
+  BackGroundColor green
+  
+  FontSize 16
+  FontStyle bold
+  FontColor white
+}
+
+delay {
+  FontSize 22
+  FontStyle italic
+}
+
+participant {
+  LineThickness 2.5
+}
+
+actor {
+  LineThickness 0.5
+}
+
+boundary {
+  LineThickness 1.5
+}
+
+control {
+  LineThickness 1.5
+}
+
+entity {
+  LineThickness 1.5
+}
+
+queue {
+  LineThickness 1.5
+}
+
+database {
+  LineThickness 1.5
+}
+
+collections {
+  LineThickness 1.5
+}
+
+arrow {
+  FontSize 13
+  LineColor Lime
+}
+
+note {
+  BackGroundColor GoldenRod
+}
+
+diamond {
+}
+
+swimlane {
+}
+
+activity {
+  BackgroundColor #33668E
+  BorderColor #33668E
+  FontColor #888
+  FontName arial
+}
+
+
+activityDiagram {
+	diamond {
+	  BackgroundColor #dae4f1
+	  BorderColor #33668E
+	  FontColor red
+	  FontName arial
+	  FontSize 5
+	}
+	arrow {
+	  FontColor gold
+	  FontName arial
+	  FontSize 15
+	}
+	partition {
+	  LineColor red
+	  FontColor green
+	  RoundCorner 30
+	  BackColor PeachPuff
+	}
+	note {
+	  FontColor Blue
+	  LineColor yellow
+	}
+}
+
+circle {
+  LineColor yellow
+}
+
+activityBar {
+  LineColor lightGreen
+}
+
+mindmapDiagram {
+    Padding 10
+    Margin 10
+}
+
+node {
+}

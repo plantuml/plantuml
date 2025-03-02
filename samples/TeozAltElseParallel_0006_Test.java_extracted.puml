@@ -1,0 +1,11 @@
+@startuml
+!pragma teoz true
+ [-> foo : test
+& Bob -> Charlie
+& par
+     Alice -> Bob: Authentication Request
+'& Charlie-> Bob: Authentication Request
+end
+& foo -> Alice : test
+
+@enduml

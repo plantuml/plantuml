@@ -1,0 +1,19 @@
+@startuml
+!pragma teoz true
+Bob -> Alice : message
+& note right of Alice: ok
+Alice -[hidden]> Alice
+
+activate Bob
+Bob -> Alice --: deactivate
+& note right of Alice: ok
+
+Bob -> Alice ++: activate
+& note right of Alice: ok
+deactivate Alice
+
+activate Bob
+Bob -> Alice --++: act+deact
+& note right of Alice: not ok
+deactivate Alice
+@enduml

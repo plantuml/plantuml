@@ -1,0 +1,8 @@
+@startuml
+Bob->Bob: hello1
+activate Bob
+Bob->Bob: hello2
+destroy Bob
+Bob->Bob: this is an\nexample of long\nmessage
+Bob->Alice: And this\nis an other on\nvery long too
+@enduml

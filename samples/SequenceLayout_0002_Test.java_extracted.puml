@@ -1,0 +1,8 @@
+@startuml
+group
+    a -> a : This works fine
+end
+group
+    a <- a : This [now works]
+end
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+
+state module {
+}
+
+note as PARAMETERS
+localparam MAX_VAL 10
+parameter COUNT_WIDTH 4
+end note
+
+
+@enduml
