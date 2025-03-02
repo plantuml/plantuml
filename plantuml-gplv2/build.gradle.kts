@@ -207,4 +207,13 @@ graalvmNative {
 		buildArgs(listOf("-Djava.awt.headless=true", "--enable-url-protocols=https"))
 	}
   toolchainDetection = false
+  agent {
+    defaultMode.set("standard")
+    enabled.set(true)
+
+    metadataCopy {
+        inputTaskNames.add("test")
+        outputDirectories.add("resources/META-INF/native-image/plantuml/")
+    }
+  }
 }
