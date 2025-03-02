@@ -1,0 +1,8 @@
+@startuml
+component test
+note top of test: first line1\nsecond line2
+note bottom of test
+    first line3
+    second line4
+end note
+@enduml

@@ -1,0 +1,5 @@
+@startuml
+-class foo{
+    # field1 : type
+}
+@enduml

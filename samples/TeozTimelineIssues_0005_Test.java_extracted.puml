@@ -1,0 +1,11 @@
+@startuml
+!pragma teoz true
+dummy -> A ++: first step
+
+A -> A: test
+A -> B --++: second step
+
+B -> B: test
+B -> C--: third step
+
+@enduml

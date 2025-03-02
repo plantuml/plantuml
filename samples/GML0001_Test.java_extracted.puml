@@ -1,0 +1,4 @@
+@startuml
+component comp1
+component comp2
+@enduml
