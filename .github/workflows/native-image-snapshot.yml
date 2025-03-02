@@ -61,6 +61,14 @@ jobs:
         shell: bash
         run: echo "DATETIME=$(date -u +'%F at %T (UTC)')" >> $GITHUB_ENV
 
+      - name: Collect Metadata Automatically with Tracing Agent
+        shell: bash
+        run: ./gradlew :plantuml-gplv2:nativeTest
+
+      - name: Copy Metadata
+        shell: bash
+        run: ./gradlew :plantuml-gplv2:metadataCopy
+
       - name: Build GPLv2 native image
         shell: bash
         run: ./gradlew :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile -x test
