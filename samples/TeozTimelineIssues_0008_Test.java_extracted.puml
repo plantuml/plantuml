@@ -1,0 +1,10 @@
+@startuml
+!pragma teoz true
+'Issue #656 -- modified
+A -> B++: Get data
+& B -> C++:a\n2
+& C -> D++:
+B -->> A--: Data
+& C -->> A--:
+& D -->> C--:a\n2
+@enduml

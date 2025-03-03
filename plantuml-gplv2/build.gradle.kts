@@ -117,15 +117,15 @@ val preprocessLicenceAntTask by tasks.registering() {
 	}
 }
 
-tasks.processResources{
+tasks.processResources {
 	dependsOn(preprocessLicenceAntTask)
 }
 
-tasks.compileJava{
+tasks.compileJava {
 	dependsOn(preprocessLicenceAntTask)
 }
 
-tasks.named("sourcesJar"){
+tasks.named("sourcesJar") {
 	dependsOn(preprocessLicenceAntTask)
 }
 
@@ -191,9 +191,16 @@ application {
 }
 
 graalvmNative {
-  binaries.all { resources.autodetect() }
+	binaries.all { resources.autodetect() }
 	binaries.create("full") {
-		buildArgs(listOf("-Djava.awt.headless=false", "--enable-url-protocols=https"))
+		buildArgs(
+			listOf(
+				"-Djava.awt.headless=false",
+				"--enable-url-protocols=https",
+				"-H:+IncludeAllLocales",
+				"-H:ConfigurationFileDirectories=./src/main/resources/META-INF/native-image/org.plantuml/plantuml"
+			)
+		)
 		runtimeArgs(listOf("-Djava.awt.headless=false"))
 		imageName.set("plantuml-full")
 		mainClass.set(application.mainClass)
@@ -204,16 +211,23 @@ graalvmNative {
 		mainClass.set(application.mainClass)
 		classpath(binaries.named("main").get().classpath)
 		runtimeArgs(listOf("-Djava.awt.headless=true"))
-		buildArgs(listOf("-Djava.awt.headless=true", "--enable-url-protocols=https"))
+		buildArgs(
+			listOf(
+				"-Djava.awt.headless=true",
+				"--enable-url-protocols=https",
+				"-H:+IncludeAllLocales",
+				"-H:ConfigurationFileDirectories=./src/main/resources/META-INF/native-image/org.plantuml/plantuml"
+			)
+		)
 	}
   toolchainDetection = false
-  agent {
-    defaultMode.set("standard")
-    enabled.set(true)
-
-    metadataCopy {
-        inputTaskNames.add("test")
-        outputDirectories.add("resources/META-INF/native-image/plantuml/")
-    }
-  }
+	agent {
+		enabled.set(true)
+		metadataCopy {
+			inputTaskNames.add("run")
+			outputDirectories.add("src/main/resources/META-INF/native-image/org.plantuml/plantuml")
+			mergeWithExisting.set(true)
+		}
+	}
 }
+

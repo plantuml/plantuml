@@ -1,0 +1,10 @@
+@startuml
+!pragma teoz true
+activate b
+b -> a --++ #red : hello
+deactivate a
+b -> a : hello2
+activate a #green
+deactivate a
+b -> a ++ #green: hello3
+@enduml

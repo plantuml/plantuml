@@ -1,0 +1,14 @@
+@startuml
+actor my_actor
+boundary my_boundary
+collections my_collections
+control my_control
+database my_database
+entity my_entity
+participant my_participant
+queue my_queue
+my_actor -> my_database: Do something
+activate my_actor
+my_database --> my_actor: Acknowledge it
+deactivate my_actor
+@enduml

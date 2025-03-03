@@ -1,0 +1,13 @@
+@startuml
+Test --> Test: Text
+note right: the location of the Comment is correct
+
+Test --> Test: Text
+note left: the location of the Comment is correct
+
+Test <-- Test: Text
+note right: the location of the Comment is [now correct]
+
+Test <-- Test: Text
+note left: the location of the Comment is [now correct]
+@enduml
