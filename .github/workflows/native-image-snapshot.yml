@@ -62,9 +62,11 @@ jobs:
         run: echo "DATETIME=$(date -u +'%F at %T (UTC)')" >> $GITHUB_ENV
 
       - name: Generate reachability metadata with agent (PDF)
-        run: ./gradlew :plantuml-gplv2:run --args='-tpdf -v /home/finkel/work_self/plantuml/samples/' metadataCopy
+        shell: bash
+        run: ./gradlew :plantuml-gplv2:run --args="-tpdf -v $(pwd)samples/" metadataCopy
       - name: Generate reachability metadata with agent (PNG)
-        run: ./gradlew :plantuml-gplv2:run --args='-tpng -v /home/finkel/work_self/plantuml/samples/' metadataCopy
+        shell: bash
+        run: ./gradlew :plantuml-gplv2:run --args="-tpng -v $(pwd)/samples/" metadataCopy
       - name: Build GPLv2 native image
         shell: bash
         run: ./gradlew :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile -x test
