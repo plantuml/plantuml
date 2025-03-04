@@ -63,10 +63,10 @@ jobs:
 
       - name: Generate reachability metadata with agent (PDF)
         shell: bash
-        run: ./gradlew :plantuml-gplv2:run --args="-tpdf -v $(pwd)samples/" metadataCopy
+        run: ./gradlew :plantuml-gplv2:run --args="-tpdf -v ${{ github.workspace }}/samples/" metadataCopy
       - name: Generate reachability metadata with agent (PNG)
         shell: bash
-        run: ./gradlew :plantuml-gplv2:run --args="-tpng -v $(pwd)/samples/" metadataCopy
+        run: ./gradlew :plantuml-gplv2:run --args="-tpng -v ${{ github.workspace }}/samples/" metadataCopy
       - name: Build GPLv2 native image
         shell: bash
         run: ./gradlew :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile -x test

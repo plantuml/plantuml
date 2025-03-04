@@ -196,6 +196,7 @@ graalvmNative {
 		buildArgs(
 			listOf(
 				"-Djava.awt.headless=false",
+				"-H:+ForeignAPISupport",
 				"--enable-url-protocols=https",
 				"-H:+IncludeAllLocales",
 				"-H:ConfigurationFileDirectories=./src/main/resources/META-INF/native-image/org.plantuml/plantuml"
@@ -214,6 +215,7 @@ graalvmNative {
 		buildArgs(
 			listOf(
 				"-Djava.awt.headless=true",
+				"-H:+ForeignAPISupport",
 				"--enable-url-protocols=https",
 				"-H:+IncludeAllLocales",
 				"-H:ConfigurationFileDirectories=./src/main/resources/META-INF/native-image/org.plantuml/plantuml"
