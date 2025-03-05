@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.ProtectedCommand;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.InstallationRequirement;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -283,6 +284,12 @@ public abstract class AbstractPSystem implements Diagram, WarningHandler {
 	@Override
 	public Collection<Warning> getWarnings() {
 		return preprocessing.getWarnings();
+	}
+	
+	
+	@Override
+	public InstallationRequirement getInstallationRequirement() {
+		return InstallationRequirement.NONE;
 	}
 
 }

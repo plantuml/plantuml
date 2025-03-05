@@ -98,5 +98,8 @@ public interface Diagram {
 	public boolean hasUrl();
 
 	public Display getTitleDisplay();
+	
+	
+	public InstallationRequirement getInstallationRequirement();
 
 }

@@ -64,6 +64,7 @@ import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.core.InstallationRequirement;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.cucadiagram.Bodier;
 import net.sourceforge.plantuml.cucadiagram.BodierJSon;
@@ -144,8 +145,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		this.setSeparator(namespaceSeparator);
 	}
 
-	public CucaDiagram(UmlSource source, UmlDiagramType type, Previous previous,
-			PreprocessingArtifact preprocessing) {
+	public CucaDiagram(UmlSource source, UmlDiagramType type, Previous previous, PreprocessingArtifact preprocessing) {
 		super(source, type, previous, preprocessing);
 		this.namespace = new Plasma<Entity>();
 		this.root = namespace.root();
@@ -215,7 +215,8 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 	protected void updateLasts(Entity result) {
 	}
 
-	final public Entity reallyCreateLeaf(LineLocation location, Quark<Entity> ident, Display display, LeafType type, USymbol symbol) {
+	final public Entity reallyCreateLeaf(LineLocation location, Quark<Entity> ident, Display display, LeafType type,
+			USymbol symbol) {
 		Objects.requireNonNull(type);
 		if (ident.getData() != null)
 			throw new IllegalStateException();
@@ -337,12 +338,13 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 		return CommandExecutionResult.ok();
 	}
 
-	final public CommandExecutionResult gotoGroup(LineLocation location, Quark<Entity> quark, Display display, GroupType type) {
+	final public CommandExecutionResult gotoGroup(LineLocation location, Quark<Entity> quark, Display display,
+			GroupType type) {
 		return gotoGroup(location, quark, display, type, null);
 	}
 
-	final public CommandExecutionResult gotoGroup(LineLocation location, Quark<Entity> quark, Display display, GroupType type,
-			USymbol usymbol) {
+	final public CommandExecutionResult gotoGroup(LineLocation location, Quark<Entity> quark, Display display,
+			GroupType type, USymbol usymbol) {
 		if (quark.getData() == null) {
 			final Entity result = this.createGroup(location, quark, type);
 			result.setTogether(currentTogether());
@@ -934,6 +936,16 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 	public int countByName(String full) {
 		return this.namespace.countByName(full);
+	}
+
+	@Override
+	public final InstallationRequirement getInstallationRequirement() {
+		if (this.isUseElk())
+			return InstallationRequirement.ELK_LIBRARY_REQUIRED;
+		else if (this.isUseSmetana())
+			return InstallationRequirement.NONE;
+		else
+			return InstallationRequirement.GRAPHVIZ_ENGINE_REQUIRED;
 	}
 
 }
