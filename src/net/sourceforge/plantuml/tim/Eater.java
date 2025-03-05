@@ -188,19 +188,19 @@ public abstract class Eater {
 
 	final protected String eatAndGetVarname() throws EaterException {
 		final StringBuilder varname = new StringBuilder("" + eatOneChar());
-		if (TLineType.isLetterOrUnderscoreOrDollar(varname.charAt(0)) == false)
+		if (TLineType.isLetterOrEmojiOrUnderscoreOrDollar(varname.charAt(0)) == false)
 			throw new EaterException("a002", stringLocated);
 
-		addUpToLastLetterOrUnderscoreOrDigit(varname);
+		addUpToLastLetterOrEmojiOrUnderscoreOrDigit(varname);
 		return varname.toString();
 	}
 
 	final protected String eatAndGetFunctionName() throws EaterException {
 		final StringBuilder varname = new StringBuilder("" + eatOneChar());
-		if (TLineType.isLetterOrUnderscoreOrDollar(varname.charAt(0)) == false)
+		if (TLineType.isLetterOrEmojiOrUnderscoreOrDollar(varname.charAt(0)) == false)
 			throw new EaterException("a003", stringLocated);
 
-		addUpToLastLetterOrUnderscoreOrDigit(varname);
+		addUpToLastLetterOrEmojiOrUnderscoreOrDigit(varname);
 		return varname.toString();
 	}
 
@@ -275,10 +275,10 @@ public abstract class Eater {
 
 	}
 
-	final protected void addUpToLastLetterOrUnderscoreOrDigit(StringBuilder sb) {
+	final protected void addUpToLastLetterOrEmojiOrUnderscoreOrDigit(StringBuilder sb) {
 		while (i < stringLocated.length()) {
 			final char ch = stringLocated.charAt(i);
-			if (TLineType.isLetterOrUnderscoreOrDigit(ch) == false)
+			if (TLineType.isLetterOrEmojiOrUnderscoreOrDigit(ch) == false)
 				return;
 
 			i++;
@@ -311,7 +311,7 @@ public abstract class Eater {
 		while (true) {
 			skipSpaces();
 			char ch = peekChar();
-			if (TLineType.isLetterOrUnderscoreOrDollar(ch)) {
+			if (TLineType.isLetterOrEmojiOrUnderscoreOrDollar(ch)) {
 				final String varname = eatAndGetVarname();
 				skipSpaces();
 				final TValue defValue;

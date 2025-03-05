@@ -141,7 +141,7 @@ public class VariableManager {
 
 	@JawsStrange
 	public String getVarnameAt(String s, int pos) {
-		final boolean justAfterALetter = pos > 0 && TLineType.isLetterOrUnderscoreOrDigit(s.charAt(pos - 1))
+		final boolean justAfterALetter = pos > 0 && TLineType.isLetterOrEmojiOrUnderscoreOrDigit(s.charAt(pos - 1))
 				&& justAfterBackslashN(s, pos) == false;
 		if (justAfterALetter && s.charAt(pos) != '$')
 			return null;
@@ -151,7 +151,7 @@ public class VariableManager {
 			return null;
 
 		if (pos + varname.length() == s.length()
-				|| TLineType.isLetterOrUnderscoreOrDigit(s.charAt(pos + varname.length())) == false)
+				|| TLineType.isLetterOrEmojiOrUnderscoreOrDigit(s.charAt(pos + varname.length())) == false)
 			return varname;
 
 		return null;

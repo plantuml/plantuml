@@ -872,7 +872,7 @@ public class TContext {
 
 	@JawsStrange
 	private String getFunctionNameAt(String s, int pos) {
-		final boolean justAfterALetter = pos > 0 && TLineType.isLetterOrUnderscoreOrDigit(s.charAt(pos - 1))
+		final boolean justAfterALetter = pos > 0 && TLineType.isLetterOrEmojiOrUnderscoreOrDigit(s.charAt(pos - 1))
 				&& VariableManager.justAfterBackslashN(s, pos) == false;
 		if (justAfterALetter && s.charAt(pos) != '%' && s.charAt(pos) != '$')
 			return null;

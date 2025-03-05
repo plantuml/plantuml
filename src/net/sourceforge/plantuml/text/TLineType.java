@@ -43,16 +43,16 @@ public enum TLineType {
 	LEGACY_DEFINELONG, THEME, INCLUDE, INCLUDE_SPRITES, INCLUDE_DEF, IMPORT, STARTSUB, ENDSUB, INCLUDESUB, LOG, DUMP_MEMORY,
 	COMMENT_SIMPLE, COMMENT_LONG_START, OPTION;
 
-	private static final Pattern PATTERN_LEGACY_DEFINE = Pattern.compile("^\\s*!define\\s+[\\p{L}_][\\p{L}_0-9]*\\(.*");
+	private static final Pattern PATTERN_LEGACY_DEFINE = Pattern.compile("^\\s*!define\\s+[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\(.*");
 
 	private static final Pattern PATTERN_LEGACY_DEFINELONG = Pattern
-			.compile("^\\s*!definelong\\s+[\\p{L}_][\\p{L}_0-9]*\\b.*");
+			.compile("^\\s*!definelong\\s+[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\b.*");
 
 	private static final Pattern PATTERN_AFFECTATION_DEFINE = Pattern
-			.compile("^\\s*!define\\s+[\\p{L}_][\\p{L}_0-9]*\\b.*");
+			.compile("^\\s*!define\\s+[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\b.*");
 
 	private static final Pattern PATTERN_AFFECTATION = Pattern
-			.compile("^\\s*!\\s*(local|global)?\\s*\\$?[\\p{L}_][\\p{L}_0-9]*\\s*\\??=.*");
+			.compile("^\\s*!\\s*(local|global)?\\s*\\$?[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*\\s*\\??=.*");
 
 	private static final Pattern PATTERN_COMMENT_SIMPLE1 = Pattern.compile("^\\s*'.*");
 
@@ -71,10 +71,10 @@ public enum TLineType {
 	private static final Pattern PATTERN_IF = Pattern.compile("^\\s*!if\\s+.*");
 
 	private static final Pattern PATTERN_DECLARE_RETURN_FUNCTION = Pattern
-			.compile("^\\s*!(unquoted\\s|final\\s)*(function)\\s+\\$?[\\p{L}_][\\p{L}_0-9]*.*");
+			.compile("^\\s*!(unquoted\\s|final\\s)*(function)\\s+\\$?[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*.*");
 
 	private static final Pattern PATTERN_DECLARE_PROCEDURE = Pattern
-			.compile("^\\s*!(unquoted\\s|final\\s)*(procedure)\\s+\\$?[\\p{L}_][\\p{L}_0-9]*.*");
+			.compile("^\\s*!(unquoted\\s|final\\s)*(procedure)\\s+\\$?[\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_][\\p{L}\\uD800-\\uDBFF\\uDC00-\\uDFFF_0-9]*.*");
 
 	private static final Pattern PATTERN_ELSE = Pattern.compile("^\\s*!else\\b.*");
 
@@ -231,26 +231,6 @@ public enum TLineType {
 		return ch == '\"' || ch == '\'';
 	}
 
-	public static boolean isLetterOrUnderscoreOrDigit(char ch) {
-		return isLetterOrUnderscore(ch) || isLatinDigit(ch);
-	}
-
-	public static boolean isLetterOrUnderscore(char ch) {
-		return isLetter(ch) || ch == '_';
-	}
-
-	public static boolean isLetterOrUnderscoreOrDollar(char ch) {
-		return isLetterOrUnderscore(ch) || ch == '$';
-	}
-
-	public static boolean isLetterOrDigit(char ch) {
-		return isLetter(ch) || isLatinDigit(ch);
-	}
-
-	public static boolean isLetter(char ch) {
-		return Character.isLetter(ch);
-	}
-
 	public static boolean isSpaceChar(char ch) {
 		return Character.isSpaceChar(ch);
 	}
@@ -258,5 +238,26 @@ public enum TLineType {
 	public static boolean isLatinDigit(char ch) {
 		return ch >= '0' && ch <= '9';
 	}
+
+	public static boolean isLetterOrEmojiOrUnderscoreOrDigit(char ch) {
+		return isLetterOrUnderscore(ch) || isLatinDigit(ch) || isEmoji(ch);
+	}
+
+	public static boolean isLetterOrEmojiOrUnderscoreOrDollar(char ch) {
+		return isLetterOrUnderscore(ch) || ch == '$' || isEmoji(ch);
+	}
+
+	private static boolean isLetterOrUnderscore(char ch) {
+		return isLetter(ch) || ch == '_';
+	}
+
+	private static boolean isLetter(char ch) {
+		return Character.isLetter(ch);
+	}
+
+	private static boolean isEmoji(char ch) {
+		return Character.isLowSurrogate(ch) || Character.isHighSurrogate(ch) ;
+	}
+
 
 }
