@@ -469,7 +469,7 @@ public class ImageBuilder {
 	}
 
 	static private HColor getDefaultHBackColor() {
-		return HColors.WHITE;
+		return HColors.WHITE.withDark(HColors.BLACK);
 	}
 
 	private String getHoverPathColorRGB() {
