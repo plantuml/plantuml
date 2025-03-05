@@ -1,4 +1,4 @@
-## V1.2025.2 (_xxx, not yet release_)
+## V1.2025.2 (Mar 5, 2025)
 
 - [EBNF - Improve the curved line on the EBNF diagram](https://github.com/plantuml/plantuml/issues/2075)
 - [SVG - Lost id-attribute (or group)](https://github.com/plantuml/plantuml/issues/2069)
