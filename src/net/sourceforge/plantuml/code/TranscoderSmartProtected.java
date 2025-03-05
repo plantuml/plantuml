@@ -97,7 +97,7 @@ public class TranscoderSmartProtected implements Transcoder {
 		appendLine(result, "The plugin you are using seems to generated a bad URL.");
 		appendLine(result, "This URL does not look like HUFFMAN data.");
 		appendLine(result, "");
-		appendLine(result, "See https://plantuml.com/pte");
+		appendLine(result, "See https://plantuml.com/text-encoding");
 		appendLine(result, "");
 		appendLine(result, "You may contact the PlantUML team at plantuml@gmail.com");
 		appendLine(result,
