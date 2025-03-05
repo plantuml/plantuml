@@ -1,4 +1,4 @@
-name: Native Image - Snapshot
+name: Native Image - Snapshot (sandbox)
 
 on:
   workflow_dispatch:
@@ -16,11 +16,11 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
- 
+
       - name: Clean release and tag
         run: |
-          gh release delete snapshot-native --cleanup-tag -y || true
-          echo "::notice title=release snapshot-native::snapshot - Native Image at ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/snapshot-native"
+          gh release delete snapshot-native-sandbox --cleanup-tag -y || true
+          echo "::notice title=release snapshot-native::snapshot (sandbox) - Native Image at ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/snapshot-native-sandbox"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -61,6 +61,12 @@ jobs:
         shell: bash
         run: echo "DATETIME=$(date -u +'%F at %T (UTC)')" >> $GITHUB_ENV
 
+      - name: Generate reachability metadata with agent (PDF)
+        shell: bash
+        run: ./gradlew :plantuml-gplv2:run --args="-tpdf -v ${{ github.workspace }}/samples/" metadataCopy
+      - name: Generate reachability metadata with agent (PNG)
+        shell: bash
+        run: ./gradlew :plantuml-gplv2:run --args="-tpng -v ${{ github.workspace }}/samples/" metadataCopy
       - name: Build GPLv2 native image
         shell: bash
         run: ./gradlew :plantuml-gplv2:nativeFullCompile :plantuml-gplv2:nativeHeadlessCompile -x test
@@ -85,8 +91,8 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: "plantuml-gplv2/build/native/native*/plantuml-*-${{ matrix. platform }}-SNAPSHOT.zip"
           file_glob: true
-          tag: snapshot-native
-          release_name: snapshot - Native Image (~v${{ env.VERSION }})
+          tag: snapshot-native-sandbox
+          release_name: snapshot (sandbox) - Native Image (~v${{ env.VERSION }})
           overwrite: true
           make_latest: false
           prerelease: true
