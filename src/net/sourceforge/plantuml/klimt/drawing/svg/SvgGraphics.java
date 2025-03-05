@@ -753,7 +753,7 @@ public class SvgGraphics {
 		}
 		if (hidden == false) {
 			final Element elt = (Element) document.createElement("path");
-			elt.setAttribute("d", sb.toString());
+			elt.setAttribute("d", sb.toString().trim());
 			styleMe(elt);
 			fillMe(elt);
 			final String id = path.getComment();
