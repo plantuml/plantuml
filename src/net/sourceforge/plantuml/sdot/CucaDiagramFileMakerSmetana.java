@@ -63,7 +63,6 @@ import h.ST_GVC_s;
 import net.atmp.CucaDiagram;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.StringUtils;
-import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.abel.CucaNote;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
@@ -73,6 +72,8 @@ import net.sourceforge.plantuml.abel.LinkArrow;
 import net.sourceforge.plantuml.annotation.DuplicateCode;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.ImageData;
+import net.sourceforge.plantuml.crash.GraphvizCrash;
+import net.sourceforge.plantuml.crash.CrashReportHandler;
 import net.sourceforge.plantuml.eggs.QuoteUtils;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -105,7 +106,6 @@ import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ClusterHeader;
 import net.sourceforge.plantuml.svek.CucaDiagramFileMaker;
 import net.sourceforge.plantuml.svek.GeneralImageBuilder;
-import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.SvekNode;
 import net.sourceforge.plantuml.svek.image.EntityImageNote;
@@ -447,8 +447,20 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			return diagram.createImageBuilder(fileFormatOption).drawable(drawable).write(os);
 		} catch (Throwable e) {
 			SmetanaDebug.printMe();
-			UmlDiagram.exportDiagramError(os, e, fileFormatOption, diagram.seed(), diagram.getMetadata(),
-					diagram.getFlashData(), getFailureText3(e));
+			Logme.error(e);
+			final CrashReportHandler report = new CrashReportHandler(e, diagram.getMetadata(), diagram.getFlashData());
+			report.add("An error has occured : " + e);
+			final String quote = StringUtils.rot(QuoteUtils.getSomeQuote());
+			report.add("<i>" + quote);
+			report.addEmptyLine();
+			report.addProperties();
+			report.addEmptyLine();
+			report.add("Sorry, the subproject Smetana is not finished yet...");
+			report.addEmptyLine();
+			report.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> or");
+			report.add("post to <b>https://plantuml.com/qa</b> to solve this issue.");
+			report.addEmptyLine();
+			report.exportDiagramError(fileFormatOption, diagram.seed(), os);
 			return ImageDataSimple.error();
 		} finally {
 			Globals.close();
@@ -471,7 +483,6 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 
 		if (nodes.values().isEmpty() && clusters.values().isEmpty())
 			return TextBlockUtils.EMPTY_TEXT_BLOCK;
-
 
 		final ST_GVC_s gvc = gvContext(zz);
 		SmetanaDebug.reset();
@@ -710,23 +721,6 @@ public class CucaDiagramFileMakerSmetana extends CucaDiagramFileMaker {
 			agsafeset(zz, e, new CString("headlabel"), hackDim, new CString(""));
 		}
 		return e;
-	}
-
-	static private List<String> getFailureText3(Throwable exception) {
-		Logme.error(exception);
-		final List<String> strings = new ArrayList<>();
-		strings.add("An error has occured : " + exception);
-		final String quote = StringUtils.rot(QuoteUtils.getSomeQuote());
-		strings.add("<i>" + quote);
-		strings.add(" ");
-		GraphvizCrash.addProperties(strings);
-		strings.add(" ");
-		strings.add("Sorry, the subproject Smetana is not finished yet...");
-		strings.add(" ");
-		strings.add("You should send this diagram and this image to <b>plantuml@gmail.com</b> or");
-		strings.add("post to <b>https://plantuml.com/qa</b> to solve this issue.");
-		strings.add(" ");
-		return strings;
 	}
 
 	private IEntityImage printEntityInternal(Entity ent) {

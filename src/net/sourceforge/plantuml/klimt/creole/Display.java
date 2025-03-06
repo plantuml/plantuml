@@ -366,7 +366,6 @@ public class Display implements Iterable<CharSequence> {
 	}
 
 //	private static List<CharSequence> manageEmbeddedDiagrams(final Collection<? extends CharSequence> strings) {
-//		System.err.println("tata=" + strings);
 //		final List<CharSequence> result = new ArrayList<>();
 //		final Iterator<? extends CharSequence> it = strings.iterator();
 //		while (it.hasNext()) {

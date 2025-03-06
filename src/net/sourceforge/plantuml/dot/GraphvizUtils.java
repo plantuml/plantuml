@@ -39,12 +39,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.List;
 import java.util.ServiceLoader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.StringUtils;
+import net.sourceforge.plantuml.crash.ReportLog;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityProfile;
@@ -230,7 +230,7 @@ public class GraphvizUtils {
 		return retrieveVersion(dotVersion());
 	}
 
-	static public int addDotStatus(List<String> result, boolean withRichText) {
+	static public int addDotStatus(ReportLog result, boolean withRichText) {
 		String red = "";
 		String bold = "";
 		if (withRichText) {

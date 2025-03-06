@@ -45,7 +45,6 @@ import java.util.List;
 import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.ScaleSimple;
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.WithSprite;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.command.Command;
@@ -55,6 +54,7 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.crash.CrashReportHandler;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
@@ -122,8 +122,8 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 			return createImageBuilder(fileFormatOption).drawable(getTextBlock(salt, size)).write(os);
 		} catch (Exception e) {
 			Logme.error(e);
-			UmlDiagram.exportDiagramError(os, e, fileFormatOption, seed(), getMetadata(), "none",
-					new ArrayList<String>());
+			final CrashReportHandler report = new CrashReportHandler(e, getMetadata(), "none");
+			report.exportDiagramError(fileFormatOption, seed(), os);
 			return ImageDataSimple.error();
 		}
 	}

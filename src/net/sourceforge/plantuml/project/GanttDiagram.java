@@ -58,6 +58,7 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.crash.GraphvizCrash;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
@@ -116,7 +117,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.text.BackSlash;
 
 public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprite, GanttStyle {
@@ -271,7 +271,7 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 
 				} catch (Throwable t) {
 					Logme.error(t);
-					final UDrawable crash = new GraphvizCrash(getSource().getPlainString(BackSlash.lineSeparator()),
+					final UDrawable crash = GraphvizCrash.build(getSource().getPlainString(BackSlash.lineSeparator()),
 							false, t);
 					crash.drawU(ug);
 

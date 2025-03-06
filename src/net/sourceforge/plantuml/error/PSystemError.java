@@ -56,6 +56,7 @@ import net.sourceforge.plantuml.asciiart.UmlCharArea;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.crash.ReportLog;
 import net.sourceforge.plantuml.eggs.PSystemWelcome;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.klimt.AffineTransformType;
@@ -85,7 +86,6 @@ import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.klimt.sprite.SpriteContainerEmpty;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SecurityUtils;
-import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.text.BackSlash;
 import net.sourceforge.plantuml.text.StringLocated;
 import net.sourceforge.plantuml.utils.LineLocation;
@@ -167,10 +167,10 @@ public abstract class PSystemError extends PlainDiagram {
 	}
 
 	private List<String> header() {
-		final List<String> result = new ArrayList<>();
+		final ReportLog result = new ReportLog();
 		result.add("PlantUML " + Version.versionString());
-		GraphvizCrash.checkOldVersionWarning(result);
-		return result;
+		result.checkOldVersionWarning();
+		return result.asList();
 	}
 
 	public List<String> getPureAsciiFormatted() {

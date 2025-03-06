@@ -54,7 +54,10 @@ import java.util.List;
 import java.util.Set;
 
 import net.sourceforge.plantuml.api.ImageDataSimple;
+import net.sourceforge.plantuml.argon2.Constants.Messages;
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.crash.CrashReportHandler;
+import net.sourceforge.plantuml.crash.GraphvizCrash;
 import net.sourceforge.plantuml.error.PSystemError;
 import net.sourceforge.plantuml.file.SuggestedFile;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -64,6 +67,7 @@ import net.sourceforge.plantuml.preproc.FileWithSuffix;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.utils.Log;
+import net.sourceforge.plantuml.version.Version;
 
 public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 	// ::remove file when __CORE__
@@ -138,8 +142,15 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 	private List<GeneratedImage> getCrashedImage(BlockUml blockUml, Throwable t, SFile outputFile) throws IOException {
 		final GeneratedImage image = new GeneratedImageImpl(outputFile, "Crash Error", blockUml, FileImageData.CRASH);
 		try (OutputStream os = outputFile.createBufferedOutputStream()) {
-			UmlDiagram.exportDiagramError(os, t, fileFormatOption, 42, null, blockUml.getFlashData(),
-					UmlDiagram.getFailureText2(t, blockUml.getFlashData()));
+			final String flash = blockUml.getFlashData();
+			final CrashReportHandler report = new CrashReportHandler(t, null, flash);
+			report.anErrorHasOccured(t, flash);
+			report.add("PlantUML (" + Version.versionString() + ") has crashed.");
+			report.checkOldVersionWarning();
+			report.addEmptyLine();
+			report.youShouldSendThisDiagram();
+			report.addEmptyLine();
+			report.exportDiagramError(fileFormatOption, (long) 42, os);
 		}
 		return Collections.singletonList(image);
 	}

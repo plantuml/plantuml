@@ -53,6 +53,7 @@ import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.crash.GraphvizCrash;
 import net.sourceforge.plantuml.decoration.symbol.USymbolHexagon;
 import net.sourceforge.plantuml.dot.DotData;
 import net.sourceforge.plantuml.dot.ExeState;
@@ -273,11 +274,11 @@ public final class GraphvizImageBuilder {
 		try {
 			svg = dotStringFactory.getSvg(stringBounder, dotMode, basefile, dotStrings);
 		} catch (IOException e) {
-			return new GraphvizCrash(source.getPlainString(BackSlash.lineSeparator()),
+			return GraphvizCrash.build(source.getPlainString(BackSlash.lineSeparator()),
 					GraphvizUtils.graphviz244onWindows(), e);
 		}
 		if (svg.length() == 0)
-			return new GraphvizCrash(source.getPlainString(BackSlash.lineSeparator()),
+			return GraphvizCrash.build(source.getPlainString(BackSlash.lineSeparator()),
 					GraphvizUtils.graphviz244onWindows(), new EmptySvgException());
 
 		final String graphvizVersion = extractGraphvizVersion(svg);

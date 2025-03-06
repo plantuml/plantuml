@@ -41,21 +41,18 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.FileFormatOption;
-import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.crash.CrashReportHandler;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SImageIO;
-import net.sourceforge.plantuml.svek.GraphvizCrash;
 import net.sourceforge.plantuml.text.BackSlash;
 
 public class PSystemDitaa extends AbstractPSystem {
@@ -177,12 +174,12 @@ public class PSystemDitaa extends AbstractPSystem {
 			return new ImageDataSimple(width, height);
 		} catch (Throwable e) {
 			e.printStackTrace();
-			final List<String> strings = new ArrayList<>();
-			strings.add("DITAA has crashed");
-			strings.add(" ");
-			GraphvizCrash.youShouldSendThisDiagram(strings);
-			strings.add(" ");
-			UmlDiagram.exportDiagramError(os, e, new FileFormatOption(FileFormat.PNG), seed(), null, null, strings);
+			final CrashReportHandler report = new CrashReportHandler(e, null, null);
+			report.add("DITAA has crashed");
+			report.add(" ");
+			report.youShouldSendThisDiagram();
+			report.add(" ");
+			report.exportDiagramError(new FileFormatOption(FileFormat.PNG), seed(), os);
 			return ImageDataSimple.error();
 		}
 

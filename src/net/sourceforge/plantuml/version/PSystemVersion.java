@@ -49,6 +49,7 @@ import net.sourceforge.plantuml.PlainStringsDiagram;
 import net.sourceforge.plantuml.Run;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.crash.ReportLog;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
@@ -58,7 +59,6 @@ import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.security.SecurityProfile;
 import net.sourceforge.plantuml.security.SecurityUtils;
-import net.sourceforge.plantuml.svek.GraphvizCrash;
 
 public class PSystemVersion extends PlainStringsDiagram {
 
@@ -166,7 +166,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 	}
 
 	public static PSystemVersion createShowVersion2(UmlSource source, PreprocessingArtifact preprocessing) {
-		final List<String> strings = new ArrayList<>();
+		final ReportLog strings = new ReportLog();
 		strings.add("<b>PlantUML version " + Version.versionString() + "</b> (" + Version.compileTimeString() + ")");
 		strings.add("(" + License.getCurrent() + " source distribution)");
 		// :: uncomment when __CORE__
@@ -175,7 +175,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 //		strings.add("Powered by CheerpJ, a Leaning Technologies Java tool");
 		// :: done
 		// :: comment when __CORE__
-		GraphvizCrash.checkOldVersionWarning(strings);
+		strings.checkOldVersionWarning();
 		if (SecurityUtils.getSecurityProfile() == SecurityProfile.UNSECURE) {
 			strings.add("Loaded from " + Version.getJarPath());
 
@@ -198,7 +198,7 @@ public class PSystemVersion extends PlainStringsDiagram {
 
 		// ::done
 
-		return new PSystemVersion(source, true, strings, preprocessing);
+		return new PSystemVersion(source, true, strings.asList(), preprocessing);
 	}
 
 	// :: comment when __CORE__
@@ -253,10 +253,10 @@ public class PSystemVersion extends PlainStringsDiagram {
 
 	// ::comment when __CORE__
 	public static PSystemVersion createTestDot(UmlSource source, PreprocessingArtifact preprocessing) throws IOException {
-		final List<String> strings = new ArrayList<>();
+		final ReportLog strings = new ReportLog();
 		strings.add(Version.fullDescription());
 		GraphvizUtils.addDotStatus(strings, true);
-		return new PSystemVersion(source, false, strings, preprocessing);
+		return new PSystemVersion(source, false, strings.asList(), preprocessing);
 	}
 	// ::done
 

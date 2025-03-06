@@ -46,6 +46,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
+import net.sourceforge.plantuml.crash.ReportLog;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.security.SFile;
 import net.sourceforge.plantuml.security.SecurityProfile;
@@ -60,7 +61,7 @@ public class OptionPrint {
 	// ::remove file when __HAXE__
 
 	static public void printTestDot() throws InterruptedException {
-		final List<String> result = new ArrayList<>();
+		final ReportLog result = new ReportLog();
 		final int errorCode = GraphvizUtils.addDotStatus(result, false);
 		for (String s : result)
 			if (errorCode == 0)
@@ -182,7 +183,7 @@ public class OptionPrint {
 			System.out.println(v);
 
 		System.out.println();
-		final List<String> result = new ArrayList<>();
+		final ReportLog result = new ReportLog();
 		final int errorCode = GraphvizUtils.addDotStatus(result, false);
 		for (String s : result)
 			System.out.println(s);

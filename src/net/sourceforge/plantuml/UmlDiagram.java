@@ -35,10 +35,6 @@
  */
 package net.sourceforge.plantuml;
 
-
-
-import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,41 +42,24 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.util.List;
 
-import net.atmp.ImageBuilder;
-import net.atmp.PixelImage;
 import net.sourceforge.plantuml.api.ImageDataSimple;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
+import net.sourceforge.plantuml.crash.CrashReportHandler;
 import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.dot.UnparsableGraphvizException;
 import net.sourceforge.plantuml.file.SuggestedFile;
-import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
-import net.sourceforge.plantuml.flashcode.FlashCodeUtils;
-import net.sourceforge.plantuml.fun.IconLoader;
-import net.sourceforge.plantuml.klimt.AffineTransformType;
-import net.sourceforge.plantuml.klimt.UTranslate;
-import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontParam;
-import net.sourceforge.plantuml.klimt.geom.GraphicPosition;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
-import net.sourceforge.plantuml.klimt.shape.GraphicStrings;
-import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
-import net.sourceforge.plantuml.klimt.shape.UImage;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.pdf.PdfConverter;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SFile;
-import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.style.NoStyleAvailableException;
 import net.sourceforge.plantuml.svek.EmptySvgException;
-import net.sourceforge.plantuml.svek.GraphvizCrash;
-import net.sourceforge.plantuml.utils.Log;
 import net.sourceforge.plantuml.version.Version;
 
 public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annotated, WithSprite {
@@ -141,82 +120,62 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 			this.lastInfo = new XDimension2D(imageData.getWidth(), imageData.getHeight());
 			return imageData;
 		} catch (NoStyleAvailableException e) {
-			// Logme.error(e);
-			exportDiagramError(os, e, fileFormatOption, null);
+			Logme.error(e);
+			final CrashReportHandler report = new CrashReportHandler(null, getMetadata(), getFlashData());
+
+			report.add("There is an issue with your plantuml.jar file:");
+			report.add("We cannot load any style from it!");
+
+			report.checkOldVersionWarning();
+			report.addProperties();
+			report.addEmptyLine();
+
+			report.exportDiagramError(fileFormatOption, seed(), os);
 			return ImageDataSimple.error(e);
 		} catch (UnparsableGraphvizException e) {
 			Logme.error(e);
-			exportDiagramError(os, e.getCause(), fileFormatOption, e.getGraphvizVersion());
+			final CrashReportHandler report = new CrashReportHandler(e.getCause(), getMetadata(), getFlashData());
+
+			report.anErrorHasOccured(e.getCause(), getFlashData());
+			report.add("PlantUML (" + Version.versionString() + ") cannot parse result from dot/GraphViz.");
+			if (e.getCause() instanceof EmptySvgException)
+				report.add("Because dot/GraphViz returns an empty string.");
+
+			report.checkOldVersionWarning();
+			if (e.getGraphvizVersion() != null) {
+				report.addEmptyLine();
+				report.add("GraphViz version used : " + e.getGraphvizVersion());
+			}
+			report.pleaseGoTo();
+			report.addProperties();
+			report.addEmptyLine();
+			report.thisMayBeCaused();
+			report.addEmptyLine();
+			report.youShouldSendThisDiagram();
+			report.addEmptyLine();
+
+			report.exportDiagramError(fileFormatOption, seed(), os);
 			return ImageDataSimple.error(e);
 		} catch (Throwable e) {
-			// Logme.error(e);
-			exportDiagramError(os, e, fileFormatOption, null);
+			Logme.error(e);
+			final CrashReportHandler report = new CrashReportHandler(e, getMetadata(), getFlashData());
+			report.anErrorHasOccured(e, getFlashData());
+			report.add("PlantUML (" + Version.versionString() + ") cannot parse result from dot/GraphViz.");
+			if (e instanceof EmptySvgException)
+				report.add("Because dot/GraphViz returns an empty string.");
+
+			report.checkOldVersionWarning();
+			report.pleaseGoTo();
+			report.addProperties();
+			report.addEmptyLine();
+			report.thisMayBeCaused();
+			report.addEmptyLine();
+			report.youShouldSendThisDiagram();
+			report.addEmptyLine();
+			report.exportDiagramError(fileFormatOption, seed(), os);
 			return ImageDataSimple.error(e);
 		}
 	}
-
-	private void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat,
-			String graphvizVersion) throws IOException {
-		exportDiagramError(os, exception, fileFormat, seed(), getMetadata(), getFlashData(),
-				getFailureText1(exception, graphvizVersion, getFlashData()));
-	}
-
-	public static void exportDiagramError(OutputStream os, Throwable exception, FileFormatOption fileFormat, long seed,
-			String metadata, String flash, List<String> strings) throws IOException {
-
-		// ::comment when __CORE__
-		if (fileFormat.getFileFormat() == FileFormat.ATXT || fileFormat.getFileFormat() == FileFormat.UTXT) {
-			exportDiagramErrorText(os, exception, strings);
-			return;
-		}
-		// ::done
-
-		strings.addAll(CommandExecutionResult.getStackTrace(exception));
-
-		BufferedImage im2 = null;
-		// ::comment when __CORE__
-		if (flash != null) {
-			final FlashCodeUtils utils = FlashCodeFactory.getFlashCodeUtils();
-			try {
-				im2 = utils.exportFlashcode(flash, Color.BLACK, Color.WHITE);
-			} catch (Throwable e) {
-				Log.error("Issue in flashcode generation " + e);
-				// Logme.error(e);
-			}
-			if (im2 != null)
-				GraphvizCrash.addDecodeHint(strings);
-		}
-		// ::done
-
-		final BufferedImage im = im2;
-		final TextBlock graphicStrings = GraphicStrings.createBlackOnWhite(strings, IconLoader.getRandom(),
-				GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT);
-
-		final UDrawable drawable = (im == null) ? graphicStrings : new UDrawable() {
-			public void drawU(UGraphic ug) {
-				graphicStrings.drawU(ug);
-				final double height = graphicStrings.calculateDimension(ug.getStringBounder()).getHeight();
-				ug = ug.apply(UTranslate.dy(height));
-				ug.draw(new UImage(new PixelImage(im, AffineTransformType.TYPE_NEAREST_NEIGHBOR)).scale(3));
-			}
-		};
-
-		ImageBuilder.create(fileFormat, drawable).metadata(metadata).seed(seed).write(os);
-	}
-
-	// ::comment when __CORE__
-	private static void exportDiagramErrorText(OutputStream os, Throwable exception, List<String> strings) {
-		final PrintWriter pw = SecurityUtils.createPrintWriter(os);
-		exception.printStackTrace(pw);
-		pw.println();
-		pw.println();
-		for (String s : strings) {
-			s = s.replaceAll("\\</?\\w+?\\>", "");
-			pw.println(s);
-		}
-		pw.flush();
-	}
-	// ::done
 
 	public String getFlashData() {
 		final UmlSource source = getSource();
@@ -224,37 +183,6 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 			return "";
 
 		return source.getPlainString("\n");
-	}
-
-	static private List<String> getFailureText1(Throwable exception, String graphvizVersion, String textDiagram) {
-		final List<String> strings = GraphvizCrash.anErrorHasOccured(exception, textDiagram);
-		strings.add("PlantUML (" + Version.versionString() + ") cannot parse result from dot/GraphViz.");
-		if (exception instanceof EmptySvgException)
-			strings.add("Because dot/GraphViz returns an empty string.");
-
-		GraphvizCrash.checkOldVersionWarning(strings);
-		if (graphvizVersion != null) {
-			strings.add(" ");
-			strings.add("GraphViz version used : " + graphvizVersion);
-		}
-		GraphvizCrash.pleaseGoTo(strings);
-		GraphvizCrash.addProperties(strings);
-		strings.add(" ");
-		GraphvizCrash.thisMayBeCaused(strings);
-		strings.add(" ");
-		GraphvizCrash.youShouldSendThisDiagram(strings);
-		strings.add(" ");
-		return strings;
-	}
-
-	public static List<String> getFailureText2(Throwable exception, String textDiagram) {
-		final List<String> strings = GraphvizCrash.anErrorHasOccured(exception, textDiagram);
-		strings.add("PlantUML (" + Version.versionString() + ") has crashed.");
-		GraphvizCrash.checkOldVersionWarning(strings);
-		strings.add(" ");
-		GraphvizCrash.youShouldSendThisDiagram(strings);
-		strings.add(" ");
-		return strings;
 	}
 
 	// ::comment when __CORE__
