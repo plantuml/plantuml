@@ -62,7 +62,6 @@ import net.sourceforge.plantuml.svek.IEntityImage;
 import net.sourceforge.plantuml.svek.Margins;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.version.PSystemVersion;
-import net.sourceforge.plantuml.version.Version;
 
 public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 
@@ -98,9 +97,6 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 			strings.addAll(CommandExecutionResult.getStackTrace(rootCause));
 
 		strings.addEmptyLine();
-		strings.add("This has been generated with PlantUML (" + Version.versionString() + ").");
-		strings.checkOldVersionWarning();
-		strings.addEmptyLine();
 		strings.addProperties();
 		strings.addEmptyLine();
 		// ::comment when __CORE__
@@ -111,7 +107,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 			strings.add("Cannot determine dot version: " + e.toString());
 		}
 		// ::done
-		strings.pleaseGoTo();
+		strings.pleaseCheckYourGraphVizVersion();
 		strings.youShouldSendThisDiagram();
 		// ::comment when __CORE__
 		if (flashCode != null)

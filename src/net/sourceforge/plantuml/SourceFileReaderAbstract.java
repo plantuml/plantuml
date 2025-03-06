@@ -145,9 +145,6 @@ public abstract class SourceFileReaderAbstract implements ISourceFileReader {
 			final String flash = blockUml.getFlashData();
 			final CrashReportHandler report = new CrashReportHandler(t, null, flash);
 			report.anErrorHasOccured(t, flash);
-			report.add("PlantUML (" + Version.versionString() + ") has crashed.");
-			report.checkOldVersionWarning();
-			report.addEmptyLine();
 			report.youShouldSendThisDiagram();
 			report.addEmptyLine();
 			report.exportDiagramError(fileFormatOption, (long) 42, os);

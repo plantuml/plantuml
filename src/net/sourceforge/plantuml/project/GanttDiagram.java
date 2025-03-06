@@ -58,7 +58,8 @@ import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.crash.GraphvizCrash;
+import net.sourceforge.plantuml.crash.CrashImage;
+import net.sourceforge.plantuml.crash.ReportLog;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
@@ -70,7 +71,6 @@ import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.UDrawable;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
@@ -117,7 +117,6 @@ import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.text.BackSlash;
 
 public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprite, GanttStyle {
 
@@ -269,11 +268,18 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 					if (showFootbox)
 						timeHeader.drawTimeFooter(ug.apply(UTranslate.dy(totalHeightWithoutFooter)));
 
-				} catch (Throwable t) {
-					Logme.error(t);
-					final UDrawable crash = GraphvizCrash.build(getSource().getPlainString(BackSlash.lineSeparator()),
-							false, t);
-					crash.drawU(ug);
+				} catch (Throwable e) {
+					Logme.error(e);
+
+					final ReportLog report = new ReportLog();
+					report.anErrorHasOccured(e, getFlashData());
+
+					report.addProperties();
+					report.addEmptyLine();
+					report.youShouldSendThisDiagram();
+
+					final CrashImage image = new CrashImage(e, getFlashData(), report);
+					image.drawU(ug);
 
 				}
 			}

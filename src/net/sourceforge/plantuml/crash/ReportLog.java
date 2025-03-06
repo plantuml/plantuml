@@ -90,14 +90,18 @@ public class ReportLog implements Iterable<String> {
 	}
 
 	public void anErrorHasOccured(Throwable exception, String fullDiagramText) {
+		
 		if (exception == null)
 			add("An error has occured!");
 		else
 			add("An error has occured : " + exception);
-
 		final String quote = StringUtils.rot(QuoteUtils.getSomeQuote());
 		add("<i>" + quote);
 		addEmptyLine();
+
+		add("PlantUML (" + Version.versionString() + ") has crashed.");
+		addEmptyLine();
+		checkOldVersionWarning();
 		add("Diagram size: " + lines(fullDiagramText) + " lines / " + fullDiagramText.length() + " characters.");
 		addEmptyLine();
 	}
@@ -111,7 +115,7 @@ public class ReportLog implements Iterable<String> {
 		return result;
 	}
 
-	public void pleaseGoTo() {
+	public void pleaseCheckYourGraphVizVersion() {
 		addEmptyLine();
 		add("Please go to https://plantuml.com/graphviz-dot to check your GraphViz version.");
 		addEmptyLine();
@@ -124,7 +128,7 @@ public class ReportLog implements Iterable<String> {
 	}
 
 	public void addDecodeHint() {
-		add(" ");
+		addEmptyLine();
 		add(" Diagram source: (Use http://zxing.org/w/decode.jspx to decode the qrcode)");
 	}
 

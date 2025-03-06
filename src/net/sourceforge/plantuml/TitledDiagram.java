@@ -281,5 +281,15 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		result.addAll(col2);
 		return result;
 	}
+	
+	public String getFlashData() {
+		final UmlSource source = getSource();
+		if (source == null)
+			return "";
+
+		return source.getPlainString("\n");
+	}
+
+
 
 }

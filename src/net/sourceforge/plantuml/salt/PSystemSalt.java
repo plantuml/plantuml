@@ -122,9 +122,14 @@ public class PSystemSalt extends TitledDiagram implements WithSprite {
 			return createImageBuilder(fileFormatOption).drawable(getTextBlock(salt, size)).write(os);
 		} catch (Exception e) {
 			Logme.error(e);
-			final CrashReportHandler report = new CrashReportHandler(e, getMetadata(), "none");
+			final CrashReportHandler report = new CrashReportHandler(e, getMetadata(), getFlashData());
+			report.anErrorHasOccured(e, getFlashData());
+			report.addProperties();
+			report.addEmptyLine();
+			report.youShouldSendThisDiagram();
+			report.addEmptyLine();
 			report.exportDiagramError(fileFormatOption, seed(), os);
-			return ImageDataSimple.error();
+			return ImageDataSimple.error(e);
 		}
 	}
 

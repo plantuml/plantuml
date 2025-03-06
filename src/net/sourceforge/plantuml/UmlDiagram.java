@@ -141,12 +141,11 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 			if (e.getCause() instanceof EmptySvgException)
 				report.add("Because dot/GraphViz returns an empty string.");
 
-			report.checkOldVersionWarning();
 			if (e.getGraphvizVersion() != null) {
 				report.addEmptyLine();
 				report.add("GraphViz version used : " + e.getGraphvizVersion());
 			}
-			report.pleaseGoTo();
+			report.pleaseCheckYourGraphVizVersion();
 			report.addProperties();
 			report.addEmptyLine();
 			report.thisMayBeCaused();
@@ -160,29 +159,13 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 			Logme.error(e);
 			final CrashReportHandler report = new CrashReportHandler(e, getMetadata(), getFlashData());
 			report.anErrorHasOccured(e, getFlashData());
-			report.add("PlantUML (" + Version.versionString() + ") cannot parse result from dot/GraphViz.");
-			if (e instanceof EmptySvgException)
-				report.add("Because dot/GraphViz returns an empty string.");
-
-			report.checkOldVersionWarning();
-			report.pleaseGoTo();
 			report.addProperties();
-			report.addEmptyLine();
-			report.thisMayBeCaused();
 			report.addEmptyLine();
 			report.youShouldSendThisDiagram();
 			report.addEmptyLine();
 			report.exportDiagramError(fileFormatOption, seed(), os);
 			return ImageDataSimple.error(e);
 		}
-	}
-
-	public String getFlashData() {
-		final UmlSource source = getSource();
-		if (source == null)
-			return "";
-
-		return source.getPlainString("\n");
 	}
 
 	// ::comment when __CORE__
