@@ -5,6 +5,17 @@
 - [SVG - Revert SVG fill to "none"; use UParam to indicate hit targets](https://github.com/plantuml/plantuml/pull/2072)
 - [SVG - Interactive SVG with namespaced::nodes does not work properly](https://github.com/plantuml/plantuml/issues/2041)
 - [SVG - Unable to Click Links in SVGs Due to Overlapping Transparent path Elements](https://github.com/plantuml/plantuml/issues/2071)
+- [SVG - Interactive SVG with component ports is not working](https://github.com/plantuml/plantuml/issues/1235)
+- [SVG - Add filtering to interactive sequence diagrams](https://github.com/plantuml/plantuml/pull/2091)
+- [SURL - Follow HTTP redirection in `!include` directive](https://github.com/plantuml/plantuml/issues/1112)
+- [Style - Allow old skinparam (stereotypeXBackgroundColor/BorderColor) for new spot style](https://github.com/plantuml/plantuml/pull/2101)
+- [Style - Update handwritten themes in order to avoid warning](https://github.com/plantuml/plantuml/pull/2088)
+- [Native - Naming of the snapshot native images](https://github.com/plantuml/plantuml/issues/2105)
+- [Native - Support C4 on native image](https://github.com/plantuml/plantuml/pull/2097)
+- [Native - Add Linux ARM64 native image on Native Image - Snapshot](https://github.com/plantuml/plantuml/pull/2078)
+- [Newline - Possible regression bug (due to new newline management)](https://github.com/plantuml/plantuml/issues/2094)
+- [Newline - Improve preproc output](https://github.com/plantuml/plantuml/issues/2095)
+- [Gantt - Hide monthheader if the whole month is closed in gantt](https://github.com/plantuml/plantuml/pull/2068)
 
 ## V1.2025.1 (Feb 16, 2025)
 
