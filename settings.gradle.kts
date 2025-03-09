@@ -13,7 +13,7 @@ val javaVersion = JavaVersion.current()
 println("Current Java version is " + javaVersion)
 
 if (isCiBuild) {
-//    include("plantuml-asl")
+    include("plantuml-asl")
 //    include("plantuml-bsd")
 //    include("plantuml-epl")
 //    include("plantuml-lgpl")
