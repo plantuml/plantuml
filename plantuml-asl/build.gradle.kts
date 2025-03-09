@@ -41,15 +41,18 @@ sourceSets {
 		java {
 			srcDirs("build/generated/sjpp")
 		}
-		resources {
-			srcDirs("build/sources/sjpp/java")
-			include("**/graphviz.dat")
-			include("**/*.png")
-			include("**/*.svg")
-			include("**/*.txt")
-		}
+        resources {
+			srcDirs("../src/main/resources")
+        }
 	}
 }
+
+tasks.processResources {
+    from("../src/main/java") {
+        include("**/graphviz.dat", "**/*.svg", "**/*.png", "**/*.txt")
+    }
+}
+
 
 
 tasks.compileJava {

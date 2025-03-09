@@ -12,7 +12,7 @@ println("Version is " + version)
 val javaVersion = JavaVersion.current()
 println("Current Java version is " + javaVersion)
 
-if (isCiBuild) {
+// if (isCiBuild) {
     include("plantuml-asl")
 //    include("plantuml-bsd")
 //    include("plantuml-epl")
@@ -25,6 +25,6 @@ if (isCiBuild) {
 //    } else {
 //        println("Skipping plantuml-gplv2 as it requires Java 11 or higher")
 //    }
-} else {
-    println("Not a CI build: only GPL will be generated")
-}
+//} else {
+//    println("Not a CI build: only GPL will be generated")
+// }

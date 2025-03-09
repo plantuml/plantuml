@@ -60,9 +60,6 @@ repositories {
 }
 
 sourceSets {
-    main {
-        resources.setSrcDirs(listOf("src/main/resources"))
-    }
 }
 
 tasks.processResources {
