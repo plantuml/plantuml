@@ -71,6 +71,14 @@ sourceSets {
 }
 
 
+tasks.processResources {
+    from("src/main/java") {
+        include("**/*.png")
+        into("")
+    }
+}
+
+
 tasks.compileJava {
 	if (JavaVersion.current().isJava8) {
 		java.targetCompatibility = JavaVersion.VERSION_1_8
