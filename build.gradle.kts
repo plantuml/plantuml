@@ -63,13 +63,18 @@ sourceSets {
     main {
         java.setSrcDirs(listOf("src/main/java"))
         resources.setSrcDirs(listOf("src/main/resources"))
+        resources {
+            include("**/graphviz.dat")
+            include("**/*.svg")
+            include("**/*.png")
+            include("**/*.txt")
+        }
     }
 
     test {
         java.setSrcDirs(listOf("src/test/java"))
     }
 }
-
 
 tasks.compileJava {
 	if (JavaVersion.current().isJava8) {
