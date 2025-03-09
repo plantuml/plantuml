@@ -51,6 +51,7 @@ sourceSets {
 	}
 }
 
+
 tasks.compileJava {
 	if (JavaVersion.current().isJava8) {
 		java.targetCompatibility = JavaVersion.VERSION_1_8
@@ -66,11 +67,7 @@ tasks.withType<Jar>().configureEach {
 		attributes["Build-Jdk-Spec"] = System.getProperty("java.specification.version")
 		from("../manifest.txt")
 	}
-	from("../skin") { into("skin") }
-	from("../stdlib") { into("stdlib") }
-	from("../svg") { into("svg") }
-	from("../themes") { into("themes") }
-	from("../resources") { into("resources") }
+
 	// source sets for java and resources are on "src", only put once into the jar
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
@@ -90,7 +87,7 @@ tasks.withType<Javadoc>().configureEach {
 }
 
 val syncSources by tasks.registering(Sync::class) {
-	from(rootProject.layout.projectDirectory.dir("src"))
+	from(rootProject.layout.projectDirectory.dir("src/main/java"))
 	into(project.layout.buildDirectory.dir("sources/sjpp/java"))
 }
 
