@@ -60,33 +60,16 @@ repositories {
 }
 
 sourceSets {
-	main {
-		java {
-			srcDirs("src")
-		}
-		resources {
-			srcDirs("src","resources")
-			include("**/graphviz.dat")
-			include("**/*.png")
-			include("**/*.svg")
-			include("**/*.txt")
-			include("resources/**/*.properties")
-		}
-	}
-	test {
-		java {
-			srcDirs("test")
-		}
-		resources {
-			srcDirs(".", "resources")
-			include("svg/**/*.css")
-			include("svg/**/*.js")
-			include("skin/**/*.skin")
-			include("themes/**/*.puml")
-			include("resources/**/*.properties")
-		}
-	}
+    main {
+        java.setSrcDirs(listOf("src/main/java"))
+        resources.setSrcDirs(listOf("src/main/resources"))
+    }
+
+    test {
+        java.setSrcDirs(listOf("src/test/java"))
+    }
 }
+
 
 tasks.compileJava {
 	if (JavaVersion.current().isJava8) {
