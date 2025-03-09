@@ -67,14 +67,9 @@ sourceSets {
 
 tasks.processResources {
     from("src/main/java") {
-        include("**/graphviz.dat")
-        include("**/*.svg")
-        include("**/*.png")
-        include("**/*.txt")
-        into("")
+        include("**/graphviz.dat", "**/*.svg", "**/*.png", "**/*.txt")
     }
 }
-
 
 tasks.compileJava {
 	if (JavaVersion.current().isJava8) {
