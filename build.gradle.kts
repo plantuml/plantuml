@@ -86,11 +86,6 @@ tasks.withType<Jar>().configureEach {
         attributes["Build-Jdk-Spec"] = System.getProperty("java.specification.version")
         from("manifest.txt")
     }
-    from("skin") { into("skin") }
-    from("stdlib") { into("stdlib") }
-    from("svg") { into("svg") }
-    from("themes") { into("themes") }
-		from("resources") { into("resources") }
 
     // Add dependencies to the JAR
     val runtimeClasspath = configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) }
@@ -99,12 +94,6 @@ tasks.withType<Jar>().configureEach {
     }
 
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
-tasks.named<Copy>("processResources") {
-	from("resources") {
-		include("**/*")
-	}
 }
 
 publishing {
