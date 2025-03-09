@@ -49,7 +49,4 @@ public interface Graphviz {
 	public String dotVersion();
 
 	public ExeState getExeState();
-
-	public boolean graphviz244onWindows();
-
 }

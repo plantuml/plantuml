@@ -64,15 +64,6 @@ class GraphvizWindowsOld extends AbstractGraphviz {
 		}
 	}
 
-	public boolean graphviz244onWindows() {
-		try {
-			return GraphvizUtils.getDotVersion() == 244;
-		} catch (Exception e) {
-			Logme.error(e);
-			return false;
-		}
-	}
-
 	private File specificDotExeSlow() {
 		for (File tmp : new File("c:/").listFiles(new FileFilter() {
 			public boolean accept(java.io.File pathname) {

@@ -146,8 +146,4 @@ public class GraphvizJs implements Graphviz {
 		};
 	}
 
-	public boolean graphviz244onWindows() {
-		return false;
-	}
-
 }
