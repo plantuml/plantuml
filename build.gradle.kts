@@ -61,15 +61,9 @@ repositories {
 
 sourceSets {
     main {
-        java.setSrcDirs(listOf("src/main/java"))
         resources.setSrcDirs(listOf("src/main/resources"))
     }
-
-    test {
-        java.setSrcDirs(listOf("src/test/java"))
-    }
 }
-
 
 tasks.processResources {
     from("src/main/java") {
