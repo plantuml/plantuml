@@ -73,7 +73,10 @@ sourceSets {
 
 tasks.processResources {
     from("src/main/java") {
+        include("**/graphviz.dat")
+        include("**/*.svg")
         include("**/*.png")
+        include("**/*.txt")
         into("")
     }
 }
