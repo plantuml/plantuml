@@ -48,14 +48,16 @@ sourceSets {
 		java {
 			srcDirs("build/generated/sjpp")
 		}
-		resources {
-			srcDirs("build/sources/sjpp/java")
-			include("**/graphviz.dat")
-			include("**/*.png")
-			include("**/*.svg")
-			include("**/*.txt")
-		}
+        resources {
+			srcDirs("../src/main/resources")
+        }
 	}
+}
+
+tasks.processResources {
+    from("../src/main/java") {
+        include("**/graphviz.dat", "**/*.svg", "**/*.png", "**/*.txt")
+    }
 }
 
 tasks.compileJava {
@@ -73,11 +75,7 @@ tasks.withType<Jar>().configureEach {
 		attributes["Build-Jdk-Spec"] = System.getProperty("java.specification.version")
 		from("../manifest.txt")
 	}
-	from("../skin") { into("skin") }
-	from("../stdlib") { into("stdlib") }
-	from("../svg") { into("svg") }
-	from("../themes") { into("themes") }
-	from("../resources") { into("resources") }
+
 	// Add dependencies to the JAR
     val runtimeClasspath = configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) }
     from(runtimeClasspath) {
@@ -103,7 +101,7 @@ tasks.withType<Javadoc>().configureEach {
 }
 
 val syncSources by tasks.registering(Sync::class) {
-	from(rootProject.layout.projectDirectory.dir("src"))
+	from(rootProject.layout.projectDirectory.dir("src/main/java"))
 	into(project.layout.buildDirectory.dir("sources/sjpp/java"))
 }
 
