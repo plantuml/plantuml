@@ -275,11 +275,11 @@ public final class GraphvizImageBuilder {
 			svg = dotStringFactory.getSvg(stringBounder, dotMode, basefile, dotStrings);
 		} catch (IOException e) {
 			return GraphvizCrash.build(source.getPlainString(BackSlash.lineSeparator()),
-					GraphvizUtils.graphviz244onWindows(), e);
+					e);
 		}
 		if (svg.length() == 0)
 			return GraphvizCrash.build(source.getPlainString(BackSlash.lineSeparator()),
-					GraphvizUtils.graphviz244onWindows(), new EmptySvgException());
+					new EmptySvgException());
 
 		final String graphvizVersion = extractGraphvizVersion(svg);
 		try {

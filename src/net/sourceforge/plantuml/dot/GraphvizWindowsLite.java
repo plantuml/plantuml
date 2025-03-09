@@ -60,10 +60,6 @@ class GraphvizWindowsLite extends AbstractGraphviz {
 		}
 	}
 
-	public boolean graphviz244onWindows() {
-		return false;
-	}
-
 	GraphvizWindowsLite(ISkinParam skinParam, String dotString, String... type) {
 		super(skinParam, dotString, type);
 	}

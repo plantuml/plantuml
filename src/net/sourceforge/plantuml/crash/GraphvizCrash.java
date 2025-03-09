@@ -69,13 +69,11 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 	private final String flash;
 	// ::comment when __CORE__
 	private final BufferedImage flashCode;
-	private final boolean graphviz244onWindows;
 	// ::done
 
-	private GraphvizCrash(String flash, boolean graphviz244onWindows, Throwable rootCause) {
+	private GraphvizCrash(String flash, Throwable rootCause) {
 		this.flash = flash;
 		// ::comment when __CORE__
-		this.graphviz244onWindows = graphviz244onWindows;
 		this.flashCode = FlashCodeFactory.getFlashCodeUtils().exportFlashcode(flash, Color.BLACK, Color.WHITE);
 		// ::done
 		final ReportLog strings = new ReportLog();
@@ -84,8 +82,8 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 				GraphicPosition.BACKGROUND_CORNER_TOP_RIGHT);
 	}
 
-	public static IEntityImage build(String text, boolean graphviz244onWindows, Throwable rootCause) {
-		return new GraphvizCrash(text, graphviz244onWindows, rootCause);
+	public static IEntityImage build(String text, Throwable rootCause) {
+		return new GraphvizCrash(text, rootCause);
 	}
 
 	private void init(ReportLog strings, Throwable rootCause) {
@@ -157,19 +155,19 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 			result = TextBlockUtils.mergeTB(result, flash, HorizontalAlignment.LEFT);
 		}
 
-		if (graphviz244onWindows) {
-			final TextBlock text2 = GraphicStrings.createBlackOnWhite(getText2());
-			result = TextBlockUtils.mergeTB(result, text2, HorizontalAlignment.LEFT);
-
-			final UImage dotc = new UImage(new PixelImage(PSystemVersion.getDotc(), AffineTransformType.TYPE_BILINEAR));
-			result = TextBlockUtils.mergeTB(result, dotc, HorizontalAlignment.LEFT);
-
-			final TextBlock text3 = GraphicStrings.createBlackOnWhite(getText3());
-			result = TextBlockUtils.mergeTB(result, text3, HorizontalAlignment.LEFT);
-
-			final UImage dotd = new UImage(new PixelImage(PSystemVersion.getDotd(), AffineTransformType.TYPE_BILINEAR));
-			result = TextBlockUtils.mergeTB(result, dotd, HorizontalAlignment.LEFT);
-		}
+//		if (graphviz244onWindows) {
+//			final TextBlock text2 = GraphicStrings.createBlackOnWhite(getText2());
+//			result = TextBlockUtils.mergeTB(result, text2, HorizontalAlignment.LEFT);
+//
+//			final UImage dotc = new UImage(new PixelImage(PSystemVersion.getDotc(), AffineTransformType.TYPE_BILINEAR));
+//			result = TextBlockUtils.mergeTB(result, dotc, HorizontalAlignment.LEFT);
+//
+//			final TextBlock text3 = GraphicStrings.createBlackOnWhite(getText3());
+//			result = TextBlockUtils.mergeTB(result, text3, HorizontalAlignment.LEFT);
+//
+//			final UImage dotd = new UImage(new PixelImage(PSystemVersion.getDotd(), AffineTransformType.TYPE_BILINEAR));
+//			result = TextBlockUtils.mergeTB(result, dotd, HorizontalAlignment.LEFT);
+//		}
 		// ::done
 
 		return result;
