@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.Option;
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.SourceFileReader;
 import net.sourceforge.plantuml.Splash;
+import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.Defines;
@@ -351,7 +352,7 @@ public class PlantUmlTask extends Task {
 	}
 
 	public void setGraphvizDot(String s) {
-		GraphvizUtils.setDotExecutable(s);
+		GraphvizRuntimeEnvironment.getInstance().setDotExecutable(s);
 	}
 
 	public void setNbThread(String s) {

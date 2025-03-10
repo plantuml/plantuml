@@ -82,7 +82,7 @@ abstract class AbstractGraphviz implements Graphviz {
 	}
 
 	final protected File searchDotExe() {
-		String getenv = GraphvizUtils.getenvGraphvizDot();
+		String getenv = GraphvizRuntimeEnvironment.getInstance().getenvGraphvizDot();
 		if (findExecutableOnPath() && getenv == null)
 			getenv = findExecutableOnPath(getExeName());
 

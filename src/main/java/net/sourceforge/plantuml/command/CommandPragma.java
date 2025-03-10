@@ -39,7 +39,7 @@ import java.util.StringTokenizer;
 
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.dot.GraphvizUtils;
+import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -93,7 +93,7 @@ public class CommandPragma extends SingleLineCommand2<TitledDiagram> {
 			if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase("elk"))
 				system.setUseElk(true);
 
-			if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase(GraphvizUtils.VIZJS))
+			if (name.equalsIgnoreCase("layout") && value.equalsIgnoreCase(GraphvizRuntimeEnvironment.VIZJS))
 				system.getSkinParam().setUseVizJs(true);
 			// ::done
 

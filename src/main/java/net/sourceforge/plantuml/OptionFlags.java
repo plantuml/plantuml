@@ -40,6 +40,7 @@ import java.io.PrintStream;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import net.sourceforge.plantuml.core.Diagram;
+import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.security.SFile;
@@ -95,11 +96,11 @@ public class OptionFlags {
 
 	public void reset() {
 		reset(false);
-		GraphvizUtils.setDotExecutable(null);
+		GraphvizRuntimeEnvironment.getInstance().setDotExecutable(null);
 	}
 
 	public final void setDotExecutable(String dotExecutable) {
-		GraphvizUtils.setDotExecutable(dotExecutable);
+		GraphvizRuntimeEnvironment.getInstance().setDotExecutable(dotExecutable);
 	}
 
 	private OptionFlags() {

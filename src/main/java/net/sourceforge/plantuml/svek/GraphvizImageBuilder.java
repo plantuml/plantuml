@@ -57,6 +57,7 @@ import net.sourceforge.plantuml.crash.GraphvizCrash;
 import net.sourceforge.plantuml.decoration.symbol.USymbolHexagon;
 import net.sourceforge.plantuml.dot.DotData;
 import net.sourceforge.plantuml.dot.ExeState;
+import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.dot.UnparsableGraphvizException;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -275,11 +276,11 @@ public final class GraphvizImageBuilder {
 			svg = dotStringFactory.getSvg(stringBounder, dotMode, basefile, dotStrings);
 		} catch (IOException e) {
 			return GraphvizCrash.build(source.getPlainString(BackSlash.lineSeparator()),
-					GraphvizUtils.graphviz244onWindows(), e);
+					GraphvizRuntimeEnvironment.getInstance().graphviz244onWindows(), e);
 		}
 		if (svg.length() == 0)
 			return GraphvizCrash.build(source.getPlainString(BackSlash.lineSeparator()),
-					GraphvizUtils.graphviz244onWindows(), new EmptySvgException());
+					GraphvizRuntimeEnvironment.getInstance().graphviz244onWindows(), new EmptySvgException());
 
 		final String graphvizVersion = extractGraphvizVersion(svg);
 		try {

@@ -42,6 +42,7 @@ import java.util.List;
 
 import net.atmp.PixelImage;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
+import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.flashcode.FlashCodeFactory;
 import net.sourceforge.plantuml.fun.IconLoader;
@@ -101,7 +102,7 @@ public class GraphvizCrash extends AbstractTextBlock implements IEntityImage {
 		strings.addEmptyLine();
 		// ::comment when __CORE__
 		try {
-			final String dotVersion = GraphvizUtils.dotVersion();
+			final String dotVersion = GraphvizRuntimeEnvironment.getInstance().dotVersion();
 			strings.add("Default dot version: " + dotVersion);
 		} catch (Throwable e) {
 			strings.add("Cannot determine dot version: " + e.toString());

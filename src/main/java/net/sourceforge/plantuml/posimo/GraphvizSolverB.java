@@ -46,6 +46,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.sourceforge.plantuml.dot.Graphviz;
+import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.dot.ProcessState;
 import net.sourceforge.plantuml.klimt.geom.MinFinder;
@@ -102,7 +103,7 @@ public class GraphvizSolverB {
 
 		// exportPng(dotString, SecurityUtils.File("png", "test1.png"));
 
-		final Graphviz graphviz = GraphvizUtils.create(null, dotString, "svg");
+		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(null, dotString, "svg");
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		final ProcessState state = graphviz.createFile3(baos);
 		baos.close();
@@ -222,7 +223,7 @@ public class GraphvizSolverB {
 	}
 
 	private void exportPng(final String dotString, SFile f) throws IOException {
-		final Graphviz graphviz = GraphvizUtils.create(null, dotString, "png");
+		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(null, dotString, "png");
 		try (OutputStream os = f.createBufferedOutputStream()) {
 			final ProcessState state = graphviz.createFile3(os);
 			if (state.differs(ProcessState.TERMINATED_OK()))

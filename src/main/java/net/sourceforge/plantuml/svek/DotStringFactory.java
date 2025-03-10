@@ -48,9 +48,9 @@ import java.util.regex.Pattern;
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.dot.DotSplines;
 import net.sourceforge.plantuml.dot.Graphviz;
+import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.dot.GraphvizVersion;
-import net.sourceforge.plantuml.dot.GraphvizVersions;
 import net.sourceforge.plantuml.dot.ProcessState;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.Moveable;
@@ -269,12 +269,12 @@ public final class DotStringFactory implements Moveable {
 	}
 
 	private GraphvizVersion getGraphvizVersionInternal() {
-		final Graphviz graphviz = GraphvizUtils.create(skinParam, "foo;", "svg");
+		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, "foo;", "svg");
 		if (graphviz instanceof GraphvizJs)
 			return GraphvizJs.getGraphvizVersion(false);
 
 		final File f = graphviz.getDotExe();
-		return GraphvizVersions.getInstance().getVersion(f);
+		return GraphvizRuntimeEnvironment.getInstance().getVersion(f);
 	}
 
 	public String getSvg(StringBounder stringBounder, DotMode dotMode, BaseFile basefile, String[] dotOptions)
@@ -286,7 +286,7 @@ public final class DotStringFactory implements Moveable {
 			SvekUtils.traceString(f, dotString);
 		}
 
-		Graphviz graphviz = GraphvizUtils.create(skinParam, dotString, "svg");
+		Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, dotString, "svg");
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try {
 			final ProcessState state = graphviz.createFile3(baos);
@@ -298,7 +298,7 @@ public final class DotStringFactory implements Moveable {
 			System.err.println("GraphvizJsRuntimeException");
 			graphvizVersion = GraphvizJs.getGraphvizVersion(true);
 			dotString = createDotString(stringBounder, dotMode, dotOptions);
-			graphviz = GraphvizUtils.create(skinParam, dotString, "svg");
+			graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, dotString, "svg");
 			baos = new ByteArrayOutputStream();
 			final ProcessState state = graphviz.createFile3(baos);
 			baos.close();
@@ -318,7 +318,7 @@ public final class DotStringFactory implements Moveable {
 	}
 
 	public boolean illegalDotExe() {
-		final Graphviz graphviz = GraphvizUtils.create(skinParam, "svg");
+		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, "svg");
 		if (graphviz instanceof GraphvizJs)
 			return false;
 
@@ -327,7 +327,7 @@ public final class DotStringFactory implements Moveable {
 	}
 
 	public File getDotExe() {
-		final Graphviz graphviz = GraphvizUtils.create(skinParam, "svg");
+		final Graphviz graphviz = GraphvizRuntimeEnvironment.getInstance().create(skinParam, "svg");
 		return graphviz.getDotExe();
 	}
 

@@ -39,6 +39,11 @@ public enum PragmaKey {
 	
 	// Temporary pragma
 	SVGNEWDATA,
+	
+	// For debug
+	EMULATE_NO_GRAPHVIZ_INSTALLATION,
+	EMULATE_GRAPHVIZ_CRASH,
+	EMULATE_GRAPHVIZ_244_ON_WINDOWS,
 
 	ASPECT, //
 	COMPACT, //

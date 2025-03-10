@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sourceforge.plantuml.api.ApiWarning;
+import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
 import net.sourceforge.plantuml.file.FileGroup;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -222,7 +223,7 @@ public class Option {
 				if (i == arg.length)
 					continue;
 
-				GraphvizUtils.setDotExecutable(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]));
+				GraphvizRuntimeEnvironment.getInstance().setDotExecutable(StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg[i]));
 			} else if (s.equalsIgnoreCase("-charset")) {
 				i++;
 				if (i == arg.length)

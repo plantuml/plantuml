@@ -1,5 +1,6 @@
 package nonreg.svg;
 
+import net.sourceforge.plantuml.dot.GraphvizRuntimeEnvironment;
 import net.sourceforge.plantuml.dot.GraphvizUtils;
 import org.junit.jupiter.api.extension.ConditionEvaluationResult;
 import org.junit.jupiter.api.extension.ExecutionCondition;
@@ -20,7 +21,7 @@ public class GraphvizRequiredTestFilter implements ExecutionCondition {
     @SuppressWarnings("CallToPrintStackTrace")
     private boolean findDotExe() {
         try {
-            final File dotExeFile = GraphvizUtils.getDotExe();
+            final File dotExeFile = GraphvizRuntimeEnvironment.getInstance().getDotExe();
             return dotExeFile.exists();
         } catch (Exception e) {
             System.err.println("Failed to find dot.exe as test prerequisite. Will skip the test.");

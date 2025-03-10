@@ -66,7 +66,7 @@ class GraphvizWindowsOld extends AbstractGraphviz {
 
 	public boolean graphviz244onWindows() {
 		try {
-			return GraphvizUtils.getDotVersion() == 244;
+			return GraphvizRuntimeEnvironment.getInstance().getDotVersion() == 244;
 		} catch (Exception e) {
 			Logme.error(e);
 			return false;
