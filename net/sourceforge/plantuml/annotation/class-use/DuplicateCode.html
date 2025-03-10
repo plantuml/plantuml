@@ -59,29 +59,35 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Contains classes for processing PlantUML source files.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.elk">net.sourceforge.plantuml.elk</a></div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.dot">net.sourceforge.plantuml.dot</a></div>
 <div class="col-last odd-row-color">
+<div class="block">Provides classes used to manage 
+ <a href="https://plantuml.com/graphviz-dot" target="_top">
+ Graphviz dot</a> for layout engine.</div>
+</div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.elk">net.sourceforge.plantuml.elk</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/elk" target="_top">
  Eclipse Layout Kernel (ELK)</a> for layout engine.</div>
 </div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.jsondiagram">net.sourceforge.plantuml.jsondiagram</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.jsondiagram">net.sourceforge.plantuml.jsondiagram</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/json" target="_top">
  JSON Diagram</a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.project.lang">net.sourceforge.plantuml.project.lang</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.sdot">net.sourceforge.plantuml.sdot</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.project.lang">net.sourceforge.plantuml.project.lang</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.sdot">net.sourceforge.plantuml.sdot</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/smetana02" target="_top">
  Smetana <i>(internal port of GraphViz in plantuml)</i></a>
  for layout engine.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.svek">net.sourceforge.plantuml.svek</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.svek">net.sourceforge.plantuml.svek</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/svek" target="_top">
  PlantUML Svek Architecture</a>.</div>
@@ -100,6 +106,57 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code><a href="../../command/CommandExecutionResult.html" title="class in net.sourceforge.plantuml.command">CommandExecutionResult</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">TitledDiagram.</span><code><a href="../../TitledDiagram.html#loadSkin(java.lang.String)" class="member-name-link">loadSkin</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newSkin)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.dot">
+<h2>Uses of <a href="../DuplicateCode.html" title="annotation interface in net.sourceforge.plantuml.annotation">DuplicateCode</a> in <a href="../../dot/package-summary.html">net.sourceforge.plantuml.dot</a></h2>
+<div class="caption"><span>Methods in <a href="../../dot/package-summary.html">net.sourceforge.plantuml.dot</a> with annotations of type <a href="../DuplicateCode.html" title="annotation interface in net.sourceforge.plantuml.annotation">DuplicateCode</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../../dot/Graphviz.html" title="interface in net.sourceforge.plantuml.dot">Graphviz</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">GraphvizRuntimeEnvironment.</span><code><a href="../../dot/GraphvizRuntimeEnvironment.html#create(net.sourceforge.plantuml.style.ISkinParam,java.lang.String,java.lang.String...)" class="member-name-link">create</a><wbr>(<a href="../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;dotString,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;type)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../../dot/Graphviz.html" title="interface in net.sourceforge.plantuml.dot">Graphviz</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">GraphvizRuntimeEnvironment.</span><code><a href="../../dot/GraphvizRuntimeEnvironment.html#createForSystemDot(net.sourceforge.plantuml.style.ISkinParam,java.lang.String,java.lang.String...)" class="member-name-link">createForSystemDot</a><wbr>(<a href="../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;dotString,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;type)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">GraphvizRuntimeEnvironment.</span><code><a href="../../dot/GraphvizRuntimeEnvironment.html#dotVersion()" class="member-name-link">dotVersion</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">GraphvizRuntimeEnvironment.</span><code><a href="../../dot/GraphvizRuntimeEnvironment.html#getDotExe()" class="member-name-link">getDotExe</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">GraphvizRuntimeEnvironment.</span><code><a href="../../dot/GraphvizRuntimeEnvironment.html#getDotExecutableForTest()" class="member-name-link">getDotExecutableForTest</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>int</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">GraphvizRuntimeEnvironment.</span><code><a href="../../dot/GraphvizRuntimeEnvironment.html#getDotVersion()" class="member-name-link">getDotVersion</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">GraphvizRuntimeEnvironment.</span><code><a href="../../dot/GraphvizRuntimeEnvironment.html#getenvGraphvizDot()" class="member-name-link">getenvGraphvizDot</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../../dot/GraphvizVersion.html" title="interface in net.sourceforge.plantuml.dot">GraphvizVersion</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">GraphvizRuntimeEnvironment.</span><code><a href="../../dot/GraphvizRuntimeEnvironment.html#getVersion(java.io.File)" class="member-name-link">getVersion</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;f)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">GraphvizRuntimeEnvironment.</span><code><a href="../../dot/GraphvizRuntimeEnvironment.html#graphviz244onWindows()" class="member-name-link">graphviz244onWindows</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>int</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">GraphvizRuntimeEnvironment.</span><code><a href="../../dot/GraphvizRuntimeEnvironment.html#retrieveVersion(java.lang.String)" class="member-name-link">retrieveVersion</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>final void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">GraphvizRuntimeEnvironment.</span><code><a href="../../dot/GraphvizRuntimeEnvironment.html#setDotExecutable(java.lang.String)" class="member-name-link">setDotExecutable</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">GraphvizRuntimeEnvironment.</span><code><a href="../../dot/GraphvizRuntimeEnvironment.html#useVizJs(net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">useVizJs</a><wbr>(<a href="../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
