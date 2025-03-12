@@ -94,7 +94,9 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(double,net.sourceforge.plantuml.skin.rose.Rose,net.sourceforge.plantuml.skin.ArrowComponent,net.sourceforge.plantuml.sequencediagram.graphic.LivingParticipantBox,net.sourceforge.plantuml.sequencediagram.MessageExoType,net.sourceforge.plantuml.url.Url,boolean,net.sourceforge.plantuml.skin.ArrowConfiguration)" class="member-name-link">MessageExoArrow</a><wbr>(double&nbsp;startingY,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.util.concurrent.atomic.AtomicInteger,net.sourceforge.plantuml.skin.Pragma,double,net.sourceforge.plantuml.skin.rose.Rose,net.sourceforge.plantuml.skin.ArrowComponent,net.sourceforge.plantuml.sequencediagram.graphic.LivingParticipantBox,net.sourceforge.plantuml.sequencediagram.MessageExoType,net.sourceforge.plantuml.url.Url,boolean,net.sourceforge.plantuml.skin.ArrowConfiguration)" class="member-name-link">MessageExoArrow</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/atomic/AtomicInteger.html" title="class or interface in java.util.concurrent.atomic" class="external-link">AtomicInteger</a>&nbsp;counter,
+ <a href="../../skin/Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma,
+ double&nbsp;startingY,
  <a href="../../skin/rose/Rose.html" title="class in net.sourceforge.plantuml.skin.rose">Rose</a>&nbsp;skin,
  <a href="../../skin/ArrowComponent.html" title="interface in net.sourceforge.plantuml.skin">ArrowComponent</a>&nbsp;arrow,
  <a href="LivingParticipantBox.html" title="class in net.sourceforge.plantuml.sequencediagram.graphic">LivingParticipantBox</a>&nbsp;p,
@@ -166,11 +168,11 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final double</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPaddingArrowHead()" class="member-name-link">getPaddingArrowHead</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getParticipant1Code()" class="member-name-link">getParticipant1Code</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getParticipant1()" class="member-name-link">getParticipant1</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getParticipant2Code()" class="member-name-link">getParticipant2Code</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getParticipant2()" class="member-name-link">getParticipant2</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="LivingParticipantBox.html" title="class in net.sourceforge.plantuml.sequencediagram.graphic">LivingParticipantBox</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getParticipantAt(net.sourceforge.plantuml.klimt.font.StringBounder,net.sourceforge.plantuml.sequencediagram.NotePosition)" class="member-name-link">getParticipantAt</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder,
@@ -230,9 +232,11 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(double,net.sourceforge.plantuml.skin.rose.Rose,net.sourceforge.plantuml.skin.ArrowComponent,net.sourceforge.plantuml.sequencediagram.graphic.LivingParticipantBox,net.sourceforge.plantuml.sequencediagram.MessageExoType,net.sourceforge.plantuml.url.Url,boolean,net.sourceforge.plantuml.skin.ArrowConfiguration)">
+<section class="detail" id="&lt;init&gt;(java.util.concurrent.atomic.AtomicInteger,net.sourceforge.plantuml.skin.Pragma,double,net.sourceforge.plantuml.skin.rose.Rose,net.sourceforge.plantuml.skin.ArrowComponent,net.sourceforge.plantuml.sequencediagram.graphic.LivingParticipantBox,net.sourceforge.plantuml.sequencediagram.MessageExoType,net.sourceforge.plantuml.url.Url,boolean,net.sourceforge.plantuml.skin.ArrowConfiguration)">
 <h3>MessageExoArrow</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MessageExoArrow</span><wbr><span class="parameters">(double&nbsp;startingY,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MessageExoArrow</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/atomic/AtomicInteger.html" title="class or interface in java.util.concurrent.atomic" class="external-link">AtomicInteger</a>&nbsp;counter,
+ <a href="../../skin/Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma,
+ double&nbsp;startingY,
  <a href="../../skin/rose/Rose.html" title="class in net.sourceforge.plantuml.skin.rose">Rose</a>&nbsp;skin,
  <a href="../../skin/ArrowComponent.html" title="interface in net.sourceforge.plantuml.skin">ArrowComponent</a>&nbsp;arrow,
  <a href="LivingParticipantBox.html" title="class in net.sourceforge.plantuml.sequencediagram.graphic">LivingParticipantBox</a>&nbsp;p,
@@ -326,15 +330,15 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="getParticipant1Code()">
-<h3>getParticipant1Code</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getParticipant1Code</span>()</div>
+<section class="detail" id="getParticipant1()">
+<h3>getParticipant1</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="../Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a></span>&nbsp;<span class="element-name">getParticipant1</span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="getParticipant2Code()">
-<h3>getParticipant2Code</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getParticipant2Code</span>()</div>
+<section class="detail" id="getParticipant2()">
+<h3>getParticipant2</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="../Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a></span>&nbsp;<span class="element-name">getParticipant2</span>()</div>
 </section>
 </li>
 <li>
