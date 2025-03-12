@@ -95,13 +95,14 @@ implements <a href="../abel/SpecificBackcolorable.html" title="interface in net.
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.sequencediagram.ParticipantType,java.lang.String,net.sourceforge.plantuml.klimt.creole.Display,java.util.Set,int,net.sourceforge.plantuml.style.StyleBuilder)" class="member-name-link">Participant</a><wbr>(<a href="../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.sequencediagram.ParticipantType,java.lang.String,net.sourceforge.plantuml.klimt.creole.Display,java.util.Set,int,net.sourceforge.plantuml.style.StyleBuilder,java.lang.String)" class="member-name-link">Participant</a><wbr>(<a href="../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
  <a href="ParticipantType.html" title="enum class in net.sourceforge.plantuml.sequencediagram">ParticipantType</a>&nbsp;type,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;code,
  <a href="../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;display,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../abel/EntityPortion.html" title="enum class in net.sourceforge.plantuml.abel">EntityPortion</a>&gt;&nbsp;hiddenPortions,
  int&nbsp;order,
- <a href="../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder)</code></div>
+ <a href="../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;uid)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -153,6 +154,12 @@ implements <a href="../abel/SpecificBackcolorable.html" title="interface in net.
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a>[]</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUsedStyles()" class="member-name-link">getUsedStyles</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../klimt/UGroupType.html" title="enum class in net.sourceforge.plantuml.klimt">UGroupType</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#groupTypeHead(net.sourceforge.plantuml.skin.Pragma)" class="member-name-link">groupTypeHead</a><wbr>(<a href="../skin/Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../klimt/UGroupType.html" title="enum class in net.sourceforge.plantuml.klimt">UGroupType</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#groupTypeTail(net.sourceforge.plantuml.skin.Pragma)" class="member-name-link">groupTypeTail</a><wbr>(<a href="../skin/Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#incInitialLife(net.sourceforge.plantuml.klimt.Fashion)" class="member-name-link">incInitialLife</a><wbr>(<a href="../klimt/Fashion.html" title="class in net.sourceforge.plantuml.klimt">Fashion</a>&nbsp;colors)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -191,7 +198,7 @@ implements <a href="../abel/SpecificBackcolorable.html" title="interface in net.
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.sequencediagram.ParticipantType,java.lang.String,net.sourceforge.plantuml.klimt.creole.Display,java.util.Set,int,net.sourceforge.plantuml.style.StyleBuilder)">
+<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.sequencediagram.ParticipantType,java.lang.String,net.sourceforge.plantuml.klimt.creole.Display,java.util.Set,int,net.sourceforge.plantuml.style.StyleBuilder,java.lang.String)">
 <h3>Participant</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Participant</span><wbr><span class="parameters">(<a href="../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
  <a href="ParticipantType.html" title="enum class in net.sourceforge.plantuml.sequencediagram">ParticipantType</a>&nbsp;type,
@@ -199,7 +206,8 @@ implements <a href="../abel/SpecificBackcolorable.html" title="interface in net.
  <a href="../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;display,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../abel/EntityPortion.html" title="enum class in net.sourceforge.plantuml.abel">EntityPortion</a>&gt;&nbsp;hiddenPortions,
  int&nbsp;order,
- <a href="../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder)</span></div>
+ <a href="../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;uid)</span></div>
 </section>
 </li>
 </ul>
@@ -338,6 +346,18 @@ implements <a href="../abel/SpecificBackcolorable.html" title="interface in net.
 <section class="detail" id="getLocation()">
 <h3>getLocation</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a></span>&nbsp;<span class="element-name">getLocation</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="groupTypeTail(net.sourceforge.plantuml.skin.Pragma)">
+<h3>groupTypeTail</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../klimt/UGroupType.html" title="enum class in net.sourceforge.plantuml.klimt">UGroupType</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">groupTypeTail</span><wbr><span class="parameters">(<a href="../skin/Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="groupTypeHead(net.sourceforge.plantuml.skin.Pragma)">
+<h3>groupTypeHead</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../klimt/UGroupType.html" title="enum class in net.sourceforge.plantuml.klimt">UGroupType</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">groupTypeHead</span><wbr><span class="parameters">(<a href="../skin/Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma)</span></div>
 </section>
 </li>
 </ul>

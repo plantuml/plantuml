@@ -55,19 +55,45 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Package</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.sequencediagram">net.sourceforge.plantuml.sequencediagram</a></div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.asciiart">net.sourceforge.plantuml.asciiart</a></div>
 <div class="col-last even-row-color">
+<div class="block">Provides classes used to manage 
+ <a href="https://plantuml.com/ascii-art" target="_top">
+ ASCII Art output format</a>.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.sequencediagram">net.sourceforge.plantuml.sequencediagram</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Provides classes used to manage 
  <a href="https://plantuml.com/sequence-diagram" target="_top">
  Sequence Diagram</a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.sequencediagram.graphic">net.sourceforge.plantuml.sequencediagram.graphic</a></div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.sequencediagram.graphic">net.sourceforge.plantuml.sequencediagram.graphic</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="#net.sourceforge.plantuml.sequencediagram.teoz">net.sourceforge.plantuml.sequencediagram.teoz</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.sequencediagram.teoz">net.sourceforge.plantuml.sequencediagram.teoz</a></div>
+<div class="col-first even-row-color"><a href="#net.sourceforge.plantuml.skin.rose">net.sourceforge.plantuml.skin.rose</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
+<li>
+<section class="detail" id="net.sourceforge.plantuml.asciiart">
+<h2>Uses of <a href="../Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a> in <a href="../../asciiart/package-summary.html">net.sourceforge.plantuml.asciiart</a></h2>
+<div class="caption"><span>Methods in <a href="../../asciiart/package-summary.html">net.sourceforge.plantuml.asciiart</a> with parameters of type <a href="../Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../../skin/Component.html" title="interface in net.sourceforge.plantuml.skin">Component</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TextSkin.</span><code><a href="../../asciiart/TextSkin.html#createComponentParticipant(net.sourceforge.plantuml.sequencediagram.Participant,net.sourceforge.plantuml.skin.ComponentType,net.sourceforge.plantuml.skin.ArrowConfiguration,net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.klimt.creole.Display)" class="member-name-link">createComponentParticipant</a><wbr>(<a href="../Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a>&nbsp;p,
+ <a href="../../skin/ComponentType.html" title="enum class in net.sourceforge.plantuml.skin">ComponentType</a>&nbsp;type,
+ <a href="../../skin/ArrowConfiguration.html" title="class in net.sourceforge.plantuml.skin">ArrowConfiguration</a>&nbsp;config,
+ <a href="../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;param,
+ <a href="../../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;stringsToDisplay)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <li>
 <section class="detail" id="net.sourceforge.plantuml.sequencediagram">
 <h2>Uses of <a href="../Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a> in <a href="../package-summary.html">net.sourceforge.plantuml.sequencediagram</a></h2>
@@ -329,6 +355,23 @@ loadScripts(document, 'script');</script>
  <a href="../graphic/LivingParticipantBox.html" title="class in net.sourceforge.plantuml.sequencediagram.graphic">LivingParticipantBox</a>&nbsp;box)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
+<div class="caption"><span>Constructors in <a href="../graphic/package-summary.html">net.sourceforge.plantuml.sequencediagram.graphic</a> with parameters of type <a href="../Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../graphic/ParticipantBox.html#%3Cinit%3E(net.sourceforge.plantuml.skin.Pragma,net.sourceforge.plantuml.utils.LineLocation,net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,net.sourceforge.plantuml.skin.Component,double,int,net.sourceforge.plantuml.sequencediagram.Participant)" class="member-name-link">ParticipantBox</a><wbr>(<a href="../../skin/Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a>&nbsp;pragma,
+ <a href="../../utils/LineLocation.html" title="interface in net.sourceforge.plantuml.utils">LineLocation</a>&nbsp;location,
+ <a href="../../skin/Component.html" title="interface in net.sourceforge.plantuml.skin">Component</a>&nbsp;head,
+ <a href="../../skin/Component.html" title="interface in net.sourceforge.plantuml.skin">Component</a>&nbsp;line,
+ <a href="../../skin/Component.html" title="interface in net.sourceforge.plantuml.skin">Component</a>&nbsp;tail,
+ <a href="../../skin/Component.html" title="interface in net.sourceforge.plantuml.skin">Component</a>&nbsp;delayLine,
+ double&nbsp;startingX,
+ int&nbsp;outMargin,
+ <a href="../Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a>&nbsp;p)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
 </section>
 </li>
 <li>
@@ -395,6 +438,24 @@ loadScripts(document, 'script');</script>
  <a href="../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../Event.html" title="interface in net.sourceforge.plantuml.sequencediagram">Event</a>&gt;&nbsp;events,
  <a href="../Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a>&nbsp;participant)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="net.sourceforge.plantuml.skin.rose">
+<h2>Uses of <a href="../Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a> in <a href="../../skin/rose/package-summary.html">net.sourceforge.plantuml.skin.rose</a></h2>
+<div class="caption"><span>Methods in <a href="../../skin/rose/package-summary.html">net.sourceforge.plantuml.skin.rose</a> with parameters of type <a href="../Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../../skin/Component.html" title="interface in net.sourceforge.plantuml.skin">Component</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Rose.</span><code><a href="../../skin/rose/Rose.html#createComponentParticipant(net.sourceforge.plantuml.sequencediagram.Participant,net.sourceforge.plantuml.skin.ComponentType,net.sourceforge.plantuml.skin.ArrowConfiguration,net.sourceforge.plantuml.style.ISkinParam,net.sourceforge.plantuml.klimt.creole.Display)" class="member-name-link">createComponentParticipant</a><wbr>(<a href="../Participant.html" title="class in net.sourceforge.plantuml.sequencediagram">Participant</a>&nbsp;p,
+ <a href="../../skin/ComponentType.html" title="enum class in net.sourceforge.plantuml.skin">ComponentType</a>&nbsp;type,
+ <a href="../../skin/ArrowConfiguration.html" title="class in net.sourceforge.plantuml.skin">ArrowConfiguration</a>&nbsp;config,
+ <a href="../../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;param,
+ <a href="../../klimt/creole/Display.html" title="class in net.sourceforge.plantuml.klimt.creole">Display</a>&nbsp;stringsToDisplay)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
