@@ -632,9 +632,9 @@ class DrawableSetInitializer {
 
 		final ISkinParam skinParam = drawableSet.getSkinParam();
 		final Display participantDisplay = p.getDisplay(skinParam.forceSequenceParticipantUnderlined());
-		final Component head = drawableSet.getSkin().createComponent(p.getUsedStyles(), headType, null, skinParam,
+		final Component head = drawableSet.getSkin().createComponentParticipant(p, headType, null, skinParam,
 				participantDisplay);
-		final Component tail = drawableSet.getSkin().createComponent(p.getUsedStyles(), tailType, null, skinParam,
+		final Component tail = drawableSet.getSkin().createComponentParticipant(p, tailType, null, skinParam,
 				participantDisplay);
 		final Style style = this.defaultLineType.getStyleSignature().withTOBECHANGED(p.getStereotype())
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
@@ -642,8 +642,8 @@ class DrawableSetInitializer {
 				drawableSet.getSkinParam(), participantDisplay);
 		final Component delayLine = drawableSet.getSkin().createComponent(null, ComponentType.DELAY_LINE, null,
 				drawableSet.getSkinParam(), participantDisplay);
-		final ParticipantBox box = new ParticipantBox(p.getLocation(), head, line, tail, delayLine, this.freeX,
-				skinParam.maxAsciiMessageLength() > 0 ? 1 : 5, p.getCode());
+		final ParticipantBox box = new ParticipantBox(skinParam.getPragma(), p.getLocation(), head, line, tail,
+				delayLine, this.freeX, skinParam.maxAsciiMessageLength() > 0 ? 1 : 5, p);
 
 		final Component comp = drawableSet.getSkin().createComponent(
 				new Style[] { ComponentType.ALIVE_BOX_CLOSE_CLOSE.getStyleSignature()

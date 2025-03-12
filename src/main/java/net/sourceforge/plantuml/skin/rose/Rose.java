@@ -41,6 +41,7 @@ import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.skin.AlignmentParam;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
@@ -121,21 +122,12 @@ public class Rose {
 		throw new UnsupportedOperationException(type.toString());
 	}
 
-	public Component createComponent(Style[] styles, ComponentType type, ArrowConfiguration config, ISkinParam param,
-			Display stringsToDisplay) {
+	public Component createComponentParticipant(Participant p, ComponentType type, ArrowConfiguration config,
+			ISkinParam param, Display stringsToDisplay) {
 		checkRose();
+		final Style[] styles = p.getUsedStyles();
 
-		if (type == ComponentType.DELAY_LINE || type == ComponentType.GROUPING_SPACE || type == ComponentType.DESTROY) {
-
-		} else {
-			if (styles == null)
-				throw new UnsupportedOperationException(type.toString());
-		}
-
-		final Stereotype stereotype = stringsToDisplay == null ? null : stringsToDisplay.getStereotypeIfAny();
-
-		if (type.isArrow())
-			return createComponentArrow(null, config, param, stringsToDisplay);
+		// final Stereotype stereotype = stringsToDisplay == null ? null : stringsToDisplay.getStereotypeIfAny();
 
 		final double padding = param.getPadding(PaddingParam.PARTICIPANT);
 
@@ -154,12 +146,6 @@ public class Rose {
 		if (type == ComponentType.COLLECTIONS_TAIL)
 			return new ComponentRoseParticipant(styles[0], styles[1], stringsToDisplay, param,
 					getMinClassWidth(styles[0]), true, padding);
-
-		if (type == ComponentType.PARTICIPANT_LINE)
-			return new ComponentRoseLine(styles[0], false, param.getIHtmlColorSet(), stringsToDisplay);
-
-		if (type == ComponentType.CONTINUE_LINE)
-			return new ComponentRoseLine(styles[0], true, param.getIHtmlColorSet(), stringsToDisplay);
 
 		if (type == ComponentType.ACTOR_HEAD)
 			return new ComponentRoseActor(param.actorStyle(), styles[0], styles == null ? null : styles[1],
@@ -198,6 +184,31 @@ public class Rose {
 
 		if (type == ComponentType.DATABASE_TAIL)
 			return new ComponentRoseDatabase(styles[0], styles[1], stringsToDisplay, false, param);
+
+		throw new UnsupportedOperationException();
+	}
+
+	public Component createComponent(Style[] styles, ComponentType type, ArrowConfiguration config, ISkinParam param,
+			Display stringsToDisplay) {
+		checkRose();
+
+		if (type == ComponentType.DELAY_LINE || type == ComponentType.GROUPING_SPACE || type == ComponentType.DESTROY) {
+
+		} else {
+			if (styles == null)
+				throw new UnsupportedOperationException(type.toString());
+		}
+
+		final Stereotype stereotype = stringsToDisplay == null ? null : stringsToDisplay.getStereotypeIfAny();
+
+		if (type.isArrow())
+			return createComponentArrow(null, config, param, stringsToDisplay);
+
+		if (type == ComponentType.PARTICIPANT_LINE)
+			return new ComponentRoseLine(styles[0], false, param.getIHtmlColorSet(), stringsToDisplay);
+
+		if (type == ComponentType.CONTINUE_LINE)
+			return new ComponentRoseLine(styles[0], true, param.getIHtmlColorSet(), stringsToDisplay);
 
 		if (type == ComponentType.NOTE)
 			throw new UnsupportedOperationException();

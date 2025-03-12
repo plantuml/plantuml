@@ -1145,15 +1145,13 @@ public class SvgGraphics {
 				case CLASS:
 				case DATA_SOURCE_LINE:
 				case DATA_QUALIFIED_NAME:
+				case DATA_ENTITY_UID:
 					pendingAction.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
 							typeIdent.getValue());
 
 				}
 			}
-		} else
-
-		{
-
+		} else {
 			for (Map.Entry<UGroupType, String> typeIdent : typeIdents.entrySet()) {
 				if (typeIdent.getKey() == UGroupType.TITLE) {
 					Element title = document.createElement(UGroupType.TITLE.getSvgKeyAttributeName());

@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.FileFormat;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowDirection;
@@ -86,6 +87,13 @@ public class TextSkin extends Rose {
 			Colors colors) {
 		return createComponentNote(styles, type, param, stringsToDisplay, colors, null);
 	}
+	
+	@Override
+	public Component createComponentParticipant(Participant p, ComponentType type, ArrowConfiguration config, ISkinParam param,
+			Display stringsToDisplay) {
+		return createComponent(p.getUsedStyles(), type, config, param, stringsToDisplay);
+	}
+
 
 	@Override
 	public Component createComponent(Style style[], ComponentType type, ArrowConfiguration config, ISkinParam param,

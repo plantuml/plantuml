@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.klimt;
 
 public enum UGroupType {
+	
 	ID,
 	CLASS,
 	TITLE,
@@ -43,6 +44,7 @@ public enum UGroupType {
 	DATA_QUALIFIED_NAME,
 	DATA_ENTITY_1,
 	DATA_ENTITY_2,
+	DATA_ENTITY_UID,
 	DATA_ENTITY_1_UID,
 	DATA_ENTITY_2_UID,
 	DATA_PARTICIPANT,

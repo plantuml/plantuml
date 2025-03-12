@@ -36,17 +36,21 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.abel.EntityPortion;
 import net.sourceforge.plantuml.abel.SpecificBackcolorable;
 import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.Style;
@@ -57,7 +61,7 @@ import net.sourceforge.plantuml.style.WithStyle;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-	// ::remove folder when __HAXE__
+// ::remove folder when __HAXE__
 public class Participant implements SpecificBackcolorable, WithStyle {
 
 	private final String code;
@@ -72,6 +76,7 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 	private final int order;
 	private final StyleBuilder styleBuilder;
 	private final LineLocation location;
+	private final String uid;
 
 	// private Style style;
 
@@ -92,8 +97,9 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 	}
 
 	public Participant(LineLocation location, ParticipantType type, String code, Display display,
-			Set<EntityPortion> hiddenPortions, int order, StyleBuilder styleBuilder) {
+			Set<EntityPortion> hiddenPortions, int order, StyleBuilder styleBuilder, String uid) {
 		this.location = location;
+		this.uid = uid;
 		this.hiddenPortions = hiddenPortions;
 		this.styleBuilder = styleBuilder;
 		this.order = order;
@@ -192,6 +198,24 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 
 	public LineLocation getLocation() {
 		return location;
+	}
+
+	public Map<UGroupType, String> groupTypeTail(Pragma pragma) {
+		final Map<UGroupType, String> typeIdents = new EnumMap<>(UGroupType.class);
+		typeIdents.put(UGroupType.CLASS, "participant participant-tail");
+		typeIdents.put(UGroupType.DATA_QUALIFIED_NAME, code);
+		typeIdents.put(UGroupType.DATA_PARTICIPANT, code);
+		typeIdents.put(UGroupType.DATA_ENTITY_UID, uid);
+		return typeIdents;
+	}
+
+	public Map<UGroupType, String> groupTypeHead(Pragma pragma) {
+		final Map<UGroupType, String> typeIdents = new EnumMap<>(UGroupType.class);
+		typeIdents.put(UGroupType.CLASS, "participant participant-head");
+		typeIdents.put(UGroupType.DATA_QUALIFIED_NAME, code);
+		typeIdents.put(UGroupType.DATA_PARTICIPANT, code);
+		typeIdents.put(UGroupType.DATA_ENTITY_UID, uid);
+		return typeIdents;
 	}
 
 }

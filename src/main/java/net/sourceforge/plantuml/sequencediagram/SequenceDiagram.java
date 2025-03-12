@@ -47,6 +47,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.Stack;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import net.atmp.ImageBuilder;
 import net.sourceforge.plantuml.FileFormat;
@@ -112,7 +113,7 @@ public class SequenceDiagram extends UmlDiagram {
 		Participant result = participantsget(code);
 		if (result == null) {
 			result = new Participant(location, ParticipantType.PARTICIPANT, code, display, hiddenPortions, 0,
-					getSkinParam().getCurrentStyleBuilder());
+					getSkinParam().getCurrentStyleBuilder(), createUid());
 			addWithOrder(result);
 			participantEnglobers2.put(result, participantEnglober);
 		}
@@ -143,7 +144,10 @@ public class SequenceDiagram extends UmlDiagram {
 		return null;
 	}
 
-	public Participant createNewParticipant(LineLocation location, ParticipantType type, String code, Display display, int order) {
+	private final AtomicInteger cpt = new AtomicInteger(1);
+
+	public Participant createNewParticipant(LineLocation location, ParticipantType type, String code, Display display,
+			int order) {
 		if (participantsget(code) != null)
 			throw new IllegalArgumentException();
 
@@ -151,11 +155,16 @@ public class SequenceDiagram extends UmlDiagram {
 			// display = Arrays.asList(code);
 			display = Display.getWithNewlines(getPragma(), code);
 		}
+
 		final Participant result = new Participant(location, type, code, display, hiddenPortions, order,
-				getSkinParam().getCurrentStyleBuilder());
+				getSkinParam().getCurrentStyleBuilder(), createUid());
 		addWithOrder(result);
 		participantEnglobers2.put(result, participantEnglober);
 		return result;
+	}
+
+	private String createUid() {
+		return "part" + cpt.getAndAdd(1);
 	}
 
 	private void addWithOrder(final Participant result) {
@@ -286,7 +295,6 @@ public class SequenceDiagram extends UmlDiagram {
 	private boolean modeTeoz() {
 		return OptionFlags.FORCE_TEOZ || getPragma().isTrue(PragmaKey.TEOZ);
 	}
-
 
 	@Override
 	public ImageBuilder createImageBuilder(FileFormatOption fileFormatOption) throws IOException {

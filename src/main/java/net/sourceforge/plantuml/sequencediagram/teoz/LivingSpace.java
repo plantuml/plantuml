@@ -170,7 +170,7 @@ public class LivingSpace {
 		if (create && verticalAlignment == VerticalAlignment.BOTTOM) {
 			return;
 		}
-		final Component comp = rose.createComponent(p.getUsedStyles(), headType, null, skinParam,
+		final Component comp = rose.createComponentParticipant(p, headType, null, skinParam,
 				p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));
 		final XDimension2D dim = comp.getPreferredDimension(ug.getStringBounder());
 		if (horizontalAlignment == HorizontalAlignment.RIGHT) {
@@ -191,7 +191,7 @@ public class LivingSpace {
 	}
 
 	public XDimension2D getHeadPreferredDimension(StringBounder stringBounder) {
-		final Component comp = rose.createComponent(p.getUsedStyles(), headType, null, skinParam,
+		final Component comp = rose.createComponentParticipant(p, headType, null, skinParam,
 				p.getDisplay(skinParam.forceSequenceParticipantUnderlined()));
 		final XDimension2D dim = comp.getPreferredDimension(stringBounder);
 		return dim;

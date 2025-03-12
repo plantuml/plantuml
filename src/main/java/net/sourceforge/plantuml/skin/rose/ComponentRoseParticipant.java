@@ -46,6 +46,7 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
+import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.style.ISkinSimple;
@@ -64,8 +65,8 @@ public class ComponentRoseParticipant extends AbstractTextualComponent {
 	private final boolean collections;
 	private final double padding;
 
-	public ComponentRoseParticipant(Style style, Style stereo, Display stringsToDisplay, ISkinSimple spriteContainer,
-			double minWidth, boolean collections, double padding) {
+	public ComponentRoseParticipant(Style style, Style stereo, Display stringsToDisplay,
+			ISkinSimple spriteContainer, double minWidth, boolean collections, double padding) {
 		super(style, stereo, LineBreakStrategy.NONE, 7, 7, 7, spriteContainer, stringsToDisplay, false);
 
 		this.roundCorner = style.value(PName.RoundCorner).asInt(false);
