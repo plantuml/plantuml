@@ -46,6 +46,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sourceforge.plantuml.klimt.UClip;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -83,10 +84,16 @@ public class DrawableSet {
 	private final ISkinParam skinParam;
 	private XDimension2D dimension;
 	private double topStartingY;
+	private final AtomicInteger counter;
 
-	DrawableSet(Rose skin, ISkinParam skinParam) {
+	public AtomicInteger getCounter() {
+		return counter;
+	}
+
+	DrawableSet(Rose skin, ISkinParam skinParam, AtomicInteger counter) {
 		this.skin = Objects.requireNonNull(skin);
 		this.skinParam = Objects.requireNonNull(skinParam);
+		this.counter = counter;
 	}
 
 	public ParticipantBox getVeryfirst() {

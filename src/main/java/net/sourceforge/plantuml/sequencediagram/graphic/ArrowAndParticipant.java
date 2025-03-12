@@ -35,12 +35,16 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.Pragma;
 
 class ArrowAndParticipant extends Arrow implements InGroupable {
 
@@ -48,9 +52,9 @@ class ArrowAndParticipant extends Arrow implements InGroupable {
 	private final ParticipantBox participantBox;
 	private final double paddingParticipant;
 
-	public ArrowAndParticipant(StringBounder stringBounder, Arrow arrow, ParticipantBox participantBox,
+	public ArrowAndParticipant(AtomicInteger counter, Pragma pragma, StringBounder stringBounder, Arrow arrow, ParticipantBox participantBox,
 			double paddingParticipant) {
-		super(arrow.getStartingY(), arrow.getSkin(), arrow.getArrowComponent(), arrow.getUrl());
+		super(counter, pragma, arrow.getStartingY(), arrow.getSkin(), arrow.getArrowComponent(), arrow.getUrl());
 		this.arrow = arrow;
 		this.participantBox = participantBox;
 		this.paddingParticipant = paddingParticipant;
@@ -89,13 +93,13 @@ class ArrowAndParticipant extends Arrow implements InGroupable {
 	}
 
 	@Override
-	protected String getParticipant1Code() {
-		return arrow.getParticipant1Code();
+	protected Participant getParticipant1() {
+		return arrow.getParticipant1();
 	}
 
 	@Override
-	protected String getParticipant2Code() {
-		return arrow.getParticipant2Code();
+	protected Participant getParticipant2() {
+		return arrow.getParticipant2();
 	}
 
 	@Override

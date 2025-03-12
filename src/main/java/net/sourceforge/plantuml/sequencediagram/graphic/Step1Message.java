@@ -78,7 +78,8 @@ class Step1Message extends Step1Abstract {
 					ComponentType.ALIVE_BOX_OPEN_OPEN, null, drawingSet.getSkinParam(),
 					message.getParticipant1().getDisplay(false));
 
-			this.messageArrow = new MessageArrow(freeY.getFreeY(range), drawingSet.getSkin(), comp,
+			this.messageArrow = new MessageArrow(getDrawingSet().getCounter(),
+					getDrawingSet().getSkinParam().getPragma(), freeY.getFreeY(range), drawingSet.getSkin(), comp,
 					getLivingParticipantBox1(), getLivingParticipantBox2(), message.getUrl(), compAliveBox);
 		}
 
@@ -182,7 +183,8 @@ class Step1Message extends Step1Abstract {
 				noteOnMessage.temporaryProtectedUntilTeozIsStandard();
 				noteBoxes.add(createNoteBox(getStringBounder(), messageSelfArrow, note, noteOnMessage));
 			}
-			return new ArrowAndNoteBox(getStringBounder(), messageSelfArrow, noteBoxes);
+			return new ArrowAndNoteBox(getDrawingSet().getCounter(), getDrawingSet().getSkinParam().getPragma(),
+					getStringBounder(), messageSelfArrow, noteBoxes);
 		} else if (getMessage().getNoteOnMessages().size() > 0) {
 			final List<NoteBox> noteBoxes = new ArrayList<>();
 			for (int i = 0; i < getNotes().size(); i++) {
@@ -191,7 +193,8 @@ class Step1Message extends Step1Abstract {
 				noteOnMessage.temporaryProtectedUntilTeozIsStandard();
 				noteBoxes.add(createNoteBox(getStringBounder(), messageArrow, note, noteOnMessage));
 			}
-			return new ArrowAndNoteBox(getStringBounder(), messageArrow, noteBoxes);
+			return new ArrowAndNoteBox(getDrawingSet().getCounter(), getDrawingSet().getSkinParam().getPragma(),
+					getStringBounder(), messageArrow, noteBoxes);
 		} else if (isSelfMessage()) {
 			return createMessageSelfArrow();
 		} else {
@@ -212,18 +215,19 @@ class Step1Message extends Step1Abstract {
 		if (getMessage().isDeactivate())
 			deltaY += halfLifeWidth;
 
-
-		int currentLevel = getLevelAt(posY,halfLifeWidth);
+		int currentLevel = getLevelAt(posY, halfLifeWidth);
 
 		final Style[] styles = getMessage().getUsedStyles();
 		final ArrowComponent comp = getDrawingSet().getSkin().createComponentArrow(styles, getConfig(),
 				getDrawingSet().getSkinParam(), getMessage().getLabelNumbered());
-		return new MessageSelfArrow(posY, getDrawingSet().getSkin(), comp, getLivingParticipantBox1(), deltaY,
-				getMessage().getUrl(), deltaX,getConfig().isReverseDefine(), currentLevel, halfLifeWidth);
+		return new MessageSelfArrow(getDrawingSet().getCounter(), getDrawingSet().getSkinParam().getPragma(), posY,
+				getDrawingSet().getSkin(), comp, getLivingParticipantBox1(), deltaY, getMessage().getUrl(), deltaX,
+				getConfig().isReverseDefine(), currentLevel, halfLifeWidth);
 	}
 
-	private int getLevelAt(double posY,double halfLifeWidth) {
-		double length = getLivingParticipantBox1().getLiveThicknessAt(getStringBounder(), posY).getSegment().getLength();
+	private int getLevelAt(double posY, double halfLifeWidth) {
+		double length = getLivingParticipantBox1().getLiveThicknessAt(getStringBounder(), posY).getSegment()
+				.getLength();
 		if (length < halfLifeWidth)
 			return 0;
 
@@ -243,7 +247,8 @@ class Step1Message extends Step1Abstract {
 		if (messageArrow == null)
 			throw new IllegalStateException();
 
-		Arrow result = new ArrowAndParticipant(getStringBounder(), messageArrow, getParticipantBox2(),
+		Arrow result = new ArrowAndParticipant(getDrawingSet().getCounter(), getDrawingSet().getSkinParam().getPragma(),
+				getStringBounder(), messageArrow, getParticipantBox2(),
 				getDrawingSet().getSkinParam().getPadding(PaddingParam.PARTICIPANT));
 		if (getMessage().getNoteOnMessages().size() > 0) {
 			final List<NoteBox> noteBoxes = new ArrayList<>();
@@ -256,7 +261,8 @@ class Step1Message extends Step1Abstract {
 
 				noteBoxes.add(noteBox);
 			}
-			result = new ArrowAndNoteBox(getStringBounder(), result, noteBoxes);
+			result = new ArrowAndNoteBox(getDrawingSet().getCounter(), getDrawingSet().getSkinParam().getPragma(),
+					getStringBounder(), result, noteBoxes);
 		}
 		getLivingParticipantBox2()
 				.create(getFreeY().getFreeY(getParticipantRange()) + result.getPreferredHeight(getStringBounder()) / 2);

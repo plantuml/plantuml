@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sourceforge.plantuml.OptionFlags;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -88,8 +89,9 @@ class DrawableSetInitializer {
 
 	private ConstraintSet constraintSet;
 
-	public DrawableSetInitializer(Rose skin, ISkinParam skinParam, boolean showTail, double autonewpage) {
-		this.drawableSet = new DrawableSet(skin, skinParam);
+	public DrawableSetInitializer(Rose skin, ISkinParam skinParam, boolean showTail, double autonewpage,
+			AtomicInteger counter) {
+		this.drawableSet = new DrawableSet(skin, skinParam, counter);
 		this.showTail = showTail;
 		this.autonewpage = autonewpage;
 

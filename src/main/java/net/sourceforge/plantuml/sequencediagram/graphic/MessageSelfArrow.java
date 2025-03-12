@@ -35,14 +35,18 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.url.Url;
 
@@ -55,9 +59,10 @@ class MessageSelfArrow extends Arrow {
 	private final int currentLevel;
 	private final double halfLifeWidth;
 
-	public MessageSelfArrow(double startingY, Rose skin, ArrowComponent arrow, LivingParticipantBox p1, double deltaY,
-													Url url, double deltaX, boolean isReverse, int currentLevel, double halfLifeWidth) {
-		super(startingY, skin, arrow, url);
+	public MessageSelfArrow(AtomicInteger counter, Pragma pragma, double startingY, Rose skin, ArrowComponent arrow,
+			LivingParticipantBox p1, double deltaY, Url url, double deltaX, boolean isReverse, int currentLevel,
+			double halfLifeWidth) {
+		super(counter, pragma, startingY, skin, arrow, url);
 		this.p1 = p1;
 		this.deltaY = deltaY;
 		this.deltaX = deltaX;
@@ -73,7 +78,8 @@ class MessageSelfArrow extends Arrow {
 
 	@Override
 	public double getPreferredWidth(StringBounder stringBounder) {
-		double length = p1.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment().getLength();
+		double length = p1.getLiveThicknessAt(stringBounder, getArrowYStartLevel(stringBounder)).getSegment()
+				.getLength();
 		return getArrowComponent().getPreferredWidth(stringBounder) + length;
 	}
 
@@ -105,7 +111,7 @@ class MessageSelfArrow extends Arrow {
 				.getPos2();
 		if (isReverse) {
 
-			return pos2  - getPreferredWidth(stringBounder);
+			return pos2 - getPreferredWidth(stringBounder);
 		} else
 			return pos2 + deltaX;
 	}
@@ -155,13 +161,13 @@ class MessageSelfArrow extends Arrow {
 	}
 
 	@Override
-	protected String getParticipant1Code() {
-		return p1.getParticipantCode();
+	protected Participant getParticipant1() {
+		return p1.getParticipant();
 	}
 
 	@Override
-	protected String getParticipant2Code() {
-		return getParticipant1Code();
+	protected Participant getParticipant2() {
+		return p1.getParticipant();
 	}
 
 	@Override

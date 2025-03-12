@@ -51,6 +51,7 @@ import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.MergeStrategy;
 import net.sourceforge.plantuml.style.Style;
@@ -206,6 +207,9 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 		typeIdents.put(UGroupType.DATA_QUALIFIED_NAME, code);
 		typeIdents.put(UGroupType.DATA_PARTICIPANT, code);
 		typeIdents.put(UGroupType.DATA_ENTITY_UID, uid);
+		if (pragma.isTrue(PragmaKey.SVGNEWDATA))
+			typeIdents.put(UGroupType.DATA_UID, uid + "-tail");
+
 		return typeIdents;
 	}
 
@@ -215,7 +219,13 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 		typeIdents.put(UGroupType.DATA_QUALIFIED_NAME, code);
 		typeIdents.put(UGroupType.DATA_PARTICIPANT, code);
 		typeIdents.put(UGroupType.DATA_ENTITY_UID, uid);
+		if (pragma.isTrue(PragmaKey.SVGNEWDATA))
+			typeIdents.put(UGroupType.DATA_UID, uid + "-head");
 		return typeIdents;
+	}
+
+	public String getUid() {
+		return uid;
 	}
 
 }

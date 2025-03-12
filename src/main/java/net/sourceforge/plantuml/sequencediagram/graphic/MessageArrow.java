@@ -36,16 +36,19 @@
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.url.Url;
 
@@ -55,9 +58,9 @@ class MessageArrow extends Arrow {
 	private final LivingParticipantBox p2;
 	private final Component compAliveBox;
 
-	public MessageArrow(double startingY, Rose skin, ArrowComponent arrow, LivingParticipantBox p1,
-			LivingParticipantBox p2, Url url, Component compAliveBox) {
-		super(startingY, skin, arrow, url);
+	public MessageArrow(AtomicInteger counter, Pragma pragma, double startingY, Rose skin, ArrowComponent arrow,
+			LivingParticipantBox p1, LivingParticipantBox p2, Url url, Component compAliveBox) {
+		super(counter, pragma, startingY, skin, arrow, url);
 
 		if (p1 == p2) {
 			throw new IllegalArgumentException();
@@ -127,13 +130,13 @@ class MessageArrow extends Arrow {
 	}
 
 	@Override
-	protected String getParticipant1Code() {
-		return p1.getParticipantCode();
+	protected Participant getParticipant1() {
+		return p1.getParticipant();
 	}
 
 	@Override
-	protected String getParticipant2Code() {
-		return p2.getParticipantCode();
+	protected Participant getParticipant2() {
+		return p2.getParticipant();
 	}
 
 	@Override

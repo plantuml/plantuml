@@ -37,13 +37,17 @@ package net.sourceforge.plantuml.sequencediagram.graphic;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.skin.ArrowComponent;
+import net.sourceforge.plantuml.skin.Pragma;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.url.Url;
 
@@ -54,6 +58,8 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 	private double paddingArrowHead;
 	private double maxX;
 	private final Url url;
+	private final Pragma pragma;
+	private final String uid;;
 
 	public void setMaxX(double m) {
 		if (maxX != 0)
@@ -71,11 +77,14 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 
 	public abstract double getActualWidth(StringBounder stringBounder);
 
-	Arrow(double startingY, Rose skin, ArrowComponent arrowComponent, Url url) {
+	Arrow(AtomicInteger counter, Pragma pragma, double startingY, Rose skin, ArrowComponent arrowComponent, Url url) {
 		super(startingY);
+		this.pragma = pragma;
 		this.skin = skin;
 		this.arrowComponent = arrowComponent;
 		this.url = url;
+		this.uid = "msg" + counter.getAndAdd(1);
+		System.err.println("uid=" + uid);
 	}
 
 	protected Url getUrl() {
@@ -85,8 +94,15 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 	protected final void startGroup(UGraphic ug) {
 		final Map<UGroupType, String> typeIdents = new EnumMap<>(UGroupType.class);
 		typeIdents.put(UGroupType.CLASS, "message");
-		typeIdents.put(UGroupType.DATA_PARTICIPANT_1, getParticipant1Code());
-		typeIdents.put(UGroupType.DATA_PARTICIPANT_2, getParticipant2Code());
+		// Please also remove Pragma from constructor when this will be removed
+		if (pragma.isTrue(PragmaKey.SVGNEWDATA)) {
+			typeIdents.put(UGroupType.DATA_PARTICIPANT_1, getParticipant1().getUid());
+			typeIdents.put(UGroupType.DATA_PARTICIPANT_2, getParticipant2().getUid());
+			typeIdents.put(UGroupType.DATA_UID, uid);
+		} else {
+			typeIdents.put(UGroupType.DATA_PARTICIPANT_1, getParticipant1().getCode());
+			typeIdents.put(UGroupType.DATA_PARTICIPANT_2, getParticipant2().getCode());
+		}
 		ug.startGroup(typeIdents);
 	}
 
@@ -126,9 +142,9 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 
 	public abstract LivingParticipantBox getParticipantAt(StringBounder stringBounder, NotePosition position);
 
-	protected abstract String getParticipant1Code();
+	protected abstract Participant getParticipant1();
 
-	protected abstract String getParticipant2Code();
+	protected abstract Participant getParticipant2();
 
 	protected final double getPaddingArrowHead() {
 		return paddingArrowHead;

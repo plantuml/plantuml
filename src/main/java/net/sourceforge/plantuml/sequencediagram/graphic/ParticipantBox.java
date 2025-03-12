@@ -219,8 +219,8 @@ public class ParticipantBox implements Pushable {
 		this.delays.add(delay);
 	}
 
-	public String getParticipantCode() {
-		return p.getCode();
+	public Participant getParticipant() {
+		return p;
 	}
 
 	public Collection<Segment> getDelays(final StringBounder stringBounder) {

@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.sequencediagram.InGroupable;
+import net.sourceforge.plantuml.sequencediagram.Participant;
 
 public class LivingParticipantBox implements InGroupable {
 
@@ -114,7 +115,7 @@ public class LivingParticipantBox implements InGroupable {
 		return toString();
 	}
 
-	public String getParticipantCode() {
-		return participantBox.getParticipantCode();
+	public Participant getParticipant() {
+		return participantBox.getParticipant();
 	}
 }

@@ -60,7 +60,8 @@ class Step1MessageExo extends Step1Abstract {
 
 		final ArrowComponent comp = drawingSet.getSkin().createComponentArrow(message.getUsedStyles(), getConfig(),
 				drawingSet.getSkinParam(), message.getLabelNumbered());
-		this.messageArrow = new MessageExoArrow(freeY.getFreeY(range), drawingSet.getSkin(), comp,
+		this.messageArrow = new MessageExoArrow(getDrawingSet().getCounter(),
+				getDrawingSet().getSkinParam().getPragma(), freeY.getFreeY(range), drawingSet.getSkin(), comp,
 				getLivingParticipantBox(), message.getType(), message.getUrl(), message.isShortArrow(),
 				message.getArrowConfiguration());
 
@@ -126,7 +127,8 @@ class Step1MessageExo extends Step1Abstract {
 			final Note noteOnMessage = getMessage().getNoteOnMessages().get(i);
 			noteBoxes.add(createNoteBox(getStringBounder(), messageArrow, note, noteOnMessage));
 		}
-		return new ArrowAndNoteBox(getStringBounder(), messageArrow, noteBoxes);
+		return new ArrowAndNoteBox(getDrawingSet().getCounter(), getDrawingSet().getSkinParam().getPragma(),
+				getStringBounder(), messageArrow, noteBoxes);
 	}
 
 	private ArrowConfiguration getArrowType(MessageExo m) {

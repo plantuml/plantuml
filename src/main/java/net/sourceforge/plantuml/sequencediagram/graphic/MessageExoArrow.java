@@ -35,17 +35,21 @@
  */
 package net.sourceforge.plantuml.sequencediagram.graphic;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.sequencediagram.MessageExoType;
 import net.sourceforge.plantuml.sequencediagram.NotePosition;
+import net.sourceforge.plantuml.sequencediagram.Participant;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowDecoration;
 import net.sourceforge.plantuml.skin.Context2D;
+import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.skin.rose.AbstractComponentRoseArrow;
 import net.sourceforge.plantuml.skin.rose.ComponentRoseArrow;
 import net.sourceforge.plantuml.skin.rose.Rose;
@@ -58,9 +62,9 @@ public class MessageExoArrow extends Arrow {
 	private final boolean shortArrow;
 	private final ArrowConfiguration arrowConfiguration;
 
-	public MessageExoArrow(double startingY, Rose skin, ArrowComponent arrow, LivingParticipantBox p,
+	public MessageExoArrow(AtomicInteger counter, Pragma pragma, double startingY, Rose skin, ArrowComponent arrow, LivingParticipantBox p,
 			MessageExoType type, Url url, boolean shortArrow, ArrowConfiguration arrowConfiguration) {
-		super(startingY, skin, arrow, url);
+		super(counter, pragma, startingY, skin, arrow, url);
 		this.p = p;
 		this.type = type;
 		this.shortArrow = shortArrow;
@@ -204,13 +208,13 @@ public class MessageExoArrow extends Arrow {
 	}
 
 	@Override
-	protected String getParticipant1Code() {
-		return p.getParticipantCode();
+	protected Participant getParticipant1() {
+		return p.getParticipant();
 	}
 
 	@Override
-	protected String getParticipant2Code() {
-		return getParticipant1Code();
+	protected Participant getParticipant2() {
+		return p.getParticipant();
 	}
 
 	@Override

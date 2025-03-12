@@ -100,6 +100,12 @@ public class SequenceDiagram extends UmlDiagram {
 
 	private final Rose skin2 = new Rose();
 
+	private final AtomicInteger cpt = new AtomicInteger(1);
+
+	public AtomicInteger getCounter() {
+		return cpt;
+	}
+
 	public SequenceDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
 		super(source, UmlDiagramType.SEQUENCE, previous, preprocessing);
 	}
@@ -143,8 +149,6 @@ public class SequenceDiagram extends UmlDiagram {
 				return (EventWithNote) events.get(i);
 		return null;
 	}
-
-	private final AtomicInteger cpt = new AtomicInteger(1);
 
 	public Participant createNewParticipant(LineLocation location, ParticipantType type, String code, Display display,
 			int order) {
@@ -277,6 +281,9 @@ public class SequenceDiagram extends UmlDiagram {
 
 	private FileMaker getSequenceDiagramPngMaker(int index, FileFormatOption fileFormatOption) {
 
+		// We reset the counter for messages
+		this.cpt.set(1);
+		
 		final FileFormat fileFormat = fileFormatOption.getFileFormat();
 		// ::comment when __CORE__
 		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT)
