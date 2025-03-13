@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  *
@@ -939,6 +939,12 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 			link.getLinkConstraint().setPosition(link, minPt);
 			link.getLinkConstraint().drawMe(ug, skinParam);
 		}
+
+		if (kal1 != null)
+			kal1.drawU(ug);
+
+		if (kal2 != null)
+			kal2.drawU(ug);
 
 		ug.closeGroup();
 	}

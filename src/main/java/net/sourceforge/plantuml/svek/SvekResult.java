@@ -99,10 +99,6 @@ public final class SvekResult extends AbstractTextBlock implements IEntityImage 
 			svekEdge.setSharedIds(ids);
 			svekEdge.drawU(ug2);
 		}
-
-		for (SvekNode node : clusterManager.getBibliotekon().allNodes())
-			node.drawKals(ug);
-
 	}
 
 	private void computeKal() {
