@@ -224,6 +224,18 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 		return typeIdents;
 	}
 
+	public Map<UGroupType, String> groupTypeLifeline(Pragma pragma) {
+		final Map<UGroupType, String> typeIdents = new EnumMap<>(UGroupType.class);
+		if (pragma.isTrue(PragmaKey.SVGNEWDATA)) {
+			typeIdents.put(UGroupType.CLASS, "participant-lifeline");
+			typeIdents.put(UGroupType.DATA_UID, uid + "-lifeline");
+			typeIdents.put(UGroupType.DATA_QUALIFIED_NAME, code);
+			typeIdents.put(UGroupType.DATA_PARTICIPANT, code);
+			typeIdents.put(UGroupType.DATA_ENTITY_UID, uid);
+		}
+		return typeIdents;
+	}
+
 	public String getUid() {
 		return uid;
 	}

@@ -39,6 +39,7 @@ import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -49,6 +50,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sourceforge.plantuml.klimt.UClip;
+import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -67,6 +69,7 @@ import net.sourceforge.plantuml.skin.Component;
 import net.sourceforge.plantuml.skin.ComponentType;
 import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.LineParam;
+import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.SimpleContext2D;
 import net.sourceforge.plantuml.skin.SkinParamBackcolored;
 import net.sourceforge.plantuml.skin.rose.Rose;
@@ -343,7 +346,17 @@ public class DrawableSet {
 				}
 			}
 			final double myDelta = page.getNewpage1() - page.getHeaderHeight();
+
+			final Participant p = box.getParticipant();
+
+			if (skinParam.getPragma().isTrue(PragmaKey.SVGNEWDATA))
+				ug.startGroup(p.groupTypeLifeline(skinParam.getPragma()));
+			
 			box.drawLineU22(ug, start, endMax, showTail, myDelta);
+			
+			if (skinParam.getPragma().isTrue(PragmaKey.SVGNEWDATA))
+				ug.closeGroup();
+
 		}
 	}
 

@@ -84,7 +84,6 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 		this.arrowComponent = arrowComponent;
 		this.url = url;
 		this.uid = "msg" + counter.getAndAdd(1);
-		System.err.println("uid=" + uid);
 	}
 
 	protected Url getUrl() {
