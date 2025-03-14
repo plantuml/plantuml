@@ -6,6 +6,12 @@
 // gradle test
 val javacRelease = (project.findProperty("javacRelease") ?: "8") as String
 
+val versionRegex = "\\d+\\.\\d+\\.\\d+".toRegex()
+val simpleVersion = if (versionRegex.containsMatchIn(project.version.toString()))
+		versionRegex.find(project.version.toString())?.value
+	else
+		project.version
+
 plugins {
 	java
 	`maven-publish`
@@ -210,6 +216,99 @@ val copyLibsTask = tasks.register<Copy>("copy-libs-to-eclipse-plugin") {
 	exclude("*-javadoc.jar")
 }
 
+val updateVersionsInManifestTask = tasks.register<Copy>("update-versions-in-manifest") {
+	from("../plantuml-eclipse/plugin/META-INF") {
+		include("MANIFEST.MF")
+		filter { line: String ->
+			if (line.startsWith("Bundle-Version:")) {
+				"Bundle-Version: $simpleVersion.qualifier"
+			}
+			else if (line.startsWith("Bundle-ClassPath: lib/plantuml-epl-")) {
+				"Bundle-ClassPath: lib/plantuml-epl-${project.version}.jar"
+			}
+			else line
+		}
+	}
+	into("build/eclipse-files/plugin/META-INF")
+	filteringCharset = "UTF-8"
+}
+
+val updateVersionsInClasspathTask = tasks.register<Copy>("update-versions-in-classpath") {
+	val linePrefix = "<classpathentry exported=\"true\" kind=\"lib\" path=\"lib/plantuml-epl-"
+
+	from("../plantuml-eclipse/plugin") {
+		include(".classpath")
+		filter { line: String ->
+			if (line.contains(linePrefix, false)) {
+				val start = line.indexOf(linePrefix) + linePrefix.length
+				val end = line.indexOf(".jar\"")
+				line.substring(0, start) + project.version + line.substring(end)
+			}
+			else line
+		}
+	}
+
+	from("../plantuml-eclipse/plugin") {
+		include("build.properties")
+		filter { line: String ->
+			if (line.startsWith("bin.includes = lib/plantuml-epl-")) {
+				"bin.includes = lib/plantuml-epl-${project.version}.jar,\\"
+			}
+			else if (line.startsWith("src.includes = lib/plantuml-epl-")) {
+				"src.includes = lib/plantuml-epl-${project.version}-sources.jar,\\"
+			}
+			else line
+		}
+	}
+	into("build/eclipse-files/plugin")
+	filteringCharset = "UTF-8"
+}
+
+val updateVersionInFeatureTask = tasks.register<Copy>("update-version-in-feature") {
+	from("../plantuml-eclipse/feature") {
+		include("feature.xml")
+		filter { line: String ->
+			if (line.trim().startsWith("version=\"") && line.endsWith(".qualifier\"")) {
+				line.substring(0, line.indexOf("\"") + 1) + simpleVersion + line.substring(line.indexOf(".qualifier"))
+			}
+			else line
+		}
+	}
+	into("build/eclipse-files/feature")
+	filteringCharset = "UTF-8"
+}
+
+val updateVersionInParentPomTask = tasks.register<Copy>("update-version-in-pom") {
+	val startTag = "<plantuml-lib-version>"
+	val endTag = "</plantuml-lib-version>"
+
+	from("../plantuml-eclipse") {
+		include("pom.xml")
+		filter { line: String ->
+			if (line.trim().startsWith(startTag) && line.endsWith(endTag)) {
+				line.substring(0, line.indexOf(startTag) + startTag.length) + simpleVersion + line.substring(line.indexOf(endTag))
+			}
+			else line
+		}
+	}
+	into("build/eclipse-files")
+	filteringCharset = "UTF-8"
+}
+
+val updateVersionsInEclipseProjectsTask = tasks.register<Copy>("update-versions-in-eclipse-projects") {
+	dependsOn(updateVersionsInManifestTask)
+	dependsOn(updateVersionsInClasspathTask)
+	dependsOn(updateVersionInFeatureTask)
+	dependsOn(updateVersionInParentPomTask)
+
+	from("build/eclipse-files")
+	into("../plantuml-eclipse")
+	filteringCharset = "UTF-8"
+}
+
+// TODO trigger maven build
+
 tasks.named("build"){
 	finalizedBy(copyLibsTask)
+	finalizedBy(updateVersionsInEclipseProjectsTask)
 }

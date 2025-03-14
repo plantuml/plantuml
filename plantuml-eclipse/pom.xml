@@ -10,7 +10,7 @@
   <name>PlantUML integration project for Eclipse</name>
 
   <properties>
-    <plantuml-lib-version>1.2025.3</plantuml-lib-version>
+    <plantuml-lib-version>1.2024.5</plantuml-lib-version>
     <qualifier>-SNAPSHOT</qualifier>
 
     <!-- tycho-version variable is defined in repo-root-folder/.mvn/maven.config, see https://tycho.eclipseprojects.io/doc/latest/StructuredBuild.html,

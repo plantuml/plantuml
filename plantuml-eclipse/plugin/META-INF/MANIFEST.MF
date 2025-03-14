@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: PlantUML library plug-in
 Bundle-SymbolicName: plantuml-epl-lib
 Automatic-Module-Name: plantuml.epl.lib
-Bundle-Version: 1.2025.3.qualifier
+Bundle-Version: 1.2024.5.qualifier
 Export-Package: net.sourceforge.plantuml,
  net.sourceforge.plantuml.abel,
  net.sourceforge.plantuml.activitydiagram,
@@ -259,4 +259,4 @@ Export-Package: net.sourceforge.plantuml,
 Bundle-Vendor: Arnaud Roques
 Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-ActivationPolicy: lazy
-Bundle-ClassPath: lib/plantuml-epl-1.2025.3beta2.jar
+Bundle-ClassPath: lib/plantuml-epl-1.2024.5-SNAPSHOT.jar

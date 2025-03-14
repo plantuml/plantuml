@@ -2,7 +2,7 @@
 <feature
       id="net.sourceforge.plantuml.lib.feature"
       label="%featureName"
-      version="1.2025.3.qualifier"
+      version="1.2024.5.qualifier"
       provider-name="Arnaud Roques">
 
    <description url="https://plantuml.com/">
