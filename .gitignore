@@ -26,6 +26,13 @@ build/
 .classpath
 .project
 
+# Do not ignore Eclipse project files in Eclipse projects
+!plantuml-eclipse/*/.settings/
+!plantuml-eclipse/*/.classpath
+!plantuml-eclipse/*/.project
+plantuml-eclipse/plugin/epl-license.txt
+plantuml-eclipse/plugin/lib/*.jar
+
 # for jenv users
 .java-version
 
@@ -35,5 +42,7 @@ build/
 *.patch
 **/*.class
 
-plantuml-eclipse/plugin/epl-license.txt
-plantuml-eclipse/plugin/lib/*.jar
+# MacOS files
+**/.DS_Store
+
+
