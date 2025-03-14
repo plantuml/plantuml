@@ -1,13 +1,10 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <!-- See https://wiki.eclipse.org/Tycho/Packaging_Types#eclipse-target-definition -->
-  <!-- The artifactId has to match the name of the target definition file, e.g. eclipse-2022-09.target, but without file extension .target -->
-  <artifactId>eclipse-2023-12</artifactId>
-  <packaging>eclipse-target-definition</packaging>
+  <artifactId>net.sourceforge.plantuml.lib.repository</artifactId>
+  <packaging>eclipse-repository</packaging>
 
-  <name>PlantUML library target platform for Eclipse</name>
+  <name>PlantUML library bundled in an Eclipse update site</name>
 
   <parent>
     <groupId>net.sourceforge.plantuml</groupId>
@@ -15,4 +12,14 @@
     <version>${plantuml-lib-version}${qualifier}</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-p2-repository-plugin</artifactId>
+        <version>${tycho-version}</version>
+      </plugin>
+    </plugins>
+  </build>
 </project>

@@ -21,10 +21,8 @@
   <modules>
     <module>target-platform</module>
     <module>plugin</module>
-    <!--
     <module>feature</module>
     <module>repository</module>
-    -->
   </modules>
 
   <profiles>
@@ -134,13 +132,6 @@
             <goals>
               <goal>feature-source</goal>
             </goals>
-            <configuration>
-              <excludes>
-                <!-- provide plug-ins not containing any source code -->
-                <plugin id="net.sourceforge.plantuml.lib" />
-                <plugin id="net.sourceforge.plantuml.lib.jlatexmath" />
-              </excludes>
-            </configuration>
           </execution>
         </executions>
       </plugin>

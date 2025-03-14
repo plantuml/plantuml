@@ -1,0 +1,16 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>net.sourceforge.plantuml.lib.feature</artifactId>
+  <packaging>eclipse-feature</packaging>
+
+  <name>PlantUML library bundled as Eclipse feature</name>
+
+  	<parent>
+	    <groupId>net.sourceforge.plantuml</groupId>
+	    <artifactId>net.sourceforge.plantuml-eclipse-parent</artifactId>
+	    <version>${plantuml-lib-version}${qualifier}</version>
+	    <relativePath>../pom.xml</relativePath>
+	</parent>
+
+</project>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="net.sourceforge.plantuml.lib.feature"
+      label="%featureName"
+      version="1.2025.3.qualifier"
+      provider-name="Arnaud Roques">
+
+   <description url="https://plantuml.com/">
+      %description
+   </description>
+
+   <copyright>
+      (C) Copyright 2009-2025, Arnaud Roques
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <plugin
+         id="plantuml-epl-lib"
+         version="0.0.0"/>
+
+</feature>
