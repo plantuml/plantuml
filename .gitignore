@@ -35,5 +35,5 @@ build/
 *.patch
 **/*.class
 
-planuml-eclipse/plugin/epl-license.txt
-planuml-eclipse/plugin/lib/*.jar
+plantuml-eclipse/plugin/epl-license.txt
+plantuml-eclipse/plugin/lib/*.jar
