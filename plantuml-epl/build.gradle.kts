@@ -194,3 +194,22 @@ signing {
 		sign(publishing.publications["maven"])
 	}
 }
+
+val deleteObsoleteLibsTask = tasks.register<Delete>("clear-eclipse-plugin-lib-dir") {
+	delete(fileTree("../plantuml-eclipse/plugin/lib").include("*.jar"))
+}
+
+val copyLibsTask = tasks.register<Copy>("copy-libs-to-eclipse-plugin") {
+	dependsOn("jar")
+	dependsOn("sourcesJar")
+	dependsOn(deleteObsoleteLibsTask)
+
+	from("build/libs")
+	into("../plantuml-eclipse/plugin/lib")
+	include("*.jar")
+	exclude("*-javadoc.jar")
+}
+
+tasks.named("build"){
+	finalizedBy(copyLibsTask)
+}
