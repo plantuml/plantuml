@@ -10,6 +10,7 @@ plugins {
 	java
 	`maven-publish`
 	signing
+	id("org.standardout.bnd-platform") version "3.1.0"
 }
 
 group = "net.sourceforge.plantuml"
@@ -31,7 +32,7 @@ dependencies {
 	testImplementation(libs.xmlunit.core)
 
 	implementation(libs.jlatexmath)
-	
+
     implementation(libs.elk.core)
     implementation(libs.elk.alg.layered)
     implementation(libs.elk.alg.mrtree)
@@ -81,7 +82,7 @@ tasks.withType<Jar>().configureEach {
     from(runtimeClasspath) {
         exclude("META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA") // Avoid conflict on signature
     }
-	
+
 	// source sets for java and resources are on "src", only put once into the jar
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
@@ -136,6 +137,34 @@ tasks.compileJava{
 
 tasks.named("sourcesJar"){
 	dependsOn(preprocessLicenceAntTask)
+}
+
+configurations.all {
+	attributes {
+		attribute(TargetJvmEnvironment.TARGET_JVM_ENVIRONMENT_ATTRIBUTE, objects.named(TargetJvmEnvironment::class, TargetJvmEnvironment.STANDARD_JVM))
+	}
+}
+
+platform {
+	// config for wrapping plantuml-epl.jar in an OSGi bundle for using it in Eclipse plug-ins
+	// see https://github.com/stempler/bnd-platform
+
+	determineImportVersions = true
+
+	// configure proper names for the p2 repository (Eclipse update site)
+	categoryId = project.group as String
+	categoryName = "PlantUML"
+
+	featureId = project.group as String + "." + project.name
+	featureName = "PlantUML SDK"
+	featureVersion = project.version as String
+	featureProvider = "Arnaud Roques"
+
+	defaultQualifier = ""
+	useBndHashQualifiers = false
+	useFeatureHashQualifiers = false
+
+	bundle(project.group as String + ":" + project.name + ":" + project.version as String)
 }
 
 publishing {
