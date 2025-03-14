@@ -34,3 +34,6 @@ build/
 
 *.patch
 **/*.class
+
+planuml-eclipse/plugin/epl-license.txt
+planuml-eclipse/plugin/lib/*.jar

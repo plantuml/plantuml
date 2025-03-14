@@ -1,0 +1,163 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>net.sourceforge.plantuml</groupId>
+  <artifactId>net.sourceforge.plantuml-eclipse-parent</artifactId>
+  <packaging>pom</packaging>
+  <version>${plantuml-lib-version}${qualifier}</version>
+
+  <name>PlantUML integration project for Eclipse</name>
+
+  <properties>
+    <plantuml-lib-version>1.2025.3</plantuml-lib-version>
+    <qualifier>-SNAPSHOT</qualifier>
+
+    <!-- tycho-version variable is defined in repo-root-folder/.mvn/maven.config, see https://tycho.eclipseprojects.io/doc/latest/StructuredBuild.html,
+         in addition, we specify it here to avoid IDE warnings because of an unrecognized variable definition -->
+    <tycho-version>3.0.5</tycho-version>
+  </properties>
+
+  <modules>
+    <module>target-platform</module>
+    <module>plugin</module>
+    <!--
+    <module>feature</module>
+    <module>repository</module>
+    -->
+  </modules>
+
+  <profiles>
+    <profile>
+      <id>sign</id>
+      <activation>
+        <property>
+          <name>jarsigner.alias</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jarsigner-plugin</artifactId>
+            <version>1.4</version>
+            <configuration>
+              <storetype>pkcs12</storetype>
+              <tsa>http://timestamp.digicert.com</tsa>
+              <keypass>${jarsigner.keypass}</keypass>
+              <storepass>${jarsigner.keypass}</storepass>
+            </configuration>
+            <executions>
+              <execution>
+                <id>sign</id>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+            <!-- See http://maven.apache.org/plugins/maven-jarsigner-plugin/sign-mojo.html -->
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.eclipse.tycho</groupId>
+          <artifactId>tycho-versions-plugin</artifactId>
+          <version>${tycho-version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>target-platform-configuration</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <pomDependencies>consider</pomDependencies>
+          <executionEnvironment>JavaSE-17</executionEnvironment>
+          <target>
+            <artifact>
+              <groupId>net.sourceforge.plantuml</groupId>
+              <artifactId>eclipse-2023-12</artifactId>
+              <version>${plantuml-lib-version}${qualifier}</version>
+            </artifact>
+          </target>
+          <environments>
+            <!-- see https://wiki.eclipse.org/Tycho/Reference_Card#Target_runtime_environment -->
+            <environment>
+              <os>win32</os>
+              <ws>win32</ws>
+              <arch>x86_64</arch>
+            </environment>
+            <environment>
+              <os>linux</os>
+              <ws>gtk</ws>
+              <arch>x86_64</arch>
+            </environment>
+            <environment>
+              <os>macosx</os>
+              <ws>cocoa</ws>
+              <arch>x86_64</arch>
+            </environment>
+          </environments>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <!-- for pom-less builds see https://tycho.eclipseprojects.io/doc/latest/StructuredBuild.html -->
+        <!-- Also see repo-root-folder/.mvn/extensions.xml -->
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-maven-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <extensions>true</extensions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-source-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <executions>
+          <execution>
+            <id>plugin-source</id>
+            <goals>
+              <goal>plugin-source</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>feature-source</id>
+            <goals>
+              <goal>feature-source</goal>
+            </goals>
+            <configuration>
+              <excludes>
+                <!-- provide plug-ins not containing any source code -->
+                <plugin id="net.sourceforge.plantuml.lib" />
+                <plugin id="net.sourceforge.plantuml.lib.jlatexmath" />
+              </excludes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-p2-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <executions>
+          <execution>
+            <id>attached-p2-metadata</id>
+            <phase>package</phase>
+            <goals>
+              <goal>p2-metadata</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

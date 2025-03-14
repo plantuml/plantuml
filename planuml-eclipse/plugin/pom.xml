@@ -1,0 +1,69 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>plantuml-epl-lib</artifactId>
+  <packaging>eclipse-plugin</packaging>
+
+  <name>PlantUML library bundled as Eclipse plug-in</name>
+
+  	<parent>
+	    <groupId>net.sourceforge.plantuml</groupId>
+	    <artifactId>net.sourceforge.plantuml-eclipse-parent</artifactId>
+	    <version>${plantuml-lib-version}${qualifier}</version>
+	    <relativePath>../pom.xml</relativePath>
+	</parent>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.7</version>
+        <executions>
+
+          <execution>
+            <id>copy-libs</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/lib</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>../../plantuml-epl/build/libs</directory>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+              <overwrite>true</overwrite>
+              <encoding>UTF-8</encoding>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>copy-license</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>../../plantuml-epl</directory>
+                  <includes>
+                    <include>epl-license.txt</include>
+                  </includes>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+              <overwrite>true</overwrite>
+              <encoding>UTF-8</encoding>
+            </configuration>
+          </execution>
+
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

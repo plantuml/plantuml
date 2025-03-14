@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?>
+<target name="eclipse-2023-12">
+	<locations>
+		<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+			<repository location="https://download.eclipse.org/releases/2023-12"/>
+			<unit id="org.eclipse.jdt.feature.group" version="3.19.300.v20231201-0110"/>
+			<unit id="org.eclipse.platform.feature.group" version="4.30.0.v20231201-0512"/>
+			<unit id="org.eclipse.xtext.sdk.feature.group" version="2.33.0.v20231121-0955"/>
+			<unit id="org.eclipse.emf.sdk.feature.group" version="2.36.0.v20231107-0612"/>
+		</location>
+	</locations>
+	<targetJRE path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17"/>
+</target>

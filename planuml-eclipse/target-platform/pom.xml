@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- See https://wiki.eclipse.org/Tycho/Packaging_Types#eclipse-target-definition -->
+  <!-- The artifactId has to match the name of the target definition file, e.g. eclipse-2022-09.target, but without file extension .target -->
+  <artifactId>eclipse-2023-12</artifactId>
+  <packaging>eclipse-target-definition</packaging>
+
+  <parent>
+    <groupId>net.sourceforge.plantuml</groupId>
+    <artifactId>net.sourceforge.plantuml-eclipse-parent</artifactId>
+    <version>${plantuml-lib-version}${qualifier}</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+</project>
