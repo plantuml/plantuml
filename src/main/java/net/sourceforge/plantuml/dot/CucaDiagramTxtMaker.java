@@ -118,7 +118,8 @@ public final class CucaDiagramTxtMaker {
 			for (Link link : diagram.getLinks()) {
 				final Block b1 = blocks.get(link.getEntity1());
 				final Block b2 = blocks.get(link.getEntity2());
-				paths.add(new Path(b1, b2, null, link.getLength(), link.isInvis()));
+				if (b1 != null && b2 != null)
+					paths.add(new Path(b1, b2, null, link.getLength(), link.isInvis()));
 			}
 			solver.solve(root, paths);
 			for (Path p : paths) {

@@ -88,7 +88,6 @@ import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.project.Failable;
 import net.sourceforge.plantuml.sdot.CucaDiagramFileMakerSmetana;
-import net.sourceforge.plantuml.security.SecurityUtils;
 import net.sourceforge.plantuml.skin.PragmaKey;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 import net.sourceforge.plantuml.skin.VisibilityModifier;
@@ -451,11 +450,7 @@ public abstract class CucaDiagram extends UmlDiagram implements GroupHierarchy, 
 
 		// ::comment when __CORE__
 		if (fileFormat == FileFormat.ATXT || fileFormat == FileFormat.UTXT) {
-			try {
-				createFilesTxt(os, index, fileFormat);
-			} catch (Throwable t) {
-				t.printStackTrace(SecurityUtils.createPrintStream(os));
-			}
+			createFilesTxt(os, index, fileFormat);
 			return ImageDataSimple.ok();
 		}
 
