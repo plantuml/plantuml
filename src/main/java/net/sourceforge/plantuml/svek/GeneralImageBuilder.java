@@ -97,7 +97,7 @@ public final class GeneralImageBuilder {
 			Collection<Link> links) {
 		final IEntityImage result = createEntityImageBlockInternal(leaf, isHideEmptyDescriptionForState, portionShower,
 				bibliotekon, graphvizVersion, links);
-		// System.err.println("leaf " + leaf + " " + result.getClass());
+		System.err.println("leaf " + leaf + " " + result.getClass());
 		return result;
 	}
 
@@ -167,7 +167,8 @@ public final class GeneralImageBuilder {
 			}
 		}
 		if (leaf.getLeafType() == LeafType.USECASE)
-			return new EntityImageUseCase(leaf, portionShower);
+			return new EntityImageDescription(leaf, portionShower, links, bibliotekon);
+			// return new EntityImageUseCase(leaf, portionShower);
 
 		if (leaf.getLeafType() == LeafType.USECASE_BUSINESS)
 			return new EntityImageUseCase(leaf, portionShower);

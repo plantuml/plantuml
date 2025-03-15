@@ -46,6 +46,8 @@ public class YTransformer {
 	}
 
 	public XPoint2D getPoint2D(XPoint2D pt) {
+		if (Double.isNaN(alpha))
+			return new XPoint2D(pt.getX(), pt.getY());
 		return new XPoint2D(pt.getX(), pt.getY() * alpha);
 	}
 

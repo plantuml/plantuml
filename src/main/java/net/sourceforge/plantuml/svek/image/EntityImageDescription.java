@@ -118,6 +118,8 @@ public class EntityImageDescription extends AbstractEntityImage {
 			this.shapeType = ShapeType.FOLDER;
 		else if (symbol == USymbols.HEXAGON)
 			this.shapeType = ShapeType.HEXAGON;
+		else if (symbol == USymbols.USECASE)
+			this.shapeType = ShapeType.OVAL;
 		else if (symbol == USymbols.INTERFACE)
 			this.shapeType = getSkinParam().fixCircleLabelOverlapping() ? ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE
 					: ShapeType.RECTANGLE;

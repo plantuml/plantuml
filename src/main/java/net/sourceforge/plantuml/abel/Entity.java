@@ -113,7 +113,7 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 	private USymbol symbol;
 	private final int rawLayout;
 	private char concurrentSeparator;
-	//private LineLocation codeLine;
+	// private LineLocation codeLine;
 	private final LineLocation location;
 
 	private Set<Stereotag> tags = new LinkedHashSet<>();
@@ -169,12 +169,14 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		this.quark.setData(this);
 	}
 
-	public Entity(LineLocation location, Quark<Entity> quark, CucaDiagram diagram, Bodier bodier, LeafType leafType, int rawLayout) {
+	public Entity(LineLocation location, Quark<Entity> quark, CucaDiagram diagram, Bodier bodier, LeafType leafType,
+			int rawLayout) {
 		this(location, Objects.requireNonNull(quark), diagram, bodier, rawLayout);
 		this.leafType = leafType;
 	}
 
-	public Entity(LineLocation location, Quark<Entity> quark, CucaDiagram diagram, Bodier bodier, GroupType groupType, int rawLayout) {
+	public Entity(LineLocation location, Quark<Entity> quark, CucaDiagram diagram, Bodier bodier, GroupType groupType,
+			int rawLayout) {
 		this(location, Objects.requireNonNull(quark), diagram, bodier, rawLayout);
 		this.groupType = groupType;
 	}
@@ -395,6 +397,11 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 	}
 
 	public USymbol getUSymbol() {
+
+		if (getLeafType() == LeafType.USECASE)
+			return USymbols.USECASE;
+		if (getLeafType() == LeafType.USECASE_BUSINESS)
+			return USymbols.ACTOR_STICKMAN_BUSINESS;
 		if (getLeafType() == LeafType.CIRCLE)
 			return USymbols.INTERFACE;
 
@@ -721,11 +728,11 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 	public final boolean isPacked() {
 		return packed;
 	}
-	
+
 	public final ISkinParam getSkinParam() {
 		return diagram.getSkinParam();
 	}
-	
+
 	public final UmlDiagramType getUmlDiagramType() {
 		return diagram.getUmlDiagramType();
 	}

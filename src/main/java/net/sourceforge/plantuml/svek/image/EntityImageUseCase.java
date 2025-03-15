@@ -112,6 +112,7 @@ public class EntityImageUseCase extends AbstractEntityImage {
 	}
 
 	public XDimension2D calculateDimension(StringBounder stringBounder) {
+		System.err.println("EntityImageUseCase SIZE1="+desc.calculateDimension(stringBounder));
 		return new TextBlockInEllipse(desc, stringBounder).calculateDimension(stringBounder);
 	}
 

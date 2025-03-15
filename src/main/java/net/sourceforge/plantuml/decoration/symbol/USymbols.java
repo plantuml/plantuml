@@ -57,42 +57,42 @@ public abstract class USymbols {
 		return symbol;
 	}
 
-	public final static USymbol STORAGE = record("STORAGE", new USymbolStorage());
-	public final static USymbol DATABASE = record("DATABASE", new USymbolDatabase());
-	public final static USymbol CLOUD = record("CLOUD", new USymbolCloud());
-	public final static USymbol CARD = record("CARD", new USymbolCard());
-	public final static USymbol FRAME = record("FRAME", new USymbolFrame(SName.frame));
-	public final static USymbol PARTITION = record("PARTITION", new USymbolFrame(SName.partition));
-	public final static USymbol GROUP = record("GROUP", new USymbolFrame(SName.group));
-	public final static USymbol NODE = record("NODE", new USymbolNode());
-	public final static USymbol ARTIFACT = record("ARTIFACT", new USymbolArtifact());
-	public final static USymbol PACKAGE = record("PACKAGE", new USymbolFolder(SName.package_, true));
-	public final static USymbol FOLDER = record("FOLDER", new USymbolFolder(SName.folder, false));
-	public final static USymbol FILE = record("FILE", new USymbolFile());
-	public final static USymbol RECTANGLE = record("RECTANGLE", new USymbolRectangle(SName.rectangle));
 	public final static USymbol ACTION = record("ACTION", new USymbolAction(SName.action));
-	public final static USymbol PROCESS = record("PROCESS", new USymbolProcess(SName.process));
-	public final static USymbol HEXAGON = record("HEXAGON", new USymbolHexagon());
-	public final static USymbol PERSON = record("PERSON", new USymbolPerson());
-	public final static USymbol LABEL = record("LABEL", new USymbolLabel());
-	public final static USymbol ARCHIMATE = record("ARCHIMATE", new USymbolRectangle(SName.archimate));
-	public final static USymbol COLLECTIONS = record("COLLECTIONS", new USymbolCollections());
-	public final static USymbol AGENT = record("AGENT", new USymbolRectangle(SName.agent));
-	public final static USymbol ACTOR_STICKMAN = record("ACTOR_STICKMAN", new USymbolActor(ActorStyle.STICKMAN));
-	public final static USymbol ACTOR_STICKMAN_BUSINESS = record("ACTOR_STICKMAN_BUSINESS", new USymbolActorBusiness());
 	public final static USymbol ACTOR_AWESOME = record("ACTOR_AWESOME", new USymbolActor(ActorStyle.AWESOME));
 	public final static USymbol ACTOR_HOLLOW = record("ACTOR_HOLLOW", new USymbolActor(ActorStyle.HOLLOW));
-	public final static USymbol USECASE = null;
+	public final static USymbol ACTOR_STICKMAN = record("ACTOR_STICKMAN", new USymbolActor(ActorStyle.STICKMAN));
+	public final static USymbol ACTOR_STICKMAN_BUSINESS = record("ACTOR_STICKMAN_BUSINESS", new USymbolActorBusiness());
+	public final static USymbol AGENT = record("AGENT", new USymbolRectangle(SName.agent));
+	public final static USymbol ARCHIMATE = record("ARCHIMATE", new USymbolRectangle(SName.archimate));
+	public final static USymbol ARTIFACT = record("ARTIFACT", new USymbolArtifact());
+	public final static USymbol BOUNDARY = record("BOUNDARY", new USymbolBoundary());
+	public final static USymbol CARD = record("CARD", new USymbolCard());
+	public final static USymbol CLOUD = record("CLOUD", new USymbolCloud());
+	public final static USymbol COLLECTIONS = record("COLLECTIONS", new USymbolCollections());
+	public final static USymbol COMPONENT_RECTANGLE = record("COMPONENT_RECTANGLE",	new USymbolRectangle(SName.component));
 	public final static USymbol COMPONENT1 = record("COMPONENT1", new USymbolComponent1());
 	public final static USymbol COMPONENT2 = record("COMPONENT2", new USymbolComponent2());
-	public final static USymbol COMPONENT_RECTANGLE = record("COMPONENT_RECTANGLE",
-			new USymbolRectangle(SName.component));
-	public final static USymbol BOUNDARY = record("BOUNDARY", new USymbolBoundary());
-	public final static USymbol ENTITY_DOMAIN = record("ENTITY_DOMAIN", new USymbolEntityDomain());
 	public final static USymbol CONTROL = record("CONTROL", new USymbolControl());
+	public final static USymbol DATABASE = record("DATABASE", new USymbolDatabase());
+	public final static USymbol ENTITY_DOMAIN = record("ENTITY_DOMAIN", new USymbolEntityDomain());
+	public final static USymbol FILE = record("FILE", new USymbolFile());
+	public final static USymbol FOLDER = record("FOLDER", new USymbolFolder(SName.folder, false));
+	public final static USymbol FRAME = record("FRAME", new USymbolFrame(SName.frame));
+	public final static USymbol GROUP = record("GROUP", new USymbolFrame(SName.group));
+	public final static USymbol HEXAGON = record("HEXAGON", new USymbolHexagon());
 	public final static USymbol INTERFACE = record("INTERFACE", new USymbolInterface());
+	public final static USymbol LABEL = record("LABEL", new USymbolLabel());
+	public final static USymbol NODE = record("NODE", new USymbolNode());
+	public final static USymbol PACKAGE = record("PACKAGE", new USymbolFolder(SName.package_, true));
+	public final static USymbol PARTITION = record("PARTITION", new USymbolFrame(SName.partition));
+	public final static USymbol PERSON = record("PERSON", new USymbolPerson());
+	public final static USymbol PROCESS = record("PROCESS", new USymbolProcess(SName.process));
 	public final static USymbol QUEUE = record("QUEUE", new USymbolQueue());
+	public final static USymbol RECTANGLE = record("RECTANGLE", new USymbolRectangle(SName.rectangle));
 	public final static USymbol STACK = record("STACK", new USymbolStack());
+	public final static USymbol STORAGE = record("STORAGE", new USymbolStorage());
+	public final static USymbol USECASE = record("USECASE", new USymbolUsecase());;
+
 
 	public static USymbol fromString(String s, ActorStyle actorStyle, ComponentStyle componentStyle,
 			PackageStyle packageStyle) {

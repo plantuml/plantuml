@@ -62,11 +62,21 @@ public class ContainingEllipse {
 	}
 
 	public double getWidth() {
-		return 2 * sec.getCircle().getRadius();
+		return 2 * getCircleRadius();
 	}
 
 	public double getHeight() {
-		return 2 * sec.getCircle().getRadius() * ytransformer.getAlpha();
+		final double height = 2 * getCircleRadius() * ytransformer.getAlpha();
+		if (Double.isNaN(height))
+			return 10;
+		return height;
+	}
+
+	private double getCircleRadius() {
+		final double radius = sec.getCircle().getRadius();
+		if (Double.isNaN(radius))
+			return 10;
+		return Math.max(10, radius);
 	}
 
 	public XPoint2D getCenter() {
