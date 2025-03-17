@@ -323,6 +323,8 @@ val buildEclipseUpdateSiteTask = tasks.register<Exec>("build-Eclipse-update-site
 	commandLine = listOf(mvnCmd, "clean", "package")
 }
 
-tasks.named("build"){
-	finalizedBy(buildEclipseUpdateSiteTask)
+if (JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_17)) {
+	tasks.named("build"){
+		finalizedBy(buildEclipseUpdateSiteTask)
+	}
 }
