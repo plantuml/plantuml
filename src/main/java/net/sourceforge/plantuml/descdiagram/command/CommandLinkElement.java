@@ -324,7 +324,7 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 
 		if (codeChar == '(') {
 			if (endWithSlash)
-				return diagram.reallyCreateLeaf(location, quark, display, LeafType.USECASE_BUSINESS, USymbols.USECASE);
+				return diagram.reallyCreateLeaf(location, quark, display, LeafType.USECASE_BUSINESS, USymbols.USECASE_BUSINESS);
 			else
 				return diagram.reallyCreateLeaf(location, quark, display, LeafType.USECASE, USymbols.USECASE);
 		} else if (codeChar == ':') {

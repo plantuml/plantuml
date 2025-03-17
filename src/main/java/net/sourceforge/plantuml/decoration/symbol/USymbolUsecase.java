@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.decoration.symbol;
 
+import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -44,15 +45,24 @@ import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.klimt.geom.XPoint2D;
 import net.sourceforge.plantuml.klimt.shape.AbstractTextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockInEllipse;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.UHorizontalLine;
+import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.svek.image.RotatedEllipse;
 
 class USymbolUsecase extends USymbol {
+
+	private final boolean isBusiness;
+
+	public USymbolUsecase(boolean isBusiness) {
+		this.isBusiness = isBusiness;
+	}
 
 	@Override
 	public SName getSName() {
@@ -63,6 +73,23 @@ class USymbolUsecase extends USymbol {
 //		return new Margin(10, 10, 10, 10);
 //	}
 
+	private void specialBusiness(UGraphic ug, UEllipse frontier) {
+		final RotatedEllipse rotatedEllipse = new RotatedEllipse(frontier, Math.PI / 4);
+
+		final double theta1 = 20.0 * Math.PI / 180;
+		final double theta2 = rotatedEllipse.getOtherTheta(theta1);
+
+		final UEllipse frontier2 = frontier.scale(0.99);
+		final XPoint2D p1 = frontier2.getPointAtAngle(-theta1);
+		final XPoint2D p2 = frontier2.getPointAtAngle(-theta2);
+		drawLine(ug, p1, p2);
+	}
+
+	private void drawLine(UGraphic ug, final XPoint2D p1, final XPoint2D p2) {
+		ug = ug.apply(UTranslate.point(p1));
+		ug.draw(new ULine(p2.getX() - p1.getX(), p2.getY() - p1.getY()));
+	}
+
 	@Override
 	public TextBlock asSmall(TextBlock name, final TextBlock label, final TextBlock stereotype,
 			final Fashion symbolContext, final HorizontalAlignment stereoAlignment) {
@@ -70,31 +97,24 @@ class USymbolUsecase extends USymbol {
 
 			public void drawU(UGraphic ug) {
 				final StringBounder stringBounder = ug.getStringBounder();
-				final XDimension2D dim = calculateDimension(stringBounder);
-				// ug = UGraphicStencil.create(ug, dim);
 				ug = symbolContext.apply(ug);
-				// final Margin margin = getMargin();
 				final TextBlock desc = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);
 
 				final TextBlockInEllipse ellipse = new TextBlockInEllipse(desc, stringBounder);
-				
+
 				final UGraphic ug2 = new MyUGraphicEllipse(ug, 0, 0, ellipse.getUEllipse());
 
-				
-				// ellipse.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
-				ellipse.drawU(ug2.apply(new UTranslate(0, 0)));
+				ellipse.drawU(ug2);
+				if (isBusiness)
+					specialBusiness(ug, ellipse.getUEllipse());
 
-				// tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
-				// tb.drawU(ug.apply(new UTranslate(margin.getX1(), margin.getY1())));
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				final TextBlock desc = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);
-				System.err.println("USymbolUsecase SIZE2="+desc.calculateDimension(stringBounder));
+				System.err.println("USymbolUsecase SIZE2=" + desc.calculateDimension(stringBounder));
 
 				return new TextBlockInEllipse(desc, stringBounder).calculateDimension(stringBounder);
-
-				// return dimStereo.mergeTB(dimLabel);
 			}
 		};
 	}

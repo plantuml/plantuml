@@ -171,7 +171,8 @@ public final class GeneralImageBuilder {
 			// return new EntityImageUseCase(leaf, portionShower);
 
 		if (leaf.getLeafType() == LeafType.USECASE_BUSINESS)
-			return new EntityImageUseCase(leaf, portionShower);
+			return new EntityImageDescription(leaf, portionShower, links, bibliotekon);
+			// return new EntityImageUseCase(leaf, portionShower);
 
 		// if (leaf.getEntityType() == LeafType.CIRCLE_INTERFACE) {
 		// return new EntityImageCircleInterface(leaf, skinParam);

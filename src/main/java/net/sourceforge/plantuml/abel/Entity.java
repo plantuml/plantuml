@@ -401,7 +401,8 @@ final public class Entity implements SpecificBackcolorable, Hideable, Removeable
 		if (getLeafType() == LeafType.USECASE)
 			return USymbols.USECASE;
 		if (getLeafType() == LeafType.USECASE_BUSINESS)
-			return USymbols.ACTOR_STICKMAN_BUSINESS;
+			return USymbols.USECASE_BUSINESS;
+		// return USymbols.ACTOR_STICKMAN_BUSINESS;
 		if (getLeafType() == LeafType.CIRCLE)
 			return USymbols.INTERFACE;
 
