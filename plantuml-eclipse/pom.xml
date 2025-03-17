@@ -15,7 +15,7 @@
 
     <!-- tycho-version variable is defined in repo-root-folder/.mvn/maven.config, see https://tycho.eclipseprojects.io/doc/latest/StructuredBuild.html,
          in addition, we specify it here to avoid IDE warnings because of an unrecognized variable definition -->
-    <tycho-version>3.0.5</tycho-version>
+    <tycho-version>4.0.12</tycho-version>
   </properties>
 
   <modules>
