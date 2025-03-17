@@ -30,6 +30,8 @@ cp "plantuml-bsd/build/libs/plantuml-bsd-${RELEASE_VERSION}-sources.jar" "github
 cp "plantuml-epl/build/libs/plantuml-epl-${RELEASE_VERSION}.jar" "github_release/plantuml-epl-SNAPSHOT.jar"
 cp "plantuml-epl/build/libs/plantuml-epl-${RELEASE_VERSION}-javadoc.jar" "github_release/plantuml-epl-SNAPSHOT-javadoc.jar"
 cp "plantuml-epl/build/libs/plantuml-epl-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-epl-SNAPSHOT-sources.jar"
+zip -r "plantuml-eclipse/repository/target/repository/plantuml-epl-${RELEASE_VERSION}-eclipse-update-site.zip" plantuml-eclipse/repository/target/repository
+cp "plantuml-eclipse/repository/target/repository/plantuml-epl-${RELEASE_VERSION}-eclipse-update-site.zip" "github_release/plantuml-epl-SNAPSHOT-eclipse-update-site.zip"
 cp "plantuml-lgpl/build/libs/plantuml-lgpl-${RELEASE_VERSION}.jar" "github_release/plantuml-lgpl-SNAPSHOT.jar"
 cp "plantuml-lgpl/build/libs/plantuml-lgpl-${RELEASE_VERSION}-javadoc.jar" "github_release/plantuml-lgpl-SNAPSHOT-javadoc.jar"
 cp "plantuml-lgpl/build/libs/plantuml-lgpl-${RELEASE_VERSION}-sources.jar" "github_release/plantuml-lgpl-SNAPSHOT-sources.jar"
