@@ -97,7 +97,7 @@ public final class GeneralImageBuilder {
 			Collection<Link> links) {
 		final IEntityImage result = createEntityImageBlockInternal(leaf, isHideEmptyDescriptionForState, portionShower,
 				bibliotekon, graphvizVersion, links);
-		System.err.println("leaf " + leaf + " " + result.getClass());
+		// System.err.println("leaf " + leaf + " " + result.getClass());
 		return result;
 	}
 

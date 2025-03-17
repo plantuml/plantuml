@@ -156,7 +156,6 @@ public class SvekNode implements XNode {
 		sb.append(",");
 		sb.append("label=\"\"");
 		sb.append(",");
-		System.err.println("dim=" + getDimImage());
 		sb.append("width=" + SvekUtils.pixelToInches(getWidth()));
 		sb.append(",");
 		sb.append("height=" + SvekUtils.pixelToInches(getHeight()));

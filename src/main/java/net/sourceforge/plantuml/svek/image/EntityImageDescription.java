@@ -150,6 +150,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, getStyleName(),
 				symbol.getSName());
+		System.err.println("symbol.getSName()=" + symbol.getSName());
 		final Style style = signature.withTOBECHANGED(stereotype)
 				.getMergedStyle(getSkinParam().getCurrentStyleBuilder()).eventuallyOverride(colors);
 

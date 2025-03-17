@@ -35,7 +35,6 @@
  */
 package net.sourceforge.plantuml.decoration.symbol;
 
-import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -112,8 +111,6 @@ class USymbolUsecase extends USymbol {
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
 				final TextBlock desc = TextBlockUtils.mergeTB(stereotype, label, HorizontalAlignment.CENTER);
-				System.err.println("USymbolUsecase SIZE2=" + desc.calculateDimension(stringBounder));
-
 				return new TextBlockInEllipse(desc, stringBounder).calculateDimension(stringBounder);
 			}
 		};
