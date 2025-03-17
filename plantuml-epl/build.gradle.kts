@@ -1,3 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 //    permits to start the build setting the javac release parameter, no parameter means build for java8:
 // gradle clean build -x javaDoc -PjavacRelease=8
 // gradle clean build -x javaDoc -PjavacRelease=17
@@ -306,9 +308,21 @@ val updateVersionsInEclipseProjectsTask = tasks.register<Copy>("update-versions-
 	filteringCharset = "UTF-8"
 }
 
-// TODO trigger maven build
+val mvnCmd = if (Os.isFamily(Os.FAMILY_WINDOWS)) { "mvn.cmd" } else { "mvn"}
+
+val checkMavenTask = tasks.register<Exec>("check-maven-version") {
+	commandLine = listOf(mvnCmd, "-version")
+}
+
+val buildEclipseUpdateSiteTask = tasks.register<Exec>("build-Eclipse-update-site") {
+	dependsOn(checkMavenTask)
+	dependsOn(copyLibsTask)
+	dependsOn(updateVersionsInEclipseProjectsTask)
+
+	workingDir = file("../plantuml-eclipse").absoluteFile
+	commandLine = listOf(mvnCmd, "clean", "package")
+}
 
 tasks.named("build"){
-	finalizedBy(copyLibsTask)
-	finalizedBy(updateVersionsInEclipseProjectsTask)
+	finalizedBy(buildEclipseUpdateSiteTask)
 }
