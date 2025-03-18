@@ -343,3 +343,18 @@ jobs:
     needs: [ workflow_config, upload ]
     if: needs.workflow_config.outputs.do_release == 'true'
     uses: ./.github/workflows/native-image-release.yml
+
+
+  dispatch_to_eclipse:
+    needs: [workflow_config, upload]
+    runs-on: ubuntu-latest
+    if: |
+      needs.workflow_config.outputs.do_release == 'true' ||
+      needs.workflow_config.outputs.do_snapshot_release == 'true'
+    steps:
+      - name: Send repository_dispatch event to plantuml-eclipse
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.PLANTUML_ECLIPSE_DISPATCH_TOKEN }}
+          repository: plantuml/plantuml-eclipse
+          event-type: plantuml-release
