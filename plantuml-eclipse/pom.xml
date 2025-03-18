@@ -23,6 +23,7 @@
     <module>plugin</module>
     <module>feature</module>
     <module>repository</module>
+	<module>composite-repository</module>
   </modules>
 
   <profiles>

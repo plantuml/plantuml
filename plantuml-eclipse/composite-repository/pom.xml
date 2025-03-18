@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>net.sourceforge.plantuml.composite.repository</artifactId>
+  <packaging>pom</packaging>
+
+  <name>PlantUML library versions in an Eclipse composite update site</name>
+
+  <parent>
+    <groupId>net.sourceforge.plantuml</groupId>
+    <artifactId>net.sourceforge.plantuml-eclipse-parent</artifactId>
+    <version>${plantuml-lib-version}${qualifier}</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>2.7</version>
+        <executions>
+
+          <execution>
+            <id>copy-composite-files</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/target/composite-repository</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>repository</directory>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+              <overwrite>true</overwrite>
+              <encoding>UTF-8</encoding>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>copy-single-update-site</id>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/target/composite-repository/${plantuml-lib-version}</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>../repository/target/repository</directory>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+              <overwrite>true</overwrite>
+              <encoding>UTF-8</encoding>
+            </configuration>
+          </execution>
+
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

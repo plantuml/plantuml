@@ -1,0 +1,3 @@
+version = 1
+metadata.repository.factory.order=compositeContent.xml,\!
+artifact.repository.factory.order=compositeArtifacts.xml,\!
