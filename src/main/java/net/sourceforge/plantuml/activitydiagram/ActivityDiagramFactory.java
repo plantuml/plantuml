@@ -38,17 +38,17 @@ package net.sourceforge.plantuml.activitydiagram;
 import java.util.List;
 
 import net.sourceforge.plantuml.Previous;
-import net.sourceforge.plantuml.activitydiagram.command.CommandElse;
+import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandElse;
+import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandEndif;
+import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandPartition;
 import net.sourceforge.plantuml.activitydiagram.command.CommandEndPartition;
-import net.sourceforge.plantuml.activitydiagram.command.CommandEndif;
 import net.sourceforge.plantuml.activitydiagram.command.CommandIf;
 import net.sourceforge.plantuml.activitydiagram.command.CommandLinkActivity;
 import net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity;
-import net.sourceforge.plantuml.activitydiagram.command.CommandPartition;
-import net.sourceforge.plantuml.classdiagram.command.CommandHideShow2;
+import net.sourceforge.plantuml.classdiagram.command.UBrexCommandHideShow2;
+import net.sourceforge.plantuml.command.UBrexCommandFootboxIgnored;
+import net.sourceforge.plantuml.command.UBrexCommandRankDir;
 import net.sourceforge.plantuml.command.Command;
-import net.sourceforge.plantuml.command.CommandFootboxIgnored;
-import net.sourceforge.plantuml.command.CommandRankDir;
 import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -59,20 +59,21 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class ActivityDiagramFactory extends PSystemCommandFactory {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	@Override
-	public ActivityDiagram createEmptyDiagram(UmlSource source, Previous previous, PreprocessingArtifact preprocessing) {
+	public ActivityDiagram createEmptyDiagram(UmlSource source, Previous previous,
+			PreprocessingArtifact preprocessing) {
 		return new ActivityDiagram(source, previous, preprocessing);
 	}
 
 	@Override
 	protected void initCommandsList(List<Command> cmds) {
-		cmds.add(new CommandFootboxIgnored());
+		cmds.add(new UBrexCommandFootboxIgnored());
 		CommonCommands.addCommonCommands1(cmds);
-		cmds.add(new CommandRankDir());
+		cmds.add(new UBrexCommandRankDir());
 
-		cmds.add(new CommandPartition());
+		cmds.add(new UBrexCommandPartition());
 		cmds.add(new CommandEndPartition());
 		cmds.add(new CommandLinkLongActivity());
 
@@ -85,11 +86,11 @@ public class ActivityDiagramFactory extends PSystemCommandFactory {
 		cmds.add(factoryNoteOnLinkCommand.createMultiLine(false));
 
 		cmds.add(new CommandIf());
-		cmds.add(new CommandElse());
-		cmds.add(new CommandEndif());
+		cmds.add(new UBrexCommandElse());
+		cmds.add(new UBrexCommandEndif());
 
 		cmds.add(new CommandLinkActivity());
-		cmds.add(new CommandHideShow2());
+		cmds.add(new UBrexCommandHideShow2());
 		// addCommand(new CommandInnerConcurrent(system));
 
 	}

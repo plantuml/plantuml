@@ -35,6 +35,7 @@
  */
 package net.sourceforge.plantuml.activitydiagram.command;
 
+import gen.annotation.Unused;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
@@ -45,10 +46,11 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
+@Unused
 public class CommandEndif extends SingleLineCommand2<ActivityDiagram> {
     // ::remove folder when __HAXE__
 
-	public CommandEndif() {
+	private CommandEndif() {
 		super(getRegexConcat());
 	}
 

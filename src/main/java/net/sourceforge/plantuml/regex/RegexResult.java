@@ -36,26 +36,48 @@
 package net.sourceforge.plantuml.regex;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+
+import com.plantuml.ubrex.UMatcher;
+import com.plantuml.ubrex.Capture;
 
 public class RegexResult {
 
 	private final Map<String, RegexPartialMatch> data;
+	private final UMatcher matcher;
 
 	public RegexResult(Map<String, RegexPartialMatch> data) {
 		this.data = Collections.unmodifiableMap(data);
+		this.matcher = null;
+	}
+
+	public RegexResult(UMatcher matcher) {
+		this.data = Collections.emptyMap();
+		this.matcher = matcher;
 	}
 
 	@Override
 	public String toString() {
+		if (matcher != null)
+			return matcher.toString();
 		return data.toString();
 	}
 
 	public RegexPartialMatch get(String key) {
+		if (matcher != null)
+			throw new UnsupportedOperationException();
 		return data.get(key);
 	}
 
 	public String get(String key, int num) {
+		if (matcher != null) {
+			final List<String> list = matcher.getCapture(key);
+			if (list == null || list.size() == 0)
+				return null;
+			return list.get(num);
+
+		}
 		final RegexPartialMatch reg = data.get(key);
 		if (reg == null)
 			return null;
@@ -64,6 +86,13 @@ public class RegexResult {
 	}
 
 	public String getLazzy(String key, int num) {
+		if (matcher != null) {
+			final List<String> capture = matcher.getCapture(key);
+			if (num >= capture.size())
+				return null;
+			return capture.get(num);
+		}
+
 		for (Map.Entry<String, RegexPartialMatch> ent : data.entrySet()) {
 			if (ent.getKey().startsWith(key) == false)
 				continue;
@@ -80,6 +109,8 @@ public class RegexResult {
 	}
 
 	public int size() {
+		if (matcher != null)
+			throw new UnsupportedOperationException();
 		return data.size();
 	}
 

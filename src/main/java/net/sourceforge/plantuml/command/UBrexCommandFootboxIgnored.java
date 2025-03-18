@@ -30,50 +30,36 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
-package net.sourceforge.plantuml.activitydiagram.command;
+package net.sourceforge.plantuml.command;
 
-import gen.annotation.Unused;
-import net.sourceforge.plantuml.abel.Entity;
-import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
-import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.ParserPass;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
+import com.plantuml.ubrex.UnicodeBracketedExpression;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+
+import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-@Unused
-public class CommandElse extends SingleLineCommand2<ActivityDiagram> {
+public class UBrexCommandFootboxIgnored extends UBrexSingleLineCommand2<UmlDiagram> {
 
-	private CommandElse() {
+	public UBrexCommandFootboxIgnored() {
 		super(getRegexConcat());
 	}
 
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandElse.class.getName(), //
-				RegexLeaf.start(), //
-				new RegexLeaf("else"), //
-				RegexLeaf.end()); //
+	
+	static UnicodeBracketedExpression getRegexConcat() {
+		return UBrexConcat.build(
+				new UBrexLeaf("【 hide┇show 】"), //
+				UBrexLeaf.spaceZeroOrMore(), //
+				new UBrexLeaf("footbox"), //
+				UBrexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		if (system.getLastEntityConsulted() == null) {
-			return CommandExecutionResult.error("No if for this else");
-		}
-		if (system.getCurrentContext() == null) {
-			return CommandExecutionResult.error("No if for this else");
-		}
-		final Entity branch = system.getCurrentContext().getBranch();
-
-		system.setLastEntityConsulted(branch);
-
+	protected CommandExecutionResult executeArg(UmlDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		return CommandExecutionResult.ok();
 	}
-
 }

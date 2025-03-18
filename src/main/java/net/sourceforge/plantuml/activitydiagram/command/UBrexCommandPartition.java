@@ -35,51 +35,57 @@
  */
 package net.sourceforge.plantuml.activitydiagram.command;
 
-import gen.annotation.Unused;
+import com.plantuml.ubrex.UnicodeBracketedExpression;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexOptional;
+import com.plantuml.ubrex.builder.UBrexOr;
+
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.klimt.color.ColorParser;
+import net.sourceforge.plantuml.klimt.color.UBrexColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.stereo.StereotypePattern;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-@Unused
-public class CommandPartition extends SingleLineCommand2<ActivityDiagram> {
+public class UBrexCommandPartition extends UBrexSingleLineCommand2<ActivityDiagram> {
 
-	private CommandPartition() {
+	public UBrexCommandPartition() {
 		super(getRegexConcat());
 	}
-
-	private static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandPartition.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("partition"), //
-				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("NAME", "([%g][^%g]+[%g]|\\S+)"), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOr(//
+	
+	static UnicodeBracketedExpression getRegexConcat() {
+		return UBrexConcat.build(
+				new UBrexLeaf("partition"), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexLeaf("【 〃 〶$NAME=〇+「〤〃」 〃 ┇ 〶$NAME=〇+〴S   】"), //
+				UBrexLeaf.spaceZeroOrMore(), //
+				new UBrexOr( //
 						color().getRegex(), //
-						new RegexLeaf("LEGACYCOLORIGNORED", "(#[0-9a-fA-F]{6}|#?\\w+)?")), //
-				StereotypePattern.optional("STEREOTYPE"), //
-				new RegexLeaf("\\{?"), //
-				RegexLeaf.end());
+						new UBrexOptional(new UBrexLeaf("【 # 〇{6}「0〜9a〜fA〜F」┇ 〇?# 〇+〴w 】")) // LEGACYCOLORIGNORED
+						), //
+				new UBrexOptional(new UBrexNamed("STEREOTYPE", //
+						new UBrexLeaf("<<  〄+〴. ->〘 >>〙"))), // 
+				UBrexLeaf.spaceZeroOrMore(), //
+				new UBrexOptional(new UBrexLeaf("{")), //
+				
+				
+				UBrexLeaf.end()); //
 	}
 
-	private static ColorParser color() {
-		return ColorParser.simpleColor(ColorType.BACK);
+	
+	private static UBrexColorParser color() {
+		return UBrexColorParser.simpleColor(ColorType.BACK);
 	}
 
 	@Override

@@ -33,47 +33,44 @@
  *
  *
  */
-package net.sourceforge.plantuml.activitydiagram.command;
+package net.sourceforge.plantuml.classdiagram.command;
 
-import gen.annotation.Unused;
-import net.sourceforge.plantuml.abel.Entity;
-import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
+import com.plantuml.ubrex.UnicodeBracketedExpression;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+
+import net.atmp.CucaDiagram;
+import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-@Unused
-public class CommandElse extends SingleLineCommand2<ActivityDiagram> {
+public class UBrexCommandHideShow2 extends UBrexSingleLineCommand2<CucaDiagram> {
 
-	private CommandElse() {
+	public UBrexCommandHideShow2() {
 		super(getRegexConcat());
 	}
 
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandElse.class.getName(), //
-				RegexLeaf.start(), //
-				new RegexLeaf("else"), //
-				RegexLeaf.end()); //
+	static UnicodeBracketedExpression getRegexConcat() {
+		return UBrexConcat.build( //
+				new UBrexNamed("COMMAND", //
+						new UBrexLeaf("【hide-class┇hide┇show-class┇show】")), //
+				UBrexLeaf.spaceOneOrMore(), //
+				new UBrexNamed("WHAT", //
+						new UBrexLeaf("【 << 〇*「〤<>」>> ┇ 〇+〴S 】 ")), //
+				UBrexLeaf.end());
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
-		if (system.getLastEntityConsulted() == null) {
-			return CommandExecutionResult.error("No if for this else");
-		}
-		if (system.getCurrentContext() == null) {
-			return CommandExecutionResult.error("No if for this else");
-		}
-		final Entity branch = system.getCurrentContext().getBranch();
+	protected CommandExecutionResult executeArg(CucaDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 
-		system.setLastEntityConsulted(branch);
-
+		final char tmp = arg.get("COMMAND", 0).charAt(0);
+		final boolean show = tmp == 's' || tmp == 'S';
+		final String what = arg.get("WHAT", 0).trim();
+		diagram.hideOrShow2(what, show);
 		return CommandExecutionResult.ok();
 	}
-
 }
