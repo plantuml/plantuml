@@ -56,8 +56,8 @@ class USymbolFile extends USymbol {
 	private final HorizontalAlignment stereotypeAlignement = HorizontalAlignment.CENTER;
 
 	@Override
-	public SName getSName() {
-		return SName.file;
+	public SName[] getSNames() {
+		return new SName[] { SName.file };
 	}
 
 	private void drawFile(UGraphic ug, double width, double height, double shadowing, double roundCorner) {

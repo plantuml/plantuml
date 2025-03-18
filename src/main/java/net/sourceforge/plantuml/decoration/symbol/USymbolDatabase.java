@@ -54,8 +54,8 @@ import net.sourceforge.plantuml.style.SName;
 class USymbolDatabase extends USymbol {
 
 	@Override
-	public SName getSName() {
-		return SName.database;
+	public SName[] getSNames() {
+		return new SName[] { SName.database };
 	}
 
 	private void drawDatabase(UGraphic ug, double width, double height, double shadowing) {

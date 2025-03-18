@@ -43,7 +43,7 @@ import net.sourceforge.plantuml.style.SName;
 
 public abstract class USymbol {
 
-	abstract public SName getSName();
+	abstract public SName[] getSNames();
 
 	public abstract TextBlock asSmall(TextBlock name, TextBlock label, TextBlock stereotype, Fashion symbolContext,
 			HorizontalAlignment stereoAlignment);

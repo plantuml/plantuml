@@ -54,8 +54,8 @@ import net.sourceforge.plantuml.style.SName;
 class USymbolQueue extends USymbol {
 
 	@Override
-	public SName getSName() {
-		return SName.queue;
+	public SName[] getSNames() {
+		return new SName[] { SName.queue };
 	}
 
 	private final double dx = 5;

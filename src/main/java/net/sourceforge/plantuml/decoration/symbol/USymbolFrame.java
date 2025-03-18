@@ -55,8 +55,8 @@ import net.sourceforge.plantuml.style.SName;
 class USymbolFrame extends USymbol {
 
 	@Override
-	public SName getSName() {
-		return sname;
+	public SName[] getSNames() {
+		return new SName[] { sname };
 	}
 
 	private final SName sname;

@@ -50,8 +50,8 @@ import net.sourceforge.plantuml.style.SName;
 public class USymbolHexagon extends USymbol {
 
 	@Override
-	public SName getSName() {
-		return SName.hexagon;
+	public SName[] getSNames() {
+		return new SName[] { SName.hexagon };
 	}
 
 	private final double marginY = 5;

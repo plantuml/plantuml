@@ -60,8 +60,8 @@ class USymbolCloud extends USymbol {
 	private final static boolean DEBUG = false;
 
 	@Override
-	public SName getSName() {
-		return SName.cloud;
+	public SName[] getSNames() {
+		return new SName[] { SName.cloud };
 	}
 
 	private void drawCloud(UGraphic ug, double width, double height, double shadowing) {

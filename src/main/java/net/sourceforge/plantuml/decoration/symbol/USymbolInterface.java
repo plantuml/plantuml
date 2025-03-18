@@ -43,8 +43,8 @@ import net.sourceforge.plantuml.svek.CircleInterface2;
 public class USymbolInterface extends USymbolSimpleAbstract {
 
 	@Override
-	public SName getSName() {
-		return SName.interface_;
+	public SName[] getSNames() {
+		return new SName[] { SName.interface_ };
 	}
 
 	@Override

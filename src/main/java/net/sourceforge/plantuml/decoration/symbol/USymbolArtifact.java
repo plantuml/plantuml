@@ -53,8 +53,8 @@ import net.sourceforge.plantuml.style.SName;
 class USymbolArtifact extends USymbol {
 
 	@Override
-	public SName getSName() {
-		return SName.artifact;
+	public SName[] getSNames() {
+		return new SName[] { SName.artifact };
 	}
 
 	private void drawArtifact(UGraphic ug, double widthTotal, double heightTotal, double shadowing,

@@ -299,4 +299,25 @@ public class StyleSignatureBasic implements StyleSignature {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, SName.activity, SName.arrow);
 	}
 
+	// Really sorry about that :-)
+	public static StyleSignatureBasic of(SName name0, SName name1, SName name2, SName name3, SName[] names) {
+		if (names.length == 1)
+			return of(name0, name1, name2, name3, names[0]);
+		if (names.length == 2)
+			return of(name0, name1, name2, name3, names[0], names[1]);
+		throw new UnsupportedOperationException();
+	}
+
+	public static StyleSignatureBasic of(SName name0, SName name1, SName name2, SName[] sNames, SName... other) {
+		final SName[] concat = new SName[3 + sNames.length + other.length];
+
+		concat[0] = name0;
+		concat[1] = name1;
+		concat[2] = name2;
+		System.arraycopy(sNames, 0, concat, 3, sNames.length);
+		System.arraycopy(other, 0, concat, 3 + sNames.length, other.length);
+
+		return of(concat);
+	}
+
 }

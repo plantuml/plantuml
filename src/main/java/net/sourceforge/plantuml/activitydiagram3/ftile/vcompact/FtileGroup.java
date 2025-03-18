@@ -87,7 +87,7 @@ public class FtileGroup extends AbstractFtile {
 	}
 
 	final static public StyleSignatureBasic getStyleSignature(USymbol symbol) {
-		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, symbol.getSName(),
+		return StyleSignatureBasic.of(SName.root, SName.element, SName.activityDiagram, symbol.getSNames(),
 				SName.composite);
 	}
 

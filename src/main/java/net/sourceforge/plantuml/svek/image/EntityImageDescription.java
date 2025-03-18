@@ -118,6 +118,8 @@ public class EntityImageDescription extends AbstractEntityImage {
 			this.shapeType = ShapeType.FOLDER;
 		else if (symbol == USymbols.HEXAGON)
 			this.shapeType = ShapeType.HEXAGON;
+		else if (symbol == USymbols.USECASE || symbol == USymbols.USECASE_BUSINESS)
+			this.shapeType = ShapeType.OVAL;
 		else if (symbol == USymbols.INTERFACE)
 			this.shapeType = getSkinParam().fixCircleLabelOverlapping() ? ShapeType.RECTANGLE_WITH_CIRCLE_INSIDE
 					: ShapeType.RECTANGLE;
@@ -135,7 +137,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 			signatureTitle = StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), SName.actor,
 					SName.business, SName.title);
 		else
-			signatureTitle = StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), symbol.getSName(),
+			signatureTitle = StyleSignatureBasic.of(SName.root, SName.element, getStyleName(), symbol.getSNames(),
 					SName.title);
 
 		final Stereotype stereotype = entity.getStereotype();
@@ -143,11 +145,12 @@ public class EntityImageDescription extends AbstractEntityImage {
 				.getMergedStyle(getSkinParam().getCurrentStyleBuilder()).eventuallyOverride(colors);
 
 		final Style styleStereo = StyleSignatureBasic
-				.of(SName.root, SName.element, getStyleName(), symbol.getSName(), SName.stereotype)
+				.of(SName.root, SName.element, getStyleName(), symbol.getSNames(), SName.stereotype)
 				.forStereotypeItself(stereotype).getMergedStyle(getSkinParam().getCurrentStyleBuilder());
 
 		final StyleSignatureBasic signature = StyleSignatureBasic.of(SName.root, SName.element, getStyleName(),
-				symbol.getSName());
+				symbol.getSNames());
+
 		final Style style = signature.withTOBECHANGED(stereotype)
 				.getMergedStyle(getSkinParam().getCurrentStyleBuilder()).eventuallyOverride(colors);
 
@@ -172,7 +175,7 @@ public class EntityImageDescription extends AbstractEntityImage {
 				diagonalCorner);
 
 		final Display codeDisplay = Display.getWithNewlines(getSkinParam().getPragma(), entity.getName());
-		if ((entity.getDisplay().equalsLike(codeDisplay) && symbol.getSName() == SName.package_)
+		if ((entity.getDisplay().equalsLike(codeDisplay) && symbol.getSNames()[0] == SName.package_)
 				|| entity.getDisplay().isWhite())
 			desc = TextBlockUtils.empty(style.value(PName.MinimumWidth).asDouble(), 0);
 		else if (entity.getDisplay().equalsLike(codeDisplay))

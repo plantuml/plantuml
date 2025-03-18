@@ -41,6 +41,7 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
+import net.sourceforge.plantuml.annotation.DeadCode;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.klimt.UGroupType;
@@ -76,13 +77,14 @@ import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.text.Guillemet;
 import net.sourceforge.plantuml.url.Url;
 
+@DeadCode
 public class EntityImageUseCase extends AbstractEntityImage {
 
 	final private TextBlock desc;
 
 	final private Url url;
 
-	public EntityImageUseCase(Entity entity, PortionShower portionShower) {
+	private EntityImageUseCase(Entity entity, PortionShower portionShower) {
 		super(entity);
 		final Stereotype stereotype = entity.getStereotype();
 

@@ -55,8 +55,8 @@ import net.sourceforge.plantuml.style.SName;
 class USymbolNode extends USymbol {
 
 	@Override
-	public SName getSName() {
-		return SName.node;
+	public SName[] getSNames() {
+		return new SName[] { SName.node };
 	}
 
 //	public USymbolNode(HorizontalAlignment stereotypeAlignement) {

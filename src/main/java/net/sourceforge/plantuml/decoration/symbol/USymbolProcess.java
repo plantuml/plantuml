@@ -60,8 +60,8 @@ class USymbolProcess extends USymbol {
 	}
 
 	@Override
-	public SName getSName() {
-		return sname;
+	public SName[] getSNames() {
+		return new SName[] { sname };
 	}
 
 	private void drawProcess(UGraphic ug, double width, double height, double shadowing, double roundCorner,

@@ -133,10 +133,10 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 
 		if (symbol.equalsIgnoreCase("usecase")) {
 			type = LeafType.USECASE;
-			usymbol = null;
+			usymbol = USymbols.USECASE;
 		} else if (symbol.equalsIgnoreCase("usecase/")) {
 			type = LeafType.USECASE_BUSINESS;
-			usymbol = null;
+			usymbol = USymbols.USECASE_BUSINESS;
 		} else {
 			usymbol = USymbols.fromString(symbol, diagram.getSkinParam().actorStyle(),
 					diagram.getSkinParam().componentStyle(), diagram.getSkinParam().packageStyle());

@@ -51,8 +51,8 @@ import net.sourceforge.plantuml.style.SName;
 class USymbolStorage extends USymbol {
 
 	@Override
-	public SName getSName() {
-		return SName.storage;
+	public SName[] getSNames() {
+		return new SName[] { SName.storage };
 	}
 
 	private void drawStorage(UGraphic ug, double width, double height, double shadowing) {

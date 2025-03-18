@@ -52,8 +52,8 @@ import net.sourceforge.plantuml.style.SName;
 class USymbolCard extends USymbol {
 
 	@Override
-	public SName getSName() {
-		return SName.card;
+	public SName[] getSNames() {
+		return new SName[] { SName.card };
 	}
 
 	private void drawCard(UGraphic ug, double width, double height, double shadowing, double top, double roundCorner) {

@@ -43,8 +43,8 @@ import net.sourceforge.plantuml.svek.Control;
 class USymbolControl extends USymbolSimpleAbstract {
 
 	@Override
-	public SName getSName() {
-		return SName.control;
+	public SName[] getSNames() {
+		return new SName[] { SName.control };
 	}
 
 	@Override

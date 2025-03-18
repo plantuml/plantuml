@@ -54,8 +54,8 @@ import net.sourceforge.plantuml.style.SName;
 class USymbolStack extends USymbol {
 
 	@Override
-	public SName getSName() {
-		return SName.stack;
+	public SName[] getSNames() {
+		return new SName[] { SName.stack };
 	}
 
 	private void drawQueue(UGraphic ug, double width, double height, double shadowing, double roundCorner) {

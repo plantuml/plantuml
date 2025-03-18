@@ -87,7 +87,6 @@ import net.sourceforge.plantuml.svek.image.EntityImageStateBorder;
 import net.sourceforge.plantuml.svek.image.EntityImageStateEmptyDescription;
 import net.sourceforge.plantuml.svek.image.EntityImageSynchroBar;
 import net.sourceforge.plantuml.svek.image.EntityImageTips;
-import net.sourceforge.plantuml.svek.image.EntityImageUseCase;
 import net.sourceforge.plantuml.text.Guillemet;
 
 public final class GeneralImageBuilder {
@@ -167,10 +166,12 @@ public final class GeneralImageBuilder {
 			}
 		}
 		if (leaf.getLeafType() == LeafType.USECASE)
-			return new EntityImageUseCase(leaf, portionShower);
+			return new EntityImageDescription(leaf, portionShower, links, bibliotekon);
+			// return new EntityImageUseCase(leaf, portionShower);
 
 		if (leaf.getLeafType() == LeafType.USECASE_BUSINESS)
-			return new EntityImageUseCase(leaf, portionShower);
+			return new EntityImageDescription(leaf, portionShower, links, bibliotekon);
+			// return new EntityImageUseCase(leaf, portionShower);
 
 		// if (leaf.getEntityType() == LeafType.CIRCLE_INTERFACE) {
 		// return new EntityImageCircleInterface(leaf, skinParam);

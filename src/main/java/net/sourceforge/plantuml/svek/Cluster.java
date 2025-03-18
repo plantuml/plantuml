@@ -286,7 +286,7 @@ public class Cluster implements Moveable {
 		if (diagramStyleName == SName.stateDiagram)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state, SName.group);
 		if (symbol != null)
-			return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.group, symbol.getSName());
+			return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.group, symbol.getSNames());
 		if (groupType == GroupType.PACKAGE)
 			return StyleSignatureBasic.of(SName.root, SName.element, diagramStyleName, SName.package_, SName.group);
 

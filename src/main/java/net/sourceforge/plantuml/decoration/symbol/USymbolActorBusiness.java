@@ -45,8 +45,8 @@ public class USymbolActorBusiness extends USymbolSimpleAbstract {
 	private final ActorStyle actorStyle = ActorStyle.STICKMAN_BUSINESS;
 
 	@Override
-	public SName getSName() {
-		return SName.business;
+	public SName[] getSNames() {
+		return new SName[] { SName.business };
 	}
 
 	@Override

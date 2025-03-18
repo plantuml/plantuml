@@ -52,8 +52,8 @@ import net.sourceforge.plantuml.style.SName;
 class USymbolComponent1 extends USymbol {
 
 	@Override
-	public SName getSName() {
-		return SName.component;
+	public SName[] getSNames() {
+		return new SName[] { SName.component };
 	}
 
 	private void drawComponent1(UGraphic ug, double widthTotal, double heightTotal, double shadowing,

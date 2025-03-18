@@ -44,8 +44,8 @@ class USymbolEntityDomain extends USymbolSimpleAbstract {
     // ::remove folder when __HAXE__
 
 	@Override
-	public SName getSName() {
-		return SName.entity;
+	public SName[] getSNames() {
+		return new SName[] { SName.entity };
 	}
 
 	@Override

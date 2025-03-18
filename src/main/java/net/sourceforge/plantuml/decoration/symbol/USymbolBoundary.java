@@ -43,8 +43,8 @@ import net.sourceforge.plantuml.svek.Boundary;
 class USymbolBoundary extends USymbolSimpleAbstract {
 
 	@Override
-	public SName getSName() {
-		return SName.boundary;
+	public SName[] getSNames() {
+		return new SName[] { SName.boundary };
 	}
 
 	@Override

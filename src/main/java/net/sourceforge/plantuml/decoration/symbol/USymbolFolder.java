@@ -78,8 +78,8 @@ public class USymbolFolder extends USymbol {
 	}
 
 	@Override
-	public SName getSName() {
-		return sname;
+	public SName[] getSNames() {
+		return new SName[] { sname };
 	}
 
 	private void drawFolder(UGraphic ug, double width, double height, XDimension2D dimName, double shadowing,

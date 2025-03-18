@@ -50,8 +50,8 @@ import net.sourceforge.plantuml.style.SName;
 class USymbolLabel extends USymbol {
 
 	@Override
-	public SName getSName() {
-		return SName.label;
+	public SName[] getSNames() {
+		return new SName[] { SName.label };
 	}
 
 	private Margin getMargin() {

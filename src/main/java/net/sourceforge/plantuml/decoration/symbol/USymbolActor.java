@@ -50,8 +50,8 @@ class USymbolActor extends USymbolSimpleAbstract {
 	}
 
 	@Override
-	public SName getSName() {
-		return SName.actor;
+	public SName[] getSNames() {
+		return new SName[] { SName.actor };
 	}
 
 	@Override

@@ -52,8 +52,8 @@ import net.sourceforge.plantuml.style.SName;
 class USymbolPerson extends USymbol {
 
 	@Override
-	public SName getSName() {
-		return SName.person;
+	public SName[] getSNames() {
+		return new SName[] { SName.person };
 	}
 
 	private void drawHeadAndBody(UGraphic ug, double shadowing, XDimension2D dimBody, double headSize) {

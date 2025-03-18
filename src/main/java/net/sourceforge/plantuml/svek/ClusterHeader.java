@@ -139,7 +139,7 @@ public final class ClusterHeader {
 			signature = StyleSignatureBasic.of(SName.root, SName.element, SName.stateDiagram, SName.state,
 					SName.composite, SName.title);
 		else if (uSymbol != null)
-			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, uSymbol.getSName(), SName.composite,
+			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, uSymbol.getSNames(), SName.composite,
 					SName.title);
 		else if (g.getGroupType() == GroupType.PACKAGE)
 			signature = StyleSignatureBasic.of(SName.root, SName.element, sname, SName.package_, SName.title);

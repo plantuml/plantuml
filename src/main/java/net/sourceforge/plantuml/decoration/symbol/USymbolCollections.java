@@ -51,8 +51,8 @@ import net.sourceforge.plantuml.style.SName;
 class USymbolCollections extends USymbol {
 
 	@Override
-	public SName getSName() {
-		return SName.collections;
+	public SName[] getSNames() {
+		return new SName[] { SName.collections };
 	}
 
 	private void drawCollections(UGraphic ug, double width, double height, double shadowing, double roundCorner) {
