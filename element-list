@@ -1,5 +1,7 @@
 com.plantuml.api.cheerpj
 com.plantuml.api.cheerpj.v1
+com.plantuml.ubrex
+com.plantuml.ubrex.builder
 gen.annotation
 gen.lib.cdt
 gen.lib.cgraph
