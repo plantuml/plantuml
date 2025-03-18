@@ -48,11 +48,12 @@ import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArg;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
-import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
+import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.Direction;
@@ -73,9 +74,23 @@ public class UBrexCommandIf extends UBrexSingleLineCommand2<ActivityDiagram> {
 										new UBrexNamed("BAR", new UBrexLeaf("=〇+= 〇*〴s 〇+「〴an_.」〇*〴s =〇+=")), //
 										new UBrexNamed("QUOTED", new UBrexLeaf("〴g 〇+「〴G」〴g 〇?〘〇+〴s as 〇+〴s 〇+「〴an_.」 〙 "))))), //
 				UBrexLeaf.spaceZeroOrMore(), //
-
+				new UBrexOptional(UBrexConcat.build( //
+						new UBrexNamed("ARROW_BODY1", new UBrexLeaf("〇+「-.」")), //
+						new UBrexNamed("ARROW_STYLE1", new UBrexLeaf("〇?〘 ["+ CommandLinkElement.UBREX_LINE_STYLE+"] 〙")), //
+						new UBrexNamed("ARROW_DIRECTION", new UBrexLeaf("〇?【 *┇left┇right┇up┇down┇l〇?e┇r〇?i┇u〇?p┇d〇?o】")), //
+						new UBrexNamed("ARROW_STYLE2", new UBrexLeaf("〇?〘 ["+ CommandLinkElement.UBREX_LINE_STYLE+"] 〙")), //
+						new UBrexNamed("ARROW_BODY2", new UBrexLeaf("〇*「-.」")), //
+						new UBrexLeaf(">") //
+						)), //
 				UBrexLeaf.spaceZeroOrMore(), //
-				new UBrexLeaf("if"), //
+				new UBrexOptional(new UBrexNamed("BRACKET", new UBrexLeaf("[ 〇+「〤]*」  〇*「〤]」 ]"))),
+				UBrexLeaf.spaceZeroOrMore(), //
+				new UBrexOr(//
+						new UBrexNamed("IF1", new UBrexLeaf("if 〇*〴s")), //
+						new UBrexNamed("IF2", new UBrexLeaf("if 〇+〴s")) //
+						),
+				UBrexLeaf.spaceZeroOrMore(), //											
+				new UBrexOptional(new UBrexLeaf("then")),
 				UBrexLeaf.end()); //
 	}
 
@@ -88,8 +103,6 @@ public class UBrexCommandIf extends UBrexSingleLineCommand2<ActivityDiagram> {
 //								new RegexLeaf("BAR", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
 //								new RegexLeaf("QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?"))), //
 //				RegexLeaf.spaceZeroOrMore(), //
-//				// new RegexOptional(new RegexLeaf("ARROW",
-//				// "([=-]+(?:(left|right|up|down|le?|ri?|up?|do?)(?=[-=.]))?[=-]*\\>)")), //
 //				new RegexOptional(new RegexConcat( //
 //						new RegexLeaf("ARROW_BODY1", "([-.]+)"), //
 //						new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //

@@ -67,9 +67,16 @@ import net.sourceforge.plantuml.utils.LineLocation;
 public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 
 	private static final String KEY1 = "dotted|dashed|plain|bold|hidden|norank|single|thickness=\\d+";
+	private static final String UBREX_KEY1 = "dotted┇dashed┇plain┇bold┇hidden┇norank┇single┇thickness=〇+〴d";
+
 	private static final String KEY2 = ",dotted|,dashed|,plain|,bold|,hidden|,norank|,single|,thickness=\\d+";
+	private static final String UBREX_KEY2 = ",dotted┇,dashed┇,plain┇,bold┇,hidden┇,norank┇,single┇,thickness=〇+〴d";
+
 	public static final String LINE_STYLE = "(?:#\\w+|" + CommandLinkElement.KEY1 + ")(?:,#\\w+|"
 			+ CommandLinkElement.KEY2 + ")*";
+	public static final String UBREX_LINE_STYLE = "【 #〇+〴w ┇" + CommandLinkElement.UBREX_KEY1 + "】 〇*【 ,#〇+〴w ┇"
+			+ CommandLinkElement.UBREX_KEY2 + "】";
+
 	private static final String LINE_STYLE_MUTILPLES = LINE_STYLE + "(?:(?:;" + LINE_STYLE + ")*)";
 	public static final String STYLE_COLORS_MULTIPLES = "-\\[(" + LINE_STYLE_MUTILPLES + "*)\\]->";
 
@@ -250,8 +257,8 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
-			throws NoSuchColorException {
+	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) throws NoSuchColorException {
 		final String ent1 = arg.get("ENT1", 0);
 		final String ent2 = arg.get("ENT2", 0);
 		final String ent1clean = diagram.cleanId(ent1);
@@ -276,10 +283,10 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 			cl1 = getDummy(location, diagram, ent1);
 			cl2 = getDummy(location, diagram, ent2);
 		}
-		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), labels.getLabelLink()), queue.length(),
-				diagram.getSkinParam().classAttributeIconSize() > 0);
-		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2,
-				linkType, linkArg.withQuantifier(labels.getFirstLabel(), labels.getSecondLabel())
+		final LinkArg linkArg = LinkArg.build(Display.getWithNewlines(diagram.getPragma(), labels.getLabelLink()),
+				queue.length(), diagram.getSkinParam().classAttributeIconSize() > 0);
+		Link link = new Link(location, diagram, diagram.getSkinParam().getCurrentStyleBuilder(), cl1, cl2, linkType,
+				linkArg.withQuantifier(labels.getFirstLabel(), labels.getSecondLabel())
 						.withDistanceAngle(diagram.getLabeldistance(), diagram.getLabelangle()));
 		if (dir == Direction.LEFT || dir == Direction.UP)
 			link = link.getInv();
@@ -307,7 +314,8 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 			final Quark<Entity> quark = diagram.quarkInContext(true, ident);
 			if (quark.getData() != null)
 				return quark.getData();
-			return diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), quark.getName()), LeafType.DESCRIPTION,
+			return diagram.reallyCreateLeaf(location, quark,
+					Display.getWithNewlines(diagram.getPragma(), quark.getName()), LeafType.DESCRIPTION,
 					USymbols.INTERFACE);
 		}
 
@@ -324,7 +332,8 @@ public class CommandLinkElement extends SingleLineCommand2<DescriptionDiagram> {
 
 		if (codeChar == '(') {
 			if (endWithSlash)
-				return diagram.reallyCreateLeaf(location, quark, display, LeafType.USECASE_BUSINESS, USymbols.USECASE_BUSINESS);
+				return diagram.reallyCreateLeaf(location, quark, display, LeafType.USECASE_BUSINESS,
+						USymbols.USECASE_BUSINESS);
 			else
 				return diagram.reallyCreateLeaf(location, quark, display, LeafType.USECASE, USymbols.USECASE);
 		} else if (codeChar == ':') {
