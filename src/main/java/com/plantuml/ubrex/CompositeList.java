@@ -65,14 +65,25 @@ public class CompositeList implements Challenge {
 
 	}
 
+	public static CompositeList parseAndBuildFromTextNavigator(TextNavigator input) {
+		if (input == null)
+			throw new IllegalArgumentException();
+		final CompositeList result = new CompositeList();
+		result.parseAndConsumeNow(input);
+		return result;
+	}
+
 	private CompositeList(CharSequence definition) {
 		if (definition.length() == 0)
 			throw new UnsupportedOperationException();
 
-		final AtomicParser builder = new AtomicParser();
-
 		final TextNavigator input = TextNavigator.build(definition);
+		parseAndConsumeNow(input);
 
+	}
+
+	private void parseAndConsumeNow(final TextNavigator input) {
+		final AtomicParser builder = new AtomicParser();
 		while (input.length() > 0) {
 			final char ch = input.charAt(0);
 			if (ch == ' ')
@@ -82,7 +93,6 @@ public class CompositeList implements Challenge {
 					this.addChallenge(c);
 
 		}
-
 	}
 
 	@Override

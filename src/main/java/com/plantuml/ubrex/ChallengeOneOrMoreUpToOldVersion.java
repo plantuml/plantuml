@@ -34,12 +34,12 @@
  */
 package com.plantuml.ubrex;
 
-public class ChallengeOneOrMoreUpTo implements Challenge {
+public class ChallengeOneOrMoreUpToOldVersion implements Challenge {
 
 	private final Challenge origin;
 	private final Challenge end;
 
-	public ChallengeOneOrMoreUpTo(Challenge origin, Challenge end) {
+	public ChallengeOneOrMoreUpToOldVersion(Challenge origin, Challenge end) {
 		this.origin = origin;
 		this.end = end;
 	}

@@ -137,6 +137,8 @@ public class AtomicParser {
 		input.jump(2);
 		if (operator == '{')
 			return manageQuantifierBracket(input);
+		else if (operator == 'l')
+			return manageQuantifierLazzy(input);
 
 		final Challenge origin = parseSingle(input);
 		switch (operator) {
@@ -149,6 +151,16 @@ public class AtomicParser {
 		default:
 			throw new UnsupportedOperationException("wip01");
 		}
+	}
+
+	private Challenge manageQuantifierLazzy(TextNavigator input) {
+		input.jump(1);
+		final Challenge origin = parseSingle(input);
+		System.err.println("origin=" + origin);
+		final CompositeList remaining = CompositeList.parseAndBuildFromTextNavigator(input);
+		System.err.println("remaining=" + remaining);
+
+		return new ChallengeLazzyOneOrMore(origin, remaining);
 	}
 
 	private Challenge manageQuantifierBracket(TextNavigator input) {
@@ -188,7 +200,7 @@ public class AtomicParser {
 		final Challenge p2 = parseSingle(input);
 		// This is a terrible hack, because if this is used with named group, we do not
 		// want p2 to be captured
-		return Arrays.asList(new ChallengeOneOrMoreUpTo(p1, p2), p2);
+		return Arrays.asList(new ChallengeOneOrMoreUpToOldVersion(p1, p2), p2);
 	}
 
 	private void skipSpaces(TextNavigator input) {
