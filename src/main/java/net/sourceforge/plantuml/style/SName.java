@@ -98,6 +98,7 @@ public enum SName {
 	header, //
 	hexagon, //
 	highlight, //
+	hnote, //
 	interface_, //
 	json, // 
 	jsonDiagram, //
@@ -130,6 +131,7 @@ public enum SName {
 	referenceHeader, //
 	regex, //
 	requirement, //
+	rnote, //
 	root, //
 	rootNode, //
 	saltDiagram, //
