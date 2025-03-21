@@ -64,7 +64,12 @@ public enum NoteStyle {
 	}
 
 	public StyleSignatureBasic getDefaultStyleDefinition() {
+		if (this == NoteStyle.HEXAGONAL)
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.hnote);
+
+		if (this == NoteStyle.BOX)
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.note, SName.rnote);
+
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.note);
 	}
-
 }
