@@ -226,6 +226,8 @@ public class FromSkinparamToStyle {
 		addMagic(SName.usecase);
 		addMagic(SName.map);
 		addMagic(SName.archimate);
+		addMagic(SName.hnote);
+		addMagic(SName.rnote);
 
 		addConvert("IconPrivateColor", PName.LineColor, SName.visibilityIcon, SName.private_);
 		addConvert("IconPrivateBackgroundColor", PName.BackGroundColor, SName.visibilityIcon, SName.private_);
