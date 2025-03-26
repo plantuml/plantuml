@@ -22,22 +22,7 @@ You can use this file to put a test you are working on.
 Here is a simple example:
 
 @startuml
-<style>
-rnote {
-    BackgroundColor #101010
-    FontColor #FAFAFA
-}
-hnote {
-    BackgroundColor #3333CC
-    FontColor #FAFAFA
-}
-</style>
-
-actor -> director
-
-rnote left of actor: "field1 = valA"
-hnote left of actor: "blue note"
-note right of actor: is it clear for everyone ?
+alice->bob: this is a test
 @enduml
 
 So you can edit this file, but please do not push any modification in the "main" branch.
@@ -58,9 +43,9 @@ public class Test_0000 {
 	@Test
 	public void testExecute() throws IOException, InterruptedException {
 		final File file = getJavaFile();
-		final FileFormatOption options = new FileFormatOption(FileFormat.SVG);
+		final FileFormatOption options = new FileFormatOption(FileFormat.PNG);
 
-		final File outputDirectory = new File("outputdev").getAbsoluteFile();
+		final File outputDirectory = new File("outputdev", "png").getAbsoluteFile();
 		outputDirectory.mkdirs();
 
 		final SourceFileReader reader = new SourceFileReader(Defines.createWithFileName(file), file, outputDirectory,
