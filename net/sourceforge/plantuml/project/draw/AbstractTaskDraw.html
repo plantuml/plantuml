@@ -129,13 +129,14 @@ implements <a href="TaskDraw.html" title="interface in net.sourceforge.plantuml.
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.ToTaskDraw,net.sourceforge.plantuml.style.StyleBuilder)" class="member-name-link">AbstractTaskDraw</a><wbr>(<a href="../timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.ToTaskDraw,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.style.ISkinSimple)" class="member-name-link">AbstractTaskDraw</a><wbr>(<a href="../timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
  <a href="../../real/Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;y,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prettyDisplay,
  <a href="../time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;start,
  <a href="../core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&nbsp;task,
  <a href="../ToTaskDraw.html" title="interface in net.sourceforge.plantuml.project">ToTaskDraw</a>&nbsp;toTaskDraw,
- <a href="../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder)</code></div>
+ <a href="../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
+ <a href="../../style/ISkinSimple.html" title="interface in net.sourceforge.plantuml.style">ISkinSimple</a>&nbsp;skinSimple)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -151,26 +152,32 @@ implements <a href="TaskDraw.html" title="interface in net.sourceforge.plantuml.
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="../../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBackgroundColor()" class="member-name-link">getBackgroundColor</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#drawNote(net.sourceforge.plantuml.klimt.drawing.UGraphic)" class="member-name-link">drawNote</a><wbr>(<a href="../../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../lang/CenterBorderColor.html" title="class in net.sourceforge.plantuml.project.lang">CenterBorderColor</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColors()" class="member-name-link">getColors</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="../../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBackgroundColor()" class="member-name-link">getBackgroundColor</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColorSet()" class="member-name-link">getColorSet</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../lang/CenterBorderColor.html" title="class in net.sourceforge.plantuml.project.lang">CenterBorderColor</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColors()" class="member-name-link">getColors</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCompletion()" class="member-name-link">getCompletion</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="../../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getColorSet()" class="member-name-link">getColorSet</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="../../klimt/font/FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFontConfiguration()" class="member-name-link">getFontConfiguration</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCompletion()" class="member-name-link">getCompletion</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final double</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFullHeightTask(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getFullHeightTask</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="../../klimt/font/FontConfiguration.html" title="class in net.sourceforge.plantuml.klimt.font">FontConfiguration</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFontConfiguration()" class="member-name-link">getFontConfiguration</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="../../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLineColor()" class="member-name-link">getLineColor</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final double</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFullHeightTask(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getFullHeightTask</a><wbr>(<a href="../../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="../../klimt/color/HColor.html" title="class in net.sourceforge.plantuml.klimt.color">HColor</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLineColor()" class="member-name-link">getLineColor</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../svek/image/Opale.html" title="class in net.sourceforge.plantuml.svek.image">Opale</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOpaleNote()" class="member-name-link">getOpaleNote</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../skin/Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPragma()" class="member-name-link">getPragma</a>()</code></div>
@@ -281,7 +288,7 @@ implements <a href="TaskDraw.html" title="interface in net.sourceforge.plantuml.
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.ToTaskDraw,net.sourceforge.plantuml.style.StyleBuilder)">
+<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.project.timescale.TimeScale,net.sourceforge.plantuml.real.Real,java.lang.String,net.sourceforge.plantuml.project.time.Day,net.sourceforge.plantuml.project.core.Task,net.sourceforge.plantuml.project.ToTaskDraw,net.sourceforge.plantuml.style.StyleBuilder,net.sourceforge.plantuml.style.ISkinSimple)">
 <h3>AbstractTaskDraw</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AbstractTaskDraw</span><wbr><span class="parameters">(<a href="../timescale/TimeScale.html" title="interface in net.sourceforge.plantuml.project.timescale">TimeScale</a>&nbsp;timeScale,
  <a href="../../real/Real.html" title="interface in net.sourceforge.plantuml.real">Real</a>&nbsp;y,
@@ -289,7 +296,8 @@ implements <a href="TaskDraw.html" title="interface in net.sourceforge.plantuml.
  <a href="../time/Day.html" title="class in net.sourceforge.plantuml.project.time">Day</a>&nbsp;start,
  <a href="../core/Task.html" title="interface in net.sourceforge.plantuml.project.core">Task</a>&nbsp;task,
  <a href="../ToTaskDraw.html" title="interface in net.sourceforge.plantuml.project">ToTaskDraw</a>&nbsp;toTaskDraw,
- <a href="../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder)</span></div>
+ <a href="../../style/StyleBuilder.html" title="class in net.sourceforge.plantuml.style">StyleBuilder</a>&nbsp;styleBuilder,
+ <a href="../../style/ISkinSimple.html" title="interface in net.sourceforge.plantuml.style">ISkinSimple</a>&nbsp;skinSimple)</span></div>
 </section>
 </li>
 </ul>
@@ -449,6 +457,18 @@ implements <a href="TaskDraw.html" title="interface in net.sourceforge.plantuml.
 <section class="detail" id="getPragma()">
 <h3>getPragma</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="../../skin/Pragma.html" title="class in net.sourceforge.plantuml.skin">Pragma</a></span>&nbsp;<span class="element-name">getPragma</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getOpaleNote()">
+<h3>getOpaleNote</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="../../svek/image/Opale.html" title="class in net.sourceforge.plantuml.svek.image">Opale</a></span>&nbsp;<span class="element-name">getOpaleNote</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="drawNote(net.sourceforge.plantuml.klimt.drawing.UGraphic)">
+<h3>drawNote</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">drawNote</span><wbr><span class="parameters">(<a href="../../klimt/drawing/UGraphic.html" title="interface in net.sourceforge.plantuml.klimt.drawing">UGraphic</a>&nbsp;ug)</span></div>
 </section>
 </li>
 </ul>
