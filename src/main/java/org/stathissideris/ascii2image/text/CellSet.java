@@ -1,21 +1,20 @@
-/*
- * DiTAA - Diagrams Through Ascii Art
+/**
+ * ditaa - Diagrams Through Ascii Art
  * 
- * Copyright (C) 2004 Efstathios Sideris
+ * Copyright (C) 2004-2011 Efstathios Sideris
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * ditaa is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * ditaa is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with ditaa.  If not, see <http://www.gnu.org/licenses/>.
  *   
  */
 package org.stathissideris.ascii2image.text;
@@ -97,7 +96,7 @@ public class CellSet implements Iterable<TextGrid.Cell> {
 	}
 
 	public String getCellsAsString(){
-		StringBuilder str = new StringBuilder();
+		StringBuffer str = new StringBuffer();
 		Iterator<TextGrid.Cell> it = iterator();
 		while(it.hasNext()){
 			str.append(it.next().toString());
@@ -121,7 +120,8 @@ public class CellSet implements Iterable<TextGrid.Cell> {
 	public static CellSet copyCellSet(CellSet set) {
 		TextGrid grid = new TextGrid();
 		CellSet newSet = new CellSet();
-		Iterator it = set.iterator();
+		
+		Iterator<TextGrid.Cell> it = set.iterator();
 		while (it.hasNext()) {
 			TextGrid.Cell cell = (TextGrid.Cell) it.next();
 			TextGrid.Cell newCell = grid.new Cell(cell);
@@ -259,9 +259,6 @@ public class CellSet implements Iterable<TextGrid.Cell> {
 		AbstractionGrid abstraction = new AbstractionGrid(subGrid, tempSet);
 		TextGrid temp = abstraction.getCopyOfInternalBuffer();
 
-		TextGrid.Cell cell1 = null;
-		TextGrid.Cell cell2 = null;
-
 		int width = temp.getWidth();
 		int height = temp.getHeight();
 		
@@ -290,9 +287,9 @@ public class CellSet implements Iterable<TextGrid.Cell> {
 
 	public void translate(int dx, int dy){
 		typeIsValid = false;
-		Iterator it = iterator();
+		Iterator<TextGrid.Cell> it = iterator();
 		while(it.hasNext()){
-			TextGrid.Cell cCell = (TextGrid.Cell) it.next();
+			TextGrid.Cell cCell = it.next();
 			cCell.x += dx;
 			cCell.y += dy;
 		}	
@@ -336,9 +333,9 @@ public class CellSet implements Iterable<TextGrid.Cell> {
 	}
 
 	public TextGrid.Cell find(int x, int y){
-		Iterator it = iterator();
+		Iterator<TextGrid.Cell> it = iterator();
 		while(it.hasNext()){
-			TextGrid.Cell cCell = (TextGrid.Cell) it.next();
+			TextGrid.Cell cCell = it.next();
 			if(cCell.x == x && cCell.y == y) return cCell;
 		}
 		return null;		
@@ -379,9 +376,9 @@ public class CellSet implements Iterable<TextGrid.Cell> {
 	 * @return
 	 */
 	public TextGrid.Cell findCellNextTo(TextGrid.Cell cell){
-		Iterator it = iterator();
+		Iterator<TextGrid.Cell> it = iterator();
 		while(it.hasNext()){
-			TextGrid.Cell cCell = (TextGrid.Cell) it.next();
+			TextGrid.Cell cCell = it.next();
 			if(cCell.isNextTo(cell)) return cCell;
 		}
 		return null;
@@ -396,9 +393,9 @@ public class CellSet implements Iterable<TextGrid.Cell> {
 	public CellSet findCellsNextTo(TextGrid.Cell cell){
 		if(cell == null) throw new IllegalArgumentException("cell cannot be null");
 		CellSet set = new CellSet();
-		Iterator it = iterator();
+		Iterator<TextGrid.Cell> it = iterator();
 		while(it.hasNext()){
-			TextGrid.Cell cCell = (TextGrid.Cell) it.next();
+			TextGrid.Cell cCell = it.next();
 			if(cCell.isNextTo(cell)) set.add(cCell);
 		}
 		return set;
@@ -406,18 +403,18 @@ public class CellSet implements Iterable<TextGrid.Cell> {
 	
 	public void appendSet(CellSet set){
 		typeIsValid = false;
-		Iterator it = set.iterator();
+		Iterator<TextGrid.Cell> it = set.iterator();
 		while(it.hasNext()){
-			TextGrid.Cell cell = (TextGrid.Cell) it.next();
+			TextGrid.Cell cell = it.next();
 			if(find(cell) == null) add(cell);
 		}	
 	}
 	
 	public void subtractSet(CellSet set){
 		typeIsValid = false;
-		Iterator it = set.iterator();
+		Iterator<TextGrid.Cell> it = set.iterator();
 		while(it.hasNext()){
-			TextGrid.Cell cell = (TextGrid.Cell) it.next();
+			TextGrid.Cell cell = it.next();
 			TextGrid.Cell thisCell = find(cell);
 			if(thisCell != null) remove(thisCell);
 		}
@@ -434,9 +431,9 @@ public class CellSet implements Iterable<TextGrid.Cell> {
 	
 	public int getMaxX(){
 		int result = 0;
-		Iterator it = iterator();
+		Iterator<TextGrid.Cell> it = iterator();
 		while(it.hasNext()){
-			TextGrid.Cell cell = (TextGrid.Cell) it.next();
+			TextGrid.Cell cell = it.next();
 			if(cell.x > result) result = cell.x;
 		}
 		return result;
@@ -444,9 +441,9 @@ public class CellSet implements Iterable<TextGrid.Cell> {
 
 	public int getMinX(){
 		int result = Integer.MAX_VALUE;
-		Iterator it = iterator();
+		Iterator<TextGrid.Cell> it = iterator();
 		while(it.hasNext()){
-			TextGrid.Cell cell = (TextGrid.Cell) it.next();
+			TextGrid.Cell cell = it.next();
 			if(cell.x < result) result = cell.x;
 		}
 		return result;
@@ -455,9 +452,9 @@ public class CellSet implements Iterable<TextGrid.Cell> {
 
 	public int getMaxY(){
 		int result = 0;
-		Iterator it = iterator();
+		Iterator<TextGrid.Cell> it = iterator();
 		while(it.hasNext()){
-			TextGrid.Cell cell = (TextGrid.Cell) it.next();
+			TextGrid.Cell cell = it.next();
 			if(cell.y > result) result = cell.y;
 		}
 		return result;
@@ -465,9 +462,9 @@ public class CellSet implements Iterable<TextGrid.Cell> {
 
 	public int getMinY(){
 		int result = Integer.MAX_VALUE;
-		Iterator it = iterator();
+		Iterator<TextGrid.Cell> it = iterator();
 		while(it.hasNext()){
-			TextGrid.Cell cell = (TextGrid.Cell) it.next();
+			TextGrid.Cell cell = it.next();
 			if(cell.y < result) result = cell.y;
 		}
 		return result;
@@ -487,16 +484,16 @@ public class CellSet implements Iterable<TextGrid.Cell> {
 	}
 
 	
-	public static ArrayList removeDuplicateSets(ArrayList list) {
-		ArrayList uniqueSets = new ArrayList();
+	public static ArrayList<CellSet> removeDuplicateSets(ArrayList<CellSet> list) {
+		ArrayList<CellSet> uniqueSets = new ArrayList<CellSet>();
 
-		Iterator it = list.iterator();
+		Iterator<CellSet> it = list.iterator();
 		while(it.hasNext()){
-			CellSet set = (CellSet) it.next();
+			CellSet set = it.next();
 			boolean isOriginal = true;
-			Iterator uniquesIt = uniqueSets.iterator();
+			Iterator<CellSet> uniquesIt = uniqueSets.iterator();
 			while(uniquesIt.hasNext()){
-				CellSet uniqueSet = (CellSet) uniquesIt.next();
+				CellSet uniqueSet = uniquesIt.next();
 				if(set.equals(uniqueSet)){
 					isOriginal = false;
 				}
@@ -512,8 +509,8 @@ public class CellSet implements Iterable<TextGrid.Cell> {
 	 * 
 	 * @return ArrayList of distinct BoundarySetS
 	 */
-	public ArrayList breakIntoDistinctBoundaries(TextGrid grid){
-		ArrayList result;
+	public ArrayList<CellSet> breakIntoDistinctBoundaries(TextGrid grid){
+		ArrayList<CellSet> result;
 		
 		AbstractionGrid temp = new AbstractionGrid(grid, this);
 		result = temp.getDistinctShapes();
@@ -526,8 +523,8 @@ public class CellSet implements Iterable<TextGrid.Cell> {
 	 * 
 	 * @return ArrayList of distinct BoundarySetS
 	 */
-	public ArrayList breakIntoDistinctBoundaries(){
-		ArrayList result = new ArrayList();
+	public ArrayList<CellSet> breakIntoDistinctBoundaries(){
+		ArrayList<CellSet> result = new ArrayList<CellSet>();
 
 		//CellSet tempSet = copyCellSet(this);
 		//tempSet.translate( - this.getMinX() + 1, - this.getMinY() + 1);
@@ -539,7 +536,7 @@ public class CellSet implements Iterable<TextGrid.Cell> {
 		boundaryGrid.fillCellsWith(this, '*');
 
 		
-		Iterator it = iterator();
+		Iterator<TextGrid.Cell> it = iterator();
 		while(it.hasNext()){
 			TextGrid.Cell cell = (TextGrid.Cell) it.next();
 			if(boundaryGrid.isBlank(cell.x, cell.y)) continue;
@@ -579,8 +576,8 @@ public class CellSet implements Iterable<TextGrid.Cell> {
 	 * @return a list of boundaries that are either open or closed but not mixed
 	 * and they are equivalent to the <code>this</code>
 	 */
-	public ArrayList breakTrulyMixedBoundaries(TextGrid grid){
-		ArrayList result = new ArrayList();
+	public ArrayList<CellSet> breakTrulyMixedBoundaries(TextGrid grid){
+		ArrayList<CellSet> result = new ArrayList<CellSet>();
 		CellSet visitedEnds = new CellSet();
 		
 		TextGrid workGrid = TextGrid.makeSameSizeAs(grid);
@@ -591,7 +588,7 @@ public class CellSet implements Iterable<TextGrid.Cell> {
 			workGrid.printDebug();
 		}
 
-		Iterator it = iterator();
+		Iterator<TextGrid.Cell> it = iterator();
 		while(it.hasNext()){
 			TextGrid.Cell start = (TextGrid.Cell) it.next();
 			if(workGrid.isLinesEnd(start) && !visitedEnds.contains(start)){
@@ -641,9 +638,7 @@ public class CellSet implements Iterable<TextGrid.Cell> {
 
 		//substract all boundary sets from this CellSet
 		CellSet whatsLeft = new CellSet(this);
-		it = result.iterator();
-		while (it.hasNext()) {
-			CellSet set = (CellSet) it.next();
+		for(CellSet set : result) {
 			whatsLeft.subtractSet(set);
 			if(DEBUG) set.printAsGrid();
 		}

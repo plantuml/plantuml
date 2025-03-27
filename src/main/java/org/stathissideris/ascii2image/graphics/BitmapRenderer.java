@@ -1,21 +1,20 @@
-/*
- * DiTAA - Diagrams Through Ascii Art
+/**
+ * ditaa - Diagrams Through Ascii Art
  * 
- * Copyright (C) 2004 Efstathios Sideris
+ * Copyright (C) 2004-2011 Efstathios Sideris
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * ditaa is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * ditaa is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with ditaa.  If not, see <http://www.gnu.org/licenses/>.
  *   
  */
 package org.stathissideris.ascii2image.graphics;
@@ -41,6 +40,7 @@ import java.util.Iterator;
 
 import org.stathissideris.ascii2image.core.RenderingOptions;
 import org.stathissideris.ascii2image.core.Shape3DOrderingComparator;
+import org.stathissideris.ascii2image.core.ShapeAreaComparator;
 
 /**
  * 
@@ -50,12 +50,27 @@ public class BitmapRenderer {
 	// ::remove folder when __CORE__
 
 	private static final boolean DEBUG = false;
+	private static final boolean DEBUG_LINES = false;
 
 	private static final String IDREGEX = "^.+_vfill$";
 	
 	Stroke normalStroke;
 	Stroke dashStroke; 
-
+	
+//	private boolean renderToPNG(Diagram diagram, String filename, RenderingOptions options){	
+//		RenderedImage image = renderToImage(diagram, options);
+//		
+//		try {
+//			File file = new File(filename);
+//			ImageIO.write(image, "png", file);
+//		} catch (IOException e) {
+//			//e.printStackTrace();
+//			System.err.println("Error: Cannot write to file "+filename);
+//			return false;
+//		}
+//		return true;
+//	}
+	
 	public RenderedImage renderToImage(Diagram diagram, RenderingOptions options){
 		BufferedImage image;
 		if(options.needsTransparency()) {
@@ -69,9 +84,10 @@ public class BitmapRenderer {
 					diagram.getHeight(),
 					BufferedImage.TYPE_INT_RGB);
 		}
+		
 		return render(diagram, image, options);
 	}
-
+	
 	public RenderedImage render(Diagram diagram, BufferedImage image,  RenderingOptions options){
 		RenderedImage renderedImage = image;
 		Graphics2D g2 = image.createGraphics();
@@ -90,22 +106,22 @@ public class BitmapRenderer {
 		
 		g2.setStroke(new BasicStroke(1, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_ROUND));
 
-		ArrayList shapes = diagram.getAllDiagramShapes();
+		ArrayList<DiagramShape> shapes = diagram.getAllDiagramShapes();
 
 		if(DEBUG) System.out.println("Rendering "+shapes.size()+" shapes (groups flattened)");
 
-		Iterator shapesIt;
+		Iterator<DiagramShape> shapesIt;
 		if(options.dropShadows()){
 			//render shadows
 			shapesIt = shapes.iterator();
 			while(shapesIt.hasNext()){
-				DiagramShape shape = (DiagramShape) shapesIt.next();
+				DiagramShape shape = shapesIt.next();
 
 				if(shape.getPoints().isEmpty()) continue;
 
 				//GeneralPath path = shape.makeIntoPath();
 				GeneralPath path;
-				path = shape.makeIntoRenderPath(diagram);			
+				path = shape.makeIntoRenderPath(diagram, options);			
 							
 				float offset = diagram.getMinimumOfCellDimension() / 3.333f;
 			
@@ -184,7 +200,7 @@ public class BitmapRenderer {
 		
 		
 		//find storage shapes
-		ArrayList storageShapes = new ArrayList();
+		ArrayList<DiagramShape> storageShapes = new ArrayList<DiagramShape>();
 		shapesIt = shapes.iterator();
 		while(shapesIt.hasNext()){
 			DiagramShape shape = (DiagramShape) shapesIt.next();
@@ -209,7 +225,7 @@ public class BitmapRenderer {
 			DiagramShape shape = (DiagramShape) shapesIt.next();
 
 			GeneralPath path;
-			path = shape.makeIntoRenderPath(diagram);
+			path = shape.makeIntoRenderPath(diagram, options);
 			
 			if(!shape.isStrokeDashed()) {
 				if(shape.getFillColor() != null)
@@ -227,9 +243,11 @@ public class BitmapRenderer {
 			g2.draw(path);
 		}
 
-
+		//sort so that the largest shapes are rendered first
+		Collections.sort(shapes, new ShapeAreaComparator());
+		
 		//render the rest of the shapes
-		ArrayList pointMarkers = new ArrayList();
+		ArrayList<DiagramShape> pointMarkers = new ArrayList<DiagramShape>();
 		shapesIt = shapes.iterator();
 		while(shapesIt.hasNext()){
 			DiagramShape shape = (DiagramShape) shapesIt.next();
@@ -250,7 +268,7 @@ public class BitmapRenderer {
 			int size = shape.getPoints().size();
 			
 			GeneralPath path;
-			path = shape.makeIntoRenderPath(diagram);
+			path = shape.makeIntoRenderPath(diagram, options);
 			
 			//fill
 			if(path != null && shape.isClosed() && !shape.isStrokeDashed()){
@@ -281,7 +299,7 @@ public class BitmapRenderer {
 			//if(shape.getType() != DiagramShape.TYPE_POINT_MARKER) continue;
 
 			GeneralPath path;
-			path = shape.makeIntoRenderPath(diagram);
+			path = shape.makeIntoRenderPath(diagram, options);
 			
 			g2.setColor(Color.white);
 			g2.fill(path);
@@ -293,9 +311,9 @@ public class BitmapRenderer {
 		//g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		//renderTextLayer(diagram.getTextObjects().iterator());
 		
-		Iterator textIt = diagram.getTextObjects().iterator();
+		Iterator<DiagramText> textIt = diagram.getTextObjects().iterator();
 		while(textIt.hasNext()){
-			DiagramText text = (DiagramText) textIt.next();
+			DiagramText text = textIt.next();
 			g2.setFont(text.getFont());
 			if(text.hasOutline()){
 				g2.setColor(text.getOutlineColor());
@@ -308,7 +326,7 @@ public class BitmapRenderer {
 			g2.drawString(text.getText(), text.getXPos(), text.getYPos());
 		}
 		
-		if(options.renderDebugLines() || DEBUG){
+		if(options.renderDebugLines() || DEBUG_LINES){
 			Stroke debugStroke =
 			  new BasicStroke(
 				1,
@@ -330,7 +348,7 @@ public class BitmapRenderer {
 		return renderedImage;
 	}
 	
-	private RenderedImage renderTextLayer(ArrayList textObjects, int width, int height){
+	private RenderedImage renderTextLayer(ArrayList<DiagramText> textObjects, int width, int height){
 		TextCanvas canvas = new TextCanvas(textObjects);
 		Image image = canvas.createImage(width, height);
 		Graphics g = image.getGraphics();
@@ -339,15 +357,15 @@ public class BitmapRenderer {
 	}
 	
 	private class TextCanvas extends Canvas {
-		ArrayList textObjects;
+		ArrayList<DiagramText> textObjects;
 		
-		public TextCanvas(ArrayList textObjects){
+		public TextCanvas(ArrayList<DiagramText> textObjects){
 			this.textObjects = textObjects;
 		}
 		
 		public void paint(Graphics g){
 			Graphics g2 = (Graphics2D) g;
-			Iterator textIt = textObjects.iterator();
+			Iterator<DiagramText> textIt = textObjects.iterator();
 			while(textIt.hasNext()){
 				DiagramText text = (DiagramText) textIt.next();
 				g2.setFont(text.getFont());
@@ -383,7 +401,7 @@ public class BitmapRenderer {
 //			g2.drawRect(bounds.x, bounds.y, bounds.width, bounds.height); //looks different!			
 		}
 		
-		//TODO: custom shape distintion relies on filename extension. Make this more intelligent
+		//TODO: custom shape distinction relies on filename extension. Make this more intelligent
 		if(definition.getFilename().endsWith(".png")){
 			renderCustomPNGShape(shape, g2);
 		} else if(definition.getFilename().endsWith(".svg")){
@@ -406,7 +424,7 @@ public class BitmapRenderer {
 //			}
 //			g2.drawImage(graphic, bounds.x, bounds.y, null);
 //		} catch (IOException e) {
-//			Logme.error(e);
+//			e.printStackTrace();
 //		}
 //	}
 	

@@ -1,27 +1,25 @@
-/*
- * DiTAA - Diagrams Through Ascii Art
+/**
+ * ditaa - Diagrams Through Ascii Art
  * 
- * Copyright (C) 2004 Efstathios Sideris
+ * Copyright (C) 2004-2011 Efstathios Sideris
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * ditaa is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * ditaa is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with ditaa.  If not, see <http://www.gnu.org/licenses/>.
  *   
  */
 package org.stathissideris.ascii2image.core;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.util.HashMap;
 
 import org.stathissideris.ascii2image.graphics.CustomShapeDefinition;
@@ -37,85 +35,67 @@ public class RenderingOptions {
 	private boolean dropShadows = true;
 	private boolean renderDebugLines = false;
 	private boolean antialias = true;
+    private boolean fixedSlope = false;
 
 	private int cellWidth = 10;
 	private int cellHeight = 14;
 	
 	private float scale = 1;
-
+	
 	private Color backgroundColor = Color.white;
 
-	private Font font = new Font("Dialog", Font.BOLD, 12);
-	private boolean forceFontSize = false;
+	public enum ImageType { PNG, SVG };
 
-	/**
-	 * @return
-	 */
+	private ImageType imageType = ImageType.PNG;
+
+	public ImageType getImageType() { return imageType; }
+	public void setImageType(ImageType type) { imageType = type; }
+
+	private String fontFamily = "Courier";
+	private String fontURL = null;
+
+	public String getFontFamily() { return fontFamily; }
+	public String getFontURL() { return fontURL; }
+	public void setFontURL(String url) { fontFamily = "Custom"; fontURL = url; }
+
 	public int getCellHeight() {
 		return cellHeight;
 	}
 
-	/**
-	 * @return
-	 */
 	public int getCellWidth() {
 		return cellWidth;
 	}
 
-	/**
-	 * @return
-	 */
 	public boolean dropShadows() {
 		return dropShadows;
 	}
 
-	/**
-	 * @return
-	 */
 	public boolean renderDebugLines() {
 		return renderDebugLines;
 	}
 
-	/**
-	 * @return
-	 */
 	public float getScale() {
 		return scale;
 	}
 
-	/**
-	 * @param b
-	 */
 	public void setDropShadows(boolean b) {
 		dropShadows = b;
 	}
 
-	/**
-	 * @param b
-	 */
 	public void setRenderDebugLines(boolean b) {
 		renderDebugLines = b;
 	}
 
-	/**
-	 * @param f
-	 */
 	public void setScale(float f) {
 		scale = f;
 		cellWidth *= scale;
 		cellHeight *= scale;
 	}
 
-	/**
-	 * @return
-	 */
 	public boolean performAntialias() {
 		return antialias;
 	}
 
-	/**
-	 * @param b
-	 */
 	public void setAntialias(boolean b) {
 		antialias = b;
 	}
@@ -132,23 +112,21 @@ public class RenderingOptions {
 		return backgroundColor.getAlpha() < 255;
 	}
 
-	public Font getFont()
-	{
-		return font;
-	}
+	/**
+     * Should the sides of trapezoids and parallelograms have fixed width (false, default)
+     * or fixed slope (true)?
+     * @return true for fixed slope, false for fixed width
+     */
+    public boolean isFixedSlope() {
+        return fixedSlope;
+    }
 
-	public void setFont(Font font)
-	{
-		this.font = font;
-	}
-
-	public boolean getForceFontSize()
-	{
-		return forceFontSize;
-	}
-
-	public void setForceFontSize(boolean forceFontSize)
-	{
-		this.forceFontSize = forceFontSize;
-	}
+    /**
+     * Should the sides of trapezoids and parallelograms have fixed width (false, default)
+     * or fixed slope (true)?
+     * @param b true for fixed slope, false for fixed width
+     */
+    public void setFixedSlope(boolean b) {
+        this.fixedSlope = b;
+    }
 }

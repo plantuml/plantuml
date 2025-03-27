@@ -1,21 +1,20 @@
-/*
- * DiTAA - Diagrams Through Ascii Art
+/**
+ * ditaa - Diagrams Through Ascii Art
  * 
- * Copyright (C) 2004 Efstathios Sideris
+ * Copyright (C) 2004-2011 Efstathios Sideris
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * ditaa is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * ditaa is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with ditaa.  If not, see <http://www.gnu.org/licenses/>.
  *   
  */
 package org.stathissideris.ascii2image.graphics;
@@ -66,7 +65,7 @@ public class ShapeEdge {
 	public void moveInwardsBy(float offset){
 		int type = this.getType();
 		if(type == TYPE_SLOPED)
-			throw new RuntimeException("Cannot move a sloped egde inwards: "+this);
+			throw new RuntimeException("Cannot move a sloped edge inwards: "+this);
 		
 		float xOffset = 0;
 		float yOffset = 0;
@@ -106,7 +105,7 @@ public class ShapeEdge {
 
 	/**
 	 * Returns the type of the edge
-	 * (<code>TYPE_HORIZONTAL, TYPE_VERTICAL, TYPE_SLOPED</code>).
+	 * (<code>TYPE_HORIZONTAL, TYPE_VERTICAL, TYPE_SLOPED).
 	 * 
 	 * @return
 	 */
@@ -222,7 +221,7 @@ public class ShapeEdge {
 	
 	/**
 	 * if horizontal flips start and end points so that start is left of end
-	 * if verical flips start and end points so that start is over of end
+	 * if vertical flips start and end points so that start is over of end
 	 *
 	 */
 	private void fixDirection(){
@@ -231,7 +230,7 @@ public class ShapeEdge {
 		} else if(isVertical()) {
 			if(startPoint.y > endPoint.y) flipDirection();
 		} else {
-			throw new RuntimeException("Cannot fix direction of sloped egde");
+			throw new RuntimeException("Cannot fix direction of sloped edge");
 		}
 	}
 	

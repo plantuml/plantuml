@@ -39,8 +39,12 @@ import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+
+import org.stathissideris.ascii2image.core.ConversionOptions;
+import org.stathissideris.ascii2image.core.ProcessingOptions;
+import org.stathissideris.ascii2image.graphics.BitmapRenderer;
+import org.stathissideris.ascii2image.graphics.Diagram;
+import org.stathissideris.ascii2image.text.TextGrid;
 
 import net.sourceforge.plantuml.AbstractPSystem;
 import net.sourceforge.plantuml.FileFormat;
@@ -50,7 +54,6 @@ import net.sourceforge.plantuml.core.DiagramDescription;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.crash.CrashReportHandler;
-import net.sourceforge.plantuml.log.Logme;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.text.BackSlash;
@@ -58,8 +61,7 @@ import net.sourceforge.plantuml.text.BackSlash;
 public class PSystemDitaa extends AbstractPSystem {
 	// ::remove folder when __CORE__
 
-	// private ProcessingOptions processingOptions;
-	private Object processingOptions;
+	private final ProcessingOptions processingOptions;
 	private final boolean dropShadows;
 	private final String data;
 	private final float scale;
@@ -77,18 +79,9 @@ public class PSystemDitaa extends AbstractPSystem {
 		this.dropShadows = dropShadows;
 		this.performSeparationOfCommonEdges = performSeparationOfCommonEdges;
 		this.allCornersAreRound = allCornersAreRound;
-		try {
-			this.processingOptions = Class.forName("org.stathissideris.ascii2image.core.ProcessingOptions")
-					.newInstance();
-			// this.processingOptions.setPerformSeparationOfCommonEdges(performSeparationOfCommonEdges);
-			this.processingOptions.getClass().getMethod("setPerformSeparationOfCommonEdges", boolean.class)
-					.invoke(this.processingOptions, performSeparationOfCommonEdges);
-			this.processingOptions.getClass().getMethod("setAllCornersAreRound", boolean.class)
-					.invoke(this.processingOptions, allCornersAreRound);
-		} catch (Exception e) {
-			Logme.error(e);
-			this.processingOptions = null;
-		}
+		this.processingOptions = new ProcessingOptions();
+		this.processingOptions.setPerformSeparationOfCommonEdges(performSeparationOfCommonEdges);
+		this.processingOptions.setAllCornersAreRound(allCornersAreRound);
 		this.transparentBackground = transparentBackground;
 		this.scale = scale;
 		this.font = font;
@@ -112,77 +105,33 @@ public class PSystemDitaa extends AbstractPSystem {
 			return ImageDataSimple.ok();
 		}
 
-		// ditaa can only export png so file format is mostly ignored
 		try {
-			// ditaa0_9.jar
-			// final ConversionOptions options = new ConversionOptions();
-			final Object options = Class.forName("org.stathissideris.ascii2image.core.ConversionOptions").newInstance();
+			final ConversionOptions options = new ConversionOptions();
+			options.setDropShadows(dropShadows);
+			options.renderingOptions.setBackgroundColor(transparentBackground ? new Color(0, 0, 0, 0) : Color.WHITE);
+			// options.renderingOptions.setFont(font);
+			// options.renderingOptions.setForceFontSize(forceFontSize);
+			options.renderingOptions.setScale(scale);
+			options.setDropShadows(dropShadows);
 
-			// final RenderingOptions renderingOptions = options.renderingOptions;
-			final Field f_renderingOptions = options.getClass().getField("renderingOptions");
-			final Object renderingOptions = f_renderingOptions.get(options);
+			final TextGrid grid = new TextGrid();
+			grid.initialiseWithText(data, null);
 
-			// renderingOptions.setBackgroundColor(font);
-			final Method setBackgroundColor = renderingOptions.getClass().getMethod("setBackgroundColor", Color.class);
-			setBackgroundColor.invoke(renderingOptions, transparentBackground ? new Color(0, 0, 0, 0) : Color.WHITE);
+			final Diagram diagram = new Diagram(grid, options);
+			final BitmapRenderer bitmapRenderer = new BitmapRenderer();
 
-			// renderingOptions.setFont(font);
-			final Method setFont = renderingOptions.getClass().getMethod("setFont", Font.class);
-			setFont.invoke(renderingOptions, font);
-
-			// renderingOptions.setForceFontSize(font);
-			final Method setForceFontSize = renderingOptions.getClass().getMethod("setForceFontSize", boolean.class);
-			setForceFontSize.invoke(renderingOptions, forceFontSize);
-
-			// renderingOptions.setScale(scale);
-			final Method setScale = renderingOptions.getClass().getMethod("setScale", float.class);
-			setScale.invoke(renderingOptions, scale);
-
-			// options.setDropShadows(dropShadows);
-			final Method setDropShadows = options.getClass().getMethod("setDropShadows", boolean.class);
-			setDropShadows.invoke(options, dropShadows);
-
-			// final TextGrid grid = new TextGrid();
-			final Object grid = Class.forName("org.stathissideris.ascii2image.text.TextGrid").newInstance();
-
-			// grid.initialiseWithText(data, null);
-			final Method initialiseWithText = grid.getClass().getMethod("initialiseWithText", String.class,
-					Class.forName("org.stathissideris.ascii2image.core.ProcessingOptions"));
-			initialiseWithText.invoke(grid, data, null);
-
-			// final Diagram diagram = new Diagram(grid, options, processingOptions);
-			final Class<?> clDiagram = Class.forName("org.stathissideris.ascii2image.graphics.Diagram");
-			clDiagram.getConstructor(grid.getClass(), options.getClass(), processingOptions.getClass())
-					.newInstance(grid, options, processingOptions);
-			final Object diagram = clDiagram
-					.getConstructor(grid.getClass(), options.getClass(), processingOptions.getClass())
-					.newInstance(grid, options, processingOptions);
-
-			// final BitmapRenderer bitmapRenderer = new BitmapRenderer();
-			final Object bitmapRenderer = Class.forName("org.stathissideris.ascii2image.graphics.BitmapRenderer")
-					.newInstance();
-
-			// final BufferedImage image = (BufferedImage)
-			// bitmapRenderer.renderToImage(diagram, renderingOptions);
-			final Method renderToImage = bitmapRenderer.getClass().getMethod("renderToImage", diagram.getClass(),
-					renderingOptions.getClass());
-			final BufferedImage image = (BufferedImage) renderToImage.invoke(bitmapRenderer, diagram, renderingOptions);
+			final BufferedImage image = (BufferedImage) bitmapRenderer.renderToImage(diagram, options.renderingOptions);
 
 			SImageIO.write(image, "png", os);
-			final int width = image.getWidth();
-			final int height = image.getHeight();
-			return new ImageDataSimple(width, height);
+			return new ImageDataSimple(image.getWidth(), image.getHeight());
 		} catch (Throwable e) {
-			e.printStackTrace();
-			final CrashReportHandler report = new CrashReportHandler(e, null, null);
+			CrashReportHandler report = new CrashReportHandler(e, null, null);
 			report.add("DITAA has crashed");
-			report.add(" ");
+			report.addEmptyLine();
 			report.youShouldSendThisDiagram();
-			report.add(" ");
+			report.addEmptyLine();
 			report.exportDiagramError(new FileFormatOption(FileFormat.PNG), seed(), os);
 			return ImageDataSimple.error();
 		}
-
 	}
-
 }

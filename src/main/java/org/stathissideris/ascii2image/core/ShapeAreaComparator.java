@@ -19,12 +19,28 @@
  */
 package org.stathissideris.ascii2image.core;
 
-public class Pair<T,K> {
-	public T first;
-	public K second;
-	
-	public Pair(T first, K second) {
-		this.first = first;
-		this.second = second;
+import java.util.Comparator;
+
+import org.stathissideris.ascii2image.graphics.DiagramShape;
+
+/**
+ * 
+ * @author Efstathios Sideris
+ */
+public class ShapeAreaComparator implements Comparator<DiagramShape> {
+
+	/**
+	 * Puts diagram shapes in order or area starting from largest to smallest
+	 * 
+	 */
+	public int compare(DiagramShape shape1, DiagramShape shape2) {
+		double y1 = shape1.calculateArea();
+		double y2 = shape2.calculateArea();
+		
+		if(y1 > y2) return -1;
+		if(y1 < y2) return 1;
+		
+		return 0;
 	}
+
 }

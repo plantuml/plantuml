@@ -1,21 +1,20 @@
-/*
- * DiTAA - Diagrams Through Ascii Art
+/**
+ * ditaa - Diagrams Through Ascii Art
  * 
- * Copyright (C) 2004 Efstathios Sideris
+ * Copyright (C) 2004-2011 Efstathios Sideris
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * ditaa is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as 
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
+ * ditaa is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with ditaa.  If not, see <http://www.gnu.org/licenses/>.
  *   
  */
 package org.stathissideris.ascii2image.graphics;
@@ -29,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import org.stathissideris.ascii2image.core.RenderingOptions;
 import org.stathissideris.ascii2image.text.TextGrid;
 
 /**
@@ -51,6 +51,9 @@ public class DiagramShape extends DiagramComponent {
 	public static final int TYPE_ELLIPSE = 9;
 	public static final int TYPE_CUSTOM = 9999;
 
+	/** The slope of side lines on trapezoids (mo, tr) and parallelograms (io). */
+	public static final float SHAPE_SLOPE = 8;
+
 	protected int type = TYPE_SIMPLE;
 
 	private Color fillColor = null;
@@ -59,7 +62,7 @@ public class DiagramShape extends DiagramComponent {
 	private boolean isClosed = false;
 	private boolean isStrokeDashed = false;
 
-	protected ArrayList points = new ArrayList();
+	protected ArrayList<ShapePoint> points = new ArrayList<ShapePoint>();
 
 	CustomShapeDefinition definition = null;
 
@@ -392,7 +395,7 @@ public class DiagramShape extends DiagramComponent {
 		return bounds;
 	}
 	
-	public GeneralPath makeIntoRenderPath(Diagram diagram) {
+	public GeneralPath makeIntoRenderPath(Diagram diagram, RenderingOptions options) {
 		int size = getPoints().size();
 		
 		if(getType() == TYPE_POINT_MARKER){
@@ -408,7 +411,7 @@ public class DiagramShape extends DiagramComponent {
 		}
 
 		if(getType() == TYPE_IO && points.size() == 4){
-			return makeIOPath(diagram);
+			return makeIOPath(diagram, options);
 		}
 
 		if(getType() == TYPE_DECISION && points.size() == 4){
@@ -416,11 +419,11 @@ public class DiagramShape extends DiagramComponent {
 		}
 
 		if(getType() == TYPE_MANUAL_OPERATION && points.size() == 4){
-			return makeTrapezoidPath(diagram, true);
+			return makeTrapezoidPath(diagram, options, true);
 		}
 
 		if(getType() == TYPE_TRAPEZOID && points.size() == 4){
-			return makeTrapezoidPath(diagram, false);
+			return makeTrapezoidPath(diagram, options, false);
 		}
 
 		if(getType() == TYPE_ELLIPSE && points.size() == 4){
@@ -532,7 +535,6 @@ public class DiagramShape extends DiagramComponent {
 	 *
 	 * @param pointInCell
 	 * @param otherPoint
-	 * @param diagram
 	 * @return
 	 */
 	public ShapePoint getCellEdgePointBetween(ShapePoint pointInCell, ShapePoint otherPoint, Diagram diagram){
@@ -597,7 +599,7 @@ public class DiagramShape extends DiagramComponent {
 		TextGrid.Cell cell = diagram.getCellFor(pointInCell);
 		
 		if(cell == null)
-			throw new RuntimeException("Upexpected error, cannot find cell corresponding to point "+pointInCell+" for diagram "+diagram);
+			throw new RuntimeException("Unexpected error, cannot find cell corresponding to point "+pointInCell+" for diagram "+diagram);
 		
 		if(otherPoint.isNorthOf(pointInCell))
 			result = new ShapePoint(pointInCell.x,
@@ -613,7 +615,7 @@ public class DiagramShape extends DiagramComponent {
 										pointInCell.y);
 		
 		if(result == null)
-			throw new RuntimeException("Upexpected error, cannot find cell edge point for points "+pointInCell+" and "+otherPoint+" for diagram "+diagram);
+			throw new RuntimeException("Unexpected error, cannot find cell edge point for points "+pointInCell+" and "+otherPoint+" for diagram "+diagram);
 
 		
 		return result;
@@ -879,11 +881,11 @@ public class DiagramShape extends DiagramComponent {
 		return path;
 	}
 
-	private GeneralPath makeTrapezoidPath(Diagram diagram, boolean inverted) {
+	private GeneralPath makeTrapezoidPath(Diagram diagram, RenderingOptions options, boolean inverted) {
 		if(points.size() != 4) return null;
 		Rectangle bounds = makeIntoPath().getBounds();
-        float offset = 0.7f * diagram.getCellWidth(); // fixed slope
-        if (inverted) offset = -offset;
+		float offset = options.isFixedSlope() ? bounds.height / SHAPE_SLOPE : diagram.getCellWidth() * 0.5f;
+		if (inverted) offset = -offset;
 		ShapePoint ul = new ShapePoint((float)bounds.getMinX() + offset, (float)bounds.getMinY());
 		ShapePoint ur = new ShapePoint((float)bounds.getMaxX() - offset, (float)bounds.getMinY());
 		ShapePoint br = new ShapePoint((float)bounds.getMaxX() + offset, (float)bounds.getMaxY());
@@ -904,7 +906,7 @@ public class DiagramShape extends DiagramComponent {
 	private GeneralPath makeDecisionPath(Diagram diagram) {
 		if(points.size() != 4) return null;
 		Rectangle bounds = makeIntoPath().getBounds();
-        ShapePoint pointMid = new ShapePoint((float)bounds.getCenterX(), (float)bounds.getCenterY());
+		ShapePoint pointMid = new ShapePoint((float)bounds.getCenterX(), (float)bounds.getCenterY());
 		ShapePoint left = new ShapePoint((float)bounds.getMinX(), (float)pointMid.getY());
 		ShapePoint right = new ShapePoint((float)bounds.getMaxX(), (float)pointMid.getY());
 		ShapePoint top = new ShapePoint((float)pointMid.getX(), (float)bounds.getMinY());
@@ -921,7 +923,7 @@ public class DiagramShape extends DiagramComponent {
 		return path;
 	}
 
-	private GeneralPath makeIOPath(Diagram diagram) {
+	private GeneralPath makeIOPath(Diagram diagram, RenderingOptions options) {
 		if(points.size() != 4) return null;
 		Rectangle bounds = makeIntoPath().getBounds();
 		ShapePoint point1 = new ShapePoint((float)bounds.getMinX(), (float)bounds.getMinY());
@@ -929,7 +931,7 @@ public class DiagramShape extends DiagramComponent {
 		ShapePoint point3 = new ShapePoint((float)bounds.getMaxX(), (float)bounds.getMaxY());
 		ShapePoint point4 = new ShapePoint((float)bounds.getMinX(), (float)bounds.getMaxY());
 	
-		float offset = diagram.getCellWidth() / 2;
+        float offset = options.isFixedSlope() ? bounds.height / SHAPE_SLOPE : diagram.getCellWidth() * 0.5f;
 		
 		GeneralPath path = new GeneralPath();
 		path.moveTo(point1.x + offset, point1.y);
@@ -949,4 +951,28 @@ public class DiagramShape extends DiagramComponent {
 		this.definition = definition;
 	}
 
+	/**
+	 * See http://mathworld.wolfram.com/PolygonArea.html
+	 * 
+	 * @return the overall area of the shape
+	 */
+	public double calculateArea() {
+		if(points.size() == 0) return 0;
+		
+		double area = 0;
+		
+		for(int i = 0; i < points.size() - 1; i++){
+			ShapePoint point1 = points.get(i);
+			ShapePoint point2 = points.get(i + 1);
+			area += point1.x * point2.y;
+			area -= point2.x * point1.y;
+		}
+		ShapePoint point1 = points.get(points.size() - 1);
+		ShapePoint point2 = points.get(0);
+		area += point1.x * point2.y;
+		area -= point2.x * point1.y;
+		
+		return Math.abs(area / 2);
+	}
+	
 }
