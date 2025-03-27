@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
@@ -112,7 +111,7 @@ public class CommandArchimate extends SingleLineCommand2<DescriptionDiagram> {
 		if (display == null)
 			display = quark.getName();
 
-		Entity entity = (Entity) quark.getData();
+		Entity entity = quark.getData();
 		if (entity == null)
 			entity = diagram.reallyCreateLeaf(location, quark, Display.getWithNewlines(diagram.getPragma(), display), LeafType.DESCRIPTION,
 					USymbols.ARCHIMATE);

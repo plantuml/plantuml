@@ -54,6 +54,7 @@ import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.descdiagram.command.CommandArchimate;
 import net.sourceforge.plantuml.descdiagram.command.CommandArchimateMultilines;
+import net.sourceforge.plantuml.descdiagram.command.CommandArchimatePackage;
 import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementFull;
 import net.sourceforge.plantuml.descdiagram.command.CommandCreateElementMultilines;
 import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
@@ -126,6 +127,7 @@ public class DescriptionDiagramFactory extends PSystemCommandFactory {
 
 		cmds.add(new CommandArchimate());
 		cmds.add(new CommandArchimateMultilines());
+		cmds.add(new CommandArchimatePackage());
 		cmds.add(new CommandCreateDomain());
 	}
 

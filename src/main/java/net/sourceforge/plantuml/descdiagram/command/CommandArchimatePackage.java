@@ -30,20 +30,20 @@
  *
  *
  * Original Author:  Arnaud Roques
- *
+ * 
  *
  */
 package net.sourceforge.plantuml.descdiagram.command;
 
+import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.abel.GroupType;
 import net.sourceforge.plantuml.abel.LeafType;
-import net.sourceforge.plantuml.classdiagram.AbstractEntityDiagram;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
-import net.sourceforge.plantuml.command.CommandMultilines2;
-import net.sourceforge.plantuml.command.MultilinesStrategy;
 import net.sourceforge.plantuml.command.ParserPass;
-import net.sourceforge.plantuml.command.Trim;
+import net.sourceforge.plantuml.command.SingleLineCommand2;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
+import net.sourceforge.plantuml.descdiagram.DescriptionDiagram;
 import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
@@ -54,38 +54,48 @@ import net.sourceforge.plantuml.plasma.Quark;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
+import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
-import net.sourceforge.plantuml.url.UrlBuilder;
-import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
 
-public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntityDiagram> {
+public class CommandArchimatePackage extends SingleLineCommand2<DescriptionDiagram> {
 
-	public CommandArchimateMultilines() {
-		super(getRegexConcat(), MultilinesStrategy.REMOVE_STARTING_QUOTE, Trim.BOTH);
-	}
-
-	@Override
-	public String getPatternEnd() {
-		return "^(.*)\\]$";
+	public CommandArchimatePackage() {
+		super(getRegexConcat());
 	}
 
 	private static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandArchimateMultilines.class.getName(), RegexLeaf.start(), //
-				new RegexLeaf("archimate"), //
+		return RegexConcat.build(CommandArchimatePackage.class.getName(), RegexLeaf.start(), //
+				new RegexLeaf("SYMBOL", "archimate"), //
 				RegexLeaf.spaceOneOrMore(), //
 				color().getRegex(), //
 				RegexLeaf.spaceOneOrMore(), //
-				new RegexLeaf("CODE", "([%pLN_.]+)"), //
+				new RegexOr(//
+						new RegexLeaf("CODE1", CommandCreateElementFull.CODE_WITH_QUOTE), //
+						new RegexConcat(//
+								new RegexLeaf("DISPLAY2", CommandCreateElementFull.DISPLAY), //
+								StereotypePattern.optionalArchimate("STEREOTYPE2"), //
+								new RegexLeaf("as"), //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("CODE2", CommandCreateElementFull.CODE)), //
+						new RegexConcat(//
+								new RegexLeaf("CODE3", CommandCreateElementFull.CODE), //
+								StereotypePattern.optionalArchimate("STEREOTYPE3"), //
+								new RegexLeaf("as"), //
+								RegexLeaf.spaceZeroOrMore(), //
+								new RegexLeaf("DISPLAY3", CommandCreateElementFull.DISPLAY)), //
+						new RegexConcat(//
+								new RegexLeaf("DISPLAY4", CommandCreateElementFull.DISPLAY_WITHOUT_QUOTE), //
+								StereotypePattern.optionalArchimate("STEREOTYPE4"), //
+								new RegexLeaf("as"), //
+								RegexLeaf.spaceOneOrMore(), //
+								new RegexLeaf("CODE4", CommandCreateElementFull.CODE)) //
+				), //
 				StereotypePattern.optionalArchimate("STEREOTYPE"), //
-				UrlBuilder.OPTIONAL, //
 				RegexLeaf.spaceZeroOrMore(), //
-				ColorParser.exp1(), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexLeaf("\\["), //
-				new RegexLeaf("DESC", "(.*)"), //
-				RegexLeaf.end());
+				new RegexLeaf("\\{"), RegexLeaf.end());
 	}
 
 	private static ColorParser color() {
@@ -93,37 +103,37 @@ public class CommandArchimateMultilines extends CommandMultilines2<AbstractEntit
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines, ParserPass currentPass)
+	protected CommandExecutionResult executeArg(DescriptionDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass)
 			throws NoSuchColorException {
-		lines = lines.trim();
-		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
-		final String codeRaw = line0.getLazzy("CODE", 0);
+		final String codeRaw = arg.getLazzy("CODE", 0);
 
-		final Quark<Entity> quark = diagram.quarkInContext(false, diagram.cleanId(codeRaw));
-		if (quark.getData() != null)
-			return CommandExecutionResult.error("Already exists " + quark.getName());
+		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(codeRaw));
 
-		final String icon = StereotypePattern.removeChevronBrackets(line0.getLazzy("STEREOTYPE", 0));
+		String display = StringUtils.eventuallyRemoveStartingAndEndingDoubleQuote(arg.getLazzy("DISPLAY", 0));
+		if (display == null)
+			display = quark.getName();
+		
+		final CommandExecutionResult status = diagram.gotoGroup(location, quark, Display.getWithNewlines(diagram.getPragma(), display),
+				GroupType.PACKAGE, USymbols.ARCHIMATE);
+		if (status.isOk() == false)
+			return status;
 
-		final Entity entity = diagram.reallyCreateLeaf(lines.getLocation(), quark, Display.getWithNewlines(quark), LeafType.DESCRIPTION,
-				USymbols.RECTANGLE);
+		final Entity p = diagram.getCurrentGroup();
 
-		lines = lines.subExtract(1, 1);
-		Display display = lines.toDisplay();
 
-		entity.setDisplay(display);
+		final String icon = StereotypePattern.removeChevronBrackets(arg.getLazzy("STEREOTYPE", 0));
 
-		if (icon != null) {
-			entity.setStereotype(
+		p.setDisplay(Display.getWithNewlines(diagram.getPragma(), display));
+
+		if (icon != null)
+			p.setStereotype(
 					Stereotype.build("<<$archimate/" + icon + ">>", diagram.getSkinParam().getCircledCharacterRadius(),
 							diagram.getSkinParam().getFont(null, false, FontParam.CIRCLED_CHARACTER),
 							diagram.getSkinParam().getIHtmlColorSet()));
-		}
 
-		final Colors colors = color().getColor(line0, diagram.getSkinParam().getIHtmlColorSet());
-		entity.setColors(colors);
+		final Colors colors = color().getColor(arg, diagram.getSkinParam().getIHtmlColorSet());
+		p.setColors(colors);
 
 		return CommandExecutionResult.ok();
 	}
-
 }
