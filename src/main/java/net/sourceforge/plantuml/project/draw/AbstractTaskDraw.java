@@ -35,12 +35,18 @@
  */
 package net.sourceforge.plantuml.project.draw;
 
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColors;
+import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.creole.Sheet;
+import net.sourceforge.plantuml.klimt.creole.SheetBlock1;
+import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.project.ToTaskDraw;
 import net.sourceforge.plantuml.project.core.GSide;
@@ -52,12 +58,14 @@ import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.skin.Pragma;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.svek.image.Opale;
 import net.sourceforge.plantuml.url.Url;
 
 public abstract class AbstractTaskDraw implements TaskDraw {
@@ -75,6 +83,8 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	private final StyleBuilder styleBuilder;
 	private final Task task;
 	private final ToTaskDraw toTaskDraw;
+	private final ISkinSimple skinSimple;
+
 
 	@Override
 	final public String toString() {
@@ -91,14 +101,16 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	}
 
 	public AbstractTaskDraw(TimeScale timeScale, Real y, String prettyDisplay, Day start, Task task,
-			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder) {
+			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder, ISkinSimple skinSimple) {
 		this.y = y;
+		this.skinSimple = skinSimple;
 		this.styleBuilder = styleBuilder;
 		this.toTaskDraw = toTaskDraw;
 		this.start = start;
 		this.prettyDisplay = prettyDisplay;
 		this.timeScale = timeScale;
 		this.task = task;
+
 	}
 
 	abstract StyleSignature getStyleSignature();
@@ -198,5 +210,35 @@ public abstract class AbstractTaskDraw implements TaskDraw {
 	protected Pragma getPragma() {
 		return styleBuilder.getSkinParam().getPragma();
 	}
+	
+	protected Opale getOpaleNote() {
+		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.note)
+				.withTOBECHANGED(noteStereotype).getMergedStyle(getStyleBuilder());
+
+		final FontConfiguration fc = style.getFontConfiguration(getColorSet());
+
+		final HorizontalAlignment horizontalAlignment = style.value(PName.HorizontalAlignment).asHorizontalAlignment();
+		final Sheet sheet = skinSimple.sheet(fc, horizontalAlignment, CreoleMode.FULL).createSheet(note);
+		final double padding = style.value(PName.Padding).asDouble();
+		final SheetBlock1 sheet1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, padding);
+
+		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getColorSet());
+		final HColor borderColor = style.value(PName.LineColor).asColor(getColorSet());
+		final double shadowing = style.getShadowing();
+
+		return new Opale(shadowing, borderColor, noteBackgroundColor, sheet1, false, style.getStroke());
+	}
+	
+	protected void drawNote(UGraphic ug) {
+		if (note == null)
+			return;
+
+		getOpaleNote().drawU(ug);
+
+	}
+
+
+
+
 
 }

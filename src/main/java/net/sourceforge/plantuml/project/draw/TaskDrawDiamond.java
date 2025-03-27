@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.project.time.Day;
 import net.sourceforge.plantuml.project.timescale.TimeScale;
 import net.sourceforge.plantuml.real.Real;
 import net.sourceforge.plantuml.style.ClockwiseTopRightBottomLeft;
+import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.style.SName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
@@ -64,8 +65,8 @@ import net.sourceforge.plantuml.style.StyleSignatureBasic;
 public class TaskDrawDiamond extends AbstractTaskDraw {
 
 	public TaskDrawDiamond(TimeScale timeScale, Real y, String prettyDisplay, Day start, Task task,
-			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder) {
-		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder);
+			ToTaskDraw toTaskDraw, StyleBuilder styleBuilder, ISkinSimple skinSimple) {
+		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinSimple);
 	}
 
 	@Override
@@ -73,9 +74,18 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 		return StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.milestone);
 	}
 
+	private double getYNotePosition(StringBounder stringBounder) {
+		final Style style = getStyle();
+		final ClockwiseTopRightBottomLeft margin = style.getMargin();
+		return margin.getTop() + getShapeHeight(stringBounder) + margin.getBottom();
+	}
+
 	@Override
 	public double getHeightMax(StringBounder stringBounder) {
-		return getFullHeightTask(stringBounder);
+		if (note == null)
+			return getFullHeightTask(stringBounder);
+
+		return getYNotePosition(stringBounder) + getOpaleNote().calculateDimension(stringBounder).getHeight();
 	}
 
 	@Override
@@ -139,6 +149,10 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 	@Override
 	public void drawU(UGraphic ug) {
 
+
+		final double x1 = timeScale.getStartingPosition(start);
+		drawNote(ug.apply(new UTranslate(x1, getYNotePosition(ug.getStringBounder()))));
+
 		if (url != null)
 			ug.startUrl(url);
 
@@ -148,7 +162,6 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 		final ClockwiseTopRightBottomLeft margin = style.getMargin();
 		ug = ug.apply(UTranslate.dy(margin.getTop()));
 
-		final double x1 = timeScale.getStartingPosition(start);
 
 		ug = ug.apply(UTranslate.dx(x1));
 
@@ -165,6 +178,8 @@ public class TaskDrawDiamond extends AbstractTaskDraw {
 		}
 		if (url != null)
 			ug.closeUrl();
+
+
 	}
 
 	private UGraphic applyColors(UGraphic ug) {

@@ -371,7 +371,7 @@ public class ChronologyDiagram extends TitledDiagram implements ToTaskDraw, With
 		for (Task task : tasks.values()) {
 			final TaskDraw draw;
 			final String disp = task.getCode().getDisplay();
-			draw = new TaskDrawDiamond(timeScale, y, disp, task.getStart(), task, this, task.getStyleBuilder());
+			draw = new TaskDrawDiamond(timeScale, y, disp, task.getStart(), task, this, task.getStyleBuilder(), getSkinParam());
 			final double height = draw.getFullHeightTask(stringBounder);
 			y = y.addAtLeast(height);
 //			if (task instanceof TaskSeparator) {

@@ -39,15 +39,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.TreeSet;
 
-import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.creole.CreoleMode;
 import net.sourceforge.plantuml.klimt.creole.Display;
-import net.sourceforge.plantuml.klimt.creole.Sheet;
-import net.sourceforge.plantuml.klimt.creole.SheetBlock1;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
-import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
@@ -73,7 +68,6 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
-import net.sourceforge.plantuml.svek.image.Opale;
 
 public class TaskDrawRegular extends AbstractTaskDraw {
 
@@ -82,13 +76,11 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 	private final boolean oddEnd;
 	private final Collection<Day> paused;
 	private final Collection<GanttConstraint> constraints;
-	private final ISkinSimple skinSimple;
 
 	public TaskDrawRegular(TimeScale timeScale, Real y, String prettyDisplay, Day start, Day end, boolean oddStart,
 			boolean oddEnd, ISkinSimple skinSimple, Task task, ToTaskDraw toTaskDraw,
 			Collection<GanttConstraint> constraints, StyleBuilder styleBuilder) {
-		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder);
-		this.skinSimple = skinSimple;
+		super(timeScale, y, prettyDisplay, start, task, toTaskDraw, styleBuilder, skinSimple);
 		this.constraints = constraints;
 		this.end = end;
 		this.oddStart = oddStart;
@@ -182,38 +174,12 @@ public class TaskDrawRegular extends AbstractTaskDraw {
 		return margin.getTop() + getShapeHeight(stringBounder) + margin.getBottom();
 	}
 
-	private void drawNote(UGraphic ug) {
-		if (note == null)
-			return;
-
-		getOpaleNote().drawU(ug);
-
-	}
-
 	@Override
 	public double getHeightMax(StringBounder stringBounder) {
 		if (note == null)
 			return getFullHeightTask(stringBounder);
 
 		return getYNotePosition(stringBounder) + getOpaleNote().calculateDimension(stringBounder).getHeight();
-	}
-
-	private Opale getOpaleNote() {
-		final Style style = StyleSignatureBasic.of(SName.root, SName.element, SName.ganttDiagram, SName.note)
-				.withTOBECHANGED(noteStereotype).getMergedStyle(getStyleBuilder());
-
-		final FontConfiguration fc = style.getFontConfiguration(getColorSet());
-
-		final HorizontalAlignment horizontalAlignment = style.value(PName.HorizontalAlignment).asHorizontalAlignment();
-		final Sheet sheet = skinSimple.sheet(fc, horizontalAlignment, CreoleMode.FULL).createSheet(note);
-		final double padding = style.value(PName.Padding).asDouble();
-		final SheetBlock1 sheet1 = new SheetBlock1(sheet, LineBreakStrategy.NONE, padding);
-
-		final HColor noteBackgroundColor = style.value(PName.BackGroundColor).asColor(getColorSet());
-		final HColor borderColor = style.value(PName.LineColor).asColor(getColorSet());
-		final double shadowing = style.getShadowing();
-
-		return new Opale(shadowing, borderColor, noteBackgroundColor, sheet1, false, style.getStroke());
 	}
 
 	public FingerPrint getFingerPrint(StringBounder stringBounder) {

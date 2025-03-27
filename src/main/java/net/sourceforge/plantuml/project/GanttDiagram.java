@@ -453,12 +453,12 @@ public class GanttDiagram extends TitledDiagram implements ToTaskDraw, WithSprit
 			} else if (task instanceof TaskGroup) {
 				final TaskGroup taskGroup = (TaskGroup) task;
 				draw = new TaskDrawGroup(timeScale, y, taskGroup.getCode().getDisplay(), getStart(taskGroup),
-						getEnd(taskGroup), task, this, task.getStyleBuilder());
+						getEnd(taskGroup), task, this, task.getStyleBuilder(), getSkinParam());
 			} else {
 				final TaskImpl tmp = (TaskImpl) task;
 				final String disp = hideResourceName ? tmp.getCode().getDisplay() : tmp.getPrettyDisplay();
 				if (tmp.isDiamond()) {
-					draw = new TaskDrawDiamond(timeScale, y, disp, getStart(tmp), task, this, task.getStyleBuilder());
+					draw = new TaskDrawDiamond(timeScale, y, disp, getStart(tmp), task, this, task.getStyleBuilder(), getSkinParam());
 				} else {
 					final boolean oddStart = printStart != null && min.compareTo(getStart(tmp)) == 0;
 					final boolean oddEnd = printStart != null && max.compareTo(getEnd(tmp)) == 0;
