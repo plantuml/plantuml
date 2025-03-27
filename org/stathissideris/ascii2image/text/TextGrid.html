@@ -176,12 +176,15 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fillContinuousArea(int,int,char)" class="member-name-link">fillContinuousArea</a><wbr>(int&nbsp;x,
  int&nbsp;y,
  char&nbsp;c)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Fills the continuous area with if c1 characters with c2,
+ flooding from cell x, y</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CellSet.html" title="class in org.stathissideris.ascii2image.text">CellSet</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fillContinuousArea(org.stathissideris.ascii2image.text.TextGrid.Cell,char)" class="member-name-link">fillContinuousArea</a><wbr>(<a href="TextGrid.Cell.html" title="class in org.stathissideris.ascii2image.text">TextGrid.Cell</a>&nbsp;cell,
  char&nbsp;c)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="TextGrid.Cell.html" title="class in org.stathissideris.ascii2image.text">TextGrid.Cell</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#findArrowheads()" class="member-name-link">findArrowheads</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CellSet.html" title="class in org.stathissideris.ascii2image.text">CellSet</a></code></div>
@@ -319,10 +322,10 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CellSet.html" title="class in org.stathissideris.ascii2image.text">CellSet</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPointMarkersOnLine()" class="member-name-link">getPointMarkersOnLine</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuffer.html" title="class or interface in java.lang" class="external-link">StringBuffer</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html" title="class or interface in java.lang" class="external-link">StringBuilder</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRow(int)" class="member-name-link">getRow</a><wbr>(int&nbsp;y)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuffer.html" title="class or interface in java.lang" class="external-link">StringBuffer</a>&gt;</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html" title="class or interface in java.lang" class="external-link">StringBuilder</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRows()" class="member-name-link">getRows</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>char</code></div>
@@ -371,7 +374,7 @@ loadScripts(document, 'script');</script>
  to go out of sync with corresponding GridPatternGroup.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initialiseWithLines(java.util.ArrayList,org.stathissideris.ascii2image.core.ProcessingOptions)" class="member-name-link">initialiseWithLines</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuffer.html" title="class or interface in java.lang" class="external-link">StringBuffer</a>&gt;&nbsp;lines,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initialiseWithLines(java.util.ArrayList,org.stathissideris.ascii2image.core.ProcessingOptions)" class="member-name-link">initialiseWithLines</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html" title="class or interface in java.lang" class="external-link">StringBuilder</a>&gt;&nbsp;lines,
  <a href="../core/ProcessingOptions.html" title="class in org.stathissideris.ascii2image.core">ProcessingOptions</a>&nbsp;options)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
@@ -620,7 +623,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#replaceAll(char,char)" class="member-name-link">replaceAll</a><wbr>(char&nbsp;c1,
  char&nbsp;c2)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Replace all occurences of c1 with c2</div>
+<div class="block">Replace all occurrences of c1 with c2</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#replaceBullets()" class="member-name-link">replaceBullets</a>()</code></div>
@@ -652,8 +655,8 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;row)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setRow(int,java.lang.StringBuffer)" class="member-name-link">setRow</a><wbr>(int&nbsp;y,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuffer.html" title="class or interface in java.lang" class="external-link">StringBuffer</a>&nbsp;row)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setRow(int,java.lang.StringBuilder)" class="member-name-link">setRow</a><wbr>(int&nbsp;y,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html" title="class or interface in java.lang" class="external-link">StringBuilder</a>&nbsp;row)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
@@ -745,7 +748,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getRow(int)">
 <h3>getRow</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuffer.html" title="class or interface in java.lang" class="external-link">StringBuffer</a></span>&nbsp;<span class="element-name">getRow</span><wbr><span class="parameters">(int&nbsp;y)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html" title="class or interface in java.lang" class="external-link">StringBuilder</a></span>&nbsp;<span class="element-name">getRow</span><wbr><span class="parameters">(int&nbsp;y)</span></div>
 </section>
 </li>
 <li>
@@ -868,10 +871,10 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="setRow(int,java.lang.StringBuffer)">
+<section class="detail" id="setRow(int,java.lang.StringBuilder)">
 <h3>setRow</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setRow</span><wbr><span class="parameters">(int&nbsp;y,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuffer.html" title="class or interface in java.lang" class="external-link">StringBuffer</a>&nbsp;row)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html" title="class or interface in java.lang" class="external-link">StringBuilder</a>&nbsp;row)</span></div>
 </section>
 </li>
 <li>
@@ -913,7 +916,7 @@ loadScripts(document, 'script');</script>
 <h3>add</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">add</span><wbr><span class="parameters">(<a href="TextGrid.html" title="class in org.stathissideris.ascii2image.text">TextGrid</a>&nbsp;grid)</span></div>
 <div class="block">Adds grid to this. Space characters in this grid
- are replaced with the corresponding contents of
+ are replaced with the corresponding contents of 
  grid, otherwise the contents are unchanged.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -955,7 +958,7 @@ loadScripts(document, 'script');</script>
 <h3>replaceAll</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">replaceAll</span><wbr><span class="parameters">(char&nbsp;c1,
  char&nbsp;c2)</span></div>
-<div class="block">Replace all occurences of c1 with c2</div>
+<div class="block">Replace all occurrences of c1 with c2</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>c1</code> - </dd>
@@ -1058,7 +1061,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="findArrowheads()">
 <h3>findArrowheads</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a></span>&nbsp;<span class="element-name">findArrowheads</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="TextGrid.Cell.html" title="class in org.stathissideris.ascii2image.text">TextGrid.Cell</a>&gt;</span>&nbsp;<span class="element-name">findArrowheads</span>()</div>
 </section>
 </li>
 <li>
@@ -1226,12 +1229,12 @@ loadScripts(document, 'script');</script>
 <h3>isStub</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isStub</span><wbr><span class="parameters">(<a href="TextGrid.Cell.html" title="class in org.stathissideris.ascii2image.text">TextGrid.Cell</a>&nbsp;cell)</span></div>
 <div class="block">A stub looks like that:
-
+ 
  <pre>
-
+ 
  +- or -+ or + or + or /- or -/ or / (you get the point)
              |    |                |
-
+ 
  </pre></div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -1691,6 +1694,17 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CellSet.html" title="class in org.stathissideris.ascii2image.text">CellSet</a></span>&nbsp;<span class="element-name">fillContinuousArea</span><wbr><span class="parameters">(int&nbsp;x,
  int&nbsp;y,
  char&nbsp;c)</span></div>
+<div class="block">Fills the continuous area with if c1 characters with c2,
+ flooding from cell x, y</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>x</code> - </dd>
+<dd><code>y</code> - </dd>
+<dd><code>c1</code> - the character to replace</dd>
+<dd><code>c2</code> - the character to replace c1 with</dd>
+<dt>Returns:</dt>
+<dd>the list of cells filled</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -1734,7 +1748,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="initialiseWithLines(java.util.ArrayList,org.stathissideris.ascii2image.core.ProcessingOptions)">
 <h3>initialiseWithLines</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">initialiseWithLines</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuffer.html" title="class or interface in java.lang" class="external-link">StringBuffer</a>&gt;&nbsp;lines,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">initialiseWithLines</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html" title="class or interface in java.lang" class="external-link">StringBuilder</a>&gt;&nbsp;lines,
  <a href="../core/ProcessingOptions.html" title="class in org.stathissideris.ascii2image.core">ProcessingOptions</a>&nbsp;options)</span>
                             throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/UnsupportedEncodingException.html" title="class or interface in java.io" class="external-link">UnsupportedEncodingException</a></span></div>
 <dl class="notes">
@@ -1746,7 +1760,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getRows()">
 <h3>getRows</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuffer.html" title="class or interface in java.lang" class="external-link">StringBuffer</a>&gt;</span>&nbsp;<span class="element-name">getRows</span>()</div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html" title="class or interface in java.lang" class="external-link">StringBuilder</a>&gt;</span>&nbsp;<span class="element-name">getRows</span>()</div>
 <dl class="notes">
 <dt>Returns:</dt>
 </dl>

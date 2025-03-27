@@ -55,11 +55,40 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Package</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><a href="#org.stathissideris.ascii2image.graphics">org.stathissideris.ascii2image.graphics</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#org.stathissideris.ascii2image.core">org.stathissideris.ascii2image.core</a></div>
+<div class="col-last even-row-color">
+<div class="block">Internal copy of 
+ <a href="https://github.com/stathissideris/ditaa" target="_top">
+ <code>ditaa</code></a> <i>(code of Stathis Sideris)</i>.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#org.stathissideris.ascii2image.graphics">org.stathissideris.ascii2image.graphics</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
+<li>
+<section class="detail" id="org.stathissideris.ascii2image.core">
+<h2>Uses of <a href="../DiagramShape.html" title="class in org.stathissideris.ascii2image.graphics">DiagramShape</a> in <a href="../../core/package-summary.html">org.stathissideris.ascii2image.core</a></h2>
+<div class="caption"><span>Methods in <a href="../../core/package-summary.html">org.stathissideris.ascii2image.core</a> with parameters of type <a href="../DiagramShape.html" title="class in org.stathissideris.ascii2image.graphics">DiagramShape</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>int</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Shape3DOrderingComparator.</span><code><a href="../../core/Shape3DOrderingComparator.html#compare(org.stathissideris.ascii2image.graphics.DiagramShape,org.stathissideris.ascii2image.graphics.DiagramShape)" class="member-name-link">compare</a><wbr>(<a href="../DiagramShape.html" title="class in org.stathissideris.ascii2image.graphics">DiagramShape</a>&nbsp;shape1,
+ <a href="../DiagramShape.html" title="class in org.stathissideris.ascii2image.graphics">DiagramShape</a>&nbsp;shape2)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Puts diagram shapes in pseudo-3d order starting from back to front</div>
+</div>
+<div class="col-first odd-row-color"><code>int</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ShapeAreaComparator.</span><code><a href="../../core/ShapeAreaComparator.html#compare(org.stathissideris.ascii2image.graphics.DiagramShape,org.stathissideris.ascii2image.graphics.DiagramShape)" class="member-name-link">compare</a><wbr>(<a href="../DiagramShape.html" title="class in org.stathissideris.ascii2image.graphics">DiagramShape</a>&nbsp;shape1,
+ <a href="../DiagramShape.html" title="class in org.stathissideris.ascii2image.graphics">DiagramShape</a>&nbsp;shape2)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Puts diagram shapes in order or area starting from largest to smallest</div>
+</div>
+</div>
+</section>
+</li>
 <li>
 <section class="detail" id="org.stathissideris.ascii2image.graphics">
 <h2>Uses of <a href="../DiagramShape.html" title="class in org.stathissideris.ascii2image.graphics">DiagramShape</a> in <a href="../package-summary.html">org.stathissideris.ascii2image.graphics</a></h2>
@@ -82,6 +111,24 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../DiagramShape.html" title="class in org.stathissideris.ascii2image.graphics">DiagramShape</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">ShapeEdge.</span><code><a href="../ShapeEdge.html#getOwner()" class="member-name-link">getOwner</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Methods in <a href="../package-summary.html">org.stathissideris.ascii2image.graphics</a> that return types with arguments of type <a href="../DiagramShape.html" title="class in org.stathissideris.ascii2image.graphics">DiagramShape</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="../DiagramShape.html" title="class in org.stathissideris.ascii2image.graphics">DiagramShape</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Diagram.</span><code><a href="../Diagram.html#getAllDiagramShapes()" class="member-name-link">getAllDiagramShapes</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns a list of all DiagramShapes in the Diagram, including
+ the ones within CompositeDiagramShapes</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="../DiagramShape.html" title="class in org.stathissideris.ascii2image.graphics">DiagramShape</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CompositeDiagramShape.</span><code><a href="../CompositeDiagramShape.html#getShapes()" class="member-name-link">getShapes</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="../DiagramShape.html" title="class in org.stathissideris.ascii2image.graphics">DiagramShape</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Diagram.</span><code><a href="../Diagram.html#getShapes()" class="member-name-link">getShapes</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.stathissideris.ascii2image.graphics</a> with parameters of type <a href="../DiagramShape.html" title="class in org.stathissideris.ascii2image.graphics">DiagramShape</a></span></div>
