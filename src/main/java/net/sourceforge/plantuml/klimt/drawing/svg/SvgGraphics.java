@@ -671,6 +671,8 @@ public class SvgGraphics {
 			s = s.replace(k, ent.getValue());
 		}
 		s = removeXmlHeader(s);
+		// Temporary add newline to help debug
+		s = s.replace(">", ">\n");
 		os.write(s.getBytes());
 	}
 
