@@ -12,11 +12,12 @@ fop                 = "2.10"
 glytching-junit-ext = "2.6.0"
 graalvm-native      = "0.10.6"
 jlatexmath          = "1.0.7"
-junit-jupiter       = "5.11.4"
+junit-jupiter       = "5.12.1"
+junit-platform-launcher = "1.10.2"
 mockito-j8          = "4.+"
 mockito             = "5.+"
 adarshr-test-logger = "4.0.0"
-xmlunit-core        = "2.10.+"
+xmlunit-core        = "2.10.0"
 
 
 [libraries]
@@ -31,6 +32,9 @@ fop                         = { module = "org.apache.xmlgraphics:fop", version.r
 glytching-junit-extensions  = { module = "io.github.glytching:junit-extensions", version.ref = "glytching-junit-ext" }
 jlatexmath                  = { module = "org.scilab.forge:jlatexmath", version.ref = "jlatexmath" }
 junit-jupiter               = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
+junit-bom                   = { module = "org.junit:junit-bom", version.ref = "junit-jupiter" }
+junit-platform-launcher     = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform-launcher" }
+
 mockito-core-j8             = { module = "org.mockito:mockito-core", version.ref = "mockito-j8" }
 mockito-core                = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 mockito-junit-jupiter-j8    = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito-j8" }

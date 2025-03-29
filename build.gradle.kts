@@ -30,6 +30,9 @@ java {
 
 dependencies {
 	compileOnly(libs.ant)
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.platform.launcher)
 
 	testImplementation(libs.glytching.junit.extensions)
 	testImplementation(libs.assertj.core)
