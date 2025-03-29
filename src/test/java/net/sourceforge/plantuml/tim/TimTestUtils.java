@@ -48,6 +48,13 @@ public class TimTestUtils {
 		assertEquals(expected, tValue.toString());
 	}
 
+	// Tfunc: (String, Int) -> (String)
+	public static void assertTimExpectedOutputFromInput(TFunction func, String input1, Integer input2, String expected) throws EaterException {
+		final List<TValue> values = Arrays.asList(TValue.fromString(input1), TValue.fromInt(input2));
+		final TValue tValue = func.executeReturnFunction(null, null, null, values, null);
+		assertEquals(expected, tValue.toString());
+	}
+
 	// Tfunc: (JsonValue) -> (String)
 	public static void assertTimExpectedOutputFromInput(TFunction func, JsonValue input, String expected) throws EaterException {
 		final List<TValue> values = Collections.singletonList(TValue.fromJson(input));
