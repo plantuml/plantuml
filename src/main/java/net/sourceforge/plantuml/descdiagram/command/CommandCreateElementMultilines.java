@@ -65,6 +65,7 @@ import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandCreateElementMultilines extends CommandMultilines2<AbstractEntityDiagram> {
 
@@ -125,6 +126,8 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 	@Override
 	protected CommandExecutionResult executeNow(AbstractEntityDiagram diagram, BlocLines lines, ParserPass currentPass)
 			throws NoSuchColorException {
+		final LineLocation location = lines.getLocation();
+
 		lines = lines.trimSmart(1).expandsNewline(false);
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final String symbol = StringUtils.goUpperCase(line0.get("TYPE", 0));
@@ -163,7 +166,7 @@ public class CommandCreateElementMultilines extends CommandMultilines2<AbstractE
 		final Quark<Entity> quark = diagram.quarkInContext(true, diagram.cleanId(idShort));
 		Entity result = quark.getData();
 		if (quark.getData() == null)
-			result = diagram.reallyCreateLeaf(lines.getLocation(), quark, display, type, usymbol);
+			result = diagram.reallyCreateLeaf(location, quark, display, type, usymbol);
 
 		if (CommandCreateElementFull.existsWithBadType3(diagram, quark, type, usymbol))
 			return CommandExecutionResult.error("This element (" + quark.getName() + ") is already defined");
