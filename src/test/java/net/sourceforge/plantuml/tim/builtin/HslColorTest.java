@@ -39,13 +39,13 @@ public class HslColorTest {
         //
         // TODO: Need to be retested... RGBa or aRGB...
         //
-        "120, 100, 50, 50, #8000FF00", // Pure green with 50% opacity
+        "120, 100, 50, 50, #800ff00", // Pure green with 50% opacity
         "240, 100, 50, 0, transparent",  // Pure blue with 0% opacity
-        "60, 100, 50, 75, #BFFFFF00",  // Pure yellow with 75% opacity
-        "180, 100, 50, 25, #4000FFFF", // Pure cyan with 25% opacity
-        "300, 100, 50, 10, #1AFF00FF", // Pure magenta with 10% opacity
+        "60, 100, 50, 75, #bfffff00",  // Pure yellow with 75% opacity
+        "180, 100, 50, 25, #4000ffff", // Pure cyan with 25% opacity
+        "300, 100, 50, 10, #1aff00ff", // Pure magenta with 10% opacity
         "0, 0, 0, 50, #80000000",      // Black with 50% opacity
-        "0, 0, 100, 50, #80FFFFFF"     // White with 50% opacity
+        "0, 0, 100, 50, #80ffffff"     // White with 50% opacity
     })
     public void testHslColorWithAlpha(int h, int s, int l, int a, String expectedOutput) throws EaterException {
         TimTestUtils.assertTimExpectedOutputFromInput(hslColorFunction, h, s, l, a, expectedOutput);
