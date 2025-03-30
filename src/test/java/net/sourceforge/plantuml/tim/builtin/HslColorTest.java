@@ -37,9 +37,9 @@ public class HslColorTest {
         // "0, 0, 0, 50, #0000007F",      // Black with 50% opacity
         // "0, 0, 100, 50, #FFFFFF7F"     // White with 50% opacity
         //
-        // TODO: Need to be retested... RGBa or aRGB...
+        // TODO: Need to be retested... RGBa or aRGB... or upper/lower
         //
-        "120, 100, 50, 50, #800ff00", // Pure green with 50% opacity
+        "120, 100, 50, 50, #8000ff00", // Pure green with 50% opacity
         "240, 100, 50, 0, transparent",  // Pure blue with 0% opacity
         "60, 100, 50, 75, #bfffff00",  // Pure yellow with 75% opacity
         "180, 100, 50, 25, #4000ffff", // Pure cyan with 25% opacity
