@@ -17,6 +17,6 @@ public class IsDarkTest {
     })
     public void testIsDark(String inputColor, boolean expectedOutput) throws EaterException {
         IsDark isDarkFunction = new IsDark();
-        TimTestUtils.assertTimExpectedOutputFromInput(isDarkFunction, inputColor, expectedOutput ? "true" : "false");
+        TimTestUtils.assertTimExpectedOutputFromInput(isDarkFunction, inputColor, expectedOutput ? "1" : "0");
     }
 }

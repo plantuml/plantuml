@@ -17,6 +17,6 @@ public class IsLightTest {
     })
     public void testIsLight(String inputColor, boolean expectedOutput) throws EaterException {
         IsLight isLightFunction = new IsLight();
-        TimTestUtils.assertTimExpectedOutputFromInput(isLightFunction, inputColor, expectedOutput ? "true" : "false");
+        TimTestUtils.assertTimExpectedOutputFromInput(isLightFunction, inputColor, expectedOutput ? "1" : "0");
     }
 }
