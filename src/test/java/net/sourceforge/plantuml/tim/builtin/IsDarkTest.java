@@ -8,7 +8,7 @@ import net.sourceforge.plantuml.tim.TimTestUtils;
 
 public class IsDarkTest {
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "[{index}] IsDark({0}) = {1}")
     @CsvSource({
         " #000000, true",  // Black color, is dark
         " #FFFFFF, false", // White color, is not dark
