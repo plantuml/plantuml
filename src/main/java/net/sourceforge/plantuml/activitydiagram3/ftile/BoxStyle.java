@@ -140,6 +140,12 @@ public enum BoxStyle {
 		protected Shadowable getShape(double width, double height, double roundCorner) {
 			return URectangle.build(width, height);
 		}
+	},
+	SDL_OBJECT("object", ']', 0) {
+		@Override
+		protected Shadowable getShape(double width, double height, double roundCorner) {
+			return URectangle.build(width, height);
+		}
 	};
 
 	private final String stereotype;
