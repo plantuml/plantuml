@@ -6,7 +6,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TimTestUtils;
 
-public class DarkenFunctionTest {
+public class DarkenTest {
 
     @ParameterizedTest(name = "[{index}] Darken(''{0}'', {1}) = ''{2}''")
     @CsvSource({

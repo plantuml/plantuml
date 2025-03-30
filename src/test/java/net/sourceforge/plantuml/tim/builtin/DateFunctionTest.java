@@ -1,6 +1,5 @@
 package net.sourceforge.plantuml.tim.builtin;
 
-import net.sourceforge.plantuml.tim.stdlib.DateFunction;
 import net.sourceforge.plantuml.tim.expression.TValue;
 import org.junit.jupiter.api.Test;
 
