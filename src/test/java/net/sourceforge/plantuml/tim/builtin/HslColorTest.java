@@ -7,6 +7,7 @@ import net.sourceforge.plantuml.tim.EaterException;
 import net.sourceforge.plantuml.tim.TimTestUtils;
 
 public class HslColorTest {
+    HslColor hslColorFunction = new HslColor();
 
     @ParameterizedTest(name = "[{index}] HslColor({0}, {1}, {2}) = {3}")
     @CsvSource({
@@ -21,8 +22,23 @@ public class HslColorTest {
         "0, 0, 50, #808080",      // Gray
         "0, 0, 75, #BFBFBF"       // Light gray
     })
-    public void testHslColor(int h, int s, int l, String expectedOutput) throws EaterException {
-        HslColor hslColorFunction = new HslColor();
+    public void testHslColor(int h, int s, int l, String expectedOutput) throws EaterException { 
         TimTestUtils.assertTimExpectedOutputFromInput(hslColorFunction, h, s, l, expectedOutput);
     }
+
+    @ParameterizedTest(name = "[{index}] HslColor({0}, {1}, {2}, {3}) = {4}")
+    @CsvSource({
+        "0, 100, 50, 100, #FF0000",    // Pure red with full opacity
+        "120, 100, 50, 50, #00FF007F", // Pure green with 50% opacity
+        "240, 100, 50, 0, #0000FF00",  // Pure blue with 0% opacity
+        "60, 100, 50, 75, #FFFF00BF",  // Pure yellow with 75% opacity
+        "180, 100, 50, 25, #00FFFF3F", // Pure cyan with 25% opacity
+        "300, 100, 50, 10, #FF00FF1A", // Pure magenta with 10% opacity
+        "0, 0, 0, 50, #0000007F",      // Black with 50% opacity
+        "0, 0, 100, 50, #FFFFFF7F"     // White with 50% opacity
+    })
+    public void testHslColorWithAlpha(int h, int s, int l, int a, String expectedOutput) throws EaterException {
+        TimTestUtils.assertTimExpectedOutputFromInput(hslColorFunction, h, s, l, a, expectedOutput);
+    }
+
 }

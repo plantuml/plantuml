@@ -10,7 +10,7 @@ import net.sourceforge.plantuml.tim.expression.TValue;
 import net.sourceforge.plantuml.json.JsonValue;
 
 /**
- * Class to help test of `tim/stdlib`.
+ * Class to help test of `tim/builtin`.
  */
 public class TimTestUtils {
 
@@ -30,6 +30,20 @@ public class TimTestUtils {
 	// Tfunc: (Integer, Integer) -> (String)
 	public static void assertTimExpectedOutputFromInput(TFunction func, Integer input1, Integer input2, String expected) throws EaterException {
 		final List<TValue> values = Arrays.asList(TValue.fromInt(input1), TValue.fromInt(input2));
+		final TValue tValue = func.executeReturnFunction(null, null, null, values, null);
+		assertEquals(expected, tValue.toString());
+	}
+
+	// Tfunc: (Integer, Integer, Integer) -> (String)
+	public static void assertTimExpectedOutputFromInput(TFunction func, Integer input1, Integer input2, Integer input3, String expected) throws EaterException {
+		final List<TValue> values = Arrays.asList(TValue.fromInt(input1), TValue.fromInt(input2), TValue.fromInt(input3));
+		final TValue tValue = func.executeReturnFunction(null, null, null, values, null);
+		assertEquals(expected, tValue.toString());
+	}
+
+	// Tfunc: (Integer, Integer, Integer, Integer) -> (String)
+	public static void assertTimExpectedOutputFromInput(TFunction func, Integer input1, Integer input2, Integer input3, Integer input4, String expected) throws EaterException {
+		final List<TValue> values = Arrays.asList(TValue.fromInt(input1), TValue.fromInt(input2), TValue.fromInt(input3), TValue.fromInt(input4));
 		final TValue tValue = func.executeReturnFunction(null, null, null, values, null);
 		assertEquals(expected, tValue.toString());
 	}
