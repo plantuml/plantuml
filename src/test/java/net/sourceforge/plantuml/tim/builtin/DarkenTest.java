@@ -8,7 +8,7 @@ import net.sourceforge.plantuml.tim.TimTestUtils;
 
 public class DarkenTest {
 
-    @ParameterizedTest(name = "[{index}] Darken(''{0}'', {1}) = ''{2}''")
+    @ParameterizedTest(name = "[{index}] Darken({0}, {1}) = {2}")
     @CsvSource({
         " #FF0000,  10, #E60000", // Red color, darkened by 10%
         " #00FF00,  50, #008000", // Green color, darkened by 50%
