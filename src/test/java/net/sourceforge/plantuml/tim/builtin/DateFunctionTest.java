@@ -1,7 +1,6 @@
 package net.sourceforge.plantuml.tim.builtin;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.text.SimpleDateFormat;
@@ -22,7 +21,17 @@ public class DateFunctionTest {
         TValue result = dateFunction.executeReturnFunction(null, null, null, Arrays.asList(), null);
         String dateString = result.toString();
         assertThat(dateString).isNotNull();
-        assertThatCode(() -> new Date(dateString)).doesNotThrowAnyException();
+
+		// Permissive pattern for date formats such as:
+		// "Mon Mar 31 14:23:55 CEST 2025"         (English)
+		// "lun. mars 31 14:23:55 UTC+1 2025"      (French)
+		// "周一 三月 31 14:23:55 GMT+08:00 2025"   (Chinese)
+		// "Mo Mär 31 14:23:55 CET 2025"           (German)
+		// "lun mar 31 14:23:55 CET 2025"          (Spanish)
+		final String pattern = "^\\S+\\s+\\S+\\s+\\d{1,2}\\s+\\d{2}:\\d{2}:\\d{2}\\s+\\S+\\s+\\d{4}$";
+
+		assertThat(dateString).matches(pattern);
+
     }
 
     @Test
