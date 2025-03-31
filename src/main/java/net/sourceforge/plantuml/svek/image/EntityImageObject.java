@@ -35,15 +35,13 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.EnumMap;
-import java.util.Map;
-
 import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPortion;
 import net.sourceforge.plantuml.abel.LineConfigurable;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
 import net.sourceforge.plantuml.klimt.Shadowable;
+import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -183,15 +181,13 @@ public class EntityImageObject extends AbstractEntityImage implements Stencil, W
 		if (url != null)
 			ug.startUrl(url);
 
-		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
-		typeIDent.put(UGroupType.CLASS, "entity");
-		typeIDent.put(UGroupType.ID, "entity_" + getEntity().getName());
-		typeIDent.put(UGroupType.DATA_ENTITY, getEntity().getName());
-		typeIDent.put(UGroupType.DATA_UID, getEntity().getUid());
-		typeIDent.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());
-		if (getEntity().getLocation() != null)
-			typeIDent.put(UGroupType.DATA_SOURCE_LINE, "" + getEntity().getLocation().getPosition());
-		ug.startGroup(typeIDent);
+		final UGroup group = new UGroup(getEntity().getLocation());
+		group.put(UGroupType.CLASS, "entity");
+		group.put(UGroupType.ID, "entity_" + getEntity().getName());
+		group.put(UGroupType.DATA_ENTITY, getEntity().getName());
+		group.put(UGroupType.DATA_UID, getEntity().getUid());
+		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());
+		ug.startGroup(group);
 		ug.apply(stroke).draw(rect);
 
 		if (headerBackcolor != null && backcolor.equals(headerBackcolor) == false) {

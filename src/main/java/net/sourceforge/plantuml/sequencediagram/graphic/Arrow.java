@@ -39,6 +39,7 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -91,7 +92,7 @@ abstract class Arrow extends GraphicalElement implements InGroupable {
 	}
 
 	protected final void startGroup(UGraphic ug) {
-		final Map<UGroupType, String> typeIdents = new EnumMap<>(UGroupType.class);
+		final UGroup typeIdents = new UGroup();
 		typeIdents.put(UGroupType.CLASS, "message");
 		// Please also remove Pragma from constructor when this will be removed
 		if (pragma.isTrue(PragmaKey.SVGNEWDATA)) {

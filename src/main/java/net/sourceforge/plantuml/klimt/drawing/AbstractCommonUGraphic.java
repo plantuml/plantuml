@@ -35,14 +35,13 @@
  */
 package net.sourceforge.plantuml.klimt.drawing;
 
-import java.util.Map;
 import java.util.Objects;
 
 import net.sourceforge.plantuml.klimt.CopyForegroundColorToBackgroundColor;
 import net.sourceforge.plantuml.klimt.UBackground;
 import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.UClip;
-import net.sourceforge.plantuml.klimt.UGroupType;
+import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.UPattern;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -193,7 +192,7 @@ public abstract class AbstractCommonUGraphic implements UGraphic {
 	public void closeUrl() {
 	}
 
-	public void startGroup(Map<UGroupType, String> typeIdents) {
+	public void startGroup(UGroup group) {
 	}
 
 	public void closeGroup() {

@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.skin.rose;
 
 import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
@@ -48,8 +49,6 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.style.Style;
-
-import static java.util.Collections.singletonMap;
 
 public class ComponentRoseActiveLine extends AbstractComponent {
 
@@ -77,7 +76,7 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 			return;
 		}
 
-		ug.startGroup(singletonMap(UGroupType.TITLE, stringsToDisplay.toTooltipText()));
+		ug.startGroup(UGroup.singletonMap(UGroupType.TITLE, stringsToDisplay.toTooltipText()));
 
 		final URectangle rect = URectangle.build(getPreferredWidth(stringBounder), dimensionToUse.getHeight());
 		if (symbolContext.isShadowing()) {

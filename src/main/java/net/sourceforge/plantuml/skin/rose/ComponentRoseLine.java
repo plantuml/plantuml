@@ -35,6 +35,9 @@
  */
 package net.sourceforge.plantuml.skin.rose;
 
+import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior.WITH_FILL_OPACITY;
+
+import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -51,9 +54,6 @@ import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
-
-import static java.util.Collections.singletonMap;
-import static net.sourceforge.plantuml.klimt.color.HColor.TransparentFillBehavior.WITH_FILL_OPACITY;
 
 public class ComponentRoseLine extends AbstractComponent {
 
@@ -80,7 +80,7 @@ public class ComponentRoseLine extends AbstractComponent {
 //		if (continueLine)
 //			ug = ug.apply(UStroke.simple());
 
-		ug.startGroup(singletonMap(UGroupType.TITLE, stringsToDisplay.toTooltipText()));
+		ug.startGroup(UGroup.singletonMap(UGroupType.TITLE, stringsToDisplay.toTooltipText()));
 		drawTitleHoverTargetRect(ug, dimensionToUse);
 
 		final int x = (int) (dimensionToUse.getWidth() / 2);

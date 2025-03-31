@@ -37,10 +37,8 @@
 package net.sourceforge.plantuml.svek.image;
 
 import java.util.Collection;
-import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -53,6 +51,7 @@ import net.sourceforge.plantuml.decoration.symbol.USymbolActorBusiness;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.Shadowable;
+import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -286,15 +285,13 @@ public class EntityImageDescription extends AbstractEntityImage {
 
 	final public void drawU(UGraphic ug) {
 		ug.draw(new UComment("entity " + getEntity().getName()));
-		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
-		typeIDent.put(UGroupType.CLASS, "entity");
-		typeIDent.put(UGroupType.ID, "entity_" + getEntity().getName());
-		typeIDent.put(UGroupType.DATA_ENTITY, getEntity().getName());
-		typeIDent.put(UGroupType.DATA_UID, getEntity().getUid());
-		typeIDent.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());
-		if (getEntity().getLocation() != null)
-			typeIDent.put(UGroupType.DATA_SOURCE_LINE, "" + getEntity().getLocation().getPosition());
-		ug.startGroup(typeIDent);
+		final UGroup group = new UGroup(getEntity().getLocation());
+		group.put(UGroupType.CLASS, "entity");
+		group.put(UGroupType.ID, "entity_" + getEntity().getName());
+		group.put(UGroupType.DATA_ENTITY, getEntity().getName());
+		group.put(UGroupType.DATA_UID, getEntity().getUid());
+		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());
+		ug.startGroup(group);
 
 		if (url != null)
 			ug.startUrl(url);

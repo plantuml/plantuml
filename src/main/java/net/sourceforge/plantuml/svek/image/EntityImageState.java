@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Collections;
-
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -52,7 +51,6 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.stereo.Stereotype;
-import net.sourceforge.plantuml.style.ISkinParam;
 
 public class EntityImageState extends EntityImageStateCommon {
 
@@ -98,7 +96,7 @@ public class EntityImageState extends EntityImageStateCommon {
 	}
 
 	final public void drawU(UGraphic ug) {
-		ug.startGroup(Collections.singletonMap(UGroupType.ID, getEntity().getQuark().toStringPoint()));
+		ug.startGroup(UGroup.singletonMap(UGroupType.ID, getEntity().getQuark().toStringPoint()));
 		if (url != null)
 			ug.startUrl(url);
 

@@ -36,15 +36,14 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 import net.sourceforge.plantuml.abel.EntityPortion;
 import net.sourceforge.plantuml.abel.SpecificBackcolorable;
 import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.Colors;
@@ -201,39 +200,39 @@ public class Participant implements SpecificBackcolorable, WithStyle {
 		return location;
 	}
 
-	public Map<UGroupType, String> groupTypeTail(Pragma pragma) {
-		final Map<UGroupType, String> typeIdents = new EnumMap<>(UGroupType.class);
-		typeIdents.put(UGroupType.CLASS, "participant participant-tail");
-		typeIdents.put(UGroupType.DATA_QUALIFIED_NAME, code);
-		typeIdents.put(UGroupType.DATA_PARTICIPANT, code);
-		typeIdents.put(UGroupType.DATA_ENTITY_UID, uid);
+	public UGroup groupTypeTail(Pragma pragma) {
+		final UGroup group = new UGroup();
+		group.put(UGroupType.CLASS, "participant participant-tail");
+		group.put(UGroupType.DATA_QUALIFIED_NAME, code);
+		group.put(UGroupType.DATA_PARTICIPANT, code);
+		group.put(UGroupType.DATA_ENTITY_UID, uid);
 		if (pragma.isTrue(PragmaKey.SVGNEWDATA))
-			typeIdents.put(UGroupType.DATA_UID, uid + "-tail");
+			group.put(UGroupType.DATA_UID, uid + "-tail");
 
-		return typeIdents;
+		return group;
 	}
 
-	public Map<UGroupType, String> groupTypeHead(Pragma pragma) {
-		final Map<UGroupType, String> typeIdents = new EnumMap<>(UGroupType.class);
-		typeIdents.put(UGroupType.CLASS, "participant participant-head");
-		typeIdents.put(UGroupType.DATA_QUALIFIED_NAME, code);
-		typeIdents.put(UGroupType.DATA_PARTICIPANT, code);
-		typeIdents.put(UGroupType.DATA_ENTITY_UID, uid);
+	public UGroup groupTypeHead(Pragma pragma) {
+		final UGroup group = new UGroup();
+		group.put(UGroupType.CLASS, "participant participant-head");
+		group.put(UGroupType.DATA_QUALIFIED_NAME, code);
+		group.put(UGroupType.DATA_PARTICIPANT, code);
+		group.put(UGroupType.DATA_ENTITY_UID, uid);
 		if (pragma.isTrue(PragmaKey.SVGNEWDATA))
-			typeIdents.put(UGroupType.DATA_UID, uid + "-head");
-		return typeIdents;
+			group.put(UGroupType.DATA_UID, uid + "-head");
+		return group;
 	}
 
-	public Map<UGroupType, String> groupTypeLifeline(Pragma pragma) {
-		final Map<UGroupType, String> typeIdents = new EnumMap<>(UGroupType.class);
+	public UGroup groupTypeLifeline(Pragma pragma) {
+		final UGroup group = new UGroup();
 		if (pragma.isTrue(PragmaKey.SVGNEWDATA)) {
-			typeIdents.put(UGroupType.CLASS, "participant-lifeline");
-			typeIdents.put(UGroupType.DATA_UID, uid + "-lifeline");
-			typeIdents.put(UGroupType.DATA_QUALIFIED_NAME, code);
-			typeIdents.put(UGroupType.DATA_PARTICIPANT, code);
-			typeIdents.put(UGroupType.DATA_ENTITY_UID, uid);
+			group.put(UGroupType.CLASS, "participant-lifeline");
+			group.put(UGroupType.DATA_UID, uid + "-lifeline");
+			group.put(UGroupType.DATA_QUALIFIED_NAME, code);
+			group.put(UGroupType.DATA_PARTICIPANT, code);
+			group.put(UGroupType.DATA_ENTITY_UID, uid);
 		}
-		return typeIdents;
+		return group;
 	}
 
 	public String getUid() {

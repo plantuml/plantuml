@@ -37,9 +37,8 @@ package net.sourceforge.plantuml.klimt.drawing;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Map;
 
-import net.sourceforge.plantuml.klimt.UGroupType;
+import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.UParamNull;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -74,7 +73,7 @@ public abstract class UGraphicNo implements UGraphic {
 	}
 
 	@Override
-	public void startGroup(Map<UGroupType, String> typeIdents) {
+	public void startGroup(UGroup group) {
 	}
 
 	@Override

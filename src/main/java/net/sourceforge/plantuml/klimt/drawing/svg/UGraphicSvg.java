@@ -41,6 +41,7 @@ import java.util.Map;
 import javax.xml.transform.TransformerException;
 
 import net.sourceforge.plantuml.klimt.ClipContainer;
+import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.drawing.AbstractCommonUGraphic;
@@ -140,8 +141,8 @@ public class UGraphicSvg extends AbstractUGraphic<SvgGraphics> implements ClipCo
 	}
 
 	@Override
-	public void startGroup(Map<UGroupType, String> typeIdents) {
-		getGraphicObject().startGroup(typeIdents);
+	public void startGroup(UGroup group) {
+		getGraphicObject().startGroup(group.asMap());
 	}
 
 	@Override

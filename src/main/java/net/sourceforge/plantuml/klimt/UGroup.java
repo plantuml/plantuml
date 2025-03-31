@@ -2,7 +2,7 @@
  * PlantUML : a free UML diagram generator
  * ========================================================================
  *
- * (C) Copyright 2009-2024, Arnaud Roques
+ * (C) Copyright 2009-2025, Arnaud Roques
  *
  * Project Info:  https://plantuml.com
  *
@@ -33,47 +33,38 @@
  *
  *
  */
-package net.sourceforge.plantuml.klimt.drawing;
+package net.sourceforge.plantuml.klimt;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import java.util.Collections;
+import java.util.EnumMap;
+import java.util.Map;
 
-import net.sourceforge.plantuml.klimt.UChange;
-import net.sourceforge.plantuml.klimt.UGroup;
-import net.sourceforge.plantuml.klimt.UParam;
-import net.sourceforge.plantuml.klimt.UShape;
-import net.sourceforge.plantuml.klimt.color.ColorMapper;
-import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.font.StringBounder;
-import net.sourceforge.plantuml.url.Url;
+import net.sourceforge.plantuml.utils.LineLocation;
 
-public interface UGraphic {
+public class UGroup {
 
-	public StringBounder getStringBounder();
+	private final Map<UGroupType, String> map = new EnumMap<>(UGroupType.class);
 
-	public UParam getParam();
+	public UGroup(LineLocation location) {
+		if (location != null)
+			map.put(UGroupType.DATA_SOURCE_LINE, "" + location.getPosition());
+	}
 
-	public <SHAPE extends UShape> void draw(SHAPE shape);
+	public UGroup() {
+	}
 
-	public UGraphic apply(UChange change);
+	public void put(UGroupType key, String value) {
+		map.put(key, value);
+	}
 
-	public ColorMapper getColorMapper();
+	public static UGroup singletonMap(UGroupType key, String value) {
+		final UGroup result = new UGroup();
+		result.put(key, value);
+		return result;
+	}
 
-	public void startUrl(Url url);
+	public Map<UGroupType, String> asMap() {
+		return Collections.unmodifiableMap(map);
+	}
 
-	public void closeUrl();
-
-	public void startGroup(UGroup group);
-
-	public void closeGroup();
-
-	public void flushUg();
-
-	public boolean matchesProperty(String propertyName);
-
-	public HColor getDefaultBackground();
-
-	// ::comment when __HAXE__
-	public void writeToStream(OutputStream os, String metadata, int dpi) throws IOException;
-	// ::done
 }

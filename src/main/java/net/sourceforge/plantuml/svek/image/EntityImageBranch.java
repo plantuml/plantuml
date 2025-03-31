@@ -35,10 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.EnumMap;
-import java.util.Map;
-
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -84,13 +82,13 @@ public class EntityImageBranch extends AbstractEntityImage {
 		final double shadowing = style.getShadowing();
 
 		diams.setDeltaShadow(shadowing);
-		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
-		typeIDent.put(UGroupType.CLASS, "entity");
-		typeIDent.put(UGroupType.ID, "entity_" + getEntity().getName());
-		typeIDent.put(UGroupType.DATA_ENTITY, getEntity().getName());
-		typeIDent.put(UGroupType.DATA_UID, getEntity().getUid());
-		typeIDent.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());
-		ug.startGroup(typeIDent);
+		final UGroup group = new UGroup();
+		group.put(UGroupType.CLASS, "entity");
+		group.put(UGroupType.ID, "entity_" + getEntity().getName());
+		group.put(UGroupType.DATA_ENTITY, getEntity().getName());
+		group.put(UGroupType.DATA_UID, getEntity().getUid());
+		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());
+		ug.startGroup(group);
 		ug.apply(border).apply(back.bg()).apply(stroke).draw(diams);
 		ug.closeGroup();
 	}

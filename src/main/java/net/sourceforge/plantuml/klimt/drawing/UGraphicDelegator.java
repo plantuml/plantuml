@@ -37,9 +37,8 @@ package net.sourceforge.plantuml.klimt.drawing;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Map;
 
-import net.sourceforge.plantuml.klimt.UGroupType;
+import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UParam;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
@@ -91,8 +90,8 @@ public abstract class UGraphicDelegator implements UGraphic {
 		ug.closeUrl();
 	}
 
-	public void startGroup(Map<UGroupType, String> typeIdents) {
-		ug.startGroup(typeIdents);
+	public void startGroup(UGroup group) {
+		ug.startGroup(group);
 	}
 
 	public void closeGroup() {

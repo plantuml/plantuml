@@ -35,9 +35,8 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.Collections;
-
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UShape;
 import net.sourceforge.plantuml.klimt.UStroke;
@@ -52,7 +51,6 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.klimt.shape.TextBlockInEllipse;
 import net.sourceforge.plantuml.klimt.shape.UEllipse;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
@@ -123,7 +121,7 @@ public class EntityImageChenCircle extends AbstractEntityImage {
 
 	@Override
 	public void drawU(UGraphic ug) {
-		ug.startGroup(Collections.singletonMap(UGroupType.ID, getEntity().getQuark().toStringPoint()));
+		ug.startGroup(UGroup.singletonMap(UGroupType.ID, getEntity().getQuark().toStringPoint()));
 		if (url != null)
 			ug.startUrl(url);
 

@@ -37,9 +37,7 @@ package net.sourceforge.plantuml.svek;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import net.sourceforge.plantuml.StringUtils;
@@ -61,6 +59,7 @@ import net.sourceforge.plantuml.decoration.Rainbow;
 import net.sourceforge.plantuml.descdiagram.command.StringWithArrow;
 import net.sourceforge.plantuml.dot.DotSplines;
 import net.sourceforge.plantuml.dot.GraphvizVersion;
+import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -801,17 +800,15 @@ public class SvekEdge extends XAbstractEdge implements XEdge, UDrawable {
 		}
 
 		ug.draw(link.commentForSvg());
-		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
-		typeIDent.put(UGroupType.DATA_UID, link.getUid());
-		typeIDent.put(UGroupType.CLASS, "link");
-		typeIDent.put(UGroupType.ID, "link_" + link.getEntity1().getName() + "_" + link.getEntity2().getName());
-		typeIDent.put(UGroupType.DATA_ENTITY_1, link.getEntity1().getName());
-		typeIDent.put(UGroupType.DATA_ENTITY_2, link.getEntity2().getName());
-		typeIDent.put(UGroupType.DATA_ENTITY_1_UID, link.getEntity1().getUid());
-		typeIDent.put(UGroupType.DATA_ENTITY_2_UID, link.getEntity2().getUid());
-		if (link.getLocation() != null)
-			typeIDent.put(UGroupType.DATA_SOURCE_LINE, "" + link.getLocation().getPosition());
-		ug.startGroup(typeIDent);
+		final UGroup group = new UGroup(link.getLocation());
+		group.put(UGroupType.DATA_UID, link.getUid());
+		group.put(UGroupType.CLASS, "link");
+		group.put(UGroupType.ID, "link_" + link.getEntity1().getName() + "_" + link.getEntity2().getName());
+		group.put(UGroupType.DATA_ENTITY_1, link.getEntity1().getName());
+		group.put(UGroupType.DATA_ENTITY_2, link.getEntity2().getName());
+		group.put(UGroupType.DATA_ENTITY_1_UID, link.getEntity1().getUid());
+		group.put(UGroupType.DATA_ENTITY_2_UID, link.getEntity2().getUid());
+		ug.startGroup(group);
 		double x = 0;
 		double y = 0;
 		final Url url = link.getUrl();

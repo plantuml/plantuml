@@ -35,15 +35,14 @@
  */
 package net.sourceforge.plantuml.svek.image;
 
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.annotation.DeadCode;
 import net.sourceforge.plantuml.cucadiagram.BodyFactory;
 import net.sourceforge.plantuml.cucadiagram.PortionShower;
+import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -136,15 +135,13 @@ public class EntityImageUseCase extends AbstractEntityImage {
 		ug = ug.apply(backcolor.bg());
 		final UGraphic ug2 = new MyUGraphicEllipse(ug, 0, 0, ellipse.getUEllipse());
 
-		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
-		typeIDent.put(UGroupType.CLASS, "entity");
-		typeIDent.put(UGroupType.ID, "entity_" + getEntity().getName());
-		typeIDent.put(UGroupType.DATA_ENTITY, getEntity().getName());
-		typeIDent.put(UGroupType.DATA_UID, getEntity().getUid());
-		typeIDent.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());
-		if (getEntity().getLocation() != null)
-			typeIDent.put(UGroupType.DATA_SOURCE_LINE, "" + getEntity().getLocation().getPosition());
-		ug.startGroup(typeIDent);
+		final UGroup group = new UGroup(getEntity().getLocation());
+		group.put(UGroupType.CLASS, "entity");
+		group.put(UGroupType.ID, "entity_" + getEntity().getName());
+		group.put(UGroupType.DATA_ENTITY, getEntity().getName());
+		group.put(UGroupType.DATA_UID, getEntity().getUid());
+		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());
+		ug.startGroup(group);
 		ellipse.drawU(ug2);
 		ug2.closeGroup();
 

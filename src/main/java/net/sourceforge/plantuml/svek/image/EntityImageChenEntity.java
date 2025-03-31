@@ -38,6 +38,7 @@ package net.sourceforge.plantuml.svek.image;
 import java.util.Collections;
 
 import net.sourceforge.plantuml.abel.Entity;
+import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -114,7 +115,7 @@ public class EntityImageChenEntity extends AbstractEntityImage {
 
 	@Override
 	public void drawU(UGraphic ug) {
-		ug.startGroup(Collections.singletonMap(UGroupType.ID, getEntity().getQuark().toStringPoint()));
+		ug.startGroup(UGroup.singletonMap(UGroupType.ID, getEntity().getQuark().toStringPoint()));
 		if (url != null)
 			ug.startUrl(url);
 

@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.cruise.XAbstractEdge;
 import net.sourceforge.plantuml.cruise.XEdge;
 import net.sourceforge.plantuml.decoration.LinkType;
 import net.sourceforge.plantuml.decoration.Rainbow;
+import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -72,9 +73,6 @@ import net.sourceforge.plantuml.svek.extremity.Extremity;
 import net.sourceforge.plantuml.svek.extremity.ExtremityFactory;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.utils.Direction;
-
-import java.util.EnumMap;
-import java.util.Map;
 
 public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 
@@ -103,15 +101,15 @@ public class SmetanaEdge extends XAbstractEdge implements XEdge, UDrawable {
 		if (link.isHidden())
 			return;
 
-		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
-		typeIDent.put(UGroupType.CLASS, "link");
-		typeIDent.put(UGroupType.ID, "link_" + link.getEntity1().getName() + "_" + link.getEntity2().getName());
-		typeIDent.put(UGroupType.DATA_UID, link.getUid());
-		typeIDent.put(UGroupType.DATA_ENTITY_1, link.getEntity1().getName());
-		typeIDent.put(UGroupType.DATA_ENTITY_2, link.getEntity2().getName());
-		typeIDent.put(UGroupType.DATA_ENTITY_1_UID, link.getEntity1().getUid());
-		typeIDent.put(UGroupType.DATA_ENTITY_2_UID, link.getEntity2().getUid());
-		ug.startGroup(typeIDent);
+		final UGroup group = new UGroup();
+		group.put(UGroupType.CLASS, "link");
+		group.put(UGroupType.ID, "link_" + link.getEntity1().getName() + "_" + link.getEntity2().getName());
+		group.put(UGroupType.DATA_UID, link.getUid());
+		group.put(UGroupType.DATA_ENTITY_1, link.getEntity1().getName());
+		group.put(UGroupType.DATA_ENTITY_2, link.getEntity2().getName());
+		group.put(UGroupType.DATA_ENTITY_1_UID, link.getEntity1().getUid());
+		group.put(UGroupType.DATA_ENTITY_2_UID, link.getEntity2().getUid());
+		ug.startGroup(group);
 
 		DotPath dotPath = getDotPathInternal();
 

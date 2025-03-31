@@ -59,6 +59,7 @@ import net.sourceforge.plantuml.abel.Together;
 import net.sourceforge.plantuml.decoration.symbol.USymbol;
 import net.sourceforge.plantuml.decoration.symbol.USymbols;
 import net.sourceforge.plantuml.dot.GraphvizVersion;
+import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -325,15 +326,13 @@ public class Cluster implements Moveable {
 
 		// ug.startGroup(Collections.singletonMap(UGroupType.ID, "cluster_" + fullName));
 		
-		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
-		typeIDent.put(UGroupType.CLASS, "cluster");
-		typeIDent.put(UGroupType.ID, "cluster_" + fullName);
-		typeIDent.put(UGroupType.DATA_ENTITY, group.getName());
-		typeIDent.put(UGroupType.DATA_UID, group.getUid());
-		typeIDent.put(UGroupType.DATA_QUALIFIED_NAME, group.getQuark().getQualifiedName());
-		if (group.getLocation() != null)
-			typeIDent.put(UGroupType.DATA_SOURCE_LINE, "" + group.getLocation().getPosition());
-		ug.startGroup(typeIDent);
+		final UGroup uGroup = new UGroup(group.getLocation());
+		uGroup.put(UGroupType.CLASS, "cluster");
+		uGroup.put(UGroupType.ID, "cluster_" + fullName);
+		uGroup.put(UGroupType.DATA_ENTITY, group.getName());
+		uGroup.put(UGroupType.DATA_UID, group.getUid());
+		uGroup.put(UGroupType.DATA_QUALIFIED_NAME, group.getQuark().getQualifiedName());
+		ug.startGroup(uGroup);
 		
 
 		final Url url = group.getUrl99();

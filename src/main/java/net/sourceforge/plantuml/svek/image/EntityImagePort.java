@@ -39,6 +39,7 @@ package net.sourceforge.plantuml.svek.image;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.EntityPosition;
 import net.sourceforge.plantuml.klimt.Shadowable;
+import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
@@ -59,9 +60,6 @@ import net.sourceforge.plantuml.svek.Bibliotekon;
 import net.sourceforge.plantuml.svek.Cluster;
 import net.sourceforge.plantuml.svek.ShapeType;
 import net.sourceforge.plantuml.svek.SvekNode;
-
-import java.util.EnumMap;
-import java.util.Map;
 
 public class EntityImagePort extends AbstractEntityImageBorder {
 
@@ -107,15 +105,13 @@ public class EntityImagePort extends AbstractEntityImageBorder {
 		else
 			y += 2 * EntityPosition.RADIUS;
 
-		final Map<UGroupType, String> typeIDent = new EnumMap<>(UGroupType.class);
-		typeIDent.put(UGroupType.CLASS, "entity");
-		typeIDent.put(UGroupType.ID, "entity_" + getEntity().getName());
-		typeIDent.put(UGroupType.DATA_ENTITY, getEntity().getName());
-		typeIDent.put(UGroupType.DATA_UID, getEntity().getUid());
-		typeIDent.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());
-		if (getEntity().getLocation() != null)
-			typeIDent.put(UGroupType.DATA_SOURCE_LINE, "" + getEntity().getLocation().getPosition());
-		ug.startGroup(typeIDent);
+		final UGroup group = new UGroup(getEntity().getLocation());
+		group.put(UGroupType.CLASS, "entity");
+		group.put(UGroupType.ID, "entity_" + getEntity().getName());
+		group.put(UGroupType.DATA_ENTITY, getEntity().getName());
+		group.put(UGroupType.DATA_UID, getEntity().getUid());
+		group.put(UGroupType.DATA_QUALIFIED_NAME, getEntity().getQuark().getQualifiedName());
+		ug.startGroup(group);
 
 		desc.drawU(ug.apply(new UTranslate(x, y)));
 
