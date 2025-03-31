@@ -92,7 +92,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">ChallengeResult</a><wbr>(int&nbsp;result)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,com.plantuml.ubrex.Capture)" class="member-name-link">ChallengeResult</a><wbr>(int&nbsp;result,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,com.plantuml.ubrex.Capture)" class="member-name-link">ChallengeResult</a><wbr>(int&nbsp;fullCaptureLength,
  <a href="Capture.html" title="class in com.plantuml.ubrex">Capture</a>&nbsp;capture)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
@@ -116,10 +116,23 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCapture()" class="member-name-link">getCapture</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInt()" class="member-name-link">getInt</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFullCaptureLength()" class="member-name-link">getFullCaptureLength</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getKeysToBeRefactored()" class="member-name-link">getKeysToBeRefactored</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Capture.html" title="class in com.plantuml.ubrex">Capture</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNonMergeableCapture()" class="member-name-link">getNonMergeableCapture</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOnlyNameLength()" class="member-name-link">getOnlyNameLength</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ChallengeResult.html" title="class in com.plantuml.ubrex">ChallengeResult</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#withNameLength(int,com.plantuml.ubrex.Capture)" class="member-name-link">withNameLength</a><wbr>(int&nbsp;onlyNameLength,
+ <a href="Capture.html" title="class in com.plantuml.ubrex">Capture</a>&nbsp;nonMergeableCapture)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -147,7 +160,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(int,com.plantuml.ubrex.Capture)">
 <h3>ChallengeResult</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ChallengeResult</span><wbr><span class="parameters">(int&nbsp;result,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ChallengeResult</span><wbr><span class="parameters">(int&nbsp;fullCaptureLength,
  <a href="Capture.html" title="class in com.plantuml.ubrex">Capture</a>&nbsp;capture)</span></div>
 </section>
 </li>
@@ -170,9 +183,16 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="getInt()">
-<h3>getInt</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getInt</span>()</div>
+<section class="detail" id="withNameLength(int,com.plantuml.ubrex.Capture)">
+<h3>withNameLength</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ChallengeResult.html" title="class in com.plantuml.ubrex">ChallengeResult</a></span>&nbsp;<span class="element-name">withNameLength</span><wbr><span class="parameters">(int&nbsp;onlyNameLength,
+ <a href="Capture.html" title="class in com.plantuml.ubrex">Capture</a>&nbsp;nonMergeableCapture)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getFullCaptureLength()">
+<h3>getFullCaptureLength</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getFullCaptureLength</span>()</div>
 </section>
 </li>
 <li>
@@ -182,9 +202,27 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getKeysToBeRefactored()">
+<h3>getKeysToBeRefactored</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getKeysToBeRefactored</span>()</div>
+</section>
+</li>
+<li>
 <section class="detail" id="getCapture()">
 <h3>getCapture</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Capture.html" title="class in com.plantuml.ubrex">Capture</a></span>&nbsp;<span class="element-name">getCapture</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getOnlyNameLength()">
+<h3>getOnlyNameLength</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getOnlyNameLength</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getNonMergeableCapture()">
+<h3>getNonMergeableCapture</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Capture.html" title="class in com.plantuml.ubrex">Capture</a></span>&nbsp;<span class="element-name">getNonMergeableCapture</span>()</div>
 </section>
 </li>
 </ul>
