@@ -66,73 +66,48 @@ public class UBrexCommandIf extends UBrexSingleLineCommand2<ActivityDiagram> {
 	}
 
 	static UnicodeBracketedExpression getRegexConcat() {
-		return UBrexConcat.build( //
-				new UBrexOptional(//
-						new UBrexNamed("FIRST", //
-								new UBrexOr(new UBrexNamed("STAR", new UBrexLeaf("(* 〇?〘top〙)")), //
-										new UBrexNamed("CODE", new UBrexLeaf("〇+「〴an_.」")), //
-										new UBrexNamed("BAR", new UBrexLeaf("=〇+= 〇*〴s 〇+「〴an_.」〇*〴s =〇+=")), //
-										new UBrexNamed("QUOTED", new UBrexLeaf("〴g 〇+「〴G」〴g 〇?〘〇+〴s as 〇+〴s 〇+「〴an_.」 〙 "))))), //
+		final UBrexConcat simple = UBrexConcat.build( //
 				UBrexLeaf.spaceZeroOrMore(), //
 				new UBrexOptional(UBrexConcat.build( //
 						new UBrexNamed("ARROW_BODY1", new UBrexLeaf("〇+「-.」")), //
-						new UBrexNamed("ARROW_STYLE1", new UBrexLeaf("〇?〘 ["+ CommandLinkElement.UBREX_LINE_STYLE+"] 〙")), //
-						new UBrexNamed("ARROW_DIRECTION", new UBrexLeaf("〇?【 *┇left┇right┇up┇down┇l〇?e┇r〇?i┇u〇?p┇d〇?o】")), //
-						new UBrexNamed("ARROW_STYLE2", new UBrexLeaf("〇?〘 ["+ CommandLinkElement.UBREX_LINE_STYLE+"] 〙")), //
+						new UBrexLeaf("〇?〘 [ 〶$ARROW_STYLE1=〘" + CommandLinkElement.UBREX_LINE_STYLE + "〙] 〙"), //
+						new UBrexNamed("ARROW_DIRECTION",
+								new UBrexLeaf("〇?【 *┇left┇right┇up┇down┇l〇?e┇r〇?i┇u〇?p┇d〇?o】")), //
+						new UBrexLeaf("〇?〘 [  〶$ARROW_STYLE2=〘" + CommandLinkElement.UBREX_LINE_STYLE + "〙] 〙"), //
 						new UBrexNamed("ARROW_BODY2", new UBrexLeaf("〇*「-.」")), //
 						new UBrexLeaf(">") //
-						)), //
+				)), // "02onStart()" --> if "" then
 				UBrexLeaf.spaceZeroOrMore(), //
-				new UBrexOptional(new UBrexNamed("BRACKET", new UBrexLeaf("[ 〇+「〤]*」  〇*「〤]」 ]"))),
-				UBrexLeaf.spaceZeroOrMore(), //
+				new UBrexOptional(new UBrexLeaf("[ 〶$BRACKET=〘〇+「〤]*」  〇*「〤]」〙 ]")), UBrexLeaf.spaceZeroOrMore(), //
 				new UBrexOr(//
-						new UBrexNamed("IF1", new UBrexLeaf("if 〇*〴s")), //
-						new UBrexNamed("IF2", new UBrexLeaf("if 〇+〴s")) //
-						),
-				UBrexLeaf.spaceZeroOrMore(), //											
-				new UBrexOptional(new UBrexLeaf("then")),
+						new UBrexLeaf("if 〇*〴s 〴g  〶$IF1=〇*〴G 〴g 〇*〴s 〇?〘as 〇+〴s 〶$ASIF1=〇+「〴an_.」 〇+〴s 〙〘then〙"), //
+						new UBrexLeaf("if 〇+〴s 〶$IF2=〇l+〴. 〘then〙 "), //
+						new UBrexLeaf("if 〇*〴s 〴g  〶$IF1=〇*〴G 〴g 〇*〴s 〇?〘as 〇+〴s 〶$ASIF1=〇+「〴an_.」 〇+〴s 〙"), //
+						new UBrexLeaf("if 〇+〴s 〶$IF2=〇+〴.") //
+				));
+
+		return UBrexConcat.build( //
+				new UBrexOr(simple, //
+						UBrexConcat.build(new UBrexNamed("STAR", new UBrexLeaf("(* 〇?〘top〙)")), simple), //
+						UBrexConcat.build(new UBrexNamed("BAR", new UBrexLeaf("=〇+= 〇*〴s 〇+「〴an_.」〇*〴s =〇+=")), simple), //
+						UBrexConcat.build(new UBrexLeaf("〴g 〶$QUOTED1=〇*〴G 〴g 〇?〘〇+〴s as 〇+〴s 〶$QUOTED2=〇+「〴an_.」 〙 "),
+								simple),
+						UBrexConcat.build(new UBrexNamed("CODE", new UBrexLeaf("〇+「〴an_.」")), simple) //
+				), //
 				UBrexLeaf.end()); //
 	}
-
-//	static IRegex getRegexConcat() {
-//		return RegexConcat.build(BrackexCommandIf.class.getName(), RegexLeaf.start(), //
-//				new RegexOptional(//
-//						new RegexOr("FIRST", //
-//								new RegexLeaf("STAR", "(\\(\\*(top)?\\))"), //
-//								new RegexLeaf("CODE", "([%pLN_.]+)"), //
-//								new RegexLeaf("BAR", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
-//								new RegexLeaf("QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?"))), //
-//				RegexLeaf.spaceZeroOrMore(), //
-//				new RegexOptional(new RegexConcat( //
-//						new RegexLeaf("ARROW_BODY1", "([-.]+)"), //
-//						new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-//						new RegexLeaf("ARROW_DIRECTION", "(\\*|left|right|up|down|le?|ri?|up?|do?)?"), //
-//						new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-//						new RegexLeaf("ARROW_BODY2", "([-.]*)"), //
-//						new RegexLeaf("\\>") //
-//				)), //
-//				RegexLeaf.spaceZeroOrMore(), //
-//				new RegexOptional(new RegexLeaf("BRACKET", "\\[([^\\]*]+[^\\]]*)\\]")), //
-//				RegexLeaf.spaceZeroOrMore(), //
-//				new RegexOr(//
-//						new RegexLeaf("IF1", "if[%s]*[%g]([^%g]*)[%g][%s]*(?:as[%s]+([%pLN_.]+)[%s]+)?"), //
-//						new RegexLeaf("IF2", "if[%s]+(.+?)")), //
-//				RegexLeaf.spaceZeroOrMore(), //
-//				new RegexOptional(new RegexLeaf("then")), //
-//				RegexLeaf.end());
-//	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg,
 			ParserPass currentPass) {
-		final Entity entity1 = CommandLinkActivity.getEntity(location, diagram, arg, true);
+		final Entity entity1 = CommandLinkActivity.ubrexGetEntityForIfOnly(location, diagram, arg);
 		if (entity1 == null)
 			return CommandExecutionResult.error("No if possible at this point");
 
 		final String ifCode;
 		final String ifLabel;
 		if (arg.get("IF2", 0) == null) {
-			ifCode = arg.get("IF1", 1);
+			ifCode = arg.get("ASIF1", 0);
 			ifLabel = arg.get("IF1", 0);
 		} else {
 			ifCode = null;

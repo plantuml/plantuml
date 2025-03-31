@@ -45,5 +45,8 @@ public interface UMatcher {
 	public String getAcceptedMatch();
 
 	public List<String> getCapture(String path);
+	
+	public List<String> getKeysToBeRefactored();
+	
 
 }

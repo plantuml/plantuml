@@ -114,22 +114,10 @@ public class AtomicParser {
 	}
 
 	private Challenge manageClass(TextNavigator input) {
-		final Challenge result;
-		final CharClass charClass;
-		if (input.charAt(1) == '〤') {
-			input.jump(2);
-			charClass = CharClass.fromDefinition(input);
-			result = new ChallengeCharNegativeClass(charClass);
-		} else {
-			input.jump(1);
-			charClass = CharClass.fromDefinition(input);
-			if (Character.isUpperCase(input.charAt(0)))
-				result = new ChallengeCharNegativeClass(charClass);
-			else
-				result = new ChallengeCharClass(charClass);
-		}
-		input.jump(charClass.getDefinitionLength());
-		return result;
+		input.jump(1);
+		final CharClass result = CharClass.fromDefinition(input);
+		input.jump(result.getDefinitionLength());
+		return new ChallengeCharClass(result);
 	}
 
 	private Challenge manageQuantifier(TextNavigator input) {
@@ -156,9 +144,7 @@ public class AtomicParser {
 	private Challenge manageQuantifierLazzy(TextNavigator input) {
 		input.jump(1);
 		final Challenge origin = parseSingle(input);
-		System.err.println("origin=" + origin);
 		final CompositeList remaining = CompositeList.parseAndBuildFromTextNavigator(input);
-		System.err.println("remaining=" + remaining);
 
 		return new ChallengeLazzyOneOrMore(origin, remaining);
 	}

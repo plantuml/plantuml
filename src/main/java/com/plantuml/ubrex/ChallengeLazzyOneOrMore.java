@@ -50,17 +50,20 @@ public class ChallengeLazzyOneOrMore implements Challenge {
 
 		int currentPos = position;
 		while (true) {
-			final ChallengeResult shallWePass = origin.runChallenge(string, currentPos);
-			if (shallWePass.getInt() < 0)
+			final ChallengeResult match1 = origin.runChallenge(string, currentPos);
+			if (match1.getFullCaptureLength() < 0)
 				return new ChallengeResult(NO_MATCH);
-			if (shallWePass.getInt() == 0)
+			if (match1.getFullCaptureLength() == 0)
 				throw new IllegalStateException("infinite loop");
-			capture = capture.merge(shallWePass.getCapture());
-			currentPos += shallWePass.getInt();
+			capture = capture.merge(match1.getCapture());
+			currentPos += match1.getFullCaptureLength();
 
-			final ChallengeResult tmp = end.runChallenge(string, currentPos);
-			if (tmp.getInt() >= 0) {
-				return new ChallengeResult(currentPos + tmp.getInt() - position, capture.merge(tmp.getCapture()));
+			final ChallengeResult match2 = end.runChallenge(string, currentPos);
+			if (match2.getFullCaptureLength() >= 0) {
+				final int result = currentPos + match2.getFullCaptureLength() - position;
+				final int nameLength = currentPos - position;
+				// capture = capture.merge(match2.getCapture());
+				return new ChallengeResult(result, capture).withNameLength(nameLength, match2.getCapture());
 			}
 
 		}

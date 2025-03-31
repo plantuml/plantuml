@@ -41,11 +41,17 @@ public class ChallengeOptional implements Challenge {
 	public ChallengeOptional(Challenge origin) {
 		this.origin = origin;
 	}
+	
+	@Override
+	public String toString() {
+		return "ChallengeOptional:" + origin;
+	}
+
 
 	@Override
 	public ChallengeResult runChallenge(TextNavigator string, int position) {
 		final ChallengeResult tmp = origin.runChallenge(string, position);
-		if (tmp.getInt() < 0)
+		if (tmp.getFullCaptureLength() < 0)
 			return new ChallengeResult(0);
 		return tmp;
 	}

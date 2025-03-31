@@ -128,7 +128,7 @@ public class TextNavigator implements CharSequence {
 
 	public int searchPattern(Challenge pattern, int ahead) {
 		for (int i = ahead; i < this.length(); i++)
-			if (pattern.runChallenge(this, i).getInt() >= 0)
+			if (pattern.runChallenge(this, i).getFullCaptureLength() >= 0)
 				return i;
 		return Challenge.NO_MATCH;
 	}

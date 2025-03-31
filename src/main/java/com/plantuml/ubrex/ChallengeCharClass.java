@@ -41,6 +41,11 @@ public class ChallengeCharClass implements Challenge {
 	public ChallengeCharClass(CharClass charClass) {
 		this.charClass = charClass;
 	}
+	
+	@Override
+	public String toString() {
+		return charClass.name();
+	}
 
 	@Override
 	public ChallengeResult runChallenge(TextNavigator string, int position) {

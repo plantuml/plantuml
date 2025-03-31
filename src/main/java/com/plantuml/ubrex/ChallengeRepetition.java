@@ -53,17 +53,17 @@ public class ChallengeRepetition implements Challenge {
 		while (true) {
 			final ChallengeResult shallWePass = origin.runChallenge(string, currentPos);
 
-			if (shallWePass.getInt() < 0)
+			if (shallWePass.getFullCaptureLength() < 0)
 				if (currentPos > position && repetition.match(count))
 					return new ChallengeResult(currentPos - position, capture);
 				else
 					return new ChallengeResult(NO_MATCH);
 
-			if (shallWePass.getInt() == 0)
+			if (shallWePass.getFullCaptureLength() == 0)
 				throw new IllegalStateException("infinite loop");
 
 			capture = capture.merge(shallWePass.getCapture());
-			currentPos += shallWePass.getInt();
+			currentPos += shallWePass.getFullCaptureLength();
 			count++;
 
 		}

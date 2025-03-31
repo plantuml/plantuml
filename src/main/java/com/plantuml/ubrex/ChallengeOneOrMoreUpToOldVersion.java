@@ -51,15 +51,15 @@ public class ChallengeOneOrMoreUpToOldVersion implements Challenge {
 		int currentPos = position;
 		while (true) {
 			final ChallengeResult shallWePass = origin.runChallenge(string, currentPos);
-			if (shallWePass.getInt() < 0)
+			if (shallWePass.getFullCaptureLength() < 0)
 				return new ChallengeResult(NO_MATCH);
-			if (shallWePass.getInt() == 0)
+			if (shallWePass.getFullCaptureLength() == 0)
 				throw new IllegalStateException("infinite loop");
 			capture = capture.merge(shallWePass.getCapture());
-			currentPos += shallWePass.getInt();
+			currentPos += shallWePass.getFullCaptureLength();
 			
 			final ChallengeResult tmp = end.runChallenge(string, currentPos);
-			if (tmp.getInt() >= 0)
+			if (tmp.getFullCaptureLength() >= 0)
 				return new ChallengeResult(currentPos - position, capture);
 
 			

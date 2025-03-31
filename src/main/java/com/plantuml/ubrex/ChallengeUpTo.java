@@ -47,7 +47,7 @@ public class ChallengeUpTo implements Challenge {
 		int currentPos = position;
 		while (true) {
 			final ChallengeResult tmp = origin.runChallenge(string, currentPos);
-			if (tmp.getInt() >= 0)
+			if (tmp.getFullCaptureLength() >= 0)
 				return new ChallengeResult(currentPos - position);
 			currentPos += 1;
 			if (currentPos > string.length())

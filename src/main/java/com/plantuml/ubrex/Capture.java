@@ -45,8 +45,6 @@ public class Capture {
 
 	public static final Capture EMPTY = new Capture();
 
-	private List<Map.Entry<String, String>> list;
-
 	private Capture() {
 
 	}
@@ -108,6 +106,9 @@ public class Capture {
 		return copy;
 	}
 
+	private List<Map.Entry<String, String>> list;
+
+
 	public List<String> findValuesByKey(String key) {
 		if (this.list == null)
 			return Collections.emptyList();
@@ -117,5 +118,12 @@ public class Capture {
 				.map(Map.Entry::getValue) //
 				.collect(Collectors.toList());
 
+	}
+
+	
+	public List<String> getKeysToBeRefactored() {
+		return this.list.stream() //
+				.map(Map.Entry::getKey) //
+				.collect(Collectors.toList());
 	}
 }

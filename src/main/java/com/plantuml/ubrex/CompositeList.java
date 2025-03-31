@@ -99,15 +99,17 @@ public class CompositeList implements Challenge {
 	public ChallengeResult runChallenge(TextNavigator string, int position) {
 
 		Capture capture = Capture.EMPTY;
+		// Capture nonMergeableCapture = Capture.EMPTY;
 
 		int current = position;
 		for (Challenge challenge : challenges) {
 			final ChallengeResult shallWePass = challenge.runChallenge(string, current);
-			if (shallWePass.getInt() < 0)
+			if (shallWePass.getFullCaptureLength() < 0)
 				return new ChallengeResult(NO_MATCH, capture);
 
-			current += shallWePass.getInt();
+			current += shallWePass.getFullCaptureLength();
 			capture = capture.merge(shallWePass.getCapture());
+			capture = capture.merge(shallWePass.getNonMergeableCapture());
 		}
 
 		return new ChallengeResult(current - position, capture);

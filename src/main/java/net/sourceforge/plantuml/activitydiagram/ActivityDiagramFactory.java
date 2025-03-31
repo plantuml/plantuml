@@ -38,20 +38,20 @@ package net.sourceforge.plantuml.activitydiagram;
 import java.util.List;
 
 import net.sourceforge.plantuml.Previous;
-import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandElse;
-import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandEndif;
-import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandPartition;
 import net.sourceforge.plantuml.activitydiagram.command.CommandEndPartition;
-import net.sourceforge.plantuml.activitydiagram.command.CommandIf;
 import net.sourceforge.plantuml.activitydiagram.command.CommandLinkActivity;
 import net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity;
+import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandElse;
+import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandEndif;
+import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandIf;
+import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandPartition;
 import net.sourceforge.plantuml.classdiagram.command.UBrexCommandHideShow2;
-import net.sourceforge.plantuml.command.UBrexCommandFootboxIgnored;
-import net.sourceforge.plantuml.command.UBrexCommandRankDir;
 import net.sourceforge.plantuml.command.Command;
 import net.sourceforge.plantuml.command.CommonCommands;
 import net.sourceforge.plantuml.command.PSystemCommandFactory;
 import net.sourceforge.plantuml.command.ParserPass;
+import net.sourceforge.plantuml.command.UBrexCommandFootboxIgnored;
+import net.sourceforge.plantuml.command.UBrexCommandRankDir;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteActivity;
 import net.sourceforge.plantuml.command.note.CommandFactoryNoteOnLink;
 import net.sourceforge.plantuml.core.UmlSource;
@@ -85,7 +85,7 @@ public class ActivityDiagramFactory extends PSystemCommandFactory {
 		cmds.add(factoryNoteOnLinkCommand.createSingleLine());
 		cmds.add(factoryNoteOnLinkCommand.createMultiLine(false));
 
-		cmds.add(new CommandIf());
+		cmds.add(new UBrexCommandIf());
 		cmds.add(new UBrexCommandElse());
 		cmds.add(new UBrexCommandEndif());
 

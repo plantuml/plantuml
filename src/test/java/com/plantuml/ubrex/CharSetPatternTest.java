@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 public class CharSetPatternTest {
 
 	private static boolean match(ChallengeCharSet pattern, char ch) {
-		return pattern.runChallenge(TextNavigator.build("" + ch), 0).getInt() == 1;
+		return pattern.runChallenge(TextNavigator.build("" + ch), 0).getFullCaptureLength() == 1;
 	}
 
 	/**

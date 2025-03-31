@@ -41,6 +41,12 @@ public class ChallengeOneOrMore implements Challenge {
 	public ChallengeOneOrMore(Challenge origin) {
 		this.origin = origin;
 	}
+	
+	@Override
+	public String toString() {
+		return "ChallengeOneOrMore:" + origin;
+	}
+
 
 	@Override
 	public ChallengeResult runChallenge(TextNavigator string, int position) {
@@ -49,15 +55,15 @@ public class ChallengeOneOrMore implements Challenge {
 		int currentPos = position;
 		while (true) {
 			final ChallengeResult shallWePass = origin.runChallenge(string, currentPos);
-			if (shallWePass.getInt() < 0)
+			if (shallWePass.getFullCaptureLength() < 0)
 				if (currentPos > position)
 					return new ChallengeResult(currentPos - position, capture);
 				else
 					return new ChallengeResult(NO_MATCH);
-			if (shallWePass.getInt() == 0)
+			if (shallWePass.getFullCaptureLength() == 0)
 				throw new IllegalStateException("infinite loop");
 			capture = capture.merge(shallWePass.getCapture());
-			currentPos += shallWePass.getInt();
+			currentPos += shallWePass.getFullCaptureLength();
 		}
 	}
 

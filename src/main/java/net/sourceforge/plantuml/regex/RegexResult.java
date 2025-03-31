@@ -40,7 +40,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.plantuml.ubrex.UMatcher;
-import com.plantuml.ubrex.Capture;
 
 public class RegexResult {
 
@@ -87,10 +86,16 @@ public class RegexResult {
 
 	public String getLazzy(String key, int num) {
 		if (matcher != null) {
-			final List<String> capture = matcher.getCapture(key);
-			if (num >= capture.size())
-				return null;
-			return capture.get(num);
+			for (String candidate : matcher.getKeysToBeRefactored()) {
+				if (candidate.startsWith(key) == false)
+					continue;
+				final List<String> list = matcher.getCapture(candidate);
+				if (list == null || list.size() == 0)
+					return null;
+				return list.get(num);
+
+			}
+			return null;
 		}
 
 		for (Map.Entry<String, RegexPartialMatch> ent : data.entrySet()) {

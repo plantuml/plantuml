@@ -61,10 +61,10 @@ public interface UnicodeBracketedExpression {
 				final ChallengeResult shallWePass = challenge.runChallenge(string, position);
 				final CharSequence acceptepMatch;
 
-				if (shallWePass.getInt() < 0)
+				if (shallWePass.getFullCaptureLength() < 0)
 					acceptepMatch = "";
 				else
-					acceptepMatch = string.subSequence(position, position + shallWePass.getInt());
+					acceptepMatch = string.subSequence(position, position + shallWePass.getFullCaptureLength());
 
 				return new UMatcher() {
 
@@ -78,7 +78,7 @@ public interface UnicodeBracketedExpression {
 						if (startMatch() == false)
 							return false;
 
-						return position + shallWePass.getInt() == string.length();
+						return position + shallWePass.getFullCaptureLength() == string.length();
 
 					}
 
@@ -89,12 +89,17 @@ public interface UnicodeBracketedExpression {
 
 					@Override
 					public boolean startMatch() {
-						return shallWePass.getInt() >= 0;
+						return shallWePass.getFullCaptureLength() >= 0;
 					}
 
 					@Override
 					public List<String> getCapture(String path) {
 						return shallWePass.findValuesByKey(path);
+					}
+
+					@Override
+					public List<String> getKeysToBeRefactored() {
+						return shallWePass.getKeysToBeRefactored();
 					}
 
 				};

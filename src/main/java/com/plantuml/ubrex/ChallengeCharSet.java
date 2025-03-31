@@ -39,7 +39,7 @@ import java.util.Set;
 
 public class ChallengeCharSet implements Challenge {
 
-	private final Set<CharClass> charClasses = EnumSet.noneOf(CharClass.class);
+	private final Set<CharClassRaw> charClasses = EnumSet.noneOf(CharClassRaw.class);
 	private final CharSet charSet = new CharSet();
 	private boolean reversed = false;
 
@@ -64,7 +64,7 @@ public class ChallengeCharSet implements Challenge {
 
 			if (ch == '〴') {
 				nav.jump(1);
-				final CharClass charClass = CharClass.fromDefinition(nav);
+				final CharClassRaw charClass = CharClassRaw.fromDefinition(nav);
 				result.charClasses.add(charClass);
 				nav.jump(charClass.getDefinitionLength() - 1);
 			} else if (nav.length() > 2 && nav.charAt(1) == '〜') {
@@ -95,7 +95,7 @@ public class ChallengeCharSet implements Challenge {
 			return new ChallengeResult(NO_MATCH);
 
 		final char ch = string.charAt(position);
-		if ((charSet.contains(ch) || CharClass.matchesAny(charClasses, ch)) != reversed)
+		if ((charSet.contains(ch) || CharClassRaw.internalMatchesAny(charClasses, ch)) != reversed)
 			return new ChallengeResult(1);
 
 		return new ChallengeResult(NO_MATCH);

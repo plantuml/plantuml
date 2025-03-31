@@ -34,22 +34,7 @@
  */
 package com.plantuml.ubrex;
 
-public class ChallengeCharNegativeClass implements Challenge {
-
-	private final CharClass charClass;
-
-	public ChallengeCharNegativeClass(CharClass charClass) {
-		this.charClass = charClass;
-	}
-
-	@Override
-	public ChallengeResult runChallenge(TextNavigator string, int position) {
-		if (string.length() == position)
-			return new ChallengeResult(NO_MATCH);
-		final char ch = string.charAt(position);
-		if (charClass.matches(ch) == false)
-			return new ChallengeResult(1);
-		return new ChallengeResult(NO_MATCH);
-	}
-
+public enum CharClassType {
+	NORMAL,
+	NEGATIVE
 }

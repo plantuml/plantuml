@@ -34,93 +34,39 @@
  */
 package com.plantuml.ubrex;
 
-import java.util.Set;
+public class CharClass {
 
-public enum CharClass {
+	private final CharClassRaw charClassRaw;
+	private final CharClassType type;
 
-	ANY(".") {
-		@Override
-		boolean matches(char ch) {
-			return true;
-		}
-	},
-	SPACE("s") {
-		@Override
-		boolean matches(char ch) {
-			return ch == ' ';
-		}
-	},
-	GUILLEMET("g") {
-		@Override
-		boolean matches(char ch) {
-			return ch == '\"' || ch == '“' || ch == '”';
-		}
-	},
-	WORD("w") {
-		@Override
-		boolean matches(char ch) {
-			return ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9') || (ch == '_'));
-		}
-	},
-	DIGIT("d") {
-		@Override
-		boolean matches(char ch) {
-			return (ch >= '0' && ch <= '9') || (ch == '_');
-		}
-	},
-	ALPHA_NUMERIC("an") {
-		@Override
-		boolean matches(char ch) {
-			throw new UnsupportedOperationException();
-		}
-	},
-	LETTER("le") {
-		@Override
-		boolean matches(char ch) {
-			throw new UnsupportedOperationException();
-		}
-	};
-
-	abstract boolean matches(char ch);
-
-	private final String syntax;
-
-	private CharClass(String syntax) {
-		this.syntax = syntax;
+	public CharClass(CharClassRaw charClassRaw, CharClassType type) {
+		this.charClassRaw = charClassRaw;
+		this.type = type;
 	}
 
-	public int getDefinitionLength() {
-		return syntax.length();
+	public boolean matches(char ch) {
+		final boolean rawMatch = charClassRaw.internalMatches(ch);
+
+		if (type == CharClassType.NORMAL)
+			return rawMatch;
+		else
+			return !rawMatch;
+
 	}
 
 	public static CharClass fromDefinition(TextNavigator nav) {
-		char ch = nav.charAt(0);
-		switch (ch) {
-		case 'S':
-		case 's':
-			return CharClass.SPACE;
-		case 'G':
-		case 'g':
-			return CharClass.GUILLEMET;
-		case 'D':
-		case 'd':
-			return CharClass.DIGIT;
-		case 'W':
-		case 'w':
-			return CharClass.WORD;
-		case '.':
-			return CharClass.ANY;
-		default:
-			throw new UnsupportedOperationException("wip01class " + ch);
-		}
+		final CharClassType type = Character.isUpperCase(nav.charAt(0)) ? CharClassType.NEGATIVE : CharClassType.NORMAL;
+		final CharClassRaw raw = CharClassRaw.fromDefinition(nav);
+
+		return new CharClass(raw, type);
 	}
 
-	public static boolean matchesAny(Set<CharClass> set, char ch) {
-		for (CharClass charClass : set)
-			if (charClass.matches(ch))
-				return true;
+	public String name() {
+		return charClassRaw.name() + "-" + type.name();
+	}
 
-		return false;
+	public int getDefinitionLength() {
+		return charClassRaw.getDefinitionLength();
 	}
 
 }

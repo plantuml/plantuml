@@ -47,7 +47,7 @@ public class ChallengeLookBehind implements Challenge {
 	@Override
 	public ChallengeResult runChallenge(TextNavigator string, int position) {
 		final TextNavigator stringReversed = string.reverse(position);
-		final int tmp = origin.runChallenge(stringReversed, 0).getInt();
+		final int tmp = origin.runChallenge(stringReversed, 0).getFullCaptureLength();
 		switch (ahead) {
 		case LOOK_BEHIND_POSITIVE:
 			if (tmp < 0)

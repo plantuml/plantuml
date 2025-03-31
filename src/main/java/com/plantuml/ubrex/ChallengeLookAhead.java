@@ -51,7 +51,7 @@ public class ChallengeLookAhead implements Challenge {
 
 	@Override
 	public ChallengeResult runChallenge(TextNavigator string, int position) {
-		final int tmp = origin.runChallenge(string, position).getInt();
+		final int tmp = origin.runChallenge(string, position).getFullCaptureLength();
 		switch (ahead) {
 		case LOOK_AHEAD_POSITIVE:
 			if (tmp < 0)

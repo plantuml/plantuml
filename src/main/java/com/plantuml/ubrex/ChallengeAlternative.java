@@ -50,7 +50,7 @@ public class ChallengeAlternative implements Challenge {
 	public ChallengeResult runChallenge(TextNavigator string, int position) {
 		for (Challenge pattern : alternatives) {
 			final ChallengeResult tmp = pattern.runChallenge(string, position);
-			if (tmp.getInt() >= 0)
+			if (tmp.getFullCaptureLength() >= 0)
 				return tmp;
 
 		}
