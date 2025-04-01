@@ -47,6 +47,7 @@ import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexOptional;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 
@@ -77,7 +78,9 @@ public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeNow(TitledDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
+	protected CommandExecutionResult executeNow(TitledDiagram diagram, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
+		final LineLocation location = lines.getLocation();
 		lines = lines.trimSmart(1);
 		final RegexResult line0 = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		final String align = line0.get("ALIGN", 0);
@@ -88,10 +91,10 @@ public class CommandMultilinesLegend extends CommandMultilines2<TitledDiagram> {
 		if (strings.size() > 0) {
 			final VerticalAlignment valignment = VerticalAlignment.fromString(valign);
 			HorizontalAlignment alignment = HorizontalAlignment.fromString(align);
-			if (alignment == null) {
+			if (alignment == null)
 				alignment = HorizontalAlignment.CENTER;
-			}
-			diagram.setLegend(DisplayPositioned.single(strings.replaceBackslashT(), alignment, valignment));
+
+			diagram.setLegend(DisplayPositioned.single(location, strings.replaceBackslashT(), alignment, valignment));
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("No legend defined");

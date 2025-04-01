@@ -42,6 +42,7 @@ import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
 import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandMultilinesCaption extends CommandMultilines<TitledDiagram> {
 
@@ -57,11 +58,12 @@ public class CommandMultilinesCaption extends CommandMultilines<TitledDiagram> {
 	}
 
 	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
+		final LineLocation location = lines.getLocation();
 		lines = lines.subExtract(1, 1);
 		lines = lines.removeEmptyColumns();
 		final Display strings = lines.toDisplay();
 		if (strings.size() > 0) {
-			diagram.setCaption(DisplayPositioned.single(strings.replaceBackslashT(), HorizontalAlignment.CENTER,
+			diagram.setCaption(DisplayPositioned.single(location, strings.replaceBackslashT(), HorizontalAlignment.CENTER,
 					VerticalAlignment.BOTTOM));
 			return CommandExecutionResult.ok();
 		}

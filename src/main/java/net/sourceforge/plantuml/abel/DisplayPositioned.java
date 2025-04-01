@@ -38,15 +38,18 @@ package net.sourceforge.plantuml.abel;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class DisplayPositioned extends DisplayPositionned {
 
 	private final Display display;
 	private final HorizontalAlignment horizontalAlignment;
 	private final VerticalAlignment verticalAlignment;
+	private final LineLocation location;
 
-	private DisplayPositioned(Display display, HorizontalAlignment horizontalAlignment,
+	private DisplayPositioned(LineLocation location, Display display, HorizontalAlignment horizontalAlignment,
 			VerticalAlignment verticalAlignment) {
+		this.location = location;
 		this.display = display;
 		this.horizontalAlignment = horizontalAlignment;
 		this.verticalAlignment = verticalAlignment;
@@ -54,11 +57,16 @@ public class DisplayPositioned extends DisplayPositionned {
 
 	public static DisplayPositioned single(Display display, HorizontalAlignment horizontalAlignment,
 			VerticalAlignment verticalAlignment) {
-		return new DisplayPositioned(display, horizontalAlignment, verticalAlignment);
+		return new DisplayPositioned(null, display, horizontalAlignment, verticalAlignment);
+	}
+
+	public static DisplayPositioned single(LineLocation location, Display display,
+			HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment) {
+		return new DisplayPositioned(location, display, horizontalAlignment, verticalAlignment);
 	}
 
 	public static DisplayPositioned none(HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment) {
-		return new DisplayPositioned(Display.NULL, horizontalAlignment, verticalAlignment);
+		return new DisplayPositioned(null, Display.NULL, horizontalAlignment, verticalAlignment);
 	}
 
 	public final Display getDisplay() {
@@ -79,6 +87,10 @@ public class DisplayPositioned extends DisplayPositionned {
 
 	public boolean hasUrl() {
 		return display.hasUrl();
+	}
+
+	public LineLocation getLineLocation() {
+		return location;
 	}
 
 }

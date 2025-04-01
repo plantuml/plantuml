@@ -36,25 +36,20 @@
 package net.sourceforge.plantuml;
 
 import net.sourceforge.plantuml.abel.DisplayPositioned;
-import net.sourceforge.plantuml.klimt.font.StringBounder;
+import net.sourceforge.plantuml.klimt.UGroup;
+import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
-import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.svek.DecorateEntityImage;
 
 public class AnnotatedWorker {
 	// ::remove file when __HAXE__
 
 	private final Annotated annotated;
-	private final ISkinParam skinParam;
-	private final StringBounder stringBounder;
 	private final AnnotatedBuilder builder;
 
-	public AnnotatedWorker(Annotated annotated, ISkinParam skinParam, StringBounder stringBounder,
-			AnnotatedBuilder builder) {
+	public AnnotatedWorker(Annotated annotated, AnnotatedBuilder builder) {
 		this.annotated = annotated;
-		this.skinParam = skinParam;
-		this.stringBounder = stringBounder;
 		this.builder = builder;
 	}
 
@@ -72,7 +67,10 @@ public class AnnotatedWorker {
 		if (legend.isNull())
 			return original;
 
-		return DecorateEntityImage.add(original, builder.getLegend(), legend.getHorizontalAlignment(),
+		final UGroup group = new UGroup(legend.getLineLocation());
+		group.put(UGroupType.CLASS, "legend");
+
+		return DecorateEntityImage.add(group, original, builder.getLegend(), legend.getHorizontalAlignment(),
 				legend.getVerticalAlignment());
 	}
 
@@ -81,7 +79,9 @@ public class AnnotatedWorker {
 		if (title.isNull())
 			return original;
 
-		return DecorateEntityImage.addTop(original, builder.getTitle(), HorizontalAlignment.CENTER);
+		final UGroup group = new UGroup(title.getLineLocation());
+		group.put(UGroupType.CLASS, "title");
+		return DecorateEntityImage.addTop(group, original, builder.getTitle(), HorizontalAlignment.CENTER);
 	}
 
 	private TextBlock addCaption(TextBlock original) {
@@ -89,7 +89,10 @@ public class AnnotatedWorker {
 		if (caption.isNull())
 			return original;
 
-		return DecorateEntityImage.addBottom(original, builder.getCaption(), HorizontalAlignment.CENTER);
+		final UGroup group = new UGroup(caption.getLineLocation());
+		group.put(UGroupType.CLASS, "caption");
+
+		return DecorateEntityImage.addBottom(group, original, builder.getCaption(), HorizontalAlignment.CENTER);
 	}
 
 }

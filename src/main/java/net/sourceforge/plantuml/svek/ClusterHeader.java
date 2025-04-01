@@ -159,7 +159,7 @@ public final class ClusterHeader {
 			return stereo;
 
 		final TextBlock legendBlock = EntityImageLegend.create(legend.getDisplay(), g.getSkinParam());
-		return DecorateEntityImage.add(legendBlock, stereo, legend.getHorizontalAlignment(),
+		return DecorateEntityImage.add(null, legendBlock, stereo, legend.getHorizontalAlignment(),
 				legend.getVerticalAlignment());
 	}
 

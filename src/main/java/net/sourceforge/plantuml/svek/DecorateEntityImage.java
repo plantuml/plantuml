@@ -37,6 +37,7 @@ package net.sourceforge.plantuml.svek;
 
 import java.util.Objects;
 
+import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -51,40 +52,49 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 public class DecorateEntityImage extends AbstractTextBlock {
 
 	private final TextBlock original;
+
+	private final UGroup group1;
 	private final HorizontalAlignment horizontal1;
 	private final TextBlock text1;
+
+	private final UGroup group2;
 	private final HorizontalAlignment horizontal2;
 	private final TextBlock text2;
 
 	private double deltaX;
 	private double deltaY;
 
-	public static TextBlock addTop(TextBlock original, TextBlock text, HorizontalAlignment horizontal) {
-		return new DecorateEntityImage(original, text, horizontal, null, null);
+	public static TextBlock addTop(UGroup group, TextBlock original, TextBlock text, HorizontalAlignment horizontal) {
+		return new DecorateEntityImage(original, group, text, horizontal, null, null, null);
 	}
 
-	public static TextBlock addBottom(TextBlock original, TextBlock text, HorizontalAlignment horizontal) {
-		return new DecorateEntityImage(original, null, null, text, horizontal);
+	public static TextBlock addBottom(UGroup group, TextBlock original, TextBlock text,
+			HorizontalAlignment horizontal) {
+		return new DecorateEntityImage(original, null, null, null, group, text, horizontal);
 	}
 
-	public static TextBlock add(TextBlock original, TextBlock text, HorizontalAlignment horizontal,
+	public static TextBlock add(UGroup group, TextBlock original, TextBlock text, HorizontalAlignment horizontal,
 			VerticalAlignment verticalAlignment) {
 		if (verticalAlignment == VerticalAlignment.TOP)
-			return addTop(original, text, horizontal);
+			return addTop(group, original, text, horizontal);
 
-		return addBottom(original, text, horizontal);
+		return addBottom(group, original, text, horizontal);
 	}
 
 	public static TextBlock addTopAndBottom(TextBlock original, TextBlock text1, HorizontalAlignment horizontal1,
 			TextBlock text2, HorizontalAlignment horizontal2) {
-		return new DecorateEntityImage(original, text1, horizontal1, text2, horizontal2);
+		return new DecorateEntityImage(original, null, text1, horizontal1, null, text2, horizontal2);
 	}
 
-	private DecorateEntityImage(TextBlock original, TextBlock text1, HorizontalAlignment horizontal1, TextBlock text2,
-			HorizontalAlignment horizontal2) {
+	private DecorateEntityImage(TextBlock original, UGroup group1, TextBlock text1, HorizontalAlignment horizontal1,
+			UGroup group2, TextBlock text2, HorizontalAlignment horizontal2) {
 		this.original = Objects.requireNonNull(original);
+
+		this.group1 = group1;
 		this.horizontal1 = horizontal1;
 		this.text1 = text1;
+
+		this.group2 = group2;
 		this.horizontal2 = horizontal2;
 		this.text2 = text2;
 	}
@@ -103,14 +113,23 @@ public class DecorateEntityImage extends AbstractTextBlock {
 
 		if (text1 != null) {
 			final double xText1 = getTextX(dimText1, dimTotal, horizontal1);
+			if (group1 != null)
+				ug.startGroup(group1);
 			text1.drawU(ug.apply(UTranslate.dx(xText1)));
+			if (group1 != null)
+				ug.closeGroup();
+
 		}
 		original.drawU(ug.apply(new UTranslate(xImage, yImage)));
 		deltaX = xImage;
 		deltaY = yImage;
 		if (text2 != null) {
 			final double xText2 = getTextX(dimText2, dimTotal, horizontal2);
+			if (group2 != null)
+				ug.startGroup(group2);
 			text2.drawU(ug.apply(new UTranslate(xText2, yText2)));
+			if (group2 != null)
+				ug.closeGroup();
 		}
 	}
 
@@ -151,16 +170,16 @@ public class DecorateEntityImage extends AbstractTextBlock {
 	}
 
 	public final double getDeltaX() {
-		if (original instanceof DecorateEntityImage) {
+		if (original instanceof DecorateEntityImage)
 			return deltaX + ((DecorateEntityImage) original).deltaX;
-		}
+
 		return deltaX;
 	}
 
 	public final double getDeltaY() {
-		if (original instanceof DecorateEntityImage) {
+		if (original instanceof DecorateEntityImage)
 			return deltaY + ((DecorateEntityImage) original).deltaY;
-		}
+
 		return deltaY;
 	}
 

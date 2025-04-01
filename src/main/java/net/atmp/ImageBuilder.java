@@ -231,7 +231,7 @@ public class ImageBuilder {
 			if (!(udrawable instanceof TextBlock))
 				throw new IllegalStateException("udrawable is not a TextBlock");
 			final AnnotatedBuilder builder = new AnnotatedBuilder(diagram, skinParam, stringBounder);
-			final AnnotatedWorker annotatedWorker = new AnnotatedWorker(diagram, skinParam, stringBounder, builder);
+			final AnnotatedWorker annotatedWorker = new AnnotatedWorker(diagram, builder);
 			udrawable = annotatedWorker.addAdd((TextBlock) udrawable);
 		}
 

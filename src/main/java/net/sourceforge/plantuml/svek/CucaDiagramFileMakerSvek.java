@@ -114,7 +114,7 @@ public final class CucaDiagramFileMakerSvek extends CucaDiagramFileMaker {
 		// because AnnotatedWorker is used here
 		// It can be looked at in another PR
 		final AnnotatedBuilder builder = new AnnotatedBuilder(diagram, diagram.getSkinParam(), stringBounder);
-		result = new AnnotatedWorker(diagram, diagram.getSkinParam(), stringBounder, builder).addAdd(result);
+		result = new AnnotatedWorker(diagram, builder).addAdd(result);
 
 		// TODO UmlDiagram.getWarningOrError() looks similar so this might be
 		// simplified? - will leave for a separate PR
