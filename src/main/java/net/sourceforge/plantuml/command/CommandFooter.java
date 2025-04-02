@@ -71,7 +71,8 @@ public class CommandFooter extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final String align = arg.get("POSITION", 0);
 		HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.CENTER);
 		if (align == null)
@@ -79,7 +80,7 @@ public class CommandFooter extends SingleLineCommand2<TitledDiagram> {
 					.getHorizontalAlignment();
 
 		final Display s = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy("LABEL", 0));
-		diagram.getFooter().putDisplay(s, ha);
+		diagram.updateFooter(location, s, ha);
 
 		return CommandExecutionResult.ok();
 	}

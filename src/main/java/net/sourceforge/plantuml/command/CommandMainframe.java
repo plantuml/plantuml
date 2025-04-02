@@ -36,6 +36,7 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
+import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
@@ -62,9 +63,10 @@ public class CommandMainframe extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final Display label = Display.getWithNewlines(diagram.getPragma(), arg.get("LABEL", 0));
-		diagram.setMainFrame(label);
+		diagram.setMainFrame(DisplayPositioned.single(location, label, null, null));
 		return CommandExecutionResult.ok();
 	}
 }

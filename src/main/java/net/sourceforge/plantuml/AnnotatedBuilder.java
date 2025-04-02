@@ -38,9 +38,10 @@ package net.sourceforge.plantuml;
 import net.atmp.InnerStrategy;
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
-import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
+import net.sourceforge.plantuml.klimt.UGroup;
+import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -77,11 +78,11 @@ public class AnnotatedBuilder {
 	}
 
 	public boolean hasMainFrame() {
-		return annotated.getMainFrame() != null;
+		return Display.isNull(annotated.getMainFrame().getDisplay()) == false;
 	}
 
 	public double mainFrameSuppHeight() {
-		final Display mainFrame = annotated.getMainFrame();
+		final Display mainFrame = annotated.getMainFrame().getDisplay();
 		final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.mainframe)
 				.getMergedStyle(skinParam.getCurrentStyleBuilder());
 		final FontConfiguration fontConfiguration = FontConfiguration.create(getSkinParam(), style);
@@ -95,8 +96,8 @@ public class AnnotatedBuilder {
 	}
 
 	public TextBlock decoreWithFrame(final TextBlock original) {
-		final Display mainFrame = annotated.getMainFrame();
-		if (mainFrame == null)
+		final Display mainFrame = annotated.getMainFrame().getDisplay();
+		if (Display.isNull(mainFrame))
 			return original;
 
 //		final double x1 = 5;
@@ -185,18 +186,14 @@ public class AnnotatedBuilder {
 	}
 
 	public TextBlock addHeaderAndFooter(TextBlock original) {
-		final DisplaySection footer = annotated.getFooter();
-		final DisplaySection header = annotated.getHeader();
+		final DisplayPositioned header = annotated.getHeader();
+		final DisplayPositioned footer = annotated.getFooter();
 		if (footer.isNull() && header.isNull())
 			return original;
 
-		TextBlock textFooter = null;
-		if (footer.isNull() == false) {
-			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.footer)
-					.getMergedStyle(skinParam.getCurrentStyleBuilder());
-			textFooter = footer.createRibbon(FontConfiguration.create(getSkinParam(), FontParam.FOOTER, null),
-					getSkinParam(), style);
-		}
+		final UGroup group1 = new UGroup(header.getLineLocation());
+		group1.put(UGroupType.CLASS, "header");
+
 		TextBlock textHeader = null;
 		if (header.isNull() == false) {
 			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.header)
@@ -205,8 +202,20 @@ public class AnnotatedBuilder {
 					getSkinParam(), style);
 		}
 
-		return DecorateEntityImage.addTopAndBottom(original, textHeader, header.getHorizontalAlignment(), textFooter,
-				footer.getHorizontalAlignment());
+		final UGroup group2 = new UGroup(footer.getLineLocation());
+		group2.put(UGroupType.CLASS, "footer");
+
+		TextBlock textFooter = null;
+		if (footer.isNull() == false) {
+
+			final Style style = StyleSignatureBasic.of(SName.root, SName.document, SName.footer)
+					.getMergedStyle(skinParam.getCurrentStyleBuilder());
+			textFooter = footer.createRibbon(FontConfiguration.create(getSkinParam(), FontParam.FOOTER, null),
+					getSkinParam(), style);
+		}
+
+		return DecorateEntityImage.addTopAndBottom(original, group1, textHeader, header.getHorizontalAlignment(),
+				group2, textFooter, footer.getHorizontalAlignment());
 	}
 
 }

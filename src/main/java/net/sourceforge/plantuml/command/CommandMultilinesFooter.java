@@ -36,16 +36,16 @@
 package net.sourceforge.plantuml.command;
 
 import net.sourceforge.plantuml.TitledDiagram;
-import net.sourceforge.plantuml.UmlDiagram;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.font.FontParam;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.regex.Matcher2;
 import net.sourceforge.plantuml.utils.BlocLines;
+import net.sourceforge.plantuml.utils.LineLocation;
 
 public class CommandMultilinesFooter extends CommandMultilines<TitledDiagram> {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	public static final CommandMultilinesFooter ME = new CommandMultilinesFooter();
 
@@ -58,7 +58,9 @@ public class CommandMultilinesFooter extends CommandMultilines<TitledDiagram> {
 		return "^end[%s]?footer$";
 	}
 
-	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines, ParserPass currentPass) throws NoSuchColorException {
+	public CommandExecutionResult execute(final TitledDiagram diagram, BlocLines lines, ParserPass currentPass)
+			throws NoSuchColorException {
+		final LineLocation location = lines.getLocation();
 		lines = lines.trim();
 		final Matcher2 m = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		if (m.find() == false) {
@@ -71,10 +73,9 @@ public class CommandMultilinesFooter extends CommandMultilines<TitledDiagram> {
 			HorizontalAlignment ha = HorizontalAlignment.fromString(align, HorizontalAlignment.CENTER);
 			if (align == null)
 				ha = FontParam.FOOTER.getStyleDefinition(null)
-						.getMergedStyle(((UmlDiagram) diagram).getSkinParam().getCurrentStyleBuilder())
-						.getHorizontalAlignment();
+						.getMergedStyle(diagram.getSkinParam().getCurrentStyleBuilder()).getHorizontalAlignment();
 
-			diagram.getFooter().putDisplay(strings, ha);
+			diagram.updateFooter(location, strings, ha);
 			return CommandExecutionResult.ok();
 		}
 		return CommandExecutionResult.error("Empty footer");

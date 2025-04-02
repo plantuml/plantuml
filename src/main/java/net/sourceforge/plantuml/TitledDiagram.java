@@ -48,7 +48,6 @@ import net.sourceforge.plantuml.api.ApiStable;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.UmlSource;
-import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.ColorOrder;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -71,6 +70,7 @@ import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
 import net.sourceforge.plantuml.style.StyleLoader;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.utils.LineLocation;
 import net.sourceforge.plantuml.warning.Warning;
 
 public abstract class TitledDiagram extends AbstractPSystem implements Diagram, Annotated {
@@ -83,9 +83,9 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 
 	private DisplayPositioned caption = DisplayPositioned.none(HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);
 	private DisplayPositioned legend = DisplayPositioned.none(HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM);
-	private final DisplaySection header = DisplaySection.none();
-	private final DisplaySection footer = DisplaySection.none();
-	private Display mainFrame;
+	private DisplayPositioned header = DisplayPositioned.none(HorizontalAlignment.CENTER, null);
+	private DisplayPositioned footer = DisplayPositioned.none(HorizontalAlignment.CENTER, null);
+	private DisplayPositioned mainFrame = DisplayPositioned.none(null, null);
 	private final UmlDiagramType type;
 
 	private final SkinParam skinParam;
@@ -151,7 +151,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		return title.getDisplay();
 	}
 
-	final public void setMainFrame(Display mainFrame) {
+	final public void setMainFrame(DisplayPositioned mainFrame) {
 		this.mainFrame = mainFrame;
 	}
 
@@ -159,18 +159,32 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		this.caption = caption;
 	}
 
+	@Override
 	final public DisplayPositioned getCaption() {
 		return caption;
 	}
 
-	final public DisplaySection getHeader() {
+	@Override
+	final public DisplayPositioned getHeader() {
 		return header;
 	}
 
-	final public DisplaySection getFooter() {
+	@Override
+	final public DisplayPositioned getFooter() {
 		return footer;
 	}
 
+	public void updateFooter(LineLocation location, Display display, HorizontalAlignment horizontalAlignment) {
+		this.footer = this.footer.withDisplay(display).withHorizontalAlignment(horizontalAlignment)
+				.withLocation(location);
+	}
+
+	public void updateHeader(LineLocation location, Display display, HorizontalAlignment horizontalAlignment) {
+		this.header = this.header.withDisplay(display).withHorizontalAlignment(horizontalAlignment)
+				.withLocation(location);
+	}
+
+	@Override
 	final public DisplayPositioned getLegend() {
 		return legend;
 	}
@@ -179,7 +193,8 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		this.legend = legend;
 	}
 
-	final public Display getMainFrame() {
+	@Override
+	final public DisplayPositioned getMainFrame() {
 		return mainFrame;
 	}
 
@@ -281,7 +296,7 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 		result.addAll(col2);
 		return result;
 	}
-	
+
 	public String getFlashData() {
 		final UmlSource source = getSource();
 		if (source == null)
@@ -289,7 +304,5 @@ public abstract class TitledDiagram extends AbstractPSystem implements Diagram, 
 
 		return source.getPlainString("\n");
 	}
-
-
 
 }

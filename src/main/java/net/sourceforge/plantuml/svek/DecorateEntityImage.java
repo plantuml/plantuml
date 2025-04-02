@@ -81,9 +81,9 @@ public class DecorateEntityImage extends AbstractTextBlock {
 		return addBottom(group, original, text, horizontal);
 	}
 
-	public static TextBlock addTopAndBottom(TextBlock original, TextBlock text1, HorizontalAlignment horizontal1,
-			TextBlock text2, HorizontalAlignment horizontal2) {
-		return new DecorateEntityImage(original, null, text1, horizontal1, null, text2, horizontal2);
+	public static TextBlock addTopAndBottom(TextBlock original, UGroup group1, TextBlock text1,
+			HorizontalAlignment horizontal1, UGroup group2, TextBlock text2, HorizontalAlignment horizontal2) {
+		return new DecorateEntityImage(original, group1, text1, horizontal1, group2, text2, horizontal2);
 	}
 
 	private DecorateEntityImage(TextBlock original, UGroup group1, TextBlock text1, HorizontalAlignment horizontal1,

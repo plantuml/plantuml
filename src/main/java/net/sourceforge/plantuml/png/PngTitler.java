@@ -35,7 +35,7 @@
  */
 package net.sourceforge.plantuml.png;
 
-import net.sourceforge.plantuml.cucadiagram.DisplaySection;
+import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -47,13 +47,13 @@ import net.sourceforge.plantuml.style.Style;
 
 public class PngTitler {
 
-	private final DisplaySection text;
+	private final DisplayPositioned text;
 
 	private final Style style;
 	private final HColorSet set;
 	private final ISkinSimple spriteContainer;
 
-	public PngTitler(DisplaySection text, Style style, HColorSet set, ISkinSimple spriteContainer) {
+	public PngTitler(DisplayPositioned text, Style style, HColorSet set, ISkinSimple spriteContainer) {
 		this.style = style;
 		this.set = set;
 		this.spriteContainer = spriteContainer;
@@ -71,7 +71,7 @@ public class PngTitler {
 
 	public TextBlock getRibbonBlock() {
 		final Display display = text.getDisplay();
-		if (display == null)
+		if (Display.isNull(display))
 			return null;
 
 		return style.createTextBlockBordered(display, set, spriteContainer, Style.ID_TITLE, LineBreakStrategy.NONE);

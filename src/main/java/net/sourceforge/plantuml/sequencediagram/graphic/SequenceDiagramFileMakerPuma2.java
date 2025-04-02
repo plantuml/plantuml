@@ -44,8 +44,8 @@ import java.util.Map;
 
 import net.sourceforge.plantuml.AnnotatedBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
@@ -245,7 +245,7 @@ public class SequenceDiagramFileMakerPuma2 implements FileMaker {
 
 	private PngTitler getPngTitler(final FontParam fontParam, int page) {
 		final ISkinParam skinParam = diagram.getSkinParam();
-		final DisplaySection display = diagram.getFooterOrHeaderTeoz(fontParam).withPage(page + 1, pages.size());
+		final DisplayPositioned display = diagram.getFooterOrHeaderTeoz(fontParam).withPage(page + 1, pages.size());
 		final StyleSignatureBasic def = fontParam.getStyleDefinition(null);
 		final Style style = def.getMergedStyle(skinParam.getCurrentStyleBuilder());
 

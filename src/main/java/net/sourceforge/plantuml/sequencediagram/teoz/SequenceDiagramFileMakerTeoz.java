@@ -40,9 +40,9 @@ import java.io.OutputStream;
 
 import net.sourceforge.plantuml.AnnotatedBuilder;
 import net.sourceforge.plantuml.FileFormatOption;
+import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.activitydiagram3.ftile.EntityImageLegend;
 import net.sourceforge.plantuml.core.ImageData;
-import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.creole.Display;
@@ -232,7 +232,7 @@ public class SequenceDiagramFileMakerTeoz implements FileMaker {
 		if (diagram.getFooterOrHeaderTeoz(param).isNull())
 			return new TeozLayer(null, stringBounder, param);
 
-		final DisplaySection display = diagram.getFooterOrHeaderTeoz(param).withPage(index + 1, getNbPages());
+		final DisplayPositioned display = diagram.getFooterOrHeaderTeoz(param).withPage(index + 1, getNbPages());
 		final ISkinParam skinParam = diagram.getSkinParam();
 
 		final StyleSignatureBasic def = param.getStyleDefinition(null);

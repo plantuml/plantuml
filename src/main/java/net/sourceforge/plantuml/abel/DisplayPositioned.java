@@ -35,9 +35,14 @@
  */
 package net.sourceforge.plantuml.abel;
 
+import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.klimt.font.FontConfiguration;
 import net.sourceforge.plantuml.klimt.geom.HorizontalAlignment;
 import net.sourceforge.plantuml.klimt.geom.VerticalAlignment;
+import net.sourceforge.plantuml.klimt.shape.TextBlock;
+import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.utils.LineLocation;
 
 public class DisplayPositioned extends DisplayPositionned {
@@ -53,6 +58,23 @@ public class DisplayPositioned extends DisplayPositionned {
 		this.display = display;
 		this.horizontalAlignment = horizontalAlignment;
 		this.verticalAlignment = verticalAlignment;
+	}
+
+	public DisplayPositioned withPage(int page, int lastpage) {
+		final Display newDisplay = display.withPage(page, lastpage);
+		return new DisplayPositioned(location, newDisplay, horizontalAlignment, verticalAlignment);
+	}
+
+	public DisplayPositioned withDisplay(Display display) {
+		return new DisplayPositioned(location, display, horizontalAlignment, verticalAlignment);
+	}
+
+	public DisplayPositioned withHorizontalAlignment(HorizontalAlignment horizontalAlignment) {
+		return new DisplayPositioned(location, display, horizontalAlignment, verticalAlignment);
+	}
+
+	public DisplayPositioned withLocation(LineLocation location) {
+		return new DisplayPositioned(location, display, horizontalAlignment, verticalAlignment);
 	}
 
 	public static DisplayPositioned single(Display display, HorizontalAlignment horizontalAlignment,
@@ -91,6 +113,18 @@ public class DisplayPositioned extends DisplayPositionned {
 
 	public LineLocation getLineLocation() {
 		return location;
+	}
+
+	public TextBlock createRibbon(FontConfiguration fontConfiguration, ISkinSimple spriteContainer, Style style) {
+		final Display display = getDisplay();
+		if (Display.isNull(display) || display.size() == 0)
+			return null;
+
+		if (style != null)
+			return style.createTextBlockBordered(display, spriteContainer.getIHtmlColorSet(), spriteContainer, null,
+					LineBreakStrategy.NONE);
+
+		return display.create(fontConfiguration, getHorizontalAlignment(), spriteContainer);
 	}
 
 }

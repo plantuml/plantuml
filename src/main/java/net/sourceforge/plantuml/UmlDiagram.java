@@ -43,12 +43,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 
+import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.api.ImageDataSimple;
 import net.sourceforge.plantuml.core.Diagram;
 import net.sourceforge.plantuml.core.ImageData;
 import net.sourceforge.plantuml.core.UmlSource;
 import net.sourceforge.plantuml.crash.CrashReportHandler;
-import net.sourceforge.plantuml.cucadiagram.DisplaySection;
 import net.sourceforge.plantuml.dot.UnparsableGraphvizException;
 import net.sourceforge.plantuml.file.SuggestedFile;
 import net.sourceforge.plantuml.klimt.font.FontParam;
@@ -93,7 +93,7 @@ public abstract class UmlDiagram extends TitledDiagram implements Diagram, Annot
 		this.rotation = rotation;
 	}
 
-	public final DisplaySection getFooterOrHeaderTeoz(FontParam param) {
+	public final DisplayPositioned getFooterOrHeaderTeoz(FontParam param) {
 		if (param == FontParam.FOOTER)
 			return getFooter();
 

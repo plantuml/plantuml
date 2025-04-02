@@ -67,9 +67,10 @@ public class CommandCaption extends SingleLineCommand2<TitledDiagram> {
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(TitledDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final Display s = Display.getWithNewlines(diagram.getPragma(), arg.getLazzy("DISPLAY", 0));
-		diagram.setCaption(DisplayPositioned.single(s, HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM));
+		diagram.setCaption(DisplayPositioned.single(location, s, HorizontalAlignment.CENTER, VerticalAlignment.BOTTOM));
 		return CommandExecutionResult.ok();
 	}
 

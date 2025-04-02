@@ -37,8 +37,6 @@ package net.sourceforge.plantuml;
 
 import net.sourceforge.plantuml.abel.DisplayPositioned;
 import net.sourceforge.plantuml.abel.DisplayPositionned;
-import net.sourceforge.plantuml.cucadiagram.DisplaySection;
-import net.sourceforge.plantuml.klimt.creole.Display;
 
 public interface Annotated {
 	// ::remove file when __HAXE__
@@ -49,10 +47,10 @@ public interface Annotated {
 
 	public DisplayPositioned getLegend();
 
-	public DisplaySection getHeader();
+	public DisplayPositioned getHeader();
 
-	public DisplaySection getFooter();
+	public DisplayPositioned getFooter();
 
-	public Display getMainFrame();
+	public DisplayPositioned getMainFrame();
 
 }
