@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-public class UrlBuilderTest {
+public class UrlUbrexTest {
 
 	public static UnicodeBracketedExpression buildPart(String... parts) {
 		final StringBuilder sb = new StringBuilder();
