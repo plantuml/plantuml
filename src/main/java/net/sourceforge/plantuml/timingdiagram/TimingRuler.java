@@ -99,6 +99,7 @@ public class TimingRuler {
 	}
 
 	private long tickUnitary() {
+		System.err.println("tickUnitary=" + tickUnitary);
 		if (tickUnitary == 0)
 			return highestCommonFactor();
 
@@ -111,19 +112,22 @@ public class TimingRuler {
 	private long highestCommonFactor() {
 		if (highestCommonFactorInternal == -1) {
 			for (long tick : getAbsolutesTicks()) {
+				System.err.println("tick=" + tick);
 				if (highestCommonFactorInternal == -1) {
 					highestCommonFactorInternal = tick;
 				} else {
 					final long candidate = computeHighestCommonFactor(highestCommonFactorInternal, tick);
 					final double size = (getMax().getTime().doubleValue() - getMin().getTime().doubleValue())
 							/ candidate;
-					if (size > 200)
-						return highestCommonFactorInternal;
+					System.err.println("size=" + size);
+//					if (size > 200)
+//						return highestCommonFactorInternal;
 
 					highestCommonFactorInternal = candidate;
 				}
 			}
 		}
+		System.err.println("highestCommonFactorInternal=" + highestCommonFactorInternal);
 		return highestCommonFactorInternal;
 	}
 
