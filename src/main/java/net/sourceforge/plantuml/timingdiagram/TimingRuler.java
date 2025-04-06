@@ -99,12 +99,29 @@ public class TimingRuler {
 	}
 
 	private long getTickUnitary() {
-		System.err.println("tickUnitary=" + forcedTickUnitary);
-		if (forcedTickUnitary == 0)
-			return highestCommonFactor();
-
+		if (forcedTickUnitary == 0) {
+			final long highestCommonFactor = highestCommonFactor();
+			if (highestCommonFactor > 1)
+				return highestCommonFactor;
+			/*
+			 * Normally, we use the highest common factor (HCF) of significant timing
+			 * values. However, if the HCF is 1 (implying no suitable common scale), we fall
+			 * back to an approximate calculation based on the diagram width in pixels and
+			 * the time range (delta). This ensures readability and prevents extremely long
+			 * diagrams.
+			 */
+			final double delta = getMax().getTime().doubleValue() - getMin().getTime().doubleValue();
+			final double totalWidth = 1000.0;
+			return Math.round(1 + (tickIntervalInPixels * delta / totalWidth));
+		}
 		return forcedTickUnitary;
+	}
 
+	public double getWidth() {
+		if (times.size() == 0)
+			return 100;
+		final double delta = getMax().getTime().doubleValue() - getMin().getTime().doubleValue();
+		return (delta / getTickUnitary() + 1) * tickIntervalInPixels;
 	}
 
 	private long highestCommonFactorInternal = -1;
@@ -152,14 +169,6 @@ public class TimingRuler {
 
 		final long delta = getMax().getTime().longValue() - getMin().getTime().longValue();
 		return Math.min(1000, (int) (1 + delta / getTickUnitary()));
-	}
-
-	public double getWidth() {
-		if (times.size() == 0)
-			return 100;
-		final double delta = getMax().getTime().doubleValue() - getMin().getTime().doubleValue();
-
-		return (delta / getTickUnitary() + 1) * tickIntervalInPixels;
 	}
 
 	public final double getPosInPixel(TimeTick when) {
@@ -293,12 +302,10 @@ public class TimingRuler {
 
 		return result;
 	}
-	
+
 	private long tickToTime(int i) {
 		return forcedTickUnitary * i + getMin().getTime().longValue();
 	}
-
-
 
 	public void drawVlines(UGraphic ug, double height) {
 		ug = applyForVLines(ug, getStyleTimegrid(), skinParam);
