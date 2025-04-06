@@ -67,7 +67,7 @@ public class TimingRuler {
 	private final ISkinParam skinParam;
 
 	private long tickIntervalInPixels = 50;
-	private long tickUnitary;
+	private long forcedTickUnitary;
 
 	private TimingFormat format = TimingFormat.DECIMAL;
 
@@ -95,15 +95,15 @@ public class TimingRuler {
 		if (pixel <= 0 || tick <= 0)
 			throw new IllegalArgumentException();
 		this.tickIntervalInPixels = pixel;
-		this.tickUnitary = tick;
+		this.forcedTickUnitary = tick;
 	}
 
-	private long tickUnitary() {
-		System.err.println("tickUnitary=" + tickUnitary);
-		if (tickUnitary == 0)
+	private long getTickUnitary() {
+		System.err.println("tickUnitary=" + forcedTickUnitary);
+		if (forcedTickUnitary == 0)
 			return highestCommonFactor();
 
-		return tickUnitary;
+		return forcedTickUnitary;
 
 	}
 
@@ -151,7 +151,7 @@ public class TimingRuler {
 			return 1;
 
 		final long delta = getMax().getTime().longValue() - getMin().getTime().longValue();
-		return Math.min(1000, (int) (1 + delta / tickUnitary()));
+		return Math.min(1000, (int) (1 + delta / getTickUnitary()));
 	}
 
 	public double getWidth() {
@@ -159,7 +159,7 @@ public class TimingRuler {
 			return 100;
 		final double delta = getMax().getTime().doubleValue() - getMin().getTime().doubleValue();
 
-		return (delta / tickUnitary() + 1) * tickIntervalInPixels;
+		return (delta / getTickUnitary() + 1) * tickIntervalInPixels;
 	}
 
 	public final double getPosInPixel(TimeTick when) {
@@ -168,11 +168,7 @@ public class TimingRuler {
 
 	private double getPosInPixelInternal(double time) {
 		time -= getMin().getTime().doubleValue();
-		return time / tickUnitary() * tickIntervalInPixels;
-	}
-
-	private long tickToTime(int i) {
-		return tickUnitary * i + getMin().getTime().longValue();
+		return time / getTickUnitary() * tickIntervalInPixels;
 	}
 
 	public void addTime(TimeTick time) {
@@ -280,7 +276,7 @@ public class TimingRuler {
 
 	private Collection<Long> roundValues() {
 		final SortedSet<Long> result = new TreeSet<>();
-		if (tickUnitary == 0) {
+		if (forcedTickUnitary == 0) {
 			for (TimeTick tick : times) {
 				final long round = tick.getTime().longValue();
 				result.add(round);
@@ -297,6 +293,12 @@ public class TimingRuler {
 
 		return result;
 	}
+	
+	private long tickToTime(int i) {
+		return forcedTickUnitary * i + getMin().getTime().longValue();
+	}
+
+
 
 	public void drawVlines(UGraphic ug, double height) {
 		ug = applyForVLines(ug, getStyleTimegrid(), skinParam);
