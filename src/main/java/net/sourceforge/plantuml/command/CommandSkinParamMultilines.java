@@ -70,7 +70,7 @@ public class CommandSkinParamMultilines extends CommandMultilinesBracket<TitledD
 
 		final Matcher2 mStart = getStartingPattern().matcher(lines.getFirst().getTrimmed().getString());
 		if (mStart.find() == false)
-			throw new IllegalStateException();
+			return CommandExecutionResult.error("Bad syntax for skinparam");
 
 		final String group1 = mStart.group(1);
 
