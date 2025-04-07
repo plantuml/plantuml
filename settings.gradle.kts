@@ -3,7 +3,7 @@
 rootProject.name = "plantuml"
 
 val isCiBuild = System.getenv("CI") != null
-val isNotDevTest = System.getenv("DEV_TEST") == null
+val isDevTest = System.getenv("DEV_TEST") != null
 val version: String by settings
 
 println("Running settings.gradle.kts")
@@ -13,7 +13,7 @@ println("Version is " + version)
 val javaVersion = JavaVersion.current()
 println("Current Java version is " + javaVersion)
 
-if (isCiBuild && isNotDevTest) {
+if (isCiBuild && !isDevTest) {
     include("plantuml-asl")
     include("plantuml-bsd")
     include("plantuml-epl")
