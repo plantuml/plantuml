@@ -3,6 +3,7 @@
 rootProject.name = "plantuml"
 
 val isCiBuild = System.getenv("CI") != null
+val isNotDevTest = System.getenv("DEV_TEST") == null
 val version: String by settings
 
 println("Running settings.gradle.kts")
@@ -12,7 +13,7 @@ println("Version is " + version)
 val javaVersion = JavaVersion.current()
 println("Current Java version is " + javaVersion)
 
-if (isCiBuild) {
+if (isCiBuild && isNotDevTest) {
     include("plantuml-asl")
     include("plantuml-bsd")
     include("plantuml-epl")
@@ -26,5 +27,5 @@ if (isCiBuild) {
         println("Skipping plantuml-gplv2 as it requires Java 11 or higher")
     }
 } else {
-    println("Not a CI build: only GPL will be generated")
+    println("Not a CI [without DevTest] build: only GPL will be generated")
 }
