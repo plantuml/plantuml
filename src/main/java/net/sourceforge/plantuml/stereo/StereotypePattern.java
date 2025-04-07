@@ -35,6 +35,13 @@
  */
 package net.sourceforge.plantuml.stereo;
 
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexOptional;
+import com.plantuml.ubrex.builder.UBrexOr;
+import com.plantuml.ubrex.builder.UBrexPart;
+
 import net.sourceforge.plantuml.regex.IRegex;
 import net.sourceforge.plantuml.regex.RegexConcat;
 import net.sourceforge.plantuml.regex.RegexLeaf;
@@ -48,6 +55,17 @@ public class StereotypePattern {
 				new RegexOptional(mandatory(param)), //
 				RegexLeaf.spaceZeroOrMore() //
 		);
+	}
+
+	public static UBrexPart ubrexOptional(String param) {
+		return UBrexConcat.build(//
+				UBrexLeaf.spaceZeroOrMore(), //
+				new UBrexOptional(ubrexMandatory(param)), //
+				UBrexLeaf.spaceZeroOrMore()); //
+	}
+
+	public static UBrexPart ubrexMandatory(String param) {
+		return new UBrexNamed(param, new UBrexLeaf("<<  〄>〘 >>〙"));
 	}
 
 	public static IRegex mandatory(String param) {

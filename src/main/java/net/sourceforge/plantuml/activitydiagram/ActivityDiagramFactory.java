@@ -38,12 +38,12 @@ package net.sourceforge.plantuml.activitydiagram;
 import java.util.List;
 
 import net.sourceforge.plantuml.Previous;
-import net.sourceforge.plantuml.activitydiagram.command.CommandEndPartition;
-import net.sourceforge.plantuml.activitydiagram.command.CommandLinkActivity;
 import net.sourceforge.plantuml.activitydiagram.command.CommandLinkLongActivity;
 import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandElse;
+import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandEndPartition;
 import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandEndif;
 import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandIf;
+import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandLinkActivity;
 import net.sourceforge.plantuml.activitydiagram.command.UBrexCommandPartition;
 import net.sourceforge.plantuml.classdiagram.command.UBrexCommandHideShow2;
 import net.sourceforge.plantuml.command.Command;
@@ -74,7 +74,7 @@ public class ActivityDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new UBrexCommandRankDir());
 
 		cmds.add(new UBrexCommandPartition());
-		cmds.add(new CommandEndPartition());
+		cmds.add(new UBrexCommandEndPartition());
 		cmds.add(new CommandLinkLongActivity());
 
 		final CommandFactoryNoteActivity factoryNoteActivityCommand = new CommandFactoryNoteActivity();
@@ -89,7 +89,7 @@ public class ActivityDiagramFactory extends PSystemCommandFactory {
 		cmds.add(new UBrexCommandElse());
 		cmds.add(new UBrexCommandEndif());
 
-		cmds.add(new CommandLinkActivity());
+		cmds.add(new UBrexCommandLinkActivity());
 		cmds.add(new UBrexCommandHideShow2());
 		// addCommand(new CommandInnerConcurrent(system));
 

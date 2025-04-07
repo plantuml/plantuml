@@ -37,10 +37,8 @@ package net.sourceforge.plantuml.klimt.color;
 
 import com.plantuml.ubrex.builder.UBrexLeaf;
 import com.plantuml.ubrex.builder.UBrexNamed;
-import com.plantuml.ubrex.builder.UBrexOptional;
 import com.plantuml.ubrex.builder.UBrexPart;
 
-import net.sourceforge.plantuml.regex.RegexLeaf;
 import net.sourceforge.plantuml.regex.RegexResult;
 
 public class UBrexColorParser {
@@ -102,10 +100,10 @@ public class UBrexColorParser {
 //		return simpleColor(null).regex;
 //	}
 
-//	public static RegexLeaf exp2() {
-//		return new RegexLeaf("BACKCOLOR", "(" + COLOR_REGEXP + ")?");
-//	}
-//
+	public static UBrexPart exp2() {
+		return new UBrexNamed("BACKCOLOR", new UBrexLeaf(COLOR_REGEXP));
+	}
+
 //	public static RegexLeaf exp3() {
 //		return new RegexLeaf("BACKCOLOR2", "(" + COLOR_REGEXP + ")?");
 //	}
@@ -125,5 +123,6 @@ public class UBrexColorParser {
 	public UBrexPart getRegex() {
 		return regex;
 	}
+
 
 }

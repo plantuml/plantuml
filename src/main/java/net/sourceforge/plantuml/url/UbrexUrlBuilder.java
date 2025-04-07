@@ -40,13 +40,17 @@ import java.util.List;
 import com.plantuml.ubrex.TextNavigator;
 import com.plantuml.ubrex.UMatcher;
 import com.plantuml.ubrex.UnicodeBracketedExpression;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexOptional;
+import com.plantuml.ubrex.builder.UBrexPart;
 
 // UrlUbrexTest
 public class UbrexUrlBuilder {
 	// ::remove file when __HAXE__
 
-//	public static final IRegex MANDATORY = new RegexLeaf("URL", "(" + UbrexUrlBuilder.getRegexp() + ")");
-//	public static final IRegex OPTIONAL = new RegexOptional(MANDATORY);
+	public static final UBrexPart MANDATORY = new UBrexNamed("URL", new UBrexLeaf(getRegexp()));
+	public static final UBrexPart OPTIONAL = new UBrexOptional(MANDATORY);
 
 	private static final String START_PART = "[[ 〇*〴s";
 	private static final String END_PART = "〇*〴s  ]]";
@@ -82,14 +86,15 @@ public class UbrexUrlBuilder {
 			"〇?〘  〴s 〶$LABEL=〘「〤〴s{}[]」 〇*「〤[]」〙  〙" + // Optional label
 			END_PART;
 
-//	public static String getRegexp() {
-//		return S_QUOTED + "|" + //
-//				S_ONLY_TOOLTIP + "|" + //
-//				S_ONLY_TOOLTIP_AND_LABEL + "|" + //
-//				S_LINK_TOOLTIP_NOLABEL + "|" + //
-//				S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL;
-//	}
-//
+	public static String getRegexp() {
+		return "【" + S_QUOTED + "┇" + //
+				S_ONLY_TOOLTIP + "┇" + //
+				S_ONLY_TOOLTIP_AND_LABEL + "┇" + //
+				S_LINK_TOOLTIP_NOLABEL + "┇" + //
+				S_LINK_WITH_OPTIONAL_TOOLTIP_WITH_OPTIONAL_LABEL + "┇" + //
+				S_LINK_NOTOOLTIP_WITH_OPTIONAL_LABEL + "】";
+	}
+
 	private static final UnicodeBracketedExpression QUOTED = UnicodeBracketedExpression.build(S_QUOTED);
 	private static final UnicodeBracketedExpression ONLY_TOOLTIP = UnicodeBracketedExpression.build(S_ONLY_TOOLTIP);
 	private static final UnicodeBracketedExpression ONLY_TOOLTIP_AND_LABEL = UnicodeBracketedExpression

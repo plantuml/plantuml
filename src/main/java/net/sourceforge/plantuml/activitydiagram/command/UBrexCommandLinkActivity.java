@@ -35,6 +35,13 @@
  */
 package net.sourceforge.plantuml.activitydiagram.command;
 
+import com.plantuml.ubrex.UnicodeBracketedExpression;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexNamed;
+import com.plantuml.ubrex.builder.UBrexOptional;
+import com.plantuml.ubrex.builder.UBrexOr;
+
 import net.sourceforge.plantuml.StringUtils;
 import net.sourceforge.plantuml.abel.Entity;
 import net.sourceforge.plantuml.abel.GroupType;
@@ -42,82 +49,92 @@ import net.sourceforge.plantuml.abel.LeafType;
 import net.sourceforge.plantuml.abel.Link;
 import net.sourceforge.plantuml.abel.LinkArg;
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
-import net.sourceforge.plantuml.annotation.DeadCode;
 import net.sourceforge.plantuml.classdiagram.command.CommandLinkClass;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
+import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
-import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
-import net.sourceforge.plantuml.klimt.color.ColorParser;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
+import net.sourceforge.plantuml.klimt.color.UBrexColorParser;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.plasma.Quark;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexOptional;
-import net.sourceforge.plantuml.regex.RegexOr;
 import net.sourceforge.plantuml.regex.RegexPartialMatch;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.stereo.Stereotype;
 import net.sourceforge.plantuml.stereo.StereotypePattern;
+import net.sourceforge.plantuml.url.UbrexUrlBuilder;
 import net.sourceforge.plantuml.url.Url;
 import net.sourceforge.plantuml.url.UrlBuilder;
 import net.sourceforge.plantuml.url.UrlMode;
 import net.sourceforge.plantuml.utils.Direction;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-@DeadCode
-public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
+public class UBrexCommandLinkActivity extends UBrexSingleLineCommand2<ActivityDiagram> {
 
-	private CommandLinkActivity() {
+	public UBrexCommandLinkActivity() {
 		super(getRegexConcat());
 	}
 
-	private static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandLinkActivity.class.getName(), RegexLeaf.start(), //
-				new RegexOptional(//
-						new RegexOr("FIRST", //
-								new RegexLeaf("STAR", "(\\(\\*(top)?\\))"), //
-								new RegexLeaf("CODE", "([%pLN][%pLN_.]*)"), //
-								new RegexLeaf("BAR", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
-								new RegexLeaf("QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?"))), //
-				StereotypePattern.optional("STEREOTYPE"), //
-				ColorParser.exp2(), //
-				RegexLeaf.spaceZeroOrMore(), //
-				UrlBuilder.OPTIONAL, //
+	static UnicodeBracketedExpression getRegexConcat() {
+		return UBrexConcat.build(//
+				new UBrexOptional(//
+						new UBrexOr(//
+								new UBrexNamed("STAR", new UBrexLeaf("(* 〇?〘top〙)")), //
+								new UBrexNamed("BAR", new UBrexLeaf("=〇+= 〇*〴s 〇+「〴an_.」〇*〴s =〇+=")), //
+								new UBrexLeaf("〴g 〶$QUOTED1=〇*〴G 〴g 〇?〘〇+〴s as 〇+〴s 〶$QUOTED2=〇+「〴an_.」 〙 "),
+								new UBrexNamed("CODE", new UBrexLeaf("〇+「〴an_.」") //
+								))), //
+				StereotypePattern.ubrexOptional("STEREOTYPE"), //
+				UBrexColorParser.exp2(),
+				UBrexLeaf.spaceZeroOrMore(), //
+				UbrexUrlBuilder.OPTIONAL, //
 
-				new RegexLeaf("ARROW_BODY1", "([-.]+)"), //
-				new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-				new RegexLeaf("ARROW_DIRECTION", "(\\*|left|right|up|down|le?|ri?|up?|do?)?"), //
-				new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-				new RegexLeaf("ARROW_BODY2", "([-.]*)"), //
-				new RegexLeaf("\\>"), //
-
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOptional(new RegexLeaf("BRACKET", "\\[([^\\]*]+[^\\]]*)\\]")), //
-				RegexLeaf.spaceZeroOrMore(), //
-				new RegexOr("FIRST2", //
-						new RegexLeaf("STAR2", "(\\(\\*(top|\\d+)?\\))"), //
-						new RegexLeaf("OPENBRACKET2", "(\\{)"), //
-						new RegexLeaf("CODE2", "([%pLN][%pLN_.]*)"), //
-						new RegexLeaf("BAR2", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
-						new RegexLeaf("QUOTED2", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN][%pLN_.]*))?"), //
-						new RegexLeaf("QUOTED_INVISIBLE2", "(\\w.*?)")), //
-				StereotypePattern.optional("STEREOTYPE2"), //
-				new RegexOptional( //
-						new RegexConcat( //
-								new RegexLeaf("in"), //
-								RegexLeaf.spaceOneOrMore(), //
-								new RegexLeaf("PARTITION2", "([%g][^%g]+[%g]|\\S+)") //
-						)), //
-				RegexLeaf.spaceZeroOrMore(), //
-				ColorParser.exp3(), //
-				RegexLeaf.end());
+				UBrexLeaf.end()); //
 	}
+
+//	private static IRegex getRegexConcat() {
+//		return RegexConcat.build(UBrexCommandLinkActivity.class.getName(), RegexLeaf.start(), //
+//				new RegexOptional(//
+//						new RegexOr("FIRST", //
+//								new RegexLeaf("STAR", "(\\(\\*(top)?\\))"), //
+//								new RegexLeaf("CODE", "([%pLN][%pLN_.]*)"), //
+//								new RegexLeaf("BAR", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
+//								new RegexLeaf("QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?"))), //
+//				StereotypePattern.optional("STEREOTYPE"), //
+//				ColorParser.exp2(), //
+//				RegexLeaf.spaceZeroOrMore(), //
+//				UrlBuilder.OPTIONAL, //
+//
+//				new RegexLeaf("ARROW_BODY1", "([-.]+)"), //
+//				new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+//				new RegexLeaf("ARROW_DIRECTION", "(\\*|left|right|up|down|le?|ri?|up?|do?)?"), //
+//				new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
+//				new RegexLeaf("ARROW_BODY2", "([-.]*)"), //
+//				new RegexLeaf("\\>"), //
+//
+//				RegexLeaf.spaceZeroOrMore(), //
+//				new RegexOptional(new RegexLeaf("BRACKET", "\\[([^\\]*]+[^\\]]*)\\]")), //
+//				RegexLeaf.spaceZeroOrMore(), //
+//				new RegexOr("FIRST2", //
+//						new RegexLeaf("STAR2", "(\\(\\*(top|\\d+)?\\))"), //
+//						new RegexLeaf("OPENBRACKET2", "(\\{)"), //
+//						new RegexLeaf("CODE2", "([%pLN][%pLN_.]*)"), //
+//						new RegexLeaf("BAR2", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
+//						new RegexLeaf("QUOTED2", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN][%pLN_.]*))?"), //
+//						new RegexLeaf("QUOTED_INVISIBLE2", "(\\w.*?)")), //
+//				StereotypePattern.optional("STEREOTYPE2"), //
+//				new RegexOptional( //
+//						new RegexConcat( //
+//								new RegexLeaf("in"), //
+//								RegexLeaf.spaceOneOrMore(), //
+//								new RegexLeaf("PARTITION2", "([%g][^%g]+[%g]|\\S+)") //
+//						)), //
+//				RegexLeaf.spaceZeroOrMore(), //
+//				ColorParser.exp3(), //
+//				RegexLeaf.end());
+//	}
 
 	@Override
 	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg,
@@ -281,9 +298,9 @@ public class CommandLinkActivity extends SingleLineCommand2<ActivityDiagram> {
 
 	static Entity ubrexGetEntityForIfOnly(LineLocation location, ActivityDiagram diagram, RegexResult arg) {
 
-		if (arg.get("STAR", 0) != null) 
+		if (arg.get("STAR", 0) != null)
 			return diagram.getStart(location);
-		
+
 		final String idShort = arg.get("CODE", 0);
 		if (idShort != null) {
 			final Quark<Entity> ident = diagram.quarkInContext(true, diagram.cleanId(idShort));

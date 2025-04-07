@@ -35,38 +35,38 @@
  */
 package net.sourceforge.plantuml.activitydiagram.command;
 
+import com.plantuml.ubrex.UnicodeBracketedExpression;
+import com.plantuml.ubrex.builder.UBrexConcat;
+import com.plantuml.ubrex.builder.UBrexLeaf;
+import com.plantuml.ubrex.builder.UBrexOr;
+
 import net.sourceforge.plantuml.activitydiagram.ActivityDiagram;
-import net.sourceforge.plantuml.annotation.DeadCode;
 import net.sourceforge.plantuml.command.CommandExecutionResult;
 import net.sourceforge.plantuml.command.ParserPass;
-import net.sourceforge.plantuml.command.SingleLineCommand2;
-import net.sourceforge.plantuml.regex.IRegex;
-import net.sourceforge.plantuml.regex.RegexConcat;
-import net.sourceforge.plantuml.regex.RegexLeaf;
-import net.sourceforge.plantuml.regex.RegexOr;
+import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
 import net.sourceforge.plantuml.regex.RegexResult;
 import net.sourceforge.plantuml.utils.LineLocation;
 
-@DeadCode
-public class CommandEndPartition extends SingleLineCommand2<ActivityDiagram> {
+public class UBrexCommandEndPartition extends UBrexSingleLineCommand2<ActivityDiagram> {
 
-	private CommandEndPartition() {
+	public UBrexCommandEndPartition() {
 		super(getRegexConcat());
 	}
 
-	static IRegex getRegexConcat() {
-		return RegexConcat.build(CommandEndPartition.class.getName(), RegexLeaf.start(), //
-				new RegexOr( //
-						new RegexConcat( //
-								new RegexLeaf("end"), //
-								RegexLeaf.spaceZeroOrMore(), //
-								new RegexLeaf("partition")), //
-						new RegexLeaf("\\}")), //
-				RegexLeaf.end()); //
+	static UnicodeBracketedExpression getRegexConcat() {
+		return UBrexConcat.build(//
+				new UBrexOr( //
+						UBrexConcat.build(//
+								new UBrexLeaf("end"), //
+								UBrexLeaf.spaceZeroOrMore(), //
+								new UBrexLeaf("partition")), //
+						new UBrexLeaf("}")), //
+				UBrexLeaf.end()); //
 	}
 
 	@Override
-	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg, ParserPass currentPass) {
+	protected CommandExecutionResult executeArg(ActivityDiagram diagram, LineLocation location, RegexResult arg,
+			ParserPass currentPass) {
 		final boolean result = diagram.endGroup();
 		if (result == false)
 			return CommandExecutionResult.error("No partition defined");
