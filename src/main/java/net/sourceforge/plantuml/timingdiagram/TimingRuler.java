@@ -67,7 +67,7 @@ public class TimingRuler {
 	private final ISkinParam skinParam;
 
 	private long tickIntervalInPixels = 50;
-	private long tickUnitary;
+	private long forcedTickUnitary;
 
 	private TimingFormat format = TimingFormat.DECIMAL;
 
@@ -95,35 +95,45 @@ public class TimingRuler {
 		if (pixel <= 0 || tick <= 0)
 			throw new IllegalArgumentException();
 		this.tickIntervalInPixels = pixel;
-		this.tickUnitary = tick;
+		this.forcedTickUnitary = tick;
 	}
 
-	private long tickUnitary() {
-		if (tickUnitary == 0)
-			return highestCommonFactor();
+	private long getTickUnitary() {
+		if (forcedTickUnitary == 0) {
+			final long highestCommonFactor = highestCommonFactor();
+			if (highestCommonFactor > 1)
+				return highestCommonFactor;
+			/*
+			 * Normally, we use the highest common factor (HCF) of significant timing
+			 * values. However, if the HCF is 1 (implying no suitable common scale), we fall
+			 * back to an approximate calculation based on the diagram width in pixels and
+			 * the time range (delta). This ensures readability and prevents extremely long
+			 * diagrams.
+			 */
+			final double delta = getMax().getTime().doubleValue() - getMin().getTime().doubleValue();
+			final double totalWidth = 1000.0;
+			return Math.round(1 + (tickIntervalInPixels * delta / totalWidth));
+		}
+		return forcedTickUnitary;
+	}
 
-		return tickUnitary;
-
+	public double getWidth() {
+		if (times.size() == 0)
+			return 100;
+		final double delta = getMax().getTime().doubleValue() - getMin().getTime().doubleValue();
+		return (delta / getTickUnitary() + 1) * tickIntervalInPixels;
 	}
 
 	private long highestCommonFactorInternal = -1;
 
 	private long highestCommonFactor() {
-		if (highestCommonFactorInternal == -1) {
-			for (long tick : getAbsolutesTicks()) {
-				if (highestCommonFactorInternal == -1) {
+		if (highestCommonFactorInternal == -1)
+			for (long tick : getAbsolutesTicks())
+				if (highestCommonFactorInternal == -1)
 					highestCommonFactorInternal = tick;
-				} else {
-					final long candidate = computeHighestCommonFactor(highestCommonFactorInternal, tick);
-					final double size = (getMax().getTime().doubleValue() - getMin().getTime().doubleValue())
-							/ candidate;
-					if (size > 200)
-						return highestCommonFactorInternal;
+				else
+					highestCommonFactorInternal = computeHighestCommonFactor(highestCommonFactorInternal, tick);
 
-					highestCommonFactorInternal = candidate;
-				}
-			}
-		}
 		return highestCommonFactorInternal;
 	}
 
@@ -147,15 +157,7 @@ public class TimingRuler {
 			return 1;
 
 		final long delta = getMax().getTime().longValue() - getMin().getTime().longValue();
-		return Math.min(1000, (int) (1 + delta / tickUnitary()));
-	}
-
-	public double getWidth() {
-		if (times.size() == 0)
-			return 100;
-		final double delta = getMax().getTime().doubleValue() - getMin().getTime().doubleValue();
-
-		return (delta / tickUnitary() + 1) * tickIntervalInPixels;
+		return Math.min(1000, (int) (1 + delta / getTickUnitary()));
 	}
 
 	public final double getPosInPixel(TimeTick when) {
@@ -164,11 +166,7 @@ public class TimingRuler {
 
 	private double getPosInPixelInternal(double time) {
 		time -= getMin().getTime().doubleValue();
-		return time / tickUnitary() * tickIntervalInPixels;
-	}
-
-	private long tickToTime(int i) {
-		return tickUnitary * i + getMin().getTime().longValue();
+		return time / getTickUnitary() * tickIntervalInPixels;
 	}
 
 	public void addTime(TimeTick time) {
@@ -276,7 +274,7 @@ public class TimingRuler {
 
 	private Collection<Long> roundValues() {
 		final SortedSet<Long> result = new TreeSet<>();
-		if (tickUnitary == 0) {
+		if (forcedTickUnitary == 0) {
 			for (TimeTick tick : times) {
 				final long round = tick.getTime().longValue();
 				result.add(round);
@@ -292,6 +290,10 @@ public class TimingRuler {
 			result.add(0L);
 
 		return result;
+	}
+
+	private long tickToTime(int i) {
+		return forcedTickUnitary * i + getMin().getTime().longValue();
 	}
 
 	public void drawVlines(UGraphic ug, double height) {
