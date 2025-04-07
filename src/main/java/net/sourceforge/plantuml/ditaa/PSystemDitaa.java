@@ -35,13 +35,13 @@
 package net.sourceforge.plantuml.ditaa;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.stathissideris.ascii2image.core.ConversionOptions;
-import org.stathissideris.ascii2image.core.ProcessingOptions;
 import org.stathissideris.ascii2image.graphics.BitmapRenderer;
 import org.stathissideris.ascii2image.graphics.Diagram;
 import org.stathissideris.ascii2image.text.TextGrid;
@@ -57,40 +57,31 @@ import net.sourceforge.plantuml.crash.CrashReportHandler;
 import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.security.SImageIO;
 import net.sourceforge.plantuml.text.BackSlash;
+import net.sourceforge.plantuml.utils.BlocLines;
 
 public class PSystemDitaa extends AbstractPSystem {
 	// ::remove folder when __CORE__
 
-	private final ProcessingOptions processingOptions;
-	private final boolean dropShadows;
-	private final String data;
-	private final float scale;
-	private final boolean transparentBackground;
-	private final Font font;
-	private final boolean forceFontSize;
-	private final boolean performSeparationOfCommonEdges;
-	private final boolean allCornersAreRound;
+	private final ConversionOptions options = new ConversionOptions();
+	private final List<String> data = new ArrayList<>();
+	private int nbStartingSpace = Integer.MAX_VALUE;
 
-	public PSystemDitaa(UmlSource source, String data, boolean performSeparationOfCommonEdges, boolean dropShadows,
-			boolean allCornersAreRound, boolean transparentBackground, float scale, Font font, boolean forceFontSize,
+	public PSystemDitaa(UmlSource source, boolean performSeparationOfCommonEdges, boolean dropShadows,
+			boolean allCornersAreRound, boolean transparentBackground, float scale,
 			PreprocessingArtifact preprocessing) {
 		super(source, preprocessing);
-		this.data = data;
-		this.dropShadows = dropShadows;
-		this.performSeparationOfCommonEdges = performSeparationOfCommonEdges;
-		this.allCornersAreRound = allCornersAreRound;
-		this.processingOptions = new ProcessingOptions();
-		this.processingOptions.setPerformSeparationOfCommonEdges(performSeparationOfCommonEdges);
-		this.processingOptions.setAllCornersAreRound(allCornersAreRound);
-		this.transparentBackground = transparentBackground;
-		this.scale = scale;
-		this.font = font;
-		this.forceFontSize = forceFontSize;
+
+		options.setDropShadows(dropShadows);
+		options.renderingOptions.setBackgroundColor(transparentBackground ? new Color(0, 0, 0, 0) : Color.WHITE);
+		options.renderingOptions.setScale(scale);
+		options.processingOptions.setPerformSeparationOfCommonEdges(performSeparationOfCommonEdges);
+		options.processingOptions.setAllCornersAreRound(allCornersAreRound);
+
 	}
 
-	PSystemDitaa add(String line, PreprocessingArtifact preprocessing) {
-		return new PSystemDitaa(getSource(), data + line + BackSlash.NEWLINE, performSeparationOfCommonEdges,
-				dropShadows, allCornersAreRound, transparentBackground, scale, font, forceFontSize, preprocessing);
+	void add(String line) {
+		data.add(line);
+		nbStartingSpace = Math.min(nbStartingSpace, BlocLines.nbStartingSpace(line));
 	}
 
 	public DiagramDescription getDescription() {
@@ -100,37 +91,35 @@ public class PSystemDitaa extends AbstractPSystem {
 	@Override
 	final protected ImageData exportDiagramNow(OutputStream os, int num, FileFormatOption fileFormat)
 			throws IOException {
-		if (fileFormat.getFileFormat() == FileFormat.ATXT) {
-			os.write(getSource().getPlainString(BackSlash.lineSeparator()).getBytes());
-			return ImageDataSimple.ok();
-		}
 
 		try {
-			final ConversionOptions options = new ConversionOptions();
-			options.setDropShadows(dropShadows);
-			options.renderingOptions.setBackgroundColor(transparentBackground ? new Color(0, 0, 0, 0) : Color.WHITE);
-			// options.renderingOptions.setFont(font);
-			// options.renderingOptions.setForceFontSize(forceFontSize);
-			options.renderingOptions.setScale(scale);
-			options.setDropShadows(dropShadows);
-
 			final TextGrid grid = new TextGrid();
-			grid.initialiseWithText(data, null);
+
+			final ArrayList<StringBuilder> lines = new ArrayList<StringBuilder>();
+			for (String s : data)
+				lines.add(new StringBuilder(s.substring(nbStartingSpace)));
+
+			grid.initialiseWithLines(lines, null);
 
 			final Diagram diagram = new Diagram(grid, options);
 			final BitmapRenderer bitmapRenderer = new BitmapRenderer();
 
 			final BufferedImage image = (BufferedImage) bitmapRenderer.renderToImage(diagram, options.renderingOptions);
 
+			if (fileFormat.getFileFormat() == FileFormat.ATXT) {
+				os.write(getSource().getPlainString(BackSlash.lineSeparator()).getBytes());
+				return ImageDataSimple.ok();
+			}
+
 			SImageIO.write(image, "png", os);
 			return new ImageDataSimple(image.getWidth(), image.getHeight());
 		} catch (Throwable e) {
-			CrashReportHandler report = new CrashReportHandler(e, null, null);
+			final CrashReportHandler report = new CrashReportHandler(e, null, null);
 			report.add("DITAA has crashed");
 			report.addEmptyLine();
 			report.youShouldSendThisDiagram();
 			report.addEmptyLine();
-			report.exportDiagramError(new FileFormatOption(FileFormat.PNG), seed(), os);
+			report.exportDiagramError(fileFormat, seed(), os);
 			return ImageDataSimple.error();
 		}
 	}

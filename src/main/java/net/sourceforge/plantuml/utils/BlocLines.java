@@ -306,7 +306,7 @@ public class BlocLines implements Iterable<StringLocated> {
 		return new BlocLines(copy);
 	}
 
-	private static int nbStartingSpace(CharSequence s) {
+	public static int nbStartingSpace(CharSequence s) {
 		int nb = 0;
 		while (nb < s.length() && isSpaceOrTab(s.charAt(nb)))
 			nb++;
@@ -314,7 +314,7 @@ public class BlocLines implements Iterable<StringLocated> {
 		return nb;
 	}
 
-	private static boolean isSpaceOrTab(char c) {
+	public static boolean isSpaceOrTab(char c) {
 		return c == ' ' || c == '\t';
 	}
 

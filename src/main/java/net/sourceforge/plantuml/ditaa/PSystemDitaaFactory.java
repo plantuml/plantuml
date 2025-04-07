@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.preproc.PreprocessingArtifact;
 import net.sourceforge.plantuml.skin.UmlDiagramType;
 
 public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
-    // ::remove folder when __HAXE__
+	// ::remove folder when __HAXE__
 
 	// private StringBuilder data;
 	// // -E,--no-separation
@@ -76,20 +76,21 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 		if (startLine != null && (startLine.contains("-T") || startLine.contains("--transparent")))
 			transparentBackground = true;
 
-		boolean forceFontSize = false;
-		if (startLine != null && startLine.contains("--font-size"))
-			forceFontSize = true;
+//		boolean forceFontSize = false;
+//		if (startLine != null && startLine.contains("--font-size"))
+//			forceFontSize = true;
 
 		final float scale = extractScale(startLine);
-		final Font font = extractFont(startLine);
+		// final Font font = extractFont(startLine);
 
-		return new PSystemDitaa(source, "", performSeparationOfCommonEdges, dropShadows, allCornersAreRound,
-				transparentBackground, scale, font, forceFontSize, preprocessing);
+		return new PSystemDitaa(source, performSeparationOfCommonEdges, dropShadows, allCornersAreRound,
+				transparentBackground, scale, preprocessing);
 
 	}
 
 	@Override
-	public PSystemDitaa executeLine(UmlSource source, PSystemDitaa system, String line, PreprocessingArtifact preprocessing) {
+	public PSystemDitaa executeLine(UmlSource source, PSystemDitaa system, String line,
+			PreprocessingArtifact preprocessing) {
 		if (system == null && (line.equals("ditaa") || line.startsWith("ditaa("))) {
 			boolean performSeparationOfCommonEdges = true;
 			if (line.contains("-E") || line.contains("--no-separation"))
@@ -107,19 +108,20 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 			if (line.contains("-T") || line.contains("--transparent"))
 				transparentBackground = true;
 
-			boolean forceFontSize = false;
-			if (line.contains("--font-size"))
-				forceFontSize = true;
+//			boolean forceFontSize = false;
+//			if (line.contains("--font-size"))
+//				forceFontSize = true;
 
 			final float scale = extractScale(line);
-			final Font font = extractFont(line);
-			return new PSystemDitaa(source, "", performSeparationOfCommonEdges, dropShadows, allCornersAreRound,
-					transparentBackground, scale, font, forceFontSize, preprocessing);
+			// final Font font = extractFont(line);
+			return new PSystemDitaa(source, performSeparationOfCommonEdges, dropShadows, allCornersAreRound,
+					transparentBackground, scale, preprocessing);
 		}
 		if (system == null)
 			return null;
 
-		return system.add(line, preprocessing);
+		system.add(line);
+		return system;
 	}
 
 	private float extractScale(String line) {
@@ -166,14 +168,12 @@ public class PSystemDitaaFactory extends PSystemBasicFactory<PSystemDitaa> {
 		final Pattern pSize = Pattern.compile("font-size=([\\d]+)");
 		final Matcher mSize = pSize.matcher(line);
 		int fontSize = 12;
-		if (mSize.find()) {
+		if (mSize.find())
 			fontSize = Integer.parseInt(mSize.group(1));
-		}
 
 		return new Font(fontName, fontVariant, fontSize);
 	}
-	
-	
+
 	@Override
 	public UmlDiagramType getUmlDiagramType() {
 		return null;
