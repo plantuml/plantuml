@@ -98,21 +98,23 @@ public class TimingRuler {
 		this.forcedTickUnitary = tick;
 	}
 
-	private long getTickUnitary() {
+	private long getOptimalTickUnit() {
 		if (forcedTickUnitary == 0) {
-			final long highestCommonFactor = highestCommonFactor();
-			if (highestCommonFactor > 1)
-				return highestCommonFactor;
-			/*
-			 * Normally, we use the highest common factor (HCF) of significant timing
-			 * values. However, if the HCF is 1 (implying no suitable common scale), we fall
-			 * back to an approximate calculation based on the diagram width in pixels and
-			 * the time range (delta). This ensures readability and prevents extremely long
-			 * diagrams.
-			 */
-			final double delta = getMax().getTime().doubleValue() - getMin().getTime().doubleValue();
-			final double totalWidth = 1000.0;
-			return Math.round(1 + (tickIntervalInPixels * delta / totalWidth));
+			final long hcfTickUnit = calculateHighestCommonFactor();
+			final double maxDiagramWidth = 4000.0;
+			if (hcfTickUnit == 1 && calculateDiagramWidth(hcfTickUnit) > maxDiagramWidth) {
+				/*
+				 * Typically, we determine the optimal tick unit using the highest common factor
+				 * (HCF) of all significant timing values. However, when the HCF is too small
+				 * (e.g., equal to 1), the resulting diagram becomes excessively wide. In such
+				 * cases, we fall back to an approximate tick unit calculation based on the
+				 * diagram's pixel width and the total time range, ensuring the diagram remains
+				 * clear and readable.
+				 */
+				final double totalTimeRange = getMax().getTime().doubleValue() - getMin().getTime().doubleValue();
+				return Math.round(1 + (tickIntervalInPixels * totalTimeRange / maxDiagramWidth));
+			}
+			return hcfTickUnit;
 		}
 		return forcedTickUnitary;
 	}
@@ -120,13 +122,17 @@ public class TimingRuler {
 	public double getWidth() {
 		if (times.size() == 0)
 			return 100;
+		return calculateDiagramWidth(getOptimalTickUnit());
+	}
+
+	private double calculateDiagramWidth(final long tickUnitary) {
 		final double delta = getMax().getTime().doubleValue() - getMin().getTime().doubleValue();
-		return (delta / getTickUnitary() + 1) * tickIntervalInPixels;
+		return (delta / tickUnitary + 1) * tickIntervalInPixels;
 	}
 
 	private long highestCommonFactorInternal = -1;
 
-	private long highestCommonFactor() {
+	private long calculateHighestCommonFactor() {
 		if (highestCommonFactorInternal == -1)
 			for (long tick : getAbsolutesTicks())
 				if (highestCommonFactorInternal == -1)
@@ -157,7 +163,7 @@ public class TimingRuler {
 			return 1;
 
 		final long delta = getMax().getTime().longValue() - getMin().getTime().longValue();
-		return Math.min(1000, (int) (1 + delta / getTickUnitary()));
+		return Math.min(1000, (int) (1 + delta / getOptimalTickUnit()));
 	}
 
 	public final double getPosInPixel(TimeTick when) {
@@ -166,7 +172,7 @@ public class TimingRuler {
 
 	private double getPosInPixelInternal(double time) {
 		time -= getMin().getTime().doubleValue();
-		return time / getTickUnitary() * tickIntervalInPixels;
+		return time / getOptimalTickUnit() * tickIntervalInPixels;
 	}
 
 	public void addTime(TimeTick time) {
