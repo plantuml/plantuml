@@ -55,6 +55,7 @@ import net.sourceforge.plantuml.command.ParserPass;
 import net.sourceforge.plantuml.command.UBrexSingleLineCommand2;
 import net.sourceforge.plantuml.decoration.LinkDecor;
 import net.sourceforge.plantuml.decoration.LinkType;
+import net.sourceforge.plantuml.descdiagram.command.CommandLinkElement;
 import net.sourceforge.plantuml.klimt.color.ColorType;
 import net.sourceforge.plantuml.klimt.color.NoSuchColorException;
 import net.sourceforge.plantuml.klimt.color.UBrexColorParser;
@@ -87,36 +88,24 @@ public class UBrexCommandLinkActivity extends UBrexSingleLineCommand2<ActivityDi
 								new UBrexNamed("CODE", new UBrexLeaf("〇+「〴an_.」") //
 								))), //
 				StereotypePattern.ubrexOptional("STEREOTYPE"), //
-				UBrexColorParser.exp2(),
-				UBrexLeaf.spaceZeroOrMore(), //
+				UBrexColorParser.exp2(), UBrexLeaf.spaceZeroOrMore(), //
 				UbrexUrlBuilder.OPTIONAL, //
+
+				new UBrexNamed("ARROW_BODY1", new UBrexLeaf("〇+「-.」")), //
+				new UBrexLeaf("〇?〘 [ 〶$ARROW_STYLE1=〘" + CommandLinkElement.UBREX_LINE_STYLE + "〙] 〙"), //
+				new UBrexNamed("ARROW_DIRECTION", new UBrexLeaf("〇?【 *┇left┇right┇up┇down┇l〇?e┇r〇?i┇u〇?p┇d〇?o】")), //
+				new UBrexLeaf("〇?〘 [  〶$ARROW_STYLE2=〘" + CommandLinkElement.UBREX_LINE_STYLE + "〙] 〙"), //
+				new UBrexNamed("ARROW_BODY2", new UBrexLeaf("〇*「-.」")), //
+				new UBrexLeaf(">"), //
+
+				UBrexLeaf.spaceZeroOrMore(), //
+				new UBrexOptional(new UBrexLeaf("[ 〶$BRACKET=〘〇+「〤]*」  〇*「〤]」〙 ]")), //
+				UBrexLeaf.spaceZeroOrMore(), //
 
 				UBrexLeaf.end()); //
 	}
 
 //	private static IRegex getRegexConcat() {
-//		return RegexConcat.build(UBrexCommandLinkActivity.class.getName(), RegexLeaf.start(), //
-//				new RegexOptional(//
-//						new RegexOr("FIRST", //
-//								new RegexLeaf("STAR", "(\\(\\*(top)?\\))"), //
-//								new RegexLeaf("CODE", "([%pLN][%pLN_.]*)"), //
-//								new RegexLeaf("BAR", "(?:==+)[%s]*([%pLN_.]+)[%s]*(?:==+)"), //
-//								new RegexLeaf("QUOTED", "[%g]([^%g]+)[%g](?:[%s]+as[%s]+([%pLN_.]+))?"))), //
-//				StereotypePattern.optional("STEREOTYPE"), //
-//				ColorParser.exp2(), //
-//				RegexLeaf.spaceZeroOrMore(), //
-//				UrlBuilder.OPTIONAL, //
-//
-//				new RegexLeaf("ARROW_BODY1", "([-.]+)"), //
-//				new RegexLeaf("ARROW_STYLE1", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-//				new RegexLeaf("ARROW_DIRECTION", "(\\*|left|right|up|down|le?|ri?|up?|do?)?"), //
-//				new RegexLeaf("ARROW_STYLE2", "(?:\\[(" + CommandLinkElement.LINE_STYLE + ")\\])?"), //
-//				new RegexLeaf("ARROW_BODY2", "([-.]*)"), //
-//				new RegexLeaf("\\>"), //
-//
-//				RegexLeaf.spaceZeroOrMore(), //
-//				new RegexOptional(new RegexLeaf("BRACKET", "\\[([^\\]*]+[^\\]]*)\\]")), //
-//				RegexLeaf.spaceZeroOrMore(), //
 //				new RegexOr("FIRST2", //
 //						new RegexLeaf("STAR2", "(\\(\\*(top|\\d+)?\\))"), //
 //						new RegexLeaf("OPENBRACKET2", "(\\{)"), //

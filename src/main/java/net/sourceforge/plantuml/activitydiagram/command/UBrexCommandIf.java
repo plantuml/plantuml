@@ -76,9 +76,10 @@ public class UBrexCommandIf extends UBrexSingleLineCommand2<ActivityDiagram> {
 						new UBrexLeaf("〇?〘 [  〶$ARROW_STYLE2=〘" + CommandLinkElement.UBREX_LINE_STYLE + "〙] 〙"), //
 						new UBrexNamed("ARROW_BODY2", new UBrexLeaf("〇*「-.」")), //
 						new UBrexLeaf(">") //
-				)), // "02onStart()" --> if "" then
+				)), //
 				UBrexLeaf.spaceZeroOrMore(), //
-				new UBrexOptional(new UBrexLeaf("[ 〶$BRACKET=〘〇+「〤]*」  〇*「〤]」〙 ]")), UBrexLeaf.spaceZeroOrMore(), //
+				new UBrexOptional(new UBrexLeaf("[ 〶$BRACKET=〘〇+「〤]*」  〇*「〤]」〙 ]")), //
+				UBrexLeaf.spaceZeroOrMore(), //
 				new UBrexOr(//
 						new UBrexLeaf("if 〇*〴s 〴g  〶$IF1=〇*〴G 〴g 〇*〴s 〇?〘as 〇+〴s 〶$ASIF1=〇+「〴an_.」 〇+〴s 〙〘then〙"), //
 						new UBrexLeaf("if 〇+〴s 〶$IF2=〇l+〴. 〘then〙 "), //
