@@ -443,10 +443,10 @@ public class SvgGraphics {
 	}
 
 	public final Element getG() {
-		if (pendingAction.size() == 0)
+		if (pendingElements.size() == 0)
 			return gRoot;
 
-		return pendingAction.get(0);
+		return pendingElements.get(0);
 	}
 
 	public void svgRectangle(double x, double y, double width, double height, double rx, double ry, double deltaShadow
@@ -1073,77 +1073,110 @@ public class SvgGraphics {
 		}
 	}
 
+	private final List<Element> pendingElements = new ArrayList<>();
 
-	private final List<Element> pendingAction = new ArrayList<>();
-	private final List<LinkData> openedLinks = new ArrayList<>();
+	/*
+	 * Note: SVG does not support nested links (<a> within <a>). Thus, we manage
+	 * link openings carefully to ensure only the topmost link remains active at any
+	 * given time.
+	 */
+	private final List<LinkData> activeLinks = new ArrayList<>();
 
-	private void closeTopPendingAction() {
-		final Element element = pendingAction.get(0);
-		pendingAction.remove(0);
+	/**
+	 * Moves the first pending element (typically a link or group) to the document's
+	 * SVG group.
+	 */
+	private void closeTopPendingElement() {
+		final Element element = pendingElements.get(0);
+		pendingElements.remove(0);
 		if (element.getFirstChild() != null)
 			getG().appendChild(element);
 	}
 
-	private void closeTopOpenedLinkIfNeeded() {
-		if (openedLinks.size() > 0) {
-			if (pendingAction.get(0).getTagName().equals("a") == false)
-				throw new IllegalStateException();
-			closeTopPendingAction();
+	/**
+	 * Closes the most recently opened link if necessary.
+	 * 
+	 * Validates state to ensure no nested or invalid link closures occur.
+	 */
+	private void closeTopActiveLinkIfNeeded() {
+		if (activeLinks.size() > 0) {
+			if (pendingElements.get(0).getTagName().equals("a") == false)
+				throw new IllegalStateException("Expected top pending element to be a link.");
+			// Move active link element to document since it's being closed
+			closeTopPendingElement();
 		}
 
-		for (Element elt : pendingAction)
+		// Check for invalid state: no links should remain pending
+		for (Element elt : pendingElements)
 			if (elt.getTagName().equals("a"))
 				throw new IllegalStateException();
 
 	}
 
+	private void addTopOpenedLinkIfNeeded() {
+		if (activeLinks.size() > 0) {
+			final LinkData link = activeLinks.get(0);
+			pendingElements.add(0, (Element) document.createElement("a"));
+			pendingElements.get(0).setAttribute("target", link.target);
+			pendingElements.get(0).setAttribute(XLINK_HREF1, link.url);
+			pendingElements.get(0).setAttribute(XLINK_HREF2, link.url);
+			pendingElements.get(0).setAttribute("xlink:type", "simple");
+			pendingElements.get(0).setAttribute("xlink:actuate", "onRequest");
+			pendingElements.get(0).setAttribute("xlink:show", "new");
+			final String title = link.getXlinkTitle();
+			pendingElements.get(0).setAttribute(XLINK_TITLE1, title);
+			pendingElements.get(0).setAttribute(XLINK_TITLE2, title);
+		}
+	}
 
+	/**
+	 * Opens a new link and adds it to the list of active links.
+	 */
 	public void openLink(String url, String title, String target) {
+		// References for related issue fixes:
 		// https://github.com/plantuml/plantuml/issues/1951
 		// https://github.com/plantuml/plantuml/issues/2069
 		// https://github.com/plantuml/plantuml/issues/2148
 
-		closeTopOpenedLinkIfNeeded();
-		openedLinks.add(0, new LinkData(url, title, target));
+		// Ensure previous active link is closed before opening a new one
+		closeTopActiveLinkIfNeeded();
+		activeLinks.add(0, new LinkData(url, title, target));
+
+		// Create a new pending link element based on provided details
 		addTopOpenedLinkIfNeeded();
 	}
 
-	private void addTopOpenedLinkIfNeeded() {
-		if (openedLinks.size() > 0) {
-			final LinkData link = openedLinks.get(0);
-			pendingAction.add(0, (Element) document.createElement("a"));
-			pendingAction.get(0).setAttribute("target", link.target);
-			pendingAction.get(0).setAttribute(XLINK_HREF1, link.url);
-			pendingAction.get(0).setAttribute(XLINK_HREF2, link.url);
-			pendingAction.get(0).setAttribute("xlink:type", "simple");
-			pendingAction.get(0).setAttribute("xlink:actuate", "onRequest");
-			pendingAction.get(0).setAttribute("xlink:show", "new");
-			final String title = link.getXlinkTitle();
-			pendingAction.get(0).setAttribute(XLINK_TITLE1, title);
-			pendingAction.get(0).setAttribute(XLINK_TITLE2, title);
-		}
-	}
-
+	/**
+	 * Closes the currently active link and updates the pending elements
+	 * accordingly.
+	 */
 	public void closeLink() {
-		if (pendingAction.size() == 0)
-			throw new IllegalStateException();
-		if (openedLinks.size() == 0)
-			throw new IllegalStateException();
-		if (pendingAction.get(0).getTagName().equals("a") == false)
-			throw new IllegalStateException();
-		
-		closeTopOpenedLinkIfNeeded();
-		openedLinks.remove(0);
+		if (pendingElements.size() == 0 || activeLinks.size() == 0
+				|| pendingElements.get(0).getTagName().equals("a") == false)
+			throw new IllegalStateException("Attempting to close a link in an invalid state.");
+
+		// Close active link properly
+		closeTopActiveLinkIfNeeded();
+		activeLinks.remove(0);
+
+		// Re-create pending link element if necessary
 		addTopOpenedLinkIfNeeded();
 
 	}
 
+	/**
+	 * Closes the current SVG group element.
+	 */
 	public void closeGroup() {
-		if (pendingAction.size() == 0)
+		if (pendingElements.size() == 0)
 			throw new IllegalStateException();
 
-		closeTopOpenedLinkIfNeeded();
-		closeTopPendingAction();
+		// Ensure any active links are closed first
+		closeTopActiveLinkIfNeeded();
+
+		closeTopPendingElement();
+
+		// Restore link state after closing group if needed
 		addTopOpenedLinkIfNeeded();
 	}
 
@@ -1151,8 +1184,10 @@ public class SvgGraphics {
 		if (typeIdents.isEmpty())
 			throw new IllegalArgumentException();
 
-		closeTopOpenedLinkIfNeeded();
-		pendingAction.add(0, (Element) document.createElement("g"));
+		// Close any active link before starting a new group
+		closeTopActiveLinkIfNeeded();
+
+		pendingElements.add(0, (Element) document.createElement("g"));
 
 		// Sorry for the code duplication: but this Pragma will be removed
 		// So we will simplify and refactor the code at that time.
@@ -1162,7 +1197,7 @@ public class SvgGraphics {
 				if (typeIdent.getKey() == UGroupType.TITLE) {
 					Element title = document.createElement(UGroupType.TITLE.getSvgKeyAttributeName());
 					title.setTextContent(typeIdent.getValue());
-					pendingAction.get(0).appendChild(title);
+					pendingElements.get(0).appendChild(title);
 				}
 
 				switch (typeIdent.getKey()) {
@@ -1171,7 +1206,7 @@ public class SvgGraphics {
 					break;
 				case DATA_UID:
 					// DATA_UID *will* be rename to ID, but right now, we do some hack
-					pendingAction.get(0).setAttribute("id", typeIdent.getValue());
+					pendingElements.get(0).setAttribute("id", typeIdent.getValue());
 					break;
 
 				// I also suggest that we rename "data-participant-1" to "data-entity-1" and
@@ -1179,18 +1214,18 @@ public class SvgGraphics {
 
 				case DATA_PARTICIPANT_1:
 				case DATA_ENTITY_1_UID:
-					pendingAction.get(0).setAttribute("data-entity-1", typeIdent.getValue());
+					pendingElements.get(0).setAttribute("data-entity-1", typeIdent.getValue());
 					break;
 				case DATA_PARTICIPANT_2:
 				case DATA_ENTITY_2_UID:
-					pendingAction.get(0).setAttribute("data-entity-2", typeIdent.getValue());
+					pendingElements.get(0).setAttribute("data-entity-2", typeIdent.getValue());
 					break;
 
 				case CLASS:
 				case DATA_SOURCE_LINE:
 				case DATA_QUALIFIED_NAME:
 				case DATA_ENTITY_UID:
-					pendingAction.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
+					pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
 							typeIdent.getValue());
 
 				}
@@ -1200,14 +1235,14 @@ public class SvgGraphics {
 				if (typeIdent.getKey() == UGroupType.TITLE) {
 					Element title = document.createElement(UGroupType.TITLE.getSvgKeyAttributeName());
 					title.setTextContent(typeIdent.getValue());
-					pendingAction.get(0).appendChild(title);
+					pendingElements.get(0).appendChild(title);
 				}
 
 				switch (typeIdent.getKey()) {
 				case DATA_UID:
 				case ID:
 				case DATA_SOURCE_LINE:
-					pendingAction.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
+					pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
 							typeIdent.getValue());
 				}
 
@@ -1220,13 +1255,14 @@ public class SvgGraphics {
 				case DATA_PARTICIPANT:
 				case DATA_PARTICIPANT_1:
 				case DATA_PARTICIPANT_2:
-					pendingAction.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
+					pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
 							typeIdent.getValue());
 				}
 			}
 
 		}
-		
+
+		// Restore link state after group creation if needed
 		addTopOpenedLinkIfNeeded();
 
 	}
