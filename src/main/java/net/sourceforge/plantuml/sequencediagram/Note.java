@@ -68,16 +68,17 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 	private Colors colors = Colors.empty();
 
 	private Url url;
-
-	private Style style;
+	private Stereotype stereotype;
 
 	public StyleSignatureBasic getStyleSignature() {
 		return noteStyle.getDefaultStyleDefinition();
 	}
 
 	public Style[] getUsedStyles() {
-		if (style != null)
-			return new Style[] { style.eventuallyOverride(colors) };
+		StyleSignatureBasic styleSignature = getStyleSignature();
+		if (stereotype != null)
+			styleSignature = styleSignature.mergeWith(stereotype.getStyles(styleBuilder));
+		final Style style = styleSignature.getMergedStyle(styleBuilder).eventuallyOverride(colors);
 
 		return new Style[] { style };
 	}
@@ -101,12 +102,10 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 		this.styleBuilder = styleBuilder;
 		this.position = position;
 		this.strings = strings;
-		this.style = getStyleSignature().getMergedStyle(styleBuilder);
 	}
 
 	public void setStereotype(Stereotype stereotype) {
-		final List<Style> others = stereotype.getStyles(styleBuilder);
-		this.style = getStyleSignature().mergeWith(others).getMergedStyle(styleBuilder);
+		this.stereotype = stereotype;
 	}
 
 	public Note withPosition(NotePosition newPosition) {
@@ -118,7 +117,6 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 		result.url = this.url;
 		result.colors = this.colors;
 		result.parallel = this.parallel;
-		result.style = getStyleSignature().getMergedStyle(styleBuilder);
 		return result;
 	}
 
@@ -164,7 +162,6 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 
 	public final void setNoteStyle(NoteStyle style) {
 		this.noteStyle = style;
-		this.style = getStyleSignature().getMergedStyle(styleBuilder);
 	}
 
 	public ISkinParam getSkinParamBackcolored(ISkinParam skinParam) {
