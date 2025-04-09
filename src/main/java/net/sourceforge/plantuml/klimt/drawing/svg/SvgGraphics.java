@@ -296,7 +296,7 @@ public class SvgGraphics {
 	// This method returns a reference to a simple XML
 	// element node that has no attributes.
 	private Element simpleElement(String type) {
-		final Element theElement = (Element) document.createElement(type);
+		final Element theElement = document.createElement(type);
 		root.appendChild(theElement);
 		return theElement;
 	}
@@ -313,7 +313,7 @@ public class SvgGraphics {
 	private Element getRootNode() {
 		// Create the root node named svg and append it to
 		// the document.
-		final Element svg = (Element) document.createElement("svg");
+		final Element svg = document.createElement("svg");
 		document.appendChild(svg);
 
 		// Set some attributes on the root node that are
@@ -327,7 +327,7 @@ public class SvgGraphics {
 
 		if (option.getTitle() != null) {
 			// Create a title element and set its text
-			final Element title = (Element) document.createElement("title");
+			final Element title = document.createElement("title");
 			title.setTextContent(option.getTitle());
 			svg.appendChild(title);
 		}
@@ -338,7 +338,7 @@ public class SvgGraphics {
 	public void svgEllipse(double x, double y, double xRadius, double yRadius, double deltaShadow) {
 		manageShadow(deltaShadow);
 		if (hidden == false) {
-			final Element elt = (Element) document.createElement("ellipse");
+			final Element elt = document.createElement("ellipse");
 			elt.setAttribute("cx", format(x));
 			elt.setAttribute("cy", format(y));
 			elt.setAttribute("rx", format(xRadius));
@@ -355,7 +355,7 @@ public class SvgGraphics {
 		if (hidden == false) {
 			final String path = "M" + format(x1) + "," + format(y1) + " A" + format(rx) + "," + format(ry) + " 0 0 0 "
 					+ format(x2) + " " + format(y2);
-			final Element elt = (Element) document.createElement("path");
+			final Element elt = document.createElement("path");
 			elt.setAttribute("d", path);
 			fillMe(elt);
 			styleMe(elt);
@@ -371,7 +371,7 @@ public class SvgGraphics {
 		final List<Object> key = Arrays.asList((Object) color1, color2, policy);
 		String id = gradients.get(key);
 		if (id == null) {
-			final Element elt = (Element) document.createElement("linearGradient");
+			final Element elt = document.createElement("linearGradient");
 			if (policy == '|') {
 				elt.setAttribute("x1", "0%");
 				elt.setAttribute("y1", "50%");
@@ -397,10 +397,10 @@ public class SvgGraphics {
 			gradients.put(key, id);
 			elt.setAttribute("id", id);
 
-			final Element stop1 = (Element) document.createElement("stop");
+			final Element stop1 = document.createElement("stop");
 			stop1.setAttribute("stop-color", color1);
 			stop1.setAttribute("offset", "0%");
-			final Element stop2 = (Element) document.createElement("stop");
+			final Element stop2 = document.createElement("stop");
 			stop2.setAttribute("stop-color", color2);
 			stop2.setAttribute("offset", "100%");
 
@@ -476,7 +476,7 @@ public class SvgGraphics {
 	}
 
 	private Element createRectangleInternal(double x, double y, double width, double height) {
-		final Element elt = (Element) document.createElement("rect");
+		final Element elt = document.createElement("rect");
 		elt.setAttribute("x", format(x));
 		elt.setAttribute("y", format(y));
 		elt.setAttribute("width", format(width));
@@ -489,7 +489,7 @@ public class SvgGraphics {
 	public void svgLine(double x1, double y1, double x2, double y2, double deltaShadow) {
 		manageShadow(deltaShadow);
 		if (hidden == false) {
-			final Element elt = (Element) document.createElement("line");
+			final Element elt = document.createElement("line");
 			elt.setAttribute("x1", format(x1));
 			elt.setAttribute("y1", format(y1));
 			elt.setAttribute("x2", format(x2));
@@ -521,7 +521,7 @@ public class SvgGraphics {
 		assert points.length % 2 == 0;
 		manageShadow(deltaShadow);
 		if (hidden == false) {
-			final Element elt = (Element) document.createElement("polygon");
+			final Element elt = document.createElement("polygon");
 			final StringBuilder sb = new StringBuilder();
 			for (double coord : points) {
 				if (sb.length() > 0)
@@ -546,7 +546,7 @@ public class SvgGraphics {
 			String fontStyle, String textDecoration, double textLength, Map<String, String> attributes,
 			String textBackColor) {
 		if (hidden == false) {
-			final Element elt = (Element) document.createElement("text");
+			final Element elt = document.createElement("text");
 			// required for web-kit based browsers
 			// elt.setAttribute("text-rendering", "geometricPrecision");
 			elt.setAttribute("x", format(x));
@@ -603,7 +603,7 @@ public class SvgGraphics {
 			// http://forum.plantuml.net/9158/hyperlink-without-underline
 			// if (textDecoration != null && textDecoration.contains("underline")) {
 			// final double delta = 2;
-			// final Element elt2 = (Element) document.createElement("line");
+			// final Element elt2 = document.createElement("line");
 			// elt2.setAttribute("x1", format(x));
 			// elt2.setAttribute("y1", format(y + delta));
 			// elt2.setAttribute("x2", format(x + textLength));
@@ -634,7 +634,7 @@ public class SvgGraphics {
 			return id;
 
 		id = getIdFilterBackColor(color);
-		final Element filter = (Element) document.createElement("filter");
+		final Element filter = document.createElement("filter");
 		filter.setAttribute("id", id);
 		filter.setAttribute("x", "0");
 		filter.setAttribute("y", "0");
@@ -669,7 +669,7 @@ public class SvgGraphics {
 			s = s.replace(k, ent.getValue());
 		}
 		s = removeXmlHeader(s);
-		s = s.replace("<", "\n<").replace(">", ">\n");
+		// s = s.replace("<", "\n<").replace(">", ">\n");
 		os.write(s.getBytes());
 	}
 
@@ -751,7 +751,7 @@ public class SvgGraphics {
 
 		}
 		if (hidden == false) {
-			final Element elt = (Element) document.createElement("path");
+			final Element elt = document.createElement("path");
 			elt.setAttribute("d", sb.toString().trim());
 			styleMe(elt);
 			fillMe(elt);
@@ -840,7 +840,7 @@ public class SvgGraphics {
 
 	public void fill(int windingRule) {
 		if (hidden == false) {
-			final Element elt = (Element) document.createElement("path");
+			final Element elt = document.createElement("path");
 			elt.setAttribute("d", currentPath.toString());
 			fillMe(elt);
 			getG().appendChild(elt);
@@ -877,7 +877,7 @@ public class SvgGraphics {
 
 	public void svgImage(BufferedImage image, double x, double y) throws IOException {
 		if (hidden == false) {
-			final Element elt = (Element) document.createElement("image");
+			final Element elt = document.createElement("image");
 			elt.setAttribute("width", format(image.getWidth()));
 			elt.setAttribute("height", format(image.getHeight()));
 			elt.setAttribute("x", format(x));
@@ -898,7 +898,7 @@ public class SvgGraphics {
 			final String pos = "<svg x=\"" + format(x) + "\" y=\"" + format(y) + "\">";
 			svg = pos + svg.substring(5);
 			final String key = "imagesvginlined" + image.getMD5Hex() + images.size();
-			final Element elt = (Element) document.createElement(key);
+			final Element elt =  document.createElement(key);
 			getG().appendChild(elt);
 			images.put(key, svg);
 		}
@@ -914,7 +914,7 @@ public class SvgGraphics {
 
 		// https://developer.mozilla.org/fr/docs/Web/SVG/Element/image
 		if (hidden == false) {
-			final Element elt = (Element) document.createElement("image");
+			final Element elt = document.createElement("image");
 			elt.setAttribute("width", format(image.getWidth()));
 			elt.setAttribute("height", format(image.getHeight()));
 			elt.setAttribute("x", format(x));
@@ -980,7 +980,7 @@ public class SvgGraphics {
 		if (deltaShadow != 0) {
 			if (withShadow == false) {
 				// <filter id="f1" x="0" y="0" width="120%" height="120%">
-				final Element filter = (Element) document.createElement("filter");
+				final Element filter = document.createElement("filter");
 				filter.setAttribute("id", shadowId);
 				filter.setAttribute("x", "-1");
 				filter.setAttribute("y", "-1");
@@ -1000,7 +1000,7 @@ public class SvgGraphics {
 
 	private void addFilter(Element filter, String name, String... data) {
 		assert data.length % 2 == 0;
-		final Element elt = (Element) document.createElement(name);
+		final Element elt = document.createElement(name);
 		for (int i = 0; i < data.length; i += 2)
 			elt.setAttribute(data[i], data[i + 1]);
 
@@ -1071,6 +1071,19 @@ public class SvgGraphics {
 
 			return sb.toString().replaceAll("\\\\n", "\n");
 		}
+
+		public void updateAttributesOf(Element element) {
+			element.setAttribute("target", target);
+			element.setAttribute(XLINK_HREF1, url);
+			element.setAttribute(XLINK_HREF2, url);
+			element.setAttribute("xlink:type", "simple");
+			element.setAttribute("xlink:actuate", "onRequest");
+			element.setAttribute("xlink:show", "new");
+			final String title = getXlinkTitle();
+			element.setAttribute(XLINK_TITLE1, title);
+			element.setAttribute(XLINK_TITLE2, title);
+
+		}
 	}
 
 	private final List<Element> pendingElements = new ArrayList<>();
@@ -1116,16 +1129,8 @@ public class SvgGraphics {
 	private void addTopOpenedLinkIfNeeded() {
 		if (activeLinks.size() > 0) {
 			final LinkData link = activeLinks.get(0);
-			pendingElements.add(0, (Element) document.createElement("a"));
-			pendingElements.get(0).setAttribute("target", link.target);
-			pendingElements.get(0).setAttribute(XLINK_HREF1, link.url);
-			pendingElements.get(0).setAttribute(XLINK_HREF2, link.url);
-			pendingElements.get(0).setAttribute("xlink:type", "simple");
-			pendingElements.get(0).setAttribute("xlink:actuate", "onRequest");
-			pendingElements.get(0).setAttribute("xlink:show", "new");
-			final String title = link.getXlinkTitle();
-			pendingElements.get(0).setAttribute(XLINK_TITLE1, title);
-			pendingElements.get(0).setAttribute(XLINK_TITLE2, title);
+			pendingElements.add(0, document.createElement("a"));
+			link.updateAttributesOf(pendingElements.get(0));
 		}
 	}
 
@@ -1187,7 +1192,7 @@ public class SvgGraphics {
 		// Close any active link before starting a new group
 		closeTopActiveLinkIfNeeded();
 
-		pendingElements.add(0, (Element) document.createElement("g"));
+		pendingElements.add(0, document.createElement("g"));
 
 		// Sorry for the code duplication: but this Pragma will be removed
 		// So we will simplify and refactor the code at that time.
