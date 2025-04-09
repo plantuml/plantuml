@@ -21,10 +21,10 @@ jobs:
       uses: gradle/actions/setup-gradle@06832c7b30a0129d7fb559bcc6e43d26f6374244 # v4.3.1
 
     - name: Compile with Gradle
-      run: gradle compileJava
+      run: gradle compileJava -d
 
     - name: Unit Test
-      run: gradle test
+      run: gradle test -d
 
     - name: Upload test reports
       uses: actions/upload-artifact@v4
