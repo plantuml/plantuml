@@ -1,0 +1,34 @@
+name: Dev - Unit Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  job1:
+    name: Run Unit Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Set environment variable
+      run: echo "DEV_TEST=true" >> $GITHUB_ENV
+
+    # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
+    # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@06832c7b30a0129d7fb559bcc6e43d26f6374244 # v4.3.1
+
+    - name: Compile with Gradle
+      run: gradle compileJava
+
+    - name: Unit Test
+      run: gradle test
+
+    - name: Upload test reports
+      uses: actions/upload-artifact@v4
+      with:
+        # Using github.run_number here to reduce confusion when downloading & comparing from several builds
+        name: ${{ github.run_number }}-test-reports
+        path: build/reports/tests/
