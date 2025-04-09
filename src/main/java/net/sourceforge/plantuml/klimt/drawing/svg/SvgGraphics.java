@@ -443,6 +443,7 @@ public class SvgGraphics {
 	}
 
 	private final List<Element> pendingAction = new ArrayList<>();
+	private final List<LinkData> openedLinks = new ArrayList<>();
 
 	public final Element getG() {
 		if (pendingAction.size() == 0)
@@ -1042,14 +1043,6 @@ public class SvgGraphics {
 		getG().appendChild(commentElement);
 	}
 
-	private boolean isThereAlreadyAnOpenLink() {
-		for (Element elt : pendingAction)
-			if (elt.getTagName().equals("a"))
-				return true;
-
-		return false;
-	}
-
 	private static class LinkData {
 		private final String url;
 		private final String title;
@@ -1083,52 +1076,90 @@ public class SvgGraphics {
 		}
 	}
 
+	private boolean isThereAlreadyAnOpenLink() {
+		for (Element elt : pendingAction)
+			if (elt.getTagName().equals("a"))
+				return true;
+
+		return false;
+	}
+
 	public void openLink(String url, String title, String target) {
 		// https://github.com/plantuml/plantuml/issues/1951
 		// https://github.com/plantuml/plantuml/issues/2069
 		// https://github.com/plantuml/plantuml/issues/2148
-		if (isThereAlreadyAnOpenLink())
-			closeLink();
+//		if (isThereAlreadyAnOpenLink())
+//			closeLink();
 
-		final LinkData link = new LinkData(url, title, target);
-		openLink(link);
+		closeTopOpenedLinkIfNeeded();
+		openedLinks.add(0, new LinkData(url, title, target));
+		addTopOpenedLinkIfNeeded();
 	}
 
-	private void openLink(LinkData link) {
-		pendingAction.add(0, (Element) document.createElement("a"));
-		pendingAction.get(0).setAttribute("target", link.target);
-		pendingAction.get(0).setAttribute(XLINK_HREF1, link.url);
-		pendingAction.get(0).setAttribute(XLINK_HREF2, link.url);
-		pendingAction.get(0).setAttribute("xlink:type", "simple");
-		pendingAction.get(0).setAttribute("xlink:actuate", "onRequest");
-		pendingAction.get(0).setAttribute("xlink:show", "new");
-		final String title = link.getXlinkTitle();
-		pendingAction.get(0).setAttribute(XLINK_TITLE1, title);
-		pendingAction.get(0).setAttribute(XLINK_TITLE2, title);
+	private void addTopOpenedLinkIfNeeded() {
+		if (openedLinks.size() > 0) {
+			final LinkData link = openedLinks.get(0);
+			pendingAction.add(0, (Element) document.createElement("a"));
+			pendingAction.get(0).setAttribute("target", link.target);
+			pendingAction.get(0).setAttribute(XLINK_HREF1, link.url);
+			pendingAction.get(0).setAttribute(XLINK_HREF2, link.url);
+			pendingAction.get(0).setAttribute("xlink:type", "simple");
+			pendingAction.get(0).setAttribute("xlink:actuate", "onRequest");
+			pendingAction.get(0).setAttribute("xlink:show", "new");
+			final String title = link.getXlinkTitle();
+			pendingAction.get(0).setAttribute(XLINK_TITLE1, title);
+			pendingAction.get(0).setAttribute(XLINK_TITLE2, title);
+		}
 	}
 
 	public void closeLink() {
-		if (pendingAction.size() > 0) {
-			final Element element = pendingAction.get(0);
-			pendingAction.remove(0);
-			if (element.getFirstChild() != null)
-				getG().appendChild(element);
-		}
+		if (pendingAction.size() == 0)
+			throw new IllegalStateException();
+		if (openedLinks.size() == 0)
+			throw new IllegalStateException();
+		if (pendingAction.get(0).getTagName().equals("a") == false)
+			throw new IllegalStateException();
+		
+		closeTopOpenedLinkIfNeeded();
+		openedLinks.remove(0);
+		addTopOpenedLinkIfNeeded();
+
 	}
 
 	public void closeGroup() {
-		if (pendingAction.size() > 0) {
-			final Element element = pendingAction.get(0);
-			pendingAction.remove(0);
-			if (element.getFirstChild() != null)
-				getG().appendChild(element);
+		if (pendingAction.size() == 0)
+			throw new IllegalStateException();
+
+		closeTopOpenedLinkIfNeeded();
+		closeTopPendingAction();
+		addTopOpenedLinkIfNeeded();
+	}
+
+	private void closeTopPendingAction() {
+		final Element element = pendingAction.get(0);
+		pendingAction.remove(0);
+		if (element.getFirstChild() != null)
+			getG().appendChild(element);
+	}
+
+	private void closeTopOpenedLinkIfNeeded() {
+		if (openedLinks.size() > 0) {
+			if (pendingAction.get(0).getTagName().equals("a") == false)
+				throw new IllegalStateException();
+			closeTopPendingAction();
 		}
+
+		for (Element elt : pendingAction)
+			if (elt.getTagName().equals("a"))
+				throw new IllegalStateException();
+
 	}
 
 	public void startGroup(Map<UGroupType, String> typeIdents) {
 		if (typeIdents.isEmpty())
 			throw new IllegalArgumentException();
 
+		closeTopOpenedLinkIfNeeded();
 		pendingAction.add(0, (Element) document.createElement("g"));
 
 		// Sorry for the code duplication: but this Pragma will be removed
@@ -1203,6 +1234,9 @@ public class SvgGraphics {
 			}
 
 		}
+		
+		addTopOpenedLinkIfNeeded();
+
 	}
 
 }
