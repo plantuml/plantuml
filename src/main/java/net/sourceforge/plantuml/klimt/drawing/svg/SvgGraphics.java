@@ -1049,30 +1049,47 @@ public class SvgGraphics {
 		return false;
 	}
 
+	private static class LinkData {
+		private final String url;
+		private final String title;
+		private final String target;
+
+		public LinkData(String url, String title, String target) {
+			// javascript: security issue
+			if (SecurityUtils.ignoreThisLink(Objects.requireNonNull(url)))
+				this.url = "";
+			else
+				this.url = url;
+			this.title = title;
+			this.target = target;
+		}
+	}
+
 	public void openLink(String url, String title, String target) {
-		Objects.requireNonNull(url);
-
-		// javascript: security issue
-		if (SecurityUtils.ignoreThisLink(url))
-			return;
-
 		// https://github.com/plantuml/plantuml/issues/1951
 		// https://github.com/plantuml/plantuml/issues/2069
+		// https://github.com/plantuml/plantuml/issues/2148
 		if (isThereAlreadyAnOpenLink())
 			closeLink();
 
+		final LinkData link = new LinkData(url, title, target);
+		openLink(link);
+	}
+
+	private void openLink(LinkData link) {
+
 		pendingAction.add(0, (Element) document.createElement("a"));
-		pendingAction.get(0).setAttribute("target", target);
-		pendingAction.get(0).setAttribute(XLINK_HREF1, url);
-		pendingAction.get(0).setAttribute(XLINK_HREF2, url);
+		pendingAction.get(0).setAttribute("target", link.target);
+		pendingAction.get(0).setAttribute(XLINK_HREF1, link.url);
+		pendingAction.get(0).setAttribute(XLINK_HREF2, link.url);
 		pendingAction.get(0).setAttribute("xlink:type", "simple");
 		pendingAction.get(0).setAttribute("xlink:actuate", "onRequest");
 		pendingAction.get(0).setAttribute("xlink:show", "new");
-		if (title == null) {
-			pendingAction.get(0).setAttribute(XLINK_TITLE1, url);
-			pendingAction.get(0).setAttribute(XLINK_TITLE2, url);
+		if (link.title == null) {
+			pendingAction.get(0).setAttribute(XLINK_TITLE1, link.url);
+			pendingAction.get(0).setAttribute(XLINK_TITLE2, link.url);
 		} else {
-			title = formatTitle(title);
+			final String title = formatTitle(link.title);
 			pendingAction.get(0).setAttribute(XLINK_TITLE1, title);
 			pendingAction.get(0).setAttribute(XLINK_TITLE2, title);
 		}
