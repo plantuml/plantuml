@@ -1,4 +1,4 @@
-name: Intermediate Test
+name: Dev - Intermediate Test
 
 on:
   workflow_dispatch:
