@@ -296,7 +296,7 @@ public class SvgGraphics {
 	// This method returns a reference to a simple XML
 	// element node that has no attributes.
 	private Element simpleElement(String type) {
-		final Element theElement = (Element) document.createElement(type);
+		final Element theElement = document.createElement(type);
 		root.appendChild(theElement);
 		return theElement;
 	}
@@ -313,7 +313,7 @@ public class SvgGraphics {
 	private Element getRootNode() {
 		// Create the root node named svg and append it to
 		// the document.
-		final Element svg = (Element) document.createElement("svg");
+		final Element svg = document.createElement("svg");
 		document.appendChild(svg);
 
 		// Set some attributes on the root node that are
@@ -327,7 +327,7 @@ public class SvgGraphics {
 
 		if (option.getTitle() != null) {
 			// Create a title element and set its text
-			final Element title = (Element) document.createElement("title");
+			final Element title = document.createElement("title");
 			title.setTextContent(option.getTitle());
 			svg.appendChild(title);
 		}
@@ -338,7 +338,7 @@ public class SvgGraphics {
 	public void svgEllipse(double x, double y, double xRadius, double yRadius, double deltaShadow) {
 		manageShadow(deltaShadow);
 		if (hidden == false) {
-			final Element elt = (Element) document.createElement("ellipse");
+			final Element elt = document.createElement("ellipse");
 			elt.setAttribute("cx", format(x));
 			elt.setAttribute("cy", format(y));
 			elt.setAttribute("rx", format(xRadius));
@@ -355,7 +355,7 @@ public class SvgGraphics {
 		if (hidden == false) {
 			final String path = "M" + format(x1) + "," + format(y1) + " A" + format(rx) + "," + format(ry) + " 0 0 0 "
 					+ format(x2) + " " + format(y2);
-			final Element elt = (Element) document.createElement("path");
+			final Element elt = document.createElement("path");
 			elt.setAttribute("d", path);
 			fillMe(elt);
 			styleMe(elt);
@@ -371,7 +371,7 @@ public class SvgGraphics {
 		final List<Object> key = Arrays.asList((Object) color1, color2, policy);
 		String id = gradients.get(key);
 		if (id == null) {
-			final Element elt = (Element) document.createElement("linearGradient");
+			final Element elt = document.createElement("linearGradient");
 			if (policy == '|') {
 				elt.setAttribute("x1", "0%");
 				elt.setAttribute("y1", "50%");
@@ -397,10 +397,10 @@ public class SvgGraphics {
 			gradients.put(key, id);
 			elt.setAttribute("id", id);
 
-			final Element stop1 = (Element) document.createElement("stop");
+			final Element stop1 = document.createElement("stop");
 			stop1.setAttribute("stop-color", color1);
 			stop1.setAttribute("offset", "0%");
-			final Element stop2 = (Element) document.createElement("stop");
+			final Element stop2 = document.createElement("stop");
 			stop2.setAttribute("stop-color", color2);
 			stop2.setAttribute("offset", "100%");
 
@@ -442,13 +442,11 @@ public class SvgGraphics {
 		this.strokeDasharray = strokeDasharray;
 	}
 
-	private final List<Element> pendingAction = new ArrayList<>();
-
 	public final Element getG() {
-		if (pendingAction.size() == 0)
+		if (pendingElements.size() == 0)
 			return gRoot;
 
-		return pendingAction.get(0);
+		return pendingElements.get(0);
 	}
 
 	public void svgRectangle(double x, double y, double width, double height, double rx, double ry, double deltaShadow
@@ -478,7 +476,7 @@ public class SvgGraphics {
 	}
 
 	private Element createRectangleInternal(double x, double y, double width, double height) {
-		final Element elt = (Element) document.createElement("rect");
+		final Element elt = document.createElement("rect");
 		elt.setAttribute("x", format(x));
 		elt.setAttribute("y", format(y));
 		elt.setAttribute("width", format(width));
@@ -491,7 +489,7 @@ public class SvgGraphics {
 	public void svgLine(double x1, double y1, double x2, double y2, double deltaShadow) {
 		manageShadow(deltaShadow);
 		if (hidden == false) {
-			final Element elt = (Element) document.createElement("line");
+			final Element elt = document.createElement("line");
 			elt.setAttribute("x1", format(x1));
 			elt.setAttribute("y1", format(y1));
 			elt.setAttribute("x2", format(x2));
@@ -523,7 +521,7 @@ public class SvgGraphics {
 		assert points.length % 2 == 0;
 		manageShadow(deltaShadow);
 		if (hidden == false) {
-			final Element elt = (Element) document.createElement("polygon");
+			final Element elt = document.createElement("polygon");
 			final StringBuilder sb = new StringBuilder();
 			for (double coord : points) {
 				if (sb.length() > 0)
@@ -548,7 +546,7 @@ public class SvgGraphics {
 			String fontStyle, String textDecoration, double textLength, Map<String, String> attributes,
 			String textBackColor) {
 		if (hidden == false) {
-			final Element elt = (Element) document.createElement("text");
+			final Element elt = document.createElement("text");
 			// required for web-kit based browsers
 			// elt.setAttribute("text-rendering", "geometricPrecision");
 			elt.setAttribute("x", format(x));
@@ -605,7 +603,7 @@ public class SvgGraphics {
 			// http://forum.plantuml.net/9158/hyperlink-without-underline
 			// if (textDecoration != null && textDecoration.contains("underline")) {
 			// final double delta = 2;
-			// final Element elt2 = (Element) document.createElement("line");
+			// final Element elt2 = document.createElement("line");
 			// elt2.setAttribute("x1", format(x));
 			// elt2.setAttribute("y1", format(y + delta));
 			// elt2.setAttribute("x2", format(x + textLength));
@@ -636,7 +634,7 @@ public class SvgGraphics {
 			return id;
 
 		id = getIdFilterBackColor(color);
-		final Element filter = (Element) document.createElement("filter");
+		final Element filter = document.createElement("filter");
 		filter.setAttribute("id", id);
 		filter.setAttribute("x", "0");
 		filter.setAttribute("y", "0");
@@ -671,6 +669,7 @@ public class SvgGraphics {
 			s = s.replace(k, ent.getValue());
 		}
 		s = removeXmlHeader(s);
+		// s = s.replace("<", "\n<").replace(">", ">\n");
 		os.write(s.getBytes());
 	}
 
@@ -752,7 +751,7 @@ public class SvgGraphics {
 
 		}
 		if (hidden == false) {
-			final Element elt = (Element) document.createElement("path");
+			final Element elt = document.createElement("path");
 			elt.setAttribute("d", sb.toString().trim());
 			styleMe(elt);
 			fillMe(elt);
@@ -841,7 +840,7 @@ public class SvgGraphics {
 
 	public void fill(int windingRule) {
 		if (hidden == false) {
-			final Element elt = (Element) document.createElement("path");
+			final Element elt = document.createElement("path");
 			elt.setAttribute("d", currentPath.toString());
 			fillMe(elt);
 			getG().appendChild(elt);
@@ -878,7 +877,7 @@ public class SvgGraphics {
 
 	public void svgImage(BufferedImage image, double x, double y) throws IOException {
 		if (hidden == false) {
-			final Element elt = (Element) document.createElement("image");
+			final Element elt = document.createElement("image");
 			elt.setAttribute("width", format(image.getWidth()));
 			elt.setAttribute("height", format(image.getHeight()));
 			elt.setAttribute("x", format(x));
@@ -899,7 +898,7 @@ public class SvgGraphics {
 			final String pos = "<svg x=\"" + format(x) + "\" y=\"" + format(y) + "\">";
 			svg = pos + svg.substring(5);
 			final String key = "imagesvginlined" + image.getMD5Hex() + images.size();
-			final Element elt = (Element) document.createElement(key);
+			final Element elt =  document.createElement(key);
 			getG().appendChild(elt);
 			images.put(key, svg);
 		}
@@ -915,7 +914,7 @@ public class SvgGraphics {
 
 		// https://developer.mozilla.org/fr/docs/Web/SVG/Element/image
 		if (hidden == false) {
-			final Element elt = (Element) document.createElement("image");
+			final Element elt = document.createElement("image");
 			elt.setAttribute("width", format(image.getWidth()));
 			elt.setAttribute("height", format(image.getHeight()));
 			elt.setAttribute("x", format(x));
@@ -981,7 +980,7 @@ public class SvgGraphics {
 		if (deltaShadow != 0) {
 			if (withShadow == false) {
 				// <filter id="f1" x="0" y="0" width="120%" height="120%">
-				final Element filter = (Element) document.createElement("filter");
+				final Element filter = document.createElement("filter");
 				filter.setAttribute("id", shadowId);
 				filter.setAttribute("x", "-1");
 				filter.setAttribute("y", "-1");
@@ -1001,7 +1000,7 @@ public class SvgGraphics {
 
 	private void addFilter(Element filter, String name, String... data) {
 		assert data.length % 2 == 0;
-		final Element elt = (Element) document.createElement(name);
+		final Element elt = document.createElement(name);
 		for (int i = 0; i < data.length; i += 2)
 			elt.setAttribute(data[i], data[i + 1]);
 
@@ -1041,74 +1040,159 @@ public class SvgGraphics {
 		getG().appendChild(commentElement);
 	}
 
-	private boolean isThereAlreadyAnOpenLink() {
-		for (Element elt : pendingAction)
-			if (elt.getTagName().equals("a"))
-				return true;
+	private static class LinkData {
+		private final String url;
+		private final String title;
+		private final String target;
 
-		return false;
+		public LinkData(String url, String title, String target) {
+			// javascript: security issue
+			if (SecurityUtils.ignoreThisLink(Objects.requireNonNull(url)))
+				this.url = "";
+			else
+				this.url = url;
+			this.title = title;
+			this.target = target;
+		}
+
+		String getXlinkTitle() {
+			if (title == null)
+				return url;
+
+			final Pattern p = Pattern.compile("\\<U\\+([0-9A-Fa-f]+)\\>");
+			final Matcher m = p.matcher(title);
+			final StringBuffer sb = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8
+			while (m.find()) {
+				final String num = m.group(1);
+				final char c = (char) Integer.parseInt(num, 16);
+				m.appendReplacement(sb, "" + c);
+			}
+			m.appendTail(sb);
+
+			return sb.toString().replaceAll("\\\\n", "\n");
+		}
+
+		public void updateAttributesOf(Element element) {
+			element.setAttribute("target", target);
+			element.setAttribute(XLINK_HREF1, url);
+			element.setAttribute(XLINK_HREF2, url);
+			element.setAttribute("xlink:type", "simple");
+			element.setAttribute("xlink:actuate", "onRequest");
+			element.setAttribute("xlink:show", "new");
+			final String title = getXlinkTitle();
+			element.setAttribute(XLINK_TITLE1, title);
+			element.setAttribute(XLINK_TITLE2, title);
+
+		}
 	}
 
+	private final List<Element> pendingElements = new ArrayList<>();
+
+	/*
+	 * Note: SVG does not support nested links (<a> within <a>). Thus, we manage
+	 * link openings carefully to ensure only the topmost link remains active at any
+	 * given time.
+	 */
+	private final List<LinkData> activeLinks = new ArrayList<>();
+
+	/**
+	 * Moves the first pending element (typically a link or group) to the document's
+	 * SVG group.
+	 */
+	private void closeTopPendingElement() {
+		final Element element = pendingElements.get(0);
+		pendingElements.remove(0);
+		if (element.getFirstChild() != null)
+			getG().appendChild(element);
+	}
+
+	/**
+	 * Closes the most recently opened link if necessary.
+	 * 
+	 * Validates state to ensure no nested or invalid link closures occur.
+	 */
+	private void closeTopActiveLinkIfNeeded() {
+		if (activeLinks.size() > 0) {
+			if (pendingElements.get(0).getTagName().equals("a") == false)
+				throw new IllegalStateException("Expected top pending element to be a link.");
+			// Move active link element to document since it's being closed
+			closeTopPendingElement();
+		}
+
+		// Check for invalid state: no links should remain pending
+		for (Element elt : pendingElements)
+			if (elt.getTagName().equals("a"))
+				throw new IllegalStateException();
+
+	}
+
+	private void addTopOpenedLinkIfNeeded() {
+		if (activeLinks.size() > 0) {
+			final LinkData link = activeLinks.get(0);
+			pendingElements.add(0, document.createElement("a"));
+			link.updateAttributesOf(pendingElements.get(0));
+		}
+	}
+
+	/**
+	 * Opens a new link and adds it to the list of active links.
+	 */
 	public void openLink(String url, String title, String target) {
-		Objects.requireNonNull(url);
-
-		// javascript: security issue
-		if (SecurityUtils.ignoreThisLink(url))
-			return;
-
+		// References for related issue fixes:
 		// https://github.com/plantuml/plantuml/issues/1951
 		// https://github.com/plantuml/plantuml/issues/2069
-		if (isThereAlreadyAnOpenLink())
-			closeLink();
+		// https://github.com/plantuml/plantuml/issues/2148
 
-		pendingAction.add(0, (Element) document.createElement("a"));
-		pendingAction.get(0).setAttribute("target", target);
-		pendingAction.get(0).setAttribute(XLINK_HREF1, url);
-		pendingAction.get(0).setAttribute(XLINK_HREF2, url);
-		pendingAction.get(0).setAttribute("xlink:type", "simple");
-		pendingAction.get(0).setAttribute("xlink:actuate", "onRequest");
-		pendingAction.get(0).setAttribute("xlink:show", "new");
-		if (title == null) {
-			pendingAction.get(0).setAttribute(XLINK_TITLE1, url);
-			pendingAction.get(0).setAttribute(XLINK_TITLE2, url);
-		} else {
-			title = formatTitle(title);
-			pendingAction.get(0).setAttribute(XLINK_TITLE1, title);
-			pendingAction.get(0).setAttribute(XLINK_TITLE2, title);
-		}
+		// Ensure previous active link is closed before opening a new one
+		closeTopActiveLinkIfNeeded();
+		activeLinks.add(0, new LinkData(url, title, target));
+
+		// Create a new pending link element based on provided details
+		addTopOpenedLinkIfNeeded();
 	}
 
-	private String formatTitle(String title) {
-		final Pattern p = Pattern.compile("\\<U\\+([0-9A-Fa-f]+)\\>");
-		final Matcher m = p.matcher(title);
-		final StringBuffer sb = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8
-		while (m.find()) {
-			final String num = m.group(1);
-			final char c = (char) Integer.parseInt(num, 16);
-			m.appendReplacement(sb, "" + c);
-		}
-		m.appendTail(sb);
-
-		title = sb.toString().replaceAll("\\\\n", "\n");
-		return title;
-	}
-
+	/**
+	 * Closes the currently active link and updates the pending elements
+	 * accordingly.
+	 */
 	public void closeLink() {
-		if (pendingAction.size() > 0) {
-			final Element element = pendingAction.get(0);
-			pendingAction.remove(0);
-			if (element.getFirstChild() != null) {
-				// Empty link
-				getG().appendChild(element);
-			}
-		}
+		if (pendingElements.size() == 0 || activeLinks.size() == 0
+				|| pendingElements.get(0).getTagName().equals("a") == false)
+			throw new IllegalStateException("Attempting to close a link in an invalid state.");
+
+		// Close active link properly
+		closeTopActiveLinkIfNeeded();
+		activeLinks.remove(0);
+
+		// Re-create pending link element if necessary
+		addTopOpenedLinkIfNeeded();
+
+	}
+
+	/**
+	 * Closes the current SVG group element.
+	 */
+	public void closeGroup() {
+		if (pendingElements.size() == 0)
+			throw new IllegalStateException();
+
+		// Ensure any active links are closed first
+		closeTopActiveLinkIfNeeded();
+
+		closeTopPendingElement();
+
+		// Restore link state after closing group if needed
+		addTopOpenedLinkIfNeeded();
 	}
 
 	public void startGroup(Map<UGroupType, String> typeIdents) {
 		if (typeIdents.isEmpty())
 			throw new IllegalArgumentException();
 
-		pendingAction.add(0, (Element) document.createElement("g"));
+		// Close any active link before starting a new group
+		closeTopActiveLinkIfNeeded();
+
+		pendingElements.add(0, document.createElement("g"));
 
 		// Sorry for the code duplication: but this Pragma will be removed
 		// So we will simplify and refactor the code at that time.
@@ -1118,7 +1202,7 @@ public class SvgGraphics {
 				if (typeIdent.getKey() == UGroupType.TITLE) {
 					Element title = document.createElement(UGroupType.TITLE.getSvgKeyAttributeName());
 					title.setTextContent(typeIdent.getValue());
-					pendingAction.get(0).appendChild(title);
+					pendingElements.get(0).appendChild(title);
 				}
 
 				switch (typeIdent.getKey()) {
@@ -1127,7 +1211,7 @@ public class SvgGraphics {
 					break;
 				case DATA_UID:
 					// DATA_UID *will* be rename to ID, but right now, we do some hack
-					pendingAction.get(0).setAttribute("id", typeIdent.getValue());
+					pendingElements.get(0).setAttribute("id", typeIdent.getValue());
 					break;
 
 				// I also suggest that we rename "data-participant-1" to "data-entity-1" and
@@ -1135,18 +1219,18 @@ public class SvgGraphics {
 
 				case DATA_PARTICIPANT_1:
 				case DATA_ENTITY_1_UID:
-					pendingAction.get(0).setAttribute("data-entity-1", typeIdent.getValue());
+					pendingElements.get(0).setAttribute("data-entity-1", typeIdent.getValue());
 					break;
 				case DATA_PARTICIPANT_2:
 				case DATA_ENTITY_2_UID:
-					pendingAction.get(0).setAttribute("data-entity-2", typeIdent.getValue());
+					pendingElements.get(0).setAttribute("data-entity-2", typeIdent.getValue());
 					break;
 
 				case CLASS:
 				case DATA_SOURCE_LINE:
 				case DATA_QUALIFIED_NAME:
 				case DATA_ENTITY_UID:
-					pendingAction.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
+					pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
 							typeIdent.getValue());
 
 				}
@@ -1156,14 +1240,14 @@ public class SvgGraphics {
 				if (typeIdent.getKey() == UGroupType.TITLE) {
 					Element title = document.createElement(UGroupType.TITLE.getSvgKeyAttributeName());
 					title.setTextContent(typeIdent.getValue());
-					pendingAction.get(0).appendChild(title);
+					pendingElements.get(0).appendChild(title);
 				}
 
 				switch (typeIdent.getKey()) {
 				case DATA_UID:
 				case ID:
 				case DATA_SOURCE_LINE:
-					pendingAction.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
+					pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
 							typeIdent.getValue());
 				}
 
@@ -1176,16 +1260,16 @@ public class SvgGraphics {
 				case DATA_PARTICIPANT:
 				case DATA_PARTICIPANT_1:
 				case DATA_PARTICIPANT_2:
-					pendingAction.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
+					pendingElements.get(0).setAttribute(typeIdent.getKey().getSvgKeyAttributeName(),
 							typeIdent.getValue());
 				}
 			}
 
 		}
-	}
 
-	public void closeGroup() {
-		closeLink();
+		// Restore link state after group creation if needed
+		addTopOpenedLinkIfNeeded();
+
 	}
 
 }
