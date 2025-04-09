@@ -118,6 +118,7 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 		result.url = this.url;
 		result.colors = this.colors;
 		result.parallel = this.parallel;
+		result.style = getStyleSignature().getMergedStyle(styleBuilder);
 		return result;
 	}
 
@@ -163,6 +164,7 @@ final public class Note extends AbstractEvent implements Event, SpecificBackcolo
 
 	public final void setNoteStyle(NoteStyle style) {
 		this.noteStyle = style;
+		this.style = getStyleSignature().getMergedStyle(styleBuilder);
 	}
 
 	public ISkinParam getSkinParamBackcolored(ISkinParam skinParam) {
