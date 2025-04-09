@@ -64,7 +64,7 @@ public class ReverseHsluvColor extends SimpleReturnFunction {
 			Map<String, TValue> named) throws EaterException {
 		final String colorString = values.get(0).toString();
 		try {
-			HColor color = HColorSet.instance().getColorLEGACY(colorString);
+			HColor color = HColorSet.instance().getColor(colorString);
 			color = color.reverseHsluv();
 			return TValue.fromString(color.asString());
 		} catch (NoSuchColorException e) {

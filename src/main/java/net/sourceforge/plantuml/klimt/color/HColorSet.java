@@ -321,10 +321,6 @@ public class HColorSet {
 		return null;
 	}
 
-	public HColor getColorLEGACY(String s) throws NoSuchColorException {
-		return getColor(s);
-	}
-
 	public HColor getColor(String s) throws NoSuchColorException {
 		if (isColorValid(Objects.requireNonNull(s)) == false)
 			throw new NoSuchColorException();

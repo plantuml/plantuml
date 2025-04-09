@@ -161,7 +161,7 @@ public class StereotypeDecoration {
 					name = "";
 
 				final String colName = mCircleSprite.get("COLOR", 0);
-				final HColor col = colName == null ? null : htmlColorSet.getColorLEGACY(colName);
+				final HColor col = colName == null ? null : htmlColorSet.getColor(colName);
 				htmlColor = col == null ? HColors.BLACK : col;
 				character = '\0';
 				spriteName = mCircleSprite.get("NAME", 0);
@@ -173,7 +173,7 @@ public class StereotypeDecoration {
 					name = "";
 
 				final String colName = mCircleChar.get("COLOR", 0);
-				htmlColor = colName == null ? null : htmlColorSet.getColorLEGACY(colName);
+				htmlColor = colName == null ? null : htmlColorSet.getColor(colName);
 				character = mCircleChar.get("CHAR", 0).charAt(0);
 			}
 
