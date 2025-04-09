@@ -1063,6 +1063,23 @@ public class SvgGraphics {
 			this.title = title;
 			this.target = target;
 		}
+
+		String getXlinkTitle() {
+			if (title == null)
+				return url;
+
+			final Pattern p = Pattern.compile("\\<U\\+([0-9A-Fa-f]+)\\>");
+			final Matcher m = p.matcher(title);
+			final StringBuffer sb = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8
+			while (m.find()) {
+				final String num = m.group(1);
+				final char c = (char) Integer.parseInt(num, 16);
+				m.appendReplacement(sb, "" + c);
+			}
+			m.appendTail(sb);
+
+			return sb.toString().replaceAll("\\\\n", "\n");
+		}
 	}
 
 	public void openLink(String url, String title, String target) {
@@ -1077,7 +1094,6 @@ public class SvgGraphics {
 	}
 
 	private void openLink(LinkData link) {
-
 		pendingAction.add(0, (Element) document.createElement("a"));
 		pendingAction.get(0).setAttribute("target", link.target);
 		pendingAction.get(0).setAttribute(XLINK_HREF1, link.url);
@@ -1085,39 +1101,26 @@ public class SvgGraphics {
 		pendingAction.get(0).setAttribute("xlink:type", "simple");
 		pendingAction.get(0).setAttribute("xlink:actuate", "onRequest");
 		pendingAction.get(0).setAttribute("xlink:show", "new");
-		if (link.title == null) {
-			pendingAction.get(0).setAttribute(XLINK_TITLE1, link.url);
-			pendingAction.get(0).setAttribute(XLINK_TITLE2, link.url);
-		} else {
-			final String title = formatTitle(link.title);
-			pendingAction.get(0).setAttribute(XLINK_TITLE1, title);
-			pendingAction.get(0).setAttribute(XLINK_TITLE2, title);
-		}
-	}
-
-	private String formatTitle(String title) {
-		final Pattern p = Pattern.compile("\\<U\\+([0-9A-Fa-f]+)\\>");
-		final Matcher m = p.matcher(title);
-		final StringBuffer sb = new StringBuffer(); // Can't be switched to StringBuilder in order to support Java 8
-		while (m.find()) {
-			final String num = m.group(1);
-			final char c = (char) Integer.parseInt(num, 16);
-			m.appendReplacement(sb, "" + c);
-		}
-		m.appendTail(sb);
-
-		title = sb.toString().replaceAll("\\\\n", "\n");
-		return title;
+		final String title = link.getXlinkTitle();
+		pendingAction.get(0).setAttribute(XLINK_TITLE1, title);
+		pendingAction.get(0).setAttribute(XLINK_TITLE2, title);
 	}
 
 	public void closeLink() {
 		if (pendingAction.size() > 0) {
 			final Element element = pendingAction.get(0);
 			pendingAction.remove(0);
-			if (element.getFirstChild() != null) {
-				// Empty link
+			if (element.getFirstChild() != null)
 				getG().appendChild(element);
-			}
+		}
+	}
+
+	public void closeGroup() {
+		if (pendingAction.size() > 0) {
+			final Element element = pendingAction.get(0);
+			pendingAction.remove(0);
+			if (element.getFirstChild() != null)
+				getG().appendChild(element);
 		}
 	}
 
@@ -1199,10 +1202,6 @@ public class SvgGraphics {
 			}
 
 		}
-	}
-
-	public void closeGroup() {
-		closeLink();
 	}
 
 }
