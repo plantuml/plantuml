@@ -442,9 +442,6 @@ public class SvgGraphics {
 		this.strokeDasharray = strokeDasharray;
 	}
 
-	private final List<Element> pendingAction = new ArrayList<>();
-	private final List<LinkData> openedLinks = new ArrayList<>();
-
 	public final Element getG() {
 		if (pendingAction.size() == 0)
 			return gRoot;
@@ -1076,20 +1073,35 @@ public class SvgGraphics {
 		}
 	}
 
-	private boolean isThereAlreadyAnOpenLink() {
+
+	private final List<Element> pendingAction = new ArrayList<>();
+	private final List<LinkData> openedLinks = new ArrayList<>();
+
+	private void closeTopPendingAction() {
+		final Element element = pendingAction.get(0);
+		pendingAction.remove(0);
+		if (element.getFirstChild() != null)
+			getG().appendChild(element);
+	}
+
+	private void closeTopOpenedLinkIfNeeded() {
+		if (openedLinks.size() > 0) {
+			if (pendingAction.get(0).getTagName().equals("a") == false)
+				throw new IllegalStateException();
+			closeTopPendingAction();
+		}
+
 		for (Element elt : pendingAction)
 			if (elt.getTagName().equals("a"))
-				return true;
+				throw new IllegalStateException();
 
-		return false;
 	}
+
 
 	public void openLink(String url, String title, String target) {
 		// https://github.com/plantuml/plantuml/issues/1951
 		// https://github.com/plantuml/plantuml/issues/2069
 		// https://github.com/plantuml/plantuml/issues/2148
-//		if (isThereAlreadyAnOpenLink())
-//			closeLink();
 
 		closeTopOpenedLinkIfNeeded();
 		openedLinks.add(0, new LinkData(url, title, target));
@@ -1133,26 +1145,6 @@ public class SvgGraphics {
 		closeTopOpenedLinkIfNeeded();
 		closeTopPendingAction();
 		addTopOpenedLinkIfNeeded();
-	}
-
-	private void closeTopPendingAction() {
-		final Element element = pendingAction.get(0);
-		pendingAction.remove(0);
-		if (element.getFirstChild() != null)
-			getG().appendChild(element);
-	}
-
-	private void closeTopOpenedLinkIfNeeded() {
-		if (openedLinks.size() > 0) {
-			if (pendingAction.get(0).getTagName().equals("a") == false)
-				throw new IllegalStateException();
-			closeTopPendingAction();
-		}
-
-		for (Element elt : pendingAction)
-			if (elt.getTagName().equals("a"))
-				throw new IllegalStateException();
-
 	}
 
 	public void startGroup(Map<UGroupType, String> typeIdents) {
