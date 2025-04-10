@@ -18,18 +18,57 @@ import net.sourceforge.plantuml.preproc.Defines;
 /*
  * 
 
-You can use this file to put a test you are working on.
-Here is a simple example:
+https://github.com/plantuml/plantuml/issues/1109#issuecomment-2794418145
 
 @startuml
-alice->bob: this is a test
+
+!pragma teoz true
+
+hide stereotype
+
+<style>
+BackGroundColor: #Black
+lifeLine {
+    ' superseded by pink, defined later
+    BackGroundColor: #Red
+}
+.A {
+    BackGroundColor: #LightCoral
+    lifeLine {
+        ' ignored, why?
+        BackGroundColor: #LightCoral
+    }
+}
+
+.B {
+    BackGroundColor: #Green
+    lifeLine {
+        ' ignored, why?
+        BackGroundColor: #Green
+    }
+}
+</style>
+
+
+participant A <<A>>
+participant B <<B>>
+
+activate A
+A -> B ++: Hello
+A <- B --: Hey
+A --
+
+' Takes effect globally, not past this point as i intended
+<style>
+lifeLine {
+    BackGroundColor: #Pink
+}
+</style>
+
+A -> B ++: Hello
+A <- B   : Hey
+
 @enduml
-
-So you can edit this file, but please do not push any modification in the "main" branch.
-Put your own tests on your own branches.
-
-However, if your test are interesting, you can add them to the "pdiff" project.
-See https://github.com/plantuml/pdiff
 
  */
 public class Test_0000 {
@@ -45,7 +84,7 @@ public class Test_0000 {
 		final File file = getJavaFile();
 		final FileFormatOption options = new FileFormatOption(FileFormat.PNG);
 
-		final File outputDirectory = new File("outputdev", "png").getAbsoluteFile();
+		final File outputDirectory = new File("outputdev").getAbsoluteFile();
 		outputDirectory.mkdirs();
 
 		final SourceFileReader reader = new SourceFileReader(Defines.createWithFileName(file), file, outputDirectory,
