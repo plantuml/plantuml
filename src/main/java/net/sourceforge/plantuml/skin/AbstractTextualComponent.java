@@ -79,7 +79,7 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 
 	public AbstractTextualComponent(Style style, Style stereo, LineBreakStrategy maxMessageSize, int marginX1,
 			int marginX2, int marginY, ISkinSimple spriteContainer, Display display, boolean enhanced) {
-		super(style);
+		super(style, spriteContainer);
 		this.spriteContainer = spriteContainer;
 
 		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());

@@ -48,6 +48,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
 public class ComponentRoseActiveLine extends AbstractComponent {
@@ -57,8 +58,8 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 	private final boolean closeDown;
     private final Display stringsToDisplay;
 
-    public ComponentRoseActiveLine(Style style, boolean closeUp, boolean closeDown, HColorSet set, Display stringsToDisplay) {
-		super(style);
+    public ComponentRoseActiveLine(Style style, boolean closeUp, boolean closeDown, HColorSet set, Display stringsToDisplay, ISkinParam skinParam) {
+		super(style, skinParam);
         this.symbolContext = style.getSymbolContext(set);
 		this.closeUp = closeUp;
 		this.closeDown = closeDown;

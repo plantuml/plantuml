@@ -52,7 +52,7 @@ public class ComponentRoseDestroy extends AbstractComponent {
 	private final HColor foregroundColor;
 
 	public ComponentRoseDestroy(Style style, HColor foregroundColor, ISkinSimple spriteContainer) {
-		super(style);
+		super(style, spriteContainer);
 		if (style != null)
 			this.foregroundColor = style.value(PName.LineColor).asColor(spriteContainer.getIHtmlColorSet());
 		else

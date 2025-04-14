@@ -205,10 +205,10 @@ public class Rose {
 			return createComponentArrow(null, config, param, stringsToDisplay);
 
 		if (type == ComponentType.PARTICIPANT_LINE)
-			return new ComponentRoseLine(styles[0], false, param.getIHtmlColorSet(), stringsToDisplay);
+			return new ComponentRoseLine(styles[0], false, param.getIHtmlColorSet(), stringsToDisplay, param);
 
 		if (type == ComponentType.CONTINUE_LINE)
-			return new ComponentRoseLine(styles[0], true, param.getIHtmlColorSet(), stringsToDisplay);
+			return new ComponentRoseLine(styles[0], true, param.getIHtmlColorSet(), stringsToDisplay, param);
 
 		if (type == ComponentType.NOTE)
 			throw new UnsupportedOperationException();
@@ -235,19 +235,19 @@ public class Rose {
 			return new ComponentRoseGroupingSpace(7);
 
 		if (type == ComponentType.ALIVE_BOX_CLOSE_CLOSE)
-			return new ComponentRoseActiveLine(styles[0], true, true, param.getIHtmlColorSet(), stringsToDisplay);
+			return new ComponentRoseActiveLine(styles[0], true, true, param.getIHtmlColorSet(), stringsToDisplay, param);
 
 		if (type == ComponentType.ALIVE_BOX_CLOSE_OPEN)
-			return new ComponentRoseActiveLine(styles[0], true, false, param.getIHtmlColorSet(), stringsToDisplay);
+			return new ComponentRoseActiveLine(styles[0], true, false, param.getIHtmlColorSet(), stringsToDisplay, param);
 
 		if (type == ComponentType.ALIVE_BOX_OPEN_CLOSE) {
-			return new ComponentRoseActiveLine(styles[0], false, true, param.getIHtmlColorSet(), stringsToDisplay);
+			return new ComponentRoseActiveLine(styles[0], false, true, param.getIHtmlColorSet(), stringsToDisplay, param);
 		}
 		if (type == ComponentType.ALIVE_BOX_OPEN_OPEN)
-			return new ComponentRoseActiveLine(styles[0], false, false, param.getIHtmlColorSet(), stringsToDisplay);
+			return new ComponentRoseActiveLine(styles[0], false, false, param.getIHtmlColorSet(), stringsToDisplay, param);
 
 		if (type == ComponentType.DELAY_LINE)
-			return new ComponentRoseDelayLine(null, getHtmlColor(param, stereotype, ColorParam.sequenceLifeLineBorder));
+			return new ComponentRoseDelayLine(null, getHtmlColor(param, stereotype, ColorParam.sequenceLifeLineBorder), param);
 
 		if (type == ComponentType.DELAY_TEXT)
 			return new ComponentRoseDelayText(styles[0], stringsToDisplay, param);
@@ -278,7 +278,7 @@ public class Rose {
 
 	public Component createComponentNewPage(ISkinParam param) {
 		checkRose();
-		return new ComponentRoseNewpage(null, getHtmlColor(param, ColorParam.sequenceNewpageSeparator));
+		return new ComponentRoseNewpage(null, getHtmlColor(param, ColorParam.sequenceNewpageSeparator), param);
 	}
 
 	public ArrowComponent createComponentArrow(Style[] styles, ArrowConfiguration config, ISkinParam param,

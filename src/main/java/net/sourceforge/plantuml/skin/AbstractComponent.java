@@ -39,6 +39,7 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
@@ -53,9 +54,11 @@ public abstract class AbstractComponent implements Component {
 	}
 
 	private final Style style;
+	private final ISkinSimple spriteContainer;
 
-	public AbstractComponent(Style style) {
+	public AbstractComponent(Style style, ISkinSimple spriteContainer) {
 		this.style = style;
+		this.spriteContainer = spriteContainer;
 	}
 
 	protected final Style getStyle() {

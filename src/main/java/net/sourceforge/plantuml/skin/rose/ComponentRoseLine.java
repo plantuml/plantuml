@@ -52,6 +52,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
@@ -62,8 +63,8 @@ public class ComponentRoseLine extends AbstractComponent {
 	private final UStroke stroke;
 	private final Display stringsToDisplay;
 
-	public ComponentRoseLine(Style style, boolean continueLine, HColorSet set, Display stringsToDisplay) {
-		super(style);
+	public ComponentRoseLine(Style style, boolean continueLine, HColorSet set, Display stringsToDisplay, ISkinParam skinParam) {
+		super(style, skinParam);
 		this.color = style.value(PName.LineColor).asColor(set);
 		this.stroke = style.getStroke();
 		this.continueLine = continueLine;
