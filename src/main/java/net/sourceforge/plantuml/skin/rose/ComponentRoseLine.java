@@ -42,7 +42,6 @@ import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.color.HColor;
-import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
@@ -63,9 +62,9 @@ public class ComponentRoseLine extends AbstractComponent {
 	private final UStroke stroke;
 	private final Display stringsToDisplay;
 
-	public ComponentRoseLine(Style style, boolean continueLine, HColorSet set, Display stringsToDisplay, ISkinParam skinParam) {
+	public ComponentRoseLine(Style style, boolean continueLine, Display stringsToDisplay, ISkinParam skinParam) {
 		super(style, skinParam);
-		this.color = style.value(PName.LineColor).asColor(set);
+		this.color = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 		this.stroke = style.getStroke();
 		this.continueLine = continueLine;
 		// Ideally, stringsToDisplay should never be null. However, as a safeguard, 

@@ -205,10 +205,10 @@ public class Rose {
 			return createComponentArrow(null, config, param, stringsToDisplay);
 
 		if (type == ComponentType.PARTICIPANT_LINE)
-			return new ComponentRoseLine(styles[0], false, param.getIHtmlColorSet(), stringsToDisplay, param);
+			return new ComponentRoseLine(styles[0], false, stringsToDisplay, param);
 
 		if (type == ComponentType.CONTINUE_LINE)
-			return new ComponentRoseLine(styles[0], true, param.getIHtmlColorSet(), stringsToDisplay, param);
+			return new ComponentRoseLine(styles[0], true, stringsToDisplay, param);
 
 		if (type == ComponentType.NOTE)
 			throw new UnsupportedOperationException();
