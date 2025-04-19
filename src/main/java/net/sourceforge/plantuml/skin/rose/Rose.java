@@ -208,7 +208,7 @@ public class Rose {
 			return new ComponentRoseLine(styles[0], false, param.getIHtmlColorSet(), stringsToDisplay, param);
 
 		if (type == ComponentType.CONTINUE_LINE)
-			return new ComponentRoseLine(styles[0], true, param.getIHtmlColorSet(), stringsToDisplay), param;
+			return new ComponentRoseLine(styles[0], true, param.getIHtmlColorSet(), stringsToDisplay, param);
 
 		if (type == ComponentType.NOTE)
 			throw new UnsupportedOperationException();
