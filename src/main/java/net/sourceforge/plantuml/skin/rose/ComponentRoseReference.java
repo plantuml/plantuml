@@ -40,7 +40,6 @@ import net.sourceforge.plantuml.klimt.LineBreakStrategy;
 import net.sourceforge.plantuml.klimt.UPath;
 import net.sourceforge.plantuml.klimt.UStroke;
 import net.sourceforge.plantuml.klimt.UTranslate;
-import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -66,8 +65,7 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 	private final Fashion symbolContextBody;
 	private int roundCorner;
 
-	public ComponentRoseReference(Style style, Style styleHeader, Display stringsToDisplay, ISkinParam skinParam,
-			HColor background) {
+	public ComponentRoseReference(Style style, Style styleHeader, Display stringsToDisplay, ISkinParam skinParam) {
 		super(style, LineBreakStrategy.NONE, 4, 4, 4, skinParam,
 				stringsToDisplay.subList(1, stringsToDisplay.size()), false);
 

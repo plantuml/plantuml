@@ -263,8 +263,7 @@ public class Rose {
 			return new ComponentRoseDivider(styles[0], stringsToDisplay, param);
 
 		if (type == ComponentType.REFERENCE)
-			return new ComponentRoseReference(styles[0], styles[1], stringsToDisplay, param,
-					getHtmlColor(param, stereotype, ColorParam.sequenceReferenceBackground));
+			return new ComponentRoseReference(styles[0], styles[1], stringsToDisplay, param);
 
 		if (type == ComponentType.ENGLOBER)
 			return new ComponentRoseEnglober(styles[0], stringsToDisplay, param);
