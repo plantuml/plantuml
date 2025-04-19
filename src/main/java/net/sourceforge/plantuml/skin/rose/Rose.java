@@ -247,7 +247,7 @@ public class Rose {
 			return new ComponentRoseActiveLine(styles[0], false, false, param.getIHtmlColorSet(), stringsToDisplay, param);
 
 		if (type == ComponentType.DELAY_LINE)
-			return new ComponentRoseDelayLine(styles[0], getHtmlColor(param, stereotype, ColorParam.sequenceLifeLineBorder), param);
+			return new ComponentRoseDelayLine(styles[0], param);
 
 		if (type == ComponentType.DELAY_TEXT)
 			return new ComponentRoseDelayText(styles[0], stringsToDisplay, param);

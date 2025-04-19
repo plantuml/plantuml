@@ -53,7 +53,7 @@ public class ComponentRoseDelayLine extends AbstractComponent {
 
 	private final HColor color;
 
-	public ComponentRoseDelayLine(Style style, HColor color, ISkinParam skinParam) {
+	public ComponentRoseDelayLine(Style style, ISkinParam skinParam) {
 		super(style, skinParam);
 		this.color = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 	}
