@@ -39,7 +39,6 @@ import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UTranslate;
-import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -58,9 +57,9 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 	private final boolean closeDown;
     private final Display stringsToDisplay;
 
-    public ComponentRoseActiveLine(Style style, boolean closeUp, boolean closeDown, HColorSet set, Display stringsToDisplay, ISkinParam skinParam) {
+    public ComponentRoseActiveLine(Style style, boolean closeUp, boolean closeDown, Display stringsToDisplay, ISkinParam skinParam) {
 		super(style, skinParam);
-        this.symbolContext = style.getSymbolContext(set);
+        this.symbolContext = style.getSymbolContext(getIHtmlColorSet());
 		this.closeUp = closeUp;
 		this.closeDown = closeDown;
 		// Ideally, stringsToDisplay should never be null. However, as a safeguard, 

@@ -235,16 +235,16 @@ public class Rose {
 			return new ComponentRoseGroupingSpace(7);
 
 		if (type == ComponentType.ALIVE_BOX_CLOSE_CLOSE)
-			return new ComponentRoseActiveLine(styles[0], true, true, param.getIHtmlColorSet(), stringsToDisplay, param);
+			return new ComponentRoseActiveLine(styles[0], true, true, stringsToDisplay, param);
 
 		if (type == ComponentType.ALIVE_BOX_CLOSE_OPEN)
-			return new ComponentRoseActiveLine(styles[0], true, false, param.getIHtmlColorSet(), stringsToDisplay, param);
+			return new ComponentRoseActiveLine(styles[0], true, false, stringsToDisplay, param);
 
 		if (type == ComponentType.ALIVE_BOX_OPEN_CLOSE) {
-			return new ComponentRoseActiveLine(styles[0], false, true, param.getIHtmlColorSet(), stringsToDisplay, param);
+			return new ComponentRoseActiveLine(styles[0], false, true, stringsToDisplay, param);
 		}
 		if (type == ComponentType.ALIVE_BOX_OPEN_OPEN)
-			return new ComponentRoseActiveLine(styles[0], false, false, param.getIHtmlColorSet(), stringsToDisplay, param);
+			return new ComponentRoseActiveLine(styles[0], false, false, stringsToDisplay, param);
 
 		if (type == ComponentType.DELAY_LINE)
 			return new ComponentRoseDelayLine(styles[0], param);
