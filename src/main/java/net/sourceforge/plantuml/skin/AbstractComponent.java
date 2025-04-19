@@ -36,9 +36,11 @@
 package net.sourceforge.plantuml.skin;
 
 import net.sourceforge.plantuml.klimt.UTranslate;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 
@@ -53,13 +55,23 @@ public abstract class AbstractComponent implements Component {
 	}
 
 	private final Style style;
+	private final ISkinParam skinParam;
 
-	public AbstractComponent(Style style) {
+	public AbstractComponent(Style style, ISkinParam skinParam) {
 		this.style = style;
+		this.skinParam = skinParam;
 	}
 
 	protected final Style getStyle() {
 		return style;
+	}
+
+	protected final ISkinParam getSkinParam() {
+		return skinParam;
+	}
+
+	protected HColorSet getIHtmlColorSet() {
+		return skinParam.getIHtmlColorSet();
 	}
 
 	abstract protected void drawInternalU(UGraphic ug, Area area);

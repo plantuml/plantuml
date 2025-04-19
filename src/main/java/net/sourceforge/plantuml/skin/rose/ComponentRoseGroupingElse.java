@@ -50,7 +50,7 @@ import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
-import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
@@ -61,8 +61,8 @@ public class ComponentRoseGroupingElse extends AbstractTextualComponent {
 	private final double roundCorner;
 	private final boolean teoz;
 
-	public ComponentRoseGroupingElse(boolean teoz, Style style, CharSequence comment, ISkinSimple spriteContainer) {
-		super(style, LineBreakStrategy.NONE, 5, 5, 1, spriteContainer, comment == null ? null : "[" + comment + "]");
+	public ComponentRoseGroupingElse(boolean teoz, Style style, CharSequence comment, ISkinParam skinParam) {
+		super(style, LineBreakStrategy.NONE, 5, 5, 1, skinParam, comment == null ? null : "[" + comment + "]");
 
 		this.teoz = teoz;
 		this.roundCorner = style.value(PName.RoundCorner).asInt(false);

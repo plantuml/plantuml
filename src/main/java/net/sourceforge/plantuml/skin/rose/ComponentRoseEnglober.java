@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
@@ -54,8 +54,8 @@ public class ComponentRoseEnglober extends AbstractTextualComponent {
 	private final Fashion symbolContext;
 	private final double roundCorner;
 
-	public ComponentRoseEnglober(Style style, Display strings, ISkinSimple spriteContainer) {
-		super(style, LineBreakStrategy.NONE, 3, 3, 1, spriteContainer, strings, false);
+	public ComponentRoseEnglober(Style style, Display strings, ISkinParam skinParam) {
+		super(style, LineBreakStrategy.NONE, 3, 3, 1, skinParam, strings, false);
 		this.roundCorner = style.value(PName.RoundCorner).asDouble();
 		this.symbolContext = style.getSymbolContext(getIHtmlColorSet());
 	}

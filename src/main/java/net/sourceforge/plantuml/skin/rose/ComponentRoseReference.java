@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
@@ -66,9 +66,9 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 	private final Fashion symbolContextBody;
 	private int roundCorner;
 
-	public ComponentRoseReference(Style style, Style styleHeader, Display stringsToDisplay, ISkinSimple spriteContainer,
+	public ComponentRoseReference(Style style, Style styleHeader, Display stringsToDisplay, ISkinParam skinParam,
 			HColor background) {
-		super(style, LineBreakStrategy.NONE, 4, 4, 4, spriteContainer,
+		super(style, LineBreakStrategy.NONE, 4, 4, 4, skinParam,
 				stringsToDisplay.subList(1, stringsToDisplay.size()), false);
 
 		this.symbolContextHeader = styleHeader.getSymbolContext(getIHtmlColorSet());
@@ -77,7 +77,7 @@ public class ComponentRoseReference extends AbstractTextualComponent {
 		final FontConfiguration fcHeader = styleHeader.getFontConfiguration(getIHtmlColorSet());
 		this.position = style.getHorizontalAlignment();
 
-		this.textHeader = stringsToDisplay.subList(0, 1).create(fcHeader, HorizontalAlignment.LEFT, spriteContainer);
+		this.textHeader = stringsToDisplay.subList(0, 1).create(fcHeader, HorizontalAlignment.LEFT, skinParam);
 
 	}
 

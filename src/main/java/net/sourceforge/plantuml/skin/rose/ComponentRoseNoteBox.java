@@ -45,7 +45,7 @@ import net.sourceforge.plantuml.klimt.font.StringBounder;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
@@ -54,8 +54,8 @@ final public class ComponentRoseNoteBox extends AbstractTextualComponent {
 	private final Fashion symbolContext;
 	private final double roundCorner;
 
-	public ComponentRoseNoteBox(Style style, Display strings, ISkinSimple spriteContainer, Colors colors) {
-		super(style, style.wrapWidth(), 4, 4, 4, spriteContainer, strings, false);
+	public ComponentRoseNoteBox(Style style, Display strings, ISkinParam skinParam, Colors colors) {
+		super(style, style.wrapWidth(), 4, 4, 4, skinParam, strings, false);
 
 		this.symbolContext = style.getSymbolContext(getIHtmlColorSet(), colors);
 		this.roundCorner = style.value(PName.RoundCorner).asInt(false);
