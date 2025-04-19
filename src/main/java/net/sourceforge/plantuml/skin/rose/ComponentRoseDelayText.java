@@ -44,13 +44,13 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
 public class ComponentRoseDelayText extends AbstractTextualComponent {
 
-	public ComponentRoseDelayText(Style style, Display stringsToDisplay, ISkinSimple spriteContainer) {
-		super(style, LineBreakStrategy.NONE, 0, 0, 4, spriteContainer, stringsToDisplay, false);
+	public ComponentRoseDelayText(Style style, Display stringsToDisplay, ISkinParam skinParam) {
+		super(style, LineBreakStrategy.NONE, 0, 0, 4, skinParam, stringsToDisplay, false);
 	}
 
 	@Override

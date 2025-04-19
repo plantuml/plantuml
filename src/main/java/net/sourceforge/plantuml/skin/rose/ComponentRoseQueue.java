@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockUtils;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
 public class ComponentRoseQueue extends AbstractTextualComponent {
@@ -57,8 +57,8 @@ public class ComponentRoseQueue extends AbstractTextualComponent {
 	private final boolean head;
 
 	public ComponentRoseQueue(Style style, Style stereo, Display stringsToDisplay, boolean head,
-			ISkinSimple spriteContainer) {
-		super(style, stereo, LineBreakStrategy.NONE, 3, 3, 0, spriteContainer, stringsToDisplay, false);
+			ISkinParam skinParam) {
+		super(style, stereo, LineBreakStrategy.NONE, 3, 3, 0, skinParam, stringsToDisplay, false);
 
 		final Fashion biColor = style.getSymbolContext(getIHtmlColorSet());
 

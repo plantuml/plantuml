@@ -39,7 +39,6 @@ import net.sourceforge.plantuml.klimt.Fashion;
 import net.sourceforge.plantuml.klimt.UGroup;
 import net.sourceforge.plantuml.klimt.UGroupType;
 import net.sourceforge.plantuml.klimt.UTranslate;
-import net.sourceforge.plantuml.klimt.color.HColorSet;
 import net.sourceforge.plantuml.klimt.creole.Display;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.StringBounder;
@@ -48,6 +47,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
 public class ComponentRoseActiveLine extends AbstractComponent {
@@ -57,9 +57,9 @@ public class ComponentRoseActiveLine extends AbstractComponent {
 	private final boolean closeDown;
     private final Display stringsToDisplay;
 
-    public ComponentRoseActiveLine(Style style, boolean closeUp, boolean closeDown, HColorSet set, Display stringsToDisplay) {
-		super(style);
-        this.symbolContext = style.getSymbolContext(set);
+    public ComponentRoseActiveLine(Style style, boolean closeUp, boolean closeDown, Display stringsToDisplay, ISkinParam skinParam) {
+		super(style, skinParam);
+        this.symbolContext = style.getSymbolContext(getIHtmlColorSet());
 		this.closeUp = closeUp;
 		this.closeDown = closeDown;
 		// Ideally, stringsToDisplay should never be null. However, as a safeguard, 

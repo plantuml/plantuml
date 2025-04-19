@@ -49,7 +49,6 @@ import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.TextBlockEmpty;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
@@ -60,27 +59,25 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 	private final int marginY;
 
 	private final TextBlock textBlock;
-	private final ISkinSimple spriteContainer;
 
 	private final UFont font;
 	private final HColor fontColor;
 	private final HorizontalAlignment alignment;
 
 	public AbstractTextualComponent(Style style, LineBreakStrategy maxMessageSize, int marginX1, int marginX2,
-			int marginY, ISkinSimple spriteContainer, CharSequence label) {
-		this(style, style, maxMessageSize, marginX1, marginX2, marginY, spriteContainer,
-				Display.getWithNewlines(spriteContainer.getPragma(), label == null ? "" : label.toString()), false);
+			int marginY, ISkinParam skinParam, CharSequence label) {
+		this(style, style, maxMessageSize, marginX1, marginX2, marginY, skinParam,
+				Display.getWithNewlines(skinParam.getPragma(), label == null ? "" : label.toString()), false);
 	}
 
 	public AbstractTextualComponent(Style style, LineBreakStrategy maxMessageSize, int marginX1, int marginX2,
-			int marginY, ISkinSimple spriteContainer, Display display, boolean enhanced) {
-		this(style, style, maxMessageSize, marginX1, marginX2, marginY, spriteContainer, display, enhanced);
+			int marginY, ISkinParam skinParam, Display display, boolean enhanced) {
+		this(style, style, maxMessageSize, marginX1, marginX2, marginY, skinParam, display, enhanced);
 	}
 
 	public AbstractTextualComponent(Style style, Style stereo, LineBreakStrategy maxMessageSize, int marginX1,
-			int marginX2, int marginY, ISkinSimple spriteContainer, Display display, boolean enhanced) {
-		super(style);
-		this.spriteContainer = spriteContainer;
+			int marginX2, int marginY, ISkinParam skinParam, Display display, boolean enhanced) {
+		super(style, skinParam);
 
 		final FontConfiguration fc = style.getFontConfiguration(getIHtmlColorSet());
 		this.font = style.getUFont();
@@ -97,16 +94,12 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 		if (display.size() == 1 && display.get(0).length() == 0)
 			textBlock = new TextBlockEmpty();
 		else if (enhanced)
-			textBlock = BodyFactory.create3(display, spriteContainer, horizontalAlignment, fc, maxMessageSize, style);
+			textBlock = BodyFactory.create3(display, skinParam, horizontalAlignment, fc, maxMessageSize, style);
 		else
-			textBlock = display.create0(fc, horizontalAlignment, spriteContainer, maxMessageSize, CreoleMode.FULL,
+			textBlock = display.create0(fc, horizontalAlignment, skinParam, maxMessageSize, CreoleMode.FULL,
 					fontForStereotype, htmlColorForStereotype, marginX1, marginX2);
 
 		this.alignment = horizontalAlignment;
-	}
-
-	protected HColorSet getIHtmlColorSet() {
-		return ((ISkinParam) spriteContainer).getIHtmlColorSet();
 	}
 
 	protected TextBlock getTextBlock() {
@@ -147,10 +140,6 @@ public abstract class AbstractTextualComponent extends AbstractComponent {
 
 	protected HColor getFontColor() {
 		return fontColor;
-	}
-
-	protected final ISkinSimple getISkinSimple() {
-		return spriteContainer;
 	}
 
 	public final HorizontalAlignment getHorizontalAlignment() {

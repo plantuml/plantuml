@@ -46,7 +46,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.ActorStyle;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
 public class ComponentRoseActor extends AbstractTextualComponent {
@@ -55,8 +55,8 @@ public class ComponentRoseActor extends AbstractTextualComponent {
 	private final boolean head;
 
 	public ComponentRoseActor(ActorStyle actorStyle, Style style, Style stereo, Display stringsToDisplay, boolean head,
-			ISkinSimple spriteContainer) {
-		super(style, stereo, LineBreakStrategy.NONE, 3, 3, 0, spriteContainer, stringsToDisplay, false);
+			ISkinParam skinParam) {
+		super(style, stereo, LineBreakStrategy.NONE, 3, 3, 0, skinParam, stringsToDisplay, false);
 		this.head = head;
 		final Fashion biColor = style.getSymbolContext(getIHtmlColorSet());
 		this.stickman = actorStyle.getTextBlock(biColor);

@@ -51,7 +51,7 @@ import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.ArrowDecoration;
 import net.sourceforge.plantuml.skin.ArrowHead;
 import net.sourceforge.plantuml.skin.ArrowPart;
-import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
 public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
@@ -61,8 +61,8 @@ public class ComponentRoseSelfArrow extends AbstractComponentRoseArrow {
 	private final boolean niceArrow;
 
 	public ComponentRoseSelfArrow(Style style, Display stringsToDisplay, ArrowConfiguration arrowConfiguration,
-			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize, boolean niceArrow) {
-		super(style, stringsToDisplay, arrowConfiguration, spriteContainer, maxMessageSize);
+			ISkinParam skinParam, LineBreakStrategy maxMessageSize, boolean niceArrow) {
+		super(style, stringsToDisplay, arrowConfiguration, skinParam, maxMessageSize);
 		this.niceArrow = niceArrow;
 	}
 

@@ -54,7 +54,7 @@ import net.sourceforge.plantuml.klimt.shape.TextBlock;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
@@ -71,8 +71,8 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 	private final double roundCorner;
 
 	public ComponentRoseGroupingHeader(boolean teoz, Style style, Style styleHeader, Display strings,
-			ISkinSimple spriteContainer) {
-		super(styleHeader, LineBreakStrategy.NONE, 15, 30, 1, spriteContainer, strings.get(0));
+			ISkinParam skinParam) {
+		super(styleHeader, LineBreakStrategy.NONE, 15, 30, 1, skinParam, strings.get(0));
 
 		this.roundCorner = style.value(PName.RoundCorner).asInt(false);
 		this.background = teoz ? HColors.transparent() : style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
@@ -84,8 +84,8 @@ public class ComponentRoseGroupingHeader extends AbstractTextualComponent {
 		if (strings.size() == 1 || strings.get(1) == null) {
 			this.commentTextBlock = null;
 		} else {
-			final Display display = Display.getWithNewlines(spriteContainer.getPragma(), "[" + strings.get(1) + "]");
-			this.commentTextBlock = display.create(smallFont2, HorizontalAlignment.LEFT, spriteContainer);
+			final Display display = Display.getWithNewlines(skinParam.getPragma(), "[" + strings.get(1) + "]");
+			this.commentTextBlock = display.create(smallFont2, HorizontalAlignment.LEFT, skinParam);
 		}
 		Objects.requireNonNull(this.background);
 	}

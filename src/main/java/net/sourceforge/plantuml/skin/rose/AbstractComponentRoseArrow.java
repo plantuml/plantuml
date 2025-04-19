@@ -46,7 +46,6 @@ import net.sourceforge.plantuml.skin.ArrowComponent;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.skin.Padder;
 import net.sourceforge.plantuml.style.ISkinParam;
-import net.sourceforge.plantuml.style.ISkinSimple;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
@@ -59,8 +58,8 @@ public abstract class AbstractComponentRoseArrow extends AbstractTextualComponen
 	private final ArrowConfiguration arrowConfiguration;
 
 	public AbstractComponentRoseArrow(Style style, Display stringsToDisplay, ArrowConfiguration arrowConfiguration,
-			ISkinSimple spriteContainer, LineBreakStrategy maxMessageSize) {
-		super(style, maxMessageSize, 7, 7, 1, spriteContainer, stringsToDisplay, false);
+			ISkinParam skinParam, LineBreakStrategy maxMessageSize) {
+		super(style, maxMessageSize, 7, 7, 1, skinParam, stringsToDisplay, false);
 
 		this.foregroundColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 		this.backgroundColor = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
@@ -71,10 +70,7 @@ public abstract class AbstractComponentRoseArrow extends AbstractTextualComponen
 
 	@Override
 	final protected TextBlock getTextBlock() {
-		final Padder padder = getISkinSimple() instanceof ISkinParam
-				? ((ISkinParam) getISkinSimple()).sequenceDiagramPadder()
-				: Padder.NONE;
-
+		final Padder padder = getSkinParam().sequenceDiagramPadder();
 		return padder.apply(super.getTextBlock());
 	}
 

@@ -48,7 +48,7 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.klimt.shape.URectangle;
 import net.sourceforge.plantuml.skin.AbstractTextualComponent;
 import net.sourceforge.plantuml.skin.Area;
-import net.sourceforge.plantuml.style.ISkinSimple;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
@@ -63,8 +63,8 @@ public class ComponentRoseDivider extends AbstractTextualComponent {
 	private final UStroke stroke;
 	private final double roundCorner;
 
-	public ComponentRoseDivider(Style style, Display stringsToDisplay, ISkinSimple spriteContainer) {
-		super(style, LineBreakStrategy.NONE, 4, 4, 4, spriteContainer, stringsToDisplay, false);
+	public ComponentRoseDivider(Style style, Display stringsToDisplay, ISkinParam skinParam) {
+		super(style, LineBreakStrategy.NONE, 4, 4, 4, skinParam, stringsToDisplay, false);
 
 		this.background = style.value(PName.BackGroundColor).asColor(getIHtmlColorSet());
 		this.borderColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());

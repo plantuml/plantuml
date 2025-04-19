@@ -43,14 +43,15 @@ import net.sourceforge.plantuml.klimt.shape.ULine;
 import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
+import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
 
 public class ComponentRoseNewpage extends AbstractComponent {
 
 	private final HColor foregroundColor;
 
-	public ComponentRoseNewpage(Style style, HColor foregroundColor) {
-		super(style);
+	public ComponentRoseNewpage(Style style, HColor foregroundColor, ISkinParam skinParam) {
+		super(style, skinParam);
 		this.foregroundColor = foregroundColor;
 	}
 
