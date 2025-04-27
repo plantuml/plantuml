@@ -14,6 +14,7 @@ plugins {
 	`maven-publish`
 	signing
     eclipse
+	id("jacoco")
 //	alias(libs.plugins.adarshr.test.logger)
 }
 
@@ -190,3 +191,6 @@ signing {
 		sign(closureOf<SignOperation> { sign(pdfJar.get()) })
 	}
 }
+
+
+apply(from = "test.gradle.kts")
