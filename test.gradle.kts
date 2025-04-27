@@ -1,13 +1,9 @@
-plugins {
-    id("jacoco")
-}
-
 tasks.named<Test>("test") {
     useJUnitPlatform()
     finalizedBy("jacocoTestReport")
 }
 
-tasks.register<JacocoReport>("jacocoTestReport") {
+tasks.named<JacocoReport>("jacocoTestReport") {
     dependsOn(tasks.named("test"))
 
     reports {
@@ -15,7 +11,7 @@ tasks.register<JacocoReport>("jacocoTestReport") {
         html.required.set(true)
     }
 
-    executionData.setFrom(fileTree(buildDir).include("/jacoco/test.exec"))
+    executionData.setFrom(fileTree(layout.buildDirectory).include("/jacoco/test.exec"))
     sourceDirectories.setFrom(files("src/main/java"))
     classDirectories.setFrom(files("build/classes/java/main"))
 }
