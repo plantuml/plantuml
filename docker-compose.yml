@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  plantuml-server:
+    image: plantuml/plantuml-server:jetty #Use the prebuilt image
+    ports:
+      - "8080:8080"
+    environment:
+      - PLANTUML_VERSION=1.2025.2 
+    restart: unless-stopped
+
+
+
+
+
+
+
+
+
+
+
+
