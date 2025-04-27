@@ -190,3 +190,6 @@ signing {
 		sign(closureOf<SignOperation> { sign(pdfJar.get()) })
 	}
 }
+
+
+apply(from = "test.gradle.kts")
