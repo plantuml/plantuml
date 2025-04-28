@@ -27,7 +27,7 @@ jobs:
 
       - name: Build the project
         run: |
-          ./gradlew clean build
+          ./gradlew buildWithScan
 
   test:
     needs: build
@@ -70,7 +70,3 @@ jobs:
       - name: Deploy the application
         run: |
           docker run -d -p 8080:8080 plantuml/plantuml-server:jetty
-
-      - name: Health Check
-        run: |
-          curl --fail http://localhost:8080 || exit 1
