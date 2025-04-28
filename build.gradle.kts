@@ -194,3 +194,14 @@ signing {
 
 
 apply(from = "test.gradle.kts")
+
+tasks.register("buildWithScan") {
+    group = "build"
+    description = "Builds the project and generates a build scan."
+
+    doFirst {
+        println("Enabling build scan before build starts...")
+        gradle.startParameter.isBuildScan = true
+    }
+    dependsOn("build") // only "build", no "clean"
+}
