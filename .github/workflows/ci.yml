@@ -3,10 +3,12 @@ name: CI Workflow
 on:
   push:
     branches:
-      - '**'
+      - main
+      - feature/**
+
   pull_request:
     branches:
-      - '**'
+      - main
 
 jobs:
   build:
@@ -21,6 +23,13 @@ jobs:
         with:
           java-version: 17
           distribution: temurin
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Build the project
         run: |
@@ -49,6 +58,14 @@ jobs:
         with:
           name: test-reports
           path: build/reports/tests/test/
+      
+      - name: Publish test results
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: Gradle Tests
+          path: build/test-results/test/*.xml
+          reporter: junit
 
   deploy:
     needs: test
@@ -67,3 +84,7 @@ jobs:
       - name: Deploy the application
         run: |
           docker run -d -p 8080:8080 plantuml/plantuml-server:jetty
+
+      - name: Health Check
+        run: |
+          curl --fail http://localhost:8080 || exit 1
