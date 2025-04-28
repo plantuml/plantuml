@@ -12,6 +12,23 @@ on:
 
 jobs:
   
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: temurin
+
+      - name: Build the project
+        run: |
+          ./gradlew clean build
+
   test:
     runs-on: ubuntu-latest
 
@@ -35,14 +52,6 @@ jobs:
           name: test-reports
           path: build/reports/tests/test/
       
-      - name: Publish test results
-        if: always()
-        uses: dorny/test-reporter@v1
-        with:
-          name: Gradle Tests
-          path: build/test-results/test/*.xml
-          reporter: junit-xml
-
   deploy:
     needs: test
     runs-on: ubuntu-latest
