@@ -72,8 +72,7 @@ For a more detailed overview, visit [PlantUML Official Website](https://plantuml
 
 See [Security Policy](SECURITY.md) and [Security overview](https://github.com/plantuml/plantuml/security).
 
-> [!IMPORTANT]
-> [PlantUML is **not** affected by the log4j vulnerability.](https://github.com/plantuml/plantuml/issues/826)
+> [!IMPORTANT] > [PlantUML is **not** affected by the log4j vulnerability.](https://github.com/plantuml/plantuml/issues/826)
 
 ## 🚀 Getting Started
 
@@ -87,7 +86,7 @@ To build PlantUML from source, you'll need to have certain prerequisites install
 
 PlantUML is an open-source project, and we welcome contributions of all kinds. Whether you're helping us fix bugs, improve the docs, or spread the word, we appreciate your support. See our [contributing guide](CONTRIBUTING.md) for more information on how to get started.
 
-For comprehensive and detailed documentation on using PlantUML, refer to the [official Javadoc, available here](https://plantuml.github.io/plantuml/). Please note that this documentation is a work in progress and may not be complete. 
+For comprehensive and detailed documentation on using PlantUML, refer to the [official Javadoc, available here](https://plantuml.github.io/plantuml/). Please note that this documentation is a work in progress and may not be complete.
 
 ## 🧑‍🤝‍🧑 Support and Community
 
@@ -105,4 +104,3 @@ PlantUML is licensed under several licenses; you can choose the one that suits y
 - [MIT license](https://opensource.org/licenses/MIT)
 
 For more information, please refer to the [PlantUML license FAQ](https://plantuml.com/en/faq#ddbc9d04378ee462) to help determine which license is appropriate for your use case.
-
