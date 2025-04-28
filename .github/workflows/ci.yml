@@ -11,32 +11,8 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout the repository
-        uses: actions/checkout@v4
-
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          java-version: 17
-          distribution: temurin
-      - name: Cache Gradle dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: Build the project
-        run: |
-          ./gradlew clean build
-
+  
   test:
-    needs: build
     runs-on: ubuntu-latest
 
     steps:
@@ -65,7 +41,7 @@ jobs:
         with:
           name: Gradle Tests
           path: build/test-results/test/*.xml
-          reporter: junit
+          reporter: junit-xml
 
   deploy:
     needs: test
