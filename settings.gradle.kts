@@ -1,23 +1,5 @@
 // https://docs.gradle.org/current/javadoc/org/gradle/api/initialization/Settings.html
 
-pluginManagement {
-    plugins {
-        id("com.gradle.enterprise") version "3.16" // ✅ You can check latest version
-    }
-}
-
-plugins {
-    id("com.gradle.enterprise")
-}
-
-gradleEnterprise {
-    buildScan {
-        termsOfServiceUrl = "https://gradle.com/terms-of-service"
-        termsOfServiceAgree = "yes"
-        publishAlways() // (Optional) automatically publish scan without asking
-    }
-}
-
 rootProject.name = "plantuml"
 
 val isCiBuild = System.getenv("CI") != null
