@@ -99,7 +99,8 @@ implements <a href="Component.html" title="interface in net.sourceforge.plantuml
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.style.Style)" class="member-name-link">AbstractComponent</a><wbr>(<a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&nbsp;style)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.style.ISkinParam)" class="member-name-link">AbstractComponent</a><wbr>(<a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&nbsp;style,
+ <a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -128,21 +129,27 @@ implements <a href="Component.html" title="interface in net.sourceforge.plantuml
  <a href="Area.html" title="class in net.sourceforge.plantuml.skin">Area</a>&nbsp;area,
  <a href="Context2D.html" title="interface in net.sourceforge.plantuml.skin">Context2D</a>&nbsp;context)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPaddingX()" class="member-name-link">getPaddingX</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIHtmlColorSet()" class="member-name-link">getIHtmlColorSet</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPaddingY()" class="member-name-link">getPaddingY</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPaddingX()" class="member-name-link">getPaddingX</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../klimt/geom/XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPreferredDimension(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPreferredDimension</a><wbr>(<a href="../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>double</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPaddingY()" class="member-name-link">getPaddingY</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract double</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPreferredHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPreferredHeight</a><wbr>(<a href="../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../klimt/geom/XDimension2D.html" title="class in net.sourceforge.plantuml.klimt.geom">XDimension2D</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPreferredDimension(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPreferredDimension</a><wbr>(<a href="../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract double</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPreferredWidth(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPreferredWidth</a><wbr>(<a href="../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPreferredHeight(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPreferredHeight</a><wbr>(<a href="../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract double</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPreferredWidth(net.sourceforge.plantuml.klimt.font.StringBounder)" class="member-name-link">getPreferredWidth</a><wbr>(<a href="../klimt/font/StringBounder.html" title="interface in net.sourceforge.plantuml.klimt.font">StringBounder</a>&nbsp;stringBounder)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSkinParam()" class="member-name-link">getSkinParam</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStyle()" class="member-name-link">getStyle</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -170,9 +177,10 @@ implements <a href="Component.html" title="interface in net.sourceforge.plantuml
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.style.Style)">
+<section class="detail" id="&lt;init&gt;(net.sourceforge.plantuml.style.Style,net.sourceforge.plantuml.style.ISkinParam)">
 <h3>AbstractComponent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AbstractComponent</span><wbr><span class="parameters">(<a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&nbsp;style)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AbstractComponent</span><wbr><span class="parameters">(<a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a>&nbsp;style,
+ <a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a>&nbsp;skinParam)</span></div>
 </section>
 </li>
 </ul>
@@ -207,6 +215,18 @@ implements <a href="Component.html" title="interface in net.sourceforge.plantuml
 <section class="detail" id="getStyle()">
 <h3>getStyle</h3>
 <div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../style/Style.html" title="class in net.sourceforge.plantuml.style">Style</a></span>&nbsp;<span class="element-name">getStyle</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getSkinParam()">
+<h3>getSkinParam</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../style/ISkinParam.html" title="interface in net.sourceforge.plantuml.style">ISkinParam</a></span>&nbsp;<span class="element-name">getSkinParam</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getIHtmlColorSet()">
+<h3>getIHtmlColorSet</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="../klimt/color/HColorSet.html" title="class in net.sourceforge.plantuml.klimt.color">HColorSet</a></span>&nbsp;<span class="element-name">getIHtmlColorSet</span>()</div>
 </section>
 </li>
 <li>
