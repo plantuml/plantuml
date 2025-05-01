@@ -347,7 +347,7 @@ public class SequenceDiagram extends UmlDiagram {
 		if (lastDelay != null)
 			return "You cannot Activate/Deactivate just after a ...";
 
-		final LifeEvent lifeEvent = new LifeEvent(p, lifeEventType, new Fashion(backcolor, linecolor));
+		final LifeEvent lifeEvent = new LifeEvent(p, lifeEventType, new Fashion(backcolor, linecolor), getSkinParam().getCurrentStyleBuilder());
 		events.add(lifeEvent);
 		if (lifeEventType == LifeEventType.CREATE) {
 			pendingCreate = lifeEvent;

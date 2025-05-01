@@ -35,7 +35,21 @@
  */
 package net.sourceforge.plantuml.sequencediagram;
 
-public enum LifeEventType {
-	ACTIVATE, DEACTIVATE, DESTROY, CREATE
+import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.Styleable;
+
+public enum LifeEventType implements Styleable {
+	ACTIVATE, DEACTIVATE, DESTROY, CREATE;
+
+	@Override
+	public StyleSignature getStyleSignature() {
+		if (this == DESTROY)
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine);
+		
+		// To be completed
+		throw new UnsupportedOperationException();
+	}
 
 }
