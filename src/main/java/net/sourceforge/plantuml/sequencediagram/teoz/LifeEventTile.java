@@ -97,12 +97,16 @@ public class LifeEventTile extends AbstractTile {
 		return ComponentType.DESTROY.getStyleSignature();
 	}
 
+    private Style[] getUsedStyle() {
+        final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return new Style[] { style };
+    }	
+
 	public void drawU(UGraphic ug) {
 		if (YGauge.USE_ME)
 			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 		if (isDestroyWithoutMessage()) {
-			final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
-			final Component cross = skin.createComponent(new Style[] { style }, ComponentType.DESTROY, null, skinParam,
+			final Component cross = skin.createComponent(getUsedStyle(), ComponentType.DESTROY, null, skinParam,
 					null);
 			final XDimension2D dimCross = cross.getPreferredDimension(ug.getStringBounder());
 			final double x = livingSpace.getPosC(ug.getStringBounder()).getCurrentValue();
