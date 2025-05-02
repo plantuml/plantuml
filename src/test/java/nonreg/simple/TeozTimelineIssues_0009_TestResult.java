@@ -164,14 +164,14 @@ LINE:
   pt2: [ 116.1416 ; 553.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
-  color: ff181818
+  color: ffa80036
 
 LINE:
   pt1: [ 98.1416 ; 553.0000 ]
   pt2: [ 116.1416 ; 535.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
-  color: ff181818
+  color: ffa80036
 
 RECTANGLE:
   pt1: [ 102.1416 ; 601.0000 ]
@@ -275,14 +275,14 @@ LINE:
   pt2: [ 330.4061 ; 482.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
-  color: ff181818
+  color: ffa80036
 
 LINE:
   pt1: [ 312.4061 ; 482.0000 ]
   pt2: [ 330.4061 ; 464.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
-  color: ff181818
+  color: ffa80036
 
 RECTANGLE:
   pt1: [ 316.4061 ; 530.0000 ]

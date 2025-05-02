@@ -130,6 +130,10 @@ sequenceDiagram {
 	  LineStyle 5
 	}
 
+  destroy {
+    LineColor #A80036
+  }
+
 	reference {
 	  FontSize 12
 	  LineColor black

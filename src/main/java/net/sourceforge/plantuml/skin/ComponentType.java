@@ -82,7 +82,7 @@ public enum ComponentType implements Styleable {
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine);
 
 		if (this == DESTROY)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.destroy);
 
 		if (this == DIVIDER)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.separator);

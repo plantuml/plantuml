@@ -253,8 +253,7 @@ public class Rose {
 			return new ComponentRoseDelayText(styles[0], stringsToDisplay, param);
 
 		if (type == ComponentType.DESTROY)
-			return new ComponentRoseDestroy(styles == null ? null : styles[0],
-					getHtmlColor(param, stereotype, ColorParam.sequenceLifeLineBorder), param);
+			return new ComponentRoseDestroy(styles[0], param);
 
 		if (type == ComponentType.NEWPAGE)
 			throw new UnsupportedOperationException();
