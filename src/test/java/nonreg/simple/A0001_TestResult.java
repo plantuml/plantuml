@@ -223,14 +223,14 @@ LINE:
   pt2: [ 38.8525 ; 125.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
   pt1: [ 20.8525 ; 125.0000 ]
   pt2: [ 38.8525 ; 107.0000 ]
   stroke: 0.0-0.0-2.0
   shadow: 0
-  color: ffa80036
+  color: ff181818
 
 LINE:
   pt1: [ 29.8525 ; 169.0000 ]
