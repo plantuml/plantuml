@@ -46,7 +46,7 @@ public enum LifeEventType implements Styleable {
 	@Override
 	public StyleSignature getStyleSignature() {
 		if (this == DESTROY)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine);
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.destroy);
 		
 		// To be completed
 		throw new UnsupportedOperationException();
