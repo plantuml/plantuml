@@ -51,12 +51,9 @@ public class ComponentRoseDestroy extends AbstractComponent {
 
 	private final HColor foregroundColor;
 
-	public ComponentRoseDestroy(Style style, HColor foregroundColor, ISkinParam skinParam) {
+	public ComponentRoseDestroy(Style style, ISkinParam skinParam) {
 		super(style, skinParam);
-		if (style != null)
-			this.foregroundColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
-		else
-			this.foregroundColor = foregroundColor;
+		this.foregroundColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 	}
 
 	private final int crossSize = 9;

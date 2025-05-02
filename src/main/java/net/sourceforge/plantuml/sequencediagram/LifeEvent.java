@@ -36,14 +36,19 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 import net.sourceforge.plantuml.klimt.Fashion;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class LifeEvent extends AbstractEvent implements Event {
 
 	private final Participant p;
 	private final LifeEventType type;
 	private final Fashion backcolor;
+	private final StyleBuilder styleBuilder;
 
-	public LifeEvent(Participant p, LifeEventType type, Fashion backcolor) {
+	public LifeEvent(Participant p, LifeEventType type, Fashion backcolor, StyleBuilder styleBuilder) {
+		this.styleBuilder = styleBuilder;
 		this.p = p;
 		this.type = type;
 		this.backcolor = backcolor;
@@ -94,6 +99,15 @@ public class LifeEvent extends AbstractEvent implements Event {
 
 	public AbstractMessage getMessage() {
 		return message;
+	}
+
+	public StyleSignature getStyleSignature() {
+		return type.getStyleSignature();
+	}
+
+	public Style[] getUsedStyle() {
+		final Style style = type.getStyleSignature().getMergedStyle(styleBuilder);
+		return new Style[] { style };
 	}
 
 }

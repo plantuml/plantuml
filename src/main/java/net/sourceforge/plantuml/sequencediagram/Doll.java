@@ -59,7 +59,7 @@ import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 import net.sourceforge.plantuml.style.StyleBuilder;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.WithStyle;
 
 public class Doll implements WithStyle {
@@ -99,7 +99,7 @@ public class Doll implements WithStyle {
 
 	}
 
-	final public StyleSignatureBasic getStyleSignature() {
+	final public StyleSignature getStyleSignature() {
 		return ComponentType.ENGLOBER.getStyleSignature();
 	}
 

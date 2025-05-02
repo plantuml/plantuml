@@ -39,7 +39,6 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.real.Real;
-import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.LifeEvent;
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
@@ -49,7 +48,7 @@ import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class LifeEventTile extends AbstractTile {
 
@@ -93,16 +92,20 @@ public class LifeEventTile extends AbstractTile {
 		return yGauge;
 	}
 
-	private StyleSignatureBasic getStyleSignature() {
+	private StyleSignature getStyleSignature() {
 		return ComponentType.DESTROY.getStyleSignature();
 	}
+
+    private Style[] getUsedStyle() {
+        final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
+		return new Style[] { style };
+    }	
 
 	public void drawU(UGraphic ug) {
 		if (YGauge.USE_ME)
 			ug = ug.apply(UTranslate.dy(getYGauge().getMin().getCurrentValue()));
 		if (isDestroyWithoutMessage()) {
-			final Style style = getStyleSignature().getMergedStyle(skinParam.getCurrentStyleBuilder());
-			final Component cross = skin.createComponent(new Style[] { style }, ComponentType.DESTROY, null, skinParam,
+			final Component cross = skin.createComponent(getUsedStyle(), ComponentType.DESTROY, null, skinParam,
 					null);
 			final XDimension2D dimCross = cross.getPreferredDimension(ug.getStringBounder());
 			final double x = livingSpace.getPosC(ug.getStringBounder()).getCurrentValue();
@@ -119,7 +122,7 @@ public class LifeEventTile extends AbstractTile {
 //			return 20;
 //		}
 		if (isDestroyWithoutMessage()) {
-			final Component cross = skin.createComponent(null, ComponentType.DESTROY, null, skinParam, null);
+			final Component cross = skin.createComponent(getUsedStyle(), ComponentType.DESTROY, null, skinParam, null);
 			final XDimension2D dimCross = cross.getPreferredDimension(getStringBounder());
 			return dimCross.getHeight();
 		}
