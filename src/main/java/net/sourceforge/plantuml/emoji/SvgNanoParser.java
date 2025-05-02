@@ -39,6 +39,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
@@ -74,7 +75,7 @@ public class SvgNanoParser implements Sprite {
 	private final List<String> data = new ArrayList<>();
 	private int minGray = 999;
 	private int maxGray = -1;
-	private final String svgStart;
+	private List<String> svg;
 	private final boolean keepColors;
 
 	private String extractData(String name, String s) {
@@ -100,24 +101,9 @@ public class SvgNanoParser implements Sprite {
 	}
 
 	public SvgNanoParser(List<String> svg, boolean keepColors) {
-		this.svgStart = svg.get(0);
+		this.svg = svg;
 		this.keepColors = keepColors;
 
-		for (String singleLine : svg) {
-			final Pattern p = Pattern
-					.compile("(\\<text .*?\\</text\\>)|(\\<(svg|path|g|circle|ellipse)[^<>]*\\>)|(\\</[^<>]*\\>)");
-			final Matcher m = p.matcher(singleLine);
-			while (m.find()) {
-				final String s = m.group(0);
-				if (s.startsWith("<path") || s.startsWith("<g ") || s.startsWith("<g>") || s.startsWith("</g>")
-						|| s.startsWith("<circle ") || s.startsWith("<ellipse ") || s.startsWith("<text "))
-					data.add(s);
-				else if (s.startsWith("<svg") || s.startsWith("</svg")) {
-					// Ignore
-				} else
-					System.err.println("???=" + s);
-			}
-		}
 	}
 
 	public void drawU(UGraphic ug, double scale, HColor colorForMonochrome) {
@@ -130,7 +116,7 @@ public class SvgNanoParser implements Sprite {
 
 		final List<UGraphicWithScale> stack = new ArrayList<>();
 		final Deque<String> stackG = new ArrayDeque<>();
-		for (String s : data) {
+		for (String s : getData()) {
 			if (s.startsWith("<path ")) {
 				drawPath(ugs, s, colorForMonochrome);
 			} else if (s.startsWith("</g>")) {
@@ -156,8 +142,29 @@ public class SvgNanoParser implements Sprite {
 		}
 	}
 
+	private synchronized Collection<String> getData() {
+		if (data.isEmpty()) {
+			for (String singleLine : svg) {
+				final Pattern p = Pattern
+						.compile("(\\<text .*?\\</text\\>)|(\\<(svg|path|g|circle|ellipse)[^<>]*\\>)|(\\</[^<>]*\\>)");
+				final Matcher m = p.matcher(singleLine);
+				while (m.find()) {
+					final String s = m.group(0);
+					if (s.startsWith("<path") || s.startsWith("<g ") || s.startsWith("<g>") || s.startsWith("</g>")
+							|| s.startsWith("<circle ") || s.startsWith("<ellipse ") || s.startsWith("<text "))
+						data.add(s);
+					else if (s.startsWith("<svg") || s.startsWith("</svg")) {
+						// Ignore
+					} else
+						System.err.println("???=" + s);
+				}
+			}
+		}
+		return Collections.unmodifiableCollection(data);
+	}
+
 	private void computeMinMaxGray() {
-		for (String s : data) {
+		for (String s : getData()) {
 			if (s.contains("<path ") || s.contains("<g ") || s.contains("<circle ") || s.contains("<ellipse ")) {
 				final HColor color = justExtractColor(s);
 				if (color != null) {
@@ -471,7 +478,7 @@ public class SvgNanoParser implements Sprite {
 	@Override
 	public TextBlock asTextBlock(final HColor color, final double scale) {
 
-		final UImageSvg data = new UImageSvg(svgStart, scale);
+		final UImageSvg data = new UImageSvg(svg.get(0), scale);
 		final double width = data.getWidth();
 		final double height = data.getHeight();
 
