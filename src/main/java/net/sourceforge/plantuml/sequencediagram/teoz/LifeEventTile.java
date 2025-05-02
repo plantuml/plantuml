@@ -123,7 +123,7 @@ public class LifeEventTile extends AbstractTile {
 //			return 20;
 //		}
 		if (isDestroyWithoutMessage()) {
-			final Component cross = skin.createComponent(null, ComponentType.DESTROY, null, skinParam, null);
+			final Component cross = skin.createComponent(getUsedStyle(), ComponentType.DESTROY, null, skinParam, null);
 			final XDimension2D dimCross = cross.getPreferredDimension(getStringBounder());
 			return dimCross.getHeight();
 		}
