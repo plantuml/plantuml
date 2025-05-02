@@ -35,7 +35,9 @@
  */
 package net.sourceforge.plantuml.skin;
 
+import net.sourceforge.plantuml.sequencediagram.LifeEventType;
 import net.sourceforge.plantuml.style.SName;
+import net.sourceforge.plantuml.style.StyleSignature;
 import net.sourceforge.plantuml.style.StyleSignatureBasic;
 import net.sourceforge.plantuml.style.Styleable;
 
@@ -70,7 +72,7 @@ public enum ComponentType implements Styleable {
 		return this == ARROW;
 	}
 
-	public StyleSignatureBasic getStyleSignature() {
+	public StyleSignature getStyleSignature() {
 		if (this == PARTICIPANT_HEAD || this == PARTICIPANT_TAIL)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.participant);
 
@@ -82,7 +84,7 @@ public enum ComponentType implements Styleable {
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine);
 
 		if (this == DESTROY)
-			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.lifeLine, SName.destroy);
+			return LifeEventType.DESTROY.getStyleSignature();
 
 		if (this == DIVIDER)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.separator);

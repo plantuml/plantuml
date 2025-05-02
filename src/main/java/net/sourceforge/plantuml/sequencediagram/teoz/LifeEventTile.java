@@ -39,7 +39,6 @@ import net.sourceforge.plantuml.klimt.UTranslate;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.geom.XDimension2D;
 import net.sourceforge.plantuml.real.Real;
-import net.sourceforge.plantuml.real.RealUtils;
 import net.sourceforge.plantuml.sequencediagram.Event;
 import net.sourceforge.plantuml.sequencediagram.LifeEvent;
 import net.sourceforge.plantuml.sequencediagram.LifeEventType;
@@ -49,7 +48,7 @@ import net.sourceforge.plantuml.skin.Context2D;
 import net.sourceforge.plantuml.skin.rose.Rose;
 import net.sourceforge.plantuml.style.ISkinParam;
 import net.sourceforge.plantuml.style.Style;
-import net.sourceforge.plantuml.style.StyleSignatureBasic;
+import net.sourceforge.plantuml.style.StyleSignature;
 
 public class LifeEventTile extends AbstractTile {
 
@@ -93,7 +92,7 @@ public class LifeEventTile extends AbstractTile {
 		return yGauge;
 	}
 
-	private StyleSignatureBasic getStyleSignature() {
+	private StyleSignature getStyleSignature() {
 		return ComponentType.DESTROY.getStyleSignature();
 	}
 
