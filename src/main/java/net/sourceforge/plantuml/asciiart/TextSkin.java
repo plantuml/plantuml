@@ -165,7 +165,7 @@ public class TextSkin extends Rose {
 	}
 
 	@Override
-	public Component createComponentNewPage(ISkinParam param) {
+	public Component createComponentNewPage(Style[] styles, ISkinParam param) {
 		return new ComponentTextNewpage(fileFormat);
 	}
 
