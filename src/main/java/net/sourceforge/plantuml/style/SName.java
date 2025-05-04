@@ -113,6 +113,7 @@ public enum SName {
 	mindmapDiagram, //
 	month, //
 	network, //
+	newpage, //
 	node, //
 	note, //
 	nwdiagDiagram, //

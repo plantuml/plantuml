@@ -92,6 +92,9 @@ public enum ComponentType implements Styleable {
 		if (this == ENGLOBER)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.box);
 
+		if (this == NEWPAGE)
+			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.newpage);
+
 		if (this == NOTE)
 			return StyleSignatureBasic.of(SName.root, SName.element, SName.sequenceDiagram, SName.note);
 

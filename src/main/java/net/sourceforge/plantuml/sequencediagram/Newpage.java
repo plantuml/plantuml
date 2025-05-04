@@ -36,13 +36,29 @@
 package net.sourceforge.plantuml.sequencediagram;
 
 import net.sourceforge.plantuml.klimt.creole.Display;
+import net.sourceforge.plantuml.skin.ComponentType;
+import net.sourceforge.plantuml.style.Style;
+import net.sourceforge.plantuml.style.StyleBuilder;
+import net.sourceforge.plantuml.style.StyleSignature;
+import net.sourceforge.plantuml.style.WithStyle;
 
-public class Newpage extends AbstractEvent implements Event {
+public class Newpage extends AbstractEvent implements Event, WithStyle {
 
 	private final Display title;
 
-	public Newpage(Display strings) {
+	final private Style style;
+
+	public StyleSignature getStyleSignature() {
+		return ComponentType.NEWPAGE.getStyleSignature();
+	}
+
+	public Style[] getUsedStyles() {
+		return new Style[] { style };
+	}
+
+	public Newpage(Display strings, StyleBuilder styleBuilder) {
 		this.title = strings;
+		this.style = getStyleSignature().getMergedStyle(styleBuilder);
 	}
 
 	public final Display getTitle() {

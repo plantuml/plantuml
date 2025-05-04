@@ -167,7 +167,7 @@ class DrawableSetInitializer {
 			final double diffY = freeY2.getFreeY(range) - lastFreeY2.getFreeY(range);
 			// final double diffY = freeY2.diff(lastFreeY2);
 			if (autonewpage > 0 && diffY > 0 && diffY + getTotalHeight(0, stringBounder) > autonewpage)
-				prepareNewpageSpecial(stringBounder, new Newpage(null), ev, range);
+				prepareNewpageSpecial(stringBounder, new Newpage(null, null), ev, range);
 
 			if (ev instanceof MessageExo)
 				prepareMessageExo(stringBounder, (MessageExo) ev, range);
