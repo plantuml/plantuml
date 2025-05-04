@@ -210,13 +210,20 @@ public class SvgPath {
 				final SvgPosition ctl = move.getSvgPosition(0);
 				result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));
 			} else if (letter == 'T') {
-				if (previous.getLetter() != 'Q')
-					throw new IllegalArgumentException();
-				// https://stackoverflow.com/questions/5287559/calculating-control-points-for-a-shorthand-smooth-svg-path-bezier-curve
-				final SvgPosition lastCtl = previous.getSvgPosition(0);
-				final SvgPosition lastP = previous.lastPosition();
-				final SvgPosition ctl = lastP.getMirror(lastCtl);
-				result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));
+				if (previous.getLetter() == 'Q') {
+					// https://stackoverflow.com/questions/5287559/calculating-control-points-for-a-shorthand-smooth-svg-path-bezier-curve
+					final SvgPosition lastCtl = previous.getSvgPosition(0);
+					final SvgPosition lastP = previous.lastPosition();
+					final SvgPosition ctl = lastP.getMirror(lastCtl);
+					result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));
+				} else if (previous.getLetter() == 'T') {
+					// Same logic as for Q followed by T: reflect the previous control point
+					final SvgPosition lastCtl = previous.getSvgPosition(0);
+					final SvgPosition lastP = previous.lastPosition();
+					final SvgPosition ctl = lastP.getMirror(lastCtl);
+					result.cubicTo(ctl.affine(at), ctl.affine(at), position.affine(at));
+				} else
+					throw new IllegalArgumentException("" + previous.getLetter());
 			} else if (letter == 'L') {
 				result.lineTo(position.affine(at));
 			} else if (letter == 'A') {
