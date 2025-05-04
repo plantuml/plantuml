@@ -185,7 +185,9 @@ public class SvgNanoParser implements Sprite {
 
 	private UGraphicWithScale applyFill(UGraphicWithScale ugs, String s, HColor colorForMonochrome) {
 		final String fillString = getTextFontColor(s, null);
-		if (fillString == null) {
+		if (fillString == null && colorForMonochrome == null) {
+			ugs = ugs.apply(HColors.BLACK).apply(HColors.BLACK.bg());
+		} else if (fillString == null) {
 			ugs = ugs.apply(colorForMonochrome).apply(colorForMonochrome.bg());
 		} else if (fillString != null && fillString.equals("none")) {
 			final String strokeString = extractData("stroke", s);
