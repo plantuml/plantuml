@@ -185,10 +185,9 @@ public class SvgNanoParser implements Sprite {
 
 	private UGraphicWithScale applyFill(UGraphicWithScale ugs, String s, HColor colorForMonochrome) {
 		final String fillString = getTextFontColor(s, null);
-		if (fillString == null)
-			return ugs;
-
-		if (fillString.equals("none")) {
+		if (fillString == null) {
+			ugs = ugs.apply(colorForMonochrome).apply(colorForMonochrome.bg());
+		} else if (fillString != null && fillString.equals("none")) {
 			final String strokeString = extractData("stroke", s);
 			if (strokeString == null)
 				return ugs;
@@ -485,7 +484,7 @@ public class SvgNanoParser implements Sprite {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				SvgNanoParser.this.drawU(ug, scale, keepColors ? null : color);
+				SvgNanoParser.this.drawU(ug, scale, color);
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {
