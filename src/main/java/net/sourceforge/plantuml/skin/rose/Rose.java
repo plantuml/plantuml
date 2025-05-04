@@ -276,7 +276,7 @@ public class Rose {
 
 	public Component createComponentNewPage(Style[] styles, ISkinParam param) {
 		checkRose();
-		return new ComponentRoseNewpage(styles[0], getHtmlColor(param, ColorParam.sequenceNewpageSeparator), param);
+		return new ComponentRoseNewpage(styles[0], param);
 	}
 
 	public ArrowComponent createComponentArrow(Style[] styles, ArrowConfiguration config, ISkinParam param,
