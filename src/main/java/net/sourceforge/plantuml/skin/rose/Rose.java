@@ -274,9 +274,9 @@ public class Rose {
 		return style.value(PName.MinimumWidth).asDouble();
 	}
 
-	public Component createComponentNewPage(ISkinParam param) {
+	public Component createComponentNewPage(Style[] styles, ISkinParam param) {
 		checkRose();
-		return new ComponentRoseNewpage(null, getHtmlColor(param, ColorParam.sequenceNewpageSeparator), param);
+		return new ComponentRoseNewpage(styles[0], param);
 	}
 
 	public ArrowComponent createComponentArrow(Style[] styles, ArrowConfiguration config, ISkinParam param,

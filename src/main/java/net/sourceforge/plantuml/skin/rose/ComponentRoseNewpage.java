@@ -44,15 +44,16 @@ import net.sourceforge.plantuml.skin.AbstractComponent;
 import net.sourceforge.plantuml.skin.Area;
 import net.sourceforge.plantuml.skin.ArrowConfiguration;
 import net.sourceforge.plantuml.style.ISkinParam;
+import net.sourceforge.plantuml.style.PName;
 import net.sourceforge.plantuml.style.Style;
 
 public class ComponentRoseNewpage extends AbstractComponent {
 
 	private final HColor foregroundColor;
 
-	public ComponentRoseNewpage(Style style, HColor foregroundColor, ISkinParam skinParam) {
+	public ComponentRoseNewpage(Style style, ISkinParam skinParam) {
 		super(style, skinParam);
-		this.foregroundColor = foregroundColor;
+		this.foregroundColor = style.value(PName.LineColor).asColor(getIHtmlColorSet());
 	}
 
 	@Override
