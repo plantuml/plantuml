@@ -2,7 +2,8 @@ package net.sourceforge.plantuml.tim.builtin;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -28,49 +29,63 @@ public class GetVariableValueTest {
         for (Map.Entry<String, TValue> entry : memoryData.entrySet()) {
             memoryGlobal.putVariable(entry.getKey(), entry.getValue(), TVariableScope.GLOBAL, null);
         }
-        String resultGlobal = getVariableValueFunction.executeReturnFunction(null, memoryGlobal, null, List.of(TValue.fromString(input)), null).toString();
+        String resultGlobal = getVariableValueFunction.executeReturnFunction(null, memoryGlobal, null, Arrays.asList(TValue.fromString(input)), null).toString();
         assertEquals(expected, resultGlobal);
 
         // Local memory
         TMemoryLocal memoryLocal = new TMemoryLocal(new TMemoryGlobal(), memoryData);
-        String resultLocal = getVariableValueFunction.executeReturnFunction(null, memoryLocal, null, List.of(TValue.fromString(input)), null).toString();
+        String resultLocal = getVariableValueFunction.executeReturnFunction(null, memoryLocal, null, Arrays.asList(TValue.fromString(input)), null).toString();
         assertEquals(expected, resultLocal);
     }
 
     public static Stream<Arguments> provideTestCasesForGetVariableValue() {
         return Stream.of(
             Arguments.of(
-                Map.of(),
+                new HashMap<>(),
                 "xxx",
                 ""
             ),
             Arguments.of(
-                Map.of("xxx", TValue.fromString("aaa")),
+                new HashMap<String, TValue>() {{
+                    put("xxx", TValue.fromString("aaa"));
+                }},
                 "xxx",
                 "aaa"
             ),
             Arguments.of(
-                Map.of("xxx", TValue.fromString("aaa")),
+                new HashMap<String, TValue>() {{
+                    put("xxx", TValue.fromString("aaa"));
+                }},
                 "yyy",
                 ""
             ),
             Arguments.of(
-                Map.of("xxx", TValue.fromString("aaa"), "yyy", TValue.fromString("bbb")),
+                new HashMap<String, TValue>() {{
+                    put("xxx", TValue.fromString("aaa"));
+                    put("yyy", TValue.fromString("bbb"));
+                }},
                 "xxx",
                 "aaa"
             ),
             Arguments.of(
-                Map.of("xxx", TValue.fromString("aaa"), "yyy", TValue.fromString("bbb")),
+                new HashMap<String, TValue>() {{
+                    put("xxx", TValue.fromString("aaa"));
+                    put("yyy", TValue.fromString("bbb"));
+                }},
                 "zzz",
                 ""
             ),
             Arguments.of(
-                Map.of("xxx", TValue.fromString("aaa")),
+                new HashMap<String, TValue>() {{
+                    put("xxx", TValue.fromString("aaa"));
+                }},
                 "",
                 ""
             ),
             Arguments.of(
-                Map.of("", TValue.fromString("ddd")),
+                new HashMap<String, TValue>() {{
+                    put("", TValue.fromString("ddd"));
+                }},
                 "",
                 "ddd"
             )

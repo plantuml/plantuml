@@ -2,8 +2,9 @@ package net.sourceforge.plantuml.tim.builtin;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+import java.util.HashMap;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -23,7 +24,7 @@ public class SetVariableValueTest {
     })
     public void testSetVariableValue(String inputKey, String inputValue) throws EaterException {
         SetVariableValue setVariableValueFunction = new SetVariableValue();
-        List<TValue> args = List.of(TValue.fromString(inputKey), TValue.fromString(inputValue));
+        List<TValue> args = Arrays.asList(TValue.fromString(inputKey), TValue.fromString(inputValue));
 
         // Global memory
         TMemoryGlobal memoryGlobal = new TMemoryGlobal();
@@ -32,7 +33,7 @@ public class SetVariableValueTest {
         assertEquals(inputValue, memoryGlobal.getVariable(inputKey).toString());
 
         // Local memory
-        TMemoryLocal memoryLocal = new TMemoryLocal(new TMemoryGlobal(), Map.of());
+        TMemoryLocal memoryLocal = new TMemoryLocal(new TMemoryGlobal(), new HashMap<>());
         TValue resultLocal = setVariableValueFunction.executeReturnFunction(null, memoryLocal, null, args, null);
         assertEquals("", resultLocal.toString());
         assertEquals(inputValue, memoryLocal.getVariable(inputKey).toString());
