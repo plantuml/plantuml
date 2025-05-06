@@ -84,7 +84,7 @@ public class SingleLine extends AbstractTextBlock implements Line {
 			} else if (cmd instanceof SpriteCommand) {
 				final Sprite sprite = spriteContainer.getSprite(((SpriteCommand) cmd).getSprite());
 				if (sprite != null)
-					result.blocs.add(sprite.asTextBlock(fontConfiguration.getColor(), 1));
+					result.blocs.add(sprite.asTextBlock(fontConfiguration.getColor(), null, 1));
 
 			} else if (cmd instanceof FontChange) {
 				fontConfiguration = ((FontChange) cmd).apply(fontConfiguration);

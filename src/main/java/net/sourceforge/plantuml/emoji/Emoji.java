@@ -129,7 +129,7 @@ public class Emoji {
 			final String singleLine = br.readLine();
 			data.add(singleLine);
 		}
-		this.nano = new SvgNanoParser(data, false);
+		this.nano = new SvgNanoParser(data);
 	}
 
 	public void drawU(UGraphic ug, double scale, HColor colorForMonochrome) {

@@ -39,6 +39,10 @@ import java.awt.geom.AffineTransform;
 
 import net.sourceforge.plantuml.klimt.UChange;
 import net.sourceforge.plantuml.klimt.UShape;
+import net.sourceforge.plantuml.klimt.color.HColor;
+import net.sourceforge.plantuml.klimt.color.HColorSet;
+import net.sourceforge.plantuml.klimt.color.HColorSimple;
+import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 
 public class UGraphicWithScale {
@@ -47,13 +51,26 @@ public class UGraphicWithScale {
 	final private AffineTransform at;
 	final private double angle;
 	final private double scale;
+	final private HColor forcedColor;
+	final private int minGray;
+	final private int maxGray;
 
-	public UGraphicWithScale(UGraphic ug, double scale) {
-		this(ug, AffineTransform.getScaleInstance(scale, scale), 0, scale);
+	public UGraphicWithScale(UGraphic ug, HColor forcedColor, double scale, int minGray, int maxGray) {
+		this(updateColor(ug, forcedColor), forcedColor, AffineTransform.getScaleInstance(scale, scale), 0, scale,
+				minGray, maxGray);
 	}
 
-	private UGraphicWithScale(UGraphic ug, AffineTransform at, double angle, double scale) {
+	private static UGraphic updateColor(UGraphic ug, HColor forcedColor) {
+		final HColor color = forcedColor == null ? HColors.BLACK : forcedColor;
+		return ug.apply(color).apply(color.bg());
+	}
+
+	private UGraphicWithScale(UGraphic ug, HColor forcedColor, AffineTransform at, double angle, double scale,
+			int minGray, int maxGray) {
 		this.ug = ug;
+		this.forcedColor = forcedColor;
+		this.minGray = minGray;
+		this.maxGray = maxGray;
 		this.at = at;
 		this.angle = angle;
 		this.scale = scale;
@@ -64,7 +81,17 @@ public class UGraphicWithScale {
 	}
 
 	public UGraphicWithScale apply(UChange change) {
-		return new UGraphicWithScale(ug.apply(change), at, angle, scale);
+		return new UGraphicWithScale(ug.apply(change), forcedColor, at, angle, scale, minGray, maxGray);
+	}
+
+	public HColor getTrueColor(String code) {
+		final HColorSimple result = (HColorSimple) HColorSet.instance().getColorOrWhite(code);
+		if (forcedColor == null)
+			return result;
+		final HColorSimple color = (HColorSimple) forcedColor;
+		if (color.isGray())
+			return result.asMonochrome();
+		return result.asMonochrome(color, this.minGray, this.maxGray);
 	}
 
 	public UGraphicWithScale applyScale(double changex, double changey) {
@@ -72,7 +99,7 @@ public class UGraphicWithScale {
 			throw new IllegalArgumentException();
 		final AffineTransform copy = new AffineTransform(at);
 		copy.scale(changex, changey);
-		return new UGraphicWithScale(ug, copy, angle, 1 * changex);
+		return new UGraphicWithScale(ug, forcedColor, copy, angle, 1 * changex, minGray, maxGray);
 	}
 
 	public void draw(UShape shape) {
@@ -82,13 +109,13 @@ public class UGraphicWithScale {
 	public UGraphicWithScale applyRotate(double delta_angle, double x, double y) {
 		final AffineTransform copy = new AffineTransform(at);
 		copy.rotate(delta_angle * Math.PI / 180, x, y);
-		return new UGraphicWithScale(ug, copy, this.angle + delta_angle, this.scale);
+		return new UGraphicWithScale(ug, forcedColor, copy, this.angle + delta_angle, this.scale, minGray, maxGray);
 	}
 
 	public UGraphicWithScale applyTranslate(double x, double y) {
 		final AffineTransform copy = new AffineTransform(at);
 		copy.translate(x, y);
-		return new UGraphicWithScale(ug, copy, angle, this.scale);
+		return new UGraphicWithScale(ug, forcedColor, copy, angle, this.scale, minGray, maxGray);
 	}
 
 	public AffineTransform getAffineTransform() {
@@ -98,7 +125,7 @@ public class UGraphicWithScale {
 	public UGraphicWithScale applyMatrix(double v1, double v2, double v3, double v4, double v5, double v6) {
 		final AffineTransform copy = new AffineTransform(at);
 		copy.concatenate(new AffineTransform(new double[] { v1, v2, v3, v4, v5, v6 }));
-		return new UGraphicWithScale(ug, copy, angle, this.scale);
+		return new UGraphicWithScale(ug, forcedColor, copy, angle, this.scale, minGray, maxGray);
 	}
 
 	public final double getAngle() {

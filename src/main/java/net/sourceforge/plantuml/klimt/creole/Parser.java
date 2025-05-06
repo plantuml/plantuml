@@ -78,7 +78,7 @@ public class Parser {
 		if (s == null)
 			return null;
 
-		final Pattern p = Pattern.compile("color[= :](#[0-9a-fA-F]{6}|\\w+)");
+		final Pattern p = Pattern.compile("color[= :](#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3}|\\w+)");
 		final Matcher m = p.matcher(s);
 		if (m.find())
 			return m.group(1);

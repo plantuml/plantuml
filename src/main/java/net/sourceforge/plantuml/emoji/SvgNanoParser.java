@@ -53,7 +53,6 @@ import net.sourceforge.plantuml.klimt.color.ColorMapper;
 import net.sourceforge.plantuml.klimt.color.ColorUtils;
 import net.sourceforge.plantuml.klimt.color.HColor;
 import net.sourceforge.plantuml.klimt.color.HColorSet;
-import net.sourceforge.plantuml.klimt.color.HColorSimple;
 import net.sourceforge.plantuml.klimt.color.HColors;
 import net.sourceforge.plantuml.klimt.drawing.UGraphic;
 import net.sourceforge.plantuml.klimt.font.FontConfiguration;
@@ -76,7 +75,6 @@ public class SvgNanoParser implements Sprite {
 	private int minGray = 999;
 	private int maxGray = -1;
 	private List<String> svg;
-	private final boolean keepColors;
 
 	private String extractData(String name, String s) {
 		final Pattern p = Pattern.compile(name + "=\"([^\"]+)\"");
@@ -96,29 +94,28 @@ public class SvgNanoParser implements Sprite {
 		return null;
 	}
 
-	public SvgNanoParser(String svg, boolean keepColors) {
-		this(Collections.singletonList(svg), keepColors);
+	public SvgNanoParser(String svg) {
+		this(Collections.singletonList(svg));
 	}
 
-	public SvgNanoParser(List<String> svg, boolean keepColors) {
+	public SvgNanoParser(List<String> svg) {
 		this.svg = svg;
-		this.keepColors = keepColors;
 
 	}
 
-	public void drawU(UGraphic ug, double scale, HColor colorForMonochrome) {
-		UGraphicWithScale ugs = new UGraphicWithScale(ug, scale);
-
+	public void drawU(UGraphic ug, double scale, HColor forcedColor) {
 		synchronized (this) {
-			if (colorForMonochrome != null && maxGray == -1)
+			if (forcedColor != null && maxGray == -1)
 				computeMinMaxGray();
 		}
+
+		UGraphicWithScale ugs = new UGraphicWithScale(ug, forcedColor, scale, minGray, maxGray);
 
 		final List<UGraphicWithScale> stack = new ArrayList<>();
 		final Deque<String> stackG = new ArrayDeque<>();
 		for (String s : getData()) {
 			if (s.startsWith("<path ")) {
-				drawPath(ugs, s, colorForMonochrome);
+				drawPath(ugs, s, stackG);
 			} else if (s.startsWith("</g>")) {
 				ugs = stack.remove(0);
 				stackG.removeFirst();
@@ -128,14 +125,14 @@ public class SvgNanoParser implements Sprite {
 			} else if (s.startsWith("<g ")) {
 				stack.add(0, ugs);
 				stackG.addFirst(s);
-				ugs = applyFill(ugs, s, colorForMonochrome);
+				ugs = applyFill(ugs, s, stackG);
 				ugs = applyTransform(ugs, s);
 			} else if (s.startsWith("<circle ")) {
-				drawCircle(ugs, s, colorForMonochrome);
+				drawCircle(ugs, s, stackG);
 			} else if (s.startsWith("<ellipse ")) {
-				drawEllipse(ugs, s, colorForMonochrome);
+				drawEllipse(ugs, s, stackG);
 			} else if (s.startsWith("<text ")) {
-				drawText(ugs, s, colorForMonochrome, stackG);
+				drawText(ugs, s, stackG);
 			} else {
 				System.err.println("**?=" + s);
 			}
@@ -183,17 +180,17 @@ public class SvgNanoParser implements Sprite {
 		return tmp.getGreen();
 	}
 
-	private UGraphicWithScale applyFill(UGraphicWithScale ugs, String s, HColor colorForMonochrome) {
-		final String fillString = getTextFontColor(s, null);
-		if (fillString == null)
+	private UGraphicWithScale applyFill(UGraphicWithScale ugs, String s, Deque<String> stackG) {
+		String fillString = getTextFontColor(s, null);
+		
+		if (fillString == null) {
 			return ugs;
-
-		if (fillString.equals("none")) {
+		} else if (fillString.equals("none")) {
 			final String strokeString = extractData("stroke", s);
 			if (strokeString == null)
 				return ugs;
 			ugs = ugs.apply(HColors.none().bg());
-			final HColor stroke = getTrueColor(strokeString, colorForMonochrome);
+			final HColor stroke = ugs.getTrueColor(strokeString);
 			ugs = ugs.apply(stroke);
 			final String strokeWidth = extractData("stroke-width", s);
 			if (strokeWidth != null) {
@@ -202,7 +199,7 @@ public class SvgNanoParser implements Sprite {
 			}
 
 		} else {
-			final HColor fill = getTrueColor(fillString, colorForMonochrome);
+			final HColor fill = ugs.getTrueColor(fillString);
 			ugs = ugs.apply(fill).apply(fill.bg());
 		}
 
@@ -219,28 +216,19 @@ public class SvgNanoParser implements Sprite {
 			if (strokeString == null)
 				return null;
 
-			final HColor stroke = getTrueColor(strokeString, null);
+			final HColor stroke = HColorSet.instance().getColorOrWhite(strokeString);
 			return stroke;
 
 		} else {
-			final HColor fill = getTrueColor(fillString, null);
+			final HColor fill = HColorSet.instance().getColorOrWhite(fillString);
 			return fill;
 		}
 
 	}
 
-	private HColor getTrueColor(String code, HColor colorForMonochrome) {
-		final HColorSimple result = (HColorSimple) HColorSet.instance().getColorOrWhite(code);
-		if (colorForMonochrome == null)
-			return result;
-		final HColorSimple color = (HColorSimple) colorForMonochrome;
-		if (color.isGray())
-			return result.asMonochrome();
-		return result.asMonochrome(color, this.minGray, this.maxGray);
-	}
 
-	private void drawCircle(UGraphicWithScale ugs, String s, HColor colorForMonochrome) {
-		ugs = applyFill(ugs, s, colorForMonochrome);
+	private void drawCircle(UGraphicWithScale ugs, String s, Deque<String> stackG) {
+		ugs = applyFill(ugs, s, stackG);
 		ugs = applyTransform(ugs, s);
 
 		final double scalex = ugs.getAffineTransform().getScaleX();
@@ -258,9 +246,9 @@ public class SvgNanoParser implements Sprite {
 		ugs.apply(translate).draw(UEllipse.build(rx * 2, ry * 2));
 	}
 
-	private void drawEllipse(UGraphicWithScale ugs, String s, HColor colorForMonochrome) {
+	private void drawEllipse(UGraphicWithScale ugs, String s, Deque<String> stackG) {
 		final boolean debug = false;
-		ugs = applyFill(ugs, s, colorForMonochrome);
+		ugs = applyFill(ugs, s, stackG);
 		ugs = applyTransform(ugs, s);
 
 		final double cx = Double.parseDouble(extractData("cx", s));
@@ -300,7 +288,7 @@ public class SvgNanoParser implements Sprite {
 
 	}
 
-	private void drawText(UGraphicWithScale ugs, String s, HColor colorForMonochrome, Deque<String> stackG) {
+	private void drawText(UGraphicWithScale ugs, String s, Deque<String> stackG) {
 		final double x = Double.parseDouble(extractData("x", s));
 		final double y = Double.parseDouble(extractData("y", s));
 		final String fontColor = getTextFontColor(s, stackG);
@@ -375,9 +363,9 @@ public class SvgNanoParser implements Sprite {
 		return Integer.parseInt(fontSize);
 	}
 
-	private void drawPath(UGraphicWithScale ugs, String s, HColor colorForMonochrome) {
+	private void drawPath(UGraphicWithScale ugs, String s, Deque<String> stackG) {
 		s = s.replace("id=\"", "ID=\"");
-		ugs = applyFill(ugs, s, colorForMonochrome);
+		ugs = applyFill(ugs, s, stackG);
 		ugs = applyTransform(ugs, s);
 
 		final int x1 = s.indexOf("d=\"");
@@ -476,7 +464,7 @@ public class SvgNanoParser implements Sprite {
 	}
 
 	@Override
-	public TextBlock asTextBlock(final HColor color, final double scale) {
+	public TextBlock asTextBlock(final HColor fontColor, final HColor forcedColor, final double scale) {
 
 		final UImageSvg data = new UImageSvg(svg.get(0), scale);
 		final double width = data.getWidth();
@@ -485,7 +473,7 @@ public class SvgNanoParser implements Sprite {
 		return new AbstractTextBlock() {
 
 			public void drawU(UGraphic ug) {
-				SvgNanoParser.this.drawU(ug, scale, keepColors ? null : color);
+				SvgNanoParser.this.drawU(ug, scale, forcedColor);
 			}
 
 			public XDimension2D calculateDimension(StringBounder stringBounder) {

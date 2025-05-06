@@ -64,7 +64,7 @@ public class CommandSpriteSvg extends SingleLineCommand2<TitledDiagram> {
 	@Override
 	protected CommandExecutionResult executeArg(TitledDiagram system, LineLocation location, RegexResult arg, ParserPass currentPass) {
 		final String svg = arg.get("SVG", 0);
-		final SvgNanoParser nanoParser = new SvgNanoParser(svg, true);
+		final SvgNanoParser nanoParser = new SvgNanoParser(svg);
 		system.addSprite(arg.get("NAME", 0), nanoParser);
 
 		return CommandExecutionResult.ok();

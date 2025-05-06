@@ -260,10 +260,11 @@ public class StripeSimple implements Stripe {
 		atoms.add(AtomTextUtils.createUrl(url, fontConfiguration, skinParam));
 	}
 
-	public void addSprite(String src, double scale, HColor color) {
+	public void addSprite(String src, double scale, HColor forcedColor) {
 		final Sprite sprite = skinParam.getSprite(src);
 		if (sprite != null)
-			atoms.add(new AtomSprite(color, scale, fontConfiguration, sprite, null));
+			atoms.add(new AtomSprite(fontConfiguration.getColor(), forcedColor, scale, sprite, null));
+
 	}
 
 	public void addOpenIcon(String src, double scale, HColor color) {

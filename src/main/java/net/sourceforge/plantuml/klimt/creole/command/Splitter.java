@@ -68,7 +68,7 @@ public class Splitter {
 	private static final String scale = "(" + //
 			"[\\{,]?" + //
 			"(?:(?:scale=|\\*)[0-9.]+)?" + //
-			"(?:,color[= :](?:#[0-9a-fA-F]{6}|\\w+))?" + //
+			"(?:,color[= :](?:#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3}|\\w+))?" + //
 			"\\}?" + //
 			")?";
 
