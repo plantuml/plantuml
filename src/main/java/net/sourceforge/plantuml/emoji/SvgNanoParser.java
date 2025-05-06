@@ -71,22 +71,51 @@ import net.sourceforge.plantuml.openiconic.SvgPath;
 // Shorcut from https://api.github.com/emojis
 
 public class SvgNanoParser implements Sprite {
+
+	private static final Pattern P_TEXT_OR_DRAW = Pattern
+			.compile("(\\<text .*?\\</text\\>)|(\\<(svg|path|g|circle|ellipse)[^<>]*\\>)|(\\</[^<>]*\\>)");
+
+	private static final Pattern P_TEXT = Pattern.compile("\\<text[^<>]*\\>(.*?)\\</text\\>");
+	private static final Pattern P_FONT_SIZE = Pattern.compile("^(\\d+)p[tx]$");
+
+	private static final Pattern P_MATRIX = Pattern.compile(
+			"matrix\\(([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)\\)");
+
+	private static final Pattern P_ROTATE = Pattern.compile("rotate\\(([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)\\)");
+
+	private static final Pattern P_TRANSLATE1 = Pattern.compile("translate\\(([-.0-9]+)[ ,]+([-.0-9]+)\\)");
+	private static final Pattern P_TRANSLATE2 = Pattern.compile("translate\\(([-.0-9]+)\\)");
+
+	private static final Pattern P_SCALE1 = Pattern.compile("scale\\(([-.0-9]+)\\)");
+	private static final Pattern P_SCALE2 = Pattern.compile("scale\\(([-.0-9]+)[ ,]+([-.0-9]+)\\)");
+
+	private static final String equals_something = "=\"([^\"]+)\"";
+	private static final Pattern DATA_CX = Pattern.compile("cx" + equals_something);
+	private static final Pattern DATA_CY = Pattern.compile("cy" + equals_something);
+	private static final Pattern DATA_FILL = Pattern.compile("fill" + equals_something);
+	private static final Pattern DATA_FONT_FAMILY = Pattern.compile("font-family" + equals_something);
+	private static final Pattern DATA_FONT_SIZE = Pattern.compile("font-size" + equals_something);
+	private static final Pattern DATA_R = Pattern.compile("r" + equals_something);
+	private static final Pattern DATA_RX = Pattern.compile("rx" + equals_something);
+	private static final Pattern DATA_RY = Pattern.compile("ry" + equals_something);
+	private static final Pattern DATA_STROKE = Pattern.compile("stroke" + equals_something);
+	private static final Pattern DATA_STROKE_WIDTH = Pattern.compile("stroke-width" + equals_something);
+	private static final Pattern DATA_STYLE = Pattern.compile("style" + equals_something);
+	private static final Pattern DATA_TRANSFORM = Pattern.compile("transform" + equals_something);
+	private static final Pattern DATA_X = Pattern.compile("x" + equals_something);
+	private static final Pattern DATA_Y = Pattern.compile("y" + equals_something);
+
+	private static final String colon_something = ":([^;\"]+)";
+	private static final Pattern STYLE_FILL = Pattern.compile(Pattern.quote("fill") + colon_something);
+	private static final Pattern STYLE_FONT_SIZE = Pattern.compile(Pattern.quote("font-size") + colon_something);
+	private static final Pattern STYLE_FONT_FAMILY = Pattern.compile(Pattern.quote("font-family") + colon_something);
+
 	private final List<String> data = new ArrayList<>();
 	private int minGray = 999;
 	private int maxGray = -1;
 	private List<String> svg;
 
-	private String extractData(String name, String s) {
-		final Pattern p = Pattern.compile(name + "=\"([^\"]+)\"");
-		final Matcher m = p.matcher(s);
-		if (m.find())
-			return m.group(1);
-
-		return null;
-	}
-
-	private String extractDataStyle(String name, String s) {
-		final Pattern p = Pattern.compile(Pattern.quote(name) + ":([^;\"]+)");
+	private String extract(Pattern p, String s) {
 		final Matcher m = p.matcher(s);
 		if (m.find())
 			return m.group(1);
@@ -142,9 +171,7 @@ public class SvgNanoParser implements Sprite {
 	private synchronized Collection<String> getData() {
 		if (data.isEmpty()) {
 			for (String singleLine : svg) {
-				final Pattern p = Pattern
-						.compile("(\\<text .*?\\</text\\>)|(\\<(svg|path|g|circle|ellipse)[^<>]*\\>)|(\\</[^<>]*\\>)");
-				final Matcher m = p.matcher(singleLine);
+				final Matcher m = P_TEXT_OR_DRAW.matcher(singleLine);
 				while (m.find()) {
 					final String s = m.group(0);
 					if (s.startsWith("<path") || s.startsWith("<g ") || s.startsWith("<g>") || s.startsWith("</g>")
@@ -182,17 +209,17 @@ public class SvgNanoParser implements Sprite {
 
 	private UGraphicWithScale applyFill(UGraphicWithScale ugs, String s, Deque<String> stackG) {
 		String fillString = getTextFontColor(s, null);
-		
+
 		if (fillString == null) {
 			return ugs;
 		} else if (fillString.equals("none")) {
-			final String strokeString = extractData("stroke", s);
+			final String strokeString = extract(DATA_STROKE, s);
 			if (strokeString == null)
 				return ugs;
 			ugs = ugs.apply(HColors.none().bg());
 			final HColor stroke = ugs.getTrueColor(strokeString);
 			ugs = ugs.apply(stroke);
-			final String strokeWidth = extractData("stroke-width", s);
+			final String strokeWidth = extract(DATA_STROKE_WIDTH, s);
 			if (strokeWidth != null) {
 				final double scale = ugs.getScale();
 				ugs = ugs.apply(UStroke.withThickness(scale * Double.parseDouble(strokeWidth)));
@@ -212,7 +239,7 @@ public class SvgNanoParser implements Sprite {
 			return null;
 
 		if (fillString.equals("none")) {
-			final String strokeString = extractData("stroke", s);
+			final String strokeString = extract(DATA_STROKE, s);
 			if (strokeString == null)
 				return null;
 
@@ -226,7 +253,6 @@ public class SvgNanoParser implements Sprite {
 
 	}
 
-
 	private void drawCircle(UGraphicWithScale ugs, String s, Deque<String> stackG) {
 		ugs = applyFill(ugs, s, stackG);
 		ugs = applyTransform(ugs, s);
@@ -237,10 +263,10 @@ public class SvgNanoParser implements Sprite {
 		final double deltax = ugs.getAffineTransform().getTranslateX();
 		final double deltay = ugs.getAffineTransform().getTranslateY();
 
-		final double cx = Double.parseDouble(extractData("cx", s)) * scalex;
-		final double cy = Double.parseDouble(extractData("cy", s)) * scaley;
-		final double rx = Double.parseDouble(extractData("r", s)) * scalex;
-		final double ry = Double.parseDouble(extractData("r", s)) * scaley;
+		final double cx = Double.parseDouble(extract(DATA_CX, s)) * scalex;
+		final double cy = Double.parseDouble(extract(DATA_CY, s)) * scaley;
+		final double rx = Double.parseDouble(extract(DATA_R, s)) * scalex;
+		final double ry = Double.parseDouble(extract(DATA_R, s)) * scaley;
 
 		final UTranslate translate = new UTranslate(deltax + cx - rx, deltay + cy - ry);
 		ugs.apply(translate).draw(UEllipse.build(rx * 2, ry * 2));
@@ -251,10 +277,10 @@ public class SvgNanoParser implements Sprite {
 		ugs = applyFill(ugs, s, stackG);
 		ugs = applyTransform(ugs, s);
 
-		final double cx = Double.parseDouble(extractData("cx", s));
-		final double cy = Double.parseDouble(extractData("cy", s));
-		final double rx = Double.parseDouble(extractData("rx", s));
-		final double ry = Double.parseDouble(extractData("ry", s));
+		final double cx = Double.parseDouble(extract(DATA_CX, s));
+		final double cy = Double.parseDouble(extract(DATA_CY, s));
+		final double rx = Double.parseDouble(extract(DATA_RX, s));
+		final double ry = Double.parseDouble(extract(DATA_RY, s));
 
 		UPath path = UPath.none();
 		path.moveTo(0, ry);
@@ -289,13 +315,12 @@ public class SvgNanoParser implements Sprite {
 	}
 
 	private void drawText(UGraphicWithScale ugs, String s, Deque<String> stackG) {
-		final double x = Double.parseDouble(extractData("x", s));
-		final double y = Double.parseDouble(extractData("y", s));
+		final double x = Double.parseDouble(extract(DATA_X, s));
+		final double y = Double.parseDouble(extract(DATA_Y, s));
 		final String fontColor = getTextFontColor(s, stackG);
 		final int fontSize = getTextFontSize(s);
 
-		final Pattern p = Pattern.compile("\\<text[^<>]*\\>(.*?)\\</text\\>");
-		final Matcher m = p.matcher(s);
+		final Matcher m = P_TEXT.matcher(s);
 		if (m.find()) {
 			final String text = m.group(1);
 			final HColor color = HColorSet.instance().getColorOrWhite(fontColor);
@@ -312,11 +337,11 @@ public class SvgNanoParser implements Sprite {
 	}
 
 	private String getTextFontFamily(String s, Deque<String> stackG) {
-		String family = extractData("font-family", s);
+		String family = extract(DATA_FONT_FAMILY, s);
 		if (family == null) {
-			final String style = extractData("style", s);
+			final String style = extract(DATA_STYLE, s);
 			if (style != null)
-				family = extractDataStyle("font-family", style);
+				family = extract(STYLE_FONT_FAMILY, style);
 		}
 		if (family == null && stackG != null) {
 			for (String g : stackG) {
@@ -329,35 +354,38 @@ public class SvgNanoParser implements Sprite {
 	}
 
 	private String getTextFontColor(String s, Deque<String> stackG) {
-		String color = extractData("fill", s);
+		String color = extract(DATA_FILL, s);
 		if (color == null) {
-			final String style = extractData("style", s);
+			final String style = extract(DATA_STYLE, s);
 			if (style != null)
-				color = extractDataStyle("fill", style);
+				color = extract(STYLE_FILL, style);
 		}
-		if (color == null && stackG != null) {
+		
+		if (color == null && stackG != null) 
 			for (String g : stackG) {
 				color = getTextFontColor(g, null);
 				if (color != null)
 					return color;
 			}
-		}
+		
 		return color;
 	}
 
 	private int getTextFontSize(String s) {
-		String fontSize = extractData("font-size", s);
+		String fontSize = extract(DATA_FONT_SIZE, s);
 		if (fontSize == null) {
-			final String style = extractData("style", s);
+			final String style = extract(DATA_STYLE, s);
 			if (style != null)
-				fontSize = extractDataStyle("font-size", style);
+				fontSize = extract(STYLE_FONT_SIZE, style);
 
 		}
 		if (fontSize == null)
 			// Not perfect, by let's take a default value
 			return 14;
 
-		if (fontSize.matches("^\\d+p[tx]$"))
+		final Matcher matcher = P_FONT_SIZE.matcher(fontSize);
+
+		if (matcher.matches())
 			return Integer.parseInt(fontSize.replaceAll("[a-z]", ""));
 
 		return Integer.parseInt(fontSize);
@@ -378,7 +406,7 @@ public class SvgNanoParser implements Sprite {
 	}
 
 	private UGraphicWithScale applyTransform(UGraphicWithScale ugs, String s) {
-		final String transform = extractData("transform", s);
+		final String transform = extract(DATA_TRANSFORM, s);
 		if (transform == null)
 			return ugs;
 
@@ -396,9 +424,7 @@ public class SvgNanoParser implements Sprite {
 	}
 
 	private UGraphicWithScale applyMatrix(UGraphicWithScale ugs, final String transform) {
-		final Pattern p3 = Pattern.compile(
-				"matrix\\(([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)\\)");
-		final Matcher m3 = p3.matcher(transform);
+		final Matcher m3 = P_MATRIX.matcher(transform);
 		if (m3.find()) {
 			final double v1 = Double.parseDouble(m3.group(1));
 			final double v2 = Double.parseDouble(m3.group(2));
@@ -413,8 +439,7 @@ public class SvgNanoParser implements Sprite {
 	}
 
 	private UGraphicWithScale applyRotate(UGraphicWithScale ugs, String transform) {
-		final Pattern p3 = Pattern.compile("rotate\\(([-.0-9]+)[ ,]+([-.0-9]+)[ ,]+([-.0-9]+)\\)");
-		final Matcher m3 = p3.matcher(transform);
+		final Matcher m3 = P_ROTATE.matcher(transform);
 		if (m3.find()) {
 			final double angle = Double.parseDouble(m3.group(1));
 			final double x = Double.parseDouble(m3.group(2));
@@ -429,14 +454,12 @@ public class SvgNanoParser implements Sprite {
 		double x = 0;
 		double y = 0;
 
-		final Pattern p3 = Pattern.compile("translate\\(([-.0-9]+)[ ,]+([-.0-9]+)\\)");
-		final Matcher m3 = p3.matcher(transform);
+		final Matcher m3 = P_TRANSLATE1.matcher(transform);
 		if (m3.find()) {
 			x = Double.parseDouble(m3.group(1));
 			y = Double.parseDouble(m3.group(2));
 		} else {
-			final Pattern p4 = Pattern.compile("translate\\(([-.0-9]+)\\)");
-			final Matcher m4 = p4.matcher(transform);
+			final Matcher m4 = P_TRANSLATE2.matcher(transform);
 			if (m4.find()) {
 				x = Double.parseDouble(m4.group(1));
 				y = Double.parseDouble(m4.group(1));
@@ -447,14 +470,12 @@ public class SvgNanoParser implements Sprite {
 
 	private double[] getScale(String transform) {
 		final double scale[] = new double[] { 1, 1 };
-		final Pattern p1 = Pattern.compile("scale\\(([-.0-9]+)\\)");
-		final Matcher m1 = p1.matcher(transform);
+		final Matcher m1 = P_SCALE1.matcher(transform);
 		if (m1.find()) {
 			scale[0] = Double.parseDouble(m1.group(1));
 			scale[1] = scale[0];
 		} else {
-			final Pattern p2 = Pattern.compile("scale\\(([-.0-9]+)[ ,]+([-.0-9]+)\\)");
-			final Matcher m2 = p2.matcher(transform);
+			final Matcher m2 = P_SCALE2.matcher(transform);
 			if (m2.find()) {
 				scale[0] = Double.parseDouble(m2.group(1));
 				scale[1] = Double.parseDouble(m2.group(2));
