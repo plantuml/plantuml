@@ -66,7 +66,7 @@ public class SvgPath {
 		for (final StringTokenizer st = new StringTokenizer(path); st.hasMoreTokens();) {
 			final String token = st.nextToken();
 
-			if (token.matches("[a-zA-Z]"))
+			if (token.length() == 1 && Character.isLetter(token.charAt(0)))
 				commands.add(new SvgCommandLetter(token));
 			else
 				commands.add(new SvgCommandNumber(token));
