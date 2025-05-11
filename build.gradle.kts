@@ -14,6 +14,7 @@ plugins {
 	`maven-publish`
 	signing
     eclipse
+	jacoco
 //	alias(libs.plugins.adarshr.test.logger)
 }
 
